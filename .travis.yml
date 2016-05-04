@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - '5'
+env:
+  global:
+    - REDIS_URL=redis://localhost:6379
+install: npm install
+script:
+  - npm test
+services:
+  - 'redis-server'
