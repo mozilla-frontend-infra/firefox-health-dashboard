@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== 'test') {
     const { address, port } = server.address();
     console.log(`http://${address}:${port}/`);
   });
-  server.listen(process.env.NOW ? null : 3000);
+  server.listen(process.env.PORT || 3000);
 }
 
 export default app;
