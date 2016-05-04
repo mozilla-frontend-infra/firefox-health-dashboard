@@ -1,0 +1,9 @@
+{
+  "extends": ["standard", "standard-react"],
+  "rules": {
+    "semi": [2, "always"],
+    "space-before-function-paren": 0,
+    "no-unused-vars": [1, {"vars": "local", "args": "none"}]
+  },
+  "parser": "babel-eslint"
+}
