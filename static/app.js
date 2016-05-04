@@ -2,8 +2,6 @@
 
 import 'babel-polyfill';
 import React from 'react';
-// import numbro from 'numbro';
-// import moment from 'moment';
 import d3 from 'd3';
 import _ from 'lodash';
 
@@ -14,7 +12,7 @@ export default class App extends React.Component {
   };
 
   async componentDidMount() {
-    const response = await fetch('//localhost:3001/crashes');
+    const response = await fetch('/crashes');
     const {uptime, crashes} = await response.json();
     this.setState({uptime, crashes});
   }
