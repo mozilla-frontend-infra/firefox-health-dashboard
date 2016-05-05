@@ -5,6 +5,9 @@ import compress from 'koa-compress';
 import Router from 'koa-router';
 import cors from 'koa-cors';
 import staticCache from 'koa-static-cache';
+import webpackMiddleware from 'koa-webpack-dev-middleware';
+import webpack from 'webpack';
+import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
 
 const app = new Koa();
@@ -18,19 +21,27 @@ import { router as release } from './release';
 import { router as crashes } from './crashes';
 
 const index = new Router();
-index.get('/', (ctx, next) => {
-  ctx.body = '/';
+index.get('/version', (ctx, next) => {
+  ctx.body = require('../package.json').version;
 });
 index.use('/release', release.routes());
 index.use('/crashes', crashes.routes());
-
 app.use(index.routes());
 
-app.use(staticCache('./dist', {
-  maxAge: 24 * 60 * 60
-}));
-
 if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV === 'production') {
+    app.use(staticCache('./dist', {
+      maxAge: 24 * 60 * 60,
+      alias: {
+        '/': '/index.html'
+      }
+    }));
+  } else {
+    app.use(webpackMiddleware(webpack(webpackConfig), {
+      noInfo: true
+    }));
+  }
+
   const server = http.createServer(app.callback());
   server.on('listening', (evt) => {
     const { address, port } = server.address();
