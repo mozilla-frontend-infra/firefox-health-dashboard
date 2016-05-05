@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "description": "Project Platform Health",
   "scripts": {
-    "watch:src": "webpack-dev-server --hot --inline --host 0.0.0.0",
-    "watch:data": "supervisor -q -w data server.js",
-    "watch:test": "NODE_ENV=test mocha --compilers js:babel-core/register --growl --reporter dot --watch",
+    "watch:src": "supervisor -q -w src server.js",
+    "watch:test": "NODE_ENV=test mocha --watch",
     "build:dev": "npm run clean; webpack -d",
     "build:prod": "npm run clean; webpack -p",
-    "test:src": "NODE_ENV=test mocha --timeout 10000 --compilers js:babel-core/register",
+    "test:src": "NODE_ENV=test nyc --require babel-core/register mocha",
     "test:lint": "eslint '?(static|src|test)/**/*.js'",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "clean": "rm -rf dist",
     "test": "npm-run-all --parallel test:*",
     "watch": "npm-run-all --parallel watch:*",
@@ -61,7 +61,6 @@
     "koa-router": "^7.0.1",
     "koa-static-cache": "^3.1.7",
     "lodash": "^4.11.0",
-    "mocha": "^2.4.5",
     "moment": "^2.12.0",
     "node-fetch": "^1.4.1",
     "normalize.css": "^4.0.0",
@@ -80,15 +79,19 @@
     "redis": "^2.6.0-1",
     "redis-commands": "^1.1.0",
     "style-loader": "^0.13.0",
-    "supertest": "^1.2.0",
     "supervisor": "^0.10.0",
     "telemetry-next-node": "^1.2.0",
     "then-redis": "^2.0.1",
     "url-loader": "^0.5.7",
     "web-app-manifest-loader": "^0.1.1",
     "webpack": "^1.12.14",
-    "webpack-dev-server": "^1.14.1",
     "webpack-sources": "^0.1.1",
-    "wolfy87-eventemitter": "^4.3.0"
+    "wolfy87-eventemitter": "^4.3.0",
+    "koa-webpack-dev-middleware": "^1.2.0"
+  },
+  "devDependencies": {
+    "nyc": "^6.4.2",
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
   }
 }

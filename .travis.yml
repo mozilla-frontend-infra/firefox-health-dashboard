@@ -9,3 +9,4 @@ script:
   - npm test
 services:
   - 'redis-server'
+after_success: npm run coverage
