@@ -65,6 +65,7 @@
     "moment": "^2.12.0",
     "node-fetch": "^1.4.1",
     "normalize.css": "^4.0.0",
+    "npm-run-all": "^1.8.0",
     "numbro": "^1.7.0",
     "postcss-cssnext": "^2.4.0",
     "postcss-custom-properties": "^5.0.0",
