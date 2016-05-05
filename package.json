@@ -5,11 +5,13 @@
   "scripts": {
     "watch:src": "webpack-dev-server --hot --inline --host 0.0.0.0",
     "watch:data": "supervisor -q -w data server.js",
-    "watch:test": "NODE_ENV=test mocha --compilers js:babel-core/register --growl --watch",
+    "watch:test": "NODE_ENV=test mocha --compilers js:babel-core/register --growl --reporter dot --watch",
     "build:dev": "npm run clean; webpack -d",
     "build:prod": "npm run clean; webpack -p",
+    "test:src": "NODE_ENV=test mocha --timeout 10000 --compilers js:babel-core/register",
+    "test:lint": "eslint '?(static|src|test)/**/*.js'",
     "clean": "rm -rf dist",
-    "test": "NODE_ENV=test mocha --timeout 10000 --compilers js:babel-core/register",
+    "test": "npm-run-all --parallel test:*",
     "watch": "npm-run-all --parallel watch:*",
     "build": "npm run build:prod",
     "start": "node server.js"
