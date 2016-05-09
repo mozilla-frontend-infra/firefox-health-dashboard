@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import http from 'http';
 import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
@@ -9,6 +12,7 @@ import webpackMiddleware from 'koa-webpack-dev-middleware';
 import webpack from 'webpack';
 import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
+import rewrite from 'koa-rewrite';
 
 const app = new Koa();
 
@@ -33,9 +37,10 @@ api.use('/bz', bz.routes());
 
 const index = new Router();
 index.use('/api', api.routes());
-index.redirect('/regressions', '/');
-index.redirect('/crashes', '/');
 app.use(index.routes());
+
+app.use(rewrite('/regressions', '/'));
+app.use(rewrite('/crashes', '/'));
 
 /* istanbul ignore if */
 if (process.env.NODE_ENV !== 'test') {

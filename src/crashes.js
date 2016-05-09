@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import moment from 'moment';
 import Telemetry from 'telemetry-next-node';
 import fetchJson from './fetch/json';
+import fetchRedash from './fetch/redash';
 import { getVersions } from './release';
 
 async function fetchLast4Beta() {
@@ -66,6 +67,19 @@ router
       return result;
     }, []);
     ctx.body = ratesByDay;
+  })
+  .get('/', async function (ctx, next) {
+    // const product = (ctx.request.query.product === 'fennec') ? 'fennec' : 'firefox';
+    // const channel = (ctx.request.query.channel === 'beta') ? 'beta' : 'channel';
+    const raw = await fetchRedash(331);
+    const reduced = raw.query_result.data.rows.map((row) => {
+      return {
+        date: row.activity_date,
+        main_crash_rate: row.main_crash_rate,
+        combined_crash_rate: row.app_crash_rate
+      };
+    });
+    ctx.body = reduced;
   })
   .get('/result', async function (ctx, next) {
     const versions = await fetchLast4Beta();

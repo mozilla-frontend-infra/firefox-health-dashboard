@@ -65,7 +65,12 @@ describe('release', () => {
 });
 
 describe('crashes', () => {
-  describe('GET crashes/adi', () => {
+  describe('GET crashes', () => {
+    it('should return 200', (done) => {
+      request()
+        .get('/api/crashes/')
+        .expect(200, done);
+    });
     it('should return 200', (done) => {
       request()
         .get('/api/crashes/adi/')
@@ -74,6 +79,21 @@ describe('crashes', () => {
     it('should return 200 for Fennec', (done) => {
       request()
         .get('/api/crashes/adi/?product=fennec')
+        .expect(200, done);
+    });
+  });
+});
+
+describe('bz', () => {
+  describe('GET regressions', () => {
+    // it('should return 200', (done) => {
+    //   request()
+    //     .get('/api/bz/regressions/')
+    //     .expect(200, done);
+    // });
+    it('should return 200', (done) => {
+      request()
+        .get('/api/bz/regressions/missed/')
         .expect(200, done);
     });
   });

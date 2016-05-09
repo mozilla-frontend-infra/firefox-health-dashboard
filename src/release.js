@@ -2,22 +2,9 @@ import Router from 'koa-router';
 import { getUpdates } from './release/updates';
 import getVersions from './release/versions';
 import { getArchive, getReleaseDate } from './release/archive';
+import getHistory from './release/history';
 import getChromeHistory from './release/chrome';
 import getCalendar from './release/calendar';
-
-export async function getHistory(channel = 'release', tail = 10) {
-  const versions = await getVersions();
-  const start = parseInt(versions[channel]);
-  const lookup = [];
-  for (let i = 0; i < tail; i++) {
-    const release = await getReleaseDate(start - i, channel);
-    lookup.push({
-      version: release.version,
-      date: release.date
-    });
-  }
-  return lookup;
-}
 
 export const router = new Router();
 
