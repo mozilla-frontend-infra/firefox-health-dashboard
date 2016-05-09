@@ -6,12 +6,12 @@ const oneHour = 60 * 60;
 const db = process.env.REDIS_URL ? createClient(process.env.REDIS_URL) : null;
 const devCache = {};
 
-export default async function fetchText(url, xml = false) {
+export default async function fetchText(url, options = {}) {
   const cached = db ? await db.get(url) : devCache[url];
   if (cached) {
     return cached;
   }
-  const response = await fetch(url);
+  const response = await fetch(url, options);
   if (!response.ok) {
     console.error(`Response for ${url} not OK: ${response.status}`);
     return null;

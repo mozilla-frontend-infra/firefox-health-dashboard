@@ -1,7 +1,19 @@
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import React from 'react';
+import { Router, Route, browserHistory } from 'react-router';
 
 import './index.css';
-import App from './app.js';
+import Home from './home.js';
+import Crashes from './crashes.js';
+import Regressions from './regressions.js';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const NoMatch = () => (<div>404</div>);
+
+render((
+  <Router history={browserHistory}>
+    <Route path='/' component={Home} />
+    <Route path='/crashes' component={Crashes} />
+    <Route path='/regressions' component={Regressions} />
+    <Route path='*' component={NoMatch} />
+  </Router>
+), document.getElementById('root'));

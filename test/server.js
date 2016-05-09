@@ -6,69 +6,74 @@ function request() {
   return superagent(app.listen());
 }
 
-// describe('crashes', () => {
-//   describe('GET /crashes', () => {
-//     it('should return 200', (done) => {
-//       request()
-//         .get('/crashes')
-//         .expect(200, done);
-//     });
-//   });
-// });
-
 describe('release', () => {
-  describe('GET /release', () => {
+  describe('GET release', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/')
+        .get('/api/release/')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/all', () => {
+  describe('GET release/archive', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/all')
+        .get('/api/release/archive')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/chrome', () => {
+  describe('GET release/chrome', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/chrome')
+        .get('/api/release/chrome')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/latest', () => {
+  describe('GET release/latest', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/latest')
+        .get('/api/release/latest')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/history', () => {
+  describe('GET release/history', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/history')
+        .get('/api/release/history')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/calendar', () => {
+  describe('GET release/calendar', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/calendar')
+        .get('/api/release/calendar')
         .expect(200, done);
     });
   });
 
-  describe('GET /release/updates', () => {
+  describe('GET release/updates', () => {
     it('should return 200', (done) => {
       request()
-        .get('/release/updates')
+        .get('/api/release/updates')
+        .expect(200, done);
+    });
+  });
+});
+
+describe('crashes', () => {
+  describe('GET crashes/adi', () => {
+    it('should return 200', (done) => {
+      request()
+        .get('/api/crashes/adi/')
+        .expect(200, done);
+    });
+    it('should return 200 for Fennec', (done) => {
+      request()
+        .get('/api/crashes/adi/?product=fennec')
         .expect(200, done);
     });
   });

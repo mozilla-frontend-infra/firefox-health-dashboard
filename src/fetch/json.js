@@ -1,7 +1,7 @@
 import fetchText from './text';
 
-export default async function fetchJson(url) {
-  const text = await fetchText(url);
+export default async function fetchJson(url, options = {}) {
+  const text = await fetchText(url, options);
   if (!text) {
     return null;
   }

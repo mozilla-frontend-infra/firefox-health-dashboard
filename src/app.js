@@ -17,17 +17,27 @@ app.use(responseTime());
 app.use(cors());
 app.use(compress());
 
+const api = new Router();
+api.get('/version', (ctx, next) => {
+  ctx.body = {
+    version: require('../package.json').version
+  };
+});
+
 import { router as release } from './release';
+api.use('/release', release.routes());
 import { router as crashes } from './crashes';
+api.use('/crashes', crashes.routes());
+import { router as bz } from './bz';
+api.use('/bz', bz.routes());
 
 const index = new Router();
-index.get('/version', (ctx, next) => {
-  ctx.body = require('../package.json').version;
-});
-index.use('/release', release.routes());
-index.use('/crashes', crashes.routes());
+index.use('/api', api.routes());
+index.redirect('/regressions', '/');
+index.redirect('/crashes', '/');
 app.use(index.routes());
 
+/* istanbul ignore if */
 if (process.env.NODE_ENV !== 'test') {
   if (process.env.NODE_ENV === 'production') {
     app.use(staticCache('./dist', {

@@ -1,7 +1,9 @@
 import fetchText from './text';
 import cheerio from 'cheerio';
 
-export default async function fetchHtml(url, xml = false) {
+export default async function fetchHtml(url, options = {}) {
+  const xml = options.xml || false;
+  delete options.xml;
   const text = await fetchText(url);
   if (!text) {
     return null;
