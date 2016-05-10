@@ -60,7 +60,7 @@ if (process.env.NODE_ENV !== 'test') {
   const server = http.createServer(app.callback());
   server.on('listening', (evt) => {
     const { address, port } = server.address();
-    console.log(`http://${address}:${port}/`);
+    console.log('http://%s:%d/ in %s', address, port, process.env.NODE_ENV);
   });
   server.listen(process.env.PORT || 3000);
 }

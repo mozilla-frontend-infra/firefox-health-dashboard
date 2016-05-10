@@ -6,28 +6,27 @@ import { getFixedCount, getMissedCount } from './bz/regressions';
 export const router = new Router();
 
 router
+
   .get('/regressions', async function (ctx, next) {
     const versions = await getVersions();
     const start = versions.release;
     const counts = [];
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i < 5; i++) {
       const version = parseInt(start) - i;
       const count = await getFixedCount(version);
       counts.push({ version, count });
     }
     ctx.body = counts;
   })
+
   .get('/regressions/missed', async function (ctx, next) {
-    const history = await getHistory('release', 7);
+    const history = await getHistory('release', 5);
     const counts = [];
     for (var i = 0; i < history.length; i++) {
       const release = history[i];
       const version = parseInt(release.version);
-      let count = await getMissedCount(version, release.date);
-      if (version === 46) {
-        count = 0;
-      }
-      counts.push({ version, count });
+      let { count, query } = await getMissedCount(version, release.date);
+      counts.push({ version, count, query });
     }
     ctx.body = counts;
   });

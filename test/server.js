@@ -6,8 +6,8 @@ function request() {
   return superagent(app.listen());
 }
 
-describe('release', () => {
-  describe('GET release', () => {
+describe('/release', () => {
+  describe('GET /release/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/')
@@ -15,7 +15,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/archive', () => {
+  describe('GET /release/archive/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/archive')
@@ -23,7 +23,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/chrome', () => {
+  describe('GET /release/chrome/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/chrome')
@@ -31,7 +31,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/latest', () => {
+  describe('GET /release/latest/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/latest')
@@ -39,7 +39,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/history', () => {
+  describe('GET /release/history/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/history')
@@ -47,7 +47,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/calendar', () => {
+  describe('GET /release/calendar/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/calendar')
@@ -55,7 +55,7 @@ describe('release', () => {
     });
   });
 
-  describe('GET release/updates', () => {
+  describe('GET /release/updates/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/updates')
@@ -64,13 +64,17 @@ describe('release', () => {
   });
 });
 
-describe('crashes', () => {
-  describe('GET crashes', () => {
-    it('should return 200', (done) => {
-      request()
+describe('/crashes', () => {
+  if (process.env.REDASH_API_KEY) {
+    describe('GET /crashes/', () => {
+      it('should return 200', (done) => {
+        request()
         .get('/api/crashes/')
         .expect(200, done);
+      });
     });
+  }
+  describe('GET /crashes/adi/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/crashes/adi/')
@@ -84,13 +88,15 @@ describe('crashes', () => {
   });
 });
 
-describe('bz', () => {
-  describe('GET regressions', () => {
-    // it('should return 200', (done) => {
-    //   request()
-    //     .get('/api/bz/regressions/')
-    //     .expect(200, done);
-    // });
+describe('/bz', () => {
+  describe('GET /regressions/', () => {
+    it('should return 200', (done) => {
+      request()
+        .get('/api/bz/regressions/')
+        .expect(200, done);
+    });
+  });
+  describe('GET /regressions/missed/', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/bz/regressions/missed/')
