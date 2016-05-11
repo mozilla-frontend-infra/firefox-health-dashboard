@@ -25,7 +25,7 @@ function searchFixed(version) {
 export async function getFixedCount(version) {
   const query = searchFixed(version);
   debug('Fixed count: %s', query);
-  const response = await fetchJson(`${base}?${query}`);
+  const response = await fetchJson(`${base}?${query}&include_fields=id`);
   return {
     query: query,
     count: response.bugs.length

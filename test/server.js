@@ -89,13 +89,13 @@ describe('/crashes', () => {
 });
 
 describe('/bz', () => {
-  describe('GET /regressions/', () => {
-    it('should return 200', (done) => {
-      request()
-        .get('/api/bz/regressions/')
-        .expect(200, done);
-    });
-  });
+  // describe('GET /regressions/', () => {
+  //   it('should return 200', (done) => {
+  //     request()
+  //       .get('/api/bz/regressions/')
+  //       .expect(200, done);
+  //   });
+  // });
   describe('GET /regressions/missed/', () => {
     it('should return 200', (done) => {
       request()

@@ -11,7 +11,7 @@ router
     const versions = await getVersions();
     const start = versions.release;
     const counts = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 1; i++) {
       const version = parseInt(start) - i;
       const count = await getFixedCount(version);
       counts.push({ version, count });
