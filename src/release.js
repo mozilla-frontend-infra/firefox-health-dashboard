@@ -22,10 +22,12 @@ router
   })
   .get('/history', async function (ctx, next) {
     const channel = ctx.request.query.channel || 'release';
-    ctx.body = await getHistory(channel);
+    const product = ctx.request.query.product || 'firefox';
+    ctx.body = await getHistory(channel, product);
   })
   .get('/archive', async function (ctx, next) {
-    ctx.body = await getArchive();
+    const channel = ctx.request.query.channel || 'release';
+    ctx.body = await getArchive(channel);
   })
   .get('/updates', async function (ctx, next) {
     ctx.body = await getUpdates();

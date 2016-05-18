@@ -1,16 +1,19 @@
-import getVersions from './versions';
-import { getReleaseDate } from './archive';
+// import getVersions from './versions';
+import sortBy from 'lodash/sortBy';
+import { getArchive, getReleaseDate } from './archive';
 
-export default async function getHistory(channel = 'release', tail = 10) {
-  const versions = await getVersions();
-  const start = parseInt(versions[channel]);
+export default async function getHistory(channel = 'release', product = 'firefox', tail = 30) {
+  const versions = await getArchive(channel, product);
   const lookup = [];
   for (let i = 0; i < tail; i++) {
-    const release = await getReleaseDate(start - i, channel);
-    lookup.push({
-      version: release.version,
-      date: release.date
-    });
+    const release = await getReleaseDate(versions[i], channel, product);
+    if (release.date) {
+      lookup.push({
+        version: release.version,
+        date: release.date
+      });
+    }
   }
+  sortBy(lookup, 'date', (a) => Date.parse(a));
   return lookup;
 }

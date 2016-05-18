@@ -68,6 +68,7 @@ router
     }, []);
     ctx.body = ratesByDay;
   })
+
   .get('/', async function (ctx, next) {
     // const product = (ctx.request.query.product === 'fennec') ? 'fennec' : 'firefox';
     // const channel = (ctx.request.query.channel === 'beta') ? 'beta' : 'channel';
@@ -81,6 +82,45 @@ router
     });
     ctx.body = reduced;
   })
+
+  .get('/release/versions', async function (ctx, next) {
+    const raw = await fetchRedash(184);
+    const reduced = raw.query_result.data.rows.map((row) => {
+      return {
+        date: row.activity_date,
+        main_crash_rate: row.main_crash_rate,
+        combined_crash_rate: row.app_crash_rate
+      };
+    });
+    ctx.body = reduced;
+  })
+
+  .get('/beta', async function (ctx, next) {
+    const raw = await fetchRedash(207);
+    const results = raw.query_result.data.rows.map((row) => {
+      return {
+        date: row.activity_date,
+        version: row.build_version,
+        id: row.build_id,
+        main_crash_rate: row.main_crash_rate
+      };
+    });
+    ctx.body = results;
+  })
+
+  .get('/beta/builds', async function (ctx, next) {
+    const raw = await fetchRedash(207);
+    const results = raw.query_result.data.rows.map((row) => {
+      return {
+        date: row.activity_date,
+        version: row.build_version,
+        id: row.build_id,
+        main_crash_rate: row.main_crash_rate
+      };
+    });
+    ctx.body = results;
+  })
+
   .get('/result', async function (ctx, next) {
     const versions = await fetchLast4Beta();
     const uptime = await fetchUptime(versions);

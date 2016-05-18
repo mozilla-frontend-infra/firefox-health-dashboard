@@ -1,0 +1,1 @@
+// https://crash-stats.mozilla.com/api/SuperSearch/?product=Firefox&version=46.0.1&url=~https%3A%2F%2Fwww.facebook.com%2F&_facets=signature&_facets=process_type&_columns=signature&_columns=product&_columns=version&_columns=build_id&_columns=platform&_results_number=1

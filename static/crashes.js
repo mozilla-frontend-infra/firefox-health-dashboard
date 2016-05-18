@@ -22,8 +22,8 @@ export default class Crashes extends React.Component {
     MG.data_graphic({
       title: 'Firefox Telemetry Crash Rate',
       data: data,
-      width: 1000,
-      height: 300,
+      width: window.innerWidth,
+      height: window.innerHeight / 3,
       target: '#firefox-telemetry-crashes',
       x_accessor: 'date',
       y_accessor: 'combined_crash_rate',
@@ -55,8 +55,8 @@ export default class Crashes extends React.Component {
     MG.data_graphic({
       title: 'Firefox ADI Crash Rate',
       data: data,
-      width: 1000,
-      height: 300,
+      width: window.innerWidth,
+      height: window.innerHeight / 3,
       target: '#firefox-crashes',
       x_accessor: 'date',
       y_accessor: 'combined_crash_rate',
@@ -71,7 +71,13 @@ export default class Crashes extends React.Component {
   async renderFennecCrashes() {
     const crashes = await (await fetch('/api/crashes/adi?product=fennec')).json();
     const data = MG.convert.date(crashes, 'date');
-    const markers = [];
+    const releases = await (await fetch('/api/release/history?product=fennec')).json();
+    const markers = releases.map((entry) => {
+      return {
+        date: new Date(entry.date),
+        label: entry.version
+      };
+    });
     markers.push({
       date: new Date('2016-01-17'),
       label: 'Baseline'
@@ -83,8 +89,8 @@ export default class Crashes extends React.Component {
     MG.data_graphic({
       title: 'Fennec ADI Crash Rate',
       data: data,
-      width: 1000,
-      height: 300,
+      width: window.innerWidth,
+      height: window.innerHeight / 3,
       target: '#fennec-crashes',
       x_accessor: 'date',
       y_accessor: 'combined_crash_rate',
