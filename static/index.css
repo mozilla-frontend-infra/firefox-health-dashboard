@@ -26,6 +26,13 @@ body {
   font-size: 1.5rem;
 }
 
+.mg-line1-color {
+  stroke: $developerBlue;
+}
+.mg-area1-color {
+  fill: $developerBlue;
+}
+
 .mg-markers text,
 .mg-x-axis text,
 .mg-y-axis text,

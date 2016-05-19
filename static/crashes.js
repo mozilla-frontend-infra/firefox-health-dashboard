@@ -31,7 +31,9 @@ export default class Crashes extends React.Component {
       min_y: 3,
       max_y: 4.5,
       show_secondary_x_label: false,
-      x_extended_ticks: false
+      x_extended_ticks: false,
+      bottom: 40,
+      interpolate: 'monotone'
     });
   }
 
@@ -66,7 +68,9 @@ export default class Crashes extends React.Component {
       max_y: 1.5,
       baselines: baselines,
       show_secondary_x_label: false,
-      x_extended_ticks: false
+      x_extended_ticks: false,
+      bottom: 40,
+      interpolate: 'monotone'
     });
   }
 
@@ -101,7 +105,9 @@ export default class Crashes extends React.Component {
       max_y: 2,
       baselines: baselines,
       show_secondary_x_label: false,
-      x_extended_ticks: false
+      x_extended_ticks: false,
+      bottom: 40,
+      interpolate: 'monotone'
     });
   }
 
