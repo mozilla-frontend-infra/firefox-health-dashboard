@@ -19,6 +19,20 @@ body {
   justify-content: center;
 }
 
-.mg-x-axis text, .mg-y-axis text, .mg-histogram .axis text {
-  opacity: 0.8;
+.mg-header {
+  opacity: 1;
+  color: rgba(0, 0, 0, 1);
+  font-weight: lighter;
+  font-size: 1.5rem;
+}
+
+.mg-markers text,
+.mg-x-axis text,
+.mg-y-axis text,
+.mg-baselines text,
+.mg-histogram .axis text {
+  color: rgba(0, 0, 0, 1);
+  text-shadow: 0 0 4px #fff;
+  opacity: 1;
+  font-size: 1rem;
 }

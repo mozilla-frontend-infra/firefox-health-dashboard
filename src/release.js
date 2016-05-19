@@ -27,7 +27,8 @@ router
   })
   .get('/archive', async function (ctx, next) {
     const channel = ctx.request.query.channel || 'release';
-    ctx.body = await getArchive(channel);
+    const product = ctx.request.query.product || 'firefox';
+    ctx.body = await getArchive(channel, product);
   })
   .get('/updates', async function (ctx, next) {
     ctx.body = await getUpdates();
