@@ -5,41 +5,63 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  min-height: 100%;
+  height: 100%;
 }
 body {
   display: flex;
   justify-content: center;
   font: 14px/20px 'Open Sans', sans-serif;
   background-color: #fff;
-  color: #333;
+  color: #fff;
+  background-color: #111;
+  align-content: stretch;
 }
-#root {
+#root, .dashboard {
+  display: flex;
+  flex: 1;
+  align-content: stretch;
+  flex-direction: column;
+}
+.dashboard {
+  margin: .6em 1em;
+}
+.graphic {
+  flex: 1;
+}
+.graphic.state-loading {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.mg-header {
+.mg-header, .graphic.state-loading {
   opacity: 1;
-  color: rgba(0, 0, 0, 1);
+  color: $darkGray;
+  fill: $darkGray;
   font-weight: lighter;
   font-size: 1.5rem;
 }
 
 .mg-line1-color {
-  stroke: $developerBlue;
+  stroke: $mobileBlueVibrant;
 }
 .mg-area1-color {
-  fill: $developerBlue;
+  fill: $mobileBlueVibrant;
 }
 
-.mg-markers text,
+.mg-x-axis line,
+.mg-y-axis line,
+.mg-baselines line,
+.mg-markers line {
+  opacity: 0.3;
+}
+
 .mg-x-axis text,
 .mg-y-axis text,
 .mg-baselines text,
+.mg-markers text,
 .mg-histogram .axis text {
-  color: rgba(0, 0, 0, 1);
-  text-shadow: 0 0 4px #fff;
+  fill: $lightGray;
   opacity: 1;
   font-size: 1rem;
 }

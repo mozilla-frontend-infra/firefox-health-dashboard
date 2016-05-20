@@ -39,6 +39,7 @@
     "babel-runtime": "^6.9.0",
     "bz": "^0.4.4",
     "cheerio": "^0.20.0",
+    "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "d3": "^3.5.17",
     "debug": "^2.2.0",

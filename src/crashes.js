@@ -53,7 +53,7 @@ router
     const raw = await fetchJson(urls[product]);
     const ratesByDay = Object.keys(raw).reduce((result, date) => {
       const time = moment(date, 'YYYY MM DD');
-      if (moment().diff(time, 'days') > 120) {
+      if (moment().diff(time, 'days') > 130) {
         return result;
       }
       const entry = raw[date];
