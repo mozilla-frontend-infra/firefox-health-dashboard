@@ -36,24 +36,26 @@ body {
 
 .mg-header, .graphic.state-loading {
   opacity: 1;
-  color: $darkGray;
-  fill: $darkGray;
+  color: $lightGray;
+  fill: $lightGray;
   font-weight: lighter;
   font-size: 1.5rem;
 }
-
+.mg-main-line {
+  stroke-width: 2 !important;
+}
 .mg-line1-color {
-  stroke: $mobileBlueVibrant;
+  stroke: $flameYellowVibrant;
 }
 .mg-area1-color {
-  fill: $mobileBlueVibrant;
+  fill: $flameYellowVibrant;
 }
 
 .mg-x-axis line,
 .mg-y-axis line,
 .mg-baselines line,
 .mg-markers line {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .mg-x-axis text,
