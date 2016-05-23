@@ -9,10 +9,16 @@ export default class Graphic extends React.Component {
     this.target = `graphic-${((Math.random() * 10000) | 0)}`;
   }
 
+  componentDidMount() {
+    // Workaround Chrome which screws height when adding graph
+    this.height = document.getElementById(this.target).offsetHeight;
+  }
+
   componentDidUpdate() {
     if (this.props.data) {
       MG.data_graphic(Object.assign({
-        target: `#${this.target}`
+        target: `#${this.target}`,
+        height: this.height
       }, this.props));
     }
   }
@@ -37,7 +43,6 @@ Graphic.defaultProps = {
   markers: [],
   baselines: [],
   full_width: true,
-  full_height: true,
   show_secondary_x_label: false,
   y_extended_ticks: false,
   interpolate: 'monotone'
