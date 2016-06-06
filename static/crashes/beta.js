@@ -3,7 +3,6 @@ import 'babel-polyfill';
 import React from 'react';
 import d3 from 'd3';
 import moment from 'moment';
-import cx from 'classnames';
 import filter from 'lodash/filter';
 import matches from 'lodash/matches';
 
