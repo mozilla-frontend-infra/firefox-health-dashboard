@@ -14,13 +14,13 @@ export async function getUpdate(channel = 'release') {
   return {
     version: field.prop('appversion'),
     build_id: field.prop('buildid'),
-    date: date.format('YYYY-MM-DD')
+    date: date.format('YYYY-MM-DD'),
   };
 }
 
 export async function getUpdates() {
   const result = {};
-  for (let channel of channels) {
+  for (const channel of channels) {
     result[channel] = getUpdate(channel);
   }
   return result;

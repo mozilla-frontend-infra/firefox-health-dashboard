@@ -1,4 +1,4 @@
-/*global describe, it*/
+/* global describe, it*/
 import superagent from 'supertest';
 import app from '../src/app';
 
@@ -11,14 +11,6 @@ describe('/release', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/')
-        .expect(200, done);
-    });
-  });
-
-  describe('GET /release/archive/', () => {
-    it('should return 200', (done) => {
-      request()
-        .get('/api/release/archive')
         .expect(200, done);
     });
   });
@@ -43,6 +35,11 @@ describe('/release', () => {
     it('should return 200', (done) => {
       request()
         .get('/api/release/history')
+        .expect(200, done);
+    });
+    it('should return 200 for beta', (done) => {
+      request()
+        .get('/api/release/history?channel=beta')
         .expect(200, done);
     });
   });
@@ -86,6 +83,22 @@ describe('/crashes', () => {
         .expect(200, done);
     });
   });
+  describe('GET /crashes/beta/builds', () => {
+    it('should return 200', (done) => {
+      request()
+        .get('/api/crashes/beta/builds')
+        .expect(200, done);
+    });
+  });
+  if (process.env.CRASH_STATS_TOKEN) {
+    describe('GET /crashes/urls', () => {
+      it('should return 200', (done) => {
+        request()
+        .get('/api/crashes/urls')
+        .expect(200, done);
+      });
+    });
+  }
 });
 
 describe('/bz', () => {

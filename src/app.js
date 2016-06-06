@@ -11,6 +11,7 @@ import webpackMiddleware from 'koa-webpack-dev-middleware';
 import webpack from 'webpack';
 import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
+const version = require('../package.json').version;
 
 const app = new Koa();
 
@@ -21,8 +22,8 @@ app.use(cors());
 const api = new Router();
 api.get('/version', (ctx, next) => {
   ctx.body = {
-    version: require('../package.json').version,
-    source: process.env.SOURCE_VERSION || ''
+    version: version,
+    source: process.env.SOURCE_VERSION || '',
   };
 });
 
@@ -37,7 +38,7 @@ const index = new Router();
 index.use('/api', api.routes());
 app.use(index.routes());
 
-app.use(async function (ctx, next) {
+app.use(async (ctx, next) => {
   const route = ctx.path;
   if (/^\/[a-z\/]*$/.test(route)) {
     ctx.path = '/index.html';
@@ -50,11 +51,11 @@ app.use(async function (ctx, next) {
 if (process.env.NODE_ENV !== 'test') {
   if (process.env.NODE_ENV === 'production') {
     app.use(staticCache('./dist', {
-      maxAge: 24 * 60 * 60
+      maxAge: 24 * 60 * 60,
     }));
   } else {
     app.use(webpackMiddleware(webpack(webpackConfig), {
-      noInfo: true
+      noInfo: true,
     }));
   }
 

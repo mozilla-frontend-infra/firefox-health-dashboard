@@ -1,6 +1,7 @@
 @import "css/colors.css";
 @import "metrics-graphics/dist/metricsgraphics.css";
 
+
 html, body {
   margin: 0;
   padding: 0;
@@ -10,27 +11,51 @@ html, body {
 body {
   display: flex;
   justify-content: center;
-  font: 14px/20px 'Open Sans', sans-serif;
+  font: 16px/23px 'Open Sans', sans-serif;
   color: #fff;
   background-color: #000;
   align-content: stretch;
 }
+
+h2 {
+  font-size: 2.8rem;
+  font-weight: 400;
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
 #root, .dashboard {
   display: flex;
   flex: 1;
   align-content: stretch;
   flex-direction: column;
 }
-.dashboard {
-  margin: 0;
-}
 .graphic {
   flex: 1;
-}
-.graphic.state-loading {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.state-loading {
+  animation: appear 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.state-loaded {
+  animation: appear 0.2s ease-out;
+}
+
+svg line {
+  stroke-width: 1;
+}
+svg text {
+  fill: #fff;
+}
+svg path {
 }
 
 .mg-header, .graphic.state-loading {
@@ -38,7 +63,7 @@ body {
   color: $lightGray;
   fill: $lightGray;
   font-weight: lighter;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 .mg-main-line {
   stroke-width: 2 !important;
@@ -48,6 +73,47 @@ body {
 }
 .mg-area1-color {
   fill: $flameYellowVibrant;
+}
+
+.crashes-beta {
+  margin: 4rem 1rem;
+}
+
+.release {
+  .release-tick, .release-today {
+    stroke: rgba(255, 255, 255, 1);
+  }
+  .release-label {
+    opacity: 1;
+    font-size: 2.8rem;
+  }
+  .release-date {
+    opacity: 0.5;
+  }
+  .release-line {
+    stroke-width: 2;
+    opacity: 1;
+    fill: none;
+  }
+  .release-area {
+    opacity: 0.15;
+    stroke: none;
+  }
+  .candidate-build {
+    opacity: 0.5;
+  }
+  .candidate {
+    .candidate-marker {
+    }
+    .candidate-label {
+      opacity: 0.8;
+      font-size: 1rem;
+    }
+    .candidate-rate {
+      opacity: 0.35;
+      fill: none;
+    }
+  }
 }
 
 .mg-x-axis line,
@@ -65,4 +131,14 @@ body {
   fill: $lightGray;
   opacity: 1;
   font-size: 1rem;
+  font-weight: 600;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
 }

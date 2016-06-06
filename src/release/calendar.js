@@ -2,11 +2,13 @@ import moment from 'moment';
 import ical from 'ical';
 import fetchText from '../fetch/text';
 
-export default async function getCalendar() {
+export default async function getCalendar({
+  channel = 'release',
+} = {}) {
   const url = 'https://calendar.google.com/calendar/ical/mozilla.com_2d37383433353432352d3939%40resource.calendar.google.com/public/basic.ics';
   const ics = await fetchText(url);
   const parsed = ical.parseICS(ics);
-  const data = Object.keys(parsed).reduce((data, key) => {
+  const dates = Object.keys(parsed).reduce((data, key) => {
     const entry = parsed[key];
     if (moment().diff(entry.start, 'days') > 7) {
       return data;
@@ -15,13 +17,21 @@ export default async function getCalendar() {
     if (!summary) {
       return data;
     }
+    const ch = summary[1] ? 'esr' : 'release';
+    if (channel && ch !== channel) {
+      return data;
+    }
+    let version = summary[2];
+    if (!/\./.test(version)) {
+      version += '.0';
+    }
     data.push({
-      version: summary[2],
-      channel: summary[1] ? 'esr' : 'release',
-      date: moment(entry.start).format('YYYY-MM-DD')
+      version: version,
+      channel: ch,
+      date: moment(entry.start).format('YYYY-MM-DD'),
     });
     return data;
   }, []);
-  data.sort((a, b) => (a.date < b.date) ? -1 : 1);
-  return data;
+  dates.sort((a, b) => ((a.date < b.date) ? -1 : 1));
+  return dates;
 }

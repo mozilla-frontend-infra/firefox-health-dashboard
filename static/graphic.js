@@ -18,22 +18,25 @@ export default class Graphic extends React.Component {
     if (this.props.data) {
       MG.data_graphic(Object.assign({
         target: `#${this.target}`,
-        height: this.height
+        height: this.height,
       }, this.props));
     }
   }
 
   render() {
     const cls = cx('graphic', {
-      'state-loading': !this.props.data
+      'state-loading': !this.props.data,
     });
     return (
-      <div className={cls} id={this.target}>
+      <div
+        className={cls}
+        id={this.target}
+      >
         {this.props.data ? '' : this.props.title}
       </div>
     );
   }
-};
+}
 
 Graphic.defaultProps = {
   title: 'Graphic',
@@ -45,9 +48,9 @@ Graphic.defaultProps = {
   full_width: true,
   show_secondary_x_label: false,
   y_extended_ticks: false,
-  interpolate: 'monotone'
+  interpolate: 'monotone',
 };
 Graphic.propTypes = {
   data: React.PropTypes.array,
-  title: React.PropTypes.string
+  title: React.PropTypes.string,
 };

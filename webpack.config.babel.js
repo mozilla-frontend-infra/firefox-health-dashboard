@@ -21,45 +21,46 @@ const cssFilename = isProd ? '[name].[chunkhash:6].css' : '[name].css';
 export default {
   context: srcDir,
   entry: {
-    app: './index.js'
+    app: './index.js',
   },
   devtool: '#source-map',
   output: {
     path: distDir,
     filename: jsFilename,
-    chunkFilename: jsFilename
+    chunkFilename: jsFilename,
+    publicPath: '/',
   },
   module: {
     preLoaders: [
       {
         test: /\.js$/,
         include: srcDir,
-        loader: 'eslint'
-      }
+        loader: 'eslint',
+      },
     ],
     loaders: [
       {
         test: /\.js$/,
         include: srcDir,
-        loader: 'babel'
+        loader: 'babel',
       }, {
         test: /\.css$/,
         include: srcDir,
         loader: ExtractTextPlugin.extract(
           'style',
           'css!postcss'
-        )
+        ),
       }, {
         test: /manifest.json$/,
-        loader: 'file?name=manifest.json!web-app-manifest'
+        loader: 'file?name=manifest.json!web-app-manifest',
       }, {
         test: /\.png$/,
         loaders: [
           'file?name=[path][name].[hash:6].[ext]',
-          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-        ]
-      }
-    ]
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        ],
+      },
+    ],
   },
   postcss: [
     postcssImport(),
@@ -67,17 +68,17 @@ export default {
     postcssNested(),
     postcssSimpleVars(),
     postcssCssnext({
-      browsers: ['last 1 version']
+      browsers: ['last 1 version'],
     }),
     postcssReporter({
-      throwError: true
-    })
+      throwError: true,
+    }),
   ],
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify((isProd) ? 'production' : 'development')
-      }
+        NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
+      },
     }),
     new HtmlWebpackPlugin({
       template: path.join(srcDir, 'index.html'),
@@ -85,18 +86,18 @@ export default {
       favicon: path.join(srcDir, 'icons', 'favicon.ico'),
       minify: {
         removeComments: true,
-        collapseWhitespace: true
-      }
+        collapseWhitespace: true,
+      },
     }),
     new ExtractTextPlugin(cssFilename, {
-      allChunks: true
+      allChunks: true,
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor']
-    })
+      names: ['vendor'],
+    }),
   ],
   devServer: {
     port: 3000,
-    noInfo: true
-  }
+    noInfo: true,
+  },
 };

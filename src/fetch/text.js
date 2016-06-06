@@ -1,17 +1,21 @@
 import { createClient } from 'then-redis';
 import fetch from 'node-fetch';
+import moment from 'moment';
 
-const defaultTtl = 60 * 60;
+const defaultTtl = moment.duration(4, 'hours').as('seconds');
 
 const db = process.env.REDIS_URL ? createClient(process.env.REDIS_URL) : null;
 const devCache = {};
 
-export default async function fetchText(url, options = {}) {
-  const {
-    ttl = defaultTtl,
-    headers = {},
-    method = 'get'
-  } = options;
+export default async function fetchText(url, {
+  fuzzyTtl = defaultTtl,
+  headers = {},
+  method = 'get',
+} = {}) {
+  let ttl = fuzzyTtl;
+  if (typeof ttl === 'string') {
+    ttl = moment.duration(1, ttl).as('seconds');
+  }
   const cached = db ? await db.get(url) : devCache[url];
   if (cached) {
     return cached;

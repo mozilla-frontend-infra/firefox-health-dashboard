@@ -8,29 +8,35 @@ export default class FennecAdiCrashes extends React.Component {
   state = {
     data: null,
     markers: null,
-    baselines: null
+    baselines: null,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetch();
+  }
+
+  async fetch() {
     const crashes = await (await fetch('/api/crashes/adi?product=fennec')).json();
     const data = MG.convert.date(crashes, 'date');
-    const releases = await (await fetch('/api/release/history?product=fennec')).json();
+    const releases = await (
+      await fetch('/api/release/history?product=fennec&tailVersion=5')
+    ).json();
     const markers = releases.map((entry) => {
       return {
         date: new Date(entry.date),
-        label: entry.version
+        label: entry.version.full,
       };
     });
     markers.push({
       date: new Date('2016-01-17'),
-      label: 'Baseline'
+      label: 'Baseline',
     });
     const baselines = [
       { value: 1.91, label: '1.91' },
-      { value: 1.26, label: '1.26' }
+      { value: 1.26, label: '1.26' },
     ];
     this.setState({
-      data, markers, baselines
+      data, markers, baselines,
     });
   }
 
@@ -46,4 +52,4 @@ export default class FennecAdiCrashes extends React.Component {
       />
     );
   }
-};
+}

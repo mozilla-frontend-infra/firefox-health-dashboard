@@ -12,13 +12,13 @@ export default class Regressions extends React.Component {
     MG.data_graphic({
       title: 'Number of Unevaluated Regressions Shipped',
       data: regressions,
-      legend: legend,
+      legend,
       chart_type: 'bar',
       width: 500,
       height: 300,
       target: '#graph',
       x_accessor: 'count',
-      y_accessor: 'version'
+      y_accessor: 'version',
     });
   }
 

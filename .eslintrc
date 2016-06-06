@@ -1,9 +1,16 @@
 {
-  "extends": ["standard", "standard-react"],
+  "extends": ["airbnb"],
   "rules": {
-    "semi": [2, "always"],
-    "space-before-function-paren": 0,
-    "no-unused-vars": [1, {"vars": "local", "args": "none"}]
+    "no-console": [0],
+    "jsx-quotes": [2, "prefer-single"],
+    "no-param-reassign": [0],
+    "guard-for-in": [0],
+    "arrow-body-style": [0],
+    "no-restricted-syntax": [0],
+    "no-unused-vars": [1],
+    "no-loop-func": [0],
+    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "object-shorthand": [0]
   },
   "parser": "babel-eslint"
 }

@@ -5,5 +5,6 @@ export default async function fetchRedash(query, options = {}) {
   assert.ok(process.env.REDASH_API_KEY, 'process.env.REDASH_API_KEY missing');
   options.headers = options.headers || {};
   options.headers.Authorization = `Key ${process.env.REDASH_API_KEY}`;
+  options.ttl = 'day';
   return await fetchJson(`https://sql.telemetry.mozilla.org/api/queries/${query}/results.json`, options);
 }

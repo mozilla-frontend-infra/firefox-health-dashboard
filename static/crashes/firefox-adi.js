@@ -8,29 +8,33 @@ export default class FirefoxAdiCrashes extends React.Component {
   state = {
     data: null,
     markers: null,
-    baselines: null
+    baselines: null,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.fetch();
+  }
+
+  async fetch() {
     const crashes = await (await fetch('/api/crashes/adi')).json();
     const data = MG.convert.date(crashes, 'date');
-    const releases = await (await fetch('/api/release/history')).json();
+    const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
     const markers = releases.map((entry) => {
       return {
         date: new Date(entry.date),
-        label: entry.version
+        label: entry.version.full,
       };
     });
     markers.push({
       date: new Date('2016-01-17'),
-      label: 'Baseline'
+      label: 'Baseline',
     });
     const baselines = [
       { value: 1.08, label: '1.08' },
-      { value: 0.75, label: '0.75' }
+      { value: 0.75, label: '0.75' },
     ];
     this.setState({
-      data, markers, baselines
+      data, markers, baselines,
     });
   }
 
@@ -40,10 +44,10 @@ export default class FirefoxAdiCrashes extends React.Component {
         {...this.state}
         x_accessor='date'
         y_accessor='combined_crash_rate'
-        min_y='0.7'
+        min_y='0.5'
         max_y='1.5'
         title='Firefox - Crashes per 100 ADI'
       />
     );
   }
-};
+}
