@@ -92,9 +92,6 @@ export default {
     new ExtractTextPlugin(cssFilename, {
       allChunks: true,
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-    }),
   ],
   devServer: {
     port: 3000,

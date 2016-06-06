@@ -40,13 +40,10 @@ h2 {
   align-items: center;
 }
 .state-loading {
-  animation: appear 0.2s ease-out;
+  animation: appear 1s ease-out;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.state-loaded {
-  animation: appear 0.2s ease-out;
 }
 
 svg line {
@@ -79,9 +76,19 @@ svg path {
   margin: 4rem 1rem;
 }
 
+.axis-rate {
+  line {
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-dasharray: 1, 2;
+  }
+  text {
+    stroke: rgba(255, 255, 255, 1);
+  }
+}
+
 .release {
   .release-tick, .release-today {
-    stroke: rgba(255, 255, 255, 1);
+    stroke: rgba(255, 255, 255, 0.7);
   }
   .release-label {
     opacity: 1;

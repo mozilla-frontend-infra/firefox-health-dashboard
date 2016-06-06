@@ -246,7 +246,7 @@ router
       })
     );
 
-    const signatureMap = crashIndex.map((data, idx) => {
+    const signatureMap = crashIndex.map((data) => {
       return data.facets.signature.map((signature) => signature.term);
     });
     const signatureIds = uniq(flatten(signatureMap));
@@ -257,7 +257,7 @@ router
       }, {
         endpoint: 'Bugs',
       });
-    }))).map((result, i) => {
+    }))).map((result) => {
       return result.hits
         // .filter((hit) => hit.signature === signatureIds[i])
         .map((hit) => hit.id);

@@ -52,7 +52,7 @@ export default class FirefoxBeta extends React.Component {
     });
   }
 
-  renderRelease({ release, start, idx, crashes }) {
+  renderRelease({ release, start, yScale, idx, crashes }) {
     const { center } = this;
     let { split, width } = this;
     let x = width * (center - split * idx);
@@ -65,10 +65,6 @@ export default class FirefoxBeta extends React.Component {
     const xScale = d3.time.scale()
       .domain(dateRange)
       .range([-split * width, 0])
-      .clamp(true);
-    const yScale = d3.scale.linear()
-      .domain(this.rateRange)
-      .range([this.height - 30, 100])
       .clamp(true);
     const path = d3.svg.line()
 			.x((d) => xScale(d.date))
@@ -234,6 +230,38 @@ export default class FirefoxBeta extends React.Component {
       );
     }
 
+    const yScale = d3.scale.linear()
+      .domain(this.rateRange)
+      .range([this.height - 30, 100])
+      .clamp(true);
+
+    const axis = [];
+    for (let i = this.rateRange[0] + 1; i < this.rateRange[1]; i++) {
+      const y = yScale(i);
+      axis.push(
+        <g
+          className='axis-rate'
+          style={{
+            transform: `translateY(${y}px)`,
+          }}
+        >
+          <line
+            x0={0}
+            y0={0}
+            x1={this.width}
+            y1={0}
+          />
+          <text
+            x={5}
+            y={5}
+            textAnchor='start'
+          >
+            {i}
+          </text>
+        </g>
+      );
+    }
+
     const releases = history.slice(0, 3).map((release, idx) => {
       return this.renderRelease({
         release,
@@ -243,6 +271,7 @@ export default class FirefoxBeta extends React.Component {
           matches({ version: release.version.full })
         ),
         start: history[idx + 1].date,
+        yScale,
       });
     });
     releases.push(
@@ -254,6 +283,7 @@ export default class FirefoxBeta extends React.Component {
           matches({ version: planned.version })
         ),
         start: history[0].date,
+        yScale,
       })
     );
     return (
@@ -268,6 +298,7 @@ export default class FirefoxBeta extends React.Component {
             height={this.height}
             width={this.width}
           >
+            {axis}
             {releases}
           </svg>
         </div>
