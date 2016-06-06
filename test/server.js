@@ -83,13 +83,15 @@ describe('/crashes', () => {
         .expect(200, done);
     });
   });
-  describe('GET /crashes/beta/builds', () => {
-    it('should return 200', (done) => {
-      request()
-        .get('/api/crashes/beta/builds')
-        .expect(200, done);
+  if (process.env.REDASH_API_KEY) {
+    describe('GET /crashes/beta/builds', () => {
+      it('should return 200', (done) => {
+        request()
+          .get('/api/crashes/beta/builds')
+          .expect(200, done);
+      });
     });
-  });
+  }
   if (process.env.CRASH_STATS_TOKEN) {
     describe('GET /crashes/urls', () => {
       it('should return 200', (done) => {
