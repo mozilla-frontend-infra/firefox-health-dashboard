@@ -1,6 +1,7 @@
 import moment from 'moment';
 import ical from 'ical';
 import fetchText from '../fetch/text';
+import { parse } from '../meta/version';
 
 export default async function getCalendar({
   channel = 'release',
@@ -10,7 +11,7 @@ export default async function getCalendar({
   const parsed = ical.parseICS(ics);
   const dates = Object.keys(parsed).reduce((data, key) => {
     const entry = parsed[key];
-    if (moment().diff(entry.start, 'days') > 7) {
+    if (moment().diff(entry.start, 'days') >= 0) {
       return data;
     }
     const summary = entry.summary.match(/Firefox\s+(ESR)?\s*([\d.]+)\s+Release/);
@@ -21,12 +22,9 @@ export default async function getCalendar({
     if (channel && ch !== channel) {
       return data;
     }
-    let version = summary[2];
-    if (!/\./.test(version)) {
-      version += '.0';
-    }
+    const { clean } = parse(summary[2]);
     data.push({
-      version: version,
+      version: clean,
       channel: ch,
       date: moment(entry.start).format('YYYY-MM-DD'),
     });

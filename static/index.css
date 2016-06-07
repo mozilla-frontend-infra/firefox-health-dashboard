@@ -95,7 +95,8 @@ svg path {
     font-size: 2.8rem;
   }
   .release-date {
-    opacity: 0.5;
+    opacity: 0.8;
+    font-weight: lighter;
   }
   .release-line {
     stroke-width: 2;
@@ -114,7 +115,7 @@ svg path {
     }
     .candidate-label {
       opacity: 0.8;
-      font-size: 1rem;
+      font-weight: lighter;
     }
     .candidate-rate {
       opacity: 0.35;

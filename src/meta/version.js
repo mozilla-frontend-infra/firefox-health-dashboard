@@ -9,8 +9,16 @@ const invalid = {
   isMajor: false,
 };
 
+export function sanitize(version) {
+  if (/^\d+$/.test(version)) {
+    return `${version}.0`;
+  }
+  return version;
+}
+
 export function parse(input) {
-  const bits = input.match(/^(\d+)\.(\d+)(?:\.(\d+)|\.(\d+)(esr)|(a|b)(\d*))?$/);
+  const bits = sanitize(input)
+    .match(/^(\d+)\.(\d+)(?:\.(\d+)|\.(\d+)(esr)|(a|b)(\d*))?$/);
   if (!bits) {
     return invalid;
   }
@@ -21,7 +29,7 @@ export function parse(input) {
   if (channel === 'release' && +bits[2]) {
     channel = 'esr';
   }
-  return {
+  const result = {
     full: input,
     major: +bits[1],
     minor: +bits[2] || 0,
@@ -30,6 +38,17 @@ export function parse(input) {
     candidate: +bits[7] || 0,
     isMajor: channel === 'release' && !+bits[3],
   };
+  const clean = [result.major, '.', result.minor];
+  if (channel === 'beta') {
+    clean.push('b', result.candidate);
+  } else if (result.patch) {
+    clean.push('.', result.patch);
+    if (channel === 'esr') {
+      clean.push('esr');
+    }
+  }
+  result.clean = clean.join('');
+  return result;
 }
 
 // export function sort(a, b) {

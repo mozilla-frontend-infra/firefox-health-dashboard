@@ -20,7 +20,7 @@ export default class FirefoxBeta extends React.Component {
   colorScale = d3.scale.category20();
   center = 0.62;
   full = 0.38;
-  split = 0.62 / 3;
+  split = 0.62 / 4;
   target = `graphic-${((Math.random() * 10000) | 0)}`;
 
   async fetch() {
@@ -31,17 +31,22 @@ export default class FirefoxBeta extends React.Component {
         }
       });
     }
-    const crashes = await (await fetch('/api/crashes/beta/builds')).json();
+    const raw = await Promise.all([
+      fetch('/api/crashes/beta/builds'),
+      fetch('/api/release/history?tailVersion=6&major=1'),
+      fetch('/api/release/calendar'),
+    ]);
+    const [crashes, history, calendar] = await Promise.all(
+      raw.map((buffer) => buffer.json())
+    );
     fixDate(crashes);
     fixDate(crashes, 'release');
     fixDate(crashes, 'startDate');
     crashes.forEach(({ dates }) => {
       fixDate(dates);
     });
-    const history = await (await fetch('/api/release/history?tailVersion=6')).json();
     fixDate(history);
     history.reverse();
-    const calendar = await (await fetch('/api/release/calendar')).json();
     fixDate(calendar);
     const planned = calendar[0];
     this.setState({
@@ -139,9 +144,9 @@ export default class FirefoxBeta extends React.Component {
           className='release-date'
           textAnchor='end'
           y={this.height - 5}
-          x={-5}
+          x={-7}
         >
-          {moment(release.date).format('MMM Do')}
+          {moment(release.date).format('MMM D')}
         </text>
         {candidates}
         <path
@@ -262,7 +267,7 @@ export default class FirefoxBeta extends React.Component {
       );
     }
 
-    const releases = history.slice(0, 3).map((release, idx) => {
+    const releases = history.slice(0, 4).map((release, idx) => {
       return this.renderRelease({
         release,
         idx,

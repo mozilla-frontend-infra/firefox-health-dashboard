@@ -81,6 +81,10 @@ export default {
         NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
       },
     }),
+    new webpack.ProvidePlugin({
+      // Promise: 'es6-promise',
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    }),
     new HtmlWebpackPlugin({
       template: path.join(srcDir, 'index.html'),
       inject: true,
