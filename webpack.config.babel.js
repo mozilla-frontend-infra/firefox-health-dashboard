@@ -22,6 +22,7 @@ export default {
   context: srcDir,
   entry: {
     app: './index.js',
+    vendor: ['d3', 'moment', 'react'],
   },
   devtool: '#source-map',
   output: {
@@ -91,6 +92,9 @@ export default {
     }),
     new ExtractTextPlugin(cssFilename, {
       allChunks: true,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor'],
     }),
   ],
   devServer: {
