@@ -163,18 +163,24 @@ router
         };
         lookup.push(result);
       }
-      result.dates.push({
-        date: row.activity_date,
-        rate: row.main_crash_rate,
-      });
+      if (row.main_crash_rate < 10 && row.main_crash_rate > 2.5) {
+        result.dates.push({
+          date: row.activity_date,
+          rate: row.main_crash_rate,
+        });
+      }
       return lookup;
     }, []);
     results.forEach((result) => {
-      result.dates = sortBy(result.dates, 'date', (a) => Date.parse(a)).slice(0, 14);
+      result.dates = sortBy(
+        result.dates,
+        'date',
+        (a) => Date.parse(a)
+      ).slice(0, 14);
       const rates = result.dates
-        .slice(3)
+        .slice(4)
         .map(({ rate }) => rate);
-      if (rates.length > 2) {
+      if (rates.length > 1) {
         result.rate = median(rates) || 0;
         result.variance = standardDeviation(rates) || 0;
       }

@@ -110,7 +110,8 @@ export default class FirefoxBeta extends React.Component {
         };
       })
       .filter(({ rate }) => rate > 0);
-    const color = this.colorScale(idx);
+    const version = +(release.version.major || release.version);
+    const color = this.colorScale(version - 43);
     return (
       <g
         key={`release-${idx}`}
@@ -132,7 +133,7 @@ export default class FirefoxBeta extends React.Component {
           x={-split * width / 2}
           y={50}
         >
-          {parseInt(release.version.major || release.version, 10)}
+          {version}
         </text>
         <text
           className='release-date'
