@@ -15,16 +15,67 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 const srcDir = path.resolve(__dirname, 'static');
 const distDir = path.resolve(__dirname, 'dist');
 const isProd = process.argv.indexOf('-p') !== -1;
-const jsFilename = isProd ? '[name].[chunkhash:6].js' : '[name].js';
+const jsFilename = isProd ? '[name].[hash:6].js' : '[name].js';
 const cssFilename = isProd ? '[name].[chunkhash:6].css' : '[name].css';
+
+const entryBase = isProd ? [] : ['webpack-hot-middleware/client?reload=true'];
+
+const plugins = [
+  new webpack.optimize.OccurenceOrderPlugin(),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
+    },
+  }),
+  new webpack.ProvidePlugin({
+    Promise: 'exports?global.Promise!es6-promise',
+    fetch: 'exports?self.fetch!whatwg-fetch',
+  }),
+  new HtmlWebpackPlugin({
+    template: path.join(srcDir, 'index.html'),
+    inject: true,
+    favicon: path.join(srcDir, 'icons', 'favicon.ico'),
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+    },
+  }),
+  new webpack.optimize.CommonsChunkPlugin({
+    names: ['vendor'],
+  }),
+];
+
+// ExtractTextPlugin does not work with hot reload
+const cssLoader = isProd ? ExtractTextPlugin.extract(
+  'style',
+  'css!postcss'
+) : 'style!css!postcss';
+
+if (isProd) {
+  plugins.push(new ExtractTextPlugin(cssFilename, {
+    allChunks: true,
+  }));
+}
 
 export default {
   context: srcDir,
   entry: {
-    app: './index.js',
-    vendor: ['d3', 'moment', 'react'],
+    app: entryBase.concat([
+      './index.js',
+    ]),
+    vendor: entryBase.concat([
+      'd3',
+      'moment',
+      'react',
+      'react-dom',
+      'react-router',
+      'metrics-graphics',
+      'classnames',
+      'babel-polyfill',
+    ]),
   },
-  devtool: '#source-map',
+  devtool: isProd ? '#source-map' : '#cheap-source-map',
   output: {
     path: distDir,
     filename: jsFilename,
@@ -47,10 +98,7 @@ export default {
       }, {
         test: /\.css$/,
         include: srcDir,
-        loader: ExtractTextPlugin.extract(
-          'style',
-          'css!postcss'
-        ),
+        loader: cssLoader,
       }, {
         test: /manifest.json$/,
         loader: 'file?name=manifest.json!web-app-manifest',
@@ -75,32 +123,7 @@ export default {
       throwError: true,
     }),
   ],
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
-      },
-    }),
-    new webpack.ProvidePlugin({
-      // Promise: 'es6-promise',
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(srcDir, 'index.html'),
-      inject: true,
-      favicon: path.join(srcDir, 'icons', 'favicon.ico'),
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-      },
-    }),
-    new ExtractTextPlugin(cssFilename, {
-      allChunks: true,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-    }),
-  ],
+  plugins: plugins,
   devServer: {
     port: 3000,
     noInfo: true,

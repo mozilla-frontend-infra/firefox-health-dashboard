@@ -7,7 +7,8 @@ import responseTime from 'koa-response-time';
 import Router from 'koa-router';
 import cors from 'koa-cors';
 import staticCache from 'koa-static-cache';
-import webpackMiddleware from 'koa-webpack-dev-middleware';
+import webpackDevMiddleware from 'koa-webpack-dev-middleware';
+import webpackHotMiddleware from 'koa-webpack-hot-middleware';
 import webpack from 'webpack';
 import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
@@ -20,7 +21,7 @@ app.use(responseTime());
 app.use(cors());
 
 const api = new Router();
-api.get('/version', (ctx, next) => {
+api.get('/version', (ctx) => {
   ctx.body = {
     version: version,
     source: process.env.SOURCE_VERSION || '',
@@ -54,13 +55,18 @@ if (process.env.NODE_ENV !== 'test') {
       maxAge: 24 * 60 * 60,
     }));
   } else {
-    app.use(webpackMiddleware(webpack(webpackConfig), {
+    const compiler = webpack(webpackConfig);
+    app.use(webpackDevMiddleware(compiler, {
+      publicPath: webpackConfig.output.publicPath,
       noInfo: true,
+      hot: true,
+      historyApiFallback: true,
     }));
+    app.use(webpackHotMiddleware(compiler));
   }
 
   const server = http.createServer(app.callback());
-  server.on('listening', (evt) => {
+  server.on('listening', () => {
     const { address, port } = server.address();
     console.log('http://%s:%d/ in %s', address, port, process.env.NODE_ENV || 'dev');
   });

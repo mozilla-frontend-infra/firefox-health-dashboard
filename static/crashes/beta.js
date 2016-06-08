@@ -99,9 +99,9 @@ export default class FirefoxBeta extends React.Component {
         >
           <line
             x1={0}
-            y1={100}
+            y1={40}
             x2={0}
-            y2={this.height - 30}
+            y2={60}
           />
         </g>
       );
@@ -134,14 +134,16 @@ export default class FirefoxBeta extends React.Component {
         />
         <text
           className='release-label'
+          key='release-label'
           textAnchor='middle'
           x={-split * width / 2}
-          y={50}
+          y={40}
         >
           {version}
         </text>
         <text
           className='release-date'
+          key='release-date'
           textAnchor='end'
           y={this.height - 5}
           x={-7}
@@ -151,11 +153,13 @@ export default class FirefoxBeta extends React.Component {
         {candidates}
         <path
           className='release-line'
+          key='release-line'
           stroke={color}
           d={path(avgs)}
         />
         <path
           className='release-area'
+          key='release-area'
           fill={color}
           d={area(avgs)}
         />
@@ -186,6 +190,7 @@ export default class FirefoxBeta extends React.Component {
           />
           <line
             className='candidate-tick'
+            key='candidate-tick-high'
             x1={0}
             y1={105}
             x2={0}
@@ -194,6 +199,7 @@ export default class FirefoxBeta extends React.Component {
           />
           <line
             className='candidate-tick'
+            key='candidate-tick-low'
             x1={0}
             y1={this.height - 40}
             x2={0}
@@ -211,6 +217,7 @@ export default class FirefoxBeta extends React.Component {
         </g>
         <path
           className='candidate-rate'
+          key='candidate-rate'
           stroke={color}
           d={path(release.dates)}
         />
