@@ -12,7 +12,8 @@
     "no-confusing-arrow": ["error", { "allowParens": true }],
     "object-shorthand": [0],
     "camelcase": [0],
-    "global-require": [0]
+    "global-require": [0],
+    "react/prefer-stateless-function": [0]
   },
   "parser": "babel-eslint"
 }

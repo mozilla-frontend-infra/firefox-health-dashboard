@@ -59,7 +59,13 @@ export async function getHistory({
     const tail = maxBy(results, 'version.major').version.major - tailVersion;
     results = filter(results, ({ version }) => version.major > tail);
   }
-  results = sortBy(results, 'date', (a) => Date.parse(a));
+  results = sortBy(results, 'date', (a) => Date.parse(a))
+    .map(({ version, date }) => {
+      return {
+        version: version.clean,
+        date: date,
+      };
+    });
   return results;
 }
 

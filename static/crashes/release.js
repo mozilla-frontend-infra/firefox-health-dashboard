@@ -3,13 +3,20 @@ import React from 'react';
 import FirefoxAdiCrashes from './firefox-adi';
 import FennecAdiCrashes from './fennec-adi';
 import FirefoxUtCrashes from './firefox-ut';
+import Dashboard from '../dashboard';
 
-const Crashes = () => (
-  <div className='dashboard'>
-    <FirefoxAdiCrashes />
-    <FennecAdiCrashes />
-    <FirefoxUtCrashes />
-  </div>
-);
-
-export default Crashes;
+export default class Crashes extends React.Component {
+  render() {
+    return (
+      <Dashboard
+        title='ADI & Telemetry Crash Rate'
+        subtitle='Firefox Release'
+        className='crashes-release'
+      >
+        <FirefoxAdiCrashes />
+        <FennecAdiCrashes />
+        <FirefoxUtCrashes />
+      </Dashboard>
+    );
+  }
+}

@@ -1,7 +1,10 @@
 @import "css/colors.css";
+@import "css/rhythm.css";
 @import "metrics-graphics/dist/metricsgraphics.css";
 
-
+* {
+	box-sizing: border-box;
+}
 html, body {
   margin: 0;
   padding: 0;
@@ -9,41 +12,86 @@ html, body {
   height: 100%;
 }
 body {
-  display: flex;
-  justify-content: center;
-  font: 16px/23px 'Open Sans', sans-serif;
+  font-family: $baseFontFamily;
+  @extend base-rhythm;
+  -webkit-text-size-adjust: 100%;
   color: #fff;
   background-color: #000;
+  display: flex;
+  justify-content: center;
   align-content: stretch;
 }
-
-h2 {
-  font-size: 2.8rem;
-  font-weight: 400;
-  flex: 1;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  flex: 1;
+a {
+  color: $mobileBlue;
+  text-decoration: none;
 }
 
-#root, .dashboard {
+#root {
   display: flex;
   flex: 1;
-  align-content: stretch;
   flex-direction: column;
+}
+.dashboard {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.dashboard-title {
+  text-align: left;
+  padding: 0 $gutterX;
+  h1 {
+    @extend h4;
+    font-weight: 700;
+    small {
+      padding-left: $gutterX;
+      display: inline-block;
+      @extend h4;
+      color: $lightGray;
+      font-weight: 400;
+    }
+  }
+}
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.state-loading .dashboard-main,
+section.state-loading {
+  animation: appear 1s ease-in-out;
+  @extend h3;
+  font-weight: 700;
+}
+.home .dashboard-main {
+  align-items: center;
+  justify-content: center;
+}
+.home .dashboard-main a {
+  @extend h2;
+}
+
+.row {
+	flex: 1;
+  display: flex;
+	padding: calc($gutterY) $gutterX;
+}
+.row header {
+	width: calc(2 * $gutterY);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.row header span {
+	transform-origin: center;
+	white-space: nowrap;
+	font-size: $h5FontSize;
+	transform: rotateZ(-90deg);
 }
 .graphic {
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-.state-loading {
-  animation: appear 1s ease-out;
-  display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 svg line {
@@ -55,12 +103,13 @@ svg text {
 svg path {
 }
 
-.mg-header, .graphic.state-loading {
+.mg-header,
+.graphic.state-loading {
   opacity: 1;
   color: $lightGray;
   fill: $lightGray;
   font-weight: lighter;
-  font-size: 1.4rem;
+  @extend h3;
 }
 .mg-main-line {
   stroke-width: 2 !important;
@@ -70,10 +119,6 @@ svg path {
 }
 .mg-area1-color {
   fill: $flameYellowVibrant;
-}
-
-.crashes-beta {
-  margin: 4rem 1rem;
 }
 
 .axis-rate {
@@ -86,14 +131,79 @@ svg path {
   }
 }
 
+svg {
+  height: 100%;
+  width: 100%;
+}
+.graphic-details, .graphic-timeline {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.graphic-timeline {
+	height: 62vh;
+}
+.graphic-details {
+	flex: 1;
+}
+
+.graphic-scores {
+	display: flex;
+	align-items: center;
+}
+
+.scores {
+  display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.score {
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+	text-align: center;
+	.score-label {
+		text-transform: uppercase;
+    color: $darkGray;
+    display: inline-block;
+	}
+  .score-main {
+		font-size: $h2FontSize;
+		line-height: $h1LineHeight;
+    color: $lightGray;
+    font-weight: 400;
+  }
+  .score-extra {
+    font-weight: 300;
+    font-size: $h3FontSize;
+		line-height: $h1LineHeight;
+    color: $darkGray;
+    display: inline-block;
+    padding-left: calc($gutterX / 2);
+  }
+}
+.state-highlight {
+	.score-main {
+		color: #fff;
+		font-size: $h1FontSize;
+	}
+}
+
 .release {
   .release-tick, .release-today {
     stroke: rgba(255, 255, 255, 0.7);
   }
   .release-label {
     opacity: 1;
-    font-size: 2.8rem;
+    font-size: $h2FontSize;
+		fill: $lightGray;
   }
+	&.state-current {
+		.release-label {
+			fill: #fff;
+		}
+	}
   .release-date {
     opacity: 0.8;
     font-weight: lighter;
@@ -111,8 +221,9 @@ svg path {
     opacity: 0.5;
   }
   .candidate {
-    .candidate-marker {
-    }
+    .candidate-hours {
+			opacity: 0.35;
+		}
     .candidate-label {
       opacity: 0.8;
       font-weight: lighter;
@@ -135,16 +246,21 @@ svg path {
 .mg-y-axis text,
 .mg-baselines text,
 .mg-markers text,
-.mg-histogram .axis text {
-  fill: $lightGray;
+.mg-histogram .axis text,
+.mg-active-datapoint {
+  fill: #fff;
   opacity: 1;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
+}
+
+.mg-barplot rect.mg-bar {
+	fill: $dinoRed;
 }
 
 @keyframes appear {
   0% {
-    opacity: 0.2;
+    opacity: 0.1;
   }
   100% {
     opacity: 1;

@@ -17,8 +17,12 @@ const distDir = path.resolve(__dirname, 'dist');
 const isProd = process.argv.indexOf('-p') !== -1;
 const jsFilename = isProd ? '[name].[hash:6].js' : '[name].js';
 const cssFilename = isProd ? '[name].[chunkhash:6].css' : '[name].css';
-
-const entryBase = isProd ? [] : ['webpack-hot-middleware/client?reload=true'];
+const entryBase = isProd
+  ? []
+  : [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client?reload=true',
+  ];
 
 const plugins = [
   new webpack.optimize.OccurenceOrderPlugin(),

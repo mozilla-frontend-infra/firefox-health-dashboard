@@ -3,25 +3,32 @@ import 'babel-polyfill';
 import React from 'react';
 import d3 from 'd3';
 import moment from 'moment';
-import filter from 'lodash/filter';
-import matches from 'lodash/matches';
+import cx from 'classnames';
+import find from 'lodash/find';
+import findLast from 'lodash/findLast';
+import sumBy from 'lodash/sumBy';
+import Dashboard from '../dashboard';
 
+const rateRange = [2, 8];
+const colorScale = d3.scale.category10();
+const center = 0.62;
+const full = 0.38;
+const split = 0.62 / 4;
 
 export default class FirefoxBeta extends React.Component {
   state = {};
 
   componentDidMount() {
     this.fetch();
-    this.height = document.getElementById(this.target).offsetHeight;
-    this.width = document.getElementById(this.target).offsetWidth;
+    if (this.target) {
+      const rect = this.target.getBoundingClientRect();
+      this.width = rect.width;
+      this.height = rect.height;
+    }
   }
 
-  rateRange = [2, 8];
-  colorScale = d3.scale.category20();
-  center = 0.62;
-  full = 0.38;
-  split = 0.62 / 4;
-  target = `graphic-${((Math.random() * 10000) | 0)}`;
+  height = 0;
+  width = 0;
 
   async fetch() {
     function fixDate(list, field = 'date') {
@@ -31,6 +38,7 @@ export default class FirefoxBeta extends React.Component {
         }
       });
     }
+    // parallel
     const raw = await Promise.all([
       fetch('/api/crashes/beta/builds'),
       fetch('/api/release/history?tailVersion=6&major=1'),
@@ -39,11 +47,11 @@ export default class FirefoxBeta extends React.Component {
     const [crashes, history, calendar] = await Promise.all(
       raw.map((buffer) => buffer.json())
     );
-    fixDate(crashes);
-    fixDate(crashes, 'release');
-    fixDate(crashes, 'startDate');
-    crashes.forEach(({ dates }) => {
-      fixDate(dates);
+    crashes.forEach(({ builds }) => {
+      fixDate(builds, 'release');
+      fixDate(builds, 'date');
+      fixDate(builds, 'startDate');
+      builds.forEach(({ dates }) => fixDate(dates));
     });
     fixDate(history);
     history.reverse();
@@ -57,19 +65,28 @@ export default class FirefoxBeta extends React.Component {
   }
 
   renderRelease({ release, start, yScale, idx, crashes }) {
-    const { center } = this;
-    let { split, width } = this;
-    let x = width * (center - split * idx);
-    if (idx === -1) {
+    const builds = crashes ? crashes.builds : [];
+    let { width } = this;
+    let ratio = split;
+    let x = width * (center - ratio * idx);
+    const current = idx === -1;
+    if (current) {
       width -= 2;
-      split = this.full;
+      ratio = full;
       x = width - 2;
     }
+    const hoursRange = [0, sumBy(builds, 'hours')];
     const dateRange = [start, release.date];
     const xScale = d3.time.scale()
       .domain(dateRange)
-      .range([-split * width, 0])
-      .clamp(true);
+      .range([-ratio * width, 0]);
+    const lastDayX = Math.min(
+      xScale(builds.slice(-1)[0].dates.slice(-1)[0].date),
+      0
+    );
+    const hoursScale = d3.time.scale()
+      .domain(hoursRange)
+      .range([-ratio * width, lastDayX]);
     const path = d3.svg.line()
 			.x((d) => xScale(d.date))
 			.y((d) => yScale(d.rate))
@@ -79,16 +96,22 @@ export default class FirefoxBeta extends React.Component {
 			.y0((d) => yScale(d.rate - d.variance))
       .y1((d) => yScale(d.rate + d.variance))
       .interpolate('monotone');
-    const candidates = crashes.map((candidate, cidx) => {
+    let hoursX = 0;
+    const candidates = builds.map((candidate, cidx) => {
+      if (candidate.hours) {
+        hoursX += candidate.hours;
+      }
       return this.renderCandidate({
         release: candidate,
         idx: cidx,
         xScale,
         yScale,
+        hoursScale,
+        hoursX,
         path,
       });
     });
-    if (idx === -1) {
+    if (current) {
       candidates.push(
         <g
           key='release-today'
@@ -99,14 +122,14 @@ export default class FirefoxBeta extends React.Component {
         >
           <line
             x1={0}
-            y1={40}
+            y1={45}
             x2={0}
-            y2={60}
+            y2={75}
           />
         </g>
       );
     }
-    const avgs = crashes
+    const avgs = builds
       .map((entry) => {
         return {
           rate: entry.rate,
@@ -115,12 +138,15 @@ export default class FirefoxBeta extends React.Component {
         };
       })
       .filter(({ rate }) => rate > 0);
-    const version = +(release.version.major || release.version);
-    const color = this.colorScale(version - 43);
+    const version = +(release.version);
+    const color = colorScale(version);
+    const cls = cx('release', {
+      'state-current': current,
+    });
     return (
       <g
         key={`release-${idx}`}
-        className='release'
+        className={cls}
         style={{
           transform: `translateX(${x}px)`,
         }}
@@ -136,7 +162,7 @@ export default class FirefoxBeta extends React.Component {
           className='release-label'
           key='release-label'
           textAnchor='middle'
-          x={-split * width / 2}
+          x={-ratio * width / 2}
           y={40}
         >
           {version}
@@ -167,10 +193,21 @@ export default class FirefoxBeta extends React.Component {
     );
   }
 
-  renderCandidate({ release, xScale, yScale, path, idx }) {
-    const color = this.colorScale(idx);
+  renderCandidate({
+    release,
+    xScale,
+    yScale,
+    hoursScale,
+    hoursX,
+    path,
+    idx,
+  }) {
+    const color = colorScale(idx);
     const start = release.release || release.date;
     const rate = yScale(release.rate);
+    const title = `${(release.hours / 1000).toFixed(1)}m usage hours`;
+    const hoursStart = hoursScale(hoursX - (release.hours || 0));
+    const hourWidth = hoursScale(hoursX) - hoursStart;
     return (
       <g
         key={`candidate-${release.build}`}
@@ -181,12 +218,13 @@ export default class FirefoxBeta extends React.Component {
             transform: `translateX(${xScale(start)}px)`,
           }}
         >
-          <circle
+          <line
             className='candidate-marker'
-            cx={0}
-            cy={rate || 100}
-            r={3}
-            fill={color}
+            x1={0}
+            y1={(rate || 100) - 5}
+            x2={0}
+            y2={(rate || 100) + 5}
+            stroke={color}
           />
           <line
             className='candidate-tick'
@@ -197,15 +235,6 @@ export default class FirefoxBeta extends React.Component {
             y2={95}
             stroke={color}
           />
-          <line
-            className='candidate-tick'
-            key='candidate-tick-low'
-            x1={0}
-            y1={this.height - 40}
-            x2={0}
-            y2={this.height - 30}
-            stroke={color}
-          />
           <text
             className='candidate-label'
             textAnchor='middle'
@@ -214,7 +243,19 @@ export default class FirefoxBeta extends React.Component {
           >
             {release.candidate || '?'}
           </text>
+          <title>
+            {title}
+          </title>
         </g>
+        <rect
+          className='candidate-hours'
+          key='candidate-hours'
+          x={hoursStart}
+          y={this.height - 40}
+          width={hourWidth}
+          height={7}
+          fill={color}
+        />
         <path
           className='candidate-rate'
           key='candidate-rate'
@@ -227,94 +268,159 @@ export default class FirefoxBeta extends React.Component {
 
   render() {
     const { crashes, history, planned } = this.state;
-    if (!crashes) {
-      return (
-        <div
-          className='dashboard crashes-beta'
-        >
-          <div
-            id={this.target}
-            className='graphic state-loading'
+    let svg = null;
+    let details = null;
+
+    if (crashes) {
+      const yScale = d3.scale.linear()
+        .domain(rateRange)
+        .range([this.height - 30, 100])
+        .clamp(true);
+
+      const axis = [];
+      for (let i = rateRange[0] + 1; i < rateRange[1]; i++) {
+        const y = yScale(i);
+        axis.push(
+          <g
+            key={`axis-rate-${i}`}
+            className='axis-rate'
+            style={{
+              transform: `translateY(${y}px)`,
+            }}
           >
-            <strong>Loading …</strong>
-          </div>
-        </div>
+            <line
+              x0={0}
+              y0={0}
+              x1={this.width}
+              y1={0}
+            />
+            <text
+              x={5}
+              y={5}
+              textAnchor='start'
+            >
+              {i}
+            </text>
+          </g>
+        );
+      }
+
+      const nextCrashes = find(
+        crashes,
+        { version: planned.version }
       );
-    }
+      const timeline = nextCrashes
+        ? [planned].push(history.slice(0, 4))
+        : history.slice(0, 5);
 
-    const yScale = d3.scale.linear()
-      .domain(this.rateRange)
-      .range([this.height - 30, 100])
-      .clamp(true);
-
-    const axis = [];
-    for (let i = this.rateRange[0] + 1; i < this.rateRange[1]; i++) {
-      const y = yScale(i);
-      axis.push(
-        <g
-          className='axis-rate'
-          style={{
-            transform: `translateY(${y}px)`,
-          }}
-        >
-          <line
-            x0={0}
-            y0={0}
-            x1={this.width}
-            y1={0}
-          />
-          <text
-            x={5}
-            y={5}
-            textAnchor='start'
-          >
-            {i}
-          </text>
-        </g>
-      );
-    }
-
-    const releases = history.slice(0, 4).map((release, idx) => {
-      return this.renderRelease({
-        release,
-        idx,
-        crashes: filter(
-          crashes,
-          matches({ version: release.version.full })
-        ),
-        start: history[idx + 1].date,
-        yScale,
+      const releases = timeline.map((release, idx) => {
+        return this.renderRelease({
+          release,
+          idx: idx - 1,
+          crashes: find(
+            crashes,
+            {
+              version: release.version,
+            }
+          ),
+          start: history[idx + 1].date,
+          yScale,
+        });
       });
-    });
-    releases.push(
-      this.renderRelease({
-        release: planned,
-        idx: -1,
-        crashes: filter(
-          crashes,
-          matches({ version: planned.version })
-        ),
-        start: history[0].date,
-        yScale,
-      })
-    );
-    return (
-      <div
-        className='dashboard crashes-beta'
-      >
-        <div
-          id={this.target}
-          className='graphic state-loaded'
-        >
-          <svg
-            height={this.height}
-            width={this.width}
+
+      details = timeline.map(({ version }, idx) => {
+        let scores = [];
+        const entry = find(crashes, { version: version });
+        if (entry && entry.rate) {
+          scores.push(
+            <div
+              className='score'
+              key='score-avg'
+            >
+              <span className='score-label'>
+                Avg per Build
+              </span>
+              <span className='score-main'>
+                {entry.rate.toFixed(1)}
+                <span className='score-extra'>
+                  ±{entry.variance.toFixed(1)}
+                </span>
+              </span>
+            </div>
+          );
+          if (!idx) {
+            const crash = find(crashes, { version: entry.version });
+            const last = findLast(crash.builds, ({ rate }) => rate);
+            scores.push(
+              <div
+                className='score'
+                key='score-last'
+              >
+                <span className='score-label'>
+                  Beta {last.candidate}
+                </span>
+                <span className='score-main'>
+                  {last.rate.toFixed(1)}
+                  <span className='score-extra'>
+                    ±{last.variance.toFixed(1)}
+                  </span>
+                </span>
+              </div>
+            );
+          }
+        }
+        const cls = cx('scores', {
+          'state-highlight': !idx,
+          'state-empty': !scores.length,
+        });
+        return (
+          <div
+            key={`score-${idx}`}
+            className={cls}
+            style={{
+              width: `${(idx ? split : full) * 100}%`,
+            }}
           >
-            {axis}
-            {releases}
-          </svg>
-        </div>
-      </div>
+            {scores}
+          </div>
+        );
+      }).reverse();
+
+      svg = (
+        <svg
+          height={this.height}
+          width={this.width}
+        >
+          {axis}
+          {releases}
+        </svg>
+      );
+    } else {
+      svg = 'Loading …';
+    }
+
+    const cls = cx('graphic-timeline', {
+      'state-loading': !crashes,
+    });
+
+    return (
+      <Dashboard
+        title='Telemetry Crash Rate'
+        subtitle='Firefox Beta'
+        className='crashes-beta'
+      >
+        <section
+          className={cls}
+          ref={(target) => (this.target = target)}
+        >
+          {svg}
+        </section>
+        <section
+          className='graphic-details'
+        >
+          {details}
+        </section>
+      </Dashboard>
     );
   }
 }

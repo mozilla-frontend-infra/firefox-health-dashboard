@@ -12,6 +12,7 @@ import webpackHotMiddleware from 'koa-webpack-hot-middleware';
 import webpack from 'webpack';
 import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
+import { createClient } from 'then-redis';
 const version = require('../package.json').version;
 
 const app = new Koa();
@@ -25,6 +26,15 @@ api.get('/version', (ctx) => {
   ctx.body = {
     version: version,
     source: process.env.SOURCE_VERSION || '',
+  };
+});
+api.get('/cache/flush', async (ctx) => {
+  const db = createClient(process.env.REDIS_URL);
+  const rows = await db.keys('cache:*');
+  const flushed = await Promise.all(rows.map((row) => db.del(row)));
+  await db.quit();
+  ctx.body = {
+    flushed: flushed.length,
   };
 });
 

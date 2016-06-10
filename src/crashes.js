@@ -1,12 +1,15 @@
 import Router from 'koa-router';
 import moment from 'moment';
-import Telemetry from 'telemetry-next-node';
-import { median, standardDeviation } from 'simple-statistics';
+import {
+  median,
+  standardDeviation,
+  geometricMean,
+ } from 'simple-statistics';
 import qs from 'qs';
+import { parse as parseVersion } from './meta/version';
 import fetchJson from './fetch/json';
 import fetchRedash from './fetch/redash';
 import fetchCrashStats from './fetch/crash-stats';
-import { getVersions } from './release';
 import { getHistory } from './release/history';
 
 import {
@@ -21,47 +24,9 @@ import {
   find,
 } from 'lodash';
 
-async function fetchLast4Beta() {
-  const versions = await getVersions();
-  return Array(4).fill(versions.beta).map((version, i) => version - i);
-}
-
-async function fetchUptime(versions) {
-  const filters = {
-    application: 'Firefox',
-  };
-  return new Promise((resolve, reject) => {
-    Telemetry.init(resolve, reject);
-  })
-  .then(() => {
-    return Promise.all(versions.map((version) => {
-      return new Promise((resolve) => {
-        Telemetry.getEvolution(
-          'beta',
-          String(version),
-          'SIMPLE_MEASURES_UPTIME',
-          filters,
-          true,
-          (evo) => {
-            resolve(evo[''].sanitized());
-          }
-        );
-      });
-    }));
-  })
-  .then((evolutions) => {
-    return evolutions.reduce((result, evolution, idx) => {
-      result[versions[idx]] = evolution.map((h, i, date) => {
-        return {
-          date: +moment(date).format('x'),
-          stats: h.mean(),
-          count: h.submissions,
-        };
-      });
-      return result;
-    }, {});
-  });
-}
+const dateBlacklist = [
+  '2016-05-08',
+];
 
 export const router = new Router();
 
@@ -75,45 +40,46 @@ router
     const raw = await fetchJson(urls[product]);
     const ratesByDay = Object.keys(raw).reduce((result, date) => {
       const time = moment(date, 'YYYY MM DD');
-      if (moment().diff(time, 'days') > 130) {
+      if (moment().diff(time, 'days') > 150) {
         return result;
       }
       const entry = raw[date];
-      const mainRate = (entry.crashes.Browser / entry.adi) * 100;
-      const contentRate = ((entry.crashes.Content || 0) / entry.adi) * 100;
-      result.push({
-        date,
-        crash_rate: mainRate,
-        combined_crash_rate: mainRate + contentRate,
-      });
+      let rate = (entry.crashes.Browser / entry.adi) * 100;
+      const day = moment(date, 'YYYY MM DD').format('dd');
+      // Deseasonalize with hardcoded seasonality index
+      if (product === 'firefox') {
+        rate *= {
+          Fr: 0.99,
+          Sa: 0.91,
+          Su: 0.92,
+          Mo: 1,
+        }[day] || 1;
+      } else {
+        rate *= {
+          Fr: 0.99,
+          Sa: 0.93,
+          Su: 0.895,
+          Mo: 0.99,
+        }[day] || 1;
+      }
+      result.push({ date, rate });
       return result;
     }, []);
     ctx.body = ratesByDay;
   })
 
   .get('/', async (ctx) => {
-    // const product = (ctx.request.query.product === 'fennec') ? 'fennec' : 'firefox';
-    // const channel = (ctx.request.query.channel === 'beta') ? 'beta' : 'channel';
     const raw = await fetchRedash(331);
-    const reduced = raw.query_result.data.rows.map((row) => {
-      return {
-        date: row.activity_date,
-        main_crash_rate: row.main_crash_rate,
-        combined_crash_rate: row.app_crash_rate,
-      };
-    });
-    ctx.body = reduced;
-  })
-
-  .get('/release/versions', async (ctx) => {
-    const raw = await fetchRedash(184);
-    const reduced = raw.query_result.data.rows.map((row) => {
-      return {
-        date: row.activity_date,
-        main_crash_rate: row.main_crash_rate,
-        combined_crash_rate: row.app_crash_rate,
-      };
-    });
+    const reduced = raw.query_result.data.rows
+      .map((row) => {
+        return {
+          date: row.activity_date,
+          rate: row.main_crash_rate,
+        };
+      })
+      .filter(({ rate, date }) => {
+        return rate > 3 && dateBlacklist.indexOf(date) < 0;
+      });
     ctx.body = reduced;
   })
 
@@ -122,7 +88,7 @@ router
     const results = raw.query_result.data.rows.map((row) => {
       return {
         date: row.activity_date,
-        main_crash_rate: row.main_crash_rate,
+        rate: row.main_crash_rate,
       };
     });
     ctx.body = results;
@@ -133,10 +99,21 @@ router
       channel: 'beta',
       tailVersion: 5,
     });
-    const raw = (await fetchRedash(207)).query_result.data.rows;
-    const rawSorted = sortBy(raw, 'activity_date', (a) => Date.parse(a));
+    const betaRaw = sortBy(
+      (await fetchRedash(207)).query_result.data.rows,
+      'activity_date',
+      (a) => Date.parse(a)
+    );
+    const betaE10sRaw = sortBy(
+      (await fetchRedash(497)).query_result.data.rows,
+      'activity_date',
+      (a) => Date.parse(a)
+    );
 
-    let results = rawSorted.reduce((lookup, row) => {
+    let builds = betaRaw.reduce((lookup, row) => {
+      if (dateBlacklist.indexOf(row.activity_date) > -1) {
+        return lookup;
+      }
       let result = find(lookup, ({ build }) => build === row.build_id);
       if (!result) {
         const buildDate = moment(row.build_id, 'YYYYMMDD');
@@ -144,18 +121,12 @@ router
           const diff = moment(date, 'YYYY MM DD').diff(buildDate, 'day');
           return diff >= 0 && diff <= 2;
         });
-        // if (release) {
-        //   console.log(row.build_version,
-        //     release.version.major, release.version.candidate,
-        //     release.date
-        //   );
-        // } else {
-        //   console.log(row.build_version, buildDate.format('YYYY-MM-DD'));
-        // }
         result = {
           date: buildDate.format('YYYY-MM-DD'),
           release: release && release.date,
-          candidate: release && release.version.candidate,
+          candidate: release
+            ? parseVersion(release.version).candidate
+            : 'rc',
           build: row.build_id,
           version: row.build_version,
           dates: [],
@@ -163,59 +134,65 @@ router
         };
         lookup.push(result);
       }
-      if (row.main_crash_rate < 10 && row.main_crash_rate > 2.5) {
-        result.dates.push({
-          date: row.activity_date,
-          rate: row.main_crash_rate,
-        });
+      const add = {
+        date: row.activity_date,
+        rate: row.main_crash_rate,
+        hours: row.usage_kilohours,
+      };
+      const e10sRow = find(betaE10sRaw, {
+        activity_date: row.activity_date,
+        build_id: row.build_id,
+      });
+      if (e10sRow) {
+        add.e01sMain = e10sRow.main_crash_rate;
+        add.e01sContent = e10sRow.content_crash_rate;
       }
+      result.dates.push(add);
       return lookup;
     }, []);
-    results.forEach((result) => {
-      result.dates = sortBy(
-        result.dates,
+    builds.forEach((build) => {
+      build.dates = sortBy(
+        build.dates,
         'date',
         (a) => Date.parse(a)
-      ).slice(0, 14);
-      const rates = result.dates
-        .slice(4)
+      );
+      build.hours = sumBy(build.dates, 'hours');
+      const rates = build.dates
+        .slice(-Math.round(build.dates.length / 2))
         .map(({ rate }) => rate);
-      if (rates.length > 1) {
-        result.rate = median(rates) || 0;
-        result.variance = standardDeviation(rates) || 0;
+      if (rates.length > 4) {
+        build.rate = median(rates) || 0;
+        build.variance = standardDeviation(rates) || 0;
+        if (build.rate < 3 && build.candidate === 'rc') {
+          build.rate = 0;
+        }
       }
     });
-    results = sortBy(results, 'build');
-    ctx.body = results;
-  })
+    builds = sortBy(builds, 'build');
 
-  .get('/result', async (ctx) => {
-    const versions = await fetchLast4Beta();
-    const uptime = await fetchUptime(versions);
-    const raw = await fetchJson('https://crash-analysis.mozilla.com/rkaiser/Firefox-daily.json');
-    const expr = new RegExp(`^(${versions.join('|')})\\..*0b(\\d+)`);
-    const crashes = {};
-    const result = { uptime, crashes };
-    for (const version in raw) {
-      const match = version.match(expr);
-      if (!match) {
-        continue;
+    const releases = builds.reduce((lookup, result) => {
+      let entry = find(lookup, ({ version }) => version === result.version);
+      if (!entry) {
+        entry = {
+          version: result.version,
+          builds: [],
+        };
+        lookup.push(entry);
       }
-      const major = match[1];
-      const tail = match[2];
-      const dates = [];
-      for (const date in raw[version]) {
-        const entry = raw[version][date];
-        dates.push({
-          date,
-          adu: entry.adu,
-          count: entry.crashes,
-        });
+      entry.builds.push(result);
+      return lookup;
+    }, []);
+    releases.forEach((release) => {
+      release.hours = sumBy(release.builds, 'hours');
+      const rates = release.builds
+        .map(({ rate }) => rate)
+        .filter((rate) => rate > 0);
+      if (rates.length > 4) {
+        release.rate = geometricMean(rates) || 0;
+        release.variance = standardDeviation(rates) || 0;
       }
-      crashes[major] = crashes[major] || {};
-      crashes[major][tail] = dates;
-    }
-    ctx.body = result;
+    });
+    ctx.body = releases;
   })
 
   .get('/urls', async (ctx) => {

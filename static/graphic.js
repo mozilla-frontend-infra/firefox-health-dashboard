@@ -16,10 +16,19 @@ export default class Graphic extends React.Component {
 
   componentDidUpdate() {
     if (this.props.data) {
-      MG.data_graphic(Object.assign({
+      const options = {
         target: `#${this.target}`,
         height: this.height,
-      }, this.props));
+      };
+      const override = {};
+      const { baselines } = this.props;
+      if (baselines.length) {
+        override.baselines = [
+          { value: baselines[1], label: baselines[1] },
+          { value: baselines[0], label: baselines[0] },
+        ];
+      }
+      MG.data_graphic(Object.assign(options, this.props, override));
     }
   }
 
@@ -32,18 +41,21 @@ export default class Graphic extends React.Component {
         className={cls}
         id={this.target}
       >
-        {this.props.data ? '' : this.props.title}
+        {this.props.data ? '' : (this.props.title || 'Loading …')}
       </div>
     );
   }
 }
 
 Graphic.defaultProps = {
-  title: 'Graphic',
+  title: '',
   data: null,
   x_accessor: 'date',
   y_accessor: 'value',
   markers: [],
+  top: 15,
+  bottom: 10,
+  left: 35,
   baselines: [],
   full_width: true,
   show_secondary_x_label: false,
@@ -53,4 +65,5 @@ Graphic.defaultProps = {
 Graphic.propTypes = {
   data: React.PropTypes.array,
   title: React.PropTypes.string,
+  baselines: React.PropTypes.array,
 };

@@ -8,7 +8,6 @@ export default class Regressions extends React.Component {
   async componentDidMount() {
     const regressions = await (await fetch('/api/bz/regressions/missed')).json();
     const legend = regressions.map((entry) => entry.count);
-    console.log(legend);
     MG.data_graphic({
       title: 'Number of Unevaluated Regressions Shipped',
       data: regressions,

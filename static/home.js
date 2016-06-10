@@ -1,15 +1,20 @@
 /* global fetch */
-
 import 'babel-polyfill';
 import React from 'react';
 import { Link } from 'react-router';
+import Dashboard from './dashboard';
 
-const Home = () => (
-  <div>
-    <Link to='/crashes'>Crashes</Link>
-    |
-    <Link to='/crashes/beta'>Beta Crashes</Link>
-  </div>
-);
-
-export default Home;
+export default class Home extends React.Component {
+  render() {
+    return (
+      <Dashboard
+        title='Platform'
+        subtitle='Metrics & Insights'
+        className='home'
+      >
+        <Link to='/crashes'>Crashes</Link>
+        <Link to='/crashes/beta'>Beta Crashes</Link>
+      </Dashboard>
+    );
+  }
+}

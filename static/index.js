@@ -3,22 +3,25 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import './index.css';
-import Router from './routes';
+import Routes from './routes';
 
 render((
   <AppContainer>
-    {Router}
+    <Routes />
   </AppContainer>
 ), document.getElementById('root'));
 
 if (process.env.NODE_ENV !== 'production') {
+  const refresh = () => {
+    const NextRoutes = require('./routes').default;
+    render((
+      <AppContainer>
+        <NextRoutes />
+      </AppContainer>
+    ), document.getElementById('root'));
+  };
+  window.$refresh = refresh;
   if (module.hot) {
-    module.hot.accept('./routes', () => {
-      render((
-        <AppContainer>
-        {require('./routes').default()}
-        </AppContainer>
-      ), document.getElementById('root'));
-    });
+    module.hot.accept('./routes', refresh);
   }
 }

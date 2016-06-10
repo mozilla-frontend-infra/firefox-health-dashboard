@@ -8,15 +8,15 @@ const db = process.env.REDIS_URL ? createClient(process.env.REDIS_URL) : null;
 const devCache = {};
 
 export default async function fetchText(url, {
-  fuzzyTtl = defaultTtl,
+  ttl = defaultTtl,
   headers = {},
   method = 'get',
 } = {}) {
-  let ttl = fuzzyTtl;
+  const key = `cache:${url}`;
   if (typeof ttl === 'string') {
     ttl = moment.duration(1, ttl).as('seconds');
   }
-  const cached = db ? await db.get(url) : devCache[url];
+  const cached = db ? await db.get(key) : devCache[key];
   if (cached) {
     return cached;
   }
@@ -27,10 +27,10 @@ export default async function fetchText(url, {
   }
   const text = await response.text();
   if (db) {
-    db.set(url, text);
-    db.expire(url, ttl);
+    db.set(key, text);
+    db.expire(key, ttl);
   } else {
-    devCache[url] = text;
+    devCache[key] = text;
   }
   return text;
 }
