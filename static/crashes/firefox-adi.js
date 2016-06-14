@@ -27,13 +27,9 @@ export default class FirefoxAdiCrashes extends React.Component {
         label: entry.version,
       };
     });
-    markers.push({
-      date: new Date('2016-01-17'),
-      label: 'Baseline',
-    });
-    const baselines = [0.75, 1.08];
+    const baseline = '2016-01-17'; // [0.75, 1.08];
     const avg = median(data.slice(-7).map(({ rate }) => rate));
-    this.setState({ data, markers, baselines, avg });
+    this.setState({ data, markers, baseline, avg });
   }
 
   render() {

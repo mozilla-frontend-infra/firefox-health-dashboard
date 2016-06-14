@@ -29,13 +29,9 @@ export default class FennecAdiCrashes extends React.Component {
         label: entry.version,
       };
     });
-    markers.push({
-      date: new Date('2016-01-17'),
-      label: 'Baseline',
-    });
-    const baselines = [1.26, 1.91];
+    const baseline = '2016-01-17'; // [1.26, 1.91];
     const avg = mean(data.slice(-5).map(({ rate }) => rate));
-    this.setState({ data, markers, baselines, avg });
+    this.setState({ data, markers, baseline, avg });
   }
 
   render() {

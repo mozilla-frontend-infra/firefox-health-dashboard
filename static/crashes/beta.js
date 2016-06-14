@@ -66,6 +66,10 @@ export default class FirefoxBeta extends React.Component {
 
   renderRelease({ release, start, yScale, idx, crashes }) {
     const builds = crashes ? crashes.builds : [];
+    if (!builds.length) {
+      console.log('Skipped', release.version);
+      return null;
+    }
     let { width } = this;
     let ratio = split;
     let x = width * (center - ratio * idx);
@@ -305,12 +309,12 @@ export default class FirefoxBeta extends React.Component {
         );
       }
 
-      const nextCrashes = find(
+      const hasNext = find(
         crashes,
         { version: planned.version }
       );
-      const timeline = nextCrashes
-        ? [planned].push(history.slice(0, 4))
+      const timeline = (hasNext && hasNext.rate)
+        ? [planned].concat(history.slice(0, 4))
         : history.slice(0, 5);
 
       const releases = timeline.map((release, idx) => {
@@ -323,7 +327,7 @@ export default class FirefoxBeta extends React.Component {
               version: release.version,
             }
           ),
-          start: history[idx + 1].date,
+          start: (timeline[idx + 1] || history[idx + 1]).date,
           yScale,
         });
       });

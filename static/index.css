@@ -5,7 +5,8 @@
 * {
 	box-sizing: border-box;
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -135,7 +136,8 @@ svg {
   height: 100%;
   width: 100%;
 }
-.graphic-details, .graphic-timeline {
+.graphic-details,
+.graphic-timeline {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -191,7 +193,8 @@ svg {
 }
 
 .release {
-  .release-tick, .release-today {
+  .release-tick,
+	.release-today {
     stroke: rgba(255, 255, 255, 0.7);
   }
   .release-label {
