@@ -48,7 +48,7 @@ export default class FirefoxUtCrashes extends React.Component {
           y_accessor='rate'
           min_y='3'
           max_y='4.5'
-          min_x={moment().subtract(150, 'days').toDate()}
+          min_x={moment().subtract(160, 'days').toDate()}
           max_x={moment().subtract(1, 'days').toDate()}
           // title='Firefox - Crashes per 1000 Usage Hours'
         />

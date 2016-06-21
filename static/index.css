@@ -13,8 +13,9 @@ body {
   height: 100%;
 }
 body {
-  font-family: $baseFontFamily;
-  @extend base-rhythm;
+  font-family: var(--baseFontFamily);
+	font-size: var(--fontSize);
+  line-height: var(--lineHeight);
   -webkit-text-size-adjust: 100%;
   color: #fff;
   background-color: #000;
@@ -23,7 +24,7 @@ body {
   align-content: stretch;
 }
 a {
-  color: $mobileBlue;
+  color: var(--mobileBlue);
   text-decoration: none;
 }
 
@@ -39,15 +40,15 @@ a {
 }
 .dashboard-title {
   text-align: left;
-  padding: 0 $gutterX;
+  padding: 0 var(--gutterX);
   h1 {
     @extend h4;
     font-weight: 700;
     small {
-      padding-left: $gutterX;
+      padding-left: var(--gutterX);
       display: inline-block;
       @extend h4;
-      color: $lightGray;
+      color: var(--lightGray);
       font-weight: 400;
     }
   }
@@ -74,10 +75,10 @@ section.state-loading {
 .row {
 	flex: 1;
   display: flex;
-	padding: calc($gutterY) $gutterX;
+	padding: calc(var(--gutterY)) var(--gutterX);
 }
 .row header {
-	width: calc(2 * $gutterY);
+	width: calc(2 * var(--gutterY));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -85,7 +86,7 @@ section.state-loading {
 .row header span {
 	transform-origin: center;
 	white-space: nowrap;
-	font-size: $h5FontSize;
+	font-size: var(--h5FontSize);
 	transform: rotateZ(-90deg);
 }
 .graphic {
@@ -107,8 +108,8 @@ svg path {
 .mg-header,
 .graphic.state-loading {
   opacity: 1;
-  color: $lightGray;
-  fill: $lightGray;
+  color: var(--lightGray);
+  fill: var(--lightGray);
   font-weight: lighter;
   @extend h3;
 }
@@ -116,10 +117,10 @@ svg path {
   stroke-width: 2 !important;
 }
 .mg-line1-color {
-  stroke: $flameYellowVibrant;
+  stroke: var(--flameYellowVibrant);
 }
 .mg-area1-color {
-  fill: $flameYellowVibrant;
+  fill: var(--flameYellowVibrant);
 }
 
 .axis-rate {
@@ -144,10 +145,13 @@ svg {
 }
 
 .graphic-timeline {
-	height: 62vh;
+	flex: 1;
 }
 .graphic-details {
-	flex: 1;
+	height: calc(var(--lineHeight) * 5);
+	@media (min-width: 1200px) and (min-height: 800px) {
+		height: calc(var(--lineHeight) * 7);
+	}
 }
 
 .graphic-scores {
@@ -165,30 +169,31 @@ svg {
 	flex-direction: column-reverse;
 	align-items: center;
 	text-align: center;
-	.score-label {
-		text-transform: uppercase;
-    color: $darkGray;
-    display: inline-block;
-	}
   .score-main {
-		font-size: $h2FontSize;
-		line-height: $h1LineHeight;
-    color: $lightGray;
+		font-size: var(--h2FontSize);
+		line-height: var(--h1LineHeight);
+    color: var(--lightGray);
     font-weight: 400;
   }
   .score-extra {
     font-weight: 300;
-    font-size: $h3FontSize;
-		line-height: $h1LineHeight;
-    color: $darkGray;
+    font-size: var(--h3FontSize);
+		line-height: var(--h1LineHeight);
+    color: var(--darkGray);
     display: inline-block;
-    padding-left: calc($gutterX / 2);
+    padding-left: calc(var(--gutterX) / 2);
   }
+	.score-label {
+		text-transform: uppercase;
+		color: var(--darkGray);
+		display: inline-block;
+		white-space: nowrap;
+	}
 }
 .state-highlight {
 	.score-main {
 		color: #fff;
-		font-size: $h1FontSize;
+		font-size: var(--h1FontSize);
 	}
 }
 
@@ -199,8 +204,8 @@ svg {
   }
   .release-label {
     opacity: 1;
-    font-size: $h2FontSize;
-		fill: $lightGray;
+    font-size: var(--h2FontSize);
+		fill: var(--lightGray);
   }
 	&.state-current {
 		.release-label {
@@ -262,7 +267,7 @@ svg {
 }
 
 .mg-barplot rect.mg-bar {
-	fill: $dinoRed;
+	fill: var(--dinoRed);
 }
 
 @keyframes appear {

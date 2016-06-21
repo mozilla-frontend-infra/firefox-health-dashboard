@@ -12,7 +12,7 @@ render((
 ), document.getElementById('root'));
 
 if (process.env.NODE_ENV !== 'production') {
-  const refresh = () => {
+  const update = () => {
     const NextRoutes = require('./routes').default;
     render((
       <AppContainer>
@@ -20,8 +20,7 @@ if (process.env.NODE_ENV !== 'production') {
       </AppContainer>
     ), document.getElementById('root'));
   };
-  window.$refresh = refresh;
   if (module.hot) {
-    module.hot.accept('./routes', refresh);
+    module.hot.accept('./routes', update);
   }
 }

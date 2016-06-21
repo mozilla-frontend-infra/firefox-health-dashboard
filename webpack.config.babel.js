@@ -7,7 +7,8 @@ import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
 import postcssReporter from 'postcss-reporter';
 import postcssSimpleExtend from 'postcss-simple-extend';
-import postcssSimpleVars from 'postcss-simple-vars';
+import postcssVariables from 'postcss-css-variables';
+import mqpacker from 'css-mqpacker';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -25,8 +26,8 @@ const entryBase = isProd
   ];
 
 const plugins = [
+  new webpack.IgnorePlugin(/^\.\/locale$|jquery/, /moment$/),
   new webpack.optimize.OccurenceOrderPlugin(),
-  new webpack.HotModuleReplacementPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
@@ -60,6 +61,8 @@ if (isProd) {
   plugins.push(new ExtractTextPlugin(cssFilename, {
     allChunks: true,
   }));
+} else {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 export default {
@@ -119,13 +122,15 @@ export default {
     postcssImport(),
     postcssSimpleExtend(),
     postcssNested(),
-    postcssSimpleVars(),
+    // postcssSimpleVars(),
+    postcssVariables(),
     postcssCssnext({
       browsers: ['last 1 version'],
     }),
     postcssReporter({
       throwError: true,
     }),
+    mqpacker(),
   ],
   plugins: plugins,
   devServer: {

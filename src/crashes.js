@@ -27,6 +27,7 @@ import {
 const dateBlacklist = [
   '2016-05-08',
 ];
+const baseline = new Date('2016-01-17');
 
 export const router = new Router();
 
@@ -40,7 +41,7 @@ router
     const raw = await fetchJson(urls[product]);
     const ratesByDay = Object.keys(raw).reduce((result, date) => {
       const time = moment(date, 'YYYY MM DD');
-      if (moment().diff(time, 'days') > 150) {
+      if (time.diff(baseline, 'days') < -3) {
         return result;
       }
       const entry = raw[date];
@@ -157,10 +158,13 @@ router
         (a) => Date.parse(a)
       );
       build.hours = sumBy(build.dates, 'hours');
-      const rates = build.dates
-        .slice(-Math.round(build.dates.length / 2))
-        .map(({ rate }) => rate);
-      if (rates.length > 4) {
+      const avg = median(build.dates.map(({ rate }) => rate));
+      const brokenDate = (build.dates[0].rate > avg);
+      const slice = brokenDate
+        ? build.dates.slice(-Math.round(build.dates.length / 2))
+        : build.dates.slice(1);
+      if (slice.length > 2) {
+        const rates = slice.map(({ rate }) => rate);
         build.rate = median(rates) || 0;
         build.variance = standardDeviation(rates) || 0;
         if (build.rate < 3 && build.candidate === 'rc') {
@@ -187,7 +191,7 @@ router
       const rates = release.builds
         .map(({ rate }) => rate)
         .filter((rate) => rate > 0);
-      if (rates.length > 4) {
+      if (rates.length > 0) {
         release.rate = geometricMean(rates) || 0;
         release.variance = standardDeviation(rates) || 0;
       }

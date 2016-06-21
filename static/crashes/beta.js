@@ -63,8 +63,8 @@ export default class FirefoxBeta extends React.Component {
       planned,
     });
   }
-
   renderRelease({ release, start, yScale, idx, crashes }) {
+    const { gridY, gridX } = this.props;
     const builds = crashes ? crashes.builds : [];
     if (!builds.length) {
       console.log('Skipped', release.version);
@@ -126,9 +126,9 @@ export default class FirefoxBeta extends React.Component {
         >
           <line
             x1={0}
-            y1={45}
+            y1={gridY * 3}
             x2={0}
-            y2={75}
+            y2={gridY * 5}
           />
         </g>
       );
@@ -167,7 +167,7 @@ export default class FirefoxBeta extends React.Component {
           key='release-label'
           textAnchor='middle'
           x={-ratio * width / 2}
-          y={40}
+          y={gridY * 2.5}
         >
           {version}
         </text>
@@ -175,8 +175,8 @@ export default class FirefoxBeta extends React.Component {
           className='release-date'
           key='release-date'
           textAnchor='end'
-          y={this.height - 5}
-          x={-7}
+          y={this.height - (gridY / 2)}
+          x={-gridX}
         >
           {moment(release.date).format('MMM D')}
         </text>
@@ -212,6 +212,8 @@ export default class FirefoxBeta extends React.Component {
     const title = `${(release.hours / 1000).toFixed(1)}m usage hours`;
     const hoursStart = hoursScale(hoursX - (release.hours || 0));
     const hourWidth = hoursScale(hoursX) - hoursStart;
+    const { gridY } = this.props;
+    const topY = gridY * 5;
     return (
       <g
         key={`candidate-${release.build}`}
@@ -225,24 +227,24 @@ export default class FirefoxBeta extends React.Component {
           <line
             className='candidate-marker'
             x1={0}
-            y1={(rate || 100) - 5}
+            y1={(rate || topY) - 5}
             x2={0}
-            y2={(rate || 100) + 5}
+            y2={(rate || topY) + 5}
             stroke={color}
           />
           <line
             className='candidate-tick'
             key='candidate-tick-high'
             x1={0}
-            y1={105}
+            y1={topY + 5}
             x2={0}
-            y2={95}
+            y2={topY - 5}
             stroke={color}
           />
           <text
             className='candidate-label'
             textAnchor='middle'
-            y={90}
+            y={topY - gridY}
             stroke={color}
           >
             {release.candidate || '?'}
@@ -318,16 +320,13 @@ export default class FirefoxBeta extends React.Component {
         : history.slice(0, 5);
 
       const releases = timeline.map((release, idx) => {
+        const before = timeline[idx + 1] || history[idx];
+        const start = before.date;
         return this.renderRelease({
           release,
           idx: idx - 1,
-          crashes: find(
-            crashes,
-            {
-              version: release.version,
-            }
-          ),
-          start: (timeline[idx + 1] || history[idx + 1]).date,
+          crashes: find(crashes, { version: release.version }),
+          start,
           yScale,
         });
       });
@@ -432,4 +431,6 @@ export default class FirefoxBeta extends React.Component {
 FirefoxBeta.defaultProps = {
 };
 FirefoxBeta.propTypes = {
+  gridX: React.PropTypes.number,
+  gridY: React.PropTypes.number,
 };

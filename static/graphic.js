@@ -24,10 +24,12 @@ export default class Graphic extends React.Component {
       const override = {};
       const { baseline } = this.props;
       if (baseline) {
-        const high = find(this.props.data, (point) => {
-          return point[this.props.x_accessor].getTime() === new Date(baseline).getTime();
-        }).rate;
-        if (high > 0) {
+        const baselineStart = new Date(baseline);
+        const needle = find(this.props.data, (point) => {
+          return point.date.toDateString() === baselineStart.toDateString();
+        });
+        if (needle && needle.rate > 0) {
+          const high = needle.rate;
           const low = high * 0.7;
           override.baselines = [
             { value: high, label: high.toFixed(2) },
@@ -35,7 +37,7 @@ export default class Graphic extends React.Component {
           ];
           override.markers = Array.from(this.props.markers || []);
           override.markers.push({
-            date: new Date(baseline),
+            date: baselineStart,
             label: 'Baseline',
           });
         }
@@ -69,7 +71,7 @@ Graphic.defaultProps = {
   bottom: 10,
   left: 35,
   baselines: [],
-  baseline: 0,
+  baseline: null,
   full_width: true,
   show_secondary_x_label: false,
   y_extended_ticks: false,
