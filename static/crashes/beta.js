@@ -70,27 +70,27 @@ export default class FirefoxBeta extends React.Component {
       console.log('Skipped', release.version);
       return null;
     }
-    let { width } = this;
+    let wide = this.width;
     let ratio = split;
-    let x = width * (center - ratio * idx);
+    let x = wide * (center - ratio * idx);
     const current = idx === -1;
     if (current) {
-      width -= 2;
+      wide -= 2;
       ratio = full;
-      x = width - 2;
+      x = wide - 2;
     }
     const hoursRange = [0, sumBy(builds, 'hours')];
     const dateRange = [start, release.date];
     const xScale = d3.time.scale()
       .domain(dateRange)
-      .range([-ratio * width, 0]);
+      .range([-ratio * wide, 0]);
     const lastDayX = Math.min(
       xScale(builds.slice(-1)[0].dates.slice(-1)[0].date),
       0
     );
     const hoursScale = d3.time.scale()
       .domain(hoursRange)
-      .range([-ratio * width, lastDayX]);
+      .range([-ratio * wide, lastDayX]);
     const path = d3.svg.line()
 			.x((d) => xScale(d.date))
 			.y((d) => yScale(d.rate))
@@ -166,7 +166,7 @@ export default class FirefoxBeta extends React.Component {
           className='release-label'
           key='release-label'
           textAnchor='middle'
-          x={-ratio * width / 2}
+          x={-ratio * wide / 2}
           y={gridY * 2.5}
         >
           {version}

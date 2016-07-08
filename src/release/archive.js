@@ -1,5 +1,4 @@
 import moment from 'moment';
-import assert from 'assert';
 // import semver from 'semver';
 import fetchHtml from '../fetch/html';
 import { parse as parseVersion } from '../meta/version';
