@@ -25,10 +25,9 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-	border-bottom: 1px dotted var(--developerBlue);
 	&:hover {
 		color: var(--mobileBlue);
-		border-bottom: 1px solid var(--mobileBlue);
+		text-decoration: underline;
 	}
 }
 

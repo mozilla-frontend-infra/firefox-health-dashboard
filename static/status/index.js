@@ -52,7 +52,8 @@ const Feature = ({ entry }) => {
         .trim()
         .replace(/^support/i, 'endorsed')
         .replace(/^mixed.*/i, 'indecisive')
-        .replace(/no\ssignal.*/i, '¯\\_(ツ)_/¯');
+        .replace(/no\ssignal.*|^u$/i, '¯\\_(ツ)_/¯')
+        .replace(/^(n)$/i, '');
       const label = state.version || {
         nope: alt,
         'in-development': 'Dev',
@@ -172,8 +173,8 @@ export default class Status extends React.Component {
     }
     return (
       <Dashboard
-        title='Platform Status'
-        subtitle='Features In Development'
+        title='Platform Feature Comparison'
+        subtitle='Aggregated from chromestatus.com and caniuse.com'
         className='status-index'
       >
         {tables}
