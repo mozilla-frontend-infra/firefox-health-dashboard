@@ -291,7 +291,7 @@ svg {
 			text-align: right;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			font-size: var(--h5FontSize);
+			font-size: var(--h4FontSize);
 			line-height: var(--h1LineHeight);
 			min-width: 0;
 			padding: 0 var(--gutterX);
