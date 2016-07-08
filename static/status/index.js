@@ -69,18 +69,27 @@ const Feature = ({ entry }) => {
       let icon = null;
       if (platform === 'firefox' && state.ref) {
         icon = (
-          <i className='icon-ref'>✓</i>
+          <i
+            className='icon-ref'
+            title='Shipping status from platform-status.mozilla.org'
+          >
+            ✓
+          </i>
         );
       } else if (state.bz) {
         icon = (
-          <i className='icon-ref icon-bz'></i>
+          <i
+            className='icon-ref icon-bz'
+            title='Shipping status from bugzilla'
+          >
+          </i>
         );
       }
       return (
         <span
           key={`feature-${id}-${platform}`}
           className={tdCls}
-          title={alt || ''}
+          title={state.alt || ''}
         >
           {label}
           {icon}
