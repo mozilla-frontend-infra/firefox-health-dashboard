@@ -66,6 +66,8 @@ section.state-loading {
   animation: appear 1s ease-in-out;
   @extend h2;
   font-weight: 300;
+	align-items: center;
+	justify-content: center;
 }
 .home .dashboard-main {
   align-items: center;
@@ -274,16 +276,6 @@ svg {
 			position: relative;
 		}
 
-		.feature-category {
-			color: var(--darkGray);
-			width: calc(var(--gutterX) * 4);
-			text-align: right;
-			text-transform: uppercase;
-			padding: 0 calc(var(--gutterX) / 2);
-			font-size: var(--smallFontSize);
-			font-weight: bold;
-		}
-
 		.feature-title {
 			flex: 1;
 			overflow: hidden;
@@ -293,7 +285,7 @@ svg {
 			font-size: var(--h4FontSize);
 			line-height: var(--h1LineHeight);
 			min-width: 0;
-			padding: 0 var(--gutterX);
+			padding: 0 var(--gutterX) 0 calc(var(--gutterX) * 2);
 		}
 
 		.icon-ref {
