@@ -1,5 +1,6 @@
 import { flow, find, findKey, filter, map } from 'lodash/fp';
 import caniuse from 'caniuse-db/data.json';
+import browserslist from 'browserslist';
 import fetchJson from '../fetch/json';
 import resolveStatus from '../meta/feature-status';
 import resolveCategory from '../meta/feature-category';
@@ -11,6 +12,12 @@ const firefoxBase = 'https://platform-status.mozilla.org/api/status';
 export async function getChromePopular() {
   const firefoxStatus = await fetchJson(firefoxBase);
   const chromeStatus = await fetchJson(base);
+  const latest = browserslist.queries.lastVersions.select(1)
+    .reduce((result, str) => {
+      const [platform, version] = str.split(/\s+/);
+      result[platform] = +version;
+      return result;
+    }, {});
   const queuedIds = [];
   const features = flow(
     filter(({ web_dev_views }) => {
@@ -45,6 +52,9 @@ export async function getChromePopular() {
       };
       if (result.chrome.status === 'shipped' && chrome.shipped_milestone) {
         result.chrome.version = chrome.shipped_milestone;
+        if (result.chrome.version > latest.chrome) {
+          result.chrome.status = 'in-development';
+        }
       }
       const firefoxRef = find({ chrome_ref: chrome.id })(firefoxStatus);
       if (firefoxRef) {
@@ -85,10 +95,12 @@ export async function getChromePopular() {
       if (version) {
         const ref = find({ id: String(id) })(queuedIds);
         if (ref) {
-          if (!ref.feature.firefox.status) {
+          if (ref.feature.firefox.status !== 'shipped') {
             ref.feature.firefox.bz = true;
           }
-          ref.feature.firefox.status = 'shipped';
+          ref.feature.firefox.status = (version > latest.firefox)
+            ? 'in-development'
+            : 'shipped';
           ref.feature.firefox.version = version;
         }
       }
@@ -96,10 +108,13 @@ export async function getChromePopular() {
 
   return flow(
     map((feature) => {
-      feature.score = ['chrome', 'firefox', 'ie', 'safari'].filter((browser) => {
-        return feature[browser].status === 'in-development'
-          || feature[browser].status === 'shipped';
-      }).length;
+      feature.score = ['chrome', 'firefox', 'ie', 'safari'].reduce((score, browser) => {
+        return score + ({
+          shipped: 1,
+          'in-development': 0.5,
+          'under-consideration': 0.25,
+        }[feature[browser].status] || 0);
+      }, 0);
       return feature;
     }),
     filter(({ score }) => score > 0)

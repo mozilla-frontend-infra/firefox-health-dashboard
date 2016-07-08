@@ -1,6 +1,6 @@
 import fetchJson from '../fetch/json';
 import browserslist from 'browserslist';
-import { flow, map, sortBy, toPairs, some, filter, find } from 'lodash/fp';
+import { flow, map, sortBy, toPairs, some, filter, find, reverse } from 'lodash/fp';
 import caniuse from 'caniuse-db/data.json';
 import resolveCategory from '../meta/feature-category';
 
@@ -36,31 +36,37 @@ export async function getInDevelopment() {
         flow(
           toPairs,
           sortBy(([idx]) => parseFloat(idx)),
+          reverse,
           some(([idx, state]) => {
+            if (!result[platform].alt) {
+              result[platform].alt = state;
+            }
             const version = parseFloat(idx);
-            if (/[ayd]/.test(state) && version <= latest[platform]) {
-              result[platform] = {
-                status: 'shipped',
-                version: version,
-              };
-              if (latest[platform] - version <= recencyFactor) {
-                result.recency += 1;
-              }
-              result.completeness += 1;
+            if (/[ay]/.test(state) && version <= latest[platform]) {
+              result[platform].status = 'shipped';
+              result[platform].version = version;
               return true;
             }
             if (/[ayd]/.test(state)) {
-              result[platform] = {
-                status: 'in-development',
-                version: version,
-              };
-              result.recency += version > latest[platform] ? 1 : 0;
-              result.completeness += 0.5;
-              return true;
+              result[platform].status = 'in-development';
+              result[platform].version = version;
             }
             return false;
           })
         )(versions);
+        switch (result[platform].status) {
+          case 'shipped':
+            if (latest[platform] - result[platform].version <= recencyFactor) {
+              result.recency += 1;
+            }
+            result.completeness += 1;
+            break;
+          case 'in-development':
+            result.recency += result[platform].version > latest[platform] ? 1 : 0;
+            result.completeness += 0.5;
+            break;
+          default:
+        }
       });
       const firefoxRef = find({ caniuse_ref: ref })(firefoxStatus);
       if (firefoxRef) {

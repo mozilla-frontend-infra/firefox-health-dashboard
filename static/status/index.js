@@ -58,8 +58,7 @@ const Feature = ({ entry }) => {
         `status-${platform}`,
         `status-${state.status}`,
         {
-          'status-ref': platform === 'firefox' && state.ref,
-          'status-bz': state.bz,
+          'status-versioned': state.version,
         }
       );
       let icon = null;
@@ -69,7 +68,7 @@ const Feature = ({ entry }) => {
         );
       } else if (state.bz) {
         icon = (
-          <i className='icon-ref'>✓</i>
+          <i className='icon-ref'>🕷</i>
         );
       }
       return (
@@ -128,7 +127,7 @@ export default class Status extends React.Component {
       tables = [
         <Table
           key='table-popular-missing'
-          title='Missing Firefox in Popular'
+          title='Chromestatus: Firefox Missing'
           rows={
             flow(
               filter((feature) => !feature.caniuse),
@@ -140,7 +139,7 @@ export default class Status extends React.Component {
         />,
         <Table
           key='table-popular-done'
-          title='Missing Firefox on CanIUse'
+          title='Chromestatus: Firefox Tracked'
           rows={
             flow(
               filter((feature) => !feature.caniuse),
@@ -152,10 +151,10 @@ export default class Status extends React.Component {
         />,
         <Table
           key='table-caniuse'
-          title='Missing Signals on CanIUse'
+          title='CanIUse: Firefox Untracked'
           rows={
             flow(
-              sortBy(['recency', 'completeness']),
+              sortBy(['recency']),
               filter((feature) => !feature.firefox || feature.firefox.status !== 'shipped'),
               reverse
             )(caniuse)

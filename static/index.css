@@ -259,8 +259,9 @@ svg {
 		flex: 1;
 		margin: 0;
 		padding: calc(var(--gutterY) / 2) var(--gutterX);
-		font-size: var(--h5FontSize);
-		font-weight: bold;
+		@extend h5;
+		color: var(--lightGray);
+		font-weight: 400;
 	}
 
 	> .table-row {
@@ -274,7 +275,7 @@ svg {
 
 		.feature-category {
 			color: var(--darkGray);
-			width: 10%;
+			width: calc(var(--gutterX) * 4);
 			text-align: right;
 			text-transform: uppercase;
 			padding: 0 calc(var(--gutterX) / 2);
@@ -311,7 +312,7 @@ svg {
 			min-width: 0%;
 			font-size: var(--smallFontSize);
 			&.status-firefox {
-				width: calc(var(--gutterX) * 6);
+				width: calc(var(--gutterX) * 5);
 			}
 			&.status-nope {
 				background-color: var(--dinoRed);
@@ -328,10 +329,10 @@ svg {
 			&.status-shipped {
 				background-color: var(--geckoGreen);
 				border-color: color(var(--geckoGreen) shade(25%));
-				font-weight: bold;
 			}
-			&.status-ref, &.status-bz {
-				text-decoration: underline;
+			&.status-versioned {
+				font-size: var(--fontSize);
+				font-weight: bold;
 			}
 		}
 	}
