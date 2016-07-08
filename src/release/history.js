@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { sortBy, maxBy, filter, find } from 'lodash';
+import { partition, flow } from 'lodash/fp';
 import fetchJson from '../fetch/json';
 import { parse as parseVersion } from '../meta/version';
 
@@ -25,6 +26,7 @@ export async function getHistory({
   product = 'firefox',
   major = false,
   tailVersion = null,
+  tailDate = null,
 }) {
   const history = {};
   if (channel === 'release') {
@@ -66,6 +68,14 @@ export async function getHistory({
         date: date,
       };
     });
+  if (tailDate) {
+    const split = flow(
+      partition(({ date }) => {
+        return new Date(date) > new Date(tailDate);
+      })
+    )(results);
+    results = split[0].concat([split[1].slice(-1)]);
+  }
   return results;
 }
 

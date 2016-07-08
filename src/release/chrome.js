@@ -6,6 +6,9 @@ export default async function getChromeHistory() {
   let lastDate = null;
   for (let i = 1; i <= 10; i++) {
     const $ = await fetchHtml(`http://filehippo.com/download_google_chrome/history/${i}/`);
+    if (!$) {
+      break;
+    }
     $('#program-history-list li').each((j, li) => {
       const labelish = $(li)
         .find('a:first-of-type')

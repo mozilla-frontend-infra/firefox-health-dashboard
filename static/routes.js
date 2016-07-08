@@ -6,6 +6,7 @@ import Home from './home.js';
 import ReleaseCrashes from './crashes/release.js';
 import BetaCrashes from './crashes/beta.js';
 import Regressions from './regressions.js';
+import Status from './status/index.js';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -49,6 +50,7 @@ export default class Routes extends Component {
           <Route path='crashes' component={ReleaseCrashes} />
           <Route path='crashes/beta' component={BetaCrashes} />
           <Route path='regressions' component={Regressions} />
+          <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />
       </Router>

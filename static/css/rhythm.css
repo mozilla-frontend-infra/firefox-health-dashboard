@@ -1,7 +1,7 @@
 :root {
   --fontSize: 0.75rem;
 }
-@media (min-width: 1200px) and (min-height: 800px) {
+@media (min-width: 1000px) and (min-height: 700px) {
   :root {
     --fontSize: 1rem;
   }

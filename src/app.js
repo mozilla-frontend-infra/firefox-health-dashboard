@@ -44,6 +44,8 @@ import { router as crashes } from './crashes';
 api.use('/crashes', crashes.routes());
 import { router as bz } from './bz';
 api.use('/bz', bz.routes());
+import { router as status } from './status';
+api.use('/status', status.routes());
 
 const index = new Router();
 index.use('/api', api.routes());

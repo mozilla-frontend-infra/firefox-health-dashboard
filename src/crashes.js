@@ -167,6 +167,9 @@ router
         const rates = slice.map(({ rate }) => rate);
         build.rate = median(rates) || 0;
         build.variance = standardDeviation(rates) || 0;
+        build.dates = build.dates.filter(({ rate }) => {
+          return Math.abs(build.rate - rate) < build.variance * 2;
+        });
         if (build.rate < 3 && build.candidate === 'rc') {
           build.rate = 0;
         }
