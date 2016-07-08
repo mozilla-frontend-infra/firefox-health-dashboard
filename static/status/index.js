@@ -28,7 +28,7 @@ const Table = ({ title, rows }) => {
   )(rows);
   return (
     <div className='features'>
-      <header className='table-row' ref='header'>
+      <header className='table-row'>
         <h2>{title}</h2>
         {headers}
       </header>
@@ -47,7 +47,12 @@ const Feature = ({ entry }) => {
   const cols = ['firefox', 'chrome', 'ie', 'safari']
     .map((platform) => {
       const state = entry[platform];
-      const alt = (state.alt || '').replace(/\s?public/i, '');
+      const alt = (state.alt || '')
+        .replace(/\s?public/i, '')
+        .trim()
+        .replace(/^support/i, 'endorsed')
+        .replace(/^mixed.*/i, 'indecisive')
+        .replace(/no\ssignal.*/i, '¯\\_(ツ)_/¯');
       const label = state.version || {
         nope: alt,
         'in-development': 'Dev',
@@ -68,7 +73,7 @@ const Feature = ({ entry }) => {
         );
       } else if (state.bz) {
         icon = (
-          <i className='icon-ref'>🕷</i>
+          <i className='icon-ref icon-bz'></i>
         );
       }
       return (
@@ -84,12 +89,6 @@ const Feature = ({ entry }) => {
     });
   return (
     <div className='table-row feature'>
-      <span
-        key={`feature-${id}-category`}
-        className='feature-category'
-      >
-        {entry.category}
-      </span>
       <span
         key={`feature-${id}-title`}
         className='feature-title'

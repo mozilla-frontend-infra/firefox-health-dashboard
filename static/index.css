@@ -258,10 +258,12 @@ svg {
 	h2 {
 		flex: 1;
 		margin: 0;
-		padding: calc(var(--gutterY) / 2) var(--gutterX);
-		@extend h5;
-		color: var(--lightGray);
-		font-weight: 400;
+		padding: 0 var(--gutterX);
+		font-size: var(--h5FontSize);
+		line-height: var(--h1LineHeight);
+		color: #fff;
+		font-weight: 700;
+		text-align: right;
 	}
 
 	> .table-row {
@@ -286,16 +288,31 @@ svg {
 		.feature-title {
 			flex: 1;
 			overflow: hidden;
+			text-align: right;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			font-size: var(--h5FontSize);
+			line-height: var(--h1LineHeight);
 			min-width: 0;
-			padding: 0 calc(var(--gutterX) / 2);
+			padding: 0 var(--gutterX);
 		}
 
 		.icon-ref {
 			position: absolute;
-			right: calc(var(--gutterX) / 2);
-			top: 0;
+			right: calc(var(--gutterX) / 4);
+			top: calc(var(--gutterY) / 4);
+			text-align: left;
+			width: var(--gutterX);
+			height: var(--gutterY);
+			color: #000;
+			opacity: 0.5;
+			&.icon-bz {
+				background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+QXJ0Ym9hcmQgMTwvdGl0bGU+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZWxsaXBzZSBmaWxsPSIjMDAwIiBjeD0iOCIgY3k9IjkiIHJ4PSI1IiByeT0iNiIvPjxwYXRoIGQ9Ik0xNCA5LjVIMk0xMyAxM0wyLjUgNk0xMy41IDZMMyAxMyIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgZmlsbD0iIzAwMCIgY3g9IjgiIGN5PSI0IiByPSIzIi8+PC9nPjwvc3ZnPg==') center right no-repeat;
+				width: var(--gutterX);
+				height: var(--gutterY);
+				background-size: contain;
+				display: inline-block;
+			}
 		}
 
 		.feature-status {
