@@ -50,7 +50,7 @@ const Feature = ({ entry }) => {
       const alt = (state.alt || '')
         .replace(/\s?public/i, '')
         .trim()
-        .replace(/^support/i, 'endorsed')
+        .replace(/^support/i, 'positive')
         .replace(/^mixed.*/i, 'indecisive')
         .replace(/no\ssignal.*|^u$/i, '¯\\_(ツ)_/¯')
         .replace(/^(n)$/i, '');
@@ -65,6 +65,7 @@ const Feature = ({ entry }) => {
         `status-${state.status}`,
         {
           'status-versioned': state.version,
+          'status-shrug': /^no.*signals$|^u$/i.test(state.alt),
         }
       );
       let icon = null;
@@ -136,7 +137,7 @@ export default class Status extends React.Component {
       tables = [
         <Table
           key='table-popular-missing'
-          title='Chromestatus: Firefox Missing'
+          title='Chrome: Firefox Missing'
           rows={
             flow(
               // filter((feature) => feature.recent),
@@ -149,7 +150,7 @@ export default class Status extends React.Component {
         />,
         <Table
           key='table-popular-done'
-          title='Chromestatus: Firefox Tracked'
+          title='Chromestatus: Chrome Not Shipped'
           rows={
             flow(
               filter(({ firefox, chrome }) => {
@@ -166,7 +167,7 @@ export default class Status extends React.Component {
         />,
         <Table
           key='table-caniuse'
-          title='CanIUse: Firefox Untracked'
+          title='CanIUse: FF Not Shipped'
           rows={
             flow(
               // filter((feature) => feature.recency > 0),

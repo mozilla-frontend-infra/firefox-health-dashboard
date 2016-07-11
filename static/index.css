@@ -44,7 +44,9 @@ a {
 .dashboard-title {
   text-align: left;
   padding: 0 var(--gutterX);
+	display: flex;
   h1 {
+		flex: 1;
     @extend h4;
     font-weight: 700;
     small {
@@ -55,6 +57,15 @@ a {
       font-weight: 400;
     }
   }
+	.dashboard-link {
+		padding: calc(var(--gutterY) / 2) calc(var(--gutterX) / 2);
+		color: var(--mobileBlueVibrant);
+		@extend h4;
+		display: none;
+	}
+}
+.state-fullscreen .dashboard-link {
+	display: block;
 }
 .dashboard-main {
   flex: 1;
@@ -260,10 +271,10 @@ svg {
 		flex: 1;
 		margin: 0;
 		padding: 0 var(--gutterX);
-		font-size: var(--h5FontSize);
+		font-size: var(--h4FontSize);
 		line-height: var(--h1LineHeight);
-		color: #fff;
-		font-weight: 700;
+		color: var(--darkGray);
+		font-weight: 400;
 		text-align: right;
 	}
 
@@ -326,6 +337,9 @@ svg {
 				background-color: var(--dinoRed);
 				border-color: color(var(--dinoRed) shade(25%));
 			}
+			&.status-shrug {
+				color: rgba(255, 255, 255, 0.5);
+			}
 			&.status-under-consideration {
 				background-color: var(--marketOrange);
 				border-color: color(var(--marketOrange) shade(25%));
@@ -340,7 +354,7 @@ svg {
 			}
 			&.status-versioned {
 				font-size: var(--fontSize);
-				font-weight: bold;
+				font-weight: 700;
 			}
 		}
 	}

@@ -9,7 +9,9 @@ const Dashboard = (props) => {
   const content = (!empty) ? children : 'Loading …';
   const cls = cx('dashboard', className, {
     'state-loading': empty,
+    'state-fullscreen': window.frameElement || document.fullscreen,
   });
+  const link = `${location.host}${location.pathname}`;
   return (
     <div className={cls}>
       <div className='dashboard-title'>
@@ -17,6 +19,7 @@ const Dashboard = (props) => {
           {title}
           <small>{subtitle}</small>
         </h1>
+        <div className='dashboard-link'>{link}</div>
       </div>
       <div className='dashboard-main'>
         {content}
