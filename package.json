@@ -15,7 +15,8 @@
     "watch": "npm-run-all --parallel watch:*",
     "build": "npm run build:prod",
     "start": "node server.js",
-    "heroku-postbuild": "npm run build:prod"
+    "heroku-postbuild": "npm run build:prod && npm run flush-cdn",
+    "flush-cdn": "babel-node src/postinstall.js"
   },
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
@@ -43,6 +44,7 @@
     "cheerio": "^0.20.0",
     "chrono-node": "^1.2.4",
     "classnames": "^2.2.5",
+    "cloudflare": "^1.0.4",
     "css-loader": "^0.23.1",
     "css-mqpacker": "^5.0.1",
     "d3": "^3.5.17",
