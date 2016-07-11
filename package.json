@@ -16,7 +16,7 @@
     "build": "npm run build:prod",
     "start": "node server.js",
     "heroku-postbuild": "npm run build:prod && npm run flush-cdn",
-    "flush-cdn": "babel-node src/postinstall.js"
+    "flush-cdn": "node postinstall.js"
   },
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
