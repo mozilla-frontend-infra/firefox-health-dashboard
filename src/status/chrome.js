@@ -2,8 +2,7 @@ import { flow, find, findKey, filter, map } from 'lodash/fp';
 import caniuse from 'caniuse-db/data.json';
 import browserslist from 'browserslist';
 import fetchJson from '../fetch/json';
-import resolveStatus from '../meta/feature-status';
-import resolveCategory from '../meta/feature-category';
+import { resolveStatus, resolveCategory, scoreFeature } from '../meta/feature';
 import { getRelease } from '../bz/release';
 
 const base = 'https://www.chromestatus.com/features.json';
@@ -23,8 +22,9 @@ export async function getChromePopular() {
     filter(({ web_dev_views }) => {
       return web_dev_views && web_dev_views.value <= 2;
     }),
-    filter(({ ff_views }) => {
-      return ff_views && resolveStatus(ff_views.text) !== 'shipped';
+    filter(({ ff_views, impl_status_chrome }) => {
+      return !/opossed/i.test(ff_views.text)
+        && !/pursuing|deprecat|removed/i.test(impl_status_chrome);
     }),
     map((chrome) => {
       const result = {
@@ -68,7 +68,7 @@ export async function getChromePopular() {
         }
       } else {
         if (/show_bug\.cgi/.test(chrome.ff_views_link || '')) {
-          const id = chrome.ff_views_link.match(/id=(\d+)/)[1];
+          const id = chrome.ff_views_link.match(/id=([^$#]+)/)[1];
           queuedIds.push({
             id: id,
             feature: result,
@@ -107,16 +107,7 @@ export async function getChromePopular() {
     });
 
   return flow(
-    map((feature) => {
-      feature.score = ['chrome', 'firefox', 'ie', 'safari'].reduce((score, browser) => {
-        return score + ({
-          shipped: 1,
-          'in-development': 0.5,
-          'under-consideration': 0.25,
-        }[feature[browser].status] || 0);
-      }, 0);
-      return feature;
-    }),
-    filter(({ score }) => score > 0)
+    map(scoreFeature),
+    filter(({ completeness }) => completeness >= 0.5)
   )(features);
 }

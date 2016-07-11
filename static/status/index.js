@@ -139,9 +139,10 @@ export default class Status extends React.Component {
           title='Chromestatus: Firefox Missing'
           rows={
             flow(
-              filter((feature) => !feature.caniuse),
-              filter(({ firefox }) => !firefox.version && firefox.status !== 'in-development'),
-              sortBy(['score', 'chrome.updated']),
+              // filter((feature) => feature.recent),
+              filter(({ firefox }) => firefox.status !== 'shipped'),
+              filter(({ firefox }) => firefox.status !== 'in-development'),
+              sortBy(['completeness', 'recency']),
               reverse
             )(popular)
           }
@@ -151,9 +152,14 @@ export default class Status extends React.Component {
           title='Chromestatus: Firefox Tracked'
           rows={
             flow(
-              filter((feature) => !feature.caniuse),
-              filter(({ firefox }) => firefox.version || firefox.status === 'in-development'),
-              sortBy(['score', 'chrome.updated']),
+              filter(({ firefox, chrome }) => {
+                return (
+                  firefox.version
+                    || firefox.status === 'shipped'
+                    || firefox.status === 'in-development'
+                  ) && chrome.status !== 'shipped';
+              }),
+              sortBy(['recency']),
               reverse
             )(popular)
           }
@@ -163,8 +169,9 @@ export default class Status extends React.Component {
           title='CanIUse: Firefox Untracked'
           rows={
             flow(
-              sortBy(['recency']),
+              // filter((feature) => feature.recency > 0),
               filter((feature) => !feature.firefox || feature.firefox.status !== 'shipped'),
+              sortBy(['recency']),
               reverse
             )(caniuse)
           }
