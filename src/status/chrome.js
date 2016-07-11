@@ -23,7 +23,7 @@ export async function getChromePopular() {
       return web_dev_views && web_dev_views.value <= 2;
     }),
     filter(({ ff_views, impl_status_chrome }) => {
-      return !/opossed/i.test(ff_views.text)
+      return !/opposed/i.test(ff_views.text)
         && !/pursuing|deprecat|removed/i.test(impl_status_chrome);
     }),
     map((chrome) => {
