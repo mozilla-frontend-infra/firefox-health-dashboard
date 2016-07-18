@@ -30,6 +30,7 @@ const dateBlacklist = [
   '2016-05-04',
   '2016-05-08',
   '2016-06-03',
+  '2016-07-04',
 ];
 const baseline = moment('2016-01-17', 'YYYY MM DD');
 
@@ -83,7 +84,9 @@ router
         };
       })
       .filter(({ rate, date }) => {
-        return rate > 3 && dateBlacklist.indexOf(date) < 0;
+        return rate > 3
+          && dateBlacklist.indexOf(date) < 0
+          && moment(date, 'YYYY MM DD').diff(new Date(), 'days') < -4;
       });
     ctx.body = reduced;
   })
