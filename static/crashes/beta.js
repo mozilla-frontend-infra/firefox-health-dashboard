@@ -34,7 +34,7 @@ export default class FirefoxBeta extends React.Component {
     function fixDate(list, field = 'date') {
       list.forEach((entry) => {
         if (entry[field]) {
-          entry[field] = new Date(entry[field]);
+          entry[field] = moment(entry[field], 'YYYY MM DD').toDate();
         }
       });
     }

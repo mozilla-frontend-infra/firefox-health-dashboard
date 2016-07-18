@@ -95,8 +95,7 @@ section.state-loading {
 .row {
 	flex: 1;
   display: flex;
-	padding: calc(var(--gutterY)) var(--gutterX);
-	/*overflow: hidden;*/
+	padding: calc(var(--gutterY) / 2) var(--gutterX);
 }
 .row header {
 	width: calc(2 * var(--gutterY));
@@ -178,6 +177,10 @@ svg {
 .graphic-scores {
 	display: flex;
 	align-items: center;
+}
+.row .graphic-scores {
+	flex-direction: column;
+	justify-content: space-around;
 }
 
 .scores {

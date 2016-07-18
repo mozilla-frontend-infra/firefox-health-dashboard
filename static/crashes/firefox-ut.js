@@ -3,8 +3,8 @@ import 'babel-polyfill';
 import React from 'react';
 import MG from 'metrics-graphics';
 import moment from 'moment';
-import { median } from 'simple-statistics';
 import Graphic from '../graphic';
+import Score from '../score';
 
 export default class FirefoxUtCrashes extends React.Component {
   state = {
@@ -23,17 +23,16 @@ export default class FirefoxUtCrashes extends React.Component {
     const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
     const markers = releases.map((entry) => {
       return {
-        date: new Date(entry.date),
+        date: moment(entry.date, 'YYYY MM DD').toDate(),
         label: entry.version,
       };
     });
     markers.push({
-      date: new Date('2016-04-01'),
+      date: moment('2016-04-01', 'YYYY MM DD').toDate(),
       label: 'Aggregate Start',
     });
     const baselines = [3.41, 4.25];
-    const avg = median(data.slice(-5).map(({ rate }) => rate));
-    this.setState({ data, markers, baselines, avg });
+    this.setState({ data, markers, baselines });
   }
 
   render() {
@@ -52,14 +51,7 @@ export default class FirefoxUtCrashes extends React.Component {
           max_x={moment().subtract(1, 'days').toDate()}
           // title='Firefox - Crashes per 1000 Usage Hours'
         />
-        <div className='graphic-scores'>
-          <div className='score'>
-            <span className='score-label'>5 Day Avg</span>
-            <span className='score-display'>
-              <span className='score-main'>{this.state.avg.toFixed(2)}</span>
-            </span>
-          </div>
-        </div>
+        <Score data={this.state.data} />
       </div>
     );
   }

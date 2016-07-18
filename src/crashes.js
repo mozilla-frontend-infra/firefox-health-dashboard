@@ -25,9 +25,13 @@ import {
 } from 'lodash';
 
 const dateBlacklist = [
+  '2016-05-01',
+  '2016-05-03',
+  '2016-05-04',
   '2016-05-08',
+  '2016-06-03',
 ];
-const baseline = new Date('2016-01-17');
+const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
 
@@ -93,6 +97,44 @@ router
       };
     });
     ctx.body = results;
+  })
+
+  .get('/xp', async (ctx) => {
+    const nonXpRates = await fetchRedash(689);
+    const xpRates = await fetchRedash(690);
+    const raw = await fetchRedash(331);
+    ctx.body = [
+      nonXpRates.query_result.data.rows
+        .map((row) => {
+          return {
+            date: row.activity_date,
+            rate: row.main_crash_rate,
+          };
+        })
+        .filter(({ date }) => {
+          return dateBlacklist.indexOf(date) < 0;
+        }),
+      xpRates.query_result.data.rows
+        .map((row) => {
+          return {
+            date: row.activity_date,
+            rate: row.main_crash_rate,
+          };
+        })
+        .filter(({ date }) => {
+          return dateBlacklist.indexOf(date) < 0;
+        }),
+      raw.query_result.data.rows
+        .map((row) => {
+          return {
+            date: row.activity_date,
+            rate: row.main_crash_rate,
+          };
+        })
+        .filter(({ rate, date }) => {
+          return rate > 3 && dateBlacklist.indexOf(date) < 0;
+        }),
+    ];
   })
 
   .get('/beta/builds', async (ctx) => {

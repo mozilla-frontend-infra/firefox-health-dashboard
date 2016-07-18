@@ -1,9 +1,10 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import moment from 'moment';
 import MG from 'metrics-graphics';
-import { median } from 'simple-statistics';
 import Graphic from '../graphic';
+import Score from '../score';
 
 export default class FirefoxAdiCrashes extends React.Component {
   state = {
@@ -23,13 +24,12 @@ export default class FirefoxAdiCrashes extends React.Component {
     const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
     const markers = releases.map((entry) => {
       return {
-        date: new Date(entry.date),
+        date: moment(entry.date, 'YYYY MM DD').toDate(),
         label: entry.version,
       };
     });
     const baseline = '2016-01-17'; // [0.75, 1.08];
-    const avg = median(data.slice(-7).map(({ rate }) => rate));
-    this.setState({ data, markers, baseline, avg });
+    this.setState({ data, markers, baseline });
   }
 
   render() {
@@ -44,16 +44,8 @@ export default class FirefoxAdiCrashes extends React.Component {
           y_accessor='rate'
           min_y='0.6'
           max_y='1.4'
-          // title='Firefox - Crashes per 100 ADI'
         />
-        <div className='graphic-scores'>
-          <div className='score'>
-            <span className='score-label'>5 Day Avg</span>
-            <span className='score-display'>
-              <span className='score-main'>{this.state.avg.toFixed(2)}</span>
-            </span>
-          </div>
-        </div>
+        <Score data={this.state.data} />
       </div>
     );
   }

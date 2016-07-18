@@ -1,9 +1,10 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import moment from 'moment';
 import MG from 'metrics-graphics';
-import { mean } from 'simple-statistics';
 import Graphic from '../graphic';
+import Score from '../score';
 
 export default class FennecAdiCrashes extends React.Component {
   state = {
@@ -25,13 +26,12 @@ export default class FennecAdiCrashes extends React.Component {
     ).json();
     const markers = releases.map((entry) => {
       return {
-        date: new Date(entry.date),
+        date: moment(entry.date, 'YYYY MM DD').toDate(),
         label: entry.version,
       };
     });
     const baseline = '2016-01-17'; // [1.26, 1.91];
-    const avg = mean(data.slice(-5).map(({ rate }) => rate));
-    this.setState({ data, markers, baseline, avg });
+    this.setState({ data, markers, baseline });
   }
 
   render() {
@@ -47,14 +47,7 @@ export default class FennecAdiCrashes extends React.Component {
           min_y='1'
           max_y='2'
         />
-        <div className='graphic-scores'>
-          <div className='score'>
-            <span className='score-label'>5 Day Avg</span>
-            <span className='score-display'>
-              <span className='score-main'>{this.state.avg.toFixed(2)}</span>
-            </span>
-          </div>
-        </div>
+        <Score data={this.state.data} />
       </div>
     );
   }

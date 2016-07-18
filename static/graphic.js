@@ -3,6 +3,7 @@ import React from 'react';
 import find from 'lodash/find';
 import MG from 'metrics-graphics';
 import cx from 'classnames';
+import moment from 'moment';
 
 export default class Graphic extends React.Component {
   constructor(props) {
@@ -24,9 +25,8 @@ export default class Graphic extends React.Component {
       const override = {};
       const { baseline } = this.props;
       if (baseline) {
-        const baselineStart = new Date(baseline);
         const needle = find(this.props.data, (point) => {
-          return point.date.toDateString() === baselineStart.toDateString();
+          return moment(point.date).format('YYYY-MM-DD') === baseline;
         });
         if (needle && needle.rate > 0) {
           const high = needle.rate;
@@ -35,9 +35,10 @@ export default class Graphic extends React.Component {
             { value: high, label: high.toFixed(2) },
             { value: low, label: low.toFixed(2) },
           ];
+          const baselineMarker = moment(baseline, 'YYYY MM DD');
           override.markers = Array.from(this.props.markers || []);
           override.markers.push({
-            date: baselineStart,
+            date: baselineMarker.toDate(),
             label: 'Baseline',
           });
         }

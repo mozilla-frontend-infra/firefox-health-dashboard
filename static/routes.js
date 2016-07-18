@@ -5,6 +5,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Home from './home.js';
 import ReleaseCrashes from './crashes/release.js';
 import BetaCrashes from './crashes/beta.js';
+import XpCrashes from './crashes/xp.js';
 import Regressions from './regressions.js';
 import Status from './status/index.js';
 
@@ -49,6 +50,7 @@ export default class Routes extends Component {
           <IndexRoute component={Home} />
           <Route path='crashes' component={ReleaseCrashes} />
           <Route path='crashes/beta' component={BetaCrashes} />
+          <Route path='crashes/xp' component={XpCrashes} />
           <Route path='regressions' component={Regressions} />
           <Route path='status' component={Status} />
         </Route>
