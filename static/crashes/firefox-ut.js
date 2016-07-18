@@ -31,8 +31,9 @@ export default class FirefoxUtCrashes extends React.Component {
       date: moment('2016-04-01', 'YYYY MM DD').toDate(),
       label: 'Aggregate Start',
     });
-    const baselines = [3.41, 4.25];
-    this.setState({ data, markers, baselines });
+    const baseline = '2016-01-17';
+    const min_x = moment(baseline, 'YYYY MM DD').subtract(3, 'days').toDate();
+    this.setState({ data, markers, min_x });
   }
 
   render() {
@@ -47,7 +48,6 @@ export default class FirefoxUtCrashes extends React.Component {
           y_accessor='rate'
           min_y='0'
           max_y='7'
-          min_x={moment().subtract(160, 'days').toDate()}
           max_x={moment().subtract(1, 'days').toDate()}
           // title='Firefox - Crashes per 1000 Usage Hours'
         />

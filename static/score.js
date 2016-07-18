@@ -19,7 +19,7 @@ export default function Score({ data }) {
         </span>
       </div>
       <div className='score'>
-        <span className='score-label'>Wkly Median</span>
+        <span className='score-label'>Weekly</span>
         <span className='score-display'>
           <span className='score-main'>{avg.toFixed(2)}</span>
         </span>

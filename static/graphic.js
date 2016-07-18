@@ -30,7 +30,7 @@ export default class Graphic extends React.Component {
         });
         if (needle && needle.rate > 0) {
           const high = needle.rate;
-          const low = high * 0.7;
+          const low = high * 0.67;
           override.baselines = [
             { value: high, label: high.toFixed(2) },
             { value: low, label: low.toFixed(2) },
