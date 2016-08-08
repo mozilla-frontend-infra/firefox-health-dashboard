@@ -92,15 +92,15 @@ describe('/crashes', () => {
       });
     });
   }
-  if (process.env.CRASH_STATS_TOKEN) {
-    describe('GET /crashes/urls', () => {
-      it('should return 200', (done) => {
-        request()
-        .get('/api/crashes/urls')
-        .expect(200, done);
-      });
-    });
-  }
+  // if (process.env.CRASH_STATS_TOKEN) {
+  //   describe('GET /crashes/urls', () => {
+  //     it('should return 200', (done) => {
+  //       request()
+  //       .get('/api/crashes/urls')
+  //       .expect(200, done);
+  //     });
+  //   });
+  // }
 });
 
 describe('/bz', () => {

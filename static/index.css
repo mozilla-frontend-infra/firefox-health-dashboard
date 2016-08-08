@@ -250,9 +250,12 @@ svg {
     stroke: none;
   }
   .candidate-build {
-    opacity: 0.5;
+    opacity: 0.25;
   }
   .candidate {
+		.candidate-no-signal {
+			opacity: 0.4;
+		}
     .candidate-hours {
 			opacity: 0.35;
 		}
@@ -382,10 +385,15 @@ svg {
   font-weight: 400;
 }
 .mg-markers text {
+	font-weight: 400;
+	opacity: 1;
+	font-size: var(--smallFontSize);
 	opacity: 0.7;
 	font-weight: 300;
+	@media (min-width: 1200px) {
+		font-weight: 300;
+	}
 }
-
 .mg-barplot rect.mg-bar {
 	fill: var(--dinoRed);
 }

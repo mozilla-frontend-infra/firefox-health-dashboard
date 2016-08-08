@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import React from 'react';
-import find from 'lodash/find';
 import MG from 'metrics-graphics';
 import cx from 'classnames';
 import moment from 'moment';
@@ -25,9 +24,9 @@ export default class Graphic extends React.Component {
       const override = {};
       const { baseline } = this.props;
       if (baseline) {
-        const needle = find(this.props.data, (point) => {
+        const needle = this.props.data.filter((point) => {
           return moment(point.date).format('YYYY-MM-DD') === baseline;
-        });
+        })[0];
         if (needle && needle.rate > 0) {
           const high = needle.rate;
           const low = high * 0.67;

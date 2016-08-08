@@ -4,6 +4,7 @@ import {
   median,
   standardDeviation,
   geometricMean,
+  mean,
  } from 'simple-statistics';
 import qs from 'qs';
 import { parse as parseVersion } from './meta/version';
@@ -150,16 +151,16 @@ router
       'activity_date',
       (a) => Date.parse(a)
     );
-    const betaE10sRaw = sortBy(
-      (await fetchRedash(497)).query_result.data.rows,
-      'activity_date',
-      (a) => Date.parse(a)
-    );
+    // const betaE10sRaw = sortBy(
+    //   (await fetchRedash(497)).query_result.data.rows,
+    //   'activity_date',
+    //   (a) => Date.parse(a)
+    // );
 
     let builds = betaRaw.reduce((lookup, row) => {
-      if (dateBlacklist.indexOf(row.activity_date) > -1) {
-        return lookup;
-      }
+      // if (dateBlacklist.indexOf(row.activity_date) > -1) {
+      //   return lookup;
+      // }
       let result = find(lookup, ({ build }) => build === row.build_id);
       if (!result) {
         const buildDate = moment(row.build_id, 'YYYYMMDD');
@@ -182,17 +183,25 @@ router
       }
       const add = {
         date: row.activity_date,
+        // Deseasonalize with hardcoded seasonality index
         rate: row.main_crash_rate,
         hours: row.usage_kilohours,
       };
-      const e10sRow = find(betaE10sRaw, {
-        activity_date: row.activity_date,
-        build_id: row.build_id,
-      });
-      if (e10sRow) {
-        add.e01sMain = e10sRow.main_crash_rate;
-        add.e01sContent = e10sRow.content_crash_rate;
+      const day = moment(Date.parse(row.activity_date)).format('dd');
+      if (day === 'Su') {
+        const saturday = result.dates.slice(-1)[0];
+        const combined = (add.rate + saturday.rate) / 2 * 1.2;
+        saturday.rate = combined;
+        add.rate = combined;
       }
+      // const e10sRow = find(betaE10sRaw, {
+      //   activity_date: row.activity_date,
+      //   build_id: row.build_id,
+      // });
+      // if (e10sRow) {
+      //   add.e01sMain = e10sRow.main_crash_rate;
+      //   add.e01sContent = e10sRow.content_crash_rate;
+      // }
       result.dates.push(add);
       return lookup;
     }, []);
@@ -206,15 +215,17 @@ router
       const avg = median(build.dates.map(({ rate }) => rate));
       const brokenDate = (build.dates[0].rate > avg);
       const slice = brokenDate
-        ? build.dates.slice(-Math.round(build.dates.length / 2))
-        : build.dates.slice(1);
-      if (slice.length > 2) {
-        const rates = slice.map(({ rate }) => rate);
-        build.rate = median(rates) || 0;
-        build.variance = standardDeviation(rates) || 0;
+        ? -Math.round(build.dates.length / 2)
+        : 0;
+      if (build.dates.length - slice >= 2) {
+        const rates = () => build.dates.slice(slice).map(({ rate }) => rate);
+        build.rate = mean(rates()) || 0;
+        build.variance = standardDeviation(rates()) || 0;
         build.dates = build.dates.filter(({ rate }) => {
-          return Math.abs(build.rate - rate) < build.variance * 2;
+          return Math.abs(build.rate - rate) < build.variance * 1;
         });
+        build.rate = mean(rates()) || 0;
+        build.variance = standardDeviation(rates()) || 0;
         if (build.rate < 3 && build.candidate === 'rc') {
           build.rate = 0;
         }

@@ -4,12 +4,12 @@ import React from 'react';
 import d3 from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
-import find from 'lodash/find';
-import findLast from 'lodash/findLast';
-import sumBy from 'lodash/sumBy';
+import find from 'lodash/fp/find';
+import findLast from 'lodash/fp/findLast';
+import sumBy from 'lodash/fp/sumBy';
 import Dashboard from '../dashboard';
 
-const rateRange = [2, 8];
+const rateRange = [0, 12];
 const colorScale = d3.scale.category10();
 const center = 0.62;
 const full = 0.38;
@@ -79,7 +79,7 @@ export default class FirefoxBeta extends React.Component {
       ratio = full;
       x = wide - 2;
     }
-    const hoursRange = [0, sumBy(builds, 'hours')];
+    const hoursRange = [0, sumBy('hours')(builds)];
     const dateRange = [start, release.date];
     const xScale = d3.time.scale()
       .domain(dateRange)
@@ -108,6 +108,7 @@ export default class FirefoxBeta extends React.Component {
       return this.renderCandidate({
         release: candidate,
         idx: cidx,
+        rate: candidate.rate,
         xScale,
         yScale,
         hoursScale,
@@ -201,6 +202,7 @@ export default class FirefoxBeta extends React.Component {
     release,
     xScale,
     yScale,
+    rate,
     hoursScale,
     hoursX,
     path,
@@ -208,16 +210,21 @@ export default class FirefoxBeta extends React.Component {
   }) {
     const color = colorScale(idx);
     const start = release.release || release.date;
-    const rate = yScale(release.rate);
+    const releaseRate = yScale(release.rate);
     const title = `${(release.hours / 1000).toFixed(1)}m usage hours`;
     const hoursStart = hoursScale(hoursX - (release.hours || 0));
     const hourWidth = hoursScale(hoursX) - hoursStart;
     const { gridY } = this.props;
     const topY = gridY * 5;
+    console.log(rate);
+    const cls = cx('candidate', {
+      'candidate-no-signal': !rate,
+      'candidate-has-signal': rate,
+    });
     return (
       <g
         key={`candidate-${release.build}`}
-        className='candidate'
+        className={cls}
       >
         <g
           style={{
@@ -227,9 +234,9 @@ export default class FirefoxBeta extends React.Component {
           <line
             className='candidate-marker'
             x1={0}
-            y1={(rate || topY) - 5}
+            y1={(releaseRate || topY) - 5}
             x2={0}
-            y2={(rate || topY) + 5}
+            y2={(releaseRate || topY) + 5}
             stroke={color}
           />
           <line
@@ -311,10 +318,7 @@ export default class FirefoxBeta extends React.Component {
         );
       }
 
-      const hasNext = find(
-        crashes,
-        { version: planned.version }
-      );
+      const hasNext = find({ version: planned.version })(crashes);
       const timeline = (hasNext && hasNext.rate)
         ? [planned].concat(history.slice(0, 4))
         : history.slice(0, 5);
@@ -325,7 +329,7 @@ export default class FirefoxBeta extends React.Component {
         return this.renderRelease({
           release,
           idx: idx - 1,
-          crashes: find(crashes, { version: release.version }),
+          crashes: find({ version: release.version })(crashes),
           start,
           yScale,
         });

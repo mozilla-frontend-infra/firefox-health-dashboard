@@ -23,9 +23,13 @@ export default class FirefoxAdiCrashes extends React.Component {
     const data = MG.convert.date(crashes, 'date');
     const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
     const markers = releases.map((entry) => {
+      const version = entry.version;
+      // if (!/\.0$/.test(version)) {
+      //   version = version.slice(-2);
+      // }
       return {
         date: moment(entry.date, 'YYYY MM DD').toDate(),
-        label: entry.version,
+        label: version,
       };
     });
     const baseline = '2016-01-17'; // [0.75, 1.08];
