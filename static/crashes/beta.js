@@ -216,7 +216,6 @@ export default class FirefoxBeta extends React.Component {
     const hourWidth = hoursScale(hoursX) - hoursStart;
     const { gridY } = this.props;
     const topY = gridY * 5;
-    console.log(rate);
     const cls = cx('candidate', {
       'candidate-no-signal': !rate,
       'candidate-has-signal': rate,
