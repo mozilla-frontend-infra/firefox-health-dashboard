@@ -190,9 +190,11 @@ router
       const day = moment(Date.parse(row.activity_date)).format('dd');
       if (day === 'Su') {
         const saturday = result.dates.slice(-1)[0];
-        const combined = (add.rate + saturday.rate) / 2 * 1.2;
-        saturday.rate = combined;
-        add.rate = combined;
+        if (saturday) {
+          const combined = (add.rate + saturday.rate) / 2 * 1.2;
+          saturday.rate = combined;
+          add.rate = combined;
+        }
       }
       // const e10sRow = find(betaE10sRaw, {
       //   activity_date: row.activity_date,
