@@ -29,6 +29,7 @@ const dateBlacklist = [
   '2016-05-01',
   '2016-05-03',
   '2016-05-04',
+  '2016-05-07',
   '2016-05-08',
   '2016-06-03',
   '2016-07-04',
@@ -36,6 +37,23 @@ const dateBlacklist = [
 const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
+
+const weeklyAverage = (result, idx, results) => {
+  if (idx < 3) {
+    return result;
+  }
+  const weekRate = results.slice(idx - 3, idx + 3).map(past => past.dirty);
+  const avg = median(weekRate);
+  const deviation = standardDeviation(weekRate);
+  if (Math.abs(result.dirty - avg) > deviation * 3) {
+    return result;
+  }
+  const weeklyCleanAvg = mean(weekRate
+    .filter(rate => rate - avg < deviation && rate - avg > deviation * -1.5)
+  );
+  result.rate = weeklyCleanAvg;
+  return result;
+};
 
 router
   .get('/adi', async (ctx) => {
@@ -45,33 +63,17 @@ router
       firefox: 'https://crash-analysis.mozilla.com/rkaiser/Firefox-release-bytype.json',
     };
     const raw = await fetchJson(urls[product]);
-    const ratesByDay = Object.keys(raw).reduce((result, date) => {
-      const time = moment(date, 'YYYY MM DD');
-      if (time.diff(baseline, 'days') < -3) {
-        return result;
-      }
-      const entry = raw[date];
-      let rate = (entry.crashes.Browser / entry.adi) * 100;
-      const day = moment(date, 'YYYY MM DD').format('dd');
-      // Deseasonalize with hardcoded seasonality index
-      if (product === 'firefox') {
-        rate *= {
-          Fr: 0.99,
-          Sa: 0.91,
-          Su: 0.92,
-          Mo: 1,
-        }[day] || 1;
-      } else {
-        rate *= {
-          Fr: 0.99,
-          Sa: 0.93,
-          Su: 0.895,
-          Mo: 0.99,
-        }[day] || 1;
-      }
-      result.push({ date, rate });
-      return result;
-    }, []);
+    const ratesByDay = Object.keys(raw)
+      .map((date) => {
+        const entry = raw[date];
+        const dirty = (entry.crashes.Browser / entry.adi) * 100;
+        return { date, dirty };
+      })
+      .map(weeklyAverage)
+      .filter((result) => {
+        const time = moment(result.date, 'YYYY MM DD');
+        return (time.diff(baseline, 'days') >= -4);
+      });
     ctx.body = ratesByDay;
   })
 
@@ -81,14 +83,15 @@ router
       .map((row) => {
         return {
           date: row.activity_date,
-          rate: row.main_crash_rate,
+          dirty: row.main_crash_rate,
         };
       })
-      .filter(({ rate, date }) => {
-        return rate > 3
+      .filter(({ dirty, date }) => {
+        return dirty > 3
           && dateBlacklist.indexOf(date) < 0
           && moment(date, 'YYYY MM DD').diff(new Date(), 'days') < -4;
-      });
+      })
+      .map(weeklyAverage);
     ctx.body = reduced;
   })
 

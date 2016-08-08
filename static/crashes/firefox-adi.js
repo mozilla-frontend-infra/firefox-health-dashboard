@@ -48,6 +48,7 @@ export default class FirefoxAdiCrashes extends React.Component {
           y_accessor='rate'
           min_y='0.6'
           max_y='1.4'
+          cleaned
         />
         <Score data={this.state.data} />
       </div>

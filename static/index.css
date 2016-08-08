@@ -139,6 +139,10 @@ svg path {
 .mg-line1-color {
   stroke: var(--flameYellowVibrant);
 }
+.mg-line2-color {
+  stroke: var(--mobileBlueVibrant);
+	opacity: 0.3 !important;
+}
 .mg-area1-color {
   fill: var(--flameYellowVibrant);
 }

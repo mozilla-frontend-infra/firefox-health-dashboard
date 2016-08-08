@@ -46,6 +46,7 @@ export default class FennecAdiCrashes extends React.Component {
           y_accessor='rate'
           min_y='1'
           max_y='2'
+          cleaned
         />
         <Score data={this.state.data} />
       </div>
