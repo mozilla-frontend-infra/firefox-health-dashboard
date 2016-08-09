@@ -39,18 +39,20 @@ const baseline = moment('2016-01-17', 'YYYY MM DD');
 export const router = new Router();
 
 const weeklyAverage = (result, idx, results) => {
-  if (idx < 3) {
+  const bandwidth = 4;
+  if (idx < bandwidth) {
     return result;
   }
-  const weekRate = results.slice(idx - 3, idx + 3).map(past => past.dirty);
+  const weekRate = results.slice(idx - bandwidth, idx + bandwidth).map(past => past.dirty);
   const avg = median(weekRate);
   const deviation = standardDeviation(weekRate);
-  if (Math.abs(result.dirty - avg) > deviation * 3) {
-    return result;
-  }
   const weeklyCleanAvg = mean(weekRate
-    .filter(rate => rate - avg < deviation && rate - avg > deviation * -1.5)
+    .filter(rate => rate - avg < deviation / 2 && rate - avg > deviation * -2)
   );
+  // if (Math.abs(result.dirty - avg) > deviation * 3) {
+  //   console.log('Dropped', result.date);
+  //   return result;
+  // }
   result.rate = weeklyCleanAvg;
   return result;
 };
