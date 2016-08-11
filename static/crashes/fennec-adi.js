@@ -19,8 +19,8 @@ export default class FennecAdiCrashes extends React.Component {
   }
 
   async fetch() {
-    const crashes = await (await fetch('/api/crashes/adi?product=fennec')).json();
-    const data = MG.convert.date(crashes, 'date');
+    const { rates, baselines } = await (await fetch('/api/crashes/adi?product=fennec')).json();
+    const data = MG.convert.date(rates, 'date');
     const releases = await (
       await fetch('/api/release/history?product=fennec&tailVersion=5')
     ).json();
@@ -30,8 +30,7 @@ export default class FennecAdiCrashes extends React.Component {
         label: entry.version,
       };
     });
-    const baseline = '2016-01-17'; // [1.26, 1.91];
-    this.setState({ data, markers, baseline });
+    this.setState({ data, markers, baselines });
   }
 
   render() {
@@ -48,7 +47,10 @@ export default class FennecAdiCrashes extends React.Component {
           max_y='2'
           cleaned
         />
-        <Score data={this.state.data} />
+        <Score
+          data={this.state.data}
+          baselines={this.state.baselines}
+        />
       </div>
     );
   }

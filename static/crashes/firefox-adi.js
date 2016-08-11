@@ -19,8 +19,8 @@ export default class FirefoxAdiCrashes extends React.Component {
   }
 
   async fetch() {
-    const crashes = await (await fetch('/api/crashes/adi')).json();
-    const data = MG.convert.date(crashes, 'date');
+    const { rates, baselines } = await (await fetch('/api/crashes/adi')).json();
+    const data = MG.convert.date(rates, 'date');
     const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
     const markers = releases.map((entry) => {
       const version = entry.version;
@@ -32,8 +32,8 @@ export default class FirefoxAdiCrashes extends React.Component {
         label: version,
       };
     });
-    const baseline = '2016-01-17'; // [0.75, 1.08];
-    this.setState({ data, markers, baseline });
+    // const baseline = '2016-01-17'; // [0.75, 1.08];
+    this.setState({ data, markers, baselines });
   }
 
   render() {
@@ -46,11 +46,14 @@ export default class FirefoxAdiCrashes extends React.Component {
           {...this.state}
           x_accessor='date'
           y_accessor='rate'
-          min_y='0.6'
-          max_y='1.4'
+          min_y='0.75'
+          max_y='1.25'
           cleaned
         />
-        <Score data={this.state.data} />
+        <Score
+          data={this.state.data}
+          baselines={this.state.baselines}
+        />
       </div>
     );
   }

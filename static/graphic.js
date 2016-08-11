@@ -22,7 +22,7 @@ export default class Graphic extends React.Component {
         height: this.height,
       };
       const override = {};
-      const { baseline } = this.props;
+      const { baseline, baselines } = this.props;
       if (baseline) {
         const needle = this.props.data.filter((point) => {
           return moment(point.date).format('YYYY-MM-DD') === baseline;
@@ -36,12 +36,23 @@ export default class Graphic extends React.Component {
             { value: low, label: low.toFixed(2) },
           ];
           const baselineMarker = moment(baseline, 'YYYY MM DD');
-          override.markers = Array.from(this.props.markers || []);
-          override.markers.push({
-            date: baselineMarker.toDate(),
-            label: 'Baseline',
-          });
+          override.markers = Array.from(this.props.markers || [])
+            .concat([{
+              date: baselineMarker.toDate(),
+              label: 'Baseline',
+            }]);
         }
+      }
+      if (baselines && baselines.length) {
+        override.baselines = [
+          { value: baselines[0].rate, label: 'Target' }, // baselines[0].rate.toFixed(2)
+          { value: baselines[1].rate, label: 'Baseline' }, // baselines[1].rate.toFixed(2)
+        ];
+        override.markers = Array.from(this.props.markers || [])
+          .concat([{
+            date: new Date(baselines[1].date),
+            label: 'Baseline',
+          }]);
       }
       if (this.props.cleaned) {
         override.data = this.props.data.reduce((split, entry) => {

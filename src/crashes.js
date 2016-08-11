@@ -34,6 +34,7 @@ const dateBlacklist = [
   '2016-06-03',
   '2016-07-04',
 ];
+const target = moment('2015-01-17', 'YYYY MM DD');
 const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
@@ -65,6 +66,7 @@ router
       firefox: 'https://crash-analysis.mozilla.com/rkaiser/Firefox-release-bytype.json',
     };
     const raw = await fetchJson(urls[product]);
+    const baselines = [0, 0];
     const ratesByDay = Object.keys(raw)
       .map((date) => {
         const entry = raw[date];
@@ -74,9 +76,21 @@ router
       .map(weeklyAverage)
       .filter((result) => {
         const time = moment(result.date, 'YYYY MM DD');
+        if (!time.diff(target, 'days')) {
+          baselines[0] = result.rate;
+        }
+        if (!time.diff(baseline, 'days')) {
+          baselines[1] = result.rate;
+        }
         return (time.diff(baseline, 'days') >= -4);
       });
-    ctx.body = ratesByDay;
+    ctx.body = {
+      baselines: [
+        { date: target.toDate(), rate: baselines[0] },
+        { date: baseline.toDate(), rate: baselines[1] },
+      ],
+      rates: ratesByDay,
+    };
   })
 
   .get('/', async (ctx) => {
