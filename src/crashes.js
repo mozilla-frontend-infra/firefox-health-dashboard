@@ -34,7 +34,7 @@ const dateBlacklist = [
   '2016-06-03',
   '2016-07-04',
 ];
-const target = moment('2015-01-17', 'YYYY MM DD');
+const target = moment('2015-01-15', 'YYYY MM DD');
 const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
@@ -74,15 +74,18 @@ router
         return { date, dirty };
       })
       .map(weeklyAverage)
-      .filter((result) => {
+      .filter((result, idx, results) => {
         const time = moment(result.date, 'YYYY MM DD');
         if (!time.diff(target, 'days')) {
-          baselines[0] = result.rate;
+          // Target from 2-weeks average
+          baselines[0] = mean(results.slice(idx - 7, idx + 7).map(past => past.rate));
         }
         if (!time.diff(baseline, 'days')) {
-          baselines[1] = result.rate;
+          // Baseline from 2-weeks average
+          baselines[1] = mean(results.slice(idx - 7, idx + 7).map(past => past.rate));
         }
-        return (time.diff(baseline, 'days') >= -4);
+        // Only show 4 days before baseline
+        return (time.diff(baseline, 'days') >= -7);
       });
     ctx.body = {
       baselines: [
