@@ -40,6 +40,8 @@ const baseline = moment('2016-01-17', 'YYYY MM DD');
 export const router = new Router();
 
 const weeklyAverage = (result, idx, results) => {
+  // 4 as mostly-weekly. Bandwidth of 3 would be actually a full week
+  // but still allows weekends to raise the rate on weekdays.
   const bandwidth = 4;
   if (idx < bandwidth) {
     return result;
@@ -77,15 +79,15 @@ router
       .filter((result, idx, results) => {
         const time = moment(result.date, 'YYYY MM DD');
         if (!time.diff(target, 'days')) {
-          // Target from 2-weeks average
-          baselines[0] = mean(results.slice(idx - 7, idx + 7).map(past => past.rate));
+          // Target from 10 day average
+          baselines[0] = mean(results.slice(idx - 5, idx + 5).map(past => past.rate));
         }
         if (!time.diff(baseline, 'days')) {
-          // Baseline from 2-weeks average
-          baselines[1] = mean(results.slice(idx - 7, idx + 7).map(past => past.rate));
+          // Baseline from 10 day average
+          baselines[1] = mean(results.slice(idx - 5, idx + 5).map(past => past.rate));
         }
-        // Only show 4 days before baseline
-        return (time.diff(baseline, 'days') >= -7);
+        // Only show 4 days before baseline in the chart
+        return (time.diff(baseline, 'days') >= -4);
       });
     ctx.body = {
       baselines: [
