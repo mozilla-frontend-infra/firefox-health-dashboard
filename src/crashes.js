@@ -6,24 +6,23 @@ import {
   geometricMean,
   mean,
  } from 'simple-statistics';
+import {
+   uniq,
+   flatten,
+   sumBy,
+   zipObject,
+   without,
+   countBy,
+   sortBy,
+   toPairs,
+   find,
+ } from 'lodash';
 import qs from 'qs';
 import { parse as parseVersion } from './meta/version';
 import fetchJson from './fetch/json';
 import fetchRedash from './fetch/redash';
 import fetchCrashStats from './fetch/crash-stats';
 import { getHistory } from './release/history';
-
-import {
-  uniq,
-  flatten,
-  sumBy,
-  zipObject,
-  without,
-  countBy,
-  sortBy,
-  toPairs,
-  find,
-} from 'lodash';
 
 const dateBlacklist = [
   '2016-05-01',
@@ -39,24 +38,15 @@ const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
 
+const bandwidth = 3;
 const weeklyAverage = (result, idx, results) => {
-  // 4 as mostly-weekly. Bandwidth of 3 would be actually a full week
-  // but still allows weekends to raise the rate on weekdays.
-  const bandwidth = 4;
   if (idx < bandwidth) {
     return result;
   }
-  const weekRate = results.slice(idx - bandwidth, idx + bandwidth).map(past => past.dirty);
-  const avg = median(weekRate);
-  const deviation = standardDeviation(weekRate);
-  const weeklyCleanAvg = mean(weekRate
-    .filter(rate => rate - avg < deviation / 2 && rate - avg > deviation * -2)
-  );
-  // if (Math.abs(result.dirty - avg) > deviation * 3) {
-  //   console.log('Dropped', result.date);
-  //   return result;
-  // }
-  result.rate = weeklyCleanAvg;
+  const weekRate = results
+    .slice(idx - bandwidth, idx + bandwidth).map(past => past.dirty);
+  const avg = mean(weekRate);
+  result.rate = avg;
   return result;
 };
 
@@ -75,16 +65,21 @@ router
         const dirty = (entry.crashes.Browser / entry.adi) * 100;
         return { date, dirty };
       })
+      .filter(({ dirty }) => dirty > 0.5) // Remove outages
       .map(weeklyAverage)
       .filter((result, idx, results) => {
         const time = moment(result.date, 'YYYY MM DD');
         if (!time.diff(target, 'days')) {
           // Target from 10 day average
-          baselines[0] = mean(results.slice(idx - 5, idx + 5).map(past => past.rate));
+          baselines[0] = mean(
+            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
+          );
         }
         if (!time.diff(baseline, 'days')) {
           // Baseline from 10 day average
-          baselines[1] = mean(results.slice(idx - 5, idx + 5).map(past => past.rate));
+          baselines[1] = mean(
+            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
+          );
         }
         // Only show 4 days before baseline in the chart
         return (time.diff(baseline, 'days') >= -4);
@@ -181,7 +176,7 @@ router
     //   (a) => Date.parse(a)
     // );
 
-    let builds = betaRaw.reduce((lookup, row) => {
+    const builds = betaRaw.reduce((lookup, row) => {
       // if (dateBlacklist.indexOf(row.activity_date) > -1) {
       //   return lookup;
       // }
@@ -215,7 +210,7 @@ router
       if (day === 'Su') {
         const saturday = result.dates.slice(-1)[0];
         if (saturday) {
-          const combined = (add.rate + saturday.rate) / 2 * 1.2;
+          const combined = ((add.rate + saturday.rate) / 2) * 1.2;
           saturday.rate = combined;
           add.rate = combined;
         }
@@ -257,7 +252,6 @@ router
         }
       }
     });
-    builds = sortBy(builds, 'build');
 
     const releases = builds.reduce((lookup, result) => {
       let entry = find(lookup, ({ version }) => version === result.version);

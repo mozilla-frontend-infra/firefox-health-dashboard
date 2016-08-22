@@ -14,7 +14,7 @@ export default function Score({ data, baselines }) {
   if (baselines) {
     const low = baselines[1].rate;
     const high = baselines[0].rate;
-    baselining = (rate) => `${Math.round(((1 - (high - rate) / (high - low)) * 100))}%`;
+    baselining = (rate) => `${Math.round(((1 - ((high - rate) / (high - low))) * 100))}%`;
   }
   return (
     <div className='graphic-scores'>

@@ -49,10 +49,16 @@ export default class Graphic extends React.Component {
           { value: baselines[1].rate, label: 'Baseline' }, // baselines[1].rate.toFixed(2)
         ];
         override.markers = Array.from(this.props.markers || [])
-          .concat([{
-            date: new Date(baselines[1].date),
-            label: 'Baseline',
-          }]);
+          .concat([
+            // {
+            //   date: new Date(baselines[0].date),
+            //   label: 'Target',
+            // },
+            {
+              date: new Date(baselines[1].date),
+              label: 'Baseline',
+            },
+          ]);
       }
       if (this.props.cleaned) {
         override.data = this.props.data.reduce((split, entry) => {
@@ -96,7 +102,6 @@ Graphic.defaultProps = {
   full_width: true,
   show_secondary_x_label: false,
   y_extended_ticks: false,
-  interpolate: 'monotone',
   cleaned: false,
 };
 Graphic.propTypes = {

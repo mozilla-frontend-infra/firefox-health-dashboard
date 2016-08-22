@@ -65,7 +65,8 @@ export default class FirefoxBeta extends React.Component {
   }
   renderRelease({ release, start, yScale, idx, crashes }) {
     const { gridY, gridX } = this.props;
-    const builds = crashes ? crashes.builds : [];
+    const builds = (crashes ? crashes.builds : [])
+      .filter(filter => filter.dates.length);
     if (!builds.length) {
       console.log('Skipped', release.version);
       return null;
@@ -84,6 +85,7 @@ export default class FirefoxBeta extends React.Component {
     const xScale = d3.time.scale()
       .domain(dateRange)
       .range([-ratio * wide, 0]);
+    console.log(builds);
     const lastDayX = Math.min(
       xScale(builds.slice(-1)[0].dates.slice(-1)[0].date),
       0

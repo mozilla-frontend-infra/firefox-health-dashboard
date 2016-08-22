@@ -83,8 +83,7 @@ const Feature = ({ entry }) => {
           <i
             className='icon-ref icon-bz'
             title='Shipping status from bugzilla'
-          >
-          </i>
+          />
         );
       }
       return (
@@ -104,7 +103,7 @@ const Feature = ({ entry }) => {
         key={`feature-${id}-title`}
         className='feature-title'
       >
-        <a href={entry.link} target='_blank'>
+        <a href={entry.link} target='_blank' rel='noopener noreferrer'>
           {entry.name}
         </a>
       </span>

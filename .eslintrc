@@ -1,5 +1,10 @@
 {
   "extends": ["airbnb"],
+  "globals": {
+    "window": true,
+    "document": true,
+    "location": true
+  },
   "rules": {
     "no-console": [0],
     "jsx-quotes": [2, "prefer-single"],
@@ -13,7 +18,10 @@
     "object-shorthand": [0],
     "camelcase": [0],
     "global-require": [0],
-    "react/prefer-stateless-function": [0]
+    "react/prefer-stateless-function": [0],
+    "react/jsx-filename-extension": [0],
+    "import/prefer-default-export": [0],
+    "no-mixed-operators": [0]
   },
   "parser": "babel-eslint"
 }
