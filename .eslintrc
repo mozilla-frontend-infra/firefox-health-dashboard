@@ -1,5 +1,6 @@
 {
-  "extends": ["airbnb"],
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
   "globals": {
     "window": true,
     "document": true,
@@ -22,6 +23,5 @@
     "react/jsx-filename-extension": [0],
     "import/prefer-default-export": [0],
     "no-mixed-operators": [0]
-  },
-  "parser": "babel-eslint"
+  }
 }

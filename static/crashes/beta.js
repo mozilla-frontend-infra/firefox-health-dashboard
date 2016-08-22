@@ -7,7 +7,6 @@ import cx from 'classnames';
 import find from 'lodash/fp/find';
 import findLast from 'lodash/fp/findLast';
 import sumBy from 'lodash/fp/sumBy';
-import Dashboard from '../dashboard';
 
 const rateRange = [0, 12];
 const colorScale = d3.scale.category10();
@@ -337,7 +336,7 @@ export default class FirefoxBeta extends React.Component {
       });
 
       details = timeline.map(({ version }, idx) => {
-        let scores = [];
+        const scores = [];
         const entry = find(crashes, { version: version });
         if (entry && entry.rate) {
           scores.push(
