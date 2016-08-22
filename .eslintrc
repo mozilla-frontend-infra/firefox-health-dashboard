@@ -1,27 +1,36 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
+  "extends": "airbnb",
   "globals": {
     "window": true,
     "document": true,
     "location": true
   },
   "rules": {
-    "no-console": [0],
-    "jsx-quotes": [2, "prefer-single"],
-    "no-param-reassign": [0],
-    "guard-for-in": [0],
-    "arrow-body-style": [0],
-    "no-restricted-syntax": [0],
-    "no-unused-vars": [1],
-    "no-loop-func": [0],
-    "no-confusing-arrow": ["error", { "allowParens": true }],
-    "object-shorthand": [0],
-    "camelcase": [0],
-    "global-require": [0],
-    "react/prefer-stateless-function": [0],
-    "react/jsx-filename-extension": [0],
-    "import/prefer-default-export": [0],
-    "no-mixed-operators": [0]
+    "no-console": 0,
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "no-param-reassign": 0,
+    "guard-for-in": 0,
+    "arrow-body-style": 0,
+    "no-restricted-syntax": 0,
+    "no-unused-vars": 1,
+    "no-loop-func": 0,
+    "no-confusing-arrow": [
+      "error",
+      {
+        "allowParens": true
+      }
+    ],
+    "object-shorthand": 0,
+    "camelcase": 0,
+    "global-require": 0,
+    "react/prefer-stateless-function": 0,
+    "react/jsx-filename-extension": 0,
+    "import/prefer-default-export": 0,
+    "no-mixed-operators": 0,
+    "generator-star-spacing": 0
   }
 }

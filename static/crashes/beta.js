@@ -7,6 +7,7 @@ import cx from 'classnames';
 import find from 'lodash/fp/find';
 import findLast from 'lodash/fp/findLast';
 import sumBy from 'lodash/fp/sumBy';
+import Dashboard from './../dashboard';
 
 const rateRange = [0, 12];
 const colorScale = d3.scale.category10();

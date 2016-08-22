@@ -1,5 +1,5 @@
-import fetchText from './text';
 import cheerio from 'cheerio';
+import fetchText from './text';
 
 export default async function fetchHtml(url, options = {}) {
   const { xml = false } = options;

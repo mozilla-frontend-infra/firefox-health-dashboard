@@ -1,5 +1,5 @@
-import fetchCrashStats from '../fetch/crash-stats';
 import moment from 'moment';
+import fetchCrashStats from '../fetch/crash-stats';
 import { getHistory } from '../release/history';
 
 export async function getAdi({ product, channel, dateRange }) {

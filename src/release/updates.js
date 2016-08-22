@@ -21,7 +21,7 @@ export async function getUpdate(channel = 'release') {
 export async function getUpdates() {
   const result = {};
   for (const channel of channels) {
-    result[channel] = getUpdate(channel);
+    result[channel] = await getUpdate(channel);
   }
   return result;
 }

@@ -1,6 +1,4 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
 import http from 'http';
 import logger from 'koa-logger';
 import responseTime from 'koa-response-time';
@@ -10,9 +8,16 @@ import staticCache from 'koa-static-cache';
 import webpackDevMiddleware from 'koa-webpack-dev-middleware';
 import webpackHotMiddleware from 'koa-webpack-hot-middleware';
 import webpack from 'webpack';
-import webpackConfig from './../webpack.config.babel.js';
 import Koa from 'koa';
 import { createClient } from 'then-redis';
+import webpackConfig from './../webpack.config.babel.js';
+
+import { router as release } from './release';
+import { router as crashes } from './crashes';
+import { router as bz } from './bz';
+import { router as status } from './status';
+
+dotenv.config();
 const version = require('../package.json').version;
 
 const app = new Koa();
@@ -38,13 +43,9 @@ api.get('/cache/flush', async (ctx) => {
   };
 });
 
-import { router as release } from './release';
 api.use('/release', release.routes());
-import { router as crashes } from './crashes';
 api.use('/crashes', crashes.routes());
-import { router as bz } from './bz';
 api.use('/bz', bz.routes());
-import { router as status } from './status';
 api.use('/status', status.routes());
 
 const index = new Router();

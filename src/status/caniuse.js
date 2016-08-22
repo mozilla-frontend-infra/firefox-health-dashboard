@@ -1,6 +1,6 @@
-import fetchJson from '../fetch/json';
 import { flow, map, sortBy, toPairs, some, filter, find } from 'lodash/fp';
 import caniuse from 'caniuse-db/data.json';
+import fetchJson from '../fetch/json';
 import { resolveCategory, latestPlatforms, scoreFeature, platforms } from '../meta/feature';
 
 const firefoxBase = 'https://platform-status.mozilla.org/api/status';

@@ -66,14 +66,12 @@ export async function getChromePopular() {
         if (firefoxRef.firefox_version) {
           result.firefox.version = firefoxRef.firefox_version;
         }
-      } else {
-        if (/show_bug\.cgi/.test(chrome.ff_views_link || '')) {
-          const id = chrome.ff_views_link.match(/id=([^$#]+)/)[1];
-          queuedIds.push({
-            id: id,
-            feature: result,
-          });
-        }
+      } else if (/show_bug\.cgi/.test(chrome.ff_views_link || '')) {
+        const id = chrome.ff_views_link.match(/id=([^$#]+)/)[1];
+        queuedIds.push({
+          id: id,
+          feature: result,
+        });
       }
       let caniuseRef = findKey({ chrome_id: chrome.id })(caniuse.data);
       if (!caniuseRef && firefoxRef && firefoxRef.caniuse_ref) {
