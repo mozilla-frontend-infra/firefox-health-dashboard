@@ -38,7 +38,7 @@ const baseline = moment('2016-01-17', 'YYYY MM DD');
 
 export const router = new Router();
 
-const bandwidth = 3;
+const bandwidth = 7;
 const weeklyAverage = (result, idx, results) => {
   if (idx < bandwidth) {
     return result;
