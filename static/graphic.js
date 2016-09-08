@@ -77,13 +77,15 @@ export default class Graphic extends React.Component {
       }
       if (this.props.cleaned) {
         override.data = this.props.data.reduce((split, entry) => {
+          let add = 0;
           if (entry.oldRate) {
-            split[0].push({ date: entry.date, rate: entry.oldRate });
+            split[add++].push({ date: entry.date, rate: entry.oldRate });
+            return split;
           }
           if (entry.rate) {
-            split[2].push({ date: entry.date, rate: entry.rate });
+            split[add++].push({ date: entry.date, rate: entry.rate });
           }
-          split[1].push({ date: entry.date, rate: entry.dirty });
+          split[add++].push({ date: entry.date, rate: entry.dirty });
           return split;
         }, [[], [], []]);
       }
