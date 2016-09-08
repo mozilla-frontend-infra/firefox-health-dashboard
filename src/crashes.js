@@ -23,6 +23,7 @@ import fetchJson from './fetch/json';
 import fetchRedash from './fetch/redash';
 import fetchCrashStats from './fetch/crash-stats';
 import { getHistory } from './release/history';
+// import { getAdi } from './crashes/adi';
 
 const dateBlacklist = [
   '2016-05-01',
@@ -53,17 +54,41 @@ const weeklyAverage = (result, idx, results) => {
 router
   .get('/adi', async (ctx) => {
     const product = (ctx.request.query.product === 'fennec') ? 'fennec' : 'firefox';
+    // const adis = await getAdi({
+    //   product: product,
+    //   channel: 'release',
+    //   dateRange: [target, moment()],
+    // });
+    // console.log(adis);
     const urls = {
       fennec: 'https://crash-analysis.mozilla.com/rkaiser/FennecAndroid-release-bytype.json',
       firefox: 'https://crash-analysis.mozilla.com/rkaiser/Firefox-release-bytype.json',
     };
     const raw = await fetchJson(urls[product]);
-    const baselines = [0, 0];
+    const baselines = [0, 0, 0];
     const ratesByDay = Object.keys(raw)
       .map((date) => {
         const entry = raw[date];
         const dirty = (entry.crashes.Browser / entry.adi) * 100;
-        return { date, dirty };
+        let oldRate = dirty;
+        const day = moment(date, 'YYYY MM DD').format('dd');
+        // Deseasonalize with hardcoded seasonality index
+        if (product === 'firefox') {
+          oldRate *= {
+            Fr: 0.99,
+            Sa: 0.91,
+            Su: 0.92,
+            Mo: 1,
+          }[day] || 1;
+        } else {
+          oldRate *= {
+            Fr: 0.99,
+            Sa: 0.93,
+            Su: 0.895,
+            Mo: 0.99,
+          }[day] || 1;
+        }
+        return { date, dirty, oldRate };
       })
       .filter(({ dirty }) => dirty > 0.5) // Remove outages
       .map(weeklyAverage)
@@ -80,6 +105,7 @@ router
           baselines[1] = mean(
             results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
           );
+          baselines[2] = result.oldRate;
         }
         // Only show 4 days before baseline in the chart
         return (time.diff(baseline, 'days') >= -4);
@@ -87,7 +113,11 @@ router
     ctx.body = {
       baselines: [
         { date: target.toDate(), rate: baselines[0] },
-        { date: baseline.toDate(), rate: baselines[1] },
+        {
+          date: baseline.toDate(),
+          rate: baselines[1],
+          oldRate: baselines[2],
+        },
       ],
       rates: ratesByDay,
     };

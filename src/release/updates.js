@@ -10,6 +10,9 @@ export async function getUpdate(channel = 'release') {
   const url = `https://aus5.mozilla.org/update/3/Firefox/${latest}/0/Darwin_x86_64-gcc3-u-i386-x86_64/en-US/${channel}/Darwin%2015.4.0/default/default/update.xml?force=1`;
   const $ = await fetchHtml(url);
   const field = $('update');
+  if (!field.length) {
+    return {};
+  }
   const date = moment(field.prop('buildid'), 'YYYYMMDDHHmmss');
   return {
     version: field.prop('appversion'),

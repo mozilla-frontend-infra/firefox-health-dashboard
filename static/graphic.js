@@ -44,10 +44,25 @@ export default class Graphic extends React.Component {
         }
       }
       if (baselines && baselines.length) {
-        override.baselines = [
-          { value: baselines[0].rate, label: 'Target' }, // baselines[0].rate.toFixed(2)
-          { value: baselines[1].rate, label: 'Baseline' }, // baselines[1].rate.toFixed(2)
-        ];
+        if (baselines[1].oldRate) {
+          const baselineRate = baselines[1].oldRate;
+          const targetRate = baselineRate * 0.67;
+          override.baselines = [
+            {
+              value: targetRate,
+              label: targetRate.toFixed(2),
+            },
+            {
+              value: baselineRate,
+              label: baselineRate.toFixed(2),
+            },
+          ];
+        } else {
+          override.baselines = [
+            { value: baselines[0].rate, label: 'Target' },
+            { value: baselines[1].rate, label: 'Baseline' },
+          ];
+        }
         override.markers = Array.from(this.props.markers || [])
           .concat([
             // {
@@ -62,12 +77,15 @@ export default class Graphic extends React.Component {
       }
       if (this.props.cleaned) {
         override.data = this.props.data.reduce((split, entry) => {
+          if (entry.oldRate) {
+            split[0].push({ date: entry.date, rate: entry.oldRate });
+          }
           if (entry.rate) {
-            split[0].push({ date: entry.date, rate: entry.rate });
+            split[2].push({ date: entry.date, rate: entry.rate });
           }
           split[1].push({ date: entry.date, rate: entry.dirty });
           return split;
-        }, [[], []]);
+        }, [[], [], []]);
       }
       MG.data_graphic(Object.assign(options, this.props, override));
     }

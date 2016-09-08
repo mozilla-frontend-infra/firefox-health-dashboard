@@ -10,7 +10,9 @@ export default async function fetchCrashStats(fuzzyQuery, options = {}) {
   }
   options.ttl = 'day';
   options.headers = options.headers || {};
-  options.headers['Auth-Token'] = process.env.CRASH_STATS_TOKEN;
   const endpoint = options.endpoint || 'SuperSearchUnredacted';
+  if (endpoint.startsWith('SuperSearchUnredacted')) {
+    options.headers['Auth-Token'] = process.env.CRASH_STATS_TOKEN;
+  }
   return await fetchJson(`https://crash-stats.mozilla.com/api/${endpoint}/?${query}`, options);
 }
