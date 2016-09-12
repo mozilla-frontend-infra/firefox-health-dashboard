@@ -132,10 +132,8 @@ router
           dirty: row.main_crash_rate,
         };
       })
-      .filter(({ dirty, date }) => {
-        return dirty > 3
-          && dateBlacklist.indexOf(date) < 0
-          && moment(date, 'YYYY MM DD').diff(new Date(), 'days') < -4;
+      .filter(({ date }) => {
+        return dateBlacklist.indexOf(date) < 0;
       })
       .map(weeklyAverage);
     ctx.body = reduced;
