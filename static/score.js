@@ -12,8 +12,7 @@ export default function Score({ data, baselines }) {
   let baselining = (entry) => entry.rate.toFixed(2);
   if (baselines) {
     if (baselines[1].oldRate) {
-      console.log(baselines[1].oldRate, last);
-      baselining = (entry) => entry.oldRate.toFixed(2);
+      baselining = (entry) => entry.rate.toFixed(2);
     } else {
       const low = baselines[1].rate;
       const high = baselines[0].rate;
