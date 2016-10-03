@@ -7,17 +7,17 @@ import { parse as parseVersion } from '../meta/version';
 const feeds = {
   firefox: {
     release: [
-      'https://svn.mozilla.org/libs/product-details/json/firefox_history_major_releases.json',
-      'https://svn.mozilla.org/libs/product-details/json/firefox_history_stability_releases.json',
+      'https://product-details.mozilla.org/1.0/firefox_history_major_releases.json',
+      'https://product-details.mozilla.org/1.0/firefox_history_stability_releases.json',
     ],
-    beta: 'https://svn.mozilla.org/libs/product-details/json/firefox_history_development_releases.json',
+    beta: 'https://product-details.mozilla.org/1.0/firefox_history_development_releases.json',
   },
   fennec: {
     release: [
-      'https://svn.mozilla.org/libs/product-details/json/mobile_history_major_releases.json',
-      'https://svn.mozilla.org/libs/product-details/json/mobile_history_stability_releases.json',
+      'https://product-details.mozilla.org/1.0/mobile_history_major_releases.json',
+      'https://product-details.mozilla.org/1.0/mobile_history_stability_releases.json',
     ],
-    beta: 'https://svn.mozilla.org/libs/product-details/json/mobile_history_development_releases.json',
+    beta: 'https://product-details.mozilla.org/1.0/mobile_history_development_releases.json',
   },
 };
 
