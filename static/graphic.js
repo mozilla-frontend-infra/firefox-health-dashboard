@@ -27,7 +27,6 @@ export default class Graphic extends React.Component {
         const needle = this.props.data.filter((point) => {
           return moment(point.date).format('YYYY-MM-DD') === baseline;
         })[0];
-        console.log(needle);
         if (needle && needle.rate > 0) {
           const high = needle.rate;
           const low = high * 0.67;
@@ -65,10 +64,10 @@ export default class Graphic extends React.Component {
         }
         override.markers = Array.from(this.props.markers || [])
           .concat([
-            // {
-            //   date: new Date(baselines[0].date),
-            //   label: 'Target',
-            // },
+            {
+              date: new Date(baselines[0].date),
+              label: 'Target',
+            },
             {
               date: new Date(baselines[1].date),
               label: 'Baseline',
@@ -131,4 +130,5 @@ Graphic.propTypes = {
   markers: React.PropTypes.array,
   x_accessor: React.PropTypes.string,
   cleaned: React.PropTypes.bool,
+  full: React.PropTypes.bool,
 };

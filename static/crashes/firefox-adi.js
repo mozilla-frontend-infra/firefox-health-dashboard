@@ -12,6 +12,7 @@ export default class FirefoxAdiCrashes extends React.Component {
     markers: null,
     baselines: null,
     avg: 0,
+    full: false,
   };
 
   componentDidMount() {
@@ -19,9 +20,10 @@ export default class FirefoxAdiCrashes extends React.Component {
   }
 
   async fetch() {
-    const { rates, baselines } = await (await fetch('/api/crashes/adi')).json();
+    const full = this.props.full;
+    const { rates, baselines } = await (await fetch(`/api/crashes/adi?full=${full}`)).json();
     const data = MG.convert.date(rates, 'date');
-    const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
+    const releases = await (await fetch('/api/release/history?tailVersion=20')).json();
     const markers = releases.map((entry) => {
       const version = entry.version;
       // if (!/\.0$/.test(version)) {
@@ -33,7 +35,7 @@ export default class FirefoxAdiCrashes extends React.Component {
       };
     });
     // const baseline = '2016-01-17'; // [0.75, 1.08];
-    this.setState({ data, markers, baselines });
+    this.setState({ data, markers, baselines, full });
   }
 
   render() {
@@ -58,3 +60,7 @@ export default class FirefoxAdiCrashes extends React.Component {
     );
   }
 }
+
+FirefoxAdiCrashes.propTypes = {
+  full: React.PropTypes.number,
+};

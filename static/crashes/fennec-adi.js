@@ -12,6 +12,7 @@ export default class FennecAdiCrashes extends React.Component {
     markers: null,
     baselines: null,
     avg: 0,
+    full: false,
   };
 
   componentDidMount() {
@@ -19,10 +20,13 @@ export default class FennecAdiCrashes extends React.Component {
   }
 
   async fetch() {
-    const { rates, baselines } = await (await fetch('/api/crashes/adi?product=fennec')).json();
+    const full = this.props.full;
+    const { rates, baselines } = await (
+      await fetch(`/api/crashes/adi?product=fennec&full=${full}`)
+    ).json();
     const data = MG.convert.date(rates, 'date');
     const releases = await (
-      await fetch('/api/release/history?product=fennec&tailVersion=5')
+      await fetch('/api/release/history?product=fennec&tailVersion=20')
     ).json();
     const markers = releases.map((entry) => {
       return {
@@ -30,7 +34,7 @@ export default class FennecAdiCrashes extends React.Component {
         label: entry.version,
       };
     });
-    this.setState({ data, markers, baselines });
+    this.setState({ data, markers, baselines, full });
   }
 
   render() {
@@ -55,3 +59,7 @@ export default class FennecAdiCrashes extends React.Component {
     );
   }
 }
+
+FennecAdiCrashes.propTypes = {
+  full: React.PropTypes.number,
+};

@@ -54,6 +54,7 @@ const weeklyAverage = (result, idx, results) => {
 router
   .get('/adi', async (ctx) => {
     const product = (ctx.request.query.product === 'fennec') ? 'fennec' : 'firefox';
+    const full = (ctx.request.query.full === '1');
     // const adis = await getAdi({
     //   product: product,
     //   channel: 'release',
@@ -95,7 +96,7 @@ router
       .filter((result, idx, results) => {
         const time = moment(result.date, 'YYYY MM DD');
         if (!time.diff(target, 'days')) {
-          // Target from 10 day average
+          // Target from 14 day average
           baselines[0] = mean(
             results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
           );
@@ -108,7 +109,7 @@ router
           baselines[2] = result.oldRate;
         }
         // Only show 4 days before baseline in the chart
-        return (time.diff(baseline, 'days') >= -4);
+        return (time.diff(full ? target : baseline, 'days') >= -4);
       });
     ctx.body = {
       baselines: [
