@@ -4,7 +4,7 @@ import fetchHtml from '../fetch/html';
 export default async function getChromeHistory() {
   const versions = [];
   let lastDate = null;
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 10; i += 1) {
     const $ = await fetchHtml(`http://filehippo.com/download_google_chrome/history/${i}/`);
     if (!$) {
       break;

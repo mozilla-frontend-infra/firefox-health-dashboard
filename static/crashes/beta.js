@@ -45,7 +45,7 @@ export default class FirefoxBeta extends React.Component {
       fetch('/api/release/calendar'),
     ]);
     const [crashes, history, calendar] = await Promise.all(
-      raw.map((buffer) => buffer.json())
+      raw.map(buffer => buffer.json()),
     );
     crashes.forEach(({ builds }) => {
       fixDate(builds, 'release');
@@ -88,19 +88,19 @@ export default class FirefoxBeta extends React.Component {
     console.log(builds);
     const lastDayX = Math.min(
       xScale(builds.slice(-1)[0].dates.slice(-1)[0].date),
-      0
+      0,
     );
     const hoursScale = d3.time.scale()
       .domain(hoursRange)
       .range([-ratio * wide, lastDayX]);
     const path = d3.svg.line()
-			.x((d) => xScale(d.date))
-			.y((d) => yScale(d.rate))
+      .x(d => xScale(d.date))
+      .y(d => yScale(d.rate))
       .interpolate('monotone');
     const area = d3.svg.area()
-			.x((d) => xScale(d.date))
-			.y0((d) => yScale(d.rate - d.variance))
-      .y1((d) => yScale(d.rate + d.variance))
+      .x(d => xScale(d.date))
+      .y0(d => yScale(d.rate - d.variance))
+      .y1(d => yScale(d.rate + d.variance))
       .interpolate('monotone');
     let hoursX = 0;
     const candidates = builds.map((candidate, cidx) => {
@@ -133,7 +133,7 @@ export default class FirefoxBeta extends React.Component {
             x2={0}
             y2={gridY * 5}
           />
-        </g>
+        </g>,
       );
     }
     const avgs = builds
@@ -292,7 +292,7 @@ export default class FirefoxBeta extends React.Component {
         .clamp(true);
 
       const axis = [];
-      for (let i = rateRange[0] + 1; i < rateRange[1]; i++) {
+      for (let i = rateRange[0] + 1; i < rateRange[1]; i += 1) {
         const y = yScale(i);
         axis.push(
           <g
@@ -315,7 +315,7 @@ export default class FirefoxBeta extends React.Component {
             >
               {i}
             </text>
-          </g>
+          </g>,
         );
       }
 
@@ -354,7 +354,7 @@ export default class FirefoxBeta extends React.Component {
                   ±{entry.variance.toFixed(1)}
                 </span>
               </span>
-            </div>
+            </div>,
           );
           if (!idx) {
             const crash = find(crashes, { version: entry.version });
@@ -373,7 +373,7 @@ export default class FirefoxBeta extends React.Component {
                     ±{last.variance.toFixed(1)}
                   </span>
                 </span>
-              </div>
+              </div>,
             );
           }
         }
@@ -419,7 +419,7 @@ export default class FirefoxBeta extends React.Component {
       >
         <section
           className={cls}
-          ref={(target) => (this.target = target)}
+          ref={target => (this.target = target)}
         >
           {svg}
         </section>

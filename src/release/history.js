@@ -33,12 +33,12 @@ export async function getHistory({
     Object.assign(
       history,
       await fetchJson(feeds[product].release[0]),
-      await fetchJson(feeds[product].release[1])
+      await fetchJson(feeds[product].release[1]),
     );
   } else {
     Object.assign(
       history,
-      await fetchJson(feeds[product].beta)
+      await fetchJson(feeds[product].beta),
     );
   }
   let results = Object.keys(history).reduce((reduced, version) => {
@@ -61,7 +61,7 @@ export async function getHistory({
     const tail = maxBy(results, 'version.major').version.major - tailVersion;
     results = filter(results, ({ version }) => version.major > tail);
   }
-  results = sortBy(results, 'date', (a) => Date.parse(a))
+  results = sortBy(results, 'date', a => Date.parse(a))
     .map(({ version, date }) => {
       return {
         version: version.clean,
@@ -72,7 +72,7 @@ export async function getHistory({
     const split = flow(
       partition(({ date }) => {
         return new Date(date) > new Date(tailDate);
-      })
+      }),
     )(results);
     results = split[0].concat([split[1].slice(-1)]);
   }

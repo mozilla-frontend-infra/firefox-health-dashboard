@@ -52,9 +52,9 @@ const mapCategory = [
 ];
 
 export function resolveCategory(test) {
-  for (let i = 0; i < mapCategory.length; i++) {
+  for (let i = 0; i < mapCategory.length; i += 1) {
     const alts = mapCategory[i].alts;
-    for (let j = 0; j < alts.length; j++) {
+    for (let j = 0; j < alts.length; j += 1) {
       if (alts[j].test(test.toLowerCase())) {
         return mapCategory[i].status;
       }
@@ -87,9 +87,9 @@ const mapStatus = [
 ];
 
 export function resolveStatus(test) {
-  for (let i = 0; i < mapStatus.length; i++) {
+  for (let i = 0; i < mapStatus.length; i += 1) {
     const alts = mapStatus[i].alts;
-    for (let j = 0; j < alts.length; j++) {
+    for (let j = 0; j < alts.length; j += 1) {
       if (alts[j].test(test.toLowerCase())) {
         return mapStatus[i].status;
       }

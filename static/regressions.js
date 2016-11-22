@@ -7,7 +7,7 @@ import MG from 'metrics-graphics';
 export default class Regressions extends React.Component {
   async componentDidMount() {
     const regressions = await (await fetch('/api/bz/regressions/missed')).json();
-    const legend = regressions.map((entry) => entry.count);
+    const legend = regressions.map(entry => entry.count);
     MG.data_graphic({
       title: 'Number of Unevaluated Regressions Shipped',
       data: regressions,

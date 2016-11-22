@@ -98,13 +98,13 @@ router
         if (!time.diff(target, 'days')) {
           // Target from 14 day average
           baselines[0] = mean(
-            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
+            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate),
           );
         }
         if (!time.diff(baseline, 'days')) {
           // Baseline from 10 day average
           baselines[1] = mean(
-            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate)
+            results.slice(idx - bandwidth, idx + bandwidth).map(past => past.rate),
           );
           baselines[2] = result.oldRate;
         }
@@ -197,7 +197,7 @@ router
     const betaRaw = sortBy(
       (await fetchRedash(207)).query_result.data.rows,
       'activity_date',
-      (a) => Date.parse(a)
+      a => Date.parse(a),
     );
     // const betaE10sRaw = sortBy(
     //   (await fetchRedash(497)).query_result.data.rows,
@@ -259,7 +259,7 @@ router
       build.dates = sortBy(
         build.dates,
         'date',
-        (a) => Date.parse(a)
+        a => Date.parse(a),
       );
       build.hours = sumBy(build.dates, 'hours');
       const avg = median(build.dates.map(({ rate }) => rate));
@@ -298,7 +298,7 @@ router
       release.hours = sumBy(release.builds, 'hours');
       const rates = release.builds
         .map(({ rate }) => rate)
-        .filter((rate) => rate > 0);
+        .filter(rate => rate > 0);
       if (rates.length > 0) {
         release.rate = geometricMean(rates) || 0;
         release.variance = standardDeviation(rates) || 0;
@@ -338,11 +338,11 @@ router
           _facets_size: '50',
           _results_number: '0',
         });
-      })
+      }),
     );
 
     const signatureMap = crashIndex.map((data) => {
-      return data.facets.signature.map((signature) => signature.term);
+      return data.facets.signature.map(signature => signature.term);
     });
     const signatureIds = uniq(flatten(signatureMap));
 
@@ -355,7 +355,7 @@ router
     }))).map((result) => {
       return result.hits
         // .filter((hit) => hit.signature === signatureIds[i])
-        .map((hit) => hit.id);
+        .map(hit => hit.id);
     });
     const bugIds = uniq(flatten(bugIndex));
     const query = {
@@ -390,12 +390,12 @@ router
               toPairs(
                 countBy(
                   without(
-                    bugs.map((bug) => componentMap[bug]),
-                    'Untriaged', 'XPCOM', undefined
-                  )
-                )
+                    bugs.map(bug => componentMap[bug]),
+                    'Untriaged', 'XPCOM', undefined,
+                  ),
+                ),
               ),
-              1
+              1,
             );
             if (!sorted.length) {
               return counted;
@@ -422,7 +422,7 @@ router
           }
           return counted;
         }, []),
-        'ratio'
+        'ratio',
       ).reverse();
       const componentSum = sumBy(components, 'ratio');
       components.forEach((entry) => {

@@ -136,6 +136,6 @@ export default {
   devServer: {
     port: 3000,
     noInfo: true,
-    quiet: false,
+    quiet: true,
   },
 };

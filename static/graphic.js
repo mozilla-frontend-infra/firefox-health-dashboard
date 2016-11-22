@@ -7,7 +7,7 @@ import moment from 'moment';
 export default class Graphic extends React.Component {
   constructor(props) {
     super(props);
-    this.target = `graphic-${((Math.random() * 10000) | 0)}`;
+    this.target = `graphic-${Math.round((Math.random() * 10000))}`;
   }
 
   componentDidMount() {
@@ -81,9 +81,9 @@ export default class Graphic extends React.Component {
           //   split[add++].push({ date: entry.date, rate: entry.oldRate });
           // }
           if (entry.rate) {
-            split[add++].push({ date: entry.date, rate: entry.rate });
+            split[(add += 1)].push({ date: entry.date, rate: entry.rate });
           }
-          split[add++].push({ date: entry.date, rate: entry.dirty });
+          split[(add += 1)].push({ date: entry.date, rate: entry.dirty });
           return split;
         }, [[], [], []]);
       }
@@ -109,7 +109,7 @@ export default class Graphic extends React.Component {
 Graphic.defaultProps = {
   title: '',
   data: null,
-  x_accessor: 'date',
+  // x_accessor: 'date',
   y_accessor: 'value',
   markers: [],
   top: 15,
@@ -128,7 +128,7 @@ Graphic.propTypes = {
   title: React.PropTypes.string,
   baselines: React.PropTypes.array,
   markers: React.PropTypes.array,
-  x_accessor: React.PropTypes.string,
+  // x_accessor: React.PropTypes.string,
   cleaned: React.PropTypes.bool,
-  full: React.PropTypes.bool,
+  // full: React.PropTypes.bool,
 };

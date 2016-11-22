@@ -85,7 +85,7 @@ export async function getChromePopular() {
         };
       }
       return result;
-    })
+    }),
   )(chromeStatus);
 
   (await getRelease(queuedIds.map(({ id }) => id)))
@@ -106,6 +106,6 @@ export async function getChromePopular() {
 
   return flow(
     map(scoreFeature),
-    filter(({ completeness }) => completeness >= 0.5)
+    filter(({ completeness }) => completeness >= 0.5),
   )(features);
 }

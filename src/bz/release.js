@@ -11,7 +11,7 @@ export async function getRelease(bugs) {
     'target_milestone',
   ];
   const latest = parseInt((await getVersions()).aurora, 10) + 1;
-  for (let i = latest - 10; i <= latest; i++) {
+  for (let i = latest - 10; i <= latest; i += 1) {
     fields.push(`cf_status_firefox${i}`);
   }
   const query = qs.stringify({
@@ -25,7 +25,7 @@ export async function getRelease(bugs) {
       version = parseInt(bug.cf_tracking_firefox_relnote, 10);
     }
     if (!version) {
-      for (let i = latest - 10; i <= latest; i++) {
+      for (let i = latest - 10; i <= latest; i += 1) {
         const field = `cf_status_firefox${i}`;
         if (/^(fixed|verified)/.test(bug[field])) {
           version = i;

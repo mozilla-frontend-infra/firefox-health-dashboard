@@ -24,7 +24,7 @@ const Table = ({ title, rows }) => {
       return (
         <Feature key={`feature-${entry.id}`} entry={entry} />
       );
-    })
+    }),
   )(rows);
   return (
     <div className='features'>
@@ -66,7 +66,7 @@ const Feature = ({ entry }) => {
         {
           'status-versioned': state.version,
           'status-shrug': /^no.*signals$|^u$/i.test(state.alt),
-        }
+        },
       );
       let icon = null;
       if (platform === 'firefox' && state.ref) {
@@ -143,7 +143,7 @@ export default class Status extends React.Component {
               filter(({ firefox }) => firefox.status !== 'shipped'),
               filter(({ firefox }) => firefox.status !== 'in-development'),
               sortBy(['completeness', 'recency']),
-              reverse
+              reverse,
             )(popular)
           }
         />,
@@ -160,7 +160,7 @@ export default class Status extends React.Component {
                   ) && chrome.status !== 'shipped';
               }),
               sortBy(['recency']),
-              reverse
+              reverse,
             )(popular)
           }
         />,
@@ -170,9 +170,9 @@ export default class Status extends React.Component {
           rows={
             flow(
               // filter((feature) => feature.recency > 0),
-              filter((feature) => !feature.firefox || feature.firefox.status !== 'shipped'),
+              filter(feature => !feature.firefox || feature.firefox.status !== 'shipped'),
               sortBy(['recency']),
-              reverse
+              reverse,
             )(caniuse)
           }
         />,

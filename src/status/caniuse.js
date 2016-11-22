@@ -39,7 +39,7 @@ export async function getInDevelopment() {
               result[platform].version = version;
             }
             return false;
-          })
+          }),
         )(versions);
       });
       const firefoxRef = find({ caniuse_ref: ref })(firefoxStatus);
@@ -49,7 +49,7 @@ export async function getInDevelopment() {
       return result;
     }),
     map(scoreFeature),
-    filter(({ completeness }) => completeness < 4 && completeness >= 0.5)
+    filter(({ completeness }) => completeness < 4 && completeness >= 0.5),
     // filter(({ recency }) => recency >= 0.5)
   )(caniuse.data);
 }

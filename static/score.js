@@ -9,14 +9,14 @@ export default function Score({ data, baselines }) {
   // const avg = median(data.slice(-7).map(({ rate }) => rate));
   const last = data.slice(-1)[0];
   const ago = moment(last.date).format('ddd, MMM D');
-  let baselining = (entry) => entry.rate.toFixed(2);
+  let baselining = entry => entry.rate.toFixed(2);
   if (baselines) {
     if (baselines[1].oldRate) {
-      baselining = (entry) => entry.rate.toFixed(2);
+      baselining = entry => entry.rate.toFixed(2);
     } else {
       const low = baselines[1].rate;
       const high = baselines[0].rate;
-      baselining = (entry) => `${
+      baselining = entry => `${
         Math.round(((1 - ((high - entry.rate) / (high - low))) * 100))
       }%`;
     }

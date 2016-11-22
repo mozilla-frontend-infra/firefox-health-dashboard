@@ -47,7 +47,7 @@ export default class FennecAdiCrashes extends React.Component {
           {...this.state}
           x_accessor='date'
           y_accessor='rate'
-          min_y='0.8'
+          min_y='0.6'
           max_y='2'
           cleaned
         />

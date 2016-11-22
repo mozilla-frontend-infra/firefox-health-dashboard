@@ -2,12 +2,12 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import Home from './home.js';
-import ReleaseCrashes from './crashes/release.js';
-import BetaCrashes from './crashes/beta.js';
-import XpCrashes from './crashes/xp.js';
-import Regressions from './regressions.js';
-import Status from './status/index.js';
+import Home from './home';
+import ReleaseCrashes from './crashes/release';
+import BetaCrashes from './crashes/beta';
+import XpCrashes from './crashes/xp';
+import Regressions from './regressions';
+import Status from './status/index';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -22,12 +22,12 @@ class App extends Component {
       gridX: parseInt(
         window.getComputedStyle(document.body, null)
           .getPropertyValue('font-size'),
-        10
+        10,
       ),
       gridY: parseInt(
         window.getComputedStyle(document.body, null)
           .getPropertyValue('line-height'),
-        10
+        10,
       ),
       viewport: [window.innerWidth, window.innerHeight],
     });
