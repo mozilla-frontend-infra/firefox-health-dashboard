@@ -442,8 +442,11 @@ svg {
 	}
   .countdown-number {
     @extend h1;
+    line-height: 1;
     font-weight: 400;
     letter-spacing: 0.2rem;
+    margin: 0;
+    margin-bottom: calc(var(--gutterY) * 0.5);
   }
   .countdown-date {
     @extend h2;
@@ -454,8 +457,7 @@ svg {
     @extend h4;
     font-weight: 400;
     color: var(--darkGray);
-    margin-top: calc(var(--gutterY) * 0.5);
-    margin-bottom: calc(var(--gutterY) * 2.5);
+    margin-bottom: calc(var(--gutterY) * 1.5);
   }
 }
 
