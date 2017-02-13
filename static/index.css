@@ -440,16 +440,21 @@ svg {
     font-weight: 300;
     margin-bottom: calc(var(--gutterY) * 1.5);
 	}
+  h3 {
+    line-height: calc(var(--gutterY) * 2);
+    margin-bottom: calc(var(--gutterY) * 0.5);
+    span {
+      font-weight: 300;
+      color: var(--darkGray);
+      @extend h3;
+    }
+  }
   .countdown-row {
-    margin-bottom: calc(var(--gutterY) * 1.5);
+    margin-bottom: calc(var(--gutterY) * 2);
   }
   .countdown-number {
     @extend h1;
-    line-height: 1;
     font-weight: 400;
-    letter-spacing: 0.2rem;
-    margin: 0;
-    margin-bottom: calc(var(--gutterY) * 0.5);
   }
   .countdown-date {
     @extend h2;
@@ -460,6 +465,7 @@ svg {
     @extend h4;
     font-weight: 400;
     color: var(--darkGray);
+    margin: 0;
     sup {
       display: block;
       font-size: var(--smallFontSize);

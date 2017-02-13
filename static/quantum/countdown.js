@@ -55,8 +55,8 @@ export default class QuantumCountdown extends React.Component {
       );
       const $seconds = (idx !== 0) ? null : (
         <div className='countdown-row'>
-          <h3 className='countdown-number'>{seconds.toLocaleString()}</h3>
-          <small>seconds <sup>(Unnecessary presicion)</sup></small>
+          <h3 className='countdown-number'><span>t -</span>{seconds.toLocaleString()} <span>sec</span></h3>
+          <small>Unnecessary precision</small>
         </div>
       );
       return (
@@ -66,7 +66,7 @@ export default class QuantumCountdown extends React.Component {
         >
           <h2>{entry.label}</h2>
           <div className='countdown-row'>
-            <h3 className='countdown-date'>{entry.date.format('ddd, MMM Do')}</h3>
+            <h3 className='countdown-date'>{entry.date.format('ddd, MMM D')}</h3>
             <small>Merge in {humanized}</small>
           </div>
           {$seconds}
