@@ -8,6 +8,8 @@ import BetaCrashes from './crashes/beta';
 import XpCrashes from './crashes/xp';
 import Regressions from './regressions';
 import Status from './status/index';
+import Quantum from './quantum/index';
+import QuantumCountdown from './quantum/countdown';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -52,6 +54,8 @@ export default class Routes extends Component {
           <Route path='crashes/beta' component={BetaCrashes} />
           <Route path='crashes/xp' component={XpCrashes} />
           <Route path='regressions' component={Regressions} />
+          <Route path='quantum' component={Quantum} />
+          <Route path='quantum/countdown' component={QuantumCountdown} />
           <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />

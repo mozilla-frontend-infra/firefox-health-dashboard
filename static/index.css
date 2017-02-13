@@ -408,6 +408,57 @@ svg {
 	fill: var(--dinoRed);
 }
 
+.quantum-countdown {
+	section {
+		text-align: center;
+		flex-direction: column;
+    padding: 0;
+    &.channel-aurora {
+      h2 {
+        background-color: var(--dinoRed);
+      }
+    }
+    &.channel-beta {
+      padding-top: calc(var(--gutterY) * 3);
+      h2 {
+        background-color: var(--marketOrange);
+      }
+    }
+    &.channel-release {
+      padding-top: calc(var(--gutterY) * 6);
+      h2 {
+        background-color: var(--geckoGreen);
+      }
+    }
+	}
+	h2 {
+		@extend h2;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    line-height: calc(var(--gutterY) * 3);
+    font-weight: 300;
+    margin-bottom: calc(var(--gutterY) * 1.5);
+	}
+  .countdown-number {
+    @extend h1;
+    font-weight: 400;
+    letter-spacing: 0.2rem;
+  }
+  .countdown-date {
+    @extend h2;
+    font-weight: 300;
+    color: var(--lightGray);
+  }
+  small, h4 {
+    @extend h4;
+    font-weight: 400;
+    color: var(--darkGray);
+    margin-top: calc(var(--gutterY) * 0.5);
+    margin-bottom: calc(var(--gutterY) * 2.5);
+  }
+}
+
 @keyframes appear {
   0% {
     opacity: 0.1;

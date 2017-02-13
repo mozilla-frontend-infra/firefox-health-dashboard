@@ -15,6 +15,7 @@ export default class Home extends React.Component {
         <Link to='/crashes'>Crashes</Link>
         <Link to='/crashes/beta'>Beta Crashes</Link>
         <Link to='/status'>Feature Status</Link>
+        <Link to='/quantum'>Quantum</Link>
       </Dashboard>
     );
   }
