@@ -249,6 +249,12 @@ svg {
     opacity: 1;
     fill: none;
   }
+  .release-line-content {
+    stroke-width: 2;
+    opacity: 1;
+    fill: none;
+		opacity: 0.5;
+  }
   .release-area {
     opacity: 0.2;
     stroke: none;

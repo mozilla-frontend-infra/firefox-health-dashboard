@@ -14,5 +14,5 @@ export default async function fetchCrashStats(fuzzyQuery, options = {}) {
   if (endpoint.startsWith('SuperSearchUnredacted')) {
     options.headers['Auth-Token'] = process.env.CRASH_STATS_TOKEN;
   }
-  return await fetchJson(`https://crash-stats.mozilla.com/api/${endpoint}/?${query}`, options);
+  await fetchJson(`https://crash-stats.mozilla.com/api/${endpoint}/?${query}`, options);
 }

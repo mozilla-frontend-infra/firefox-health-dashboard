@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import GitHubApi from 'github';
+import Tmo from './perf/tmo';
 
 export const router = new Router();
 const gh = new GitHubApi();
@@ -13,6 +14,10 @@ gh.authenticate({
 });
 
 router
+
+  .get('/release', async (ctx) => {
+    ctx.body = 'Release';
+  })
 
   .get('/e10s/hangs', async (ctx) => {
     const beta = await gh.repos.getContent({

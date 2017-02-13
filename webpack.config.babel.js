@@ -11,7 +11,7 @@ import postcssVariables from 'postcss-css-variables';
 import mqpacker from 'css-mqpacker';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+// import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const srcDir = path.resolve(__dirname, 'static');
 const distDir = path.resolve(__dirname, 'dist');
@@ -27,15 +27,15 @@ const entryBase = isProd
 
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$|jquery/, /moment$/),
-  new webpack.optimize.OccurenceOrderPlugin(),
+  new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
     },
   }),
   new webpack.ProvidePlugin({
-    Promise: 'exports?global.Promise!es6-promise',
-    fetch: 'exports?self.fetch!whatwg-fetch',
+    Promise: 'exports-loader?global.Promise!es6-promise',
+    fetch: 'exports-loader?self.fetch!whatwg-fetch',
   }),
   new HtmlWebpackPlugin({
     template: path.join(srcDir, 'index.html'),
@@ -46,21 +46,21 @@ const plugins = [
       collapseWhitespace: true,
     },
   }),
-  new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor'],
-  }),
+  // new webpack.optimize.CommonsChunkPlugin({
+  //   names: ['vendor'],
+  // }),
 ];
 
 // ExtractTextPlugin does not work with hot reload
-const cssLoader = isProd ? ExtractTextPlugin.extract(
-  'style',
-  'css!postcss'
-) : 'style!css!postcss';
+// const cssLoader = isProd ? ExtractTextPlugin.extract(
+//   'style-loader',
+//   'css-loader!postcss-loader',
+// ) : 'style-loader!css-loader!postcss-loader';
 
 if (isProd) {
-  plugins.push(new ExtractTextPlugin(cssFilename, {
-    allChunks: true,
-  }));
+  // plugins.push(new ExtractTextPlugin(cssFilename, {
+  //   allChunks: true,
+  // }));
 } else {
   plugins.push(new webpack.HotModuleReplacementPlugin());
 }
@@ -71,16 +71,16 @@ export default {
     app: entryBase.concat([
       './index.js',
     ]),
-    vendor: entryBase.concat([
-      'd3',
-      'moment',
-      'react',
-      'react-dom',
-      'react-router',
-      'metrics-graphics',
-      'classnames',
-      'babel-polyfill',
-    ]),
+    // vendor: entryBase.concat([
+    //   'd3',
+    //   'moment',
+    //   'react',
+    //   'react-dom',
+    //   'react-router',
+    //   'metrics-graphics',
+    //   'classnames',
+    //   'babel-polyfill',
+    // ]),
   },
   devtool: isProd ? '#source-map' : '#cheap-source-map',
   output: {
@@ -90,48 +90,54 @@ export default {
     publicPath: '/',
   },
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.js$/,
         include: srcDir,
-        loader: 'eslint',
+        enforce: 'pre',
+        loader: 'eslint-loader',
       },
-    ],
-    loaders: [
       {
         test: /\.js$/,
         include: srcDir,
-        loader: 'babel',
+        use: 'babel-loader',
       }, {
         test: /\.css$/,
         include: srcDir,
-        loader: cssLoader,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                postcssImport(),
+                postcssSimpleExtend(),
+                postcssNested(),
+                // postcssSimpleVars(),
+                postcssVariables(),
+                postcssCssnext({
+                  browsers: ['last 1 version'],
+                }),
+                postcssReporter({
+                  throwError: true,
+                }),
+                mqpacker(),
+              ],
+            },
+          }],
       }, {
         test: /manifest.json$/,
-        loader: 'file?name=manifest.json!web-app-manifest',
+        use: ['file-loader?name=manifest.json', 'web-app-manifest'],
       }, {
         test: /\.png$/,
-        loaders: [
-          'file?name=[path][name].[hash:6].[ext]',
-          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        use: [
+          'file-loader?name=[path][name].[hash:6].[ext]',
+          'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
         ],
       },
     ],
   },
-  postcss: [
-    postcssImport(),
-    postcssSimpleExtend(),
-    postcssNested(),
-    // postcssSimpleVars(),
-    postcssVariables(),
-    postcssCssnext({
-      browsers: ['last 1 version'],
-    }),
-    postcssReporter({
-      throwError: true,
-    }),
-    mqpacker(),
-  ],
   plugins: plugins,
   devServer: {
     port: 3000,

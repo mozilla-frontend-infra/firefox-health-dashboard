@@ -5,6 +5,7 @@ import {
   standardDeviation,
   geometricMean,
   mean,
+  quantile,
  } from 'simple-statistics';
 import {
    uniq,
@@ -194,11 +195,7 @@ router
       channel: 'beta',
       tailVersion: 5,
     });
-    const betaRaw = sortBy(
-      (await fetchRedash(207)).query_result.data.rows,
-      'activity_date',
-      a => Date.parse(a),
-    );
+    const betaRaw = (await fetchRedash(2856)).query_result.data.rows;
     // const betaE10sRaw = sortBy(
     //   (await fetchRedash(497)).query_result.data.rows,
     //   'activity_date',
@@ -206,81 +203,27 @@ router
     // );
 
     const builds = betaRaw.reduce((lookup, row) => {
-      // if (dateBlacklist.indexOf(row.activity_date) > -1) {
-      //   return lookup;
-      // }
-      let result = find(lookup, ({ build }) => build === row.build_id);
-      if (!result) {
-        const buildDate = moment(row.build_id, 'YYYYMMDD');
-        const release = find(history, ({ date }) => {
-          const diff = moment(date, 'YYYY MM DD').diff(buildDate, 'day');
-          return diff >= 0 && diff <= 2;
-        });
-        result = {
-          date: buildDate.format('YYYY-MM-DD'),
-          release: release && release.date,
-          candidate: release
-            ? parseVersion(release.version).candidate
-            : 'rc',
-          build: row.build_id,
-          version: row.build_version,
-          dates: [],
-          startDate: row.activity_date,
-        };
-        lookup.push(result);
-      }
-      const add = {
-        date: row.activity_date,
-        // Deseasonalize with hardcoded seasonality index
-        rate: row.main_crash_rate,
+      const buildDate = moment(row.build_id, 'YYYYMMDD');
+      const release = find(history, ({ date }) => {
+        const diff = moment(date, 'YYYY MM DD').diff(buildDate, 'day');
+        return diff >= 0 && diff <= 2;
+      });
+      const result = {
+        date: buildDate.format('YYYY-MM-DD'),
+        release: release && release.date,
+        candidate: release
+          ? parseVersion(release.version).candidate
+          : 'rc',
+        build: row.build_id,
+        version: row.build_version,
         hours: row.usage_kilohours,
+        rate: row.main_crash_rate,
+        rateContent: row.content_crash_rate,
+        dates: [],
       };
-      const day = moment(Date.parse(row.activity_date)).format('dd');
-      if (day === 'Su') {
-        const saturday = result.dates.slice(-1)[0];
-        if (saturday) {
-          const combined = ((add.rate + saturday.rate) / 2) * 1.2;
-          saturday.rate = combined;
-          add.rate = combined;
-        }
-      }
-      // const e10sRow = find(betaE10sRaw, {
-      //   activity_date: row.activity_date,
-      //   build_id: row.build_id,
-      // });
-      // if (e10sRow) {
-      //   add.e01sMain = e10sRow.main_crash_rate;
-      //   add.e01sContent = e10sRow.content_crash_rate;
-      // }
-      result.dates.push(add);
+      lookup.push(result);
       return lookup;
     }, []);
-    builds.forEach((build) => {
-      build.dates = sortBy(
-        build.dates,
-        'date',
-        a => Date.parse(a),
-      );
-      build.hours = sumBy(build.dates, 'hours');
-      const avg = median(build.dates.map(({ rate }) => rate));
-      const brokenDate = (build.dates[0].rate > avg);
-      const slice = brokenDate
-        ? -Math.round(build.dates.length / 2)
-        : 0;
-      if (build.dates.length - slice >= 2) {
-        const rates = () => build.dates.slice(slice).map(({ rate }) => rate);
-        build.rate = mean(rates()) || 0;
-        build.variance = standardDeviation(rates()) || 0;
-        build.dates = build.dates.filter(({ rate }) => {
-          return Math.abs(build.rate - rate) < build.variance * 1;
-        });
-        build.rate = mean(rates()) || 0;
-        build.variance = standardDeviation(rates()) || 0;
-        if (build.rate < 3 && build.candidate === 'rc') {
-          build.rate = 0;
-        }
-      }
-    });
 
     const releases = builds.reduce((lookup, result) => {
       let entry = find(lookup, ({ version }) => version === result.version);

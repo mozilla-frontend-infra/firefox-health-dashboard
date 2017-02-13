@@ -1,7 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
-import d3 from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
 import find from 'lodash/fp/find';
@@ -9,11 +9,11 @@ import findLast from 'lodash/fp/findLast';
 import sumBy from 'lodash/fp/sumBy';
 import Dashboard from './../dashboard';
 
-const rateRange = [0, 12];
-const colorScale = d3.scale.category10();
-const center = 0.62;
-const full = 0.38;
-const split = 0.62 / 4;
+const rateRange = [0, 5.5];
+const colorScale = scaleOrdinal(schemeCategory10);
+const center = 0.38;
+const full = 0.62;
+const split = 0.38 / 3;
 
 export default class FirefoxBeta extends React.Component {
   state = {};
@@ -65,8 +65,7 @@ export default class FirefoxBeta extends React.Component {
   }
   renderRelease({ release, start, yScale, idx, crashes }) {
     const { gridY, gridX } = this.props;
-    const builds = (crashes ? crashes.builds : [])
-      .filter(filter => filter.dates.length);
+    const builds = (crashes ? crashes.builds : []);
     if (!builds.length) {
       console.log('Skipped', release.version);
       return null;
@@ -82,26 +81,25 @@ export default class FirefoxBeta extends React.Component {
     }
     const hoursRange = [0, sumBy('hours')(builds)];
     const dateRange = [start, release.date];
-    const xScale = d3.time.scale()
+    const xScale = scaleTime()
       .domain(dateRange)
       .range([-ratio * wide, 0]);
-    console.log(builds);
     const lastDayX = Math.min(
-      xScale(builds.slice(-1)[0].dates.slice(-1)[0].date),
+      xScale(builds.slice(-1)[0].date),
       0,
     );
-    const hoursScale = d3.time.scale()
+    const hoursScale = scaleTime()
       .domain(hoursRange)
       .range([-ratio * wide, lastDayX]);
-    const path = d3.svg.line()
+    const path = line()
       .x(d => xScale(d.date))
       .y(d => yScale(d.rate))
-      .interpolate('monotone');
-    const area = d3.svg.area()
-      .x(d => xScale(d.date))
-      .y0(d => yScale(d.rate - d.variance))
-      .y1(d => yScale(d.rate + d.variance))
-      .interpolate('monotone');
+      .curve(curveLinear);
+    // const area = d3.svg.area()
+    //   .x(d => xScale(d.date))
+    //   .y0(d => yScale(d.rate - d.variance))
+    //   .y1(d => yScale(d.rate + d.variance))
+    //   .interpolate('monotone');
     let hoursX = 0;
     const candidates = builds.map((candidate, cidx) => {
       if (candidate.hours) {
@@ -136,10 +134,19 @@ export default class FirefoxBeta extends React.Component {
         </g>,
       );
     }
-    const avgs = builds
+    const mainRates = builds
       .map((entry) => {
         return {
           rate: entry.rate,
+          variance: entry.variance,
+          date: entry.release || entry.date,
+        };
+      })
+      .filter(({ rate }) => rate > 0);
+    const contentRates = builds
+      .map((entry) => {
+        return {
+          rate: entry.rateContent,
           variance: entry.variance,
           date: entry.release || entry.date,
         };
@@ -188,13 +195,13 @@ export default class FirefoxBeta extends React.Component {
           className='release-line'
           key='release-line'
           stroke={color}
-          d={path(avgs)}
+          d={path(mainRates)}
         />
         <path
-          className='release-area'
-          key='release-area'
-          fill={color}
-          d={area(avgs)}
+          className='release-line-content'
+          key='release-line-content'
+          stroke={color}
+          d={path(contentRates)}
         />
       </g>
     );
@@ -205,17 +212,16 @@ export default class FirefoxBeta extends React.Component {
     xScale,
     yScale,
     rate,
-    hoursScale,
-    hoursX,
-    path,
+    // hoursScale,
+    // hoursX,
     idx,
   }) {
     const color = colorScale(idx);
     const start = release.release || release.date;
-    const releaseRate = yScale(release.rate);
+    const mainRate = yScale(release.rate);
     const title = `${(release.hours / 1000).toFixed(1)}m usage hours`;
-    const hoursStart = hoursScale(hoursX - (release.hours || 0));
-    const hourWidth = hoursScale(hoursX) - hoursStart;
+    // const hoursStart = hoursScale(hoursX - (release.hours || 0));
+    // const hourWidth = hoursScale(hoursX) - hoursStart;
     const { gridY } = this.props;
     const topY = gridY * 5;
     const cls = cx('candidate', {
@@ -235,9 +241,9 @@ export default class FirefoxBeta extends React.Component {
           <line
             className='candidate-marker'
             x1={0}
-            y1={(releaseRate || topY) - 5}
+            y1={mainRate - 5}
             x2={0}
-            y2={(releaseRate || topY) + 5}
+            y2={mainRate + 5}
             stroke={color}
           />
           <line
@@ -261,7 +267,7 @@ export default class FirefoxBeta extends React.Component {
             {title}
           </title>
         </g>
-        <rect
+        {/* <rect
           className='candidate-hours'
           key='candidate-hours'
           x={hoursStart}
@@ -269,13 +275,7 @@ export default class FirefoxBeta extends React.Component {
           width={hourWidth}
           height={7}
           fill={color}
-        />
-        <path
-          className='candidate-rate'
-          key='candidate-rate'
-          stroke={color}
-          d={path(release.dates)}
-        />
+        /> */}
       </g>
     );
   }
@@ -286,7 +286,7 @@ export default class FirefoxBeta extends React.Component {
     let details = null;
 
     if (crashes) {
-      const yScale = d3.scale.linear()
+      const yScale = scaleLinear()
         .domain(rateRange)
         .range([this.height - 30, 100])
         .clamp(true);
@@ -381,9 +381,10 @@ export default class FirefoxBeta extends React.Component {
           'state-highlight': !idx,
           'state-empty': !scores.length,
         });
+        const key = `score-${idx}`;
         return (
           <div
-            key={`score-${idx}`}
+            key={key}
             className={cls}
             style={{
               width: `${(idx ? split : full) * 100}%`,

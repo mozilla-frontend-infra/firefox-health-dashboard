@@ -6,5 +6,5 @@ export default async function fetchRedash(query, options = {}) {
   options.headers = options.headers || {};
   options.headers.Authorization = `Key ${process.env.REDASH_API_KEY}`;
   options.ttl = 'day';
-  return await fetchJson(`https://sql.telemetry.mozilla.org/api/queries/${query}/results.json`, options);
+  return fetchJson(`https://sql.telemetry.mozilla.org/api/queries/${query}/results.json`, options);
 }
