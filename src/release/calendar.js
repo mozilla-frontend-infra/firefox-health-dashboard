@@ -33,22 +33,22 @@ export default async function getCalendar({
   dates.sort((a, b) => ((a.date < b.date) ? -1 : 1));
   if (!dates.length) {
     dates.push({
-      version: '52',
+      version: '52.0',
       channel: 'release',
       date: '2017-03-07',
     });
     dates.push({
-      version: '53',
+      version: '53.0',
       channel: 'release',
       date: '2017-04-18',
     });
     dates.push({
-      version: '54',
+      version: '54.0',
       channel: 'release',
       date: '2017-06-13',
     });
     dates.push({
-      version: '55',
+      version: '55.0',
       channel: 'release',
       date: '2017-08-08',
     });

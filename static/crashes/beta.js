@@ -11,9 +11,9 @@ import Dashboard from './../dashboard';
 
 const rateRange = [0, 5.5];
 const colorScale = scaleOrdinal(schemeCategory10);
-const center = 0.38;
-const full = 0.62;
-const split = 0.38 / 3;
+const center = 0.62;
+const full = 0.38;
+const split = 0.62 / 4;
 
 export default class FirefoxBeta extends React.Component {
   state = {};
@@ -146,7 +146,7 @@ export default class FirefoxBeta extends React.Component {
     const contentRates = builds
       .map((entry) => {
         return {
-          rate: entry.rateContent,
+          rate: entry.contentRate,
           variance: entry.variance,
           date: entry.release || entry.date,
         };
@@ -303,10 +303,10 @@ export default class FirefoxBeta extends React.Component {
             }}
           >
             <line
-              x0={0}
-              y0={0}
-              x1={this.width}
+              x1={0}
               y1={0}
+              x2={this.width}
+              y2={0}
             />
             <text
               x={5}
@@ -335,11 +335,11 @@ export default class FirefoxBeta extends React.Component {
           yScale,
         });
       });
-
       details = timeline.map(({ version }, idx) => {
         const scores = [];
-        const entry = find(crashes, { version: version });
+        const entry = find({ version: version })(crashes);
         if (entry && entry.rate) {
+          console.log(entry);
           scores.push(
             <div
               className='score'
@@ -351,14 +351,14 @@ export default class FirefoxBeta extends React.Component {
               <span className='score-main'>
                 {entry.rate.toFixed(1)}
                 <span className='score-extra'>
-                  ±{entry.variance.toFixed(1)}
+                  {entry.contentRate.toFixed(1)}
                 </span>
               </span>
             </div>,
           );
           if (!idx) {
-            const crash = find(crashes, { version: entry.version });
-            const last = findLast(crash.builds, ({ rate }) => rate);
+            const crash = find({ version: entry.version })(crashes);
+            const last = find(({ rate }) => rate)(crash.builds);
             scores.push(
               <div
                 className='score'
@@ -370,7 +370,7 @@ export default class FirefoxBeta extends React.Component {
                 <span className='score-main'>
                   {last.rate.toFixed(1)}
                   <span className='score-extra'>
-                    ±{last.variance.toFixed(1)}
+                    {last.contentRate.toFixed(1)}
                   </span>
                 </span>
               </div>,

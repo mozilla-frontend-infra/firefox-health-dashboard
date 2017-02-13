@@ -218,7 +218,7 @@ router
         version: row.build_version,
         hours: row.usage_kilohours,
         rate: row.main_crash_rate,
-        rateContent: row.content_crash_rate,
+        contentRate: row.content_crash_rate,
         dates: [],
       };
       lookup.push(result);
@@ -242,8 +242,12 @@ router
       const rates = release.builds
         .map(({ rate }) => rate)
         .filter(rate => rate > 0);
+      const contentRates = release.builds
+        .map(({ contentRate }) => contentRate)
+        .filter(contentRate => contentRate > 0);
       if (rates.length > 0) {
         release.rate = geometricMean(rates) || 0;
+        release.contentRate = geometricMean(contentRates) || 0;
         release.variance = standardDeviation(rates) || 0;
       }
     });
