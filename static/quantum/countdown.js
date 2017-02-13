@@ -48,15 +48,15 @@ export default class QuantumCountdown extends React.Component {
       const humanized = moment.duration(entry.date.diff(moment())).humanize(true);
       const cls = cx('row', `channel-${entry.idx}`);
       const $days = (extraDays < 1) ? null : (
-        <div>
+        <div className='countdown-row'>
           <h3 className='countdown-number'>{extraDays}</h3>
           <small>week days</small>
         </div>
       );
       const $seconds = (idx !== 0) ? null : (
-        <div>
+        <div className='countdown-row'>
           <h3 className='countdown-number'>{seconds.toLocaleString()}</h3>
-          <small>seconds</small>
+          <small>seconds <sup>(Unnecessary presicion)</sup></small>
         </div>
       );
       return (
@@ -65,12 +65,16 @@ export default class QuantumCountdown extends React.Component {
           key={entry.idx}
         >
           <h2>{entry.label}</h2>
-          <h3 className='countdown-date'>{entry.date.format('ddd, MMM Do')}</h3>
-          <small>{humanized}</small>
-          <h3 className='countdown-number'>{weeks}</h3>
-          <small>work weeks</small>
-          {$days}
+          <div className='countdown-row'>
+            <h3 className='countdown-date'>{entry.date.format('ddd, MMM Do')}</h3>
+            <small>Merge in {humanized}</small>
+          </div>
           {$seconds}
+          <div className='countdown-row'>
+            <h3 className='countdown-number'>{weeks}</h3>
+            <small>work weeks</small>
+          </div>
+          {$days}
         </section>
       );
     });

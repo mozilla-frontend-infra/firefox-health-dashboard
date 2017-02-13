@@ -440,6 +440,9 @@ svg {
     font-weight: 300;
     margin-bottom: calc(var(--gutterY) * 1.5);
 	}
+  .countdown-row {
+    margin-bottom: calc(var(--gutterY) * 1.5);
+  }
   .countdown-number {
     @extend h1;
     line-height: 1;
@@ -457,7 +460,10 @@ svg {
     @extend h4;
     font-weight: 400;
     color: var(--darkGray);
-    margin-bottom: calc(var(--gutterY) * 1.5);
+    sup {
+      display: block;
+      font-size: var(--smallFontSize);
+    }
   }
 }
 
