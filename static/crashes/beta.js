@@ -1,7 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
-import { curveLinear, line, scaleTime, scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3';
+import { curveMonotoneX, line, scaleTime, scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
 import find from 'lodash/fp/find';
@@ -94,7 +94,7 @@ export default class FirefoxBeta extends React.Component {
     const path = line()
       .x(d => xScale(d.date))
       .y(d => yScale(d.rate))
-      .curve(curveLinear);
+      .curve(curveMonotoneX);
     // const area = d3.svg.area()
     //   .x(d => xScale(d.date))
     //   .y0(d => yScale(d.rate - d.variance))
@@ -219,6 +219,7 @@ export default class FirefoxBeta extends React.Component {
     const color = colorScale(idx);
     const start = release.release || release.date;
     const mainRate = yScale(release.rate);
+    const contentRate = yScale(release.contentRate);
     const title = `${(release.hours / 1000).toFixed(1)}m usage hours`;
     // const hoursStart = hoursScale(hoursX - (release.hours || 0));
     // const hourWidth = hoursScale(hoursX) - hoursStart;
@@ -244,6 +245,14 @@ export default class FirefoxBeta extends React.Component {
             y1={mainRate - 5}
             x2={0}
             y2={mainRate + 5}
+            stroke={color}
+          />
+          <line
+            className='candidate-marker'
+            x1={0}
+            y1={contentRate - 2}
+            x2={0}
+            y2={contentRate + 2}
             stroke={color}
           />
           <line
@@ -414,8 +423,8 @@ export default class FirefoxBeta extends React.Component {
 
     return (
       <Dashboard
-        title='Telemetry Crash Rate'
-        subtitle='Firefox Beta'
+        title='Firefox Beta Stability'
+        subtitle='Main & Content C/1kUH (E10S Only)'
         className='crashes-beta'
       >
         <section
