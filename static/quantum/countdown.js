@@ -56,7 +56,7 @@ export default class QuantumCountdown extends React.Component {
       const $seconds = (idx !== 0) ? null : (
         <div className='countdown-row'>
           <h3 className='countdown-number'><span>t -</span>{seconds.toLocaleString()} <span>sec</span></h3>
-          <small>Unnecessary precision</small>
+          <small>Precision Countdown</small>
         </div>
       );
       return (
@@ -80,7 +80,7 @@ export default class QuantumCountdown extends React.Component {
     });
     return (
       <Dashboard
-        title='Firefox 57 (Quantum MVP)'
+        title='New Firefox 57 (Powered by Quantum)'
         subtitle='Merge Day Countdown'
         className='status-index quantum-countdown'
       >
