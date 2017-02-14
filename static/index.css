@@ -441,8 +441,8 @@ svg {
     margin-bottom: calc(var(--gutterY) * 1.5);
 	}
   h3 {
-    line-height: calc(var(--gutterY) * 2);
-    margin-bottom: calc(var(--gutterY) * 0.5);
+    /*line-height: calc(var(--gutterY) * 2);*/
+    margin-bottom: calc(var(--gutterY) * 1);
     span {
       font-weight: 300;
       color: var(--darkGray);
@@ -459,6 +459,7 @@ svg {
   .countdown-date {
     @extend h2;
     font-weight: 300;
+    /*line-height: 1;*/
     color: var(--lightGray);
   }
   small, h4 {
@@ -466,6 +467,7 @@ svg {
     font-weight: 400;
     color: var(--darkGray);
     margin: 0;
+    padding: 0;
     sup {
       display: block;
       font-size: var(--smallFontSize);
