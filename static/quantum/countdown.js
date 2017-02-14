@@ -50,13 +50,12 @@ export default class QuantumCountdown extends React.Component {
       const $days = (extraDays < 1) ? null : (
         <div className='countdown-row'>
           <h3 className='countdown-number'>{extraDays}</h3>
-          <small>week days</small>
+          <small>Week Days</small>
         </div>
       );
       const $seconds = (idx !== 0) ? null : (
         <div className='countdown-row'>
           <h3 className='countdown-number'><span>t -</span>{seconds.toLocaleString()} <span>sec</span></h3>
-          <small>Precision Countdown</small>
         </div>
       );
       return (
@@ -72,7 +71,7 @@ export default class QuantumCountdown extends React.Component {
           {$seconds}
           <div className='countdown-row'>
             <h3 className='countdown-number'>{weeks}</h3>
-            <small>work weeks</small>
+            <small>Work Weeks</small>
           </div>
           {$days}
         </section>
