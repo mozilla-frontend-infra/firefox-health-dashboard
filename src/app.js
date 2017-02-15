@@ -75,6 +75,7 @@ if (process.env.NODE_ENV !== 'test') {
       publicPath: webpackConfig.output.publicPath,
       noInfo: true,
       hot: true,
+      lazy: true,
       historyApiFallback: true,
     }));
     app.use(webpackHotMiddleware(compiler));

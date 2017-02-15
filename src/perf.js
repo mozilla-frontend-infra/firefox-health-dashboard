@@ -1,6 +1,8 @@
 import Router from 'koa-router';
 import GitHubApi from 'github';
-import Tmo from './perf/tmo';
+import json2csv from 'json2csv';
+import moment from 'moment';
+import { getSummary, getEvolution } from './perf/tmo';
 
 export const router = new Router();
 const gh = new GitHubApi();
@@ -15,8 +17,50 @@ gh.authenticate({
 
 router
 
+  .get('/ipc', async (ctx) => {
+    const evolutions = await getEvolution('IPC_SYNC_LATENCY_MS', '54', 'nightly', { application: 'Firefox' });
+    const summary = evolutions
+      .filter(({ evolution }) => evolution)
+      .map(({ key, evolution }) => {
+        const lastDate = evolution.dates().slice(-1)[0];
+        // console.log(moment().add(-7, 'days').format('YYYY-MM-DD'));
+        const hist = evolution
+          .dateRange(
+            moment(lastDate).add(-7, 'days').toDate(),
+            lastDate,
+          )
+          .histogram();
+        return {
+          key,
+          count: hist.count,
+          submissions: hist.submissions,
+          mean: hist.percentile(50),
+        };
+      });
+    ctx.body = json2csv({ data: summary });
+  })
+
   .get('/release', async (ctx) => {
-    ctx.body = 'Release';
+    const metrics = [
+      'CHECKERBOARD_SEVERITY',
+      'TIME_TO_NON_BLANK_PAINT_MS',
+      'FX_TAB_SWITCH_TOTAL_E10S_MS',
+      ['TIME_TO_FIRST_CLICK_V2', 'TIME_TO_FIRST_CLICK'],
+      ['TIME_TO_FIRST_KEY_INPUT_V2', 'TIME_TO_FIRST_KEY_INPUT'],
+      ['TIME_TO_FIRST_MOUSE_MOVE_V2', 'TIME_TO_FIRST_MOUSE_MOVE'],
+      ['TIME_TO_FIRST_SCROLL_V2', 'TIME_TO_FIRST_SCROLL'],
+      'TOTAL_SCROLL_Y',
+      'PAGE_MAX_SCROLL_Y',
+    ];
+    const baseline = await Promise.all(metrics.map(metric => getSummary(metric, '52', 'beta', { application: 'Firefox' })));
+    const tracking = await Promise.all(metrics.map(metric => getSummary(metric, '54', 'nightly', { application: 'Firefox', e10sEnabled: true })));
+    ctx.body = metrics.map((metric, idx) => {
+      return {
+        metric: metric,
+        baseline: baseline[idx],
+        tracking: tracking[idx],
+      };
+    });
   })
 
   .get('/e10s/hangs', async (ctx) => {
