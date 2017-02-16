@@ -34,7 +34,8 @@ router
           key,
           count: hist.count,
           submissions: hist.submissions,
-          mean: hist.percentile(50),
+          mean: hist.mean(),
+          median: hist.percentile(50),
         };
       });
     ctx.body = json2csv({ data: summary });
