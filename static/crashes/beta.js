@@ -5,7 +5,6 @@ import { curveMonotoneX, line, scaleTime, scaleLinear, scaleOrdinal, schemeCateg
 import moment from 'moment';
 import cx from 'classnames';
 import find from 'lodash/fp/find';
-import findLast from 'lodash/fp/findLast';
 import sumBy from 'lodash/fp/sumBy';
 import Dashboard from './../dashboard';
 

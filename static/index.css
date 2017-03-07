@@ -408,6 +408,90 @@ svg {
 	fill: var(--dinoRed);
 }
 
+.quantum-metrics {
+  --gridX: calc(var(--gutterX) * 3);
+
+  .dashboard-main {
+    display: grid;
+    grid-gap: calc(var(--gutterY) * 3) var(--gridX);
+    grid-template-columns: repeat(5, [col] 1fr);
+    grid-template-rows: repeat(3, [row] 1fr);
+    section {
+      position: relative;
+      .metrics-head {
+        border-bottom: 1px solid color(var(--darkGray) alpha(0.6));
+        position: absolute;
+        top: -calc(var(--gutterY) * 0.5);
+        line-height: 1;
+        text-align: center;
+        width: 100%;
+        left: 0;
+        @extend h4;
+        font-weight: 300;
+      }
+    }
+  }
+  .metrics-group {
+    display: flex;
+  }
+  .metric {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-left: var(--gridX);
+    &:first-child {
+      margin-left: 0;
+    }
+    .metric-head {
+      @extend h5;
+      line-height: calc(var(--gutterY));
+      padding: 0;
+      margin: 0;
+      line-height: calc(var(--gutterY) * 2);
+      margin-top: calc(var(--gutterY));
+      .metric-head-sub {
+        padding-left: calc(var(--gutterX) * 0.5);
+        @extend h5;
+        font-weight: 300;
+        color: var(--darkGray);
+        font-weight: 300;
+      }
+    }
+		.metric-data {
+			> div {
+				margin-top: calc(var(--gutterY));
+			}
+		}
+		.metric-telemetry {
+			display: flex;
+			&.status-wip {
+				color: var(--lightGray);
+				text-align: center;
+			}
+			> strong {}
+			> div {
+				flex: 1;
+				text-align: center;
+				.metric-value {
+					display: block;
+					margin-bottom: 0;
+					@extend h3;
+				}
+				em {
+					display: block;
+					font-style: normal;
+					color: var(--darkGray);
+					font-size: var(--smallFontSize);
+				}
+			}
+		}
+    > div {
+      flex: 1;
+    }
+  }
+}
+
 .quantum-countdown {
 	section {
 		text-align: center;
@@ -446,7 +530,6 @@ svg {
     span {
       font-weight: 300;
       color: var(--darkGray);
-      @extend h3;
     }
   }
   .countdown-row {

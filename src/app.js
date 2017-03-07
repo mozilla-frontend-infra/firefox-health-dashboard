@@ -64,7 +64,7 @@ app.use(async (ctx, next) => {
 });
 
 /* istanbul ignore if */
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'testing') {
   if (process.env.NODE_ENV === 'production') {
     app.use(staticCache('./dist', {
       maxAge: 24 * 60 * 60,
@@ -75,7 +75,7 @@ if (process.env.NODE_ENV !== 'test') {
       publicPath: webpackConfig.output.publicPath,
       noInfo: true,
       hot: true,
-      lazy: true,
+      // lazy: true,
       historyApiFallback: true,
     }));
     app.use(webpackHotMiddleware(compiler));

@@ -15,10 +15,96 @@ gh.authenticate({
   },
 });
 
+const summarizeHistogram = (hist) => {
+  return {
+    mean: hist.mean(),
+    p5: hist.percentile(5),
+    p50: hist.percentile(50),
+    p75: hist.percentile(75),
+    p95: hist.percentile(95),
+    p99: hist.percentile(99),
+  };
+};
+
 router
+  //
+  // .get('/evolution', async (ctx) => {
+  //   const opts = Object.assign({}, ctx.request.query);
+  //   const evolution = await getEvolution(opts);
+  //   if (!evolution) {
+  //     ctx.body = [];
+  //     return;
+  //   }
+  //   ctx.body = evolution.map((histogram, i, date) => {
+  //     return {
+  //       date: moment(date).format('YYYY-MM-DD'),
+  //       mean: histogram.mean(),
+  //       50: histogram.percentile(50),
+  //       75: histogram.percentile(75),
+  //       95: histogram.percentile(95),
+  //       99: histogram.percentile(99),
+  //     };
+  //   });
+  // })
+
+  .get('/evolution', async (ctx) => {
+    const opts = Object.assign({}, ctx.request.query);
+    const evolution = await getEvolution(opts);
+    if (!evolution) {
+      ctx.body = null;
+      return;
+    }
+    ctx.body = evolution.map((histogram, i, date) => {
+      return Object.assign(
+        summarizeHistogram(histogram),
+        {
+          date: moment(date).format('YYYY-MM-DD'),
+        },
+      );
+    });
+  })
+
+  .get('/tracking', async (ctx) => {
+    const opts = ctx.request.query;
+    const evolution = await getEvolution(opts);
+    if (!evolution) {
+      ctx.body = null;
+      return;
+    }
+    const histogram = evolution.histogram();
+    ctx.body = summarizeHistogram(histogram);
+  })
+
+  .get('/release', async (ctx) => {
+    const metrics = [
+      'CHECKERBOARD_SEVERITY',
+      'TIME_TO_NON_BLANK_PAINT_MS',
+      'FX_TAB_SWITCH_TOTAL_E10S_MS',
+      ['TIME_TO_FIRST_CLICK_V2', 'TIME_TO_FIRST_CLICK'],
+      ['TIME_TO_FIRST_KEY_INPUT_V2', 'TIME_TO_FIRST_KEY_INPUT'],
+      ['TIME_TO_FIRST_MOUSE_MOVE_V2', 'TIME_TO_FIRST_MOUSE_MOVE'],
+      ['TIME_TO_FIRST_SCROLL_V2', 'TIME_TO_FIRST_SCROLL'],
+      'TOTAL_SCROLL_Y',
+      'PAGE_MAX_SCROLL_Y',
+    ];
+    const baseline = await Promise.all(metrics.map(metric => getSummary({ metric, version: '52', channel: 'beta', application: 'Firefox' })));
+    const tracking = await Promise.all(metrics.map(metric => getSummary({ metric, version: '54', channel: 'nightly', application: 'Firefox', e10sEnabled: true })));
+    ctx.body = metrics.map((metric, idx) => {
+      return {
+        metric: metric,
+        baseline: baseline[idx],
+        tracking: tracking[idx],
+      };
+    });
+  })
 
   .get('/ipc', async (ctx) => {
-    const evolutions = await getEvolution('IPC_SYNC_LATENCY_MS', '54', 'nightly', { application: 'Firefox' });
+    const evolutions = await getEvolution({
+      metric: 'IPC_SYNC_LATENCY_MS',
+      version: '54',
+      channel: 'nightly',
+      application: 'Firefox',
+    });
     const summary = evolutions
       .filter(({ evolution }) => evolution)
       .map(({ key, evolution }) => {
@@ -39,29 +125,6 @@ router
         };
       });
     ctx.body = json2csv({ data: summary });
-  })
-
-  .get('/release', async (ctx) => {
-    const metrics = [
-      'CHECKERBOARD_SEVERITY',
-      'TIME_TO_NON_BLANK_PAINT_MS',
-      'FX_TAB_SWITCH_TOTAL_E10S_MS',
-      ['TIME_TO_FIRST_CLICK_V2', 'TIME_TO_FIRST_CLICK'],
-      ['TIME_TO_FIRST_KEY_INPUT_V2', 'TIME_TO_FIRST_KEY_INPUT'],
-      ['TIME_TO_FIRST_MOUSE_MOVE_V2', 'TIME_TO_FIRST_MOUSE_MOVE'],
-      ['TIME_TO_FIRST_SCROLL_V2', 'TIME_TO_FIRST_SCROLL'],
-      'TOTAL_SCROLL_Y',
-      'PAGE_MAX_SCROLL_Y',
-    ];
-    const baseline = await Promise.all(metrics.map(metric => getSummary(metric, '52', 'beta', { application: 'Firefox' })));
-    const tracking = await Promise.all(metrics.map(metric => getSummary(metric, '54', 'nightly', { application: 'Firefox', e10sEnabled: true })));
-    ctx.body = metrics.map((metric, idx) => {
-      return {
-        metric: metric,
-        baseline: baseline[idx],
-        tracking: tracking[idx],
-      };
-    });
   })
 
   .get('/e10s/hangs', async (ctx) => {

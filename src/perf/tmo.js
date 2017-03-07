@@ -1,4 +1,11 @@
 import Telemetry from 'telemetry-next-node';
+import getVersions from '../release/versions';
+import fetchJson from '../fetch/json';
+
+Telemetry.getJSON = async (url, callback) => {
+  const response = await fetchJson(url, { ttl: 'day' });
+  callback(response);
+};
 
 let nextTelemetry = 0;
 let initResolve = null;
@@ -20,14 +27,31 @@ function init() {
   return initResolve;
 }
 
-export async function getEvolution(metric, version, channel = 'release', filter = {}, useSubmissionDate = false) {
+export async function getEvolution(query) {
+  const {
+    metric,
+    channel = 'release',
+    useSubmissionDate = true,
+  } = query;
+  let {
+    version,
+  } = query;
+  delete query.metric;
+  delete query.version;
+  delete query.channel;
+  delete query.useSubmissionDate;
+  if (!version) {
+    const versions = await getVersions();
+    version = versions[channel];
+  }
   await init();
   return new Promise((resolve) => {
+    console.log(channel, version, metric, query);
     Telemetry.getEvolution(
       channel,
       String(parseInt(version, 10)),
       metric,
-      filter,
+      query,
       useSubmissionDate,
       (evolutionMap) => {
         const keys = Object.keys(evolutionMap);
@@ -48,23 +72,12 @@ export async function getEvolution(metric, version, channel = 'release', filter 
   });
 }
 
-export async function getSummary(metric, version, channel = 'release', filter = {}) {
-  let evolution = null;
-  if (!Array.isArray(metric)) {
-    metric = [metric];
-  }
-  for (const entry of metric) {
-    evolution = await getEvolution(entry, version, channel, filter);
-    if (evolution) {
-      break;
-    }
-  }
-  if (!evolution) {
-    return null;
-  }
+export async function getSummary(query) {
+  const evolution = await getEvolution(query);
   const hist = evolution.histogram();
   return {
     mean: hist.mean(),
+    median: hist.percentile(50),
     90: hist.percentile(90),
     95: hist.percentile(95),
     99: hist.percentile(99),
