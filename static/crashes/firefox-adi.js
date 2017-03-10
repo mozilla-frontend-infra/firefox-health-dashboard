@@ -48,7 +48,7 @@ export default class FirefoxAdiCrashes extends React.Component {
           {...this.state}
           x_accessor='date'
           y_accessor='rate'
-          min_y='0.6'
+          min_y='0.45'
           max_y='1.25'
           cleaned
         />
