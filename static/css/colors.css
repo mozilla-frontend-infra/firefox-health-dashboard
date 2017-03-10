@@ -1,4 +1,13 @@
 :root {
+  --newYellow: rgb(249, 232, 0);
+  --newLightBlue: rgb(12, 251, 251);
+  --newBlue: rgb(101, 211, 249);
+  --newBlue: rgb(178, 177, 239);
+  --newGreen: rgb(170, 219, 0);
+  --newOrange: rgb(248, 175, 0);
+  --newPink: rgb(255, 129, 255);
+  --newRed: rgb(255, 132, 140);
+
   --nightlyBlue: #1f366c;
   --nightlyBlueVibrant: #1e4488;
   --developerBlue: #005189;
