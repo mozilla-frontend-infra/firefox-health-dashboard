@@ -79,7 +79,7 @@ export default class QuantumCountdown extends React.Component {
     });
     return (
       <Dashboard
-        title='New Firefox 57 (Powered by Quantum)'
+        title='Year End Release (Powered by Quantum)'
         subtitle='Merge Day Countdown'
         className='status-index quantum-countdown'
       >

@@ -8,7 +8,7 @@
 }
 
 :root {
-  --baseFontFamily: 'Open Sans', sans-serif;
+  --baseFontFamily: 'Fira Sans', 'Open Sans', sans-serif;
   --lineHeight: calc(var(--fontSize) * 1.42857);
   --capHeight: calc(var(--fontSize) * 0.75);
   --gutterX: var(--fontSize);

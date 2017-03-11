@@ -45,31 +45,36 @@ export async function getEvolution(query) {
     version = versions[channel];
   }
   await init();
-  return new Promise((resolve) => {
-    console.log(channel, version, metric, query);
-    Telemetry.getEvolution(
-      channel,
-      String(parseInt(version, 10)),
-      metric,
-      query,
-      useSubmissionDate,
-      (evolutionMap) => {
-        const keys = Object.keys(evolutionMap);
-        if (keys.length > 1) {
-          resolve(keys.map((key) => {
-            console.log(key);
-            return {
-              key: key,
-              evolution: evolutionMap[key].sanitized(),
-            };
-          }));
-        } else if (evolutionMap['']) {
-          resolve(evolutionMap[''].sanitized());
-        } else {
-          resolve(null);
-        }
-      });
-  });
+  let response = null;
+  for (let i = 0; i < 5; i++) {
+    response = await new Promise((resolve) => {
+      Telemetry.getEvolution(
+        channel,
+        String(parseInt(version, 10) - 1),
+        metric,
+        query,
+        useSubmissionDate,
+        (evolutionMap) => {
+          const keys = Object.keys(evolutionMap);
+          if (keys.length > 1) {
+            resolve(keys.map((key) => {
+              console.log(key);
+              return {
+                key: key,
+                evolution: evolutionMap[key].sanitized(),
+              };
+            }));
+          } else if (evolutionMap['']) {
+            resolve(evolutionMap[''].sanitized());
+          } else {
+            resolve(null);
+          }
+        });
+    });
+    if (response) {
+      return response;
+    }
+  }
 }
 
 export async function getSummary(query) {

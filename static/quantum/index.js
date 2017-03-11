@@ -2,6 +2,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import numeral from 'numeral';
+import cx from 'classnames';
 import Dashboard from './../dashboard';
 
 export default class QuantumIndex extends React.Component {
@@ -20,8 +21,8 @@ export default class QuantumIndex extends React.Component {
   render() {
     return (
       <Dashboard
-        title='Firefox 57 (Quantum)'
-        subtitle='Performance Release Criteria'
+        title='Year End Release (Quantum)'
+        subtitle='Perceived Performance Release Criteria'
         className='quantum-metrics'
       >
         <section
@@ -32,29 +33,21 @@ export default class QuantumIndex extends React.Component {
         >
           <h3 className='metrics-head'><span>Smoothness</span></h3>
           <div className='metrics-group'>
+            <div className='metric metric-info'>
+              <p>This dashboard is a work in progress.
+              Keep an eye out for more metrics to come online.</p>
+              <p><em>
+                Telemetry data is 7-day average from Nightly.
+                Lower numbers are better.
+              </em></p>
+            </div>
             <Metric
-              title='Frame Throughput'
-              subtitle='TP'
+              title='Content Animations'
+              subtitle='Frame Throughput'
               status={{
                 priority: 0,
                 telemetry: {
                   status: 'Assigned',
-                  bug: 1303313,
-                },
-                benchmark: {
-                  status: 'In Progress',
-                  framework: 'Hasal',
-                  gh_issue: 'https://github.com/Mozilla-TWQA/Hasal/issues/543',
-                },
-              }}
-            />
-            <Metric
-              title='Content'
-              subtitle='TP'
-              status={{
-                priority: 1,
-                telemetry: {
-                  status: 'In Progress',
                   bug: 1338347,
                 },
                 benchmark: {
@@ -65,13 +58,29 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title='Frontend'
-              subtitle='TP'
+              title='Frontend Animations'
+              subtitle='FT'
               status={{
                 priority: 1,
                 telemetry: {
-                  status: 'Backlog',
+                  status: 'Assigned',
                   bug: 1338347,
+                },
+              }}
+            />
+            <Metric
+              title='Scrolling'
+              subtitle='Frame Throughput'
+              status={{
+                priority: 0,
+                telemetry: {
+                  status: 'Assigned',
+                  bug: 1338347,
+                },
+                benchmark: {
+                  status: 'In Progress',
+                  framework: 'Hasal',
+                  gh_issue: 'https://github.com/Mozilla-TWQA/Hasal/issues/543',
                 },
               }}
             />
@@ -91,7 +100,7 @@ export default class QuantumIndex extends React.Component {
                 },
               }}
             />
-            <Metric
+            {/* <Metric
               title='Paint Time'
               subtitle='CB'
               format='0,0'
@@ -101,7 +110,7 @@ export default class QuantumIndex extends React.Component {
                   metric: 'CONTENT_PAINT_TIME',
                 },
               }}
-            />
+            /> */}
           </div>
         </section>
         <section
@@ -113,41 +122,49 @@ export default class QuantumIndex extends React.Component {
           <h3 className='metrics-head'><span>Responsiveness</span></h3>
           <div className='metrics-group'>
             <Metric
-              title='Input-Handler Latency'
+              title='Input Latency'
               status={{
-                telemetry: {
-                  metric: 'INPUT_EVENT_RESPONSE_MS',
-                },
-              }}
-            />
-            <Metric
-              title='APZ Input Latency'
-              status={{
-                telemetry: {
-                  metric: 'CONTENT_RESPONSE_DURATION',
-                },
-              }}
-            />
-            <Metric
-              title='Input-Display Latency'
-              status={{
-                telemetry: {
-                  status: 'In Progress',
-                  format: '0.0',
-                },
+                telemetry: [
+                  {
+                    metric: 'INPUT_EVENT_RESPONSE_MS',
+                    label: 'Input Handler Latency',
+                  },
+                  {
+                    metric: 'CONTENT_RESPONSE_DURATION',
+                    label: 'Scroll Latency',
+                  },
+                ],
                 benchmark: {
                   framework: 'Hasal',
-                  status: 'At Risk',
+                  status: 'In Progress',
                   comment: 'Limited coverage for Q1',
                 },
               }}
             />
             <Metric
-              title='Content/Frontend Hangs'
+              title='Expected Queuing Latency'
+              unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
-                  status: 'Backlog (Q2)',
-                  unit: 'hangs > 100ms / minute',
+                  status: 'TBD',
+                },
+              }}
+            />
+            <Metric
+              title='Content Hangs'
+              unit='Hangs > 100ms / Minute'
+              status={{
+                telemetry: {
+                  status: 'In Progress',
+                },
+              }}
+            />
+            <Metric
+              title='Frontend Hangs'
+              unit='Hangs > 100ms / Minute'
+              status={{
+                telemetry: {
+                  status: 'In Progress',
                 },
               }}
             />
@@ -164,7 +181,7 @@ export default class QuantumIndex extends React.Component {
         </section>
         <section
           style={{
-            gridColumn: '2 / span 4',
+            gridColumn: '1 / span 5',
             gridRow: '3',
           }}
         >
@@ -181,27 +198,10 @@ export default class QuantumIndex extends React.Component {
                 benchmark: {
                   framework: 'WebPageTest',
                   metric: 'Start Render',
+                  status: 'In Data Review',
                   target: 1.33,
                   baseline: 1.63,
                   tracking: 1.0,
-                },
-              }}
-            />
-            <Metric
-              title='Page Load'
-              unit='Spinner, ms'
-              status={{
-                telemetry: {
-                  metric: 'FX_PAGE_LOAD_MS',
-                  format: '0,0',
-                },
-                benchmark: {
-                  framework: 'WebPageTest',
-                  metric: 'Visual Complete',
-                  status: 'Running',
-                  reference: 4.99,
-                  baseline: 4.18,
-                  tracking: 5.18,
                 },
               }}
             />
@@ -211,13 +211,30 @@ export default class QuantumIndex extends React.Component {
               unit='ms'
               status={{
                 telemetry: {
-                  metric: 'TIME_TO_MEANINGFUL_PAINT_MS',
                   status: 'In Progress',
                 },
                 benchmark: {
                   framework: 'WebPageTest',
                   metric: 'Speed Index',
-                  status: 'Running',
+                  status: 'In Data Review',
+                },
+              }}
+            />
+            <Metric
+              title='Fully Loaded'
+              unit='Spinner, ms'
+              status={{
+                telemetry: {
+                  metric: 'FX_PAGE_LOAD_MS',
+                  format: '0,0',
+                },
+                benchmark: {
+                  framework: 'WebPageTest',
+                  metric: 'Visual Complete',
+                  status: 'In Data Review',
+                  reference: 4.99,
+                  baseline: 4.18,
+                  tracking: 5.18,
                 },
               }}
             />
@@ -225,18 +242,18 @@ export default class QuantumIndex extends React.Component {
               title='Interactive'
               subtitle='TTI'
               status={{
-                priority: 1,
                 telemetry: {
-                  metric: 'TIME_TO_INTERACTIVE_MS',
                   status: 'Backlog',
                 },
                 benchmark: {
                   framework: 'WebPageTest',
-                  metric: 'TTI',
-                  status: 'In Progress',
+                  status: 'Backlog',
                 },
               }}
             />
+            <div className='metric metric-info'>
+              <p>Next up is setting targets and adding graphs.</p>
+            </div>
           </div>
         </section>
         {/*
@@ -299,52 +316,88 @@ class Metric extends React.Component {
 
   async fetch() {
     const { telemetry } = this.props.status;
-    if (telemetry && telemetry.metric && !telemetry.status) {
-      const args = 'channel=nightly';
-      const url = `/api/perf/tracking?metric=${telemetry.metric}&${args}`;
+    if (!telemetry) {
+      return;
+    }
+    (Array.isArray(telemetry) ? telemetry : [telemetry]).forEach(async ({ metric }) => {
+      if (!metric) {
+        return;
+      }
+      const args = 'channel=nightly&application=Firefox&e10sEnabled=true';
+      const url = `/api/perf/tracking?metric=${metric}&${args}`;
       let evolution = null;
       try {
         evolution = await (await fetch(url)).json();
       } catch (e) {
         evolution = 'n/a';
       }
-      this.setState({ evolution });
-    }
+      this.setState({ [metric]: evolution });
+    }, this);
   }
 
-  renderTelemetry({ status, metric, unit = '', format = '0,0.0' }) {
-    const evolution = this.state.evolution;
-    if (!evolution) {
-      return (
-        <div className='metric-line status-wip'>
-          {status || '…'}
-        </div>
+  renderTelemetry({ status, metric, label, format = '0,0.0' }) {
+    const evolution = this.state[metric];
+    const cls = ['metric-line', 'metric-telemetry'];
+    const $content = [];
+    if (label) {
+      $content.push(
+        <div className='metric-source'>
+          <em>Telemetry:</em>
+          {label}
+        </div>,
+      );
+    } else {
+      $content.push(
+        <div className='metric-source'>
+          <em>Telemetry</em>
+        </div>,
       );
     }
-    let $content = ['n/a'];
-    if (typeof evolution === 'object') {
-      $content = [
-        <div className='metric-median'>
-          <span className='metric-value'>{numeral(evolution.p50).format(format)}</span>
-          <em>p50</em>
-        </div>,
-        <div className='metric-95h'>
-          <span className='metric-value'>{numeral(evolution.p95).format(format)}</span>
-          <em>p95</em>
-        </div>,
-      ];
+    if (evolution) {
+      if (typeof evolution === 'object') {
+        $content.push(
+          <div className='metric-summary'>
+            <div className='metric-median'>
+              <span className='metric-value'>{numeral(evolution.p50).format(format)}</span>
+              <em>p50</em>
+            </div>
+            <div className='metric-95h'>
+              <span className='metric-value'>{numeral(evolution.p95).format(format)}</span>
+              <em>p95</em>
+            </div>
+          </div>,
+        );
+      }
+    } else {
+      cls.push('status-wip');
+      $content.push(
+        <span className='metric-status'>{status || '…'}</span>,
+      );
     }
     return (
-      <div className='metric-line metric-telemetry' title={metric}>
+      <div className={cx(cls)} title={metric} key={metric}>
         {$content}
       </div>
     );
   }
 
-  renderBenchmark({ metric, framework }) {
+  renderBenchmark({ metric, framework, status }) {
+    const $content = [
+      <div className='metric-source'>
+        <em>Benchmark:</em>
+        {framework}
+      </div>,
+    ];
+    const cls = ['metric-line', 'metric-benchmark'];
+    if (status) {
+      cls.push('status-wip');
+      $content.push(
+        <span className='metric-status'>{status}</span>,
+      );
+    }
     return (
-      <div className='metric-line metric-telemetry'>
-        {framework} ({metric})
+      <div className={cx(cls)}>
+        {$content}
       </div>
     );
   }
@@ -353,9 +406,9 @@ class Metric extends React.Component {
     const { title, subtitle, status = {} } = this.props;
     const { benchmark, telemetry, priority = 0 } = status;
     const $status = [];
-    const unit = telemetry && telemetry.unit;
     if (telemetry) {
-      $status.push(this.renderTelemetry(telemetry));
+      const list = Array.isArray(telemetry) ? telemetry : [telemetry];
+      list.forEach(entry => $status.push(this.renderTelemetry(entry)));
     }
     if (benchmark) {
       $status.push(this.renderBenchmark(benchmark));
@@ -364,7 +417,7 @@ class Metric extends React.Component {
       <div className='metric'>
         <h4 className='metric-head'>{title} {
           subtitle
-            ? <small className='metric-head-sub'>{subtitle || unit}</small>
+            ? <small className='metric-head-sub'>{subtitle}</small>
             : ''
         }</h4>
         {$status}

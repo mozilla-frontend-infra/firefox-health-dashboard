@@ -1,12 +1,13 @@
 :root {
-  --newYellow: rgb(249, 232, 0);
-  --newLightBlue: rgb(12, 251, 251);
-  --newBlue: rgb(101, 211, 249);
-  --newBlue: rgb(178, 177, 239);
-  --newGreen: rgb(170, 219, 0);
-  --newOrange: rgb(248, 175, 0);
-  --newPink: rgb(255, 129, 255);
-  --newRed: rgb(255, 132, 140);
+  --newCyan: #82D1F5;
+  --newLilac: #B0B2E9;
+  --newNeonBlue: #00FFFF;
+  --newCoral: #FF8C8E;
+  --newOrange: #FABA00;
+  --newNeonPink: #FA8CFF;
+  --newYellow: #FFED00;
+  --newLime: #B6D806;
+  --newNeonGreen: #ABFF10;
 
   --nightlyBlue: #1f366c;
   --nightlyBlueVibrant: #1e4488;
