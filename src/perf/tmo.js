@@ -46,7 +46,7 @@ export async function getEvolution(query) {
   }
   await init();
   let response = null;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i += 1) {
     response = await new Promise((resolve) => {
       Telemetry.getEvolution(
         channel,
@@ -75,6 +75,7 @@ export async function getEvolution(query) {
       return response;
     }
   }
+  return null;
 }
 
 export async function getSummary(query) {
