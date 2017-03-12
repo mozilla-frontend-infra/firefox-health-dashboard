@@ -46,7 +46,7 @@ export async function getEvolution(query) {
   }
   await init();
   let response = null;
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
     response = await new Promise((resolve) => {
       Telemetry.getEvolution(
         channel,
@@ -71,7 +71,7 @@ export async function getEvolution(query) {
           }
         });
     });
-    if (response) {
+    if (response && response.dates().length > 6) {
       return response;
     }
   }

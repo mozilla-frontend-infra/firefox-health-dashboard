@@ -47,11 +47,11 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 0,
                 telemetry: {
-                  status: 'Assigned',
+                  status: 'In Progress',
                   bug: 1338347,
                 },
                 benchmark: {
-                  status: 'In Progress',
+                  status: 'Backlog',
                   framework: 'Hasal',
                   gh_issue: 'https://github.com/Mozilla-TWQA/Hasal/issues/543',
                 },
@@ -63,7 +63,7 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 1,
                 telemetry: {
-                  status: 'Assigned',
+                  status: 'In Progress',
                   bug: 1338347,
                 },
               }}
@@ -74,11 +74,11 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 0,
                 telemetry: {
-                  status: 'Assigned',
+                  status: 'In Progress',
                   bug: 1338347,
                 },
                 benchmark: {
-                  status: 'In Progress',
+                  status: 'Backlog',
                   framework: 'Hasal',
                   gh_issue: 'https://github.com/Mozilla-TWQA/Hasal/issues/543',
                 },
@@ -136,7 +136,7 @@ export default class QuantumIndex extends React.Component {
                 ],
                 benchmark: {
                   framework: 'Hasal',
-                  status: 'In Progress',
+                  status: 'Backlog',
                   comment: 'Limited coverage for Q1',
                 },
               }}
@@ -146,7 +146,7 @@ export default class QuantumIndex extends React.Component {
               unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
-                  status: 'TBD',
+                  status: 'Backlog',
                 },
               }}
             />
@@ -155,7 +155,7 @@ export default class QuantumIndex extends React.Component {
               unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
-                  status: 'In Progress',
+                  status: 'Backlog',
                 },
               }}
             />
@@ -164,7 +164,7 @@ export default class QuantumIndex extends React.Component {
               unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
-                  status: 'In Progress',
+                  status: 'Backlog',
                 },
               }}
             />
@@ -323,7 +323,7 @@ class Metric extends React.Component {
       if (!metric) {
         return;
       }
-      const args = 'channel=nightly&application=Firefox&e10sEnabled=true';
+      const args = 'channel=beta&application=Firefox&e10sEnabled=true';
       const url = `/api/perf/tracking?metric=${metric}&${args}`;
       let evolution = null;
       try {
