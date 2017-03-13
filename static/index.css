@@ -482,8 +482,9 @@ svg {
 			background-color: var(--newLime);
 			white-space: nowrap;
 			overflow: hidden;
+			text-shadow: 0 0 1px #fff;
 			color: #000;
-			font-weight: 400;
+			font-weight: 500;
       line-height: calc(var(--gutterY));
       padding: 0 calc(var(--gutterX) * 0.5);
       margin: 0;
@@ -493,13 +494,13 @@ svg {
         padding-left: calc(var(--gutterX) * 0.5);
         @extend h5;
         font-weight: 300;
-        color: var(--darkGray);
+        color: #000;
         font-weight: 300;
       }
     }
 		.metric-line {
 			padding-top: calc(var(--gutterY) * 0.5);
-			background-color: color(var(--newLilac) shade(90%));
+			background-color: color(var(--newLilac) shade(95%));
 			flex: 1;
 			&.status-wip {
 				text-align: center;
@@ -507,6 +508,7 @@ svg {
 					padding: 0 calc(var(--gutterX) * 0.5);
 					color: #000;
 					background-color: var(--lightGray);
+					font-style: italic;
 				}
 			}
 		}
@@ -515,8 +517,10 @@ svg {
 			margin-top: calc(var(--gutterY) * -0.5);
 			color: var(--lightGray);
 			font-size: var(--smallFontSize);
+			font-weight: 500;
 			em {
-				color: var(--darkGray);
+				font-weight: 300;
+				color: var(--lightGray);
 				font-style: normal;
 				padding-right: calc(var(--gutterX) * 0.5);
 			}

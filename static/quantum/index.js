@@ -36,10 +36,9 @@ export default class QuantumIndex extends React.Component {
           <div className='metrics-group'>
             <div className='metric metric-info'>
               <p>This dashboard is a work in progress.
-              Keep an eye out for more metrics to come online
-              and targets to be set for Quantum.</p>
+              Keep an eye out for more metrics and targets to come online.</p>
               <p><em>
-                Telemetry data is 7-day average from Nightly.
+                Telemetry data are a 7-day window from Beta.
                 Lower numbers are better.
               </em></p>
             </div>
@@ -268,7 +267,6 @@ export default class QuantumIndex extends React.Component {
                 <h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a></h4><br />
                 <h4>#quantum</h4> (Slack/IRC)
               </p>
-              <p />
               <p><em>https://health.graphics/quantum</em></p>
             </div>
           </div>
