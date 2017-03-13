@@ -460,6 +460,13 @@ svg {
 			em {
 				font-size: var(--smallFontSize);
 			}
+			p {
+				margin: 0 0 calc(var(--gutterY)) 0;
+			}
+			h4 {
+				margin: 0;
+				line-height: calc(var(--gutterY) * 2);
+			}
 		}
     .metric-head {
       @extend h5;

@@ -2,6 +2,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import numeral from 'numeral';
+import { stringify } from 'qs';
 import cx from 'classnames';
 import Dashboard from './../dashboard';
 
@@ -35,7 +36,8 @@ export default class QuantumIndex extends React.Component {
           <div className='metrics-group'>
             <div className='metric metric-info'>
               <p>This dashboard is a work in progress.
-              Keep an eye out for more metrics to come online.</p>
+              Keep an eye out for more metrics to come online
+              and targets to be set for Quantum.</p>
               <p><em>
                 Telemetry data is 7-day average from Nightly.
                 Lower numbers are better.
@@ -43,7 +45,8 @@ export default class QuantumIndex extends React.Component {
             </div>
             <Metric
               title='Content Animations'
-              subtitle='Frame Throughput'
+              subtitle='Frame Throughp.'
+              unit='fps'
               status={{
                 priority: 0,
                 telemetry: {
@@ -59,7 +62,8 @@ export default class QuantumIndex extends React.Component {
             />
             <Metric
               title='Frontend Animations'
-              subtitle='FT'
+              subtitle='Frame Throughp.'
+              unit='fps'
               status={{
                 priority: 1,
                 telemetry: {
@@ -71,6 +75,7 @@ export default class QuantumIndex extends React.Component {
             <Metric
               title='Scrolling'
               subtitle='Frame Throughput'
+              unit='fps'
               status={{
                 priority: 0,
                 telemetry: {
@@ -88,6 +93,7 @@ export default class QuantumIndex extends React.Component {
               title='Scroll Quality'
               subtitle='CB'
               format='0,0'
+              unit='severity'
               status={{
                 priority: 2,
                 telemetry: {
@@ -123,6 +129,7 @@ export default class QuantumIndex extends React.Component {
           <div className='metrics-group'>
             <Metric
               title='Input Latency'
+              unit='ms'
               status={{
                 telemetry: [
                   {
@@ -143,7 +150,7 @@ export default class QuantumIndex extends React.Component {
             />
             <Metric
               title='Expected Queuing Latency'
-              unit='Hangs > 100ms / Minute'
+              unit='ms'
               status={{
                 telemetry: {
                   status: 'Backlog',
@@ -171,6 +178,7 @@ export default class QuantumIndex extends React.Component {
             <Metric
               title='Slow Script'
               subtitle='Page Count'
+              unit='count'
               status={{
                 telemetry: {
                   metric: 'SLOW_SCRIPT_PAGE_COUNT',
@@ -190,6 +198,7 @@ export default class QuantumIndex extends React.Component {
             <Metric
               title='Non-Blank Paint'
               subtitle='TTFP'
+              unit='ms'
               status={{
                 telemetry: {
                   metric: 'TIME_TO_NON_BLANK_PAINT_MS',
@@ -222,7 +231,8 @@ export default class QuantumIndex extends React.Component {
             />
             <Metric
               title='Fully Loaded'
-              unit='Spinner, ms'
+              subtitle='Tab Throbber'
+              unit='ms'
               status={{
                 telemetry: {
                   metric: 'FX_PAGE_LOAD_MS',
@@ -241,6 +251,7 @@ export default class QuantumIndex extends React.Component {
             <Metric
               title='Interactive'
               subtitle='TTI'
+              unit='ms'
               status={{
                 telemetry: {
                   status: 'Backlog',
@@ -252,7 +263,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <div className='metric metric-info'>
-              <p>Next up is setting targets and adding graphs.</p>
+              <p>Feedback, questions or reports of bad performance?</p>
+              <p><h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a> #quantum</h4></p>
+              <p><em>https://health.graphics/quantum</em></p>
             </div>
           </div>
         </section>
@@ -335,22 +348,20 @@ class Metric extends React.Component {
     }, this);
   }
 
-  renderTelemetry({ status, metric, label, format = '0,0.0' }) {
+  renderTelemetry({ status, metric, label, unit, format = '0,0.0' }) {
     const evolution = this.state[metric];
     const cls = ['metric-line', 'metric-telemetry'];
     const $content = [];
+    const $title = <em>Telemetry ({unit || this.props.unit})</em>;
     if (label) {
       $content.push(
         <div className='metric-source'>
-          <em>Telemetry:</em>
-          {label}
+          {$title} {label}
         </div>,
       );
     } else {
       $content.push(
-        <div className='metric-source'>
-          <em>Telemetry</em>
-        </div>,
+        <div className='metric-source'>{$title}</div>,
       );
     }
     if (evolution) {
@@ -428,10 +439,12 @@ class Metric extends React.Component {
 
 Metric.defaultProps = {
   subtitle: '',
+  unit: 'count',
   status: {},
 };
 Metric.propTypes = {
   title: React.PropTypes.string,
   subtitle: React.PropTypes.string,
+  unit: React.PropTypes.string,
   status: React.PropTypes.object,
 };
