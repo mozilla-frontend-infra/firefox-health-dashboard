@@ -464,14 +464,18 @@ svg {
 				margin: 0 0 calc(var(--gutterY)) 0;
 			}
 			h4 {
+				display: inline;
 				margin: 0;
-				line-height: calc(var(--gutterY) * 2);
+				padding: 0;
+				line-height: calc(var(--gutterY));
+				font-size: inherit;
 			}
 		}
     .metric-head {
       @extend h5;
 			text-align: center;
 			background-color: var(--newLime);
+			white-space: nowrap;
 			color: #000;
 			font-weight: 400;
       line-height: calc(var(--gutterY));

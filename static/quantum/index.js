@@ -264,7 +264,8 @@ export default class QuantumIndex extends React.Component {
             />
             <div className='metric metric-info'>
               <p>Feedback, questions or reports of bad performance?</p>
-              <p><h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a> #quantum</h4></p>
+              <p><h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a></h4></p>
+              <p><h4>#quantum</h4> (Slack/IRC)</p>
               <p><em>https://health.graphics/quantum</em></p>
             </div>
           </div>
