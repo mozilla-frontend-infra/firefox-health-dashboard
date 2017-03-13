@@ -409,16 +409,21 @@ svg {
 }
 
 .quantum-metrics {
-  --gridX: calc(var(--gutterX) * 3);
+  --gridX: calc(var(--gutterX) * 2);
 
   .dashboard-main {
-    display: grid;
+    display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		height: 100%;
 		margin-top: -calc(var(--gutterY) * 1);
-    grid-gap: calc(var(--gutterY) * 1.5) var(--gridX);
-    grid-template-columns: repeat(5, [col] 1fr);
-    grid-template-rows: repeat(3, [row] 1fr);
     section {
+			flex: 1;
       position: relative;
+			margin-bottom: calc(var(--gutterY) * 1);
+			&:last-child {
+				margin-bottom: 0;
+			}
       .metrics-head {
         position: absolute;
         top: -calc(var(--gutterY) * 0.5);
@@ -476,10 +481,11 @@ svg {
 			text-align: center;
 			background-color: var(--newLime);
 			white-space: nowrap;
+			overflow: hidden;
 			color: #000;
 			font-weight: 400;
       line-height: calc(var(--gutterY));
-      padding: 0;
+      padding: 0 calc(var(--gutterX) * 0.5);
       margin: 0;
       line-height: calc(var(--gutterY) * 2);
       margin-top: calc(var(--gutterY));
@@ -500,7 +506,7 @@ svg {
 				.metric-status {
 					padding: 0 calc(var(--gutterX) * 0.5);
 					color: #000;
-					background-color: var(--newYellow);
+					background-color: var(--lightGray);
 				}
 			}
 		}

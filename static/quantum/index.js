@@ -91,7 +91,7 @@ export default class QuantumIndex extends React.Component {
             />
             <Metric
               title='Scroll Quality'
-              subtitle='CB'
+              subtitle='Checkerboarding'
               format='0,0'
               unit='severity'
               status={{
@@ -264,8 +264,11 @@ export default class QuantumIndex extends React.Component {
             />
             <div className='metric metric-info'>
               <p>Feedback, questions or reports of bad performance?</p>
-              <p><h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a></h4></p>
-              <p><h4>#quantum</h4> (Slack/IRC)</p>
+              <p>
+                <h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a></h4><br />
+                <h4>#quantum</h4> (Slack/IRC)
+              </p>
+              <p />
               <p><em>https://health.graphics/quantum</em></p>
             </div>
           </div>
