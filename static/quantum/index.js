@@ -2,7 +2,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import numeral from 'numeral';
-import { stringify } from 'qs';
 import cx from 'classnames';
 import Dashboard from './../dashboard';
 

@@ -50,7 +50,7 @@ export async function getEvolution(query) {
     response = await new Promise((resolve) => {
       Telemetry.getEvolution(
         channel,
-        String(parseInt(version, 10) - 1),
+        String(parseInt(version, 10) - i),
         metric,
         query,
         useSubmissionDate,
@@ -58,7 +58,6 @@ export async function getEvolution(query) {
           const keys = Object.keys(evolutionMap);
           if (keys.length > 1) {
             resolve(keys.map((key) => {
-              console.log(key);
               return {
                 key: key,
                 evolution: evolutionMap[key].sanitized(),
@@ -71,7 +70,7 @@ export async function getEvolution(query) {
           }
         });
     });
-    if (response && response.dates().length > 6) {
+    if (response && (Array.isArray(response) || response.dates().length > 6)) {
       return response;
     }
   }

@@ -26,6 +26,33 @@ const summarizeHistogram = (hist) => {
   };
 };
 
+const summarizeIpcTable = async (metric) => {
+  const evolutions = await getEvolution({
+    metric: metric,
+    channel: 'nightly',
+    application: 'Firefox',
+  });
+  return evolutions
+  .filter(({ evolution }) => evolution)
+  .map(({ key, evolution }) => {
+    const lastDate = evolution.dates().slice(-1)[0];
+    // console.log(moment().add(-7, 'days').format('YYYY-MM-DD'));
+    const hist = evolution
+      .dateRange(
+        moment(lastDate).add(-7, 'days').toDate(),
+        lastDate,
+      )
+      .histogram();
+    return {
+      key,
+      count: hist.count,
+      submissions: hist.submissions,
+      mean: hist.mean(),
+      median: hist.percentile(50),
+    };
+  });
+};
+
 router
   //
   // .get('/evolution', async (ctx) => {
@@ -68,7 +95,7 @@ router
     const opts = ctx.request.query;
     const evolution = await getEvolution(opts);
     if (!evolution) {
-      ctx.body = null;
+      ctx.body = { status: 0 };
       return;
     }
     const histogram = evolution.histogram();
@@ -99,31 +126,17 @@ router
   })
 
   .get('/ipc', async (ctx) => {
-    const evolutions = await getEvolution({
-      metric: 'IPC_SYNC_LATENCY_MS',
-      version: '54',
-      channel: 'nightly',
-      application: 'Firefox',
-    });
-    const summary = evolutions
-      .filter(({ evolution }) => evolution)
-      .map(({ key, evolution }) => {
-        const lastDate = evolution.dates().slice(-1)[0];
-        // console.log(moment().add(-7, 'days').format('YYYY-MM-DD'));
-        const hist = evolution
-          .dateRange(
-            moment(lastDate).add(-7, 'days').toDate(),
-            lastDate,
-          )
-          .histogram();
-        return {
-          key,
-          count: hist.count,
-          submissions: hist.submissions,
-          mean: hist.mean(),
-          median: hist.percentile(50),
-        };
-      });
+    const summary = await summarizeIpcTable('IPC_SYNC_LATENCY_MS');
+    ctx.body = json2csv({ data: summary });
+  })
+
+  .get('/ipc/main/write', async (ctx) => {
+    const summary = await summarizeIpcTable('IPC_WRITE_MAIN_THREAD_LATENCY_MS');
+    ctx.body = json2csv({ data: summary });
+  })
+
+  .get('/ipc/main/read', async (ctx) => {
+    const summary = await summarizeIpcTable('IPC_READ_MAIN_THREAD_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
 
