@@ -126,16 +126,16 @@ router
   })
 
   .get('/ipc', async (ctx) => {
-    const summary = await summarizeIpcTable('IPC_SYNC_LATENCY_MS');
+    const summary = await summarizeIpcTable('IPC_SYNC_MAIN_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
 
-  .get('/ipc/main/write', async (ctx) => {
+  .get('/ipc/write', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_WRITE_MAIN_THREAD_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
 
-  .get('/ipc/main/read', async (ctx) => {
+  .get('/ipc/read', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_READ_MAIN_THREAD_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
