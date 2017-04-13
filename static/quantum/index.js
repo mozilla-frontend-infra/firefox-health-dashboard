@@ -400,7 +400,7 @@ class Metric extends React.Component {
     );
   }
 
-  renderBenchmark({ metric, framework, status }) {
+  renderBenchmark({ framework, status }) {
     const $content = [
       <div className='metric-source'>
         <em>Benchmark:</em>
@@ -423,7 +423,7 @@ class Metric extends React.Component {
 
   render() {
     const { title, subtitle, status = {} } = this.props;
-    const { benchmark, telemetry, priority = 0 } = status;
+    const { benchmark, telemetry } = status;
     const $status = [];
     if (telemetry) {
       const list = Array.isArray(telemetry) ? telemetry : [telemetry];

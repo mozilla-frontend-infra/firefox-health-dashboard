@@ -58,16 +58,18 @@ export default class FirefoxBeta extends React.Component {
         .exponent(0.5)
         .domain([0, evolutions.length - 1])
         .range([1, 0.1]);
+      console.log(evolutions[0].dates[0].date);
+      const xDomain = [
+        new Date(evolutions[0].dates[0].date),
+        new Date(evolutions.slice(-1)[0].dates.slice(-1)[0].date),
+      ];
+      console.log(xDomain);
+      const xScale = scaleTime()
+        .domain(xDomain)
+        .range([0, this.width]);
       const $evolutions = evolutions.map((version, versionIdx) => {
-        const xDomain = [
-          new Date(version.start),
-          new Date(version.end || version.release || Date.now()),
-        ];
         const alpha = alphaScale(versionIdx);
         // console.log(moment(xDomain[1]).diff(xDomain[0], 'weeks', true));
-        const xScale = scaleTime()
-          .domain(xDomain)
-          .range([0, this.width]);
         const paths = yRangeFields.map((field) => {
           const yScale = scaleLinear()
             .domain(yRanges[field])
