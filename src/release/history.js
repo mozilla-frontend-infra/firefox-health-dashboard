@@ -95,7 +95,7 @@ export async function getReleaseDate(version, {
     channel: channel || parsed.channel,
   });
   const found = find(history, (entry) => {
-    return parsed.full === entry.version.full;
+    return parsed.full === entry.version;
   });
   return {
     date: found ? moment(found.date).format('YYYY-MM-DD') : null,

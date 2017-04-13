@@ -408,6 +408,19 @@ svg {
 	fill: var(--dinoRed);
 }
 
+.dashboard-metric {
+	.channel-line {
+		text {
+			font-size: var(--smallFontSize);
+			text-anchor: start;
+			alignment-baseline: hanging;
+		}
+		path {
+			fill: none;
+		}
+	}
+}
+
 .quantum-metrics {
   --gridX: calc(var(--gutterX) * 2);
 

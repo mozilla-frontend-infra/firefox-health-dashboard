@@ -2,7 +2,15 @@ import Router from 'koa-router';
 import GitHubApi from 'github';
 import json2csv from 'json2csv';
 import moment from 'moment';
-import { getSummary, getEvolution } from './perf/tmo';
+import {
+  median,
+} from 'simple-statistics';
+import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
+import channels from './release/channels';
+import getVersions from './release/versions';
+import { getReleaseDate, getHistory } from './release/history';
+import { sanitize } from './meta/version';
+import getCalendar from './release/calendar';
 
 export const router = new Router();
 const gh = new GitHubApi();
@@ -16,14 +24,37 @@ gh.authenticate({
 });
 
 const summarizeHistogram = (hist) => {
+  if (!hist.mean) {
+    console.error('Unexpected histogram', hist);
+    return null;
+  }
   return {
-    mean: hist.mean(),
     p5: hist.percentile(5),
     p50: hist.percentile(50),
-    p75: hist.percentile(75),
     p95: hist.percentile(95),
     p99: hist.percentile(99),
+    submissions: hist.submissions,
   };
+};
+
+const summaryKeys = [
+  'p5',
+  'p50',
+  'p95',
+  'p99',
+  'submissions',
+];
+
+const averageEvolution = (evolution) => {
+  evolution.forEach((summary, idx) => {
+    summaryKeys.forEach((key) => {
+      const windo = evolution
+        .slice(Math.max(0, idx - 4), Math.min(idx + 3, evolution.length))
+        .map(entry => entry[key]);
+      summary[`${key}-avg`] = median(windo);
+    });
+  });
+  return evolution;
 };
 
 const summarizeIpcTable = async (metric) => {
@@ -74,26 +105,75 @@ router
   //   });
   // })
 
-  .get('/evolution', async (ctx) => {
-    const opts = Object.assign({}, ctx.request.query);
-    const evolution = await getEvolution(opts);
-    if (!evolution) {
-      ctx.body = null;
-      return;
-    }
-    ctx.body = evolution.map((histogram, i, date) => {
-      return Object.assign(
-        summarizeHistogram(histogram),
-        {
-          date: moment(date).format('YYYY-MM-DD'),
+  .get('/version-evolutions', async (ctx) => {
+    const query = Object.assign({}, ctx.request.query);
+    const channelVersions = await getVersions();
+    const calendar = await getCalendar();
+    const start = parseInt(channelVersions.nightly, 10);
+    const versions = [];
+    const nightlyToRelease = channels.slice().reverse();
+    let endDate = null;
+    for (let version = start; version >= start - 4; version -= 1) {
+      const evolutions = await Promise.all(
+        nightlyToRelease.map((channel) => {
+          if (version > parseInt(channelVersions[channel], 10)) {
+            return null;
+          }
+          return getEvolution(Object.assign({}, query, {
+            channel,
+            version: version,
+            useSubmissionDate: channel === 'release',
+          }));
         },
-      );
-    });
+      ));
+      if (!evolutions[0]) {
+        break;
+      }
+      const versionStr = sanitize(version);
+      const nightlyDate = moment(evolutions[0].dates()[0]).format('YYYY-MM-DD');
+      let releaseDate = (await getReleaseDate(versionStr)).date;
+      if (!releaseDate) {
+        const planned = calendar.find(release => release.version === versionStr);
+        if (planned) {
+          releaseDate = planned.date;
+        }
+      }
+      versions.push({
+        version: versionStr,
+        start: nightlyDate,
+        release: releaseDate,
+        end: endDate,
+        channels: nightlyToRelease
+          .map((channel, i) => {
+            if (!evolutions[i]) {
+              return null;
+            }
+            return {
+              channel: channel,
+              dates: averageEvolution(
+                evolutions[i]
+                  .map((histogram, j, date) => {
+                    return Object.assign(
+                      summarizeHistogram(histogram),
+                      {
+                        date: moment(date).format('YYYY-MM-DD'),
+                      },
+                    );
+                  }),
+              ),
+            };
+          })
+          .filter(entry => entry),
+      });
+      endDate = releaseDate;
+    }
+
+    ctx.body = versions;
   })
 
   .get('/tracking', async (ctx) => {
     const opts = ctx.request.query;
-    const evolution = await getEvolution(opts);
+    const evolution = await getLatestEvolution(opts);
     if (!evolution) {
       ctx.body = { status: 0 };
       return;
@@ -114,13 +194,18 @@ router
       'TOTAL_SCROLL_Y',
       'PAGE_MAX_SCROLL_Y',
     ];
-    const baseline = await Promise.all(metrics.map(metric => getSummary({ metric, version: '52', channel: 'beta', application: 'Firefox' })));
-    const tracking = await Promise.all(metrics.map(metric => getSummary({ metric, version: '54', channel: 'nightly', application: 'Firefox', e10sEnabled: true })));
+    const baseline = await Promise.all(metrics.map(metric => getSummary({ metric, version: '52', channel: 'nightly', application: 'Firefox' })));
+    const tracking = await Promise.all(metrics.map(metric => getSummary({
+      metric,
+      version: '55',
+      channel: 'nightly',
+      application: 'Firefox',
+      e10sEnabled: true,
+    })));
     ctx.body = metrics.map((metric, idx) => {
       return {
         metric: metric,
-        baseline: baseline[idx],
-        tracking: tracking[idx],
+        baseline: tracking[idx],
       };
     });
   })

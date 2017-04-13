@@ -48,7 +48,7 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 0,
                 telemetry: {
-                  status: 'In Progress',
+                  metric: 'COMPOSITOR_ANIMATION_THROUGHPUT_CONTENT',
                   bug: 1338347,
                 },
                 benchmark: {
@@ -65,7 +65,7 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 1,
                 telemetry: {
-                  status: 'In Progress',
+                  metric: 'COMPOSITOR_ANIMATION_THROUGHPUT_CHROME',
                   bug: 1338347,
                 },
               }}
@@ -77,7 +77,7 @@ export default class QuantumIndex extends React.Component {
               status={{
                 priority: 0,
                 telemetry: {
-                  status: 'In Progress',
+                  metric: 'COMPOSITOR_ANIMATION_THROUGHPUT_APZ',
                   bug: 1338347,
                 },
                 benchmark: {
@@ -135,8 +135,12 @@ export default class QuantumIndex extends React.Component {
                     label: 'Input Handler Latency',
                   },
                   {
-                    metric: 'CONTENT_RESPONSE_DURATION',
-                    label: 'Scroll Latency',
+                    metric: 'KEYBOARD_EVENT_RECEIVED_MS',
+                    label: 'Keyboard Queue Latency',
+                  },
+                  {
+                    metric: 'MOUSE_CLICK_EVENT_RECEIVED_MS',
+                    label: 'Click Queue Time',
                   },
                 ],
                 benchmark: {
@@ -147,12 +151,15 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title='Expected Queuing Latency'
+              title='Scroll Latency'
               unit='ms'
               status={{
-                telemetry: {
-                  status: 'Backlog',
-                },
+                telemetry: [
+                  {
+                    metric: 'CONTENT_RESPONSE_DURATION',
+                    label: 'Scroll Latency',
+                  },
+                ],
               }}
             />
             <Metric

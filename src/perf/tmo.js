@@ -32,46 +32,47 @@ export async function getEvolution(query) {
     metric,
     channel = 'release',
     useSubmissionDate = true,
-  } = query;
-  let {
     version,
   } = query;
   delete query.metric;
   delete query.version;
   delete query.channel;
   delete query.useSubmissionDate;
-  if (!version) {
-    const versions = await getVersions();
-    version = versions[channel];
-  }
   await init();
-  let response = null;
-  for (let i = 0; i < 3; i += 1) {
-    response = await new Promise((resolve) => {
-      Telemetry.getEvolution(
-        channel,
-        String(parseInt(version, 10) - i),
-        metric,
-        query,
-        useSubmissionDate,
-        (evolutionMap) => {
-          const keys = Object.keys(evolutionMap);
-          if (keys.length > 1) {
-            resolve(keys.map((key) => {
-              return {
-                key: key,
-                evolution: evolutionMap[key].sanitized(),
-              };
-            }));
-          } else if (evolutionMap['']) {
-            resolve(evolutionMap[''].sanitized());
-          } else {
-            resolve(null);
-          }
-        });
+  const evolutionMap = await new Promise((resolve) => {
+    console.log('Telemetry.getEvolution', channel, version);
+    Telemetry.getEvolution(
+      channel,
+      String(parseInt(version, 10)),
+      metric,
+      query,
+      useSubmissionDate,
+      resolve,
+    );
+  });
+  const keys = Object.keys(evolutionMap);
+  if (keys.length > 1) {
+    return keys.map((key) => {
+      return {
+        key: key,
+        evolution: evolutionMap[key].sanitized(),
+      };
     });
-    if (response && (Array.isArray(response) || response.dates().length > 6)) {
-      return response;
+  } else if (evolutionMap['']) {
+    return evolutionMap[''].sanitized();
+  }
+  return null;
+}
+
+export async function getLatestEvolution(query) {
+  const versions = await getVersions();
+  query.version = versions[query.channel];
+  for (let i = 0; i < 3; i += 1) {
+    const histogram = await getEvolution(Object.assign({
+      version: query.version - 1,
+    }, query));
+    if (histogram) {
+      return histogram;
     }
   }
   return null;
