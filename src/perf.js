@@ -225,6 +225,11 @@ router
     ctx.body = json2csv({ data: summary });
   })
 
+  .get('/ipc/mm', async (ctx) => {
+    const summary = await summarizeIpcTable('IPC_SYNC_MESSAGE_MANAGER_LATENCY_MS');
+    ctx.body = json2csv({ data: summary });
+  })
+
   .get('/e10s/hangs', async (ctx) => {
     const beta = await gh.repos.getContent({
       owner: 'mozilla',
