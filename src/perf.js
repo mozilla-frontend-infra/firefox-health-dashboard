@@ -8,7 +8,7 @@ import {
 import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
 import channels from './release/channels';
 import getVersions from './release/versions';
-import { getReleaseDate, getHistory } from './release/history';
+import { getReleaseDate } from './release/history';
 import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
 
@@ -51,14 +51,14 @@ const averageEvolution = (evolution) => {
       const windo = evolution
         .slice(Math.max(0, idx - 4), Math.min(idx + 3, evolution.length))
         .map(entry => entry[key]);
-      summary[`${key}-avg`] = median(windo);
+      summary[`${key}-avg`] = (windo.length === 7) ? median(windo) : evolution[idx][key];
     });
   });
   return evolution;
 };
 
 const summarizeIpcTable = async (metric) => {
-  const evolutions = await getEvolution({
+  const evolutions = await getLatestEvolution({
     metric: metric,
     channel: 'nightly',
     application: 'Firefox',
@@ -113,7 +113,7 @@ router
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
-    for (let version = start; version >= start - 4; version -= 1) {
+    for (let version = start; version >= start - 3; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel) => {
           if (version > parseInt(channelVersions[channel], 10)) {
@@ -194,7 +194,15 @@ router
       'TOTAL_SCROLL_Y',
       'PAGE_MAX_SCROLL_Y',
     ];
-    const baseline = await Promise.all(metrics.map(metric => getSummary({ metric, version: '52', channel: 'nightly', application: 'Firefox' })));
+    // const baseline = await Promise.all(
+    //   metrics
+    //     .map(metric => getSummary({
+    //       metric,
+    //       version: '52',
+    //       channel: 'nightly',
+    //       application: 'Firefox',
+    //     })),
+    // );
     const tracking = await Promise.all(metrics.map(metric => getSummary({
       metric,
       version: '55',
