@@ -9,7 +9,8 @@ export default class QuantumResponsivenessParent extends React.Component {
     return (
       <ChannelMetric
         title='Parent Process Responsiveness'
-        subtitle='Input Response Latency (ms)'
+        subtitle='Input Response Latency'
+        unit='ms'
         query='metric=INPUT_EVENT_RESPONSE_MS&child=parent&os=Windows_NT&e10sEnabled=true'
       />
     );

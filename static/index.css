@@ -412,7 +412,10 @@ svg {
 	.channel-line {
 		text {
 			font-size: var(--smallFontSize);
-			text-anchor: start;
+			font-weight: 700;
+			text-anchor: end;
+			transform: translate(-5px, calc(var(--smallFontSize) / 2));
+			stroke: none;
 		}
 		path {
 			fill: none;
@@ -420,26 +423,28 @@ svg {
 	}
 	.title {
 		text {
-			font-size: var(--h3FontSize);
+			font-size: var(--h2FontSize);
 			stroke: var(--lightGray);
 			font-weight: 300;
 			text-anchor: start;
+			opacity: 0.3;
 		}
 	}
 	.tick {
 		line {
 			stroke: var(--darkGray);
 			stroke-width: 1;
+			opacity: 0.6;
 		}
 		text {
-			font-size: var(--smallFontSize);
-			text-anchor: end;
+			font-size: var(--h5FontSize);
+			text-anchor: start;
+			font-weight: 300;
+			transform: translate(0, calc(var(--smallFontSize) / 2));
 		}
 	}
 	.tick-secondary line {
 		stroke-dasharray: 1, 2;
-		stroke: var(--darkGray);
-		opacity: 0.5;
 	}
 
 }

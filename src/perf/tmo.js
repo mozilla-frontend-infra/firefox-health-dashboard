@@ -2,30 +2,16 @@ import Telemetry from 'telemetry-next-node';
 import getVersions from '../release/versions';
 import fetchJson from '../fetch/json';
 
-Telemetry.getJSON = async (url, callback) => {
-  const response = await fetchJson(url, { ttl: 'day' });
-  callback(response);
-};
-
-let nextTelemetry = 0;
-let initResolve = null;
-function init() {
-  if (Date.now() < nextTelemetry) {
-    return Promise.resolve();
-  }
-  if (!initResolve) {
-    console.log('Requesting init');
-    initResolve = new Promise((resolve) => {
-      Telemetry.init(() => {
-        console.log('Init');
-        initResolve = null;
-        nextTelemetry = Date.now() + 3600;
-        resolve();
-      });
-    });
-  }
-  return initResolve;
-}
+const didInit = new Promise((resolve) => {
+  Telemetry.init(() => {
+    Telemetry.getJSON = async (url, callback) => {
+      const response = await fetchJson(url, { ttl: 'day' });
+      callback(response);
+    };
+    console.log('telemetry-next-node did init');
+    resolve();
+  });
+});
 
 export async function getEvolution(query) {
   const {
@@ -38,7 +24,7 @@ export async function getEvolution(query) {
   delete query.version;
   delete query.channel;
   delete query.useSubmissionDate;
-  await init();
+  await didInit;
   const evolutionMap = await new Promise((resolve) => {
     console.log('Telemetry.getEvolution', channel, version);
     Telemetry.getEvolution(

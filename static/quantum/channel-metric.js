@@ -3,8 +3,10 @@ import 'babel-polyfill';
 import React from 'react';
 import cx from 'classnames';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand } from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format } from 'd3';
 import Dashboard from './../dashboard';
+
+const tickCount = 5;
 
 export default class ChannelMetric extends React.Component {
   state = {};
@@ -71,14 +73,14 @@ export default class ChannelMetric extends React.Component {
         const xScale = scaleLinear()
           // .exponent(0.5)
           .domain(yRanges[field])
-          .nice(10)
+          .nice(tickCount)
           .range([band + yBandScale.bandwidth(), band]);
         return map.set(field, xScale);
       }, new Map());
       const alphaScale = scalePow()
         .exponent(0.5)
         .domain([0, 2])
-        .range([1, 0.25]);
+        .range([1, 0.3]);
       const xDomain = [
         // first day of release for oldest version
         new Date(evolutions.slice(-1)[0].channels.slice(-3)[0].dates[0].date),
@@ -101,14 +103,14 @@ export default class ChannelMetric extends React.Component {
           const latest = (versionIdx === 0);
           return [...paths].map(([field, path], pathIdx) => {
             const color = pathIdx ? '#B6D806' : '#FF8C8E';
-            const $label = (channel.channel === 'nightly')
+            const $label = (true || channel.channel === 'nightly')
               ? (
                 <text
                   x={xScale(new Date(channel.dates[0].date))}
-                  y={yScales.get(field)(new Date(channel.dates[0][field]))}
-                  stroke={color}
+                  y={yScales.get(field)(channel.dates[0][field])}
+                  fill={color}
                 >
-                  {`${version.version}/${channel.channel}`}
+                  {`${version.version}`}
                 </text>
               )
               : null;
@@ -117,13 +119,13 @@ export default class ChannelMetric extends React.Component {
                 key={`${versionIdx}-${channelIdx}-${pathIdx}`}
                 className='channel-line'
               >
-                {$label}
                 <path
                   stroke={color}
                   strokeWidth={latest ? 2 : 1}
                   strokeOpacity={alpha}
                   d={path(channel.dates)}
                 />
+                {$label}
               </g>
             );
           });
@@ -135,8 +137,13 @@ export default class ChannelMetric extends React.Component {
         );
       });
       const $ticks = [...yScales].map(([field, yScale]) => {
-        return yScale.ticks(10).map((tick, idx) => {
+        const formatTick = format(this.props.format);
+        return yScale.ticks(tickCount).map((tick, idx) => {
           const y = yScale(tick);
+          let label = formatTick(tick);
+          if (!idx) {
+            label += ` ${this.props.unit}`;
+          }
           return (
             <g className={cx('tick', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${tick}`}>
               <line
@@ -146,10 +153,10 @@ export default class ChannelMetric extends React.Component {
                 y2={y}
               />
               <text
-                x={40}
+                x={0}
                 y={y}
               >
-                {tick}
+                {label}
               </text>
             </g>
           );
@@ -166,7 +173,7 @@ export default class ChannelMetric extends React.Component {
         return (
           <g className={cx('title')} key={`title-${field}`}>
             <text
-              transform={`translate(${75}, ${y + 10})`}
+              transform={`translate(${75}, ${y - 5})`}
             >
               {label}
             </text>
@@ -212,9 +219,13 @@ ChannelMetric.defaultProps = {
   query: '',
   title: '',
   subtitle: '',
+  format: '.2',
+  unit: 'ms',
 };
 ChannelMetric.propTypes = {
   query: React.PropTypes.string,
   title: React.PropTypes.string,
   subtitle: React.PropTypes.string,
+  format: React.PropTypes.string,
+  unit: React.PropTypes.string,
 };
