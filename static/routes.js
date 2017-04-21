@@ -10,7 +10,9 @@ import Regressions from './regressions';
 import Status from './status/index';
 import Quantum from './quantum/index';
 import QuantumCountdown from './quantum/countdown';
-import QuantumResponsiveness from './quantum/responsiveness';
+import QuantumResponsivenessParent from './quantum/responsiveness-parent';
+import QuantumResponsivenessContent from './quantum/responsiveness-content';
+import QuantumPageLoadRender from './quantum/pageload-render';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -57,7 +59,9 @@ export default class Routes extends Component {
           <Route path='regressions' component={Regressions} />
           <Route path='quantum' component={Quantum} />
           <Route path='quantum/countdown' component={QuantumCountdown} />
-          <Route path='quantum/responsiveness' component={QuantumResponsiveness} />
+          <Route path='quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
+          <Route path='quantum/responsiveness/content' component={QuantumResponsivenessContent} />
+          <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
           <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />
