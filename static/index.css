@@ -413,12 +413,35 @@ svg {
 		text {
 			font-size: var(--smallFontSize);
 			text-anchor: start;
-			alignment-baseline: hanging;
 		}
 		path {
 			fill: none;
 		}
 	}
+	.title {
+		text {
+			font-size: var(--h3FontSize);
+			stroke: var(--lightGray);
+			font-weight: 300;
+			text-anchor: start;
+		}
+	}
+	.tick {
+		line {
+			stroke: var(--darkGray);
+			stroke-width: 1;
+		}
+		text {
+			font-size: var(--smallFontSize);
+			text-anchor: end;
+		}
+	}
+	.tick-secondary line {
+		stroke-dasharray: 1, 2;
+		stroke: var(--darkGray);
+		opacity: 0.5;
+	}
+
 }
 
 .quantum-metrics {

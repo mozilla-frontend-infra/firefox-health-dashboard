@@ -12,6 +12,8 @@ import { getReleaseDate } from './release/history';
 import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
 
+channels.splice(2, 1);
+
 export const router = new Router();
 const gh = new GitHubApi();
 
@@ -45,13 +47,15 @@ const summaryKeys = [
   'submissions',
 ];
 
+const windowRadius = 3;
+
 const averageEvolution = (evolution) => {
   evolution.forEach((summary, idx) => {
     summaryKeys.forEach((key) => {
       const windo = evolution
-        .slice(Math.max(0, idx - 4), Math.min(idx + 3, evolution.length))
+        .slice(Math.max(0, idx - windowRadius), idx + windowRadius + 1)
         .map(entry => entry[key]);
-      summary[`${key}-avg`] = (windo.length === 7) ? median(windo) : evolution[idx][key];
+      summary[`${key}Avg`] = median(windo);
     });
   });
   return evolution;
@@ -113,7 +117,7 @@ router
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
-    for (let version = start; version >= start - 3; version -= 1) {
+    for (let version = start; version >= start - 4; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel) => {
           if (version > parseInt(channelVersions[channel], 10)) {
@@ -148,19 +152,27 @@ router
             if (!evolutions[i]) {
               return null;
             }
+            const submissionsAvg = median(evolutions[i].map(date => date.submissions));
+            const cutoff = submissionsAvg * 0.25;
+            const dates = averageEvolution(
+              evolutions[i]
+                .map((histogram, j, date) => {
+                  if (histogram.submissions < cutoff) {
+                    return null;
+                  }
+                  return Object.assign(
+                    summarizeHistogram(histogram),
+                    {
+                      date: moment(date).format('YYYY-MM-DD'),
+                    },
+                  );
+                })
+                .filter(entry => entry && entry.p50),
+            );
             return {
               channel: channel,
-              dates: averageEvolution(
-                evolutions[i]
-                  .map((histogram, j, date) => {
-                    return Object.assign(
-                      summarizeHistogram(histogram),
-                      {
-                        date: moment(date).format('YYYY-MM-DD'),
-                      },
-                    );
-                  }),
-              ),
+              submissionsAvg: submissionsAvg,
+              dates: dates,
             };
           })
           .filter(entry => entry),

@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const defaultTtl = moment.duration(4, 'hours').as('seconds');
 
-const db = process.env.REDIS_URL ? createClient(process.env.REDIS_URL) : null;
+let db = null;
 const devCache = {};
 
 export default async function fetchText(url, {
@@ -16,6 +16,9 @@ export default async function fetchText(url, {
   if (typeof ttl === 'string') {
     ttl = moment.duration(1, ttl).as('seconds');
   }
+  if (process.env.REDIS_URL && !db) {
+    db = createClient(process.env.REDIS_URL);
+  }
   const cached = db ? await db.get(key) : devCache[key];
   if (cached) {
     return cached;
@@ -26,7 +29,7 @@ export default async function fetchText(url, {
     return null;
   }
   const text = await response.text();
-  if (db) {
+  if (process.env.REDIS_URL) {
     db.set(key, text);
     db.expire(key, ttl);
   } else {

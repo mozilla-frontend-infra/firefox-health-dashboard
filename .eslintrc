@@ -12,6 +12,7 @@
       "error",
       "prefer-single"
     ],
+    "max-len": 1,
     "no-await-in-loop": 0,
     "no-param-reassign": 0,
     "guard-for-in": 0,

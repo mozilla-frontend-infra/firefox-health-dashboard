@@ -10,6 +10,10 @@ import webpackHotMiddleware from 'koa-webpack-hot-middleware';
 import webpack from 'webpack';
 import Koa from 'koa';
 import { createClient } from 'then-redis';
+
+dotenv.config();
+
+/* eslint-disable import/first */
 import webpackConfig from './../webpack.config.babel';
 
 import { router as release } from './release';
@@ -17,8 +21,8 @@ import { router as crashes } from './crashes';
 import { router as bz } from './bz';
 import { router as status } from './status';
 import { router as perf } from './perf';
+/* eslint-enable import/first */
 
-dotenv.config();
 const version = require('../package.json').version;
 
 const app = new Koa();
