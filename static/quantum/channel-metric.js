@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import cx from 'classnames';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format } from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat } from 'd3';
 import Dashboard from './../dashboard';
 
 const tickCount = 5;
@@ -66,8 +66,8 @@ export default class ChannelMetric extends React.Component {
       });
       const yBandScale = scaleBand()
         .domain(yRangeFields)
-        .padding(0.1)
-        .range([this.height, 0]);
+        .paddingInner(0.15)
+        .range([this.height - 25, 5]);
       const yScales = yRangeFields.reduce((map, field) => {
         const band = yBandScale(field);
         const xScale = scaleLinear()
@@ -102,13 +102,14 @@ export default class ChannelMetric extends React.Component {
           const alpha = alphaScale(channelIdx);
           const latest = (versionIdx === 0);
           return [...paths].map(([field, path], pathIdx) => {
-            const color = pathIdx ? '#B6D806' : '#FF8C8E';
+            const color = pathIdx ? '#FF8C8E' : '#B6D806';
             const $label = (true || channel.channel === 'nightly')
               ? (
                 <text
                   x={xScale(new Date(channel.dates[0].date))}
                   y={yScales.get(field)(channel.dates[0][field])}
                   fill={color}
+                  fillOpacity={alpha}
                 >
                   {`${version.version}`}
                 </text>
@@ -121,7 +122,7 @@ export default class ChannelMetric extends React.Component {
               >
                 <path
                   stroke={color}
-                  strokeWidth={latest ? 2 : 1}
+                  strokeWidth={alpha === 1 ? 2 : 1}
                   strokeOpacity={alpha}
                   d={path(channel.dates)}
                 />
@@ -136,16 +137,16 @@ export default class ChannelMetric extends React.Component {
           </g>
         );
       });
-      const $ticks = [...yScales].map(([field, yScale]) => {
+      const $yAxis = [...yScales].map(([field, yScale]) => {
         const formatTick = format(this.props.format);
         return yScale.ticks(tickCount).map((tick, idx) => {
           const y = yScale(tick);
           let label = formatTick(tick);
           if (!idx) {
-            label += ` ${this.props.unit}`;
+            label += this.props.unit;
           }
           return (
-            <g className={cx('tick', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${tick}`}>
+            <g className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${tick}`}>
               <line
                 x1={50}
                 y1={y}
@@ -162,6 +163,34 @@ export default class ChannelMetric extends React.Component {
           );
         });
       });
+      const yFormat = timeFormat('%b');
+      const $xAxis = xScale.ticks().map((tick, idx) => {
+        const x = xScale(tick);
+        const label = yFormat(tick);
+        const $lines = yRangeFields.map((field) => {
+          const band = yBandScale(field);
+          return (
+            <line
+              key={`x-axis-${field}`}
+              x1={x}
+              y1={band}
+              x2={x}
+              y2={band + yBandScale.bandwidth()}
+            />
+          );
+        });
+        return (
+          <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
+            {$lines}
+            <text
+              x={x}
+              y={this.height}
+            >
+              {label}
+            </text>
+          </g>
+        );
+      });
       const fieldLabels = {
         p50Avg: '50th Percentile',
         p95Avg: '95th Percentile',
@@ -173,7 +202,8 @@ export default class ChannelMetric extends React.Component {
         return (
           <g className={cx('title')} key={`title-${field}`}>
             <text
-              transform={`translate(${75}, ${y - 5})`}
+              x={75}
+              y={y}
             >
               {label}
             </text>
@@ -185,7 +215,8 @@ export default class ChannelMetric extends React.Component {
           height={this.height}
           width={this.width}
         >
-          {$ticks}
+          {$yAxis}
+          {$xAxis}
           {$fields}
           {$evolutions}
         </svg>

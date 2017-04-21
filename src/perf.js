@@ -47,7 +47,7 @@ const summaryKeys = [
   'submissions',
 ];
 
-const windowRadius = 3;
+const windowRadius = 7;
 
 const averageEvolution = (evolution) => {
   evolution.forEach((summary, idx) => {
@@ -126,7 +126,7 @@ router
           return getEvolution(Object.assign({}, query, {
             channel,
             version: version,
-            useSubmissionDate: channel === 'release',
+            useSubmissionDate: channel !== 'nightly',
           }));
         },
       ));
@@ -153,7 +153,7 @@ router
               return null;
             }
             const submissionsAvg = median(evolutions[i].map(date => date.submissions));
-            const cutoff = submissionsAvg * 0.25;
+            const cutoff = submissionsAvg * 0.5;
             const dates = averageEvolution(
               evolutions[i]
                 .map((histogram, j, date) => {

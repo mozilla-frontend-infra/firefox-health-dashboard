@@ -414,7 +414,7 @@ svg {
 			font-size: var(--smallFontSize);
 			font-weight: 700;
 			text-anchor: end;
-			transform: translate(-5px, calc(var(--smallFontSize) / 2));
+			transform: translate(-5px, calc(var(--smallFontSize) / -4));
 			stroke: none;
 		}
 		path {
@@ -428,13 +428,13 @@ svg {
 			font-weight: 300;
 			text-anchor: start;
 			opacity: 0.3;
+			transform: translate(0, var(--h2FontSize));
 		}
 	}
 	.tick {
 		line {
 			stroke: var(--darkGray);
 			stroke-width: 1;
-			opacity: 0.6;
 		}
 		text {
 			font-size: var(--h5FontSize);
@@ -442,6 +442,18 @@ svg {
 			font-weight: 300;
 			transform: translate(0, calc(var(--smallFontSize) / 2));
 		}
+	}
+	.tick-x {
+		line {
+			opacity: 0.5;
+		}
+		text {
+			text-anchor: middle;
+			transform: translate(0, calc(var(--smallFontSize) / -4));
+		}
+	}
+	.tick-axis text {
+		font-weight: 400;
 	}
 	.tick-secondary line {
 		stroke-dasharray: 1, 2;
