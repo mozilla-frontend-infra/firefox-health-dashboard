@@ -231,7 +231,7 @@ export default class ChannelMetric extends React.Component {
 
     return (
       <Dashboard
-        title={`Quantum Performance: ${this.props.title}`}
+        title={`Quantum Nightly Telemetry: ${this.props.title}`}
         subtitle={this.props.subtitle}
         className='dashboard-metric'
       >
