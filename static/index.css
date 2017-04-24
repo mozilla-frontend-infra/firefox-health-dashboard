@@ -458,7 +458,45 @@ svg {
 	.tick-secondary line {
 		stroke-dasharray: 1, 2;
 	}
+}
 
+.quantum-benchmarks {
+	.dashboard-main {
+		align-items: center;
+		justify-content: center;
+	}
+	iframe {
+		border: 0;
+		padding: 0;
+		width: 640px;
+		height: 400px;
+		transform: scale(1.5);
+		transform-origin: center;
+	}
+	.benchmark-sm {
+		background: no-repeat url('./data/responsiveness-2017-04-21.png') center;
+		background-size: contain;
+		height: 80%;
+		width: 80%;
+		position: relative;
+		div {
+			position: absolute;
+			top: calc(-var(--gutterX));
+			left: 0;
+			width: 100%;
+			text-align: center;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		.label-firefox {
+			color: #1685d0;
+
+		}
+		.label-chrome {
+			padding-right: var(--gutterX);
+			color: #df5eb4;
+		}
+	}
 }
 
 .quantum-metrics {

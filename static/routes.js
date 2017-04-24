@@ -13,6 +13,9 @@ import QuantumCountdown from './quantum/countdown';
 import QuantumResponsivenessParent from './quantum/responsiveness-parent';
 import QuantumResponsivenessContent from './quantum/responsiveness-content';
 import QuantumPageLoadRender from './quantum/pageload-render';
+import QuantumBenchmarkHasal from './quantum/benchmark-hasal';
+import QuantumBenchmarkSm from './quantum/benchmark-sm';
+import QuantumBenchmarkPageload from './quantum/benchmark-pageload';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -62,6 +65,9 @@ export default class Routes extends Component {
           <Route path='quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
           <Route path='quantum/responsiveness/content' component={QuantumResponsivenessContent} />
           <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
+          <Route path='quantum/benchmark/hasal' component={QuantumBenchmarkHasal} />
+          <Route path='quantum/benchmark/pageload' component={QuantumBenchmarkPageload} />
+          <Route path='quantum/benchmark/sm' component={QuantumBenchmarkSm} />
           <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />
