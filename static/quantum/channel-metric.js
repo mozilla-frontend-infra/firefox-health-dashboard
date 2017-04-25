@@ -66,7 +66,7 @@ export default class ChannelMetric extends React.Component {
       });
       const yBandScale = scaleBand()
         .domain(yRangeFields)
-        .paddingInner(0.15)
+        .paddingInner(0.13)
         .range([this.height - 25, 5]);
       const yScales = yRangeFields.reduce((map, field) => {
         const band = yBandScale(field);
@@ -192,6 +192,7 @@ export default class ChannelMetric extends React.Component {
         );
       });
       const fieldLabels = {
+        // p25Avg: '25th Percentile',
         p50Avg: '50th Percentile',
         p95Avg: '95th Percentile',
       };

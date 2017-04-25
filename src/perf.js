@@ -31,16 +31,18 @@ const summarizeHistogram = (hist) => {
     return null;
   }
   return {
-    p5: hist.percentile(5),
+    // p5: hist.percentile(5),
+    // p25: hist.percentile(25),
     p50: hist.percentile(50),
     p95: hist.percentile(95),
-    p99: hist.percentile(99),
+    // p99: hist.percentile(99),
     submissions: hist.submissions,
   };
 };
 
 const summaryKeys = [
-  'p5',
+  // 'p5',
+  // 'p25',
   'p50',
   'p95',
   'p99',
@@ -117,7 +119,7 @@ router
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
-    for (let version = start; version >= start - 4; version -= 1) {
+    for (let version = start; version >= start - 3; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel) => {
           if (version > parseInt(channelVersions[channel], 10)) {
@@ -126,7 +128,7 @@ router
           return getEvolution(Object.assign({}, query, {
             channel,
             version: version,
-            useSubmissionDate: channel !== 'nightly',
+            useSubmissionDate: channel === 'release',
           }));
         },
       ));

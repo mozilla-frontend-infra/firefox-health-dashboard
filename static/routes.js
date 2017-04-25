@@ -16,6 +16,7 @@ import QuantumPageLoadRender from './quantum/pageload-render';
 import QuantumBenchmarkHasal from './quantum/benchmark-hasal';
 import QuantumBenchmarkSm from './quantum/benchmark-sm';
 import QuantumBenchmarkPageload from './quantum/benchmark-pageload';
+import QuantumTracking from './quantum/metric';
 
 const NoMatch = () => (<div>404</div>);
 
@@ -68,6 +69,7 @@ export default class Routes extends Component {
           <Route path='quantum/benchmark/hasal' component={QuantumBenchmarkHasal} />
           <Route path='quantum/benchmark/pageload' component={QuantumBenchmarkPageload} />
           <Route path='quantum/benchmark/sm' component={QuantumBenchmarkSm} />
+          <Route path='quantum/track' component={QuantumTracking} />
           <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />
