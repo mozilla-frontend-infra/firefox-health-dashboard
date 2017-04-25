@@ -84,8 +84,15 @@ section.state-loading {
   align-items: center;
   justify-content: center;
 }
+.home .dashboard-main h2 {
+	@extend h2;
+	margin-top: calc(var(--gutterY) * 2);
+	font-weight: 300;
+	color: var(--darkGray);
+}
 .home .dashboard-main a {
   @extend h2;
+	margin-top: calc(var(--gutterY) / 2);
 }
 .status-index .dashboard-main {
 	flex-direction: row;

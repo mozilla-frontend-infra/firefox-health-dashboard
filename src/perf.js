@@ -37,6 +37,7 @@ const summarizeHistogram = (hist) => {
     p95: hist.percentile(95),
     // p99: hist.percentile(99),
     submissions: hist.submissions,
+    count: hist.count,
   };
 };
 
@@ -47,6 +48,7 @@ const summaryKeys = [
   'p95',
   'p99',
   'submissions',
+  'count',
 ];
 
 const windowRadius = 7;
