@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
 const Dashboard = (props) => {
-  const { title, subtitle, children, className, source, sourceTitle } = props;
+  const { title, subtitle, children, className, note, source, sourceTitle } = props;
   const empty = !children;
   const $content = (!empty) ? children : 'Loading …';
   const cls = cx('dashboard', className, {
@@ -12,6 +12,9 @@ const Dashboard = (props) => {
     'state-fullscreen': window.frameElement || document.fullscreen,
   });
   const link = `${location.host}${location.pathname}`;
+  const $note = note ? (
+    <div className='dashboard-note'>{note}</div>
+  ) : null;
   const $source = source ? (
     <div className='dashboard-source'>
       Source: <a href={source} target='_new'>
@@ -26,6 +29,7 @@ const Dashboard = (props) => {
           {title}
           <small>{subtitle}</small>
         </h1>
+        {$note}
         {$source}
         <div className='dashboard-link'>{link}</div>
       </div>
@@ -41,6 +45,7 @@ Dashboard.propTypes = {
   title: PropTypes.string,
   className: PropTypes.string,
   subtitle: PropTypes.string,
+  note: PropTypes.string,
   source: PropTypes.string,
   sourceTitle: PropTypes.string,
 };

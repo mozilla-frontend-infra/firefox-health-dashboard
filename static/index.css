@@ -45,9 +45,11 @@ a {
   text-align: left;
   padding: 0 var(--gutterX);
 	display: flex;
+	align-items: center;
   h1 {
 		flex: 1;
     @extend h4;
+		margin-bottom: 0;
     font-weight: 700;
     small {
       padding-left: var(--gutterX);
@@ -57,8 +59,13 @@ a {
       font-weight: 400;
     }
   }
+	.dashboard-note {
+		color: var(--lightGray);
+		padding-left: calc(var(--gutterX));
+	}
 	.dashboard-source {
-		@extend h6;
+		color: var(--darkGray);
+		padding-left: calc(var(--gutterX));
 		a {
 			color: var(--mobileBlueVibrant);
 		}
@@ -438,10 +445,11 @@ svg {
 		text {
 			font-size: var(--h2FontSize);
 			stroke: var(--lightGray);
+			opacity: 0.3;
 			font-weight: 300;
 			text-anchor: start;
 			opacity: 0.3;
-			transform: translate(0, var(--h2FontSize));
+			transform: translate(0, calc(var(--h2FontSize) * 1.1));
 		}
 	}
 	.tick {
@@ -450,6 +458,7 @@ svg {
 			stroke-width: 1;
 		}
 		text {
+			fill: var(--lightGray);
 			font-size: var(--h5FontSize);
 			text-anchor: start;
 			font-weight: 300;
@@ -467,6 +476,7 @@ svg {
 	}
 	.tick-axis text {
 		font-weight: 400;
+		fill: #fff;
 	}
 	.tick-secondary line {
 		stroke-dasharray: 1, 2;

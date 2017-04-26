@@ -250,8 +250,9 @@ export default class ChannelMetric extends React.Component {
         title={`Quantum Nightly Telemetry: ${this.props.title}`}
         subtitle={this.props.subtitle}
         className='dashboard-metric'
+        note='14-day Moving Median'
         source={source}
-        sourceTitle='t.m.o'
+        sourceTitle={`${query.metric} (t.m.o)`}
       >
         <section
           className={cls}

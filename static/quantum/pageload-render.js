@@ -10,7 +10,7 @@ export default class QuantumPageLoadRender extends React.Component {
       <ChannelMetric
         title='Page Load'
         subtitle='Time to First non-blank Paint (ms)'
-        unit='ms'
+        unit=''
         query={{
           metric: 'TIME_TO_NON_BLANK_PAINT_MS',
           child: 'content',
