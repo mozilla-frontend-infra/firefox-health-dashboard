@@ -11,6 +11,8 @@ export default class QuantumBenchmarks extends React.Component {
         title='Quantum Benchmarks'
         subtitle='Speedometer (Responsiveness)'
         className='quantum-benchmarks'
+        source='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
+        sourceTitle='AWFY (Log in required)'
       >
         <div className='benchmark-sm' key='benchmark-sm'>
           <div>

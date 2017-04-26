@@ -6,14 +6,23 @@ import ChannelMetric from './channel-metric';
 export default class QuantumTracking extends React.Component {
 
   render() {
-    const metric = this.props.location.query.metric;
-    console.log(metric);
+    const { metric, child } = this.props.location.query;
+    const params = {
+      metric: metric,
+      os: 'Windows_NT',
+      e10sEnabled: true,
+    };
+    const subtitle = [];
+    if (child) {
+      params.child = child;
+      subtitle.push('For', child);
+    }
     return (
       <ChannelMetric
         title={metric}
-        subtitle=''
+        subtitle={subtitle.join(' ')}
         unit='ms'
-        query={`metric=${metric}&os=Windows_NT&e10sEnabled=true`}
+        query={params}
         format='.2s'
       />
     );

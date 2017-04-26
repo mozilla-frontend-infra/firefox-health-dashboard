@@ -4,6 +4,7 @@ import React from 'react';
 import cx from 'classnames';
 // import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat } from 'd3';
+import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 
 const tickCount = 5;
@@ -24,10 +25,9 @@ export default class ChannelMetric extends React.Component {
   width = 0;
 
   async fetch() {
+    const query = this.props.query;
     const raw = await Promise.all([
-      /* eslint-disable max-len */
-      fetch(`/api/perf/version-evolutions?${this.props.query}`),
-      /* eslint-enable max-len */
+      fetch(`/api/perf/version-evolutions?${stringify(query)}`),
     ]);
     const [evolutions] = await Promise.all(
       raw.map(buffer => buffer.json()),
@@ -36,6 +36,7 @@ export default class ChannelMetric extends React.Component {
   }
 
   render() {
+    const { query } = this.props;
     const { builds, evolutions } = this.state;
     let svg = null;
 
@@ -227,14 +228,30 @@ export default class ChannelMetric extends React.Component {
     }
 
     const cls = cx('graphic-timeline', {
-      'state-loading': !builds,
+      'state-loading': !evolutions,
     });
+
+    const params = {
+      aggregates: 'median!95th-percentile',
+      measure: query.metric,
+      os: 'Windows_NT',
+      product: 'Firefox',
+      sanitize: '1',
+      e10s: query.e10sEnabled ? 'true' : 'false',
+      use_submission_date: '0',
+    };
+    if (query.child) {
+      params.processType = query.child;
+    }
+    const source = `https://telemetry.mozilla.org/new-pipeline/evo.html#!${stringify(params)}`;
 
     return (
       <Dashboard
         title={`Quantum Nightly Telemetry: ${this.props.title}`}
         subtitle={this.props.subtitle}
         className='dashboard-metric'
+        source={source}
+        sourceTitle='t.m.o'
       >
         <section
           className={cls}
@@ -255,7 +272,7 @@ ChannelMetric.defaultProps = {
   unit: 'ms',
 };
 ChannelMetric.propTypes = {
-  query: React.PropTypes.string,
+  query: React.PropTypes.object,
   title: React.PropTypes.string,
   subtitle: React.PropTypes.string,
   format: React.PropTypes.string,

@@ -121,16 +121,17 @@ router
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
-    for (let version = start; version >= start - 3; version -= 1) {
+    for (let version = start; version >= start - 5; version -= 1) {
       const evolutions = await Promise.all(
-        nightlyToRelease.map((channel) => {
+        nightlyToRelease.map((channel, channelIdx) => {
+          console.log(version, channelVersions[channel]);
           if (version > parseInt(channelVersions[channel], 10)) {
             return null;
           }
           return getEvolution(Object.assign({}, query, {
             channel,
             version: version,
-            useSubmissionDate: channel === 'release',
+            useSubmissionDate: channel !== 'nightly',
           }));
         },
       ));
@@ -157,6 +158,7 @@ router
               return null;
             }
             const submissionsAvg = median(evolutions[i].map(date => date.submissions));
+            const countAvg = median(evolutions[i].map(date => date.count));
             const cutoff = submissionsAvg * 0.5;
             const dates = averageEvolution(
               evolutions[i]
@@ -176,6 +178,7 @@ router
             return {
               channel: channel,
               submissionsAvg: submissionsAvg,
+              countAvg: countAvg,
               dates: dates,
             };
           })

@@ -40,6 +40,10 @@ class App extends Component {
       ),
       viewport: [window.innerWidth, window.innerHeight],
     });
+    const children = this.props.children;
+    if (children && children.onResize) {
+      children.onResize(this.state);
+    }
   }
 
   render() {

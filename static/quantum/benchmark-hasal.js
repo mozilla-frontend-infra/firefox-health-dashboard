@@ -11,6 +11,8 @@ export default class QuantumBenchmarks extends React.Component {
         title='Quantum Benchmarks'
         subtitle='Hasal (Responsiveness)'
         className='quantum-benchmarks'
+        source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/edit#gid=0'
+        sourceTitle='Spreadsheet'
       >
         <iframe
           scrolling='no'

@@ -11,7 +11,12 @@ export default class QuantumResponsivenessContent extends React.Component {
         title='Responsiveness'
         subtitle='Content Input Response Latency (ms)'
         unit='ms'
-        query='metric=INPUT_EVENT_RESPONSE_MS&child=content&os=Windows_NT&e10sEnabled=true'
+        query={{
+          metric: 'INPUT_EVENT_RESPONSE_MS',
+          child: 'content',
+          os: 'Windows_NT',
+          e10sEnabled: true,
+        }}
       />
     );
   }

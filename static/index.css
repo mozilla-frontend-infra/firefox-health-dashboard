@@ -57,6 +57,12 @@ a {
       font-weight: 400;
     }
   }
+	.dashboard-source {
+		@extend h6;
+		a {
+			color: var(--mobileBlueVibrant);
+		}
+	}
 	.dashboard-link {
 		padding: calc(var(--gutterY) / 2) calc(var(--gutterX) / 2);
 		color: var(--mobileBlueVibrant);

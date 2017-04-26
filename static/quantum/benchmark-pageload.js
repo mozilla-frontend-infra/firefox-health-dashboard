@@ -11,6 +11,8 @@ export default class QuantumBenchmarks extends React.Component {
         title='Quantum Benchmarks'
         subtitle='Visual Page Load'
         className='quantum-benchmarks'
+        source='https://docs.google.com/spreadsheets/d/1Kxn850VasyaG_WfRg3pMInW0hbIT8LP7pRPBYTIpdbM/edit'
+        sourceTitle='Spreadsheet by :bsmedberg'
       >
         <iframe
           scrolling='no'
