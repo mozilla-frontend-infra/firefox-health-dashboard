@@ -133,7 +133,7 @@ export default {
         test: /\.png$/,
         use: [
           'file-loader?name=[path][name].[hash:6].[ext]',
-          'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
+          // 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
         ],
       },
     ],
