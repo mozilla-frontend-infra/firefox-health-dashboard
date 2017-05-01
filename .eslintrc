@@ -18,7 +18,14 @@
     "guard-for-in": 0,
     "arrow-body-style": 0,
     "no-restricted-syntax": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": [
+      0,
+      {
+        "vars": "local",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
     "no-loop-func": 0,
     "import/prefer-default-export": 0,
     "no-confusing-arrow": [

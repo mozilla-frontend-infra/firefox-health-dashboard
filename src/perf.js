@@ -118,13 +118,14 @@ router
     const channelVersions = await getVersions();
     const calendar = await getCalendar();
     const start = parseInt(channelVersions.nightly, 10);
+    const oldestRelease = start - 4;
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
     for (let version = start; version >= start - 5; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel, channelIdx) => {
-          console.log(version, channelVersions[channel]);
+          console.log(oldestRelease - version - (2 - channelIdx));
           if (version > parseInt(channelVersions[channel], 10)) {
             return null;
           }

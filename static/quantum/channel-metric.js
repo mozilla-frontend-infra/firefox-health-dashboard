@@ -37,7 +37,7 @@ export default class ChannelMetric extends React.Component {
 
   render() {
     const { query } = this.props;
-    const { builds, evolutions } = this.state;
+    const { evolutions } = this.state;
     let svg = null;
 
     if (evolutions) {
@@ -91,6 +91,7 @@ export default class ChannelMetric extends React.Component {
       const xScale = scaleTime()
         .domain(xDomain)
         .range([50, this.width - 5]);
+      const $labels = [];
       const $evolutions = evolutions.map((version, versionIdx) => {
         // console.log(moment(xDomain[1]).diff(xDomain[0], 'weeks', true));
         const paths = yRangeFields.reduce((map, field) => {
@@ -101,24 +102,35 @@ export default class ChannelMetric extends React.Component {
         }, new Map());
         const $channels = version.channels.map((channel, channelIdx) => {
           const alpha = alphaScale(channelIdx);
-          const latest = (versionIdx === 0);
+          // const latest = (versionIdx === 0);
           return [...paths].map(([field, path], pathIdx) => {
             const color = pathIdx ? '#FF8C8E' : '#B6D806';
-            const $label = (true || channel.channel === 'nightly')
-              ? (
-                <text
-                  x={xScale(new Date(channel.dates[0].date))}
-                  y={yScales.get(field)(channel.dates[0][field])}
-                  fill={color}
-                  fillOpacity={alpha}
+            const labelProps = {
+              x: xScale(new Date(channel.dates[0].date)),
+              y: yScales.get(field)(channel.dates[0][field]),
+              fill: color,
+              fillOpacity: alpha,
+            };
+            const key = `${versionIdx}-${channelIdx}-${pathIdx}`;
+            if (channel.dates.length > 1) {
+              $labels.push((
+                <g
+                  key={`label-${key}`}
+                  className='channel-label'
                 >
-                  {`${version.version}`}
-                </text>
-              )
-              : null;
+                  <text {...labelProps}>
+                    {`${version.version}`}
+                  </text>
+                  <circle cx={labelProps.x} cy={labelProps.y} r={3} />
+                  <text {...labelProps}>
+                    {`${channel.channel}`}
+                  </text>
+                </g>
+              ));
+            }
             return (
               <g
-                key={`${versionIdx}-${channelIdx}-${pathIdx}`}
+                key={`line-${key}`}
                 className='channel-line'
               >
                 <path
@@ -127,7 +139,6 @@ export default class ChannelMetric extends React.Component {
                   strokeOpacity={alpha}
                   d={path(channel.dates)}
                 />
-                {$label}
               </g>
             );
           });
@@ -221,6 +232,7 @@ export default class ChannelMetric extends React.Component {
           {$xAxis}
           {$fields}
           {$evolutions}
+          {$labels}
         </svg>
       );
     } else {
@@ -253,6 +265,7 @@ export default class ChannelMetric extends React.Component {
         note='14-day Moving Median'
         source={source}
         sourceTitle={`${query.metric} (t.m.o)`}
+        link='https://bit.ly/quantum-dashboards'
       >
         <section
           className={cls}

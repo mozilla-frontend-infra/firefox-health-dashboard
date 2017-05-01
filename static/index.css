@@ -64,10 +64,15 @@ a {
 		padding-left: calc(var(--gutterX));
 	}
 	.dashboard-source {
+		font-size: var(--smallFontSize);
 		color: var(--darkGray);
 		padding-left: calc(var(--gutterX));
 		a {
 			color: var(--mobileBlueVibrant);
+			text-align: right;
+			&:last-child {
+				display: block;
+			}
 		}
 	}
 	.dashboard-link {
@@ -429,14 +434,30 @@ svg {
 }
 
 .dashboard-metric {
-	.channel-line {
+	.channel-label {
 		text {
-			font-size: var(--smallFontSize);
+			fill: var(--lightGray);
+			text-shadow: 1px 1px 1px rgba(0, 0, 0, 150), -1px -1px 1px rgba(0, 0, 0, 150);
 			font-weight: 700;
-			text-anchor: end;
-			transform: translate(-5px, calc(var(--smallFontSize) / -4));
 			stroke: none;
+			&:first-child {
+				font-size: var(--fontSize);
+				text-anchor: end;
+				transform: translate(-2px, calc(var(--smallFontSize) / -2));
+			}
+			&:last-child {
+				font-size: var(--smallFontSize);
+				font-weight: 400;
+				text-anchor: start;
+				transform: translate(2px, calc(var(--smallFontSize) / -2));
+			}
 		}
+		circle {
+			opacity: 0.5;
+			fill: #fff;
+		}
+	}
+	.channel-line {
 		path {
 			fill: none;
 		}
@@ -497,7 +518,7 @@ svg {
 		transform-origin: center;
 	}
 	.benchmark-sm {
-		background: no-repeat url('./data/responsiveness-2017-04-21.png') center;
+		background: no-repeat url('./data/responsiveness-2017-04-30.png') center;
 		background-size: contain;
 		height: 80%;
 		width: 80%;

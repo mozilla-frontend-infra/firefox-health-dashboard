@@ -1,7 +1,6 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
-import { Link } from 'react-router';
 import Dashboard from './../dashboard';
 
 export default class QuantumBenchmarks extends React.Component {
@@ -13,6 +12,7 @@ export default class QuantumBenchmarks extends React.Component {
         className='quantum-benchmarks'
         source='https://docs.google.com/spreadsheets/d/1Kxn850VasyaG_WfRg3pMInW0hbIT8LP7pRPBYTIpdbM/edit'
         sourceTitle='Spreadsheet by :bsmedberg'
+        link='https://bit.ly/quantum-dashboards'
       >
         <iframe
           scrolling='no'

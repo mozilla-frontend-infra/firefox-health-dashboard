@@ -13,13 +13,14 @@ export default class QuantumIndex extends React.Component {
         className='home'
       >
         <h2>Nightly Telemetry</h2>
-        <Link to='/quantum/responsiveness/parent'>Responsiveness: Parent</Link>
-        <Link to='/quantum/responsiveness/content'>Responsiveness: Content</Link>
         <Link to='/quantum/pageload/render'>Pageload: First Render</Link>
         <h2>Benchmarks</h2>
         <Link to='/quantum/benchmark/pageload'>Page Load</Link>
         <Link to='/quantum/benchmark/sm'>SM</Link>
         <Link to='/quantum/benchmark/hasal'>Hasal</Link>
+        <h2>Engineering</h2>
+        <Link to='/quantum/responsiveness/parent'>Responsiveness: Parent</Link>
+        <Link to='/quantum/responsiveness/content'>Responsiveness: Content</Link>
       </Dashboard>
     );
   }
