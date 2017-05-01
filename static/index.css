@@ -65,6 +65,7 @@ a {
 	}
 	.dashboard-source {
 		font-size: var(--smallFontSize);
+		line-height: var(--fontSize);
 		color: var(--darkGray);
 		padding-left: calc(var(--gutterX));
 		a {
