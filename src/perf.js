@@ -118,14 +118,15 @@ router
     const channelVersions = await getVersions();
     const calendar = await getCalendar();
     const start = parseInt(channelVersions.nightly, 10);
-    const oldestRelease = start - 4;
+    const oldestRelease = start - 3;
     const versions = [];
     const nightlyToRelease = channels.slice().reverse();
     let endDate = null;
+    let oldestNightlyStart = null;
+    const channelDates = [];
     for (let version = start; version >= start - 5; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel, channelIdx) => {
-          console.log(oldestRelease - version - (2 - channelIdx));
           if (version > parseInt(channelVersions[channel], 10)) {
             return null;
           }
@@ -139,8 +140,32 @@ router
       if (!evolutions[0]) {
         break;
       }
+      if (channelDates.length) {
+        nightlyToRelease.forEach((channel, channelIdx) => {
+          if (!evolutions[channelIdx] || !channelDates[channelIdx]) {
+            return;
+          }
+          evolutions[channelIdx] = evolutions[channelIdx].dateRange(
+            oldestNightlyStart || evolutions[channelIdx].dates()[0],
+            channelDates[channelIdx],
+          );
+          if (evolutions[channelIdx] && !evolutions[channelIdx].dates().length) {
+            evolutions[channelIdx] = null;
+          }
+        });
+      }
+      nightlyToRelease.forEach((channel, channelIdx) => {
+        if (!evolutions[channelIdx]) {
+          return;
+        }
+        channelDates[channelIdx] = evolutions[channelIdx].dates()[0];
+      });
+      if (oldestRelease === version) {
+        oldestNightlyStart = channelDates[0];
+        console.log(oldestRelease, oldestNightlyStart);
+      }
+      const nightlyDate = moment(evolutions.find(evoluion => evoluion).dates()[0]).format('YYYY-MM-DD');
       const versionStr = sanitize(version);
-      const nightlyDate = moment(evolutions[0].dates()[0]).format('YYYY-MM-DD');
       let releaseDate = (await getReleaseDate(versionStr)).date;
       if (!releaseDate) {
         const planned = calendar.find(release => release.version === versionStr);
@@ -182,8 +207,7 @@ router
               countAvg: countAvg,
               dates: dates,
             };
-          })
-          .filter(entry => entry),
+          }),
       });
       endDate = releaseDate;
     }
@@ -200,42 +224,6 @@ router
     }
     const histogram = evolution.histogram();
     ctx.body = summarizeHistogram(histogram);
-  })
-
-  .get('/release', async (ctx) => {
-    const metrics = [
-      'CHECKERBOARD_SEVERITY',
-      'TIME_TO_NON_BLANK_PAINT_MS',
-      'FX_TAB_SWITCH_TOTAL_E10S_MS',
-      ['TIME_TO_FIRST_CLICK_V2', 'TIME_TO_FIRST_CLICK'],
-      ['TIME_TO_FIRST_KEY_INPUT_V2', 'TIME_TO_FIRST_KEY_INPUT'],
-      ['TIME_TO_FIRST_MOUSE_MOVE_V2', 'TIME_TO_FIRST_MOUSE_MOVE'],
-      ['TIME_TO_FIRST_SCROLL_V2', 'TIME_TO_FIRST_SCROLL'],
-      'TOTAL_SCROLL_Y',
-      'PAGE_MAX_SCROLL_Y',
-    ];
-    // const baseline = await Promise.all(
-    //   metrics
-    //     .map(metric => getSummary({
-    //       metric,
-    //       version: '52',
-    //       channel: 'nightly',
-    //       application: 'Firefox',
-    //     })),
-    // );
-    const tracking = await Promise.all(metrics.map(metric => getSummary({
-      metric,
-      version: '55',
-      channel: 'nightly',
-      application: 'Firefox',
-      e10sEnabled: true,
-    })));
-    ctx.body = metrics.map((metric, idx) => {
-      return {
-        metric: metric,
-        baseline: tracking[idx],
-      };
-    });
   })
 
   .get('/ipc', async (ctx) => {

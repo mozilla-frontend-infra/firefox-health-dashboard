@@ -438,7 +438,7 @@ svg {
 	.channel-label {
 		text {
 			fill: var(--lightGray);
-			text-shadow: 1px 1px 1px rgba(0, 0, 0, 150), -1px -1px 1px rgba(0, 0, 0, 150);
+			text-shadow: 1px 1px 1px rgba(0, 0, 0, 200), -1px -1px 1px rgba(0, 0, 0, 200);
 			font-weight: 700;
 			stroke: none;
 			&:first-child {

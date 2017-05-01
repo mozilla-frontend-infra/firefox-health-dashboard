@@ -49,6 +49,9 @@ export default class ChannelMetric extends React.Component {
       const yRangeFields = Object.keys(yRanges);
       evolutions.forEach((version) => {
         version.channels.forEach((channel) => {
+          if (!channel) {
+            return;
+          }
           channel.dates.forEach((date) => {
             yRangeFields.forEach((field) => {
               if (yRanges[field][0] > date[field]) {
@@ -84,10 +87,21 @@ export default class ChannelMetric extends React.Component {
         .range([1, 0.3]);
       const xDomain = [
         // first day of release for oldest version
-        new Date(evolutions.slice(-1)[0].channels.slice(-3)[0].dates[0].date),
+        new Date(
+          evolutions
+            .slice()
+            .reverse()
+            .find(evolution => evolution.channels[0])
+            .channels.slice(-3).find(channel => channel).dates[0].date,
+          ),
         // last day of current nightly
-        new Date(evolutions[0].channels[0].dates.slice(-1)[0].date),
+        new Date(
+          evolutions
+            .find(evolution => evolution.channels[0])
+            .channels[0].dates.slice(-1)[0].date,
+        ),
       ];
+      console.log(evolutions[0]);
       const xScale = scaleTime()
         .domain(xDomain)
         .range([50, this.width - 5]);
@@ -101,6 +115,9 @@ export default class ChannelMetric extends React.Component {
             .curve(curveLinear));
         }, new Map());
         const $channels = version.channels.map((channel, channelIdx) => {
+          if (!channel) {
+            return null;
+          }
           const alpha = alphaScale(channelIdx);
           // const latest = (versionIdx === 0);
           return [...paths].map(([field, path], pathIdx) => {
@@ -154,7 +171,7 @@ export default class ChannelMetric extends React.Component {
         return yScale.ticks(tickCount).map((tick, idx) => {
           const y = yScale(tick);
           let label = formatTick(tick);
-          if (!idx) {
+          if (!idx && this.props.unit) {
             label += this.props.unit;
           }
           return (
@@ -282,8 +299,8 @@ ChannelMetric.defaultProps = {
   query: '',
   title: '',
   subtitle: '',
-  format: '.2',
-  unit: 'ms',
+  format: '.1f',
+  unit: '',
 };
 ChannelMetric.propTypes = {
   query: React.PropTypes.object,

@@ -21,9 +21,7 @@ export default class QuantumTracking extends React.Component {
       <ChannelMetric
         title={metric}
         subtitle={subtitle.join(' ')}
-        unit='ms'
         query={params}
-        format='.2s'
       />
     );
   }
