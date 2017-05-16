@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 // import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat } from 'd3';
@@ -26,18 +27,18 @@ export default class ChannelMetric extends React.Component {
 
   async fetch() {
     const query = this.props.query;
-    const raw = await Promise.all([
-      fetch(`/api/perf/version-evolutions?${stringify(query)}`),
-    ]);
-    const [evolutions] = await Promise.all(
-      raw.map(buffer => buffer.json()),
-    );
-    this.setState({ evolutions });
+    try {
+      const raw = await fetch(`/api/perf/version-evolutions?${stringify(query)}`);
+      const evolutions = await raw.json();
+      this.setState({ evolutions });
+    } catch (e) {
+      this.setState({ error: true });
+    }
   }
 
   render() {
     const { query } = this.props;
-    const { evolutions } = this.state;
+    const { evolutions, error } = this.state;
     let svg = null;
 
     if (evolutions) {
@@ -303,9 +304,9 @@ ChannelMetric.defaultProps = {
   unit: '',
 };
 ChannelMetric.propTypes = {
-  query: React.PropTypes.object,
-  title: React.PropTypes.string,
-  subtitle: React.PropTypes.string,
-  format: React.PropTypes.string,
-  unit: React.PropTypes.string,
+  query: PropTypes.object,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  format: PropTypes.string,
+  unit: PropTypes.string,
 };

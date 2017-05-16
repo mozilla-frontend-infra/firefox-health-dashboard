@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ChannelMetric from './channel-metric';
 
 export default class QuantumTracking extends React.Component {
@@ -28,5 +29,5 @@ export default class QuantumTracking extends React.Component {
 }
 
 QuantumTracking.propTypes = {
-  location: React.PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };

@@ -1,17 +1,13 @@
-import Telemetry from 'telemetry-next-node';
+import Telemetry from './telemetry-node';
 import getVersions from '../release/versions';
 import fetchJson from '../fetch/json';
 
-const didInit = new Promise((resolve) => {
-  Telemetry.init(() => {
-    Telemetry.getJSON = async (url, callback) => {
-      const response = await fetchJson(url, { ttl: 'day' });
-      callback(response);
-    };
-    console.log('telemetry-next-node did init');
-    resolve();
-  });
-});
+Telemetry.getJSON = async (url, callback) => {
+  const response = await fetchJson(url, { ttl: 'day' });
+  callback(response);
+};
+
+// const didInit =
 
 export async function getEvolution(query) {
   const {
@@ -24,7 +20,10 @@ export async function getEvolution(query) {
   delete query.version;
   delete query.channel;
   delete query.useSubmissionDate;
-  await didInit;
+  await new Promise((resolve, reject) => {
+    console.log('Init');
+    Telemetry.init(resolve);
+  });
   const evolutionMap = await new Promise((resolve) => {
     console.log('Telemetry.getEvolution', channel, version);
     Telemetry.getEvolution(

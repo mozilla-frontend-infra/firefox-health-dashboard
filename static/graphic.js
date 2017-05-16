@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import MG from 'metrics-graphics';
 import cx from 'classnames';
 import moment from 'moment';
@@ -123,12 +124,12 @@ Graphic.defaultProps = {
   cleaned: false,
 };
 Graphic.propTypes = {
-  data: React.PropTypes.array,
-  baseline: React.PropTypes.string,
-  title: React.PropTypes.string,
-  baselines: React.PropTypes.array,
-  markers: React.PropTypes.array,
-  // x_accessor: React.PropTypes.string,
-  cleaned: React.PropTypes.bool,
-  // full: React.PropTypes.bool,
+  data: PropTypes.array,
+  baseline: PropTypes.string,
+  title: PropTypes.string,
+  baselines: PropTypes.array,
+  markers: PropTypes.array,
+  // x_accessor: PropTypes.string,
+  cleaned: PropTypes.bool,
+  // full: PropTypes.bool,
 };

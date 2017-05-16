@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 export default function Score({ data, baselines }) {
@@ -34,6 +35,6 @@ export default function Score({ data, baselines }) {
 }
 
 Score.propTypes = {
-  data: React.PropTypes.array,
-  baselines: React.PropTypes.array,
+  data: PropTypes.array,
+  baselines: PropTypes.array,
 };

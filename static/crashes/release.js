@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import FirefoxAdiCrashes from './firefox-adi';
 import FennecAdiCrashes from './fennec-adi';
 import FirefoxUtCrashes from './firefox-ut';
@@ -24,5 +25,5 @@ export default class Crashes extends React.Component {
 }
 
 Crashes.propTypes = {
-  location: React.PropTypes.object,
+  location: PropTypes.object,
 };

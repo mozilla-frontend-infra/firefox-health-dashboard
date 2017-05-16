@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { curveMonotoneX, line, scaleTime, scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3';
 import moment from 'moment';
 import cx from 'classnames';
@@ -445,6 +446,6 @@ export default class FirefoxBeta extends React.Component {
 FirefoxBeta.defaultProps = {
 };
 FirefoxBeta.propTypes = {
-  gridX: React.PropTypes.number,
-  gridY: React.PropTypes.number,
+  gridX: PropTypes.number,
+  gridY: PropTypes.number,
 };

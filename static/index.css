@@ -203,6 +203,52 @@ svg {
 		height: calc(var(--lineHeight) * 7);
 	}
 }
+.graphic-widget {
+	.widget-content {
+		flex: 1;
+		align-self: stretch;
+		&.state-loading {
+			justify-content: center;
+
+		}
+	}
+	path.series {
+		stroke: var(--mobileBlueVibrantTint);
+		stroke-width: 2;
+		fill: none;
+		&.series-1 {
+			stroke: var(--geckoGreenVibrantTint);
+		}
+	}
+	circle.series {
+		fill: var(--mobileBlue);
+		opacity: 0.1;
+		&.series-1 {
+			fill: var(--geckoGreen);
+		}
+	}
+	.tick {
+		line {
+			stroke: var(--darkGray);
+			opacity: 0.3;
+			stroke-width: 1;
+		}
+		text {
+			fill: var(--lightGray);
+			opacity: 0.5;
+			font-size: var(--smallFontSize);
+			text-anchor: start;
+			font-weight: 300;
+			transform: translate(0, calc(var(--smallFontSize)));
+		}
+	}
+	.tick-x {
+		text {
+			text-anchor: middle;
+			transform: translate(0, calc(var(--smallFontSize) / -4));
+		}
+	}
+}
 
 .graphic-scores {
 	display: flex;

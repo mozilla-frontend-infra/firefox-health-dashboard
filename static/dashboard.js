@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const Dashboard = (props) => {

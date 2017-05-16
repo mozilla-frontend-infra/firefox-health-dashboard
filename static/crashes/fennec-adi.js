@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import MG from 'metrics-graphics';
 import Graphic from '../graphic';
@@ -61,5 +62,5 @@ export default class FennecAdiCrashes extends React.Component {
 }
 
 FennecAdiCrashes.propTypes = {
-  full: React.PropTypes.number,
+  full: PropTypes.number,
 };

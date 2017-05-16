@@ -1,6 +1,7 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import cx from 'classnames';
 import Dashboard from './../dashboard';
@@ -451,8 +452,8 @@ Metric.defaultProps = {
   status: {},
 };
 Metric.propTypes = {
-  title: React.PropTypes.string,
-  subtitle: React.PropTypes.string,
-  unit: React.PropTypes.string,
-  status: React.PropTypes.object,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  unit: PropTypes.string,
+  status: PropTypes.object,
 };
