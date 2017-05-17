@@ -238,6 +238,7 @@ svg {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			flex: 1;
+			text-decoration: underline;
 		}
 		aside {
 			font-size: var(--fontSize);
@@ -314,9 +315,9 @@ svg {
 	.legend {
 		text-anchor: start;
 		font-size: var(--smallFontSize);
-		fill: var(--newCyan);
+		fill: color(var(--newCyan) saturation(100%) shade(20%));
 		&.series-1 {
-			fill: var(--newLilac);
+			fill: color(var(--newLilac) saturation(100%) shade(20%));
 		}
 	}
 	.tick {

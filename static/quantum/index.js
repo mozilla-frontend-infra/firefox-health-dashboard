@@ -12,6 +12,14 @@ const apzBugs = {
   1105109: 'Autoscrolling',
 };
 
+const altMtbf = (
+  <abbr
+    title='Mean time between failures (MTBF) is the predicted elapsed time between inherent failures of a system during operation'
+  >
+    MTBF
+  </abbr>
+);
+
 export default class QuantumIndex extends React.Component {
   state = {
     apzStatus: [],
@@ -62,49 +70,21 @@ export default class QuantumIndex extends React.Component {
         subtitle='Release Criteria Report'
         className='summary'
       >
-        <h2>Page Load Time</h2>
-        <div className='row'>
-          <div className='criteria-widget status-yellow'>
-            <header>
-              <h3>Top 5: Time to First Paint</h3>
-              <aside>Target: ≥ Chrome</aside>
-            </header>
-            <div className='widget-content'>
-              <div className='widget-entry'>TBD</div>
-            </div>
-          </div>
-          <div className='criteria-widget status-yellow'>
-            <header>
-              <h3>Top 5: Time to Hero Element</h3>
-              <aside>Target: ≥ Chrome</aside>
-            </header>
-            <div className='widget-content'>
-              <div className='widget-entry'>TBD</div>
-            </div>
-          </div>
-          <Perfherder
-            title='Page Load (tp5)'
-            signatures={{
-              'win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
-              'win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
-            }}
-          />
-        </div>
         <h2>Responsiveness: Browser chrome</h2>
         <div className='row'>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Input Latency</h3>
               <aside>
-                Target: 2.5s MTBF ≥ <em>16 hours</em>,
+                Target: 2.5s {altMtbf} ≥ <em>16 hours</em>,
                 2.5s ≤ <em>2% of users</em> (weekly),
-                250ms MTBF ≥ <em>2 hours</em>
+                250ms {altMtbf} ≥ <em>2 hours</em>
               </aside>
             </header>
             <div className='widget-content'>
-              <div className='widget-entry'>2.5s MTBF = <em>25.29 hours</em> (good!)</div>
+              <div className='widget-entry'>2.5s {altMtbf} = <em>25.29 hours</em> (good!)</div>
               <div className='widget-entry'>2.5s population = <em>32% of users</em></div>
-              <div className='widget-entry'>250ms MTBF = <em>36 min</em></div>
+              <div className='widget-entry'>250ms {altMtbf} = <em>36 min</em></div>
             </div>
           </div>
         </div>
@@ -112,11 +92,11 @@ export default class QuantumIndex extends React.Component {
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>CC/GC pauses longer than 150 ms</h3>
-              <aside>Target: ≤ 2% of users</aside>
+              <aside>Target: <em>≤ 2% of users</em></aside>
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                <em>57% of users</em> reported long chrome pauses (Nightly).
+                <em>57% of users</em> reported long chrome pauses.
               </div>
             </div>
           </div>
@@ -239,15 +219,15 @@ export default class QuantumIndex extends React.Component {
             <header>
               <h3>Input Latency</h3>
               <aside>
-                Target: 2.5s MTBF ≥ <em>4 hours</em>,
+                Target: 2.5s {altMtbf} ≥ <em>4 hours</em>,
                 2.5s ≤ <em>45% of users</em> (weekly),
-                250ms MTBF ≥ <em>30 min</em>
+                250ms {altMtbf} ≥ <em>30 min</em>
               </aside>
             </header>
             <div className='widget-content status-red'>
-              <div className='widget-entry'>2.5s MTBF = <em>0.4 hours</em></div>
+              <div className='widget-entry'>2.5s {altMtbf} = <em>0.4 hours</em></div>
               <div className='widget-entry'>2.5s population = <em>45% of users</em></div>
-              <div className='widget-entry'>250ms MTBF = <em>13 min</em></div>
+              <div className='widget-entry'>250ms {altMtbf} = <em>13 min</em></div>
             </div>
           </div>
           <div className='criteria-widget status-yellow'>
@@ -257,7 +237,7 @@ export default class QuantumIndex extends React.Component {
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                <em>23% of users</em> reported long chrome pauses (Nighly).
+                <em>23% of users</em> reported long chrome pauses.
               </div>
             </div>
           </div>
@@ -285,6 +265,34 @@ export default class QuantumIndex extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <h2>Page Load Time</h2>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Top Sites: Time to First Paint</h3>
+              <aside>Target: ≥ Chrome</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Top Sites: Time to Hero Element</h3>
+              <aside>Target: ≥ Chrome</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+          <Perfherder
+            title='Page Load (tp5)'
+            signatures={{
+              'win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
+              'win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
+            }}
+          />
         </div>
         <h2>Smoothness: Content</h2>
         <div className='row'>
