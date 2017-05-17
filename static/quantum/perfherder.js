@@ -186,17 +186,17 @@ export default class PerfherderWidget extends React.Component {
 
     return (
       <section
-        className='graphic-timeline graphic-widget'
+        className={`graphic-timeline graphic-widget status-${this.props.status}`}
       >
         <header>
-          <a
+          <h3><a
             href={link}
             target='_blank'
             rel='noopener noreferrer'
           >
             {this.props.title}
-          </a>
-          <aside>Target: No new regressions</aside>
+          </a></h3>
+          <aside>Target: <em>No regressions</em></aside>
         </header>
         <div
           className={cls}
@@ -211,11 +211,12 @@ export default class PerfherderWidget extends React.Component {
 
 PerfherderWidget.defaultProps = {
   signatures: '',
+  status: 'red',
 };
 PerfherderWidget.propTypes = {
   // query: PropTypes.object,
   signatures: PropTypes.object,
   title: PropTypes.string,
-  // format: PropTypes.string,
+  status: PropTypes.string,
   // unit: PropTypes.string,
 };

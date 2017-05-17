@@ -31,8 +31,8 @@ export default class QuantumIndex extends React.Component {
     const apzStatus = this.state.apzStatus;
 
     const $apz = (
-      <div className='criteria-widget'>
-        <header>APZ Everywhere: All content scrolling should use APZ</header>
+      <div className='criteria-widget status-red'>
+        <header><h3>APZ Everywhere</h3><aside>All content scrolling should use APZ</aside></header>
         <div className='widget-content'>
           {Object.keys(apzBugs).map((id) => {
             const bug = apzStatus.find(needle => String(needle.id) === String(id));
@@ -64,22 +64,22 @@ export default class QuantumIndex extends React.Component {
       >
         <h2>Page Load Time</h2>
         <div className='row'>
-          <div className='criteria-widget'>
+          <div className='criteria-widget status-yellow'>
             <header>
-              Top 5: Time to First Paint
+              <h3>Top 5: Time to First Paint</h3>
               <aside>Target: ≥ Chrome</aside>
             </header>
-            <div className='widget-content state-loading'>
-              TBD
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
             </div>
           </div>
-          <div className='criteria-widget'>
+          <div className='criteria-widget status-yellow'>
             <header>
-              Top 5: Time to Hero Element
+              <h3>Top 5: Time to Hero Element</h3>
               <aside>Target: ≥ Chrome</aside>
             </header>
-            <div className='widget-content state-loading'>
-              TBD
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
             </div>
           </div>
           <Perfherder
@@ -92,8 +92,50 @@ export default class QuantumIndex extends React.Component {
         </div>
         <h2>Responsiveness: Browser chrome</h2>
         <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Input Latency</h3>
+              <aside>
+                Target: 2.5s MTBF ≥ <em>16 hours</em>,
+                2.5s ≤ <em>2% of users</em> (weekly),
+                250ms MTBF ≥ <em>2 hours</em>
+              </aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>2.5s input jank MTBF = <em>25.29 hours</em> (good!)</div>
+              <div className='widget-entry'>2.5s input jank population = <em>32% of users</em></div>
+              <div className='widget-entry'>250ms input jank MTBF = <em>36 min</em></div>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>CC/GC pauses longer than 150 ms</h3>
+              <aside>Target: ≤ 2% of users</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                57% of Nightly users reported long chrome pauses.
+              </div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Ghost windows</h3>
+              <aside>Target: 0% of sessions</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                10% of sessions and 47% of Nightly users reported ghost windows.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
           <Perfherder
             title='Start-up (sessionrestore)'
+            status='red'
             signatures={{
               'win8/64': '555ac79a588637a3ec5752d5b9b3ee769a55d7f6',
               'win7/32': '196b82960327035de720500e1a5f9f0154cf97ad',
@@ -101,6 +143,7 @@ export default class QuantumIndex extends React.Component {
           />
           <Perfherder
             title='Start-up (sessionrestore_no_auto_restore)'
+            status='red'
             signatures={{
               'win8/64': 'c3f0064e247fc3825e3a4b5367a4d898f86cfc1f',
               'win7/32': 'ba16f34b35fb3492dc22f3774aff2d010e5f10ba',
@@ -110,6 +153,7 @@ export default class QuantumIndex extends React.Component {
         <div className='row'>
           <Perfherder
             title='Start-Up (ts_paint)'
+            status='green'
             signatures={{
               'win8/64': 'f04c0fb17ff70e2b5a99829a64d51411bd187d0a',
               'win7/32': 'e394aab72917d169024558cbab33eb4e7e9504e1',
@@ -117,6 +161,7 @@ export default class QuantumIndex extends React.Component {
           />
           <Perfherder
             title='Window Opening (tpaint)'
+            status='green'
             signatures={{
               'win8/64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
               'win7/32': 'd0a85e9de2bec8153d2040f2958d979876542012',
@@ -126,6 +171,7 @@ export default class QuantumIndex extends React.Component {
         <div className='row'>
           <Perfherder
             title='Tab Opening (tabpaint)'
+            status='green'
             signatures={{
               'win8/64': '26721ba0e181e2844da3ddc2284a331ba54eefe0',
               'win7/32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
@@ -133,13 +179,15 @@ export default class QuantumIndex extends React.Component {
           />
           <Perfherder
             title='Tab Animation (TART)'
+            status='green'
             signatures={{
               'win8/64': '11f6fa713ccb401ad32d744398978b421758ab9d',
               'win7/32': '710f43a8c2041fe3e67124305649c12a9d708858',
             }}
           />
           <Perfherder
-            title='Tabswitch (tps)'
+            title='Tab Switch (tps)'
+            status='red'
             signatures={{
               'win8/64': 'cfc195cb8dcd3d23be28f59f57a9bb68b8d7dfe2',
               'win7/32': 'a86a2a069ed634663dbdef7193f2dee69b50dbc9',
@@ -149,6 +197,7 @@ export default class QuantumIndex extends React.Component {
         <div className='row'>
           <Perfherder
             title='SVG (tsvg_static)'
+            status='red'
             signatures={{
               'win8/64': '397a484349ec684142dc3b3dab8f882a5d54bc8b',
               'win7/32': '18cf40355e5b20164ab9307f83dd6d6eb6184aa8',
@@ -156,6 +205,7 @@ export default class QuantumIndex extends React.Component {
           />
           <Perfherder
             title='SVG (tsvgr_opacity)'
+            status='green'
             signatures={{
               'win8/64': '3bfe93820de5fd84b3a3d997670b1689a9a70839',
               'win7/32': 'f22a87e9898beb0c7dc5fefec8267c3a9ad89a8b',
@@ -163,6 +213,7 @@ export default class QuantumIndex extends React.Component {
           />
           <Perfherder
             title='SVG (tsvgx)'
+            status='green'
             signatures={{
               'win8/64': '801468cb00bf0ca29ad9135a05a3bcfcdba8d480',
               'win7/32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
@@ -170,6 +221,71 @@ export default class QuantumIndex extends React.Component {
           />
         </div>
         <h2>Responsiveness: Content</h2>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Top Sites: Input Latency Benchmark</h3>
+              <aside>
+                TBD
+              </aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Input Latency</h3>
+              <aside>
+                Target: 2.5s MTBF ≥ <em>4 hours</em>,
+                2.5s ≤ <em>45% of users</em> (weekly),
+                250ms MTBF ≥ <em>30 min</em>
+              </aside>
+            </header>
+            <div className='widget-content status-red'>
+              <div className='widget-entry'>2.5s input jank MTBF = <em>0.4 hours</em></div>
+              <div className='widget-entry'>2.5s input jank population = <em>45% of users</em></div>
+              <div className='widget-entry'>250ms input jank MTBF = <em>13 min</em></div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>CC/GC pauses longer than 2500 ms</h3>
+              <aside>Target: ≤ 2% of users</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                23% of Nightly users reported long chrome pauses.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Start-up: Time to First Paint</h3>
+              <aside>Target: ≤ <em>390 ms</em> (Chrome + 20%)</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                1600 ms
+              </div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Start-up: Time to Hero Element</h3>
+              <aside>Target: ≤ <em>1270 ms</em> (Chrome + 20%)</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                1183 ms
+              </div>
+            </div>
+          </div>
+        </div>
         <h2>Smoothness: Content</h2>
         <div className='row'>
           {$apz}
