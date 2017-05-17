@@ -230,13 +230,6 @@ svg {
 			background-color: #fff;
 			color: #000;
 		}
-		a {
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			flex: 1;
-			text-decoration: underline;
-		}
 		aside {
 			padding-left: calc(var(--gutterX) / 2);
 			font-size: var(--fontSize);
@@ -286,6 +279,7 @@ svg {
 			font-weight: 700;
 			color: #333;
 			font-style: normal;
+			font-size: var(--h4FontSize);
 		}
 	}
 	.series-path {
@@ -305,7 +299,7 @@ svg {
 	}
 	.series-area {
 		fill: var(--newCyan);
-		opacity: 0.2;
+		opacity: 0.25;
 		&.series-1 {
 			fill: var(--newLilac);
 		}
@@ -320,8 +314,9 @@ svg {
 	}
 	.tick {
 		line {
-			stroke: var(--darkGray);
-			opacity: 0.3;
+			stroke: var(--lightGray);
+			opacity: 0.5;
+			stroke-dasharray: 1, 2;
 			stroke-width: 1;
 		}
 		text {

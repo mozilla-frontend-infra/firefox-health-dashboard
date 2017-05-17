@@ -74,7 +74,7 @@ export default class QuantumIndex extends React.Component {
         <div className='row'>
           <div className='criteria-widget status-yellow'>
             <header>
-              <h3>Top Sites: Time to First Paint</h3>
+              <h3>Benchmark: Time to First Paint</h3>
               <aside>Target: ≥ Chrome</aside>
             </header>
             <div className='widget-content'>
@@ -83,7 +83,7 @@ export default class QuantumIndex extends React.Component {
           </div>
           <div className='criteria-widget status-yellow'>
             <header>
-              <h3>Top Sites: Time to Hero Element</h3>
+              <h3>Benchmark: Time to Hero Element</h3>
               <aside>Target: ≥ Chrome</aside>
             </header>
             <div className='widget-content'>
@@ -93,8 +93,8 @@ export default class QuantumIndex extends React.Component {
           <Perfherder
             title='Page Load (tp5)'
             signatures={{
-              'win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
-              'win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
+              'Win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
+              'Win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
             }}
           />
         </div>
@@ -145,16 +145,16 @@ export default class QuantumIndex extends React.Component {
             title='Start-up (sessionrestore)'
             status='red'
             signatures={{
-              'win8/64': '555ac79a588637a3ec5752d5b9b3ee769a55d7f6',
-              'win7/32': '196b82960327035de720500e1a5f9f0154cf97ad',
+              'Win8/64': '555ac79a588637a3ec5752d5b9b3ee769a55d7f6',
+              'Win7/32': '196b82960327035de720500e1a5f9f0154cf97ad',
             }}
           />
           <Perfherder
             title='Start-up (sessionrestore_no_auto_restore)'
             status='red'
             signatures={{
-              'win8/64': 'c3f0064e247fc3825e3a4b5367a4d898f86cfc1f',
-              'win7/32': 'ba16f34b35fb3492dc22f3774aff2d010e5f10ba',
+              'Win8/64': 'c3f0064e247fc3825e3a4b5367a4d898f86cfc1f',
+              'Win7/32': 'ba16f34b35fb3492dc22f3774aff2d010e5f10ba',
             }}
           />
         </div>
@@ -163,16 +163,16 @@ export default class QuantumIndex extends React.Component {
             title='Start-Up (ts_paint)'
             status='green'
             signatures={{
-              'win8/64': 'f04c0fb17ff70e2b5a99829a64d51411bd187d0a',
-              'win7/32': 'e394aab72917d169024558cbab33eb4e7e9504e1',
+              'Win8/64': 'f04c0fb17ff70e2b5a99829a64d51411bd187d0a',
+              'Win7/32': 'e394aab72917d169024558cbab33eb4e7e9504e1',
             }}
           />
           <Perfherder
             title='Window Opening (tpaint)'
             status='green'
             signatures={{
-              'win8/64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
-              'win7/32': 'd0a85e9de2bec8153d2040f2958d979876542012',
+              'Win8/64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
+              'Win7/32': 'd0a85e9de2bec8153d2040f2958d979876542012',
             }}
           />
         </div>
@@ -181,24 +181,24 @@ export default class QuantumIndex extends React.Component {
             title='Tab Opening (tabpaint)'
             status='green'
             signatures={{
-              'win8/64': '26721ba0e181e2844da3ddc2284a331ba54eefe0',
-              'win7/32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
+              'Win8/64': '26721ba0e181e2844da3ddc2284a331ba54eefe0',
+              'Win7/32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
             }}
           />
           <Perfherder
             title='Tab Animation (TART)'
             status='green'
             signatures={{
-              'win8/64': '11f6fa713ccb401ad32d744398978b421758ab9d',
-              'win7/32': '710f43a8c2041fe3e67124305649c12a9d708858',
+              'Win8/64': '11f6fa713ccb401ad32d744398978b421758ab9d',
+              'Win7/32': '710f43a8c2041fe3e67124305649c12a9d708858',
             }}
           />
           <Perfherder
             title='Tab Switch (tps)'
             status='red'
             signatures={{
-              'win8/64': 'cfc195cb8dcd3d23be28f59f57a9bb68b8d7dfe2',
-              'win7/32': 'a86a2a069ed634663dbdef7193f2dee69b50dbc9',
+              'Win8/64': 'cfc195cb8dcd3d23be28f59f57a9bb68b8d7dfe2',
+              'Win7/32': 'a86a2a069ed634663dbdef7193f2dee69b50dbc9',
             }}
           />
         </div>
@@ -207,24 +207,24 @@ export default class QuantumIndex extends React.Component {
             title='SVG (tsvg_static)'
             status='red'
             signatures={{
-              'win8/64': '397a484349ec684142dc3b3dab8f882a5d54bc8b',
-              'win7/32': '18cf40355e5b20164ab9307f83dd6d6eb6184aa8',
+              'Win8/64': '397a484349ec684142dc3b3dab8f882a5d54bc8b',
+              'Win7/32': '18cf40355e5b20164ab9307f83dd6d6eb6184aa8',
             }}
           />
           <Perfherder
             title='SVG (tsvgr_opacity)'
             status='green'
             signatures={{
-              'win8/64': '3bfe93820de5fd84b3a3d997670b1689a9a70839',
-              'win7/32': 'f22a87e9898beb0c7dc5fefec8267c3a9ad89a8b',
+              'Win8/64': '3bfe93820de5fd84b3a3d997670b1689a9a70839',
+              'Win7/32': 'f22a87e9898beb0c7dc5fefec8267c3a9ad89a8b',
             }}
           />
           <Perfherder
             title='SVG (tsvgx)'
             status='green'
             signatures={{
-              'win8/64': '801468cb00bf0ca29ad9135a05a3bcfcdba8d480',
-              'win7/32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
+              'Win8/64': '801468cb00bf0ca29ad9135a05a3bcfcdba8d480',
+              'Win7/32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
             }}
           />
         </div>
@@ -232,13 +232,26 @@ export default class QuantumIndex extends React.Component {
         <div className='row'>
           <div className='criteria-widget status-yellow'>
             <header>
-              <h3>Top Sites: Input Latency Benchmark</h3>
+              <h3>Benchmark: Input Latency Benchmark</h3>
               <aside>
                 TBD
               </aside>
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Speedometer</h3>
+              <aside>
+                Target: <em>≤ 2370 ms</em> (Chrome + 20%)
+              </aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>
+                <em>3962 ms</em>
+              </div>
             </div>
           </div>
         </div>

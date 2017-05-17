@@ -149,8 +149,8 @@ export default class PerfherderWidget extends React.Component {
         return (
           <text
             className={`legend series-${idx}`}
-            x={20 + (50 * idx)}
-            y={this.height - 25}
+            x={27 + (50 * idx)}
+            y={15}
             key={`legend-${label}`}
           >
             {label}
