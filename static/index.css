@@ -120,7 +120,7 @@ a {
 .row {
 	flex: 1;
   display: flex;
-	padding: calc(var(--gutterY) / 2) var(--gutterX);
+	padding: 0 var(--gutterX) calc(var(--gutterY) * 2);
 
 	.aside {
 		width: calc(2 * var(--gutterY));
@@ -207,11 +207,11 @@ svg {
 	}
 }
 .graphic-widget, .criteria-widget {
+	background-color: #fff;
 	flex-direction: column;
 	align-items: stretch;
-	padding-bottom: calc(var(--gutterY));
 	&:not(:first-child) {
-		padding-left: calc(var(--gutterX));
+		margin-left: calc(var(--gutterX) * 2);
 	}
 	header {
 		display: flex;
@@ -222,7 +222,7 @@ svg {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		border-top: 1px solid #fff;
+		border-top: calc(var(--gutterY) / 4) solid #fff;
 		h3 {
 			margin: 0;
 			padding: 0;
@@ -245,7 +245,7 @@ svg {
 			font-weight: 400;
 			em {
 				font-weight: 700;
-				color: var(--lightGray);
+				color: #333;
 				font-style: normal;
 			}
 		}
@@ -278,23 +278,23 @@ svg {
 		flex: 1;
 		display: flex;
 		align-self: stretch;
-		color: var(--lightGray);
+		color: var(--darkGray);
 		&.state-loading {
 			justify-content: center;
 			align-items: center;
 		}
 		em {
 			font-weight: 700;
-			color: #fff;
+			color: #333;
 			font-style: normal;
 		}
 	}
 	.series-path {
-		stroke: var(--newCyan);
+		stroke: color(var(--newCyan) saturation(100%) shade(20%));
 		stroke-width: 2;
 		fill: none;
 		&.series-1 {
-			stroke: var(--newLilac);
+			stroke: color(var(--newLilac) saturation(100%) shade(20%));
 		}
 	}
 	circle.series {
@@ -326,7 +326,7 @@ svg {
 			stroke-width: 1;
 		}
 		text {
-			fill: var(--lightGray);
+			fill: var(--darkGray);
 			opacity: 0.5;
 			font-size: var(--smallFontSize);
 			text-anchor: start;

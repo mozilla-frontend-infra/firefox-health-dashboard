@@ -102,9 +102,9 @@ export default class QuantumIndex extends React.Component {
               </aside>
             </header>
             <div className='widget-content'>
-              <div className='widget-entry'>2.5s input jank MTBF = <em>25.29 hours</em> (good!)</div>
-              <div className='widget-entry'>2.5s input jank population = <em>32% of users</em></div>
-              <div className='widget-entry'>250ms input jank MTBF = <em>36 min</em></div>
+              <div className='widget-entry'>2.5s MTBF = <em>25.29 hours</em> (good!)</div>
+              <div className='widget-entry'>2.5s population = <em>32% of users</em></div>
+              <div className='widget-entry'>250ms MTBF = <em>36 min</em></div>
             </div>
           </div>
         </div>
@@ -116,18 +116,18 @@ export default class QuantumIndex extends React.Component {
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                57% of Nightly users reported long chrome pauses.
+                <em>57% of users</em> reported long chrome pauses (Nightly).
               </div>
             </div>
           </div>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Ghost windows</h3>
-              <aside>Target: 0% of sessions</aside>
+              <aside>Target: <em>0% of sessions</em></aside>
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                10% of sessions and 47% of Nightly users reported ghost windows.
+                <em>10% of sessions</em> reported ghost windows.
               </div>
             </div>
           </div>
@@ -245,19 +245,19 @@ export default class QuantumIndex extends React.Component {
               </aside>
             </header>
             <div className='widget-content status-red'>
-              <div className='widget-entry'>2.5s input jank MTBF = <em>0.4 hours</em></div>
-              <div className='widget-entry'>2.5s input jank population = <em>45% of users</em></div>
-              <div className='widget-entry'>250ms input jank MTBF = <em>13 min</em></div>
+              <div className='widget-entry'>2.5s MTBF = <em>0.4 hours</em></div>
+              <div className='widget-entry'>2.5s population = <em>45% of users</em></div>
+              <div className='widget-entry'>250ms MTBF = <em>13 min</em></div>
             </div>
           </div>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>CC/GC pauses longer than 2500 ms</h3>
-              <aside>Target: ≤ 2% of users</aside>
+              <aside>Target: <em>≤ 2%</em> of users</aside>
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                23% of Nightly users reported long chrome pauses.
+                <em>23% of users</em> reported long chrome pauses (Nighly).
               </div>
             </div>
           </div>
@@ -270,7 +270,7 @@ export default class QuantumIndex extends React.Component {
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                1600 ms
+                <em>1600 ms</em>
               </div>
             </div>
           </div>
@@ -281,7 +281,7 @@ export default class QuantumIndex extends React.Component {
             </header>
             <div className='widget-content'>
               <div className='widget-entry'>
-                1183 ms
+                <em>1183 ms</em>
               </div>
             </div>
           </div>

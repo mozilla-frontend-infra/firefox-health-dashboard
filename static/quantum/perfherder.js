@@ -120,7 +120,7 @@ export default class PerfherderWidget extends React.Component {
               y2={y}
             />
             <text
-              x={0}
+              x={2}
               y={y}
             >
               {label}
@@ -136,7 +136,7 @@ export default class PerfherderWidget extends React.Component {
           <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
             <text
               x={x}
-              y={this.height}
+              y={this.height - 5}
             >
               {label}
             </text>
