@@ -70,6 +70,34 @@ export default class QuantumIndex extends React.Component {
         subtitle='Release Criteria Report'
         className='summary'
       >
+        <h2>Page Load Time</h2>
+        <div className='row'>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Top Sites: Time to First Paint</h3>
+              <aside>Target: ≥ Chrome</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+          <div className='criteria-widget status-yellow'>
+            <header>
+              <h3>Top Sites: Time to Hero Element</h3>
+              <aside>Target: ≥ Chrome</aside>
+            </header>
+            <div className='widget-content'>
+              <div className='widget-entry'>TBD</div>
+            </div>
+          </div>
+          <Perfherder
+            title='Page Load (tp5)'
+            signatures={{
+              'win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
+              'win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
+            }}
+          />
+        </div>
         <h2>Responsiveness: Browser chrome</h2>
         <div className='row'>
           <div className='criteria-widget status-yellow'>
@@ -265,34 +293,6 @@ export default class QuantumIndex extends React.Component {
               </div>
             </div>
           </div>
-        </div>
-        <h2>Page Load Time</h2>
-        <div className='row'>
-          <div className='criteria-widget status-yellow'>
-            <header>
-              <h3>Top Sites: Time to First Paint</h3>
-              <aside>Target: ≥ Chrome</aside>
-            </header>
-            <div className='widget-content'>
-              <div className='widget-entry'>TBD</div>
-            </div>
-          </div>
-          <div className='criteria-widget status-yellow'>
-            <header>
-              <h3>Top Sites: Time to Hero Element</h3>
-              <aside>Target: ≥ Chrome</aside>
-            </header>
-            <div className='widget-content'>
-              <div className='widget-entry'>TBD</div>
-            </div>
-          </div>
-          <Perfherder
-            title='Page Load (tp5)'
-            signatures={{
-              'win8/64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
-              'win7/32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
-            }}
-          />
         </div>
         <h2>Smoothness: Content</h2>
         <div className='row'>

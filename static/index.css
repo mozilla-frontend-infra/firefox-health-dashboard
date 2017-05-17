@@ -216,12 +216,9 @@ svg {
 	header {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-start;
 		text-align: left;
 		padding-right: calc(var(--gutterX));
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 		border-top: calc(var(--gutterY) / 4) solid #fff;
 		h3 {
 			margin: 0;
@@ -241,6 +238,7 @@ svg {
 			text-decoration: underline;
 		}
 		aside {
+			padding-left: calc(var(--gutterX) / 2);
 			font-size: var(--fontSize);
 			color: var(--darkGray);
 			font-weight: 400;
