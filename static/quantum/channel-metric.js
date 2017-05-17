@@ -254,7 +254,7 @@ export default class ChannelMetric extends React.Component {
         </svg>
       );
     } else {
-      svg = 'Loading …';
+      svg = 'Loading t.m.o. …';
     }
 
     const cls = cx('graphic-timeline', {

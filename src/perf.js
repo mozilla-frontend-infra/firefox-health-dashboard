@@ -6,6 +6,7 @@ import { stringify } from 'query-string';
 import {
   median,
   standardDeviation,
+  quantile,
 } from 'simple-statistics';
 import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
@@ -98,8 +99,7 @@ const summarizeIpcTable = async (metric) => {
 router
 
   .get('/herder', async (ctx) => {
-    const { signature } = ctx.request.query;
-    const signatures = signature.split(',');
+    const { signatures } = ctx.request.query;
     const data = await fetchJson(`https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
       framework: 1,
       interval: 31536000 / 2,
@@ -142,6 +142,8 @@ router
           })
           .map(check => check.value);
         entry.avg = median(sliced);
+        entry.q1 = quantile(sliced, 0.75);
+        entry.q3 = quantile(sliced, 0.25);
       });
       return series;
     });

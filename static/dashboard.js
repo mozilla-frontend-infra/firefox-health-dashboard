@@ -16,7 +16,6 @@ const Dashboard = (props) => {
   const $note = note ? (
     <div className='dashboard-note'>{note}</div>
   ) : null;
-  console.log(link);
   const $link = link ? (
     <a href={link} target='_new'>
       {link.replace(/.*\/\//, '')}

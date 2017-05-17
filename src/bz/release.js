@@ -9,8 +9,10 @@ export async function getRelease(bugs) {
     'id',
     'cf_tracking_firefox_relnote',
     'target_milestone',
+    'assigned_to',
+    'flags',
   ];
-  const latest = parseInt((await getVersions()).aurora, 10) + 1;
+  const latest = parseInt((await getVersions()).nightly, 10);
   for (let i = latest - 10; i <= latest; i += 1) {
     fields.push(`cf_status_firefox${i}`);
   }
@@ -36,8 +38,21 @@ export async function getRelease(bugs) {
     if (!version && bug.target_milestone !== '---') {
       version = parseInt(bug.target_milestone.replace('mozilla', ''), 10);
     }
+    let contact = null;
+    if (!version) {
+      if (bug.flags) {
+        const ni = bug.flags.find(flag => flag.name === 'needinfo');
+        if (ni) {
+          contact = ni.requestee;
+        }
+      }
+      if (!contact && bug.assigned_to_detail) {
+        contact = bug.assigned_to_detail.real_name.replace(/.*(:[a-z0-9]+).*/, '$1');
+      }
+    }
     return {
       id: bug.id,
+      contact: contact,
       version: version || null,
     };
   });

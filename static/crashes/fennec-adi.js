@@ -41,7 +41,7 @@ export default class FennecAdiCrashes extends React.Component {
   render() {
     return (
       <div className='row'>
-        <header>
+        <header className='aside'>
           <span>Fennec Crashes / 100 ADI</span>
         </header>
         <Graphic

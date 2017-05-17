@@ -1,10 +1,18 @@
 import Router from 'koa-router';
+import { stringify } from 'qs';
+import fetchJson from './fetch/json';
+import { getRelease } from './bz/release';
 // import { getHistory } from './release/history';
 // import { getMissedCount } from './bz/regressions';
 
 export const router = new Router();
 
 router
+
+  .get('/status', async (ctx) => {
+    const { ids } = ctx.request.query;
+    ctx.body = await getRelease(ids);
+  })
 
   .get('/regressions/missed', async (ctx) => {
     // const history = await getHistory({

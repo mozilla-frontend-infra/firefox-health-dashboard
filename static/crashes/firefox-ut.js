@@ -39,7 +39,7 @@ export default class FirefoxUtCrashes extends React.Component {
   render() {
     return (
       <div className='row'>
-        <header>
+        <header className='aside'>
           <span>Firefox Crashes / 1000 hrs</span>
         </header>
         <Graphic

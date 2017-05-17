@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { maxBy, minBy } from 'lodash/fp';
 import cx from 'classnames';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat } from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat, area } from 'd3';
 import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 
 const tickCount = 4;
 
-export default class ChannelMetric extends React.Component {
+export default class PerfherderWidget extends React.Component {
   state = {};
 
   componentDidMount() {
@@ -28,11 +28,11 @@ export default class ChannelMetric extends React.Component {
 
   async fetch() {
     const signatures = this.props.signatures;
-    // 'ac46ba40f08bbbf209a6c34b8c054393bf222e67';
-    // b68e2b084272409d7def3928a55baf0e00f3888a
+    const query = stringify({
+      signatures: Object.values(signatures),
+    });
     try {
-      const raw = await fetch(`api/perf/herder?signature=${signatures}`);
-      const evolutions = await raw.json();
+      const evolutions = await (await fetch(`api/perf/herder?${query}`)).json();
       this.setState({ evolutions: evolutions });
     } catch (e) {
       this.setState({ error: true });
@@ -57,20 +57,25 @@ export default class ChannelMetric extends React.Component {
       ];
       const xScale = scaleTime()
         .domain(xRange)
-        .range([10, this.width - 5]);
+        .range([25, this.width]);
       const yScale = scaleLinear()
         .domain(yRange)
         .nice(tickCount)
-        .range([this.height - 20, 10]);
+        .range([this.height - 20, 2]);
       const path = line()
         .x(d => xScale(new Date(d.time * 1000)))
         .y(d => yScale(d.avg))
+        .curve(curveLinear);
+      const filledPath = area()
+        .x(d => xScale(new Date(d.time * 1000)))
+        .y0(d => yScale(d.q1))
+        .y1(d => yScale(d.q3))
         .curve(curveLinear);
       const $evolutions = evolutions.map((evolution, idx) => {
         const $path = (
           <path
             d={path(evolution)}
-            className={`series series-${idx}`}
+            className={`series series-path series-${idx}`}
           />
         );
         const $scatters = evolution.reduce((reduced, entry) => {
@@ -79,16 +84,23 @@ export default class ChannelMetric extends React.Component {
               <circle
                 cx={xScale(run.time * 1000)}
                 cy={yScale(run.value)}
-                r={3}
+                r={1.5}
                 className={`series series-${idx}`}
               />
             ));
           }, reduced);
           return reduced;
         }, []);
+        const $area = (
+          <path
+            d={filledPath(evolution)}
+            className={`series series-area series-${idx}`}
+          />
+        );
         return [
-          $path,
           $scatters,
+          $path,
+          $area,
         ];
       });
 
@@ -120,19 +132,6 @@ export default class ChannelMetric extends React.Component {
       const $xAxis = xScale.ticks(6).map((tick, idx) => {
         const x = xScale(tick);
         const label = yFormat(tick);
-        console.log(label);
-      // const $lines = yRangeFields.map((field) => {
-      //   const band = yBandScale(field);
-      //   return (
-      //     <line
-      //       key={`x-axis-${field}`}
-      //       x1={x}
-      //       y1={band}
-      //       x2={x}
-      //       y2={band + yBandScale.bandwidth()}
-      //     />
-      //   );
-      // });
         return (
           <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
             <text
@@ -145,6 +144,20 @@ export default class ChannelMetric extends React.Component {
         );
       });
 
+      const $legend = Object.keys(this.props.signatures).map((label, idx) => {
+        const signature = this.props.signatures[label];
+        return (
+          <text
+            className={`legend series-${idx}`}
+            x={20 + (50 * idx)}
+            y={this.height - 25}
+            key={`legend-${label}`}
+          >
+            {label}
+          </text>
+        );
+      });
+
       svg = (
         <svg
           height={this.height}
@@ -153,26 +166,29 @@ export default class ChannelMetric extends React.Component {
           {$yAxis}
           {$xAxis}
           {$evolutions}
+          {$legend}
         </svg>
       );
     } else {
-      svg = 'Loading …';
+      svg = 'Loading Perfherder …';
     }
 
-    const linkArgs = this.props.signatures.split(',').map((signature) => {
-      return `series=[mozilla-central,${signature},1,1]`;
-    }).concat(['timerange=7776000']).join('&');
+    const linkArgs = stringify({
+      timerange: 7776000,
+      series: Object.values(this.props.signatures).map((signature) => {
+        return `[mozilla-central,${signature},1,1]`;
+      }),
+    });
     const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;
-    const cls = cx('graphic-timeline graphic-widget', {
+    const cls = cx('widget-content', {
       'state-loading': !evolutions,
     });
 
     return (
       <section
-        className={cls}
+        className='graphic-timeline graphic-widget'
       >
-        <header><span>
-          Talos:
+        <header>
           <a
             href={link}
             target='_blank'
@@ -180,9 +196,10 @@ export default class ChannelMetric extends React.Component {
           >
             {this.props.title}
           </a>
-        </span></header>
+          <aside>Target: No new regressions</aside>
+        </header>
         <div
-          className='widget-content'
+          className={cls}
           ref={target => (this.target = target)}
         >
           {svg}
@@ -192,12 +209,12 @@ export default class ChannelMetric extends React.Component {
   }
 }
 
-ChannelMetric.defaultProps = {
+PerfherderWidget.defaultProps = {
   signatures: '',
 };
-ChannelMetric.propTypes = {
+PerfherderWidget.propTypes = {
   // query: PropTypes.object,
-  signatures: PropTypes.string,
+  signatures: PropTypes.object,
   title: PropTypes.string,
   // format: PropTypes.string,
   // unit: PropTypes.string,

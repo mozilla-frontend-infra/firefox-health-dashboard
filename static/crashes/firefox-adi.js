@@ -42,7 +42,7 @@ export default class FirefoxAdiCrashes extends React.Component {
   render() {
     return (
       <div className='row'>
-        <header>
+        <header className='aside'>
           <span>Firefox Crashes / 100 ADI</span>
         </header>
         <Graphic
