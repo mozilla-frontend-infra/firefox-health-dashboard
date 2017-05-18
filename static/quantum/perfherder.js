@@ -158,6 +158,18 @@ export default class PerfherderWidget extends React.Component {
         );
       });
 
+      const referenceX = xScale(new Date(this.props.reference));
+      console.log(referenceX);
+      const $reference = (
+        <line
+          className='reference'
+          x1={referenceX}
+          y1={20}
+          x2={referenceX}
+          y2={this.height - 25}
+        />
+      );
+
       svg = (
         <svg
           height={this.height}
@@ -166,6 +178,7 @@ export default class PerfherderWidget extends React.Component {
           {$yAxis}
           {$xAxis}
           {$evolutions}
+          {$reference}
           {$legend}
         </svg>
       );
@@ -211,6 +224,7 @@ export default class PerfherderWidget extends React.Component {
 
 PerfherderWidget.defaultProps = {
   signatures: '',
+  reference: '',
   status: 'red',
 };
 PerfherderWidget.propTypes = {
@@ -218,5 +232,6 @@ PerfherderWidget.propTypes = {
   signatures: PropTypes.object,
   title: PropTypes.string,
   status: PropTypes.string,
+  reference: PropTypes.string,
   // unit: PropTypes.string,
 };

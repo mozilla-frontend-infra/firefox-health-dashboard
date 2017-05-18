@@ -120,7 +120,7 @@ a {
 .row {
 	flex: 1;
   display: flex;
-	padding: 0 var(--gutterX) calc(var(--gutterY) * 2);
+	padding: var(--gutterY) var(--gutterX) var(--gutterY);
 
 	.aside {
 		width: calc(2 * var(--gutterY));
@@ -334,6 +334,11 @@ svg {
 			transform: translate(0, calc(var(--smallFontSize) / -4));
 		}
 	}
+	.reference {
+		stroke: var(--newNeonPink);
+		stroke-dasharray: 1, 2;
+		stroke-width: 2;
+	}
 }
 .graphic-timeline .widget-content {
 	min-height: 250px;
@@ -346,7 +351,10 @@ svg {
 	font-weight: 300;
 	color: var(--lightGray);
 	padding: calc(var(--gutterY) / 2) 0;
-	margin: 0 var(--gutterX);
+	margin: calc(var(--gutterY)) var(--gutterX) 0;
+}
+.summary .row {
+	background-color: #fff;
 }
 
 .criteria-widget {
