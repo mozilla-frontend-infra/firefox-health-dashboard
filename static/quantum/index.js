@@ -71,6 +71,8 @@ export default class QuantumIndex extends React.Component {
       </div>
     );
 
+    let rowId = 0;
+
     return (
       <Dashboard
         title='Quantum'
@@ -78,11 +80,11 @@ export default class QuantumIndex extends React.Component {
         className='summary'
       >
         <h2>Quantum Flow</h2>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <Flow />
         </div>
         <h2>Page Load Time</h2>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Benchmark: Time to First Paint</h3>
@@ -111,7 +113,7 @@ export default class QuantumIndex extends React.Component {
           />
         </div>
         <h2>Responsiveness: Browser chrome</h2>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Input Latency</h3>
@@ -128,7 +130,7 @@ export default class QuantumIndex extends React.Component {
             </div>
           </div>
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>CC/GC pauses longer than 150 ms</h3>
@@ -152,7 +154,7 @@ export default class QuantumIndex extends React.Component {
             </div>
           </div>
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <Perfherder
             title='Start-up (sessionrestore)'
             status='red'
@@ -172,7 +174,7 @@ export default class QuantumIndex extends React.Component {
             }}
           />
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <Perfherder
             title='Start-Up (ts_paint)'
             status='green'
@@ -192,7 +194,7 @@ export default class QuantumIndex extends React.Component {
             }}
           />
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <Perfherder
             title='Tab Opening (tabpaint)'
             status='green'
@@ -221,7 +223,7 @@ export default class QuantumIndex extends React.Component {
             }}
           />
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <Perfherder
             title='SVG (tsvg_static)'
             status='red'
@@ -251,7 +253,7 @@ export default class QuantumIndex extends React.Component {
           />
         </div>
         <h2>Responsiveness: Content</h2>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Benchmark: Input Latency Benchmark</h3>
@@ -277,7 +279,7 @@ export default class QuantumIndex extends React.Component {
             </div>
           </div>
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Input Latency</h3>
@@ -305,7 +307,7 @@ export default class QuantumIndex extends React.Component {
             </div>
           </div>
         </div>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           <div className='criteria-widget status-yellow'>
             <header>
               <h3>Start-up: Time to First Paint</h3>
@@ -330,7 +332,7 @@ export default class QuantumIndex extends React.Component {
           </div>
         </div>
         <h2>Smoothness: Content</h2>
-        <div className='row'>
+        <div className='row' key={`row-${rowId += 1}`}>
           {$apz}
         </div>
       </Dashboard>

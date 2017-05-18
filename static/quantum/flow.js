@@ -73,24 +73,28 @@ export default class FlowWidget extends React.Component {
       const $pathOpened = (
         <path
           d={pathOpened(burnup)}
+          key='path-opened'
           className={'series series-path series-0'}
         />
       );
       const $pathClosed = (
         <path
           d={pathClosed(burnup)}
+          key='path-closed'
           className={'series series-path series-1'}
         />
       );
       const $areaOpen = (
         <path
           d={areaOpen(burnup)}
+          key='area-open'
           className={'series series-area series-0'}
         />
       );
       const $areaClosed = (
         <path
           d={areaClosed(burnup)}
+          key='area-closed'
           className={'series series-area series-1'}
         />
       );
