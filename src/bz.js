@@ -1,4 +1,6 @@
 import Router from 'koa-router';
+import moment from 'moment';
+import _ from 'lodash/fp';
 import { stringify } from 'qs';
 import fetchJson from './fetch/json';
 import { getRelease } from './bz/release';
@@ -8,6 +10,86 @@ import { getRelease } from './bz/release';
 export const router = new Router();
 
 router
+
+  .get('/burnup', async (ctx) => {
+    const base = 'https://bugzilla.mozilla.org/rest/bug';
+    const query = stringify({
+      whiteboard: '[qf:p1]',
+      include_fields: [
+        'id',
+        'is_open',
+        'status',
+        'creation_time',
+        'last_change_time',
+        'cf_last_resolved',
+        'assigned_to',
+        'flags',
+      ].join(','),
+    });
+    const { bugs } = await fetchJson(`${base}?${query}`, { ttl: 'day' });
+    const bydate = bugs.map((bug) => {
+      const set = {
+        id: bug.id,
+        opened: moment(bug.creation_time, 'YYYY-MM-DD').valueOf(),
+      };
+      if (bug.is_open) {
+        if (bug.assigned_to || bug.assigned_to_detail || bug.flags.find(flag => flag.name === 'needinfo')) {
+          bug.assigned = true;
+        }
+      } else {
+        set.closed = moment(bug.cf_last_resolved || bug.last_change_time, 'YYYY-MM-DD').valueOf();
+        set.status = bug.status;
+      }
+      return set;
+    });
+    const buckets = {
+      closed: [],
+      opened: [],
+    };
+    const uniqueDates = [];
+    const cutOff = (new Date('2017-04-01')).getTime();
+    bydate.forEach((bug) => {
+      for (const key in buckets) {
+        const date = bug[key];
+        if (date && date > cutOff) {
+          const bucket = buckets[key];
+          let pairs = bucket.find(([needle]) => needle === date);
+          if (!pairs) {
+            if (!uniqueDates.includes(date)) {
+              uniqueDates.push(date);
+            }
+            pairs = [date, []];
+            bucket.push(pairs);
+          }
+          pairs[1].push(bug.id);
+        }
+      }
+    });
+    uniqueDates.sort().reverse();
+    const openedIds = bydate.filter(bug => !bug.closed).map(bug => bug.id);
+    const unassignedIds = bydate.filter(bug => bug.assigned).map(bug => bug.id);
+    const closedIds = bydate.filter(bug => bug.closed).map(bug => bug.id);
+
+    const countChanged = (bucket, date) => {
+      const pairs = buckets[bucket].find(([needle]) => needle === date);
+      return pairs ? pairs[1].length : 0;
+    };
+
+    let openedPointer = bydate.length;
+    let closedPointer = closedIds.length;
+    const timeline = uniqueDates.map((date) => {
+      openedPointer -= countChanged('opened', date);
+      closedPointer -= countChanged('closed', date);
+      return {
+        date,
+        opened: openedPointer,
+        closed: closedPointer,
+      };
+    });
+    timeline.reverse();
+
+    ctx.body = timeline;
+  })
 
   .get('/status', async (ctx) => {
     const { ids } = ctx.request.query;

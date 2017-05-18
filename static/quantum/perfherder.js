@@ -159,7 +159,7 @@ export default class PerfherderWidget extends React.Component {
       });
 
       const referenceX = xScale(new Date(this.props.reference));
-      console.log(referenceX);
+      // console.log(referenceX);
       const $reference = (
         <line
           className='reference'

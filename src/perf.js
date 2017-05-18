@@ -102,9 +102,9 @@ router
     const { signatures } = ctx.request.query;
     const data = await fetchJson(`https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
       framework: 1,
-      interval: 31536000 / 2,
+      interval: 31536000 / 12 * 5,
       signatures: signatures,
-    })}`);
+    })}`, { ttl: 'day' });
     ctx.body = signatures.map((current) => {
       const series = data[current].reduce((reduced, entry) => {
         const date = moment(entry.push_timestamp * 1000).format('YYYY-MM-DD');

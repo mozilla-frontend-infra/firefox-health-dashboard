@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 import Perfherder from './perfherder';
+import Flow from './flow';
 
 const apzBugs = {
   1351783: 'Keyboard scrolling',
@@ -27,12 +28,18 @@ export default class QuantumIndex extends React.Component {
 
   componentDidMount() {
     this.fetchApzStatus();
+    this.fetchBurnup();
   }
 
   async fetchApzStatus() {
     const bugQuery = stringify({ ids: Object.keys(apzBugs) });
     const apzStatus = await (await fetch(`/api/bz/status?${bugQuery}`)).json();
     this.setState({ apzStatus });
+  }
+
+  async fetchBurnup() {
+    const burnup = await (await fetch('/api/bz/burnup')).json();
+    this.setState({ burnup });
   }
 
   render() {
@@ -70,6 +77,10 @@ export default class QuantumIndex extends React.Component {
         subtitle='Release Criteria Report'
         className='summary'
       >
+        <h2>Quantum Flow</h2>
+        <div className='row'>
+          <Flow />
+        </div>
         <h2>Page Load Time</h2>
         <div className='row'>
           <div className='criteria-widget status-yellow'>
