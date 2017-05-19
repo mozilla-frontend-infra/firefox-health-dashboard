@@ -71,6 +71,8 @@
     "file-loader": "^0.11.1",
     "github": "^9.2.0",
     "github-api": "^3.0.0",
+    "googleapis": "^19.0.0",
+    "gsjson": "^0.1.8",
     "html-webpack-plugin": "^2.28.0",
     "ical": "^0.5.0",
     "image-webpack-loader": "^3.3.1",

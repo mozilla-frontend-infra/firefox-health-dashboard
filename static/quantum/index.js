@@ -73,7 +73,7 @@ export default class QuantumIndex extends React.Component {
 
     let rowId = 0;
 
-    return (
+    const $dashboard = (
       <Dashboard
         title='Quantum'
         subtitle='Release Criteria Report'
@@ -337,5 +337,7 @@ export default class QuantumIndex extends React.Component {
         </div>
       </Dashboard>
     );
+
+    return $dashboard;
   }
 }

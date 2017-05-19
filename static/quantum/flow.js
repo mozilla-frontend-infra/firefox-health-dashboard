@@ -74,28 +74,28 @@ export default class FlowWidget extends React.Component {
         <path
           d={pathOpened(burnup)}
           key='path-opened'
-          className={'series series-path series-0'}
+          className={'series series-path series-open'}
         />
       );
       const $pathClosed = (
         <path
           d={pathClosed(burnup)}
           key='path-closed'
-          className={'series series-path series-1'}
+          className={'series series-path series-closed'}
         />
       );
       const $areaOpen = (
         <path
           d={areaOpen(burnup)}
           key='area-open'
-          className={'series series-area series-0'}
+          className={'series series-area series-open'}
         />
       );
       const $areaClosed = (
         <path
           d={areaClosed(burnup)}
           key='area-closed'
-          className={'series series-area series-1'}
+          className={'series series-area series-closed'}
         />
       );
 
@@ -139,6 +139,25 @@ export default class FlowWidget extends React.Component {
         );
       });
 
+      const $legends = [
+        <text
+          className={'legend series-closed'}
+          x={27}
+          y={15}
+          key={'legend-closed'}
+        >
+          Closed
+        </text>,
+        <text
+          className={'legend series-open'}
+          x={70}
+          y={15}
+          key={'legend-open'}
+        >
+          Open
+        </text>,
+      ];
+
       svg = (
         <svg
           height={this.height}
@@ -150,6 +169,7 @@ export default class FlowWidget extends React.Component {
           {$areaClosed}
           {$pathOpened}
           {$pathClosed}
+          {$legends}
         </svg>
       );
     } else {

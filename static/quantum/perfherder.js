@@ -2,8 +2,9 @@
 import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { maxBy, minBy } from 'lodash/fp';
+import { min, max, maxBy, minBy } from 'lodash/fp';
 import cx from 'classnames';
+import moment from 'moment';
 // import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat, area } from 'd3';
 import { stringify } from 'query-string';
@@ -71,7 +72,29 @@ export default class PerfherderWidget extends React.Component {
         .y0(d => yScale(d.q1))
         .y1(d => yScale(d.q3))
         .curve(curveLinear);
+
+      const referenceTime = this.props.reference;
+      const referenceX = xScale(new Date(referenceTime));
+      const referenceYs = [];
+
       const $evolutions = evolutions.map((evolution, idx) => {
+        const ref = evolution
+          .find(d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime);
+        let $reference = null;
+        if (ref) {
+          const refY = yScale(ref.avg);
+          referenceYs.push(refY);
+          $reference = (
+            <line
+              key={`reference-${idx}`}
+              className='reference reference-x'
+              x1={referenceX}
+              y1={refY}
+              x2={this.width}
+              y2={refY}
+            />
+          );
+        }
         const $path = (
           <path
             d={path(evolution)}
@@ -101,6 +124,7 @@ export default class PerfherderWidget extends React.Component {
           $scatters,
           $path,
           $area,
+          $reference,
         ];
       });
 
@@ -158,13 +182,11 @@ export default class PerfherderWidget extends React.Component {
         );
       });
 
-      const referenceX = xScale(new Date(this.props.reference));
-      // console.log(referenceX);
       const $reference = (
         <line
-          className='reference'
+          className='reference reference-y'
           x1={referenceX}
-          y1={20}
+          y1={min(referenceYs)}
           x2={referenceX}
           y2={this.height - 25}
         />

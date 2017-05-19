@@ -289,6 +289,12 @@ svg {
 		&.series-1 {
 			stroke: color(var(--newLilac) saturation(100%) shade(20%));
 		}
+		&.series-open {
+			stroke: color(var(--newCoral) saturation(100%) shade(20%));
+		}
+		&.series-closed {
+			stroke: color(var(--newLime) saturation(100%) shade(20%));
+		}
 	}
 	circle.series {
 		fill: var(--newCyan);
@@ -303,6 +309,12 @@ svg {
 		&.series-1 {
 			fill: var(--newLilac);
 		}
+		&.series-open {
+			fill: var(--newCoral);
+		}
+		&.series-closed {
+			fill: var(--newLime);
+		}
 	}
 	.legend {
 		text-anchor: start;
@@ -310,6 +322,12 @@ svg {
 		fill: color(var(--newCyan) saturation(100%) shade(20%));
 		&.series-1 {
 			fill: color(var(--newLilac) saturation(100%) shade(20%));
+		}
+		&.series-open {
+			stroke: color(var(--newCoral) saturation(100%) shade(20%));
+		}
+		&.series-closed {
+			stroke: color(var(--newLime) saturation(100%) shade(20%));
 		}
 	}
 	.tick {
@@ -337,7 +355,9 @@ svg {
 	.reference {
 		stroke: var(--newNeonPink);
 		stroke-dasharray: 1, 2;
-		stroke-width: 2;
+		stroke-width: 1;
+		&.reference-x {
+		}
 	}
 }
 .graphic-timeline .widget-content {
