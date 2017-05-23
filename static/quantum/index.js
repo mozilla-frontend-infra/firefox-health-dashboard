@@ -231,11 +231,11 @@ export default class QuantumIndex extends React.Component {
         </div>
         <h2>Responsiveness: Content</h2>
         <div className='row' key={`row-${rowId += 1}`}>
-          <Widget
+          <MissonControl
             title='Input Latency Benchmark'
             {...notes.hasal}
           />
-          <Widget
+          <MissonControl
             title='Speedometer v2'
             {...notes.speedometer}
           />
@@ -251,11 +251,11 @@ export default class QuantumIndex extends React.Component {
           />
         </div>
         <div className='row' key={`row-${rowId += 1}`}>
-          <Widget
+          <MissonControl
             title='Start-up: Time to First Paint'
             {...notes.startup_render}
           />
-          <Widget
+          <MissonControl
             title='Start-up: Time to Hero Element'
             {...notes.startup_hero}
           />

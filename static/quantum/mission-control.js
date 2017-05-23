@@ -15,11 +15,9 @@ export default class MissionControlWidget extends React.Component {
 
   render() {
     const measurements = this.props.measurements || this.props.content;
-    console.log(measurements);
     const contents = Array.isArray(measurements)
       ? measurements
       : measurements.split(/\s*;\s+/);
-    console.log(contents);
     const $content = contents.map((content, idx) => {
       return (
         <div

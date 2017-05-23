@@ -3,6 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import moment from 'moment';
 
 const enrich = (text) => {
   return (typeof text === 'string')
@@ -27,6 +28,7 @@ const enrich = (text) => {
 export default class Widget extends React.Component {
   render() {
     const title = enrich(this.props.title);
+    const updated = this.props.updated && moment(this.props.updated);
     const $title = (this.props.link)
       ? (
         <a
@@ -47,7 +49,10 @@ export default class Widget extends React.Component {
       >
         <header>
           <h3>{$title}</h3>
-          <aside>Target: {enrich(this.props.target)}</aside>
+          {
+            this.props.target &&
+              <aside>Target: {enrich(this.props.target)}</aside>
+          }
         </header>
         <div
           className={cx('widget-content', {
@@ -61,32 +66,39 @@ export default class Widget extends React.Component {
           }}
         >
           {enrich(this.props.content)}
+          {
+            this.props.explainer &&
+              <div
+                className='widget-explainer'
+              >
+                {enrich(this.props.explainer)}
+              </div>
+          }
+          {
+            this.props.commentary &&
+              <div
+                className='widget-commentary'
+              >
+                {enrich(this.props.commentary)}
+              </div>
+          }
+          {
+            updated &&
+            <div
+              className='widget-updated'
+            >
+              Last triage on {updated.format('MMM Do')}
+            </div>
+          }
         </div>
-        {
-          this.props.explainer &&
-            <div
-              className='widget-explainer'
-            >
-              {enrich(this.props.explainer)}
-            </div>
-        }
-        {
-          this.props.commentary &&
-            <div
-              className='widget-commentary'
-            >
-              {enrich(this.props.commentary)}
-            </div>
-        }
       </div>
     );
   }
 }
 
 Widget.defaultProps = {
-  content: 'Coming soon',
+  content: 'n\\a',
   title: 'Mission Control Metric',
-  target: 'Not set',
   status: 'unknown',
 };
 Widget.propTypes = {
@@ -98,6 +110,7 @@ Widget.propTypes = {
   commentary: PropTypes.string,
   viewport: PropTypes.function,
   link: PropTypes.string,
+  updated: PropTypes.string,
   className: PropTypes.string,
   loading: PropTypes.bool,
 };

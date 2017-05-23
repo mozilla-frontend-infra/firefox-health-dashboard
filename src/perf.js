@@ -134,14 +134,16 @@ router
       notesCache = values.reduce((criteria, entry) => {
         const obj = {};
         headers.forEach((header, idx) => {
-          obj[header] = entry[idx];
+          if (entry[idx]) {
+            obj[header] = entry[idx];
+          }
         });
         criteria[obj.id] = obj;
         return criteria;
       }, {});
       setTimeout(() => {
         notesCache = null;
-      }, 5);
+      }, (process.env.NODE_ENV === 'production') ? (1000 * 60 * 5) : (1000 * 60));
     }
     ctx.body = notesCache;
   })
