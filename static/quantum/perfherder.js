@@ -2,13 +2,13 @@
 import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { min, max, maxBy, minBy } from 'lodash/fp';
+import { min, maxBy, minBy } from 'lodash/fp';
 import cx from 'classnames';
 import moment from 'moment';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat, area } from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
 import { stringify } from 'query-string';
-import Dashboard from './../dashboard';
+import Widget from './widget';
 
 const tickCount = 4;
 
@@ -17,15 +17,9 @@ export default class PerfherderWidget extends React.Component {
 
   componentDidMount() {
     this.fetch();
-    if (this.target) {
-      const rect = this.target.getBoundingClientRect();
-      this.width = rect.width;
-      this.height = rect.height;
-    }
   }
 
-  height = 0;
-  width = 0;
+  viewport: [0, 0];
 
   async fetch() {
     const signatures = this.props.signatures;
@@ -45,6 +39,7 @@ export default class PerfherderWidget extends React.Component {
     let svg = null;
 
     if (evolutions) {
+      const [width, height] = this.viewport;
       const full = evolutions.reduce((reduced, evolution) => {
         return reduced.concat(evolution);
       }, []);
@@ -58,11 +53,11 @@ export default class PerfherderWidget extends React.Component {
       ];
       const xScale = scaleTime()
         .domain(xRange)
-        .range([25, this.width]);
+        .range([25, width]);
       const yScale = scaleLinear()
         .domain(yRange)
         .nice(tickCount)
-        .range([this.height - 20, 2]);
+        .range([height - 20, 2]);
       const path = line()
         .x(d => xScale(new Date(d.time * 1000)))
         .y(d => yScale(d.avg))
@@ -90,7 +85,7 @@ export default class PerfherderWidget extends React.Component {
               className='reference reference-x'
               x1={referenceX}
               y1={refY}
-              x2={this.width}
+              x2={width}
               y2={refY}
             />
           );
@@ -140,7 +135,7 @@ export default class PerfherderWidget extends React.Component {
             <line
               x1={0}
               y1={y}
-              x2={this.width}
+              x2={width}
               y2={y}
             />
             <text
@@ -160,7 +155,7 @@ export default class PerfherderWidget extends React.Component {
           <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
             <text
               x={x}
-              y={this.height - 5}
+              y={height - 5}
             >
               {label}
             </text>
@@ -169,7 +164,6 @@ export default class PerfherderWidget extends React.Component {
       });
 
       const $legend = Object.keys(this.props.signatures).map((label, idx) => {
-        const signature = this.props.signatures[label];
         return (
           <text
             className={`legend series-${idx}`}
@@ -188,14 +182,14 @@ export default class PerfherderWidget extends React.Component {
           x1={referenceX}
           y1={min(referenceYs)}
           x2={referenceX}
-          y2={this.height - 25}
+          y2={height - 25}
         />
       );
 
       svg = (
         <svg
-          height={this.height}
-          width={this.width}
+          height={height}
+          width={width}
         >
           {$yAxis}
           {$xAxis}
@@ -215,31 +209,17 @@ export default class PerfherderWidget extends React.Component {
       }),
     });
     const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;
-    const cls = cx('widget-content', {
-      'state-loading': !evolutions,
-    });
 
     return (
-      <section
-        className={`graphic-timeline graphic-widget status-${this.props.status}`}
-      >
-        <header>
-          <h3><a
-            href={link}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            {this.props.title}
-          </a></h3>
-          <aside>Target: <em>No regressions</em></aside>
-        </header>
-        <div
-          className={cls}
-          ref={target => (this.target = target)}
-        >
-          {svg}
-        </div>
-      </section>
+      <Widget
+        link={link}
+        target='No regressions'
+        className='graphic-widget graphic-timeline'
+        content={svg}
+        loading={!evolutions}
+        viewport={size => (this.viewport = size)}
+        {...this.props}
+      />
     );
   }
 }
@@ -247,13 +227,9 @@ export default class PerfherderWidget extends React.Component {
 PerfherderWidget.defaultProps = {
   signatures: '',
   reference: '',
-  status: 'red',
+
 };
 PerfherderWidget.propTypes = {
-  // query: PropTypes.object,
   signatures: PropTypes.object,
-  title: PropTypes.string,
-  status: PropTypes.string,
   reference: PropTypes.string,
-  // unit: PropTypes.string,
 };

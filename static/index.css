@@ -208,6 +208,7 @@ svg {
 }
 .graphic-widget, .criteria-widget {
 	background-color: #fff;
+	color: var(--darkGray);
 	flex-direction: column;
 	align-items: stretch;
 	&:not(:first-child) {
@@ -215,23 +216,28 @@ svg {
 	}
 	header {
 		display: flex;
-		justify-content: space-between;
 		align-items: flex-start;
 		text-align: left;
-		padding-right: calc(var(--gutterX));
-		border-top: calc(var(--gutterY) / 4) solid #fff;
+		background-color: var(--lightGray);
+		margin-bottom: calc(var(--gutterY) / 4);
 		h3 {
 			margin: 0;
 			padding: 0;
+			align-self: stretch;
 			font-size: var(--h4FontSize);
+			padding-top: calc(var(--gutterY) / 4);
 			padding: 0 calc(var(--gutterX) / 2);
 			font-weight: 400;
 			display: inline-block;
-			background-color: #fff;
 			color: #000;
 		}
 		aside {
+			flex: 1;
+			text-align: right;
+			align-self: flex-end;
+			background-color: #fff;
 			padding-left: calc(var(--gutterX) / 2);
+			padding-right: calc(var(--gutterX));
 			font-size: var(--fontSize);
 			color: var(--darkGray);
 			font-weight: 400;
@@ -242,35 +248,19 @@ svg {
 			}
 		}
 	}
-	&.status-red {
-		header {
-			border-top-color: var(--newCoral);
-			h3 {
-				background-color: var(--newCoral);
-			}
-		}
+	&.status-red header {
+		background-color: var(--newCoral);
 	}
-	&.status-yellow {
-		header {
-			border-top-color: var(--newYellow);
-			h3 {
-				background-color: var(--newYellow);
-			}
-		}
+	&.status-yellow header {
+		background-color: var(--newYellow);
 	}
-	&.status-green {
-		header {
-			border-top-color: var(--newLime);
-			h3 {
-				background-color: var(--newLime);
-			}
-		}
+	&.status-green header {
+		background-color: var(--newLime);
 	}
 	.widget-content {
 		flex: 1;
 		display: flex;
 		align-self: stretch;
-		color: var(--darkGray);
 		&.state-loading {
 			justify-content: center;
 			align-items: center;
@@ -286,48 +276,30 @@ svg {
 		stroke: color(var(--newCyan) saturation(100%) shade(20%));
 		stroke-width: 2;
 		fill: none;
-		&.series-1 {
+		&.series-1, &.series-open {
 			stroke: color(var(--newLilac) saturation(100%) shade(20%));
-		}
-		&.series-open {
-			stroke: color(var(--newCoral) saturation(100%) shade(20%));
-		}
-		&.series-closed {
-			stroke: color(var(--newLime) saturation(100%) shade(20%));
 		}
 	}
 	circle.series {
 		fill: var(--newCyan);
 		opacity: 0.2;
-		&.series-1 {
+		&.series-1, &.series-open {
 			fill: var(--newLilac);
 		}
 	}
 	.series-area {
 		fill: var(--newCyan);
 		opacity: 0.25;
-		&.series-1 {
+		&.series-1, &.series-open {
 			fill: var(--newLilac);
-		}
-		&.series-open {
-			fill: var(--newCoral);
-		}
-		&.series-closed {
-			fill: var(--newLime);
 		}
 	}
 	.legend {
 		text-anchor: start;
 		font-size: var(--smallFontSize);
 		fill: color(var(--newCyan) saturation(100%) shade(20%));
-		&.series-1 {
+		&.series-1, &.series-open {
 			fill: color(var(--newLilac) saturation(100%) shade(20%));
-		}
-		&.series-open {
-			stroke: color(var(--newCoral) saturation(100%) shade(20%));
-		}
-		&.series-closed {
-			stroke: color(var(--newLime) saturation(100%) shade(20%));
 		}
 	}
 	.tick {
@@ -372,6 +344,9 @@ svg {
 	color: var(--lightGray);
 	padding: calc(var(--gutterY) / 2) 0;
 	margin: calc(var(--gutterY)) var(--gutterX) 0;
+	&:first-child {
+		margin-top: 0;
+	}
 }
 .summary .row {
 	background-color: #fff;
@@ -379,6 +354,8 @@ svg {
 
 .criteria-widget {
 	flex: 1;
+	display: flex;
+	position: relative;
 	h4 {
 		padding-top: calc(var(--gutterY));
 		font-weight: 300;
@@ -388,10 +365,6 @@ svg {
 			font-size: var(--smallFontSize);
 		}
 	}
-	span {
-		font-weight: bold;
-		font-size: var(--h4FontSize);
-	}
 	.widget-content {
 		flex: 1;
 		display: flex;
@@ -399,6 +372,42 @@ svg {
 		align-items: center;
 		.widget-entry {
 			padding: calc(var(--gutterY) * 1.5) var(--gutterX);
+		}
+	}
+	.widget-explainer, .widget-commentary {
+		position: absolute;
+		font-size: var(--smallFontSize);
+		line-height: calc(var(--gutterY) * 0.8);
+	}
+	.widget-explainer {
+		transition: opacity 0.1s ease-out;
+		opacity: 0;
+		bottom: calc(var(--gutterY) * 0);
+		left: 0;
+		padding: 0;
+		max-width: 75%;
+		background-color: color(#fff alpha(75%));
+		color: #000;
+		em {
+			font-weight: 700;
+			color: #333;
+			font-style: normal;
+		}
+	}
+	.widget-commentary {
+		opacity: 0.6;
+		font-style: italic;
+		text-align: right;
+		padding: calc(var(--gutterY) * 0.1) calc(var(--gutterX) / 2);
+		top: calc(var(--gutterY) * 1.5);
+		right: 0;
+		max-width: 75%;
+		background-color: #000;
+		color: var(--lightGray);
+	}
+	&:hover {
+		.widget-explainer {
+			opacity: 1;
 		}
 	}
 }

@@ -2,12 +2,15 @@ import Router from 'koa-router';
 import GitHubApi from 'github';
 import json2csv from 'json2csv';
 import moment from 'moment';
+import gsjson from 'gsjson';
+import google from 'googleapis';
 import { stringify } from 'query-string';
 import {
   median,
   standardDeviation,
   quantile,
 } from 'simple-statistics';
+import { createClient } from 'then-redis';
 import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
 import channels from './release/channels';
@@ -16,6 +19,7 @@ import { getReleaseDate } from './release/history';
 import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
 
+// Project Dawn
 channels.splice(2, 1);
 
 export const router = new Router();
@@ -96,7 +100,51 @@ const summarizeIpcTable = async (metric) => {
   });
 };
 
+let jwtClient = null;
+let notesCache = null;
+
 router
+
+  .get('/notes', async (ctx) => {
+    if (!notesCache) {
+      if (!jwtClient) {
+        const jwtKey = JSON.parse(process.env.GAUTH_JSON);
+        jwtClient = new google.auth.JWT(
+          jwtKey.client_email, null, jwtKey.private_key,
+          'https://spreadsheets.google.com/feeds', null,
+        );
+        await new Promise(resolve => jwtClient.authorize(resolve));
+      }
+      const { values } = await new Promise((resolve) => {
+        const sheets = google.sheets('v4');
+        sheets.spreadsheets.values.get({
+          auth: jwtClient,
+          spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+          range: 'Status!A1:G25',
+        }, (err, response) => resolve(response));
+      });
+
+      const headers = values.splice(0, 1).pop();
+
+      // const result = await gsjson({
+      //   spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+      //   worksheet: ['Status'],
+      //   credentials: process.env.GAUTH_JSON,
+      // });
+      notesCache = values.reduce((criteria, entry) => {
+        const obj = {};
+        headers.forEach((header, idx) => {
+          obj[header] = entry[idx];
+        });
+        criteria[obj.id] = obj;
+        return criteria;
+      }, {});
+      setTimeout(() => {
+        notesCache = null;
+      }, 5);
+    }
+    ctx.body = notesCache;
+  })
 
   .get('/herder', async (ctx) => {
     const { signatures } = ctx.request.query;
@@ -299,54 +347,4 @@ router
   .get('/ipc/mm', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_SYNC_MESSAGE_MANAGER_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
-  })
-
-  .get('/e10s/hangs', async (ctx) => {
-    const beta = await gh.repos.getContent({
-      owner: 'mozilla',
-      repo: 'e10s_analyses',
-      path: '',
-    });
-    const tree = (await gh.gitdata.getTree({
-      owner: 'mozilla',
-      repo: 'e10s_analyses',
-      sha: beta.find(({ path }) => path === 'beta').sha,
-      recursive: 1,
-    })).tree.filter(({ path }) => {
-      return /e10s_experiment\.ipynb/.test(path);
-    });
-    const blobs = await Promise.all(
-      tree.map(({ sha }) => {
-        return gh.gitdata.getBlob({
-          owner: 'mozilla',
-          repo: 'e10s_analyses',
-          sha: sha,
-        });
-      }),
-    );
-
-    // const commits = await Promise.all(
-    //   tree.map(({ path }) => {
-    //     return gh.repos.getCommits({
-    //       owner: 'mozilla',
-    //       repo: 'e10s_analyses',
-    //       path: `beta/${path}`,
-    //     });
-    //   })
-    // );
-
-    const hangs = blobs
-      .map((blob, idx) => {
-        const re = /Median difference in hangs over 100ms per minute \(parent\)[^(]+\(([^)]+)/;
-        const str = Buffer.from(blob.content, 'base64').toString('utf8');
-        const bits = str.match(re);
-        const path = tree[idx].path;
-        if (bits) {
-          return [path].concat(bits[1].split(', ').map(Number));
-        }
-        return null;
-      })
-      .filter(data => data);
-
-    ctx.body = hangs;
   });
