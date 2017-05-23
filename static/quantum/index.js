@@ -82,6 +82,8 @@ export default class QuantumIndex extends React.Component {
         title='Quantum'
         subtitle='Release Criteria Report'
         className='summary'
+        sourceTitle='Status Spreadsheet'
+        source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/view'
       >
         <h2>Quantum Flow</h2>
         <div className='row' key={`row-${rowId += 1}`}>

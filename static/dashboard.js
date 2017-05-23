@@ -23,7 +23,11 @@ const Dashboard = (props) => {
   ) : null;
   const $source = source ? (
     <div className='dashboard-source'>
-      Source: <a href={source} target='_new'>
+      Source: <a
+        href={source}
+        target='_new'
+        rel='noopener noreferrer'
+      >
         {sourceTitle}
       </a>
       {$link}
