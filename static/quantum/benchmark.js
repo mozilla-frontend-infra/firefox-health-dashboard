@@ -50,25 +50,41 @@ export default class BenchmarkWidget extends React.Component {
         .domain(yRange)
         .nice(tickCount)
         .range([height - 20, 2]);
-      const paths = [
-        line()
-          .x(d => xScale(new Date(d.time)))
-          .y(d => yScale(d['0']))
-          .curve(curveLinear),
-        line()
-          .x(d => xScale(new Date(d.time)))
-          .y(d => yScale(d['1']))
-          .curve(curveLinear),
-      ];
+      const path = line()
+        .x(d => xScale(new Date(d.time)))
+        .y(d => yScale(d.value))
+        .curve(curveLinear);
+      const filledPath = area()
+        .x(d => xScale(new Date(d.time)))
+        .y0(d => yScale(d.value))
+        .y1(d => yScale(d.value * 1.2))
+        .curve(curveLinear);
 
       const $evolution = [0, 1].map((idx) => {
+        const filtered = evolution
+          .filter(entry => entry[idx])
+          .map((entry) => {
+            return {
+              time: entry.time,
+              value: entry[idx],
+            };
+          });
         const $path = (
           <path
-            d={paths[idx](evolution)}
+            d={path(filtered)}
             className={`series series-path series-${idx}`}
           />
         );
+        const $area = (idx === 0)
+          ? (
+            <path
+              d={filledPath(filtered)}
+              className={'series series-area series-target'}
+            />
+          )
+          : null;
         return [
+          $area,
           $path,
         ];
       });
@@ -97,7 +113,7 @@ export default class BenchmarkWidget extends React.Component {
           </g>
         );
       });
-      const yFormat = timeFormat('%b');
+      const yFormat = timeFormat('%b %d');
       const $xAxis = xScale.ticks(4).map((tick, idx) => {
         const x = xScale(tick);
         const label = yFormat(tick);

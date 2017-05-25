@@ -214,6 +214,11 @@ svg {
 	&:not(:first-child) {
 		margin-left: calc(var(--gutterX) * 2);
 	}
+	&.widget-secondary {
+		header {
+			opacity: 0.6;
+		}
+	}
 	header {
 		display: flex;
 		align-items: flex-start;
@@ -291,6 +296,9 @@ svg {
 		&.series-1, &.series-open {
 			fill: var(--newLilac);
 		}
+		&.series-target {
+			fill: var(--newLime);
+		}
 	}
 	.legend {
 		text-anchor: start;
@@ -332,6 +340,9 @@ svg {
 }
 .graphic-timeline .widget-content {
 	min-height: 250px;
+}
+.widget-secondary .widget-content {
+	min-height: 100px;
 }
 
 

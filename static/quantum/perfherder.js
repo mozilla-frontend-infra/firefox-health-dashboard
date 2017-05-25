@@ -117,9 +117,9 @@ export default class PerfherderWidget extends React.Component {
           />
         );
         return [
+          $area,
           $scatters,
           $path,
-          $area,
           $reference,
         ];
       });
@@ -216,10 +216,10 @@ export default class PerfherderWidget extends React.Component {
         {...this.props}
         link={link}
         target='No regressions'
-        className='graphic-widget graphic-timeline'
+        className='graphic-widget graphic-timeline widget-secondary'
         content={svg}
         loading={!evolutions}
-        explainer={`${explainer} (14-day moving median \\w band for 1st/3rd quantile variance)`}
+        explainer={`${explainer} (14-day moving median, variance band between 1st/3rd quantile)`}
         viewport={size => (this.viewport = size)}
       />
     );

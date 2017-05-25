@@ -182,20 +182,23 @@ router
 
   .get('/benchmark/speedometer', async (ctx) => {
     const { graph } = await fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json');
-    ctx.body = graph.timelist.map((time, idx) => {
-      if (!graph.lines[0].data[idx]) {
-        console.error('Oh Noe', idx);
-      }
-      const values = {
-        time: time * 1000,
-      };
-      graph.lines.forEach((line, lineIdx) => {
-        if (line && line.data[idx]) {
-          values[lineIdx] = line.data[idx][0];
+    const start = moment('2017-05-01').valueOf();
+    ctx.body = graph.timelist
+      .map((time, idx) => {
+        if (!graph.lines[0].data[idx]) {
+          console.error('Oh Noe', idx);
         }
-      });
-      return values;
-    });
+        const values = {
+          time: time * 1000,
+        };
+        graph.lines.forEach((line, lineIdx) => {
+          if (line && line.data[idx]) {
+            values[lineIdx] = line.data[idx][0];
+          }
+        });
+        return values;
+      })
+      .filter(({ time }) => time > start);
   })
 
   .get('/herder', async (ctx) => {
