@@ -22,7 +22,7 @@ export default class PerfherderWidget extends React.Component {
   viewport: [0, 0];
 
   async fetch() {
-    const signatures = this.props.signatures;
+    const { signatures } = this.props;
     const query = stringify({
       signatures: Object.values(signatures),
     });
@@ -35,6 +35,7 @@ export default class PerfherderWidget extends React.Component {
   }
 
   render() {
+    const { explainer } = this.props;
     const { evolutions } = this.state;
     let svg = null;
 
@@ -212,13 +213,14 @@ export default class PerfherderWidget extends React.Component {
 
     return (
       <Widget
+        {...this.props}
         link={link}
         target='No regressions'
         className='graphic-widget graphic-timeline'
         content={svg}
         loading={!evolutions}
+        explainer={`${explainer} (14-day moving median \\w band for 1st/3rd quantile variance)`}
         viewport={size => (this.viewport = size)}
-        {...this.props}
       />
     );
   }
@@ -231,5 +233,6 @@ PerfherderWidget.defaultProps = {
 };
 PerfherderWidget.propTypes = {
   signatures: PropTypes.object,
+  explainer: PropTypes.string,
   reference: PropTypes.string,
 };

@@ -87,7 +87,7 @@ export default class Widget extends React.Component {
             <div
               className='widget-updated'
             >
-              Last triage on {updated.format('MMM Do')}
+              Commentary updated {updated.format('MMM Do')}
             </div>
           }
         </div>
@@ -100,6 +100,7 @@ Widget.defaultProps = {
   content: 'n\\a',
   title: 'Mission Control Metric',
   status: 'unknown',
+  viewport: () => {},
 };
 Widget.propTypes = {
   content: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
@@ -108,7 +109,7 @@ Widget.propTypes = {
   target: PropTypes.string,
   explainer: PropTypes.string,
   commentary: PropTypes.string,
-  viewport: PropTypes.function,
+  viewport: PropTypes.func,
   link: PropTypes.string,
   updated: PropTypes.string,
   className: PropTypes.string,

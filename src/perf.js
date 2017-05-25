@@ -22,6 +22,51 @@ import getCalendar from './release/calendar';
 // Project Dawn
 channels.splice(2, 1);
 
+let jwtClient = null;
+const getSpreadsheetValues = async ({ id, range }) => {
+  if (!jwtClient) {
+    const jwtKey = JSON.parse(process.env.GAUTH_JSON);
+    jwtClient = new google.auth.JWT(
+      jwtKey.client_email, null, jwtKey.private_key,
+      'https://spreadsheets.google.com/feeds', null,
+    );
+    await new Promise(resolve => jwtClient.authorize(resolve));
+  }
+  const { values } = await new Promise((resolve) => {
+    const sheets = google.sheets('v4');
+    sheets.spreadsheets.values.get({
+      auth: jwtClient,
+      spreadsheetId: id,
+      range: range,
+    }, (err, response) => resolve(response));
+  });
+  const headers = values.splice(0, 1).pop();
+  const multiMode = (headers[0] === 'date' && headers[1] === 'id');
+  let carryOver = '';
+  return values.reduce((criteria, entry) => {
+    if (multiMode) {
+      if (entry[0]) {
+        carryOver = entry[0];
+        criteria[carryOver] = {};
+      } else {
+        entry[0] = carryOver;
+      }
+    }
+    const obj = {};
+    headers.forEach((header, idx) => {
+      if (entry[idx]) {
+        obj[header] = entry[idx];
+      }
+    });
+    if (multiMode) {
+      criteria[obj.date][obj.id] = obj;
+    } else {
+      criteria[obj.id || obj.date] = obj;
+    }
+    return criteria;
+  }, {});
+};
+
 export const router = new Router();
 const gh = new GitHubApi();
 
@@ -141,13 +186,15 @@ router
       if (!graph.lines[0].data[idx]) {
         console.error('Oh Noe', idx);
       }
-      return {
+      const values = {
         time: time * 1000,
-        lines: [
-          graph.lines[0].data[idx],
-          graph.lines[1].data[idx],
-        ],
       };
+      graph.lines.forEach((line, lineIdx) => {
+        if (line && line.data[idx]) {
+          values[lineIdx] = line.data[idx][0];
+        }
+      });
+      return values;
     });
   })
 

@@ -5,6 +5,7 @@ import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
+import Benchmark from './benchmark';
 import MissonControl from './mission-control';
 import Flow from './flow';
 
@@ -235,8 +236,10 @@ export default class QuantumIndex extends React.Component {
             title='Input Latency Benchmark'
             {...notes.hasal}
           />
-          <MissonControl
+          <Benchmark
             title='Speedometer v2'
+            id='speedometer'
+            link='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
             {...notes.speedometer}
           />
         </div>

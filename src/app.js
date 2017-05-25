@@ -60,7 +60,7 @@ app.use(index.routes());
 
 app.use(async (ctx, next) => {
   const route = ctx.path;
-  if (/^\/[a-zA-Z_/]*$/.test(route)) {
+  if (/^\/[a-zA-Z/]*$/.test(route)) {
     ctx.path = '/index.html';
   }
   await next();
