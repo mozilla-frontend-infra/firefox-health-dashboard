@@ -82,14 +82,17 @@ const summarizeIpcTable = async (metric) => {
   return evolutions
   .filter(({ evolution }) => evolution)
   .map(({ key, evolution }) => {
-    const lastDate = evolution.dates().slice(-1)[0];
-    // console.log(moment().add(-7, 'days').format('YYYY-MM-DD'));
-    const hist = evolution
+    const lastDate = moment().add(-1, 'days').toDate();
+    const firstDate = moment(lastDate).add(-7, 'days').toDate();
+    const range = evolution
       .dateRange(
-        moment(lastDate).add(-7, 'days').toDate(),
+        firstDate,
         lastDate,
-      )
-      .histogram();
+      );
+    if (!range) {
+      return null;
+    }
+    const hist = range.histogram();
     return {
       key,
       count: hist.count,
@@ -97,55 +100,55 @@ const summarizeIpcTable = async (metric) => {
       mean: hist.mean(),
       median: hist.percentile(50),
     };
-  });
+  })
+  .filter(row => row);
 };
 
-let jwtClient = null;
 let notesCache = null;
 
 router
 
   .get('/notes', async (ctx) => {
     if (!notesCache) {
-      if (!jwtClient) {
-        const jwtKey = JSON.parse(process.env.GAUTH_JSON);
-        jwtClient = new google.auth.JWT(
-          jwtKey.client_email, null, jwtKey.private_key,
-          'https://spreadsheets.google.com/feeds', null,
-        );
-        await new Promise(resolve => jwtClient.authorize(resolve));
-      }
-      const { values } = await new Promise((resolve) => {
-        const sheets = google.sheets('v4');
-        sheets.spreadsheets.values.get({
-          auth: jwtClient,
-          spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-          range: 'Status!A1:G25',
-        }, (err, response) => resolve(response));
+      notesCache = await getSpreadsheetValues({
+        id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+        range: 'Status!A1:G25',
       });
-
-      const headers = values.splice(0, 1).pop();
 
       // const result = await gsjson({
       //   spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
       //   worksheet: ['Status'],
       //   credentials: process.env.GAUTH_JSON,
       // });
-      notesCache = values.reduce((criteria, entry) => {
-        const obj = {};
-        headers.forEach((header, idx) => {
-          if (entry[idx]) {
-            obj[header] = entry[idx];
-          }
-        });
-        criteria[obj.id] = obj;
-        return criteria;
-      }, {});
       setTimeout(() => {
         notesCache = null;
       }, (process.env.NODE_ENV === 'production') ? (1000 * 60 * 5) : (1000 * 60));
     }
     ctx.body = notesCache;
+  })
+
+  .get('/benchmark/page-load', async (ctx) => {
+    const values = await getSpreadsheetValues({
+      id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+      range: 'pageLoad!A1:E25',
+    });
+    ctx.body = values;
+  })
+
+  .get('/benchmark/speedometer', async (ctx) => {
+    const { graph } = await fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json');
+    ctx.body = graph.timelist.map((time, idx) => {
+      if (!graph.lines[0].data[idx]) {
+        console.error('Oh Noe', idx);
+      }
+      return {
+        time: time * 1000,
+        lines: [
+          graph.lines[0].data[idx],
+          graph.lines[1].data[idx],
+        ],
+      };
+    });
   })
 
   .get('/herder', async (ctx) => {

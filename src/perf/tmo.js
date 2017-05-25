@@ -25,7 +25,7 @@ export async function getEvolution(query) {
     Telemetry.init(resolve);
   });
   const evolutionMap = await new Promise((resolve) => {
-    console.log('Telemetry.getEvolution', channel, version);
+    console.log('Telemetry.getEvolution', channel, String(parseInt(version, 10)));
     Telemetry.getEvolution(
       channel,
       String(parseInt(version, 10)),
