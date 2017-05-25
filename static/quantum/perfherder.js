@@ -10,7 +10,7 @@ import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } f
 import { stringify } from 'query-string';
 import Widget from './widget';
 
-const tickCount = 4;
+const tickCount = 2;
 
 export default class PerfherderWidget extends React.Component {
   state = {};

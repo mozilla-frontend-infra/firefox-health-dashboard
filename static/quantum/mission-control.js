@@ -32,6 +32,7 @@ export default class MissionControlWidget extends React.Component {
     return (
       <Widget
         {...this.props}
+        link='https://mana.mozilla.org/wiki/display/PI/Mission+Control'
         loading={$content.length === 0}
         content={$content.length ? $content : 'Loading Mission Control …'}
       />

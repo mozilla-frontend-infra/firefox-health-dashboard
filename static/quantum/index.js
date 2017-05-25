@@ -7,6 +7,7 @@ import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import MissonControl from './mission-control';
+import Countdown from './countdown';
 import Flow from './flow';
 
 const apzBugs = {
@@ -89,6 +90,7 @@ export default class QuantumIndex extends React.Component {
         <h2>Quantum Flow</h2>
         <div className='row' key={`row-${rowId += 1}`}>
           <Flow />
+          <Countdown />
         </div>
         <h2>Page Load Time</h2>
         <div className='row' key={`row-${rowId += 1}`}>
@@ -113,18 +115,21 @@ export default class QuantumIndex extends React.Component {
         <h2>Responsiveness: Browser chrome</h2>
         <div className='row' key={`row-${rowId += 1}`}>
           <MissonControl
-            title='Input Latency'
-            content={[
-              '2.5s MTBF = *25.29 hours*',
-              '2.5s population = *32% of users*',
-              '250ms MTBF = *36 min*',
-            ]}
-            {...notes.chrome_input_latency}
+            title='Input Latency over 2.5s/MTBF'
+            {...notes.chrome_il_mtbf_high}
+          />
+          <MissonControl
+            title='Input Latency over 2.5s/Sessions'
+            {...notes.chrome_il_sessions_high}
+          />
+          <MissonControl
+            title='Input Latency over 250ms/MTBF'
+            {...notes.chrome_il_mtbf_low}
           />
         </div>
         <div className='row' key={`row-${rowId += 1}`}>
           <MissonControl
-            title='CC/GC Pauses longer than 150 ms'
+            title='CC/GC Pauses over 150ms'
             {...notes.chrome_gc_pauses}
           />
           <MissonControl
@@ -233,6 +238,20 @@ export default class QuantumIndex extends React.Component {
         <h2>Responsiveness: Content</h2>
         <div className='row' key={`row-${rowId += 1}`}>
           <MissonControl
+            title='Input Latency over 2.5s/MTBF'
+            {...notes.content_il_mtbf_high}
+          />
+          <MissonControl
+            title='Input Latency over 2.5s/Sessions'
+            {...notes.content_il_sessions_high}
+          />
+          <MissonControl
+            title='Input Latency over 250ms/MTBF'
+            {...notes.content_il_mtbf_low}
+          />
+        </div>
+        <div className='row' key={`row-${rowId += 1}`}>
+          <MissonControl
             title='Input Latency Benchmark'
             {...notes.hasal}
           />
@@ -242,14 +261,8 @@ export default class QuantumIndex extends React.Component {
             link='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
             {...notes.speedometer}
           />
-        </div>
-        <div className='row' key={`row-${rowId += 1}`}>
           <MissonControl
-            title='Input Latency'
-            {...notes.chrome_input_latency}
-          />
-          <MissonControl
-            title='CC/GC pauses longer than 2500 ms'
+            title='CC/GC pauses 2500ms+'
             {...notes.content_gc_pauses}
           />
         </div>

@@ -157,7 +157,7 @@ router
     if (!notesCache) {
       notesCache = await getSpreadsheetValues({
         id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-        range: 'Status!A1:G25',
+        range: 'Status!A1:J35',
       });
 
       // const result = await gsjson({
@@ -182,7 +182,7 @@ router
 
   .get('/benchmark/speedometer', async (ctx) => {
     const { graph } = await fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json');
-    const start = moment('2017-05-01').valueOf();
+    const start = moment('2017-05-20').valueOf();
     ctx.body = graph.timelist
       .map((time, idx) => {
         if (!graph.lines[0].data[idx]) {

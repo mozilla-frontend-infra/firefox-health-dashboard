@@ -120,7 +120,7 @@ a {
 .row {
 	flex: 1;
   display: flex;
-	padding: var(--gutterY) var(--gutterX) var(--gutterY);
+	padding: calc(var(--gutterY) * 1.25) var(--gutterX) calc(var(--gutterY) * 1.75);
 
 	.aside {
 		width: calc(2 * var(--gutterY));
@@ -216,8 +216,14 @@ svg {
 	}
 	&.widget-secondary {
 		header {
-			opacity: 0.6;
+			opacity: 0.7;
 		}
+		.widget-content {
+			opacity: 0.7;
+		}
+	}
+	&.widget-countdown {
+		max-width: 32%;
 	}
 	header {
 		display: flex;
@@ -344,6 +350,9 @@ svg {
 .widget-secondary .widget-content {
 	min-height: 100px;
 }
+.widget-secondary header h3 {
+	font-size: var(--fontSize);
+}
 
 
 .summary h2 {
@@ -352,7 +361,7 @@ svg {
 	font-weight: 300;
 	color: var(--lightGray);
 	padding: calc(var(--gutterY) / 2) 0;
-	margin: calc(var(--gutterY)) var(--gutterX) 0;
+	margin: calc(var(--gutterY) * 1.25) var(--gutterX) calc(var(--gutterY) * 0.75);
 	&:first-child {
 		margin-top: 0;
 	}
