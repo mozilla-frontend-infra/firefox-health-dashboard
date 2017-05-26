@@ -175,16 +175,30 @@ router
   })
 
   .get('/benchmark/pageload', async (ctx) => {
-    const list = await getSpreadsheetValues({
+    const list = (await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      range: 'pageLoad!A1:F25',
-    });
+      range: 'pageLoad!A1:F100',
+    })).filter(entry => entry.diff != null);
     const ids = _.uniq(_.pluck('id', list));
     list.forEach((entry) => {
       entry.id = ids.indexOf(entry.id);
       entry.date = moment(chrono.parseDate(entry.date)).valueOf();
       entry.firstPaint = parseFloat(entry.firstPaint);
       entry.heroElement = parseFloat(entry.heroElement);
+    });
+    ctx.body = list;
+  })
+
+  .get('/benchmark/hasal', async (ctx) => {
+    const list = (await getSpreadsheetValues({
+      id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+      range: 'hasal!A1:F100',
+    })).filter(entry => entry.diff != null);
+    const ids = _.uniq(_.pluck('id', list));
+    list.forEach((entry) => {
+      entry.id = ids.indexOf(entry.id);
+      entry.date = moment(chrono.parseDate(entry.date)).valueOf();
+      entry.diff = parseFloat(entry.diff);
     });
     ctx.body = list;
   })

@@ -255,12 +255,15 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <MissonControl
-              title='Input Latency Benchmark'
+            <Benchmark
+              title='Benchmark: Input Latency'
+              id='hasal'
+              link='https://github.com/Mozilla-TWQA/Hasal/'
+              targetDiff={0}
               {...notes.hasal}
             />,
             <Benchmark
-              title='Speedometer v2'
+              title='Benchmark: Speedometer v2'
               id='speedometer'
               link='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
