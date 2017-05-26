@@ -238,10 +238,10 @@ svg {
 			font-weight: 400;
 			display: inline-block;
 			color: #000;
-			white-space: nowrap;
 		}
 		aside {
 			flex: 1;
+			flex-shrink: 1;
 			text-align: right;
 			white-space: nowrap;
 			overflow: hidden;
@@ -392,6 +392,10 @@ svg {
 		&.header-status-green {
 			background-color: var(--newLime);
 		}
+		&.header-status-secondary {
+			background-color: var(--newOrange);
+		}
+
 		em {
 			font-weight: bold;
 			font-style: normal;

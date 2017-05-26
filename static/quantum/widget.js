@@ -51,7 +51,7 @@ export default class Widget extends React.Component {
           <h3>{$title}</h3>
           {
             this.props.target &&
-              <aside>Target: {enrich(this.props.target)}</aside>
+              <aside title={this.props.target}>Target: {enrich(this.props.target)}</aside>
           }
         </header>
         <div

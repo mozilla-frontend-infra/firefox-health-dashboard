@@ -296,6 +296,7 @@ export default class QuantumIndex extends React.Component {
 
     const statusLabels = new Map([
       ['red', 'blocked or at risk'],
+      ['secondary', 'regression criteria at risk'],
       ['yellow', 'with unknowns or possible blockers'],
       ['green', 'on track'],
     ]);
@@ -308,7 +309,12 @@ export default class QuantumIndex extends React.Component {
       );
       for (const widgets of rows) {
         for (const widget of widgets) {
-          statusList.set(widget.props.status, (statusList.get(widget.props.status) || 0) + 1);
+          const secondary = (widget.type.displayName === 'PerfherderWidget');
+          if (!secondary) {
+            statusList.set(widget.props.status, statusList.get(widget.props.status) + 1);
+          } else if (widget.props.status === 'red') {
+            statusList.set('secondary', statusList.get('secondary') + 1);
+          }
         }
         rowIdx += 1;
         add.push((
