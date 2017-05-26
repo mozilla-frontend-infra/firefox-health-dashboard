@@ -59,12 +59,13 @@ export default class BenchmarkWidget extends React.Component {
         .curve(curveLinear);
 
       const $history = (scatter)
-        ? evolution.map((entry) => {
+        ? evolution.map((entry, idx) => {
           return (
             <circle
               cx={xScale(entry.date - (noise / 2) + (Math.random() * noise))}
               cy={yScale(entry[metric])}
               r={4}
+              key={`scatter-${idx}`}
               className={'series series-0'}
             />
           );
@@ -88,9 +89,9 @@ export default class BenchmarkWidget extends React.Component {
       const $path = (
         <line
           x1={xScale.range()[0]}
-          y1={yScale(targetDiff)}
+          y1={yScale(0)}
           x2={xScale.range()[1]}
-          y2={yScale(targetDiff)}
+          y2={yScale(0)}
           className={'series series-path series-target'}
         />
       );
@@ -131,19 +132,20 @@ export default class BenchmarkWidget extends React.Component {
           </g>
         );
       });
-      //
-      // const $legend = Object.keys(this.props.signatures).map((label, idx) => {
-      //   return (
-      //     <text
-      //       className={`legend series-${idx}`}
-      //       x={27 + (50 * idx)}
-      //       y={15}
-      //       key={`legend-${label}`}
-      //     >
-      //       {label}
-      //     </text>
-      //   );
-      // });
+      let label = 'Chrome';
+      if (targetDiff) {
+        label += ` + ${targetDiff}% band`;
+      }
+      const $legend = (
+        <text
+          className={'legend series-target'}
+          x={xScale.range()[0] + 5}
+          y={yScale(0) + 15}
+          key={'legend-target'}
+        >
+          {label}
+        </text>
+      );
 
       svg = (
         <svg
@@ -155,7 +157,7 @@ export default class BenchmarkWidget extends React.Component {
           {$area}
           {$path}
           {$history}
-          {/* {$legend} */}
+          {$legend}
         </svg>
       );
     } else {
