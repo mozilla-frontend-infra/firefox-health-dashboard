@@ -2,8 +2,10 @@ import Router from 'koa-router';
 import GitHubApi from 'github';
 import json2csv from 'json2csv';
 import moment from 'moment';
+import chrono from 'chrono-node';
 import gsjson from 'gsjson';
 import google from 'googleapis';
+import _ from 'lodash/fp';
 import { stringify } from 'query-string';
 import {
   median,
@@ -40,31 +42,21 @@ const getSpreadsheetValues = async ({ id, range }) => {
       range: range,
     }, (err, response) => resolve(response));
   });
-  const headers = values.splice(0, 1).pop();
-  const multiMode = (headers[0] === 'date' && headers[1] === 'id');
-  let carryOver = '';
+  const headers = values.splice(0, 1)
+    .pop();
   return values.reduce((criteria, entry) => {
-    if (multiMode) {
-      if (entry[0]) {
-        carryOver = entry[0];
-        criteria[carryOver] = {};
-      } else {
-        entry[0] = carryOver;
-      }
-    }
     const obj = {};
     headers.forEach((header, idx) => {
-      if (entry[idx]) {
+      if (header.charAt(0) !== '_' && entry[idx]) {
         obj[header] = entry[idx];
+        if (header === 'date') {
+          obj[header] = moment(obj[header]).format('YYYY-MM-DD');
+        }
       }
     });
-    if (multiMode) {
-      criteria[obj.date][obj.id] = obj;
-    } else {
-      criteria[obj.id || obj.date] = obj;
-    }
+    criteria.push(obj);
     return criteria;
-  }, {});
+  }, []);
 };
 
 export const router = new Router();
@@ -84,22 +76,16 @@ const summarizeHistogram = (hist) => {
     return null;
   }
   return {
-    // p5: hist.percentile(5),
-    // p25: hist.percentile(25),
     p50: hist.percentile(50),
     p95: hist.percentile(95),
-    // p99: hist.percentile(99),
     submissions: hist.submissions,
     count: hist.count,
   };
 };
 
 const summaryKeys = [
-  // 'p5',
-  // 'p25',
   'p50',
   'p95',
-  'p99',
   'submissions',
   'count',
 ];
@@ -155,10 +141,13 @@ router
 
   .get('/notes', async (ctx) => {
     if (!notesCache) {
-      notesCache = await getSpreadsheetValues({
+      notesCache = (await getSpreadsheetValues({
         id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
         range: 'Status!A1:J35',
-      });
+      })).reduce((hash, note) => {
+        hash[note.id] = note;
+        return hash;
+      }, {});
 
       // const result = await gsjson({
       //   spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
@@ -172,33 +161,55 @@ router
     ctx.body = notesCache;
   })
 
-  .get('/benchmark/page-load', async (ctx) => {
-    const values = await getSpreadsheetValues({
+  .get('/benchmark/startup', async (ctx) => {
+    const list = await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      range: 'pageLoad!A1:E25',
+      range: 'startup!A1:E25',
     });
-    ctx.body = values;
+    list.forEach((entry) => {
+      entry.date = moment(chrono.parseDate(entry.date)).valueOf();
+      entry.firstPaint = parseFloat(entry.firstPaint);
+      entry.heroElement = parseFloat(entry.heroElement);
+    });
+    ctx.body = list;
+  })
+
+  .get('/benchmark/pageload', async (ctx) => {
+    const list = await getSpreadsheetValues({
+      id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+      range: 'pageLoad!A1:F25',
+    });
+    const ids = _.uniq(_.pluck('id', list));
+    list.forEach((entry) => {
+      entry.id = ids.indexOf(entry.id);
+      entry.date = moment(chrono.parseDate(entry.date)).valueOf();
+      entry.firstPaint = parseFloat(entry.firstPaint);
+      entry.heroElement = parseFloat(entry.heroElement);
+    });
+    ctx.body = list;
   })
 
   .get('/benchmark/speedometer', async (ctx) => {
     const { graph } = await fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json');
-    const start = moment('2017-05-20').valueOf();
+    const start = moment('2017-05-01').valueOf();
     ctx.body = graph.timelist
-      .map((time, idx) => {
-        if (!graph.lines[0].data[idx]) {
-          console.error('Oh Noe', idx);
-        }
+      .map((date, idx) => {
         const values = {
-          time: time * 1000,
+          date: date * 1000,
         };
-        graph.lines.forEach((line, lineIdx) => {
+        const runs = graph.lines.reduce((reduced, line) => {
           if (line && line.data[idx]) {
-            values[lineIdx] = line.data[idx][0];
+            reduced.push(line.data[idx][0]);
           }
-        });
+          return reduced;
+        }, []);
+        if (runs.length === 2) {
+          values.diff = ((runs[1] - runs[0]) / runs[0]) * 100;
+        }
         return values;
       })
-      .filter(({ time }) => time > start);
+      .filter(entry => entry.diff != null)
+      .filter(entry => entry.date > start);
   })
 
   .get('/herder', async (ctx) => {

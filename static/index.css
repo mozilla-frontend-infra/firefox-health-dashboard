@@ -222,9 +222,6 @@ svg {
 			opacity: 0.7;
 		}
 	}
-	&.widget-countdown {
-		max-width: 32%;
-	}
 	header {
 		display: flex;
 		align-items: flex-start;
@@ -288,6 +285,9 @@ svg {
 		&.series-1, &.series-open {
 			stroke: color(var(--newLilac) saturation(100%) shade(20%));
 		}
+		&.series-target {
+			stroke: color(var(--newLime) saturation(100%) shade(20%));
+		}
 	}
 	circle.series {
 		fill: var(--newCyan);
@@ -342,6 +342,10 @@ svg {
 		stroke-width: 1;
 		&.reference-x {
 		}
+	}
+	&.widget-benchmark circle {
+		opacity: 0.8;
+
 	}
 }
 .graphic-timeline .widget-content {

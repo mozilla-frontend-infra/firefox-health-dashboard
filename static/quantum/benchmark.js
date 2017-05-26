@@ -8,6 +8,7 @@ import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } f
 import Widget from './widget';
 
 const tickCount = 5;
+const noise = 1000 * 60 * 60 * 12;
 
 export default class BenchmarkWidget extends React.Component {
   state = {};
@@ -30,18 +31,20 @@ export default class BenchmarkWidget extends React.Component {
 
   render() {
     const { evolution } = this.state;
+    const { metric, targetDiff, type } = this.props;
+    const scatter = (type === 'scatter');
     let svg = null;
 
     if (evolution) {
       const [width, height] = this.viewport;
 
       const xRange = [
-        minBy('time', evolution).time,
-        maxBy('time', evolution).time,
+        minBy('date', evolution).date - (scatter ? (noise * 4) : 0),
+        maxBy('date', evolution).date + (scatter ? (noise * 4) : 0),
       ];
       const yRange = [
-        Math.min(minBy('0', evolution)[0], minBy('1', evolution)[1]),
-        Math.max(maxBy('0', evolution)[0], minBy('1', evolution)[1]),
+        Math.min(minBy(metric, evolution)[metric], 0),
+        maxBy(metric, evolution)[metric],
       ];
       const xScale = scaleTime()
         .domain(xRange)
@@ -51,51 +54,51 @@ export default class BenchmarkWidget extends React.Component {
         .nice(tickCount)
         .range([height - 20, 2]);
       const path = line()
-        .x(d => xScale(new Date(d.time)))
-        .y(d => yScale(d.value))
-        .curve(curveLinear);
-      const filledPath = area()
-        .x(d => xScale(new Date(d.time)))
-        .y0(d => yScale(d.value))
-        .y1(d => yScale(d.value * 1.2))
+        .x(d => xScale(new Date(d.date)))
+        .y(d => yScale(d[metric]))
         .curve(curveLinear);
 
-      const $evolution = [0, 1].map((idx) => {
-        const filtered = evolution
-          .filter(entry => entry[idx])
-          .map((entry) => {
-            return {
-              time: entry.time,
-              value: entry[idx],
-            };
-          });
-        const $path = (
+      const $history = (scatter)
+        ? evolution.map((entry) => {
+          return (
+            <circle
+              cx={xScale(entry.date - (noise / 2) + (Math.random() * noise))}
+              cy={yScale(entry[metric])}
+              r={4}
+              className={'series series-0'}
+            />
+          );
+        })
+        : (
           <path
-            d={path(filtered)}
-            className={`series series-path series-${idx}`}
+            d={path(evolution)}
+            className={'series series-path series-0'}
           />
         );
-        const $area = (idx === 0)
-          ? (
-            <path
-              d={filledPath(filtered)}
-              className={'series series-area series-target'}
-            />
-          )
-          : null;
-        return [
-          $area,
-          $path,
-        ];
-      });
+
+      const $area = (
+        <rect
+          x={xScale.range()[0]}
+          y={yScale(targetDiff)}
+          width={xScale.range()[0] + xScale.range()[1]}
+          height={yScale.range()[0] - yScale(targetDiff)}
+          className={'series series-area series-target'}
+        />
+      );
+      const $path = (
+        <line
+          x1={xScale.range()[0]}
+          y1={yScale(targetDiff)}
+          x2={xScale.range()[1]}
+          y2={yScale(targetDiff)}
+          className={'series series-path series-target'}
+        />
+      );
 
       const formatTick = format('.0d');
       const $yAxis = yScale.ticks(tickCount).map((tick, idx) => {
         const y = yScale(tick);
-        const label = formatTick(tick);
-        // if (!idx && this.props.unit) {
-        //   label += this.props.unit;
-        // }
+        const label = `${formatTick(tick)}%`;
         return (
           <g className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${idx}`}>
             <line
@@ -149,18 +152,20 @@ export default class BenchmarkWidget extends React.Component {
         >
           {$yAxis}
           {$xAxis}
-          {$evolution}
+          {$area}
+          {$path}
+          {$history}
           {/* {$legend} */}
         </svg>
       );
     } else {
-      svg = 'Loading Perfherder …';
+      svg = 'Loading Benchmark …';
     }
 
     return (
       <Widget
         target='No regressions'
-        className='graphic-widget graphic-timeline'
+        className='graphic-widget graphic-timeline widget-benchmark'
         content={svg}
         loading={!evolution}
         viewport={size => (this.viewport = size)}
@@ -172,7 +177,13 @@ export default class BenchmarkWidget extends React.Component {
 
 BenchmarkWidget.defaultProps = {
   id: '',
+  metric: 'diff',
+  type: 'scatter',
+  targetDiff: 0,
 };
 BenchmarkWidget.propTypes = {
   id: PropTypes.string,
+  metric: PropTypes.string,
+  type: PropTypes.string,
+  targetDiff: PropTypes.number,
 };

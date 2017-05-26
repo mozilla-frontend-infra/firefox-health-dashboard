@@ -15,7 +15,7 @@ const dates = [
   {
     idx: 'beta',
     label: 'Beta 57',
-    date: moment('2017-09-26', 'YYYY-MM-DD'),
+    date: moment('2017-09-25', 'YYYY-MM-DD'),
   },
   {
     idx: 'release',
@@ -31,7 +31,7 @@ export default class CountdownWidget extends React.Component {
       const weeks = Math.floor(weekDays / 5);
       const extraDays = weekDays - (weeks * 5);
       return (
-        <div className='widget-entry'>
+        <div className='widget-entry' key={`countdown-${entry.idx}`}>
           <h4>{entry.label}<small>{entry.date.format('ddd, MMM D')}</small></h4>
           {
             (extraDays < 1)
@@ -54,8 +54,8 @@ export default class CountdownWidget extends React.Component {
     });
     return (
       <Widget
-        title='Quantum Branch Dates'
-        target='Be feature complete'
+        title='Branch Dates'
+        target='*Feature Complete* by Nightly 57'
         link='https://wiki.mozilla.org/RapidRelease/Calendar'
         className='widget-countdown'
         content={$counters}

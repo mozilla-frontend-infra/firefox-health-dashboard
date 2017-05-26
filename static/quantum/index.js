@@ -79,6 +79,16 @@ export default class QuantumIndex extends React.Component {
 
     let rowId = 0;
 
+    // const sections = [
+    //   [
+    //     'title': 'Quantum Project',
+    //     rows: [
+    //       <Flow />,
+    //       <Countdown />,
+    //     ]
+    //   ]
+    // ];
+
     const $dashboard = (
       <Dashboard
         title='Quantum'
@@ -94,12 +104,18 @@ export default class QuantumIndex extends React.Component {
         </div>
         <h2>Page Load Time</h2>
         <div className='row' key={`row-${rowId += 1}`}>
-          <MissonControl
+          <Benchmark
             title='Benchmark: Time to First Paint'
+            id='pageload'
+            metric='firstPaint'
+            link='https://docs.google.com/a/mozilla.com/document/d/1ViLJw-ZH9K8ecr5itZaXcnyxEDDYtJcv1KOSXMO5dVA/edit?usp=sharing'
             {...notes.tp6_render}
           />
-          <MissonControl
+          <Benchmark
             title='Benchmark: Time to Hero Element'
+            id='pageload'
+            metric='heroElement'
+            link='https://docs.google.com/a/mozilla.com/document/d/1ViLJw-ZH9K8ecr5itZaXcnyxEDDYtJcv1KOSXMO5dVA/edit?usp=sharing'
             {...notes.tp6_hero}
           />
           <Perfherder
@@ -259,6 +275,8 @@ export default class QuantumIndex extends React.Component {
             title='Speedometer v2'
             id='speedometer'
             link='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
+            targetDiff='20'
+            type='line'
             {...notes.speedometer}
           />
           <MissonControl

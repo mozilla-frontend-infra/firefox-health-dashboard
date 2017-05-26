@@ -1,13 +1,11 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { maxBy, minBy } from 'lodash/fp';
 import cx from 'classnames';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat, area } from 'd3';
-import { stringify } from 'query-string';
-import Dashboard from './../dashboard';
+import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
+import Widget from './widget';
 
 const tickCount = 4;
 
@@ -16,15 +14,9 @@ export default class FlowWidget extends React.Component {
 
   componentDidMount() {
     this.fetch();
-    if (this.target) {
-      const rect = this.target.getBoundingClientRect();
-      this.width = rect.width;
-      this.height = rect.height;
-    }
   }
 
-  height = 0;
-  width = 0;
+  viewport: [0, 0];
 
   async fetch() {
     const burnup = await (await fetch('/api/bz/burnup')).json();
@@ -36,6 +28,7 @@ export default class FlowWidget extends React.Component {
     let svg = null;
 
     if (burnup) {
+      const [width, height] = this.viewport;
       const xRange = [
         minBy('date', burnup).date,
         maxBy('date', burnup).date,
@@ -46,11 +39,11 @@ export default class FlowWidget extends React.Component {
       ];
       const xScale = scaleTime()
         .domain(xRange)
-        .range([25, this.width]);
+        .range([25, width]);
       const yScale = scaleLinear()
         .domain(yRange)
         .nice(tickCount)
-        .range([this.height - 20, 2]);
+        .range([height - 20, 2]);
       const pathOpened = line()
         .x(d => xScale(new Date(d.date)))
         .y(d => yScale(d.opened - d.closed))
@@ -62,7 +55,7 @@ export default class FlowWidget extends React.Component {
 
       const areaOpen = area()
         .x(d => xScale(new Date(d.date)))
-        .y0(d => yScale(0))
+        .y0(() => yScale(0))
         .y1(d => yScale(d.opened - d.closed))
         .curve(curveLinear);
       const areaClosed = area()
@@ -111,7 +104,7 @@ export default class FlowWidget extends React.Component {
             <line
               x1={0}
               y1={y}
-              x2={this.width}
+              x2={width}
               y2={y}
             />
             <text
@@ -124,14 +117,14 @@ export default class FlowWidget extends React.Component {
         );
       });
       const yFormat = timeFormat('%b %d');
-      const $xAxis = xScale.ticks(6).map((tick, idx) => {
+      const $xAxis = xScale.ticks(6).map((tick) => {
         const x = xScale(tick);
         const label = yFormat(tick);
         return (
           <g className={cx('tick', 'tick-x')} key={`tick-${tick}`}>
             <text
               x={x}
-              y={this.height - 5}
+              y={height - 5}
             >
               {label}
             </text>
@@ -160,8 +153,8 @@ export default class FlowWidget extends React.Component {
 
       svg = (
         <svg
-          height={this.height}
-          width={this.width}
+          height={height}
+          width={width}
         >
           {$yAxis}
           {$xAxis}
@@ -176,31 +169,16 @@ export default class FlowWidget extends React.Component {
       svg = 'Loading Bugzilla …';
     }
 
-    const cls = cx('widget-content', {
-      'state-loading': !burnup,
-    });
-
     return (
-      <section
-        className={'graphic-timeline graphic-widget'}
-      >
-        <header>
-          <h3><a
-            href='https://wiki.mozilla.org/Quantum/Flow#Query:_P1_Bugs'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            P1 Bugs (Opened/Closed)
-          </a></h3>
-          <aside>Target: <em>Fix P1s</em></aside>
-        </header>
-        <div
-          className={cls}
-          ref={target => (this.target = target)}
-        >
-          {svg}
-        </div>
-      </section>
+      <Widget
+        title='Quantum Flow P1 Bugs Burnup'
+        className='graphic-timeline graphic-widget'
+        link='https://wiki.mozilla.org/Quantum/Flow#Query:_P1_Bugs'
+        target='*Fix P1 Bugs*'
+        loading={!burnup}
+        viewport={size => (this.viewport = size)}
+        content={svg}
+      />
     );
   }
 }
