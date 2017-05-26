@@ -394,6 +394,7 @@ svg {
 		}
 		&.header-status-secondary {
 			background-color: var(--newOrange);
+			opacity: 0.7;
 		}
 
 		em {

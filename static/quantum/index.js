@@ -296,9 +296,9 @@ export default class QuantumIndex extends React.Component {
 
     const statusLabels = new Map([
       ['red', 'blocked or at risk'],
-      ['secondary', 'regression criteria at risk'],
       ['yellow', 'with unknowns or possible blockers'],
       ['green', 'on track'],
+      ['secondary', 'regression criteria at risk'],
     ]);
 
     let rowIdx = 0;
