@@ -125,7 +125,7 @@ export default class PerfherderWidget extends React.Component {
         const x = xScale(tick);
         const label = yFormat(tick);
         return (
-          <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
+          <g className={cx('tick', 'tick-x')} key={`tick-${idx}`}>
             <text x={x} y={height - 5}>
               {label}
             </text>

@@ -17,7 +17,6 @@ const apzBugs = {
 };
 
 export default class QuantumIndex extends React.Component {
-
   constructor(props) {
     super(props);
     this.fetchNotes();
@@ -46,26 +45,21 @@ export default class QuantumIndex extends React.Component {
     const $apz = (
       <Widget
         title='APZ Scrolling'
-        content={
-          Object.keys(apzBugs).map((id) => {
-            const bug = apzStatus.find(needle => String(needle.id) === String(id));
-            let label = 'Loading …';
-            if (bug) {
-              label = bug.version
-                ? `Landed in ${bug.version}`
-                : (bug.contact
-                  ? `Waiting for ${bug.contact}`
-                  : 'Unassigned'
-                );
-            }
-            return (
-              <div className='widget-entry'>
-                <h4>{apzBugs[id]}<small>Bug {id}</small></h4>
-                <span>{label}</span>
-              </div>
-            );
-          })
-        }
+        content={Object.keys(apzBugs).map((id) => {
+          const bug = apzStatus.find(needle => String(needle.id) === String(id));
+          let label = 'Loading …';
+          if (bug) {
+            label = bug.version
+              ? `Landed in ${bug.version}`
+              : bug.contact ? `Waiting for ${bug.contact}` : 'Unassigned';
+          }
+          return (
+            <div className='widget-entry'>
+              <h4>{apzBugs[id]}<small>Bug {id}</small></h4>
+              <span>{label}</span>
+            </div>
+          );
+        })}
         {...notes.apz}
       />
     );
@@ -73,12 +67,7 @@ export default class QuantumIndex extends React.Component {
     const sections = [
       {
         title: 'Planning',
-        rows: [
-          [
-            <Flow />,
-            <Countdown />,
-          ],
-        ],
+        rows: [[<Flow />, <Countdown />]],
       },
       {
         title: 'Page Load Time',
@@ -114,28 +103,16 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Browser chrome',
         rows: [
           [
-            <MissonControl
-              title='Input Latency over 2.5s/MTBF'
-              {...notes.chrome_il_mtbf_high}
-            />,
+            <MissonControl title='Input Latency over 2.5s/MTBF' {...notes.chrome_il_mtbf_high} />,
             <MissonControl
               title='Input Latency over 2.5s/Sessions'
               {...notes.chrome_il_sessions_high}
             />,
-            <MissonControl
-              title='Input Latency over 250ms/MTBF'
-              {...notes.chrome_il_mtbf_low}
-            />,
+            <MissonControl title='Input Latency over 250ms/MTBF' {...notes.chrome_il_mtbf_low} />,
           ],
           [
-            <MissonControl
-              title='CC/GC Pauses over 150ms'
-              {...notes.chrome_gc_pauses}
-            />,
-            <MissonControl
-              title='Ghost Windows'
-              {...notes.chrome_ghost_windows}
-            />,
+            <MissonControl title='CC/GC Pauses over 150ms' {...notes.chrome_gc_pauses} />,
+            <MissonControl title='Ghost Windows' {...notes.chrome_ghost_windows} />,
           ],
           [
             <Perfherder
@@ -241,18 +218,12 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Content',
         rows: [
           [
-            <MissonControl
-              title='Input Latency over 2.5s/MTBF'
-              {...notes.content_il_mtbf_high}
-            />,
+            <MissonControl title='Input Latency over 2.5s/MTBF' {...notes.content_il_mtbf_high} />,
             <MissonControl
               title='Input Latency over 2.5s/Sessions'
               {...notes.content_il_sessions_high}
             />,
-            <MissonControl
-              title='Input Latency over 250ms/MTBF'
-              {...notes.content_il_mtbf_low}
-            />,
+            <MissonControl title='Input Latency over 250ms/MTBF' {...notes.content_il_mtbf_low} />,
           ],
           [
             <Benchmark
@@ -270,18 +241,21 @@ export default class QuantumIndex extends React.Component {
               type='line'
               {...notes.speedometer}
             />,
-            <MissonControl
-              title='CC/GC pauses 2500ms+'
-              {...notes.content_gc_pauses}
-            />,
+            <MissonControl title='CC/GC pauses 2500ms+' {...notes.content_gc_pauses} />,
           ],
           [
-            <MissonControl
+            <Benchmark
               title='Start-up: Time to First Paint'
+              id='startup'
+              metric='firstPaint'
+              targetDiff={20}
               {...notes.startup_render}
             />,
-            <MissonControl
+            <Benchmark
               title='Start-up: Time to Hero Element'
+              id='startup'
+              metric='heroElement'
+              targetDiff={20}
               {...notes.startup_hero}
             />,
           ],
@@ -289,11 +263,7 @@ export default class QuantumIndex extends React.Component {
       },
       {
         title: 'Smoothness: Content',
-        rows: [
-          [
-            $apz,
-          ],
-        ],
+        rows: [[$apz]],
       },
     ];
 
@@ -307,12 +277,10 @@ export default class QuantumIndex extends React.Component {
     let rowIdx = 0;
     const $content = sections.reduce((reduced, { title, rows }) => {
       const add = [];
-      const statusList = new Map(
-        Array.from(statusLabels.keys()).map(key => [key, 0]),
-      );
+      const statusList = new Map(Array.from(statusLabels.keys()).map(key => [key, 0]));
       for (const widgets of rows) {
         for (const widget of widgets) {
-          const secondary = (widget.type.displayName === 'PerfherderWidget');
+          const secondary = widget.type.displayName === 'PerfherderWidget';
           if (!secondary) {
             statusList.set(widget.props.status, statusList.get(widget.props.status) + 1);
           } else if (widget.props.status === 'red') {
@@ -320,28 +288,28 @@ export default class QuantumIndex extends React.Component {
           }
         }
         rowIdx += 1;
-        add.push((
+        add.push(
           <div className='row' key={`row-${rowIdx}`}>
             {widgets}
-          </div>
-        ));
+          </div>,
+        );
       }
       const $status = [];
       for (const [status, count] of statusList) {
         if (statusLabels.has(status) && count) {
-          $status.push((
+          $status.push(
             <div key={`status-${status}`} className={`header-status header-status-${status}`}>
               <em>{count}</em> {statusLabels.get(status)}
-            </div>
-          ));
+            </div>,
+          );
         }
       }
-      add.unshift((
+      add.unshift(
         <h2>
           <span>{title}</span>
           {$status}
-        </h2>
-      ));
+        </h2>,
+      );
       return reduced.concat(add);
     }, []);
 
