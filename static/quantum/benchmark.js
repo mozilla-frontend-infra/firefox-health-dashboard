@@ -22,7 +22,7 @@ export default class BenchmarkWidget extends React.Component {
   async fetch() {
     const id = this.props.id;
     try {
-      const evolution = await (await fetch(`api/perf/benchmark/${id}`)).json();
+      const evolution = await (await fetch(`/api/perf/benchmark/${id}`)).json();
       this.setState({ evolution: evolution });
     } catch (e) {
       this.setState({ error: true });
@@ -32,37 +32,32 @@ export default class BenchmarkWidget extends React.Component {
   render() {
     const { evolution } = this.state;
     const { metric, targetDiff, type } = this.props;
-    const scatter = (type === 'scatter');
+    const scatter = type === 'scatter';
     let svg = null;
 
     if (evolution) {
       const [width, height] = this.viewport;
 
       const xRange = [
-        minBy('date', evolution).date - (scatter ? (noise * 4) : 0),
-        maxBy('date', evolution).date + (scatter ? (noise * 4) : 0),
+        minBy('date', evolution).date - (scatter ? noise * 4 : 0),
+        maxBy('date', evolution).date + (scatter ? noise * 4 : 0),
       ];
       const yRange = [
         Math.min(minBy(metric, evolution)[metric], 0),
         maxBy(metric, evolution)[metric],
       ];
-      const xScale = scaleTime()
-        .domain(xRange)
-        .range([25, width]);
-      const yScale = scaleLinear()
-        .domain(yRange)
-        .nice(tickCount)
-        .range([height - 20, 2]);
+      const xScale = scaleTime().domain(xRange).range([25, width]);
+      const yScale = scaleLinear().domain(yRange).nice(tickCount).range([height - 20, 2]);
       const path = line()
         .x(d => xScale(new Date(d.date)))
         .y(d => yScale(d[metric]))
         .curve(curveLinear);
 
-      const $history = (scatter)
+      const $history = scatter
         ? evolution.map((entry, idx) => {
           return (
             <circle
-              cx={xScale(entry.date - (noise / 2) + (Math.random() * noise))}
+              cx={xScale(entry.date - noise / 2 + Math.random() * noise)}
               cy={yScale(entry[metric])}
               r={4}
               key={`scatter-${idx}`}
@@ -70,12 +65,7 @@ export default class BenchmarkWidget extends React.Component {
             />
           );
         })
-        : (
-          <path
-            d={path(evolution)}
-            className={'series series-path series-0'}
-          />
-        );
+        : <path d={path(evolution)} className={'series series-path series-0'} />;
 
       const $area = (
         <rect
@@ -101,17 +91,12 @@ export default class BenchmarkWidget extends React.Component {
         const y = yScale(tick);
         const label = `${formatTick(tick)}%`;
         return (
-          <g className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${idx}`}>
-            <line
-              x1={0}
-              y1={y}
-              x2={width}
-              y2={y}
-            />
-            <text
-              x={2}
-              y={y}
-            >
+          <g
+            className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })}
+            key={`tick-${idx}`}
+          >
+            <line x1={0} y1={y} x2={width} y2={y} />
+            <text x={2} y={y}>
               {label}
             </text>
           </g>
@@ -123,10 +108,7 @@ export default class BenchmarkWidget extends React.Component {
         const label = yFormat(tick);
         return (
           <g className={cx('tick', 'tick-x')} key={`tick-${idx}`}>
-            <text
-              x={x}
-              y={height - 5}
-            >
+            <text x={x} y={height - 5}>
               {label}
             </text>
           </g>
@@ -148,10 +130,7 @@ export default class BenchmarkWidget extends React.Component {
       );
 
       svg = (
-        <svg
-          height={height}
-          width={width}
-        >
+        <svg height={height} width={width}>
           {$yAxis}
           {$xAxis}
           {$area}

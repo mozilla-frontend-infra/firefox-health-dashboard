@@ -10,7 +10,7 @@ import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } f
 import { stringify } from 'query-string';
 import Widget from './widget';
 
-const tickCount = 2;
+const tickCount = 4;
 
 export default class PerfherderWidget extends React.Component {
   state = {};
@@ -27,7 +27,7 @@ export default class PerfherderWidget extends React.Component {
       signatures: Object.values(signatures),
     });
     try {
-      const evolutions = await (await fetch(`api/perf/herder?${query}`)).json();
+      const evolutions = await (await fetch(`/api/perf/herder?${query}`)).json();
       this.setState({ evolutions: evolutions });
     } catch (e) {
       this.setState({ error: true });
@@ -44,21 +44,10 @@ export default class PerfherderWidget extends React.Component {
       const full = evolutions.reduce((reduced, evolution) => {
         return reduced.concat(evolution);
       }, []);
-      const xRange = [
-        minBy('time', full).time * 1000,
-        maxBy('time', full).time * 1000,
-      ];
-      const yRange = [
-        minBy('value', full).value,
-        maxBy('value', full).value,
-      ];
-      const xScale = scaleTime()
-        .domain(xRange)
-        .range([25, width]);
-      const yScale = scaleLinear()
-        .domain(yRange)
-        .nice(tickCount)
-        .range([height - 20, 2]);
+      const xRange = [minBy('time', full).time * 1000, maxBy('time', full).time * 1000];
+      const yRange = [minBy('value', full).value, maxBy('value', full).value];
+      const xScale = scaleTime().domain(xRange).range([25, width]);
+      const yScale = scaleLinear().domain(yRange).nice(tickCount).range([height - 20, 2]);
       const path = line()
         .x(d => xScale(new Date(d.time * 1000)))
         .y(d => yScale(d.avg))
@@ -74,8 +63,9 @@ export default class PerfherderWidget extends React.Component {
       const referenceYs = [];
 
       const $evolutions = evolutions.map((evolution, idx) => {
-        const ref = evolution
-          .find(d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime);
+        const ref = evolution.find(
+          d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime,
+        );
         let $reference = null;
         if (ref) {
           const refY = yScale(ref.avg);
@@ -91,37 +81,24 @@ export default class PerfherderWidget extends React.Component {
             />
           );
         }
-        const $path = (
-          <path
-            d={path(evolution)}
-            className={`series series-path series-${idx}`}
-          />
-        );
+        const $path = <path d={path(evolution)} className={`series series-path series-${idx}`} />;
         const $scatters = evolution.reduce((reduced, entry) => {
           entry.runs.forEach((run) => {
-            reduced.push((
+            reduced.push(
               <circle
                 cx={xScale(run.time * 1000)}
                 cy={yScale(run.value)}
                 r={1.5}
                 className={`series series-${idx}`}
-              />
-            ));
+              />,
+            );
           }, reduced);
           return reduced;
         }, []);
         const $area = (
-          <path
-            d={filledPath(evolution)}
-            className={`series series-area series-${idx}`}
-          />
+          <path d={filledPath(evolution)} className={`series series-area series-${idx}`} />
         );
-        return [
-          $area,
-          $scatters,
-          $path,
-          $reference,
-        ];
+        return [$area, $scatters, $path, $reference];
       });
 
       const formatTick = format('.0d');
@@ -132,17 +109,12 @@ export default class PerfherderWidget extends React.Component {
         //   label += this.props.unit;
         // }
         return (
-          <g className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${tick}`}>
-            <line
-              x1={0}
-              y1={y}
-              x2={width}
-              y2={y}
-            />
-            <text
-              x={2}
-              y={y}
-            >
+          <g
+            className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })}
+            key={`tick-${tick}`}
+          >
+            <line x1={0} y1={y} x2={width} y2={y} />
+            <text x={2} y={y}>
               {label}
             </text>
           </g>
@@ -154,10 +126,7 @@ export default class PerfherderWidget extends React.Component {
         const label = yFormat(tick);
         return (
           <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
-            <text
-              x={x}
-              y={height - 5}
-            >
+            <text x={x} y={height - 5}>
               {label}
             </text>
           </g>
@@ -166,12 +135,7 @@ export default class PerfherderWidget extends React.Component {
 
       const $legend = Object.keys(this.props.signatures).map((label, idx) => {
         return (
-          <text
-            className={`legend series-${idx}`}
-            x={27 + (50 * idx)}
-            y={15}
-            key={`legend-${label}`}
-          >
+          <text className={`legend series-${idx}`} x={27 + 50 * idx} y={15} key={`legend-${label}`}>
             {label}
           </text>
         );
@@ -188,10 +152,7 @@ export default class PerfherderWidget extends React.Component {
       );
 
       svg = (
-        <svg
-          height={height}
-          width={width}
-        >
+        <svg height={height} width={width}>
           {$yAxis}
           {$xAxis}
           {$evolutions}
@@ -229,7 +190,6 @@ export default class PerfherderWidget extends React.Component {
 PerfherderWidget.defaultProps = {
   signatures: '',
   reference: '',
-
 };
 PerfherderWidget.propTypes = {
   signatures: PropTypes.object,
