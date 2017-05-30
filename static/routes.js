@@ -6,20 +6,13 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
-import XpCrashes from './crashes/xp';
-import Regressions from './regressions';
 import Status from './status/index';
 import Quantum from './quantum/index';
-import QuantumCountdown from './quantum/countdown';
 import QuantumResponsivenessParent from './quantum/responsiveness-parent';
 import QuantumResponsivenessContent from './quantum/responsiveness-content';
 import QuantumPageLoadRender from './quantum/pageload-render';
-import QuantumBenchmarkHasal from './quantum/benchmark-hasal';
-import QuantumBenchmarkSm from './quantum/benchmark-sm';
-import QuantumBenchmarkPageload from './quantum/benchmark-pageload';
-import QuantumTracking from './quantum/metric';
 
-const NoMatch = () => (<div>404</div>);
+const NoMatch = () => <div>404</div>;
 
 class App extends Component {
   // componentWillMount() {
@@ -64,17 +57,10 @@ export default class Routes extends Component {
           <IndexRoute component={Home} />
           <Route path='crashes' component={ReleaseCrashes} />
           <Route path='crashes/beta' component={BetaCrashes} />
-          <Route path='crashes/xp' component={XpCrashes} />
-          <Route path='regressions' component={Regressions} />
           <Route path='quantum' component={Quantum} />
-          <Route path='quantum/countdown' component={QuantumCountdown} />
           <Route path='quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
           <Route path='quantum/responsiveness/content' component={QuantumResponsivenessContent} />
           <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
-          <Route path='quantum/benchmark/hasal' component={QuantumBenchmarkHasal} />
-          <Route path='quantum/benchmark/pageload' component={QuantumBenchmarkPageload} />
-          <Route path='quantum/benchmark/sm' component={QuantumBenchmarkSm} />
-          <Route path='quantum/track' component={QuantumTracking} />
           <Route path='status' component={Status} />
         </Route>
         <Route path='*' component={NoMatch} />
