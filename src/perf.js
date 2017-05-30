@@ -7,11 +7,7 @@ import gsjson from 'gsjson';
 import google from 'googleapis';
 import _ from 'lodash/fp';
 import { stringify } from 'query-string';
-import {
-  median,
-  standardDeviation,
-  quantile,
-} from 'simple-statistics';
+import { median, standardDeviation, quantile } from 'simple-statistics';
 import { createClient } from 'then-redis';
 import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
@@ -29,21 +25,26 @@ const getSpreadsheetValues = async ({ id, range }) => {
   if (!jwtClient) {
     const jwtKey = JSON.parse(process.env.GAUTH_JSON);
     jwtClient = new google.auth.JWT(
-      jwtKey.client_email, null, jwtKey.private_key,
-      'https://spreadsheets.google.com/feeds', null,
+      jwtKey.client_email,
+      null,
+      jwtKey.private_key,
+      'https://spreadsheets.google.com/feeds',
+      null,
     );
     await new Promise(resolve => jwtClient.authorize(resolve));
   }
   const { values } = await new Promise((resolve) => {
     const sheets = google.sheets('v4');
-    sheets.spreadsheets.values.get({
-      auth: jwtClient,
-      spreadsheetId: id,
-      range: range,
-    }, (err, response) => resolve(response));
+    sheets.spreadsheets.values.get(
+      {
+        auth: jwtClient,
+        spreadsheetId: id,
+        range: range,
+      },
+      (err, response) => resolve(response),
+    );
   });
-  const headers = values.splice(0, 1)
-    .pop();
+  const headers = values.splice(0, 1).pop();
   return values.reduce((criteria, entry) => {
     const obj = {};
     headers.forEach((header, idx) => {
@@ -83,12 +84,7 @@ const summarizeHistogram = (hist) => {
   };
 };
 
-const summaryKeys = [
-  'p50',
-  'p95',
-  'submissions',
-  'count',
-];
+const summaryKeys = ['p50', 'p95', 'submissions', 'count'];
 
 const windowRadius = 7;
 
@@ -111,34 +107,29 @@ const summarizeIpcTable = async (metric) => {
     application: 'Firefox',
   });
   return evolutions
-  .filter(({ evolution }) => evolution)
-  .map(({ key, evolution }) => {
-    const lastDate = moment().add(-1, 'days').toDate();
-    const firstDate = moment(lastDate).add(-7, 'days').toDate();
-    const range = evolution
-      .dateRange(
-        firstDate,
-        lastDate,
-      );
-    if (!range) {
-      return null;
-    }
-    const hist = range.histogram();
-    return {
-      key,
-      count: hist.count,
-      submissions: hist.submissions,
-      mean: hist.mean(),
-      median: hist.percentile(50),
-    };
-  })
-  .filter(row => row);
+    .filter(({ evolution }) => evolution)
+    .map(({ key, evolution }) => {
+      const lastDate = moment().add(-1, 'days').toDate();
+      const firstDate = moment(lastDate).add(-7, 'days').toDate();
+      const range = evolution.dateRange(firstDate, lastDate);
+      if (!range) {
+        return null;
+      }
+      const hist = range.histogram();
+      return {
+        key,
+        count: hist.count,
+        submissions: hist.submissions,
+        mean: hist.mean(),
+        median: hist.percentile(50),
+      };
+    })
+    .filter(row => row);
 };
 
 let notesCache = null;
 
 router
-
   .get('/notes', async (ctx) => {
     if (!notesCache) {
       notesCache = (await getSpreadsheetValues({
@@ -156,11 +147,10 @@ router
       // });
       setTimeout(() => {
         notesCache = null;
-      }, (process.env.NODE_ENV === 'production') ? (1000 * 60 * 5) : (1000 * 60));
+      }, process.env.NODE_ENV === 'production' ? 1000 * 60 * 5 : 1000 * 60);
     }
     ctx.body = notesCache;
   })
-
   .get('/benchmark/startup', async (ctx) => {
     const list = await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
@@ -173,12 +163,12 @@ router
     });
     ctx.body = list;
   })
-
   .get('/benchmark/pageload', async (ctx) => {
-    const list = (await getSpreadsheetValues({
+    const list = await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
       range: 'pageLoad!A1:F100',
-    })).filter(entry => entry.diff != null);
+    });
+    console.log(list);
     const ids = _.uniq(_.pluck('id', list));
     list.forEach((entry) => {
       entry.id = ids.indexOf(entry.id);
@@ -188,7 +178,6 @@ router
     });
     ctx.body = list;
   })
-
   .get('/benchmark/hasal', async (ctx) => {
     const list = (await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
@@ -202,9 +191,10 @@ router
     });
     ctx.body = list;
   })
-
   .get('/benchmark/speedometer', async (ctx) => {
-    const { graph } = await fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json');
+    const { graph } = await fetchJson(
+      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json',
+    );
     const start = moment('2017-05-01').valueOf();
     ctx.body = graph.timelist
       .map((date, idx) => {
@@ -218,21 +208,23 @@ router
           return reduced;
         }, []);
         if (runs.length === 2) {
-          values.diff = ((runs[1] - runs[0]) / runs[0]) * 100;
+          values.diff = (runs[1] - runs[0]) / runs[0] * 100;
         }
         return values;
       })
       .filter(entry => entry.diff != null)
       .filter(entry => entry.date > start);
   })
-
   .get('/herder', async (ctx) => {
     const { signatures } = ctx.request.query;
-    const data = await fetchJson(`https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
-      framework: 1,
-      interval: 31536000 / 12 * 5,
-      signatures: signatures,
-    })}`, { ttl: 'day' });
+    const data = await fetchJson(
+      `https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
+        framework: 1,
+        interval: 31536000 / 12 * 5,
+        signatures: signatures,
+      })}`,
+      { ttl: 'day' },
+    );
     ctx.body = signatures.map((current) => {
       const series = data[current].reduce((reduced, entry) => {
         const date = moment(entry.push_timestamp * 1000).format('YYYY-MM-DD');
@@ -276,26 +268,6 @@ router
       return series;
     });
   })
-
-  // .get('/evolution', async (ctx) => {
-  //   const opts = Object.assign({}, ctx.request.query);
-  //   const evolution = await getEvolution(opts);
-  //   if (!evolution) {
-  //     ctx.body = [];
-  //     return;
-  //   }
-  //   ctx.body = evolution.map((histogram, i, date) => {
-  //     return {
-  //       date: moment(date).format('YYYY-MM-DD'),
-  //       mean: histogram.mean(),
-  //       50: histogram.percentile(50),
-  //       75: histogram.percentile(75),
-  //       95: histogram.percentile(95),
-  //       99: histogram.percentile(99),
-  //     };
-  //   });
-  // })
-
   .get('/version-evolutions', async (ctx) => {
     const query = Object.assign({}, ctx.request.query);
     const channelVersions = await getVersions();
@@ -313,13 +285,15 @@ router
           if (version > parseInt(channelVersions[channel], 10)) {
             return null;
           }
-          return getEvolution(Object.assign({}, query, {
-            channel,
-            version: version,
-            useSubmissionDate: channel !== 'nightly',
-          }));
-        },
-      ));
+          return getEvolution(
+            Object.assign({}, query, {
+              channel,
+              version: version,
+              useSubmissionDate: channel !== 'nightly',
+            }),
+          );
+        }),
+      );
       if (!evolutions[0]) {
         break;
       }
@@ -347,7 +321,9 @@ router
         oldestNightlyStart = channelDates[0];
         console.log(oldestRelease, oldestNightlyStart);
       }
-      const nightlyDate = moment(evolutions.find(evoluion => evoluion).dates()[0]).format('YYYY-MM-DD');
+      const nightlyDate = moment(evolutions.find(evoluion => evoluion).dates()[0]).format(
+        'YYYY-MM-DD',
+      );
       const versionStr = sanitize(version);
       let releaseDate = (await getReleaseDate(versionStr)).date;
       if (!releaseDate) {
@@ -361,43 +337,38 @@ router
         start: nightlyDate,
         release: releaseDate,
         end: endDate,
-        channels: nightlyToRelease
-          .map((channel, i) => {
-            if (!evolutions[i]) {
-              return null;
-            }
-            const submissionsAvg = median(evolutions[i].map(date => date.submissions));
-            const countAvg = median(evolutions[i].map(date => date.count));
-            const cutoff = submissionsAvg * 0.5;
-            const dates = averageEvolution(
-              evolutions[i]
-                .map((histogram, j, date) => {
-                  if (histogram.submissions < cutoff) {
-                    return null;
-                  }
-                  return Object.assign(
-                    summarizeHistogram(histogram),
-                    {
-                      date: moment(date).format('YYYY-MM-DD'),
-                    },
-                  );
-                })
-                .filter(entry => entry && entry.p50),
-            );
-            return {
-              channel: channel,
-              submissionsAvg: submissionsAvg,
-              countAvg: countAvg,
-              dates: dates,
-            };
-          }),
+        channels: nightlyToRelease.map((channel, i) => {
+          if (!evolutions[i]) {
+            return null;
+          }
+          const submissionsAvg = median(evolutions[i].map(date => date.submissions));
+          const countAvg = median(evolutions[i].map(date => date.count));
+          const cutoff = submissionsAvg * 0.5;
+          const dates = averageEvolution(
+            evolutions[i]
+              .map((histogram, j, date) => {
+                if (histogram.submissions < cutoff) {
+                  return null;
+                }
+                return Object.assign(summarizeHistogram(histogram), {
+                  date: moment(date).format('YYYY-MM-DD'),
+                });
+              })
+              .filter(entry => entry && entry.p50),
+          );
+          return {
+            channel: channel,
+            submissionsAvg: submissionsAvg,
+            countAvg: countAvg,
+            dates: dates,
+          };
+        }),
       });
       endDate = releaseDate;
     }
 
     ctx.body = versions;
   })
-
   .get('/tracking', async (ctx) => {
     const opts = ctx.request.query;
     const evolution = await getLatestEvolution(opts);
@@ -408,22 +379,18 @@ router
     const histogram = evolution.histogram();
     ctx.body = summarizeHistogram(histogram);
   })
-
   .get('/ipc', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_SYNC_MAIN_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
-
   .get('/ipc/write', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_WRITE_MAIN_THREAD_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
-
   .get('/ipc/read', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_READ_MAIN_THREAD_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
   })
-
   .get('/ipc/mm', async (ctx) => {
     const summary = await summarizeIpcTable('IPC_SYNC_MESSAGE_MANAGER_LATENCY_MS');
     ctx.body = json2csv({ data: summary });
