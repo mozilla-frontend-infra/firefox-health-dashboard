@@ -11,8 +11,9 @@ import Countdown from './countdown';
 import Flow from './flow';
 
 const apzBugs = {
-  1351783: 'Keyboard scrolling',
-  1349750: 'Scrollbar dragging',
+  1351783: 'Keyboard Scrolling',
+  1349750: 'Scrollbar Dragging',
+  1367765: 'Touch Scrollbar Dragging',
   1105109: 'Autoscrolling',
 };
 
@@ -63,7 +64,14 @@ export default class QuantumIndex extends React.Component {
           }
           return (
             <div className={'widget-entry'} key={`apz-${id}`}>
-              <h4>{apzBugs[id]}<small>Bug {id}</small></h4>
+              <h4>
+                {apzBugs[id]}
+                <small>
+                  <a href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${id}`} target='_new'>
+                    Bug {id}
+                  </a>
+                </small>
+              </h4>
               <span>{label}</span>
             </div>
           );
