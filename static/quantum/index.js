@@ -126,9 +126,9 @@ export default class QuantumIndex extends React.Component {
               title='Page Load (tp5)'
               reference='2017-04-20'
               signatures={{
-                // 'win10-32': 'be6543ec7eef581e51c8464200cf880be9ac129e',
-                'win8-64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
+                'win10-32': 'c00763b23b39207671b795a12ba29d38ddc17f06',
                 'win7-32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
+                'win8-64': 'b68e2b084272409d7def3928a55baf0e00f3888a',
               }}
               {...notes.talos_tp5}
             />,
