@@ -35,18 +35,27 @@ export default class PerfherderWidget extends React.Component {
   }
 
   render() {
-    const { explainer } = this.props;
+    const { explainer, signatures } = this.props;
     const { evolutions } = this.state;
+    const signatureLabels = Object.keys(signatures);
     let svg = null;
 
     if (evolutions) {
+      const referenceTime = this.props.reference;
+      const referenceYs = [];
+      const referenceFit = moment(referenceTime).add(-5, 'days').unix();
       const [width, height] = this.viewport;
+
       const full = evolutions.reduce((reduced, evolution) => {
         return reduced.concat(evolution);
       }, []);
-      const xRange = [minBy('time', full).time * 1000, maxBy('time', full).time * 1000];
+      const xRange = [
+        Math.max(referenceFit, minBy('time', full).time) * 1000,
+        maxBy('time', full).time * 1000,
+      ];
       const yRange = [minBy('value', full).value, maxBy('value', full).value];
       const xScale = scaleTime().domain(xRange).range([25, width]);
+      const referenceX = xScale(new Date(referenceTime));
       const yScale = scaleLinear().domain(yRange).nice(tickCount).range([height - 20, 2]);
       const path = line()
         .x(d => xScale(new Date(d.time * 1000)))
@@ -57,10 +66,6 @@ export default class PerfherderWidget extends React.Component {
         .y0(d => yScale(d.q1))
         .y1(d => yScale(d.q3))
         .curve(curveLinear);
-
-      const referenceTime = this.props.reference;
-      const referenceX = xScale(new Date(referenceTime));
-      const referenceYs = [];
 
       const $evolutions = evolutions.map((evolution, idx) => {
         const ref = evolution.find(
@@ -120,7 +125,7 @@ export default class PerfherderWidget extends React.Component {
           </g>
         );
       });
-      const yFormat = timeFormat('%b');
+      const yFormat = timeFormat('%b %d');
       const $xAxis = xScale.ticks(6).map((tick, idx) => {
         const x = xScale(tick);
         const label = yFormat(tick);
@@ -133,9 +138,9 @@ export default class PerfherderWidget extends React.Component {
         );
       });
 
-      const $legend = Object.keys(this.props.signatures).map((label, idx) => {
+      const $legend = signatureLabels.map((label, idx) => {
         return (
-          <text className={`legend series-${idx}`} x={27 + 50 * idx} y={15} key={`legend-${label}`}>
+          <text className={`legend series-${idx}`} x={27 + 60 * idx} y={15} key={`legend-${label}`}>
             {label}
           </text>
         );

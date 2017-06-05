@@ -7,9 +7,8 @@ import gsjson from 'gsjson';
 import google from 'googleapis';
 import _ from 'lodash/fp';
 import { stringify } from 'query-string';
-import { median, standardDeviation, quantile } from 'simple-statistics';
-import { createClient } from 'then-redis';
-import { getSummary, getEvolution, getLatestEvolution } from './perf/tmo';
+import { median, quantile } from 'simple-statistics';
+import { getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
 import channels from './release/channels';
 import getVersions from './release/versions';
@@ -168,7 +167,6 @@ router
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
       range: 'pageLoad!A1:F100',
     });
-    console.log(list);
     const ids = _.uniq(_.pluck('id', list));
     list.forEach((entry) => {
       entry.id = ids.indexOf(entry.id);
@@ -220,7 +218,7 @@ router
     const data = await fetchJson(
       `https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
         framework: 1,
-        interval: 31536000 / 12 * 5,
+        interval: 31536000 / 12 * 3,
         signatures: signatures,
       })}`,
       { ttl: 'day' },

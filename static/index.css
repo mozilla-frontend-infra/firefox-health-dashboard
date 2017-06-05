@@ -264,7 +264,6 @@ svg {
 		background-color: var(--newCoral);
 	}
 	&.status-yellow header {
-		background-color: var(--newYellow);
 	}
 	&.status-green header {
 		background-color: var(--newLime);
@@ -349,10 +348,45 @@ svg {
 	}
 	&.widget-benchmark circle {
 		opacity: 0.8;
-
+	}
+	&.widget-status-all {
+		.widget-content {
+			flex-direction: column;
+			align-items: stretch;
+			justify-content: center;
+			.widget-entry {
+				padding: 0;
+				margin: calc(var(--gutterY) / 4) 0;
+				&:first-child {
+					margin-top: 0;
+				}
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+		.widget-entry {
+			text-align: center;
+			background-color: var(--lightGray);
+			height: calc(var(--gutterY) * 2);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.status-red {
+			background-color: var(--newCoral);
+		}
+		.status-yellow {
+		}
+		.status-green {
+			background-color: var(--newLime);
+		}
+		.status-blue {
+			background-color: var(--newCyan);
+		}
 	}
 }
-.graphic-timeline .widget-content {
+.graphic-timeline.criteria-widget .widget-content {
 	min-height: 250px;
 }
 .widget-secondary .widget-content {
@@ -412,7 +446,7 @@ svg {
 	flex: 1;
 	display: flex;
 	h4 {
-		padding-top: calc(var(--gutterY));
+		padding-top: 0;
 		font-weight: 300;
 		small {
 			display: block;
@@ -421,6 +455,7 @@ svg {
 		}
 	}
 	.widget-content {
+		min-height: 150px;
 		position: relative;
 		flex: 1;
 		display: flex;
