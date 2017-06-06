@@ -1,9 +1,7 @@
 import Router from 'koa-router';
-import GitHubApi from 'github';
 import json2csv from 'json2csv';
 import moment from 'moment';
 import chrono from 'chrono-node';
-import gsjson from 'gsjson';
 import google from 'googleapis';
 import _ from 'lodash/fp';
 import { stringify } from 'query-string';
@@ -60,15 +58,6 @@ const getSpreadsheetValues = async ({ id, range }) => {
 };
 
 export const router = new Router();
-const gh = new GitHubApi();
-
-gh.authenticate({
-  type: 'oauth',
-  token: '0d762cbc855c11db20a0e410a5a13c928a1d2ef3',
-  headers: {
-    Accept: 'application/vnd.github.v3.raw',
-  },
-});
 
 const summarizeHistogram = (hist) => {
   if (!hist.mean) {
@@ -190,28 +179,38 @@ router
     ctx.body = list;
   })
   .get('/benchmark/speedometer', async (ctx) => {
-    const { graph } = await fetchJson(
-      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json',
-    );
-    const start = moment('2017-05-01').valueOf();
-    ctx.body = graph.timelist
-      .map((date, idx) => {
-        const values = {
-          date: date * 1000,
-        };
-        const runs = graph.lines.reduce((reduced, line) => {
-          if (line && line.data[idx]) {
-            reduced.push(line.data[idx][0]);
+    const [legacySeries, referenceSeries] = await Promise.all([
+      fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json'),
+      fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json'),
+    ]);
+    const transform = ({ graph }, start = null, end = null) => {
+      return graph.timelist
+        .map((date, idx) => {
+          const values = {
+            date: date * 1000,
+          };
+          const runs = graph.lines.reduce((reduced, line) => {
+            if (line && line.data[idx]) {
+              reduced.push(line.data[idx][0]);
+            }
+            return reduced;
+          }, []);
+          if (runs.length === 2) {
+            values.diff = (runs[1] - runs[0]) / runs[0] * 100;
           }
-          return reduced;
-        }, []);
-        if (runs.length === 2) {
-          values.diff = (runs[1] - runs[0]) / runs[0] * 100;
-        }
-        return values;
-      })
-      .filter(entry => entry.diff != null)
-      .filter(entry => entry.date > start);
+          return values;
+        })
+        .filter(entry => entry.diff != null)
+        .filter(entry => !end || entry.date < end)
+        .filter(entry => !start || entry.date > start);
+    };
+    const legacy = transform(
+      legacySeries,
+      moment('2017-05-01').valueOf(),
+      moment('2017-06-01').valueOf(),
+    );
+    const reference = transform(referenceSeries);
+    ctx.body = legacy.concat(reference);
   })
   .get('/herder', async (ctx) => {
     const { signatures } = ctx.request.query;
@@ -252,7 +251,7 @@ router
       // const md = median(values);
       // const sd = standardDeviation(values);
       const slice = 60 * 60 * 24 * 7;
-      series.forEach((entry, idx) => {
+      series.forEach((entry) => {
         const now = entry.runs[0].time;
         const sliced = runs
           .filter((check) => {
@@ -279,7 +278,7 @@ router
     const channelDates = [];
     for (let version = start; version >= start - 5; version -= 1) {
       const evolutions = await Promise.all(
-        nightlyToRelease.map((channel, channelIdx) => {
+        nightlyToRelease.map((channel) => {
           if (version > parseInt(channelVersions[channel], 10)) {
             return null;
           }

@@ -30,12 +30,19 @@ export default class Widget extends React.Component {
         {title}
       </a>)
       : title;
+    let target = this.props.target;
+    if (target) {
+      const tooLong = target.length > 15;
+      target = enrich(this.props.target);
+      if (!tooLong) {
+        target = ['Target: ', target];
+      }
+    }
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
         <header>
           <h3>{$title}</h3>
-          {this.props.target &&
-            <aside title={this.props.target}>Target: {enrich(this.props.target)}</aside>}
+          {target && <aside title={this.props.target}>{target}</aside>}
         </header>
         <div
           className={cx('widget-content', {

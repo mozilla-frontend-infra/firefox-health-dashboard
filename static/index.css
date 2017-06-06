@@ -249,8 +249,7 @@ svg {
 			align-self: flex-end;
 			background-color: #fff;
 			padding-left: calc(var(--gutterX) / 2);
-			padding-right: calc(var(--gutterX));
-			font-size: var(--fontSize);
+			padding-right: calc(var(--gutterX) / 2);
 			color: var(--darkGray);
 			font-weight: 400;
 			em {
@@ -386,7 +385,7 @@ svg {
 		}
 	}
 }
-.graphic-timeline.criteria-widget .widget-content {
+.graphic-timeline .widget-content {
 	min-height: 250px;
 }
 .widget-secondary .widget-content {

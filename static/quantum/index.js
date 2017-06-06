@@ -163,7 +163,7 @@ export default class QuantumIndex extends React.Component {
               title='Start-up (sessionrestore)'
               reference='2017-04-13'
               signatures={{
-                'win10-64': 'fbd9aab82203e641b6a4c717bd7509504b1e1ad9',
+                'win10-64': '577f4c3e31bc186dbfebdef9e40571569764d613',
                 'win7-32': '196b82960327035de720500e1a5f9f0154cf97ad',
                 'win8-64': '555ac79a588637a3ec5752d5b9b3ee769a55d7f6',
               }}
@@ -290,7 +290,7 @@ export default class QuantumIndex extends React.Component {
             <Benchmark
               title='Benchmark: Speedometer v2'
               id='speedometer'
-              link='https://arewefastyet.com/#machine=17&view=breakdown&suite=speedometer-misc'
+              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
               type='line'
               {...notes.speedometer}
