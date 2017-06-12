@@ -42,7 +42,7 @@ export default class Widget extends React.Component {
         <aside className={cx(targetCls)}>
           {targetStatus === 'pass'
             ? ['On Target', ' ', <span className='status-icon'>🙂</span>]
-            : ['Not on Target', ' ', <span className='status-icon'>🙂</span>]}
+            : ['Not on Target', ' ', <span className='status-icon'>☹️</span>]}
         </aside>
       );
     }
