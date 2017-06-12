@@ -117,14 +117,14 @@ export default class QuantumIndex extends React.Component {
         rows: [
           [
             <Benchmark
-              title='Benchmark: Time to First Paint'
+              title='Benchmark: First Paint'
               id='pageload'
               metric='firstPaint'
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.tp6_render}
             />,
             <Benchmark
-              title='Benchmark: Time to Hero Element'
+              title='Benchmark: Hero Element'
               id='pageload'
               metric='heroElement'
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
@@ -147,15 +147,15 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Browser chrome',
         rows: [
           [
-            <MissonControl title='Input Latency over 2.5s/MTBF' {...notes.chrome_il_mtbf_high} />,
+            <MissonControl title='Input Latency ≥ 2.5s/MTBF' {...notes.chrome_il_mtbf_high} />,
             <MissonControl
-              title='Input Latency over 2.5s/Sessions'
+              title='Input Latency ≥ 2.5s/Sessions'
               {...notes.chrome_il_sessions_high}
             />,
-            <MissonControl title='Input Latency over 250ms/MTBF' {...notes.chrome_il_mtbf_low} />,
+            <MissonControl title='Input Latency ≥ 250ms/MTBF' {...notes.chrome_il_mtbf_low} />,
           ],
           [
-            <MissonControl title='CC/GC Pauses over 150ms' {...notes.chrome_gc_pauses} />,
+            <MissonControl title='CC/GC Pauses ≥ 150ms' {...notes.chrome_gc_pauses} />,
             <MissonControl title='Ghost Windows' {...notes.chrome_ghost_windows} />,
           ],
           [
@@ -272,12 +272,12 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Content',
         rows: [
           [
-            <MissonControl title='Input Latency over 2.5s/MTBF' {...notes.content_il_mtbf_high} />,
+            <MissonControl title='Input Latency ≥ 2.5s/MTBF' {...notes.content_il_mtbf_high} />,
             <MissonControl
-              title='Input Latency over 2.5s/Sessions'
+              title='Input Latency ≥ 2.5s/Sessions'
               {...notes.content_il_sessions_high}
             />,
-            <MissonControl title='Input Latency over 250ms/MTBF' {...notes.content_il_mtbf_low} />,
+            <MissonControl title='Input Latency ≥ 250ms/MTBF' {...notes.content_il_mtbf_low} />,
           ],
           [
             <Benchmark
@@ -299,7 +299,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Start-up: Time to First Paint'
+              title='Start-up: First Paint'
               id='startup'
               metric='firstPaint'
               targetDiff={20}
@@ -307,7 +307,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.startup_render}
             />,
             <Benchmark
-              title='Start-up: Time to Hero Element'
+              title='Start-up: Hero Element'
               id='startup'
               metric='heroElement'
               targetDiff={20}
