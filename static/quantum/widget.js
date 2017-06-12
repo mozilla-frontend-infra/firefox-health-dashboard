@@ -32,17 +32,26 @@ export default class Widget extends React.Component {
       : title;
     let target = this.props.target;
     if (target) {
-      const tooLong = target.length > 15;
-      target = enrich(this.props.target);
-      if (!tooLong) {
-        target = ['Target: ', target];
-      }
+      target = ['Target: ', enrich(this.props.target)];
     }
+    const targetCls = ['widget-target-status'];
+    let $targetStatus = null;
+    if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
+      const targetStatus = this.props.targetStatus;
+      $targetStatus = (
+        <aside className={cx(targetCls)}>
+          {targetStatus === 'pass'
+            ? ['On Target', ' ', <span className='status-icon'>🙂</span>]
+            : ['Not on Target', ' ', <span className='status-icon'>🙂</span>]}
+        </aside>
+      );
+    }
+
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
         <header>
           <h3>{$title}</h3>
-          {target && <aside title={this.props.target}>{target}</aside>}
+          {$targetStatus}
         </header>
         <div
           className={cx('widget-content', {
@@ -56,18 +65,19 @@ export default class Widget extends React.Component {
           }}
         >
           {enrich(this.props.content)}
-          {this.props.explainer &&
-            <div key='explainer' className='widget-explainer'>
-              {enrich(this.props.explainer)}
-            </div>}
-          {this.props.commentary &&
-            <div key='commentary' className='widget-commentary'>
-              {enrich(this.props.commentary)}
-            </div>}
           {updated &&
             <div key='updated' className='widget-updated'>
-              Commentary updated {updated.format('MMM Do')}
+              Updated
+              {' '}
+              <a
+                href='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                {updated.format('MMM Do')}
+              </a>
             </div>}
+          {target && <div key='target' className='widget-target'>{target}</div>}
         </div>
       </div>
     );
@@ -85,6 +95,7 @@ Widget.propTypes = {
   status: PropTypes.string,
   title: PropTypes.string,
   target: PropTypes.string,
+  targetStatus: PropTypes.string,
   explainer: PropTypes.string,
   commentary: PropTypes.string,
   viewport: PropTypes.func,

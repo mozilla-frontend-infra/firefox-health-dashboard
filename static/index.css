@@ -239,7 +239,7 @@ svg {
 			display: inline-block;
 			color: #000;
 		}
-		aside {
+		.widget-target-status {
 			flex: 1;
 			flex-shrink: 1;
 			text-align: right;
@@ -251,7 +251,8 @@ svg {
 			padding-left: calc(var(--gutterX) / 2);
 			padding-right: calc(var(--gutterX) / 2);
 			color: var(--darkGray);
-			font-weight: 400;
+			font-weight: 700;
+			font-size: var(--smallFontSize);
 			em {
 				font-weight: 700;
 				color: #333;
@@ -470,43 +471,22 @@ svg {
 			}
 		}
 	}
-	.widget-explainer, .widget-commentary, .widget-updated {
+	.widget-updated, .widget-target {
 		position: absolute;
 		font-size: var(--smallFontSize);
 		line-height: calc(var(--gutterY) * 0.8);
-		transition: opacity 0.1s ease-out;
-		opacity: 0;
-		background-color: color(#fff alpha(75%));
+		color: var(--darkGray);
 	}
 	.widget-updated {
-		opacity: 0.3;
 		color: var(--darkGray);
 		position: absolute;
 		right: 0;
 		bottom: calc(var(--gutterY) * -0.75);
 	}
-	.widget-explainer {
+	.widget-target {
 		bottom: calc(var(--gutterY) * -0.75);
 		left: 0;
 		padding: 0;
-		max-width: 75%;
-		color: #000;
-	}
-	.widget-commentary {
-		opacity: 0.3;
-		font-style: italic;
-		text-align: right;
-		padding: calc(var(--gutterY) * 0.1) calc(var(--gutterX) / 2);
-		top: calc(var(--gutterY) * 0);
-		right: 0;
-		max-width: 75%;
-		background-color: #000;
-		color: var(--lightGray);
-	}
-	&:hover {
-		.widget-explainer, .widget-commentary, .widget-updated {
-			opacity: 1;
-		}
 	}
 }
 

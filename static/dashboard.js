@@ -7,32 +7,25 @@ import cx from 'classnames';
 const Dashboard = (props) => {
   const { title, subtitle, children, className, note, source, sourceTitle, link } = props;
   const empty = !children;
-  const $content = (!empty) ? children : 'Loading …';
+  const $content = !empty ? children : 'Loading …';
   const cls = cx('dashboard', className, {
     'state-loading': empty,
     'state-fullscreen': window.frameElement || document.fullscreen,
   });
-  const direct = `${location.host}${location.pathname}`;
-  const $note = note ? (
-    <div className='dashboard-note'>{note}</div>
-  ) : null;
-  const $link = link ? (
-    <a href={link} target='_new'>
+  const $note = note ? <div className='dashboard-note'>{note}</div> : null;
+  const $link = link
+    ? (<a href={link} target='_new'>
       {link.replace(/.*\/\//, '')}
-    </a>
-  ) : null;
-  const $source = source ? (
-    <div className='dashboard-source'>
-      Source: <a
-        href={source}
-        target='_new'
-        rel='noopener noreferrer'
-      >
-        {sourceTitle}
-      </a>
+    </a>)
+    : null;
+  const $source = source
+    ? (<div className='dashboard-source'>
+        Source: <a href={source} target='_new' rel='noopener noreferrer'>
+          {sourceTitle}
+        </a>
       {$link}
-    </div>
-  ) : null;
+    </div>)
+    : null;
   return (
     <div className={cls}>
       <div className='dashboard-title'>

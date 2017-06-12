@@ -89,7 +89,7 @@ export default class QuantumIndex extends React.Component {
 
     const statusWidget = (
       <Widget
-        title='Status Tracking Summary'
+        title='Target Tracking Summary'
         target='Be *on track*'
         className='widget-status-all'
         loading={Object.keys(notes).length === 0}
@@ -120,14 +120,14 @@ export default class QuantumIndex extends React.Component {
               title='Benchmark: Time to First Paint'
               id='pageload'
               metric='firstPaint'
-              link='https://docs.google.com/a/mozilla.com/document/d/1ViLJw-ZH9K8ecr5itZaXcnyxEDDYtJcv1KOSXMO5dVA/edit?usp=sharing'
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.tp6_render}
             />,
             <Benchmark
               title='Benchmark: Time to Hero Element'
               id='pageload'
               metric='heroElement'
-              link='https://docs.google.com/a/mozilla.com/document/d/1ViLJw-ZH9K8ecr5itZaXcnyxEDDYtJcv1KOSXMO5dVA/edit?usp=sharing'
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.tp6_hero}
             />,
             <Perfherder
@@ -303,6 +303,7 @@ export default class QuantumIndex extends React.Component {
               id='startup'
               metric='firstPaint'
               targetDiff={20}
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
               {...notes.startup_render}
             />,
             <Benchmark
@@ -310,6 +311,7 @@ export default class QuantumIndex extends React.Component {
               id='startup'
               metric='heroElement'
               targetDiff={20}
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
               {...notes.startup_hero}
             />,
           ],
@@ -367,6 +369,7 @@ export default class QuantumIndex extends React.Component {
         className='summary'
         sourceTitle='Status Spreadsheet'
         source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/view'
+        link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
       >
         {$content}
       </Dashboard>
