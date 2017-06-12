@@ -122,7 +122,7 @@ router
     if (!notesCache) {
       notesCache = (await getSpreadsheetValues({
         id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-        range: 'Status!A1:J35',
+        range: 'Status!A1:F30',
       })).reduce((hash, note) => {
         hash[note.id] = note;
         return hash;
