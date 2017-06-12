@@ -41,8 +41,8 @@ export default class Widget extends React.Component {
       $targetStatus = (
         <aside className={cx(targetCls)}>
           {targetStatus === 'pass'
-            ? ['On Target', ' ', <span className='status-icon'>🙂</span>]
-            : ['Not on Target', ' ', <span className='status-icon'>☹️</span>]}
+            ? ['On Target', ' ', <span className='status-icon'>😀</span>]
+            : ['Not on Target', ' ', <span className='status-icon'>😟</span>]}
         </aside>
       );
     }

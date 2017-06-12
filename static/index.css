@@ -253,10 +253,17 @@ svg {
 			color: var(--darkGray);
 			font-weight: 700;
 			font-size: var(--smallFontSize);
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
 			em {
 				font-weight: 700;
 				color: #333;
 				font-style: normal;
+			}
+			.status-icon {
+				padding-left: calc(var(--gutterY) / 4);
+				font-size: var(--fontSize);
 			}
 		}
 	}
