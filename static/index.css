@@ -358,27 +358,32 @@ svg {
 	}
 	&.widget-status-all {
 		.widget-content {
-			flex-direction: column;
-			align-items: stretch;
-			justify-content: center;
+			display: flex;
+			flex-direction: row;
+			align-items: flex-start;
 			.widget-entry {
+				flex: 1;
 				padding: 0;
-				margin: calc(var(--gutterY) / 4) 0;
-				&:first-child {
-					margin-top: 0;
-				}
-				&:last-child {
-					margin-bottom: 0;
-				}
+				margin: 0 calc(var(--gutterY) / 8);
 			}
 		}
-		.widget-entry {
+		.widget-entry-row, h4 {
+			padding: 0;
+			margin: calc(var(--gutterY) / 4) 0;
 			text-align: center;
-			background-color: var(--lightGray);
-			height: calc(var(--gutterY) * 2);
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			em {
+
+			}
+		}
+		h4 {
+			height: calc(var(--gutterY));
+		}
+		.widget-entry-row {
+			height: calc(var(--gutterY) * 2);
+			background-color: var(--lightGray);
 		}
 		.status-red {
 			background-color: var(--newCoral);
@@ -447,6 +452,15 @@ svg {
 }
 .summary .row {
 	background-color: #fff;
+}
+.summary-fullscreen  {
+	margin-bottom: calc(var(--gutterY) * 2);
+	.row {
+		flex: 1;
+	}
+	.row:not(:first-of-type), h2:not(:first-of-type) {
+		display: none;
+	}
 }
 
 .criteria-widget {

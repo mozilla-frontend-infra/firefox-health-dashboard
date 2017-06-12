@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import moment from 'moment';
 
-const enrich = (text) => {
+const enrich = (text, key = 'none') => {
   return typeof text === 'string'
     ? <span
+      key={`enriched-${key}`}
       dangerouslySetInnerHTML={{
           // eslint-disable-line
         __html: text
@@ -41,8 +42,8 @@ export default class Widget extends React.Component {
       $targetStatus = (
         <aside className={cx(targetCls)}>
           {targetStatus === 'pass'
-            ? ['Within Target', ' ', <span className='status-icon'>😀</span>]
-            : ['Not within Target', ' ', <span className='status-icon'>😟</span>]}
+            ? ['Within Target', ' ', <span key='icon-pass' className='status-icon'>😀</span>]
+            : ['Not within Target', ' ', <span key='icon-fail' className='status-icon'>😟</span>]}
         </aside>
       );
     }
@@ -64,7 +65,7 @@ export default class Widget extends React.Component {
             }
           }}
         >
-          {enrich(this.props.content)}
+          {enrich(this.props.content, 'content')}
           {updated &&
             <div key='updated' className='widget-updated'>
               Updated

@@ -1,6 +1,8 @@
 /* global fetch */
 import 'babel-polyfill';
 import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 import Widget from './widget';
@@ -20,9 +22,10 @@ const apzBugs = {
 const statusLabels = new Map([
   ['red', 'blocked/at risk'],
   ['green', 'on track'],
-  ['yellow', 'unknowns/possible blockers'],
   ['blue', 'signed off'],
   ['secondary', 'regression criteria at risk'],
+  ['pass', ['within target', ' ', <em>😀</em>]],
+  ['fail', ['not within target', ' ', <em>😟</em>]],
 ]);
 
 export default class QuantumIndex extends React.Component {
@@ -80,28 +83,49 @@ export default class QuantumIndex extends React.Component {
       />
     );
 
-    const allStatus = new Map([['green', 0], ['red', 0], ['yellow', 0], ['blue', 0]]);
+    const allStatus = new Map([['green', 0], ['red', 0], ['blue', 0]]);
+    const allTargetStatus = new Map([['pass', 0], ['fail', 0]]);
     for (const note of Object.values(notes)) {
       if (note.status) {
         allStatus.set(note.status, allStatus.get(note.status) + 1);
+      }
+      if (note.targetStatus) {
+        allTargetStatus.set(note.targetStatus, allTargetStatus.get(note.targetStatus) + 1);
       }
     }
 
     const statusWidget = (
       <Widget
-        title='Target Tracking Summary'
-        target='Be *on track*'
+        title='Tracking Summary'
+        target='Be *on track* to be *within target*'
         className='widget-status-all'
         loading={Object.keys(notes).length === 0}
         content={
           Object.keys(notes).length
-            ? Array.from(allStatus.entries()).map(([color, count]) => {
-              return (
-                <div className={`widget-entry status-${color}`} key={`status-${color}`}>
-                  <span><em>{count}</em> {statusLabels.get(color)}</span>
-                </div>
-              );
-            })
+            ? [
+              <div className='widget-entry' key='confidence'>
+                {[<h4>Engineering Confidence</h4>].concat(
+                    Array.from(allStatus.entries()).map(([color, count]) => {
+                      return (
+                        <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
+                          <span><em>{count}</em> {statusLabels.get(color)}</span>
+                        </div>
+                      );
+                    }),
+                  )}
+              </div>,
+              <div className='widget-entry' key='status'>
+                {[<h4>Target Status</h4>].concat(
+                    Array.from(allTargetStatus.entries()).map(([color, count]) => {
+                      return (
+                        <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
+                          <span><em>{count}</em> {statusLabels.get(color)}</span>
+                        </div>
+                      );
+                    }),
+                  )}
+              </div>,
+            ]
             : 'Loading status …'
         }
       />
@@ -362,11 +386,13 @@ export default class QuantumIndex extends React.Component {
       return reduced.concat(add);
     }, []);
 
+    const full = !!this.props.location.query.full;
+
     const $dashboard = (
       <Dashboard
         title='Quantum'
         subtitle='Release Criteria Report'
-        className='summary'
+        className={cx('summary', { 'summary-fullscreen': full })}
         sourceTitle='Status Spreadsheet'
         source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/view'
         link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
@@ -378,3 +404,7 @@ export default class QuantumIndex extends React.Component {
     return $dashboard;
   }
 }
+
+QuantumIndex.propTypes = {
+  location: PropTypes.object,
+};
