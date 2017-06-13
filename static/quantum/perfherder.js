@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { min, maxBy, minBy } from 'lodash/fp';
 import cx from 'classnames';
 import moment from 'moment';
-// import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
 import { stringify } from 'query-string';
 import Widget from './widget';

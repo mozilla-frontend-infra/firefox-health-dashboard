@@ -212,6 +212,28 @@ router
     const reference = transform(referenceSeries);
     ctx.body = legacy.concat(reference);
   })
+  .get('/mission-control', async (ctx) => {
+    const { metric } = ctx.request.query;
+    const fields = metric.split('.');
+    fields[0] += '_quantumready';
+    const start = moment('2017-06-05');
+    const days = moment().diff(start, 'days') - 1;
+    const dates = [];
+    for (let i = 0; i <= days; i += 1) {
+      const current = start.add(i, 'days');
+      const data = await fetchJson(
+        `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(current).format('YYYYMMDD')}.json`,
+      );
+      if (!data) {
+        break;
+      }
+      dates.push({
+        time: current.valueOf(),
+        value: data[fields[0]][fields[1]],
+      });
+    }
+    ctx.body = dates;
+  })
   .get('/herder', async (ctx) => {
     const { signatures } = ctx.request.query;
     const data = await fetchJson(

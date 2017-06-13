@@ -8,7 +8,7 @@ import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
-import MissonControl from './mission-control';
+import MissionControl from './mission-control';
 import Countdown from './countdown';
 import Flow from './flow';
 
@@ -171,16 +171,40 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Browser chrome',
         rows: [
           [
-            <MissonControl title='Input Latency ≥ 2.5s/MTBF' {...notes.chrome_il_mtbf_high} />,
-            <MissonControl
+            <MissionControl
+              title='Input Latency ≥ 2.5s/MTBF'
+              metric='nightly.mtbf_chrome_input_latency_gt_2500'
+              reference={16}
+              formatting='h'
+              {...notes.chrome_il_mtbf_high}
+            />,
+            <MissionControl
               title='Input Latency ≥ 2.5s/Sessions'
               {...notes.chrome_il_sessions_high}
             />,
-            <MissonControl title='Input Latency ≥ 250ms/MTBF' {...notes.chrome_il_mtbf_low} />,
+            <MissionControl
+              title='Input Latency ≥ 250ms/MTBF'
+              metric='nightly.mtbf_chrome_input_latency_gt_250'
+              reference={2}
+              formatting='h'
+              {...notes.chrome_il_mtbf_low}
+            />,
           ],
           [
-            <MissonControl title='CC/GC Pauses ≥ 150ms' {...notes.chrome_gc_pauses} />,
-            <MissonControl title='Ghost Windows' {...notes.chrome_ghost_windows} />,
+            <MissionControl
+              title='CC/GC Pauses ≥ 150ms'
+              metric='weekly.chrome_gccc_gt_150'
+              formatting='%'
+              reference={2}
+              {...notes.chrome_gc_pauses}
+            />,
+            <MissionControl
+              title='Ghost Windows'
+              formatting='%'
+              reference={0}
+              metric='nightly.ghost_windows_rate'
+              {...notes.chrome_ghost_windows}
+            />,
           ],
           [
             <Perfherder
@@ -296,12 +320,21 @@ export default class QuantumIndex extends React.Component {
         title: 'Responsiveness: Content',
         rows: [
           [
-            <MissonControl title='Input Latency ≥ 2.5s/MTBF' {...notes.content_il_mtbf_high} />,
-            <MissonControl
+            <MissionControl
+              title='Input Latency ≥ 2.5s/MTBF'
+              metric='nightly.mtbf_content_input_latency_gt_2500'
+              {...notes.content_il_mtbf_high}
+            />,
+            <MissionControl
               title='Input Latency ≥ 2.5s/Sessions'
               {...notes.content_il_sessions_high}
             />,
-            <MissonControl title='Input Latency ≥ 250ms/MTBF' {...notes.content_il_mtbf_low} />,
+            <MissionControl
+              title='Input Latency ≥ 250ms/MTBF'
+              metric='nightly.mtbf_content_input_latency_gt_250'
+              reference={16}
+              {...notes.content_il_mtbf_low}
+            />,
           ],
           [
             <Benchmark
@@ -319,7 +352,12 @@ export default class QuantumIndex extends React.Component {
               type='line'
               {...notes.speedometer}
             />,
-            <MissonControl title='CC/GC pauses 2500ms+' {...notes.content_gc_pauses} />,
+            <MissionControl
+              title='CC/GC pauses 2500ms+'
+              metric='weekly.content_gccc_gt_2500'
+              formatting='%'
+              {...notes.content_gc_pauses}
+            />,
           ],
           [
             <Benchmark
