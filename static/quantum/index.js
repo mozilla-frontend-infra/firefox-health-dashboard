@@ -20,12 +20,11 @@ const apzBugs = {
 };
 
 const statusLabels = new Map([
-  ['red', 'blocked/at risk'],
-  ['green', 'on track'],
+  ['red', 'needs escalation'],
+  ['yellow', 'on track but not within target'],
+  ['green', 'within target'],
   ['blue', 'signed off'],
   ['secondary', 'regression criteria at risk'],
-  ['pass', ['within target', ' ', <em>😀</em>]],
-  ['fail', ['not within target', ' ', <em>😟</em>]],
 ]);
 
 export default class QuantumIndex extends React.Component {
@@ -83,20 +82,16 @@ export default class QuantumIndex extends React.Component {
       />
     );
 
-    const allStatus = new Map([['green', 0], ['red', 0], ['blue', 0]]);
-    const allTargetStatus = new Map([['pass', 0], ['fail', 0]]);
+    const allStatus = new Map([['green', 0], ['yellow', 0], ['red', 0]]);
     for (const note of Object.values(notes)) {
       if (note.status) {
         allStatus.set(note.status, allStatus.get(note.status) + 1);
-      }
-      if (note.targetStatus) {
-        allTargetStatus.set(note.targetStatus, allTargetStatus.get(note.targetStatus) + 1);
       }
     }
 
     const statusWidget = (
       <Widget
-        title='Tracking Summary'
+        title='Risk/Target Status Summary'
         target='Be *on track* to be *within target*'
         className='widget-status-all'
         loading={Object.keys(notes).length === 0}
@@ -104,26 +99,13 @@ export default class QuantumIndex extends React.Component {
           Object.keys(notes).length
             ? [
               <div className='widget-entry' key='confidence'>
-                {[<h4>Engineering Confidence</h4>].concat(
-                    Array.from(allStatus.entries()).map(([color, count]) => {
-                      return (
-                        <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
-                          <span><em>{count}</em> {statusLabels.get(color)}</span>
-                        </div>
-                      );
-                    }),
-                  )}
-              </div>,
-              <div className='widget-entry' key='status'>
-                {[<h4>Target Status</h4>].concat(
-                    Array.from(allTargetStatus.entries()).map(([color, count]) => {
-                      return (
-                        <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
-                          <span><em>{count}</em> {statusLabels.get(color)}</span>
-                        </div>
-                      );
-                    }),
-                  )}
+                {Array.from(allStatus.entries()).map(([color, count]) => {
+                  return (
+                    <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
+                      <span><em>{count}</em> {statusLabels.get(color)}</span>
+                    </div>
+                  );
+                })}
               </div>,
             ]
             : 'Loading status …'
@@ -133,11 +115,103 @@ export default class QuantumIndex extends React.Component {
 
     const sections = [
       {
-        title: 'Planning',
         rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
       },
       {
-        title: 'Page Load Time',
+        title: '#1 Speedometer v2',
+        rows: [
+          [
+            <Benchmark
+              title='Benchmark: Speedometer v2'
+              id='speedometer'
+              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometer}
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#2 Responsiveness in Browser Chrome & Content',
+        rows: [
+          [
+            <MissionControl
+              title='Browser: Input Lag ≥ 2.5s/MTBF'
+              metric='nightly.mtbf_chrome_input_latency_gt_2500'
+              reference={16}
+              referenceArea='above'
+              formatting='hrs'
+              {...notes.chrome_il_mtbf_high}
+            />,
+            <MissionControl
+              title='Browser: Input Lag ≥ 2.5s/Population'
+              metric='weekly.chrome_input_latency_gt_2500'
+              formatting='%'
+              reference={0.02}
+              {...notes.chrome_il_sessions_high}
+            />,
+            <MissionControl
+              title='Browser: Input Lag ≥ 250ms/MTBF'
+              metric='nightly.mtbf_chrome_input_latency_gt_250'
+              reference={2}
+              referenceArea='above'
+              formatting='min'
+              {...notes.chrome_il_mtbf_low}
+            />,
+          ],
+          [
+            <MissionControl
+              title='Content: Input Lag ≥ 2.5s/MTBF'
+              metric='nightly.mtbf_content_input_latency_gt_2500'
+              reference={4}
+              referenceArea='above'
+              formatting='hrs'
+              {...notes.content_il_mtbf_high}
+            />,
+            <MissionControl
+              title='Content: Input Lag ≥ 2.5s/Population'
+              metric='weekly.content_input_latency_gt_2500'
+              formatting='%'
+              reference={0.05}
+              {...notes.content_il_sessions_high}
+            />,
+            <MissionControl
+              title='Content: Input Lag ≥ 250ms/MTBF'
+              metric='nightly.mtbf_content_input_latency_gt_250'
+              reference={0.5}
+              referenceArea='above'
+              formatting='min'
+              {...notes.content_il_mtbf_low}
+            />,
+          ],
+          [
+            <MissionControl
+              title='Browser: CC/GC Pauses ≥ 150ms'
+              metric='weekly.chrome_gccc_gt_150'
+              formatting='%'
+              reference={0.02}
+              {...notes.chrome_gc_pauses}
+            />,
+            <MissionControl
+              title='Browser: Ghost Windows'
+              formatting='%'
+              reference={0}
+              metric='nightly.ghost_windows_rate'
+              {...notes.chrome_ghost_windows}
+            />,
+            <MissionControl
+              title='Content: CC/GC pauses 2500ms+'
+              metric='weekly.content_gccc_gt_2500'
+              formatting='%'
+              reference={0.02}
+              {...notes.content_gc_pauses}
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#3 Browser & Page Load Times',
         rows: [
           [
             <Benchmark
@@ -154,6 +228,49 @@ export default class QuantumIndex extends React.Component {
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.tp6_hero}
             />,
+          ],
+        ],
+      },
+      {
+        title: '#4 Browser Startup',
+        rows: [
+          [
+            <Benchmark
+              title='Start-up: First Paint'
+              id='startup'
+              metric='firstPaint'
+              targetDiff={20}
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
+              {...notes.startup_render}
+            />,
+            <Benchmark
+              title='Start-up: Hero Element'
+              id='startup'
+              metric='heroElement'
+              targetDiff={20}
+              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
+              {...notes.startup_hero}
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#5 Smooth Scrolling',
+        rows: [[$apz]],
+      },
+      {
+        title: '#6 Regression',
+        rows: [
+          [
+            <Benchmark
+              title='Benchmark: Input Lag (Hasal)'
+              id='hasal'
+              link='https://github.com/Mozilla-TWQA/Hasal/'
+              targetDiff={0}
+              {...notes.hasal}
+            />,
+          ],
+          [
             <Perfherder
               title='Page Load (tp5)'
               reference='2017-04-20'
@@ -164,46 +281,15 @@ export default class QuantumIndex extends React.Component {
               }}
               {...notes.talos_tp5}
             />,
-          ],
-        ],
-      },
-      {
-        title: 'Responsiveness: Browser chrome',
-        rows: [
-          [
-            <MissionControl
-              title='Input Latency ≥ 2.5s/MTBF'
-              metric='nightly.mtbf_chrome_input_latency_gt_2500'
-              reference={16}
-              formatting='h'
-              {...notes.chrome_il_mtbf_high}
-            />,
-            <MissionControl
-              title='Input Latency ≥ 2.5s/Sessions'
-              {...notes.chrome_il_sessions_high}
-            />,
-            <MissionControl
-              title='Input Latency ≥ 250ms/MTBF'
-              metric='nightly.mtbf_chrome_input_latency_gt_250'
-              reference={2}
-              formatting='h'
-              {...notes.chrome_il_mtbf_low}
-            />,
-          ],
-          [
-            <MissionControl
-              title='CC/GC Pauses ≥ 150ms'
-              metric='weekly.chrome_gccc_gt_150'
-              formatting='%'
-              reference={2}
-              {...notes.chrome_gc_pauses}
-            />,
-            <MissionControl
-              title='Ghost Windows'
-              formatting='%'
-              reference={0}
-              metric='nightly.ghost_windows_rate'
-              {...notes.chrome_ghost_windows}
+            <Perfherder
+              title='Window Opening (tpaint)'
+              reference='2017-05-07'
+              signatures={{
+                'win10-64': '1372d76b5e35afa687de06f8159d5e8c437be91d',
+                'win7-32': 'd0a85e9de2bec8153d2040f2958d979876542012',
+                'win8-64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
+              }}
+              {...notes.talos_tpaint}
             />,
           ],
           [
@@ -227,8 +313,6 @@ export default class QuantumIndex extends React.Component {
               }}
               {...notes.talos_sessionrestore_no_auto_restore}
             />,
-          ],
-          [
             <Perfherder
               title='Start-Up (ts_paint)'
               reference='2017-05-07'
@@ -238,16 +322,6 @@ export default class QuantumIndex extends React.Component {
                 'win8-64': 'f04c0fb17ff70e2b5a99829a64d51411bd187d0a',
               }}
               {...notes.talos_ts_paint}
-            />,
-            <Perfherder
-              title='Window Opening (tpaint)'
-              reference='2017-05-07'
-              signatures={{
-                'win10-64': '1372d76b5e35afa687de06f8159d5e8c437be91d',
-                'win7-32': 'd0a85e9de2bec8153d2040f2958d979876542012',
-                'win8-64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
-              }}
-              {...notes.talos_tpaint}
             />,
           ],
           [
@@ -316,73 +390,6 @@ export default class QuantumIndex extends React.Component {
           ],
         ],
       },
-      {
-        title: 'Responsiveness: Content',
-        rows: [
-          [
-            <MissionControl
-              title='Input Latency ≥ 2.5s/MTBF'
-              metric='nightly.mtbf_content_input_latency_gt_2500'
-              {...notes.content_il_mtbf_high}
-            />,
-            <MissionControl
-              title='Input Latency ≥ 2.5s/Sessions'
-              {...notes.content_il_sessions_high}
-            />,
-            <MissionControl
-              title='Input Latency ≥ 250ms/MTBF'
-              metric='nightly.mtbf_content_input_latency_gt_250'
-              reference={16}
-              {...notes.content_il_mtbf_low}
-            />,
-          ],
-          [
-            <Benchmark
-              title='Benchmark: Input Latency'
-              id='hasal'
-              link='https://github.com/Mozilla-TWQA/Hasal/'
-              targetDiff={0}
-              {...notes.hasal}
-            />,
-            <Benchmark
-              title='Benchmark: Speedometer v2'
-              id='speedometer'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer}
-            />,
-            <MissionControl
-              title='CC/GC pauses 2500ms+'
-              metric='weekly.content_gccc_gt_2500'
-              formatting='%'
-              {...notes.content_gc_pauses}
-            />,
-          ],
-          [
-            <Benchmark
-              title='Start-up: First Paint'
-              id='startup'
-              metric='firstPaint'
-              targetDiff={20}
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
-              {...notes.startup_render}
-            />,
-            <Benchmark
-              title='Start-up: Hero Element'
-              id='startup'
-              metric='heroElement'
-              targetDiff={20}
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
-              {...notes.startup_hero}
-            />,
-          ],
-        ],
-      },
-      {
-        title: 'Smoothness: Content',
-        rows: [[$apz]],
-      },
     ];
 
     let rowIdx = 0;
@@ -415,12 +422,14 @@ export default class QuantumIndex extends React.Component {
           );
         }
       }
-      add.unshift(
-        <h2>
-          <span>{title}</span>
-          {$status}
-        </h2>,
-      );
+      if (title) {
+        add.unshift(
+          <h2>
+            <span>{title}</span>
+            {$status}
+          </h2>,
+        );
+      }
       return reduced.concat(add);
     }, []);
 

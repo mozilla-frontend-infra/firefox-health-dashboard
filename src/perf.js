@@ -179,8 +179,9 @@ router
     ctx.body = list;
   })
   .get('/benchmark/speedometer', async (ctx) => {
-    const [legacySeries, referenceSeries] = await Promise.all([
-      fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json'),
+    // legacySeries,
+    const [referenceSeries] = await Promise.all([
+      // fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json'),
       fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json'),
     ]);
     const transform = ({ graph }, start = null, end = null) => {
@@ -200,37 +201,38 @@ router
           }
           return values;
         })
-        .filter(entry => entry.diff != null)
+        .filter(entry => entry.diff)
         .filter(entry => !end || entry.date < end)
         .filter(entry => !start || entry.date > start);
     };
-    const legacy = transform(
-      legacySeries,
-      moment('2017-05-01').valueOf(),
-      moment('2017-06-01').valueOf(),
-    );
+    // const legacy = transform(
+    //   legacySeries,
+    //   moment('2017-05-01').valueOf(),
+    //   moment('2017-06-01').valueOf(),
+    // );
     const reference = transform(referenceSeries);
-    ctx.body = legacy.concat(reference);
+    ctx.body = reference;
   })
   .get('/mission-control', async (ctx) => {
     const { metric } = ctx.request.query;
     const fields = metric.split('.');
     fields[0] += '_quantumready';
-    const start = moment('2017-06-05');
-    const days = moment().diff(start, 'days') - 1;
+    const current = moment('2017-06-05');
+    const days = moment().diff(current, 'days') - 1;
     const dates = [];
     for (let i = 0; i <= days; i += 1) {
-      const current = start.add(i, 'days');
+      current.add(1, 'days');
       const data = await fetchJson(
-        `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(current).format('YYYYMMDD')}.json`,
+        `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(
+          current,
+        ).format('YYYYMMDD')}.json`,
       );
-      if (!data) {
-        break;
+      if (data && data[fields[0]][fields[1]]) {
+        dates.push({
+          time: current.valueOf(),
+          value: data[fields[0]][fields[1]],
+        });
       }
-      dates.push({
-        time: current.valueOf(),
-        value: data[fields[0]][fields[1]],
-      });
     }
     ctx.body = dates;
   })

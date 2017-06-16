@@ -48,17 +48,17 @@ export default class MissionControlWidget extends React.Component {
 
   render() {
     const { evolution } = this.state;
-    const { metric, formatting } = this.props;
-    // if (!metric) {
-    console.log(this.props);
-    // }
+    const { metric, formatting, reference, referenceArea } = this.props;
     const measurements = this.props.measurements || this.props.content;
     let svg = null;
 
     if (evolution) {
       const [width, height] = this.viewport;
       const xRange = [minBy('time', evolution).time, maxBy('time', evolution).time];
-      const yRange = [0, maxBy('value', evolution).value];
+      const yRange = [
+        0,
+        Math.max(reference ? reference * 1.1 : 0, maxBy('value', evolution).value),
+      ];
       const xScale = scaleTime().domain(xRange).range([25, width]);
       const yScale = scaleLinear().domain(yRange).nice(tickCount).range([height - 20, 2]);
       const path = line()
@@ -68,7 +68,12 @@ export default class MissionControlWidget extends React.Component {
 
       const $evolution = <path d={path(evolution)} className={'series series-path'} />;
 
-      const formatTick = format(formatting === '%' ? '.1%' : '.3f');
+      const formatTick = {
+        '%': format('.0%'),
+        hrs: value => `${Math.round(value)}h`,
+        min: value => `${Math.round(value * 60)}m`,
+        f: format('.2f'),
+      }[formatting || 'f'];
       const $yAxis = yScale.ticks(tickCount).map((tick, idx) => {
         const y = yScale(tick);
         const label = formatTick(tick);
@@ -86,6 +91,9 @@ export default class MissionControlWidget extends React.Component {
       });
       const yFormat = timeFormat('%b %d');
       const $xAxis = xScale.ticks(6).map((tick, idx) => {
+        if (!idx) {
+          return null;
+        }
         const x = xScale(tick);
         const label = yFormat(tick);
         return (
@@ -97,16 +105,44 @@ export default class MissionControlWidget extends React.Component {
         );
       });
 
+      const $reference = [];
+      if (reference != null) {
+        $reference.push(
+          <line
+            x1={xScale.range()[0]}
+            y1={yScale(reference)}
+            x2={xScale.range()[1]}
+            y2={yScale(reference)}
+            className={'series series-path series-target'}
+          />,
+        );
+        const above = referenceArea === 'above';
+        const areaY = above ? yScale.range()[1] : yScale(reference);
+        const areaHeight = above
+          ? yScale(reference) - yScale.range()[1]
+          : yScale.range()[0] - yScale(reference);
+        // above ? yScale(reference) - yScale.range()[1] : yScale.range()[1]
+        $reference.push(
+          <rect
+            x={xScale.range()[0]}
+            y={areaY}
+            width={xScale.range()[0] + xScale.range()[1]}
+            height={areaHeight}
+            className={'series series-area series-target'}
+          />,
+        );
+      }
+
       svg = (
         <svg height={height} width={width}>
           {$yAxis}
           {$xAxis}
           {$evolution}
+          {$reference}
         </svg>
       );
     } else if (!metric && measurements) {
       const contents = Array.isArray(measurements) ? measurements : measurements.split(/\s*;\s+/);
-      console.log(contents);
       svg = contents.map((content, idx) => {
         return (
           <div
@@ -159,9 +195,15 @@ export default class MissionControlWidget extends React.Component {
   // }
 }
 
+MissionControlWidget.defaultProps = {
+  referenceArea: 'below',
+};
+
 MissionControlWidget.propTypes = {
   content: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   measurements: PropTypes.string,
   metric: PropTypes.string,
   formatting: PropTypes.string,
+  reference: PropTypes.number,
+  referenceArea: PropTypes.string,
 };

@@ -126,6 +126,9 @@ export default class PerfherderWidget extends React.Component {
       });
       const yFormat = timeFormat('%b %d');
       const $xAxis = xScale.ticks(6).map((tick, idx) => {
+        if (!idx) {
+          return null;
+        }
         const x = xScale(tick);
         const label = yFormat(tick);
         return (

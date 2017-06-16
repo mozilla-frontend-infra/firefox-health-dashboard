@@ -4,7 +4,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 // import moment from 'moment';
-import { curveLinear, line, scaleTime, scaleLinear, scalePow, scaleBand, format, timeFormat } from 'd3';
+import {
+  curveLinear,
+  line,
+  scaleTime,
+  scaleLinear,
+  scalePow,
+  scaleBand,
+  format,
+  timeFormat,
+} from 'd3';
 import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
 
@@ -82,10 +91,7 @@ export default class ChannelMetric extends React.Component {
           .range([band + yBandScale.bandwidth(), band]);
         return map.set(field, xScale);
       }, new Map());
-      const alphaScale = scalePow()
-        .exponent(0.5)
-        .domain([0, 2])
-        .range([1, 0.3]);
+      const alphaScale = scalePow().exponent(0.5).domain([0, 2]).range([1, 0.3]);
       const xDomain = [
         // first day of release for oldest version
         new Date(
@@ -93,27 +99,26 @@ export default class ChannelMetric extends React.Component {
             .slice()
             .reverse()
             .find(evolution => evolution.channels[0])
-            .channels.slice(-3).find(channel => channel).dates[0].date,
-          ),
+            .channels.slice(-3)
+            .find(channel => channel).dates[0].date,
+        ),
         // last day of current nightly
         new Date(
-          evolutions
-            .find(evolution => evolution.channels[0])
-            .channels[0].dates.slice(-1)[0].date,
+          evolutions.find(evolution => evolution.channels[0]).channels[0].dates.slice(-1)[0].date,
         ),
       ];
-      console.log(evolutions[0]);
-      const xScale = scaleTime()
-        .domain(xDomain)
-        .range([50, this.width - 5]);
+      const xScale = scaleTime().domain(xDomain).range([50, this.width - 5]);
       const $labels = [];
       const $evolutions = evolutions.map((version, versionIdx) => {
         // console.log(moment(xDomain[1]).diff(xDomain[0], 'weeks', true));
         const paths = yRangeFields.reduce((map, field) => {
-          return map.set(field, line()
-            .x(d => xScale(new Date(d.date)))
-            .y(d => yScales.get(field)(d[field]))
-            .curve(curveLinear));
+          return map.set(
+            field,
+            line()
+              .x(d => xScale(new Date(d.date)))
+              .y(d => yScales.get(field)(d[field]))
+              .curve(curveLinear),
+          );
         }, new Map());
         const $channels = version.channels.map((channel, channelIdx) => {
           if (!channel) {
@@ -131,11 +136,8 @@ export default class ChannelMetric extends React.Component {
             };
             const key = `${versionIdx}-${channelIdx}-${pathIdx}`;
             if (channel.dates.length > 1) {
-              $labels.push((
-                <g
-                  key={`label-${key}`}
-                  className='channel-label'
-                >
+              $labels.push(
+                <g key={`label-${key}`} className='channel-label'>
                   <text {...labelProps}>
                     {`${version.version}`}
                   </text>
@@ -143,14 +145,11 @@ export default class ChannelMetric extends React.Component {
                   <text {...labelProps}>
                     {`${channel.channel}`}
                   </text>
-                </g>
-              ));
+                </g>,
+              );
             }
             return (
-              <g
-                key={`line-${key}`}
-                className='channel-line'
-              >
+              <g key={`line-${key}`} className='channel-line'>
                 <path
                   stroke={color}
                   strokeWidth={alpha === 1 ? 2 : 1}
@@ -176,17 +175,15 @@ export default class ChannelMetric extends React.Component {
             label += this.props.unit;
           }
           return (
-            <g className={cx('tick', 'tick-y', { 'tick-axis': idx === 0, 'tick-secondary': idx > 0 })} key={`tick-${tick}`}>
-              <line
-                x1={50}
-                y1={y}
-                x2={this.width}
-                y2={y}
-              />
-              <text
-                x={0}
-                y={y}
-              >
+            <g
+              className={cx('tick', 'tick-y', {
+                'tick-axis': idx === 0,
+                'tick-secondary': idx > 0,
+              })}
+              key={`tick-${tick}`}
+            >
+              <line x1={50} y1={y} x2={this.width} y2={y} />
+              <text x={0} y={y}>
                 {label}
               </text>
             </g>
@@ -212,10 +209,7 @@ export default class ChannelMetric extends React.Component {
         return (
           <g className={cx('tick', 'tick-x')} key={`tick-${label}`}>
             {$lines}
-            <text
-              x={x}
-              y={this.height}
-            >
+            <text x={x} y={this.height}>
               {label}
             </text>
           </g>
@@ -232,20 +226,14 @@ export default class ChannelMetric extends React.Component {
         // transform={`translate(${20}, ${y + 100}) rotate(-90)`}
         return (
           <g className={cx('title')} key={`title-${field}`}>
-            <text
-              x={75}
-              y={y}
-            >
+            <text x={75} y={y}>
               {label}
             </text>
           </g>
         );
       });
       svg = (
-        <svg
-          height={this.height}
-          width={this.width}
-        >
+        <svg height={this.height} width={this.width}>
           {$yAxis}
           {$xAxis}
           {$fields}
@@ -285,10 +273,7 @@ export default class ChannelMetric extends React.Component {
         sourceTitle={`${query.metric} (t.m.o)`}
         link='https://bit.ly/quantum-dashboards'
       >
-        <section
-          className={cls}
-          ref={target => (this.target = target)}
-        >
+        <section className={cls} ref={target => (this.target = target)}>
           {svg}
         </section>
       </Dashboard>
