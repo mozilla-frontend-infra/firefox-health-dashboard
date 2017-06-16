@@ -20,7 +20,7 @@ const apzBugs = {
 };
 
 const statusLabels = new Map([
-  ['red', 'needs escalation'],
+  ['red', 'at risk and not within target'],
   ['yellow', 'on track but not within target'],
   ['green', 'within target'],
   ['blue', 'signed off'],
@@ -30,6 +30,7 @@ const statusLabels = new Map([
 export default class QuantumIndex extends React.Component {
   constructor(props) {
     super(props);
+    document.body.classList.add('multipage');
     this.fetchNotes();
   }
 
@@ -194,18 +195,27 @@ export default class QuantumIndex extends React.Component {
               {...notes.chrome_gc_pauses}
             />,
             <MissionControl
+              title='Content: CC/GC pauses 2500ms+'
+              metric='weekly.content_gccc_gt_2500'
+              formatting='%'
+              reference={0.02}
+              {...notes.content_gc_pauses}
+            />,
+            <MissionControl
               title='Browser: Ghost Windows'
               formatting='%'
               reference={0}
               metric='nightly.ghost_windows_rate'
               {...notes.chrome_ghost_windows}
             />,
-            <MissionControl
-              title='Content: CC/GC pauses 2500ms+'
-              metric='weekly.content_gccc_gt_2500'
-              formatting='%'
-              reference={0.02}
-              {...notes.content_gc_pauses}
+          ],
+          [
+            <Benchmark
+              title='Benchmark: Input Lag (Hasal)'
+              id='hasal'
+              link='https://github.com/Mozilla-TWQA/Hasal/'
+              targetDiff={0}
+              {...notes.hasal}
             />,
           ],
         ],
@@ -261,15 +271,6 @@ export default class QuantumIndex extends React.Component {
       {
         title: '#6 Regression',
         rows: [
-          [
-            <Benchmark
-              title='Benchmark: Input Lag (Hasal)'
-              id='hasal'
-              link='https://github.com/Mozilla-TWQA/Hasal/'
-              targetDiff={0}
-              {...notes.hasal}
-            />,
-          ],
           [
             <Perfherder
               title='Page Load (tp5)'
