@@ -272,6 +272,7 @@ svg {
     background-color: var(--newCoral);
   }
   &.status-yellow header {
+    background-color: var(--newYellow);
   }
   &.status-green header {
     background-color: var(--newLime);
@@ -390,7 +391,7 @@ svg {
       background-color: var(--newCoral);
     }
     .status-yellow {
-      background-color: var(--newOrange);
+      background-color: var(--newYellow);
     }
     .status-green {
       background-color: var(--newLime);
