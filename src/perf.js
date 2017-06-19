@@ -196,7 +196,7 @@ router
             }
             return reduced;
           }, []);
-          if (runs.length === 2) {
+          if (runs.length === 2 && runs[0] && runs[1]) {
             values.diff = (runs[1] - runs[0]) / runs[0] * 100;
           }
           return values;
