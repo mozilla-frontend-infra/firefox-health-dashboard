@@ -179,25 +179,23 @@ router
     ctx.body = list;
   })
   .get('/benchmark/speedometer', async (ctx) => {
-    // legacySeries,
-    const [referenceSeries] = await Promise.all([
-      // fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-17.json'),
-      fetchJson('https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json'),
-    ]);
+    const referenceSeries = await fetchJson(
+      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json',
+    );
+    const runs = {};
     const transform = ({ graph }, start = null, end = null) => {
       return graph.timelist
         .map((date, idx) => {
           const values = {
             date: date * 1000,
           };
-          const runs = graph.lines.reduce((reduced, line) => {
+          graph.lines.forEach((line, lineIdx) => {
             if (line && line.data[idx]) {
-              reduced.push(line.data[idx][0]);
+              runs[lineIdx] = line.data[idx][0];
             }
-            return reduced;
           }, []);
-          if (runs.length === 2 && runs[0] && runs[1]) {
-            values.diff = (runs[1] - runs[0]) / runs[0] * 100;
+          if (runs[0] && (runs[1] || runs[2])) {
+            values.diff = ((runs[1] || runs[2]) - runs[0]) / runs[0] * 100;
           }
           return values;
         })

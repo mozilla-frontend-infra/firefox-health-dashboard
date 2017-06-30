@@ -205,7 +205,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#3 Browser & Page Load Times',
+        title: '#3 Page Load Times',
         rows: [
           [
             <Benchmark
