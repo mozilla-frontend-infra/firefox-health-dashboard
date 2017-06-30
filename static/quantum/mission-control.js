@@ -2,10 +2,9 @@
 import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { min, maxBy, minBy } from 'lodash/fp';
-import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
+import { maxBy, minBy } from 'lodash/fp';
+import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat } from 'd3';
 import cx from 'classnames';
-import moment from 'moment';
 import { stringify } from 'query-string';
 import Widget from './widget';
 

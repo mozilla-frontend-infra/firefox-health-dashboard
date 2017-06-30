@@ -47,7 +47,7 @@ export default class ChannelMetric extends React.Component {
 
   render() {
     const { query } = this.props;
-    const { evolutions, error } = this.state;
+    const { evolutions } = this.state;
     let svg = null;
 
     if (evolutions) {
@@ -166,7 +166,7 @@ export default class ChannelMetric extends React.Component {
           </g>
         );
       });
-      const $yAxis = [...yScales].map(([field, yScale]) => {
+      const $yAxis = [...yScales].map(([_, yScale]) => {
         const formatTick = format(this.props.format);
         return yScale.ticks(tickCount).map((tick, idx) => {
           const y = yScale(tick);
@@ -191,7 +191,7 @@ export default class ChannelMetric extends React.Component {
         });
       });
       const yFormat = timeFormat('%b');
-      const $xAxis = xScale.ticks().map((tick, idx) => {
+      const $xAxis = xScale.ticks().map((tick) => {
         const x = xScale(tick);
         const label = yFormat(tick);
         const $lines = yRangeFields.map((field) => {

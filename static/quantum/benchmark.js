@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { maxBy, minBy } from 'lodash/fp';
-import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
+import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat } from 'd3';
 import Widget from './widget';
 
 const tickCount = 5;

@@ -25,6 +25,7 @@
       {
         "vars": "local",
         "args": "after-used",
+        "argsIgnorePattern": "^_",
         "ignoreRestSiblings": true
       }
     ],
@@ -47,6 +48,7 @@
     "react/no-array-index-key": 0,
     "react/no-multi-comp": 0,
     "react/no-unused-prop-types": 0,
+    "react/no-danger": 0,
     "no-mixed-operators": 0,
     "generator-star-spacing": 0
   }
