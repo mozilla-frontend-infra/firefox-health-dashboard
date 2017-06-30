@@ -188,28 +188,12 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <MissionControl
-              title='Browser: CC/GC Pauses ≥ 150ms'
-              metric='weekly.chrome_gccc_gt_150'
-              formatting='%'
-              reference={0.02}
-              {...notes.chrome_gc_pauses}
-            />,
-            <MissionControl
-              title='Content: CC/GC pauses 2500ms+'
-              metric='weekly.content_gccc_gt_2500'
-              formatting='%'
-              reference={0.02}
-              {...notes.content_gc_pauses}
-            />,
-            <MissionControl
               title='Browser: Ghost Windows'
               formatting='%'
               reference={0}
               metric='nightly.ghost_windows_rate'
               {...notes.chrome_ghost_windows}
             />,
-          ],
-          [
             <Benchmark
               title='Benchmark: Input Lag (Hasal)'
               id='hasal'
