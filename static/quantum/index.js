@@ -313,7 +313,7 @@ export default class QuantumIndex extends React.Component {
             <Perfherder
               {...notes.talos_tabpaint}
               title='Tab Opening (tabpaint)'
-              reference='2017-04-24'
+              reference='2017-06-15'
               signatures={{
                 'win10-64': 'a9cd333dff68ce0812dc85e0657af4edfc51ebe3',
                 'win7-32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
