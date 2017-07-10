@@ -317,7 +317,6 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': 'a9cd333dff68ce0812dc85e0657af4edfc51ebe3',
                 'win7-32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
-                'win8-64': '26721ba0e181e2844da3ddc2284a331ba54eefe0',
               }}
             />,
             <Perfherder
