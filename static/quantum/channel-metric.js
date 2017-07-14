@@ -91,7 +91,7 @@ export default class ChannelMetric extends React.Component {
           .range([band + yBandScale.bandwidth(), band]);
         return map.set(field, xScale);
       }, new Map());
-      const alphaScale = scalePow().exponent(0.5).domain([0, 2]).range([1, 0.3]);
+      const alphaScale = scalePow().exponent(0.5).domain([0, 3]).range([1, 0.3]);
       const xDomain = [
         // first day of release for oldest version
         new Date(

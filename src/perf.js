@@ -15,7 +15,7 @@ import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
 
 // Project Dawn
-channels.splice(2, 1);
+// channels.splice(2, 1);
 
 let jwtClient = null;
 const getSpreadsheetValues = async ({ id, range }) => {
@@ -301,20 +301,25 @@ router
     for (let version = start; version >= start - 5; version -= 1) {
       const evolutions = await Promise.all(
         nightlyToRelease.map((channel) => {
-          if (version > parseInt(channelVersions[channel], 10)) {
+          if (version > parseInt(channelVersions[channel], 10) || (version > 55 && channel === 1)) {
             return null;
           }
           return getEvolution(
             Object.assign({}, query, {
               channel,
               version: version,
-              useSubmissionDate: channel !== 'nightly',
+              useSubmissionDate: channel !== 'nightly' && channel !== 'aurora',
             }),
           );
         }),
       );
+      console.log(evolutions);
       if (!evolutions[0]) {
-        break;
+        if (version === start) {
+          continue;
+        } else {
+          break;
+        }
       }
       if (channelDates.length) {
         nightlyToRelease.forEach((channel, channelIdx) => {
