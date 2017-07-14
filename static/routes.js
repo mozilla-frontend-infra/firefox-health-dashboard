@@ -16,30 +16,28 @@ import QuantumTracking from './quantum/metric';
 const NoMatch = () => <div>404</div>;
 
 class App extends Component {
-  // componentWillMount() {
-  //   this.resize();
-  //   window.addEventListener('resize', () => this.resize());
-  // }
+  componentWillMount() {
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+  }
 
-  // resize() {
-  //   this.setState({
-  //     gridX: parseInt(
-  //       window.getComputedStyle(document.body, null)
-  //         .getPropertyValue('font-size'),
-  //       10,
-  //     ),
-  //     gridY: parseInt(
-  //       window.getComputedStyle(document.body, null)
-  //         .getPropertyValue('line-height'),
-  //       10,
-  //     ),
-  //     viewport: [window.innerWidth, window.innerHeight],
-  //   });
-  //   const children = this.props.children;
-  //   if (children && children.onResize) {
-  //     children.onResize(this.state);
-  //   }
-  // }
+  resize() {
+    this.setState({
+      gridX: parseInt(
+        window.getComputedStyle(document.body, null).getPropertyValue('font-size'),
+        10,
+      ),
+      gridY: parseInt(
+        window.getComputedStyle(document.body, null).getPropertyValue('line-height'),
+        10,
+      ),
+      viewport: [window.innerWidth, window.innerHeight],
+    });
+    const children = this.props.children;
+    if (children && children.onResize) {
+      children.onResize(this.state);
+    }
+  }
 
   render() {
     return React.cloneElement(this.props.children, this.state);

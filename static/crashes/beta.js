@@ -44,9 +44,7 @@ export default class FirefoxBeta extends React.Component {
       fetch('/api/release/history?tailVersion=6&major=1'),
       fetch('/api/release/calendar'),
     ]);
-    const [crashes, history, calendar] = await Promise.all(
-      raw.map(buffer => buffer.json()),
-    );
+    const [crashes, history, calendar] = await Promise.all(raw.map(buffer => buffer.json()));
     crashes.forEach(({ builds }) => {
       fixDate(builds, 'release');
       fixDate(builds, 'date');
@@ -65,7 +63,7 @@ export default class FirefoxBeta extends React.Component {
   }
   renderRelease({ release, start, yScale, idx, crashes }) {
     const { gridY, gridX } = this.props;
-    const builds = (crashes ? crashes.builds : []);
+    const builds = crashes ? crashes.builds : [];
     if (!builds.length) {
       console.log('Skipped', release.version);
       return null;
@@ -81,20 +79,10 @@ export default class FirefoxBeta extends React.Component {
     }
     const hoursRange = [0, sumBy('hours')(builds)];
     const dateRange = [start, release.date];
-    const xScale = scaleTime()
-      .domain(dateRange)
-      .range([-ratio * wide, 0]);
-    const lastDayX = Math.min(
-      xScale(builds.slice(-1)[0].date),
-      0,
-    );
-    const hoursScale = scaleTime()
-      .domain(hoursRange)
-      .range([-ratio * wide, lastDayX]);
-    const path = line()
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.rate))
-      .curve(curveMonotoneX);
+    const xScale = scaleTime().domain(dateRange).range([-ratio * wide, 0]);
+    const lastDayX = Math.min(xScale(builds.slice(-1)[0].date), 0);
+    const hoursScale = scaleTime().domain(hoursRange).range([-ratio * wide, lastDayX]);
+    const path = line().x(d => xScale(d.date)).y(d => yScale(d.rate)).curve(curveMonotoneX);
     // const area = d3.svg.area()
     //   .x(d => xScale(d.date))
     //   .y0(d => yScale(d.rate - d.variance))
@@ -125,12 +113,7 @@ export default class FirefoxBeta extends React.Component {
             transform: `translateX(${xScale(new Date())}px)`,
           }}
         >
-          <line
-            x1={0}
-            y1={gridY * 3}
-            x2={0}
-            y2={gridY * 5}
-          />
+          <line x1={0} y1={gridY * 3} x2={0} y2={gridY * 5} />
         </g>,
       );
     }
@@ -152,7 +135,7 @@ export default class FirefoxBeta extends React.Component {
         };
       })
       .filter(({ rate }) => rate > 0);
-    const version = +(release.version);
+    const version = +release.version;
     const color = colorScale(version);
     const cls = cx('release', {
       'state-current': current,
@@ -165,13 +148,7 @@ export default class FirefoxBeta extends React.Component {
           transform: `translateX(${x}px)`,
         }}
       >
-        <line
-          className='release-tick'
-          x1={0}
-          y1={0}
-          x2={0}
-          y2={this.height}
-        />
+        <line className='release-tick' x1={0} y1={0} x2={0} y2={this.height} />
         <text
           className='release-label'
           key='release-label'
@@ -185,18 +162,13 @@ export default class FirefoxBeta extends React.Component {
           className='release-date'
           key='release-date'
           textAnchor='end'
-          y={this.height - (gridY / 2)}
+          y={this.height - gridY / 2}
           x={-gridX}
         >
           {moment(release.date).format('MMM D')}
         </text>
         {candidates}
-        <path
-          className='release-line'
-          key='release-line'
-          stroke={color}
-          d={path(mainRates)}
-        />
+        <path className='release-line' key='release-line' stroke={color} d={path(mainRates)} />
         <path
           className='release-line-content'
           key='release-line-content'
@@ -224,16 +196,14 @@ export default class FirefoxBeta extends React.Component {
     // const hoursStart = hoursScale(hoursX - (release.hours || 0));
     // const hourWidth = hoursScale(hoursX) - hoursStart;
     const { gridY } = this.props;
+    console.log(gridY);
     const topY = gridY * 5;
     const cls = cx('candidate', {
       'candidate-no-signal': !rate,
       'candidate-has-signal': rate,
     });
     return (
-      <g
-        key={`candidate-${release.build}`}
-        className={cls}
-      >
+      <g key={`candidate-${release.build}`} className={cls}>
         <g
           style={{
             transform: `translateX(${xScale(start)}px)`,
@@ -264,12 +234,7 @@ export default class FirefoxBeta extends React.Component {
             y2={topY - 5}
             stroke={color}
           />
-          <text
-            className='candidate-label'
-            textAnchor='middle'
-            y={topY - gridY}
-            stroke={color}
-          >
+          <text className='candidate-label' textAnchor='middle' y={topY - gridY} stroke={color}>
             {release.candidate || '?'}
           </text>
           <title>
@@ -295,10 +260,7 @@ export default class FirefoxBeta extends React.Component {
     let details = null;
 
     if (crashes) {
-      const yScale = scaleLinear()
-        .domain(rateRange)
-        .range([this.height - 30, 100])
-        .clamp(true);
+      const yScale = scaleLinear().domain(rateRange).range([this.height - 30, 100]).clamp(true);
 
       const axis = [];
       for (let i = rateRange[0] + 1; i < rateRange[1]; i += 1) {
@@ -311,17 +273,8 @@ export default class FirefoxBeta extends React.Component {
               transform: `translateY(${y}px)`,
             }}
           >
-            <line
-              x1={0}
-              y1={0}
-              x2={this.width}
-              y2={0}
-            />
-            <text
-              x={5}
-              y={5}
-              textAnchor='start'
-            >
+            <line x1={0} y1={0} x2={this.width} y2={0} />
+            <text x={5} y={5} textAnchor='start'>
               {i}
             </text>
           </g>,
@@ -329,9 +282,8 @@ export default class FirefoxBeta extends React.Component {
       }
 
       const hasNext = find({ version: planned.version })(crashes);
-      const timeline = (hasNext && hasNext.rate)
-        ? [planned].concat(history.slice(0, 4))
-        : history.slice(0, 5);
+      const timeline =
+        hasNext && hasNext.rate ? [planned].concat(history.slice(0, 4)) : history.slice(0, 5);
 
       const releases = timeline.map((release, idx) => {
         const before = timeline[idx + 1] || history[idx];
@@ -344,71 +296,61 @@ export default class FirefoxBeta extends React.Component {
           yScale,
         });
       });
-      details = timeline.map(({ version }, idx) => {
-        const scores = [];
-        const entry = find({ version: version })(crashes);
-        if (entry && entry.rate) {
-          console.log(entry);
-          scores.push(
-            <div
-              className='score'
-              key='score-avg'
-            >
-              <span className='score-label'>
-                Avg per Build
-              </span>
-              <span className='score-main'>
-                {entry.rate.toFixed(1)}
-                <span className='score-extra'>
-                  {entry.contentRate.toFixed(1)}
-                </span>
-              </span>
-            </div>,
-          );
-          if (!idx) {
-            const crash = find({ version: entry.version })(crashes);
-            const last = find(({ rate }) => rate)(crash.builds);
+      details = timeline
+        .map(({ version }, idx) => {
+          const scores = [];
+          const entry = find({ version: version })(crashes);
+          if (entry && entry.rate) {
             scores.push(
-              <div
-                className='score'
-                key='score-last'
-              >
-                <span className='score-label'>
-                  Beta {last.candidate}
-                </span>
+              <div className='score' key='score-avg'>
+                <span className='score-label'>Avg per Build</span>
                 <span className='score-main'>
-                  {last.rate.toFixed(1)}
+                  {entry.rate.toFixed(1)}
                   <span className='score-extra'>
-                    {last.contentRate.toFixed(1)}
+                    {entry.contentRate.toFixed(1)}
                   </span>
                 </span>
               </div>,
             );
+            if (!idx) {
+              const crash = find({ version: entry.version })(crashes);
+              const last = find(({ rate }) => rate)(crash.builds);
+              scores.push(
+                <div className='score' key='score-last'>
+                  <span className='score-label'>
+                    Beta {last.candidate}
+                  </span>
+                  <span className='score-main'>
+                    {last.rate.toFixed(1)}
+                    <span className='score-extra'>
+                      {last.contentRate.toFixed(1)}
+                    </span>
+                  </span>
+                </div>,
+              );
+            }
           }
-        }
-        const cls = cx('scores', {
-          'state-highlight': !idx,
-          'state-empty': !scores.length,
-        });
-        const key = `score-${idx}`;
-        return (
-          <div
-            key={key}
-            className={cls}
-            style={{
-              width: `${(idx ? split : full) * 100}%`,
-            }}
-          >
-            {scores}
-          </div>
-        );
-      }).reverse();
+          const cls = cx('scores', {
+            'state-highlight': !idx,
+            'state-empty': !scores.length,
+          });
+          const key = `score-${idx}`;
+          return (
+            <div
+              key={key}
+              className={cls}
+              style={{
+                width: `${(idx ? split : full) * 100}%`,
+              }}
+            >
+              {scores}
+            </div>
+          );
+        })
+        .reverse();
 
       svg = (
-        <svg
-          height={this.height}
-          width={this.width}
-        >
+        <svg height={this.height} width={this.width}>
           {axis}
           {releases}
         </svg>
@@ -427,15 +369,10 @@ export default class FirefoxBeta extends React.Component {
         subtitle='Main & Content C/1kUH (E10S Only)'
         className='crashes-beta'
       >
-        <section
-          className={cls}
-          ref={target => (this.target = target)}
-        >
+        <section className={cls} ref={target => (this.target = target)}>
           {svg}
         </section>
-        <section
-          className='graphic-details'
-        >
+        <section className='graphic-details'>
           {details}
         </section>
       </Dashboard>
@@ -443,8 +380,7 @@ export default class FirefoxBeta extends React.Component {
   }
 }
 
-FirefoxBeta.defaultProps = {
-};
+FirefoxBeta.defaultProps = {};
 FirefoxBeta.propTypes = {
   gridX: PropTypes.number,
   gridY: PropTypes.number,

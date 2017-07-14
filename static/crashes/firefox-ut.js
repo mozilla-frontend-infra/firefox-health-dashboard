@@ -47,7 +47,7 @@ export default class FirefoxUtCrashes extends React.Component {
           x_accessor='date'
           y_accessor='rate'
           min_y='0'
-          max_y='6'
+          max_y='10'
           max_x={moment().subtract(1, 'days').toDate()}
           y_extended_ticks
           cleaned

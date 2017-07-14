@@ -22,13 +22,13 @@ export default class FennecAdiCrashes extends React.Component {
 
   async fetch() {
     const full = this.props.full;
-    const { rates, baselines } = await (
-      await fetch(`/api/crashes/adi?product=fennec&full=${full}`)
-    ).json();
+    const { rates, baselines } = await (await fetch(
+      `/api/crashes/adi?product=fennec&full=${full}`,
+    )).json();
     const data = MG.convert.date(rates, 'date');
-    const releases = await (
-      await fetch('/api/release/history?product=fennec&tailVersion=20')
-    ).json();
+    const releases = await (await fetch(
+      '/api/release/history?product=fennec&tailVersion=20',
+    )).json();
     const markers = releases.map((entry) => {
       return {
         date: moment(entry.date, 'YYYY MM DD').toDate(),
@@ -48,14 +48,11 @@ export default class FennecAdiCrashes extends React.Component {
           {...this.state}
           x_accessor='date'
           y_accessor='rate'
-          min_y='0.6'
+          min_y='0.5'
           max_y='2'
           cleaned
         />
-        <Score
-          data={this.state.data}
-          baselines={this.state.baselines}
-        />
+        <Score data={this.state.data} baselines={this.state.baselines} />
       </div>
     );
   }
