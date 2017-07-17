@@ -142,7 +142,7 @@ router
   .get('/benchmark/startup', async (ctx) => {
     const list = await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      range: 'startup!A1:E25',
+      range: 'startup!A1:E200',
     });
     list.forEach((entry) => {
       entry.date = moment(chrono.parseDate(entry.date)).valueOf();
@@ -154,7 +154,7 @@ router
   .get('/benchmark/pageload', async (ctx) => {
     const list = await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      range: 'pageLoad!A1:F100',
+      range: 'pageLoad!A1:F300',
     });
     const ids = _.uniq(_.pluck('id', list));
     list.forEach((entry) => {
@@ -168,7 +168,7 @@ router
   .get('/benchmark/hasal', async (ctx) => {
     const list = (await getSpreadsheetValues({
       id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      range: 'hasal!A1:F100',
+      range: 'hasal!A1:F300',
     })).filter(entry => entry.diff != null);
     const ids = _.uniq(_.pluck('id', list));
     list.forEach((entry) => {
