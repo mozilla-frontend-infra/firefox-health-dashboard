@@ -75,7 +75,9 @@ export default class QuantumIndex extends React.Component {
                   </a>
                 </small>
               </h4>
-              <span>{label}</span>
+              <span>
+                {label}
+              </span>
             </div>
           );
         })}
@@ -103,7 +105,9 @@ export default class QuantumIndex extends React.Component {
                 {Array.from(allStatus.entries()).map(([color, count]) => {
                   return (
                     <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
-                      <span><em>{count}</em> {statusLabels.get(color)}</span>
+                      <span>
+                        <em>{count}</em> {statusLabels.get(color)}
+                      </span>
                     </div>
                   );
                 })}
@@ -221,6 +225,17 @@ export default class QuantumIndex extends React.Component {
               metric='heroElement'
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.tp6_hero}
+            />,
+            <Perfherder
+              title='Talos TP6: First Paint'
+              target='Not set'
+              signatures={{
+                'win10-64':
+                  'fd75e33f207c37d5b2af9f8bbe6ce2e2a8d626ee,b8d73ce351c36fb3f136064b85a051b2c393decd,177e98528def00a9399250b7fb71f2a3bdb6440e,47a93f1c5ceec5ef83f764c2cea3e24bfb50beeb',
+                'win7-32':
+                  '7f1ea9f8f87c915b288fa99e69f19803799ec480,9ebf63ac2c9ab57a36bd523bc91bba78b22cd5ac,c2eb952711af078f8419af4f7b6fdad0e3a5028f,1a165eb0262c84b0e04e830d88844cf18c0fb8f8',
+              }}
+              {...notes.talos_tp6}
             />,
           ],
         ],
@@ -409,7 +424,9 @@ export default class QuantumIndex extends React.Component {
       if (title) {
         add.unshift(
           <h2>
-            <span>{title}</span>
+            <span>
+              {title}
+            </span>
             {$status}
           </h2>,
         );

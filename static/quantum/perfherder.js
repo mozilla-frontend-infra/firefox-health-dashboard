@@ -23,7 +23,9 @@ export default class PerfherderWidget extends React.Component {
   async fetch() {
     const { signatures } = this.props;
     const query = stringify({
-      signatures: Object.values(signatures),
+      signatures: Object.values(signatures).reduce((split, signature) => {
+        return split.concat(signature.split(','));
+      }, []),
     });
     try {
       const evolutions = await (await fetch(`/api/perf/herder?${query}`)).json();
@@ -42,7 +44,7 @@ export default class PerfherderWidget extends React.Component {
     if (evolutions) {
       const referenceTime = this.props.reference;
       const referenceYs = [];
-      const referenceFit = moment(referenceTime).add(-5, 'days').unix();
+      const referenceFit = referenceTime ? moment(referenceTime).add(-5, 'days').unix() : 0;
       const [width, height] = this.viewport;
 
       const full = evolutions.reduce((reduced, evolution) => {
@@ -66,6 +68,7 @@ export default class PerfherderWidget extends React.Component {
         .y1(d => yScale(d.q3))
         .curve(curveLinear);
 
+      const long = evolutions.length > 3;
       const $evolutions = evolutions.map((evolution, idx) => {
         const ref = evolution.find(
           d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime,
@@ -85,7 +88,14 @@ export default class PerfherderWidget extends React.Component {
             />
           );
         }
-        const $path = <path d={path(evolution)} className={`series series-path series-${idx}`} />;
+        const $path = (
+          <path
+            d={path(evolution)}
+            className={`series series-path series-${long
+              ? Math.round(evolutions.length / idx - 1)
+              : idx}`}
+          />
+        );
         const $scatters = evolution.reduce((reduced, entry) => {
           entry.runs.forEach((run) => {
             reduced.push(
