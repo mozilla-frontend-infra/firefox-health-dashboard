@@ -21,24 +21,31 @@ export default class PerfherderWidget extends React.Component {
   viewport: [0, 0];
 
   async fetch() {
-    const { signatures } = this.props;
+    const { signatures, framework } = this.props;
+    const signatureLabels = Object.keys(signatures);
+    const splitSignatures = Object.values(signatures).reduce((split, signature, idx) => {
+      signature.split(',').forEach(entry => split.set(entry, signatureLabels[idx]));
+      return split;
+    }, new Map());
     const query = stringify({
-      signatures: Object.values(signatures).reduce((split, signature) => {
-        return split.concat(signature.split(','));
-      }, []),
+      signatures: [...splitSignatures.keys()],
+      framework: framework,
     });
     try {
       const evolutions = await (await fetch(`/api/perf/herder?${query}`)).json();
-      this.setState({ evolutions: evolutions });
+      this.setState({
+        evolutions: evolutions,
+        signatures: splitSignatures,
+        signatureLabels: signatureLabels,
+      });
     } catch (e) {
       this.setState({ error: true });
     }
   }
 
   render() {
-    const { explainer, signatures } = this.props;
-    const { evolutions } = this.state;
-    const signatureLabels = Object.keys(signatures);
+    const { explainer } = this.props;
+    const { evolutions, signatures, signatureLabels } = this.state;
     let svg = null;
 
     if (evolutions) {
@@ -183,9 +190,11 @@ export default class PerfherderWidget extends React.Component {
 
     const linkArgs = stringify({
       timerange: 7776000,
-      series: Object.values(this.props.signatures).map((signature) => {
-        return `[mozilla-central,${signature},1,1]`;
-      }),
+      series: (signatures
+        ? [...signatures.keys()]
+        : Object.values(this.props.signatures)).map((signature) => {
+          return `[mozilla-central,${signature},1,1]`;
+        }),
     });
     const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;
 
@@ -206,10 +215,12 @@ export default class PerfherderWidget extends React.Component {
 
 PerfherderWidget.defaultProps = {
   signatures: '',
+  framework: 1,
   reference: '',
 };
 PerfherderWidget.propTypes = {
   signatures: PropTypes.object,
+  framework: PropTypes.number,
   explainer: PropTypes.string,
   reference: PropTypes.string,
 };

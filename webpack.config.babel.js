@@ -20,17 +20,14 @@ const jsFilename = isProd ? '[name].[hash:6].js' : '[name].js';
 const cssFilename = isProd ? '[name].[chunkhash:6].css' : '[name].css';
 const entryBase = isProd
   ? []
-  : [
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client?reload=true',
-  ];
+  : ['react-hot-loader/patch', 'webpack-hot-middleware/client?reload=true'];
 
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$|jquery/, /moment$/),
   new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.DefinePlugin({
     'process.env': {
-      NODE_ENV: JSON.stringify((isProd) ? 'production' : 'development'),
+      NODE_ENV: JSON.stringify(isProd ? 'production' : 'development'),
     },
   }),
   new webpack.ProvidePlugin({
@@ -68,9 +65,7 @@ if (isProd) {
 export default {
   context: srcDir,
   entry: {
-    app: entryBase.concat([
-      './index.js',
-    ]),
+    app: entryBase.concat(['./index.js']),
     // vendor: entryBase.concat([
     //   'd3',
     //   'moment',
@@ -82,7 +77,7 @@ export default {
     //   'babel-polyfill',
     // ]),
   },
-  devtool: isProd ? '#source-map' : '#cheap-source-map',
+  devtool: '#source-map',
   output: {
     path: distDir,
     filename: jsFilename,
@@ -101,7 +96,8 @@ export default {
         test: /\.js$/,
         include: srcDir,
         use: 'babel-loader',
-      }, {
+      },
+      {
         test: /\.css$/,
         include: srcDir,
         use: [
@@ -125,11 +121,14 @@ export default {
                 mqpacker(),
               ],
             },
-          }],
-      }, {
+          },
+        ],
+      },
+      {
         test: /manifest.json$/,
         use: ['file-loader?name=manifest.json', 'web-app-manifest'],
-      }, {
+      },
+      {
         test: /\.png$/,
         use: [
           'file-loader?name=[path][name].[hash:6].[ext]',

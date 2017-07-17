@@ -235,16 +235,20 @@ router
     ctx.body = dates;
   })
   .get('/herder', async (ctx) => {
-    const { signatures } = ctx.request.query;
+    const { signatures, framework } = ctx.request.query;
     const data = await fetchJson(
       `https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
-        framework: 1,
+        framework: framework != null ? framework : 1,
         interval: 31536000 / 12 * 3,
         signatures: signatures,
       })}`,
       { ttl: 'day' },
     );
     ctx.body = signatures.map((current) => {
+      if (!data[current]) {
+        console.error('Could not load %s', current);
+        return null;
+      }
       const series = data[current].reduce((reduced, entry) => {
         const date = moment(entry.push_timestamp * 1000).format('YYYY-MM-DD');
         let found = reduced.find(needle => needle.date === date);
@@ -318,7 +322,6 @@ router
         if (version === start) {
           continue;
         } else {
-          break;
         }
       }
       if (channelDates.length) {

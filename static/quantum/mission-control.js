@@ -108,6 +108,7 @@ export default class MissionControlWidget extends React.Component {
       if (reference != null) {
         $reference.push(
           <line
+            key='reference'
             x1={xScale.range()[0]}
             y1={yScale(reference)}
             x2={xScale.range()[1]}
