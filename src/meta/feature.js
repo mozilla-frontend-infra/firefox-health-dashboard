@@ -87,6 +87,9 @@ const mapStatus = [
 ];
 
 export function resolveStatus(test) {
+  if (!test) {
+    return mapStatus[0].status;
+  }
   for (let i = 0; i < mapStatus.length; i += 1) {
     const alts = mapStatus[i].alts;
     for (let j = 0; j < alts.length; j += 1) {
@@ -99,12 +102,11 @@ export function resolveStatus(test) {
 }
 
 export function extractLatestPlatforms() {
-  return browserslist.queries.lastVersions.select(1)
-    .reduce((result, str) => {
-      const [platform, version] = str.split(/\s+/);
-      result[platform] = +version;
-      return result;
-    }, {});
+  return browserslist.queries.lastVersions.select(1).reduce((result, str) => {
+    const [platform, version] = str.split(/\s+/);
+    result[platform] = +version;
+    return result;
+  }, {});
 }
 
 export const latestPlatforms = extractLatestPlatforms();
@@ -124,7 +126,7 @@ export function scoreFeature(feature) {
         if (entry.version) {
           if (diff <= factor) {
             if (factor) {
-              feature.recency += (factor / (factor - diff)) || 0;
+              feature.recency += factor / (factor - diff) || 0;
             } else {
               feature.recency += 1;
             }
@@ -133,7 +135,7 @@ export function scoreFeature(feature) {
         feature.completeness += 1;
         break;
       case 'in-development':
-        feature.recency += (diff < 0) ? 1 : 0;
+        feature.recency += diff < 0 ? 1 : 0;
         feature.completeness += 0.5;
         break;
       case 'under-consideration':

@@ -11,52 +11,54 @@ const firefoxBase = 'https://platform-status.mozilla.org/api/status';
 export async function getChromePopular() {
   const firefoxStatus = await fetchJson(firefoxBase);
   const chromeStatus = await fetchJson(base);
-  const latest = browserslist.queries.lastVersions.select(1)
-    .reduce((result, str) => {
-      const [platform, version] = str.split(/\s+/);
-      result[platform] = +version;
-      return result;
-    }, {});
+  const latest = browserslist.queries.lastVersions.select(1).reduce((result, str) => {
+    const [platform, version] = str.split(/\s+/);
+    result[platform] = +version;
+    return result;
+  }, {});
   const queuedIds = [];
   const features = flow(
-    filter(({ web_dev_views }) => {
-      return web_dev_views && web_dev_views.value <= 2;
+    filter(({ browsers }) => {
+      return browsers.webdev && browsers.webdev.view.val <= 2;
     }),
-    filter(({ ff_views, impl_status_chrome }) => {
-      return !/opposed/i.test(ff_views.text)
-        && !/pursuing|deprecat|removed/i.test(impl_status_chrome);
+    filter(({ browsers }) => {
+      return (
+        !/opposed/i.test(browsers.ff.view.text) &&
+        !/pursuing|deprecat|removed/i.test(browsers.chrome.status.text)
+      );
     }),
-    map((chrome) => {
+    map((chromestatus) => {
+      const { chrome, ff, edge, safari } = chromestatus.browsers;
       const result = {
-        id: chrome.id,
-        link: `https://www.chromestatus.com/feature/${chrome.id}`,
-        name: chrome.name,
-        category: resolveCategory(chrome.category),
+        id: chromestatus.id,
+        link: `https://www.chromestatus.com/feature/${chromestatus.id}`,
+        name: chromestatus.name,
+        category: resolveCategory(chromestatus.category),
         chrome: {
-          status: resolveStatus(chrome.impl_status_chrome),
-          alt: chrome.impl_status_chrome,
+          status: resolveStatus(chrome.status.text),
+          alt: chrome.status.text,
           updated: new Date(chrome.updated).valueOf(),
         },
         firefox: {
-          status: resolveStatus(chrome.ff_views.text),
-          alt: chrome.ff_views.text,
+          status: resolveStatus(ff && ff.view.text),
+          alt: ff && ff.view.text,
         },
         ie: {
-          status: resolveStatus(chrome.ie_views.text),
-          alt: chrome.ie_views.text,
+          status: resolveStatus(edge && edge.view.text),
+          alt: edge && edge.view.text,
         },
         safari: {
-          status: resolveStatus(chrome.safari_views.text),
-          alt: chrome.safari_views.text,
+          status: resolveStatus(safari && safari.view.text),
+          alt: safari && safari.view.text,
         },
       };
-      if (result.chrome.status === 'shipped' && chrome.shipped_milestone) {
-        result.chrome.version = chrome.shipped_milestone;
+      if (result.chrome.status === 'shipped' && chrome.milestone_str) {
+        result.chrome.version = chrome.milestone_str;
         if (result.chrome.version > latest.chrome) {
           result.chrome.status = 'in-development';
         }
       }
-      const firefoxRef = find({ chrome_ref: chrome.id })(firefoxStatus);
+      const firefoxRef = find({ chrome_ref: chromestatus.id })(firefoxStatus);
       if (firefoxRef) {
         result.name = firefoxRef.title;
         result.firefox.ref = firefoxRef.slug;
@@ -66,14 +68,14 @@ export async function getChromePopular() {
         if (firefoxRef.firefox_version) {
           result.firefox.version = firefoxRef.firefox_version;
         }
-      } else if (/show_bug\.cgi/.test(chrome.ff_views_link || '')) {
-        const id = chrome.ff_views_link.match(/id=([^$#]+)/)[1];
+      } else if (/show_bug\.cgi/.test((ff && ff.view.url) || '')) {
+        const id = ff.view.url.match(/id=([^$#]+)/)[1];
         queuedIds.push({
           id: id,
           feature: result,
         });
       }
-      let caniuseRef = findKey({ chrome_id: chrome.id })(caniuse.data);
+      let caniuseRef = findKey({ chrome_id: chromestatus.id })(caniuse.data);
       if (!caniuseRef && firefoxRef && firefoxRef.caniuse_ref) {
         caniuseRef = firefoxRef.caniuse_ref;
       }
@@ -88,24 +90,18 @@ export async function getChromePopular() {
     }),
   )(chromeStatus);
 
-  (await getRelease(queuedIds.map(({ id }) => id)))
-    .forEach(({ id, version }) => {
-      if (version) {
-        const ref = find({ id: String(id) })(queuedIds);
-        if (ref) {
-          if (ref.feature.firefox.status !== 'shipped') {
-            ref.feature.firefox.bz = true;
-          }
-          ref.feature.firefox.status = (version > latest.firefox)
-            ? 'in-development'
-            : 'shipped';
-          ref.feature.firefox.version = version;
+  (await getRelease(queuedIds.map(({ id }) => id))).forEach(({ id, version }) => {
+    if (version) {
+      const ref = find({ id: String(id) })(queuedIds);
+      if (ref) {
+        if (ref.feature.firefox.status !== 'shipped') {
+          ref.feature.firefox.bz = true;
         }
+        ref.feature.firefox.status = version > latest.firefox ? 'in-development' : 'shipped';
+        ref.feature.firefox.version = version;
       }
-    });
+    }
+  });
 
-  return flow(
-    map(scoreFeature),
-    filter(({ completeness }) => completeness >= 0.5),
-  )(features);
+  return flow(map(scoreFeature), filter(({ completeness }) => completeness >= 0.5))(features);
 }

@@ -320,8 +320,8 @@ router
       console.log(evolutions);
       if (!evolutions[0]) {
         if (version === start) {
+          // eslint-disable-next-line
           continue;
-        } else {
         }
       }
       if (channelDates.length) {

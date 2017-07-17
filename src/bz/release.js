@@ -5,16 +5,13 @@ import getVersions from '../release/versions';
 const base = 'https://bugzilla.mozilla.org/rest/bug';
 
 export async function getRelease(bugs) {
-  const fields = [
-    'id',
-    'cf_tracking_firefox_relnote',
-    'target_milestone',
-    'assigned_to',
-    'flags',
-  ];
+  const fields = ['id', 'cf_tracking_firefox_relnote', 'target_milestone', 'assigned_to', 'flags'];
   const latest = parseInt((await getVersions()).nightly, 10);
   for (let i = latest - 10; i <= latest; i += 1) {
     fields.push(`cf_status_firefox${i}`);
+  }
+  if (!bugs.length) {
+    return [];
   }
   const query = qs.stringify({
     id: bugs.join(','),

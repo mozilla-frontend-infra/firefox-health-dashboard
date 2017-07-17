@@ -42,8 +42,12 @@ export default class Widget extends React.Component {
       $targetStatus = (
         <aside className={cx(targetCls)}>
           {targetStatus === 'pass'
-            ? <span key='icon-pass' className='status-icon'>😀</span>
-            : <span key='icon-fail' className='status-icon'>😟</span>}
+            ? <span role='img' aria-label='Pass' key='icon-pass' className='status-icon'>
+                😀
+              </span>
+            : <span role='img' aria-label='Fail' key='icon-fail' className='status-icon'>
+                😟
+              </span>}
         </aside>
       );
     }
@@ -51,7 +55,9 @@ export default class Widget extends React.Component {
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
         <header>
-          <h3>{$title}</h3>
+          <h3>
+            {$title}
+          </h3>
           {$targetStatus}
         </header>
         <div
@@ -68,8 +74,7 @@ export default class Widget extends React.Component {
           {enrich(this.props.content, 'content')}
           {updated &&
             <div key='updated' className='widget-updated'>
-              Updated
-              {' '}
+              Updated{' '}
               <a
                 href='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
                 target='_blank'
@@ -78,7 +83,10 @@ export default class Widget extends React.Component {
                 {updated.format('MMM Do')}
               </a>
             </div>}
-          {target && <div key='target' className='widget-target'>{target}</div>}
+          {target &&
+            <div key='target' className='widget-target'>
+              {target}
+            </div>}
         </div>
       </div>
     );

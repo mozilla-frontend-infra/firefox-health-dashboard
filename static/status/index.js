@@ -14,23 +14,22 @@ const Table = ({ title, rows }) => {
   const headers = ['firefox', 'chrome', 'ie', 'safari'].map((platform) => {
     const cls = cx('feature-status', `status-${platform}`);
     return (
-      <span
-        key={`header-${platform}`}
-        className={cls}
-      >{platform}</span>
+      <span key={`header-${platform}`} className={cls}>
+        {platform}
+      </span>
     );
   });
   const main = flow(
     map((entry) => {
-      return (
-        <Feature key={`feature-${entry.id}`} entry={entry} />
-      );
+      return <Feature key={`feature-${entry.id}`} entry={entry} />;
     }),
   )(rows);
   return (
     <div className='features'>
       <header className='table-row'>
-        <h2>{title}</h2>
+        <h2>
+          {title}
+        </h2>
         {headers}
       </header>
       {main}
@@ -45,65 +44,47 @@ Table.propTypes = {
 
 const Feature = ({ entry }) => {
   const { id } = entry;
-  const cols = ['firefox', 'chrome', 'ie', 'safari']
-    .map((platform) => {
-      const state = entry[platform];
-      const alt = (state.alt || '')
-        .replace(/\s?public/i, '')
-        .trim()
-        .replace(/^support/i, 'positive')
-        .replace(/^mixed.*/i, 'indecisive')
-        .replace(/no\ssignal.*|^u$/i, '¯\\_(ツ)_/¯')
-        .replace(/^(n)$/i, '');
-      const label = state.version || {
+  const cols = ['firefox', 'chrome', 'ie', 'safari'].map((platform) => {
+    const state = entry[platform];
+    const alt = (state.alt || '')
+      .replace(/\s?public/i, '')
+      .trim()
+      .replace(/^support/i, 'positive')
+      .replace(/^mixed.*/i, 'indecisive')
+      .replace(/no\ssignal.*|^u$/i, '¯\\_(ツ)_/¯')
+      .replace(/^(n)$/i, '');
+    const label =
+      state.version ||
+      {
         nope: alt,
         'in-development': 'Dev',
         'under-consideration': alt,
-      }[state.status] || '';
-      const tdCls = cx(
-        'feature-status',
-        `status-${platform}`,
-        `status-${state.status}`,
-        {
-          'status-versioned': state.version,
-          'status-shrug': /^no.*signals$|^u$/i.test(state.alt),
-        },
-      );
-      let icon = null;
-      if (platform === 'firefox' && state.ref) {
-        icon = (
-          <i
-            className='icon-ref'
-            title='Shipping status from platform-status.mozilla.org'
-          >
-            ✓
-          </i>
-        );
-      } else if (state.bz) {
-        icon = (
-          <i
-            className='icon-ref icon-bz'
-            title='Shipping status from bugzilla'
-          />
-        );
-      }
-      return (
-        <span
-          key={`feature-${id}-${platform}`}
-          className={tdCls}
-          title={state.alt || ''}
-        >
-          {label}
-          {icon}
-        </span>
-      );
+      }[state.status] ||
+      '';
+    const tdCls = cx('feature-status', `status-${platform}`, `status-${state.status}`, {
+      'status-versioned': state.version,
+      'status-shrug': /^no.*signals$|^u$/i.test(state.alt),
     });
+    let icon = null;
+    if (platform === 'firefox' && state.ref) {
+      icon = (
+        <i className='icon-ref' title='Shipping status from platform-status.mozilla.org'>
+          ✓
+        </i>
+      );
+    } else if (state.bz) {
+      icon = <i className='icon-ref icon-bz' title='Shipping status from bugzilla' />;
+    }
+    return (
+      <span key={`feature-${id}-${platform}`} className={tdCls} title={state.alt || ''}>
+        {label}
+        {icon}
+      </span>
+    );
+  });
   return (
     <div className='table-row feature'>
-      <span
-        key={`feature-${id}-title`}
-        className='feature-title'
-      >
+      <span key={`feature-${id}-title`} className='feature-title'>
         <a href={entry.link} target='_blank' rel='noopener noreferrer'>
           {entry.name}
         </a>
@@ -137,45 +118,40 @@ export default class Status extends React.Component {
       tables = [
         <Table
           key='table-popular-missing'
-          title='Chrome: Firefox Missing'
-          rows={
-            flow(
-              // filter((feature) => feature.recent),
-              filter(({ firefox }) => firefox.status !== 'shipped'),
-              filter(({ firefox }) => firefox.status !== 'in-development'),
-              sortBy(['completeness', 'recency']),
-              reverse,
-            )(popular)
-          }
+          title='Chrome but not FF'
+          rows={flow(
+            // filter((feature) => feature.recent),
+            filter(({ firefox }) => firefox.status !== 'shipped'),
+            filter(({ firefox }) => firefox.status !== 'in-development'),
+            sortBy(['completeness', 'recency']),
+            reverse,
+          )(popular)}
         />,
         <Table
           key='table-popular-done'
-          title='Chromestatus: Chrome Not Shipped'
-          rows={
-            flow(
-              filter(({ firefox, chrome }) => {
-                return (
-                  firefox.version
-                    || firefox.status === 'shipped'
-                    || firefox.status === 'in-development'
-                  ) && chrome.status !== 'shipped';
-              }),
-              sortBy(['recency']),
-              reverse,
-            )(popular)
-          }
+          title='FF but not Chrome'
+          rows={flow(
+            filter(({ firefox, chrome }) => {
+              return (
+                (firefox.version ||
+                  firefox.status === 'shipped' ||
+                  firefox.status === 'in-development') &&
+                chrome.status !== 'shipped'
+              );
+            }),
+            sortBy(['recency']),
+            reverse,
+          )(popular)}
         />,
         <Table
           key='table-caniuse'
-          title='CanIUse: FF Not Shipped'
-          rows={
-            flow(
-              // filter((feature) => feature.recency > 0),
-              filter(feature => !feature.firefox || feature.firefox.status !== 'shipped'),
-              sortBy(['recency']),
-              reverse,
-            )(caniuse)
-          }
+          title='CanIUse: Not FF'
+          rows={flow(
+            // filter((feature) => feature.recency > 0),
+            filter(feature => !feature.firefox || feature.firefox.status !== 'shipped'),
+            sortBy(['recency']),
+            reverse,
+          )(caniuse)}
         />,
       ];
     }
