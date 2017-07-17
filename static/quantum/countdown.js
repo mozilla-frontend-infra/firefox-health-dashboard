@@ -9,7 +9,7 @@ const dates = [
   {
     idx: 'nightly',
     label: 'Nightly 57',
-    date: moment('2017-08-07', 'YYYY-MM-DD'),
+    date: moment('2017-08-02', 'YYYY-MM-DD'),
   },
   {
     idx: 'beta',
@@ -31,7 +31,12 @@ export default class CountdownWidget extends React.Component {
       const extraDays = weekDays - weeks * 5;
       return (
         <div className='widget-entry' key={`countdown-${entry.idx}`}>
-          <h4>{entry.label}<small>{entry.date.format('ddd, MMM D')}</small></h4>
+          <h4>
+            {entry.label}
+            <small>
+              {entry.date.format('ddd, MMM D')}
+            </small>
+          </h4>
           {extraDays < 1
             ? <div key='weeks'>
               <em>{weeks}</em> work weeks
