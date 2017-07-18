@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import moment from 'moment';
+// import moment from 'moment';
 
 const enrich = (text, key = 'none') => {
   return typeof text === 'string'
@@ -25,7 +25,7 @@ const enrich = (text, key = 'none') => {
 export default class Widget extends React.Component {
   render() {
     const title = enrich(this.props.title);
-    const updated = this.props.updated && moment(this.props.updated);
+    // const updated = this.props.updated && moment(this.props.updated);
     const $title = this.props.link
       ? (<a href={this.props.link} target='_blank' rel='noopener noreferrer'>
         {title}
@@ -72,17 +72,6 @@ export default class Widget extends React.Component {
           }}
         >
           {enrich(this.props.content, 'content')}
-          {updated &&
-            <div key='updated' className='widget-updated'>
-              Updated{' '}
-              <a
-                href='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                {updated.format('MMM Do')}
-              </a>
-            </div>}
           {target &&
             <div key='target' className='widget-target'>
               {target}

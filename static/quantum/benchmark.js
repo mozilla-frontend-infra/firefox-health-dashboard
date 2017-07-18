@@ -103,7 +103,7 @@ export default class BenchmarkWidget extends React.Component {
         );
       });
       const yFormat = timeFormat('%b %d');
-      const $xAxis = xScale.ticks(5).map((tick, idx) => {
+      const $xAxis = xScale.ticks(6).map((tick, idx) => {
         const x = xScale(tick);
         const label = yFormat(tick);
         return (
