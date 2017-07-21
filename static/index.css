@@ -465,7 +465,8 @@ svg {
 .summary .row {
   background-color: #fff;
 }
-.summary-fullscreen {
+.multipage.summary-fullscreen {
+  height: 100%;
   margin-bottom: calc(var(--gutterY) * 2);
   .row {
     flex: 1;

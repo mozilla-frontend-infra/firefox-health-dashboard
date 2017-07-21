@@ -465,11 +465,13 @@ export default class QuantumIndex extends React.Component {
 
     const full = !!this.props.location.query.full;
 
+    document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
+
     const $dashboard = (
       <Dashboard
         title='Quantum'
         subtitle='Release Criteria Report'
-        className={cx('summary', { 'summary-fullscreen': full })}
+        className={cx('summary')}
         sourceTitle='Status Spreadsheet'
         source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/view'
         link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
