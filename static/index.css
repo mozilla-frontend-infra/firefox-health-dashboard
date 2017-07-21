@@ -480,9 +480,9 @@ svg {
     display: block;
     border: none;
     text-align: center;
+    margin: 0;
     strong {
       color: var(--newNeonBlue);
-      text-decoration: underline;
     }
   }
    /*{

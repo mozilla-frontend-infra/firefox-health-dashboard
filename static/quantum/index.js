@@ -466,7 +466,7 @@ export default class QuantumIndex extends React.Component {
 
     if (full) {
       $content.push(
-        <h2>More details on <strong>https://health.graphics/quantum</strong></h2>,
+        <h2>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
       );
     }
 
