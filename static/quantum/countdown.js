@@ -8,17 +8,17 @@ import Widget from './widget';
 const dates = [
   {
     idx: 'nightly',
-    label: 'Nightly 57',
+    label: [<strong>Nightly</strong>, ' ', 57],
     date: moment('2017-08-02', 'YYYY-MM-DD'),
   },
   {
     idx: 'beta',
-    label: 'Beta 57',
+    label: [<strong>Beta</strong>, ' ', 57],
     date: moment('2017-09-25', 'YYYY-MM-DD'),
   },
   {
     idx: 'release',
-    label: 'Release 57',
+    label: [<strong>Release</strong>, ' ', 57],
     date: moment('2017-11-14', 'YYYY-MM-DD'),
   },
 ];

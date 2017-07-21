@@ -467,15 +467,25 @@ svg {
 }
 .multipage.summary-fullscreen {
   height: 100%;
-  margin-bottom: calc(var(--gutterY) * 2);
+  .dashboard-main {
+    flex-wrap: wrap;
+  }
   .row {
     flex: 1;
   }
-  .row:not(:nth-of-type(1), :nth-of-type(2)) {
+  .row:not(:nth-of-type(1), :nth-of-type(2)), h2:not(:nth-of-type(1)) {
     display: none;
   }
-  h2:not(:nth-of-type(1)) {
-    flex: 1;
+  h2:last-child {
+    display: block;
+    border: none;
+    text-align: center;
+    strong {
+      color: var(--newNeonBlue);
+      text-decoration: underline;
+    }
+  }
+   /*{
     font-size: var(--fontSize);
     padding: calc(var(--gutterY) / 4) 0;
     margin: 0;
@@ -484,7 +494,7 @@ svg {
       font-size: var(--smallFontSize);
       line-height: var(--fontSize);
     }
-  }
+  }*/
 }
 
 .criteria-widget {
@@ -494,6 +504,10 @@ svg {
     padding-top: 0;
     font-weight: 300;
     margin-top: 0;
+    strong {
+      font-weight: 700;
+      color: #333;
+    }
     small {
       display: block;
       color: var(--darkGray);

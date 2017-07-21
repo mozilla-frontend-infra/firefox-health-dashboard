@@ -67,6 +67,8 @@ export default class BenchmarkWidget extends React.Component {
         })
         : <path d={path(evolution)} className={'series series-path series-0'} />;
 
+      const topArea = Math.min(yScale.range()[0], yScale(targetDiff));
+
       const $area = (
         <rect
           x={xScale.range()[0]}
@@ -103,7 +105,7 @@ export default class BenchmarkWidget extends React.Component {
         );
       });
       const yFormat = timeFormat('%b %d');
-      const $xAxis = xScale.ticks(6).map((tick, idx) => {
+      const $xAxis = xScale.ticks(10).map((tick, idx) => {
         const x = xScale(tick);
         const label = yFormat(tick);
         return (
@@ -122,7 +124,7 @@ export default class BenchmarkWidget extends React.Component {
         <text
           className={'legend series-target'}
           x={xScale.range()[0] + 5}
-          y={yScale(0) + 15}
+          y={Math.min(yScale(0) + 15, topArea + 15)}
           key={'legend-target'}
         >
           {label}

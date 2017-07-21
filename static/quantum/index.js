@@ -53,6 +53,7 @@ export default class QuantumIndex extends React.Component {
 
   render() {
     const { apzStatus, notes } = this.state;
+    const full = !!this.props.location.query.full;
 
     const $apz = (
       <Widget
@@ -106,7 +107,7 @@ export default class QuantumIndex extends React.Component {
                   return (
                     <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
                       <span>
-                        <em>{count}</em> {statusLabels.get(color)}
+                        <em>{count}</em> criteria {statusLabels.get(color)}
                       </span>
                     </div>
                   );
@@ -463,7 +464,11 @@ export default class QuantumIndex extends React.Component {
       return reduced.concat(add);
     }, []);
 
-    const full = !!this.props.location.query.full;
+    if (full) {
+      $content.push(
+        <h2>More details on <strong>https://health.graphics/quantum</strong></h2>,
+      );
+    }
 
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
