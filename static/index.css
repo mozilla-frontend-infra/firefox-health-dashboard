@@ -471,9 +471,19 @@ svg {
   .row {
     flex: 1;
   }
-  .row:not(:nth-of-type(1), :nth-of-type(2)),
-  h2:not(:nth-of-type(1)) {
+  .row:not(:nth-of-type(1), :nth-of-type(2)) {
     display: none;
+  }
+  h2:not(:nth-of-type(1)) {
+    flex: 1;
+    font-size: var(--fontSize);
+    padding: calc(var(--gutterY) / 4) 0;
+    margin: 0;
+    border: 0;
+    .header-status, .header-status em {
+      font-size: var(--smallFontSize);
+      line-height: var(--fontSize);
+    }
   }
 }
 
