@@ -2,7 +2,7 @@ import { createClient } from 'then-redis';
 import fetch from 'node-fetch';
 import moment from 'moment';
 
-const defaultTtl = moment.duration(4, 'hours').as('seconds');
+const defaultTtl = moment.duration(8, 'hours').as('seconds');
 
 let db = null;
 const devCache = {};
