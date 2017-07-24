@@ -30,7 +30,7 @@ router
     const bydate = bugs.map((bug) => {
       const set = {
         id: bug.id,
-        opened: moment(bug.creation_time, 'YYYY-MM-DD').valueOf(),
+        total: moment(bug.creation_time, 'YYYY-MM-DD').valueOf(),
       };
       if (bug.is_open) {
         if (bug.assigned_to || bug.assigned_to_detail || bug.flags.find(flag => flag.name === 'needinfo')) {
@@ -44,7 +44,7 @@ router
     });
     const buckets = {
       closed: [],
-      opened: [],
+      total: [],
     };
     const uniqueDates = [];
     const cutOff = (new Date('2017-04-01')).getTime();
@@ -66,8 +66,8 @@ router
       }
     });
     uniqueDates.sort().reverse();
-    const openedIds = bydate.filter(bug => !bug.closed).map(bug => bug.id);
-    const unassignedIds = bydate.filter(bug => bug.assigned).map(bug => bug.id);
+    // const totalIds = bydate.filter(bug => !bug.closed).map(bug => bug.id);
+    // const unassignedIds = bydate.filter(bug => bug.assigned).map(bug => bug.id);
     const closedIds = bydate.filter(bug => bug.closed).map(bug => bug.id);
 
     const countChanged = (bucket, date) => {
@@ -75,14 +75,14 @@ router
       return pairs ? pairs[1].length : 0;
     };
 
-    let openedPointer = bydate.length;
+    let totalPointer = bydate.length;
     let closedPointer = closedIds.length;
     const timeline = uniqueDates.map((date) => {
-      openedPointer -= countChanged('opened', date);
+      totalPointer -= countChanged('total', date);
       closedPointer -= countChanged('closed', date);
       return {
         date,
-        opened: openedPointer,
+        total: totalPointer,
         closed: closedPointer,
       };
     });

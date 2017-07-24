@@ -35,8 +35,10 @@ export default class FlowWidget extends React.Component {
       ];
       const yRange = [
         0,
-        maxBy('opened', burnup).opened,
+        maxBy('total', burnup).total,
       ];
+      console.log(maxBy('total', burnup).total);
+      console.log(maxBy('total', burnup).closed);
       const xScale = scaleTime()
         .domain(xRange)
         .range([25, width]);
@@ -44,29 +46,29 @@ export default class FlowWidget extends React.Component {
         .domain(yRange)
         .nice(tickCount)
         .range([height - 20, 2]);
-      const pathOpened = line()
-        .x(d => xScale(new Date(d.date)))
-        .y(d => yScale(d.opened - d.closed))
-        .curve(curveLinear);
       const pathClosed = line()
         .x(d => xScale(new Date(d.date)))
-        .y(d => yScale(d.opened))
+        .y(d => yScale(d.closed))
+        .curve(curveLinear);
+      const pathTotal = line()
+        .x(d => xScale(new Date(d.date)))
+        .y(d => yScale(d.total))
         .curve(curveLinear);
 
-      const areaOpen = area()
-        .x(d => xScale(new Date(d.date)))
-        .y0(() => yScale(0))
-        .y1(d => yScale(d.opened - d.closed))
-        .curve(curveLinear);
       const areaClosed = area()
         .x(d => xScale(new Date(d.date)))
-        .y0(d => yScale(d.opened - d.closed))
-        .y1(d => yScale(d.opened))
+        .y0(() => yScale(0))
+        .y1(d => yScale(d.closed))
         .curve(curveLinear);
-      const $pathOpened = (
+      const areaTotal = area()
+        .x(d => xScale(new Date(d.date)))
+        .y0(d => yScale(d.total))
+        .y1(d => yScale(d.closed))
+        .curve(curveLinear);
+      const $pathTotal = (
         <path
-          d={pathOpened(burnup)}
-          key='path-opened'
+          d={pathTotal(burnup)}
+          key='path-total'
           className={'series series-path series-open'}
         />
       );
@@ -77,9 +79,9 @@ export default class FlowWidget extends React.Component {
           className={'series series-path series-closed'}
         />
       );
-      const $areaOpen = (
+      const $areaTotal = (
         <path
-          d={areaOpen(burnup)}
+          d={areaTotal(burnup)}
           key='area-open'
           className={'series series-area series-open'}
         />
@@ -139,15 +141,15 @@ export default class FlowWidget extends React.Component {
           y={15}
           key={'legend-closed'}
         >
-          Closed
+          Completed
         </text>,
         <text
           className={'legend series-open'}
-          x={70}
+          x={92}
           y={15}
           key={'legend-open'}
         >
-          Open
+          Nominated
         </text>,
       ];
 
@@ -158,9 +160,9 @@ export default class FlowWidget extends React.Component {
         >
           {$yAxis}
           {$xAxis}
-          {$areaOpen}
+          {$areaTotal}
           {$areaClosed}
-          {$pathOpened}
+          {$pathTotal}
           {$pathClosed}
           {$legends}
         </svg>
