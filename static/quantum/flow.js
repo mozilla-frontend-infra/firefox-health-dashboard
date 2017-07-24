@@ -37,8 +37,6 @@ export default class FlowWidget extends React.Component {
         0,
         maxBy('total', burnup).total,
       ];
-      console.log(maxBy('total', burnup).total);
-      console.log(maxBy('total', burnup).closed);
       const xScale = scaleTime()
         .domain(xRange)
         .range([25, width]);

@@ -422,7 +422,7 @@ export default class QuantumIndex extends React.Component {
     ];
 
     let rowIdx = 0;
-    const $content = sections.reduce((reduced, { title, rows }) => {
+    const $content = sections.reduce((reduced, { title, rows }, sectionId) => {
       const add = [];
       const statusList = new Map(Array.from(statusLabels.keys()).map(key => [key, 0]));
       for (const widgets of rows) {
@@ -435,11 +435,13 @@ export default class QuantumIndex extends React.Component {
           }
         }
         rowIdx += 1;
-        add.push(
-          <div className='row' key={`row-${rowIdx}`}>
-            {widgets}
-          </div>,
-        );
+        if (!full || sectionId < 2) {
+          add.push(
+            <div className='row' key={`row-${rowIdx}`}>
+              {widgets}
+            </div>,
+          );
+        }
       }
       const $status = [];
       for (const [status, count] of statusList) {
@@ -451,7 +453,7 @@ export default class QuantumIndex extends React.Component {
           );
         }
       }
-      if (title) {
+      if ((!full || sectionId < 2) && title) {
         add.unshift(
           <h2>
             <span>

@@ -473,9 +473,6 @@ svg {
   .row {
     flex: 1;
   }
-  .row:not(:nth-of-type(1), :nth-of-type(2)), h2:not(:nth-of-type(1)) {
-    display: none;
-  }
   h2:last-child {
     display: block;
     border: none;
