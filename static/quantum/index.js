@@ -16,7 +16,7 @@ const apzBugs = {
   1376525: 'Keyboard Scrolling',
   1349750: 'Scrollbar Dragging',
   1367765: 'Touch Scrollbar Dragging',
-  1105109: 'Autoscrolling',
+  1385463: 'Autoscrolling',
 };
 
 const statusLabels = new Map([
