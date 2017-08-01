@@ -303,6 +303,9 @@ svg {
       stroke: color(var(--newLime) saturation(100%) shade(20%));
       stroke-width: 1;
     }
+    &.series-busy {
+      stroke-width: 1;
+    }
   }
   circle.series {
     fill: var(--newCyan);
@@ -321,6 +324,9 @@ svg {
     }
     &.series-target {
       fill: var(--newLime);
+    }
+    &.series-busy {
+      opacity: 0.15;
     }
   }
   .legend {

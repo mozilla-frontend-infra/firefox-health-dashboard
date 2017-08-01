@@ -24,7 +24,7 @@ export default class PerfherderWidget extends React.Component {
     const { signatures, framework } = this.props;
     const signatureLabels = Object.keys(signatures);
     const splitSignatures = Object.values(signatures).reduce((split, signature, idx) => {
-      signature.split(',').forEach(entry => split.set(entry, signatureLabels[idx]));
+      signature.split(/\s*,\s*/).forEach(entry => split.set(entry, signatureLabels[idx]));
       return split;
     }, new Map());
     const query = stringify({
@@ -44,11 +44,12 @@ export default class PerfherderWidget extends React.Component {
   }
 
   render() {
-    const { explainer } = this.props;
+    const { explainer, framework } = this.props;
     const { evolutions, signatures, signatureLabels } = this.state;
     let svg = null;
 
     if (evolutions) {
+      const busy = signatures.size > 5;
       const referenceTime = this.props.reference;
       const referenceYs = [];
       const referenceFit = referenceTime ? moment(referenceTime).add(-5, 'days').unix() : 0;
@@ -84,7 +85,7 @@ export default class PerfherderWidget extends React.Component {
         if (ref) {
           const refY = yScale(ref.avg);
           referenceYs.push(refY);
-          $reference = (
+          $reference = busy ? null : (
             <line
               key={`reference-${idx}`}
               className='reference reference-x'
@@ -98,12 +99,14 @@ export default class PerfherderWidget extends React.Component {
         const $path = (
           <path
             d={path(evolution)}
-            className={`series series-path series-${long
+            className={cx(`series series-path series-${long
               ? Math.round(evolutions.length / idx - 1)
-              : idx}`}
+              : idx}`, {
+                'series-busy': busy,
+              })}
           />
         );
-        const $scatters = evolution.reduce((reduced, entry) => {
+        const $scatters = busy ? null : evolution.reduce((reduced, entry) => {
           entry.runs.forEach((run) => {
             reduced.push(
               <circle
@@ -116,8 +119,13 @@ export default class PerfherderWidget extends React.Component {
           }, reduced);
           return reduced;
         }, []);
-        const $area = (
-          <path d={filledPath(evolution)} className={`series series-area series-${idx}`} />
+        const $area = busy ? null : (
+          <path
+            d={filledPath(evolution)}
+            className={cx(`series series-area series-${idx}`, {
+              'series-busy': busy,
+            })}
+          />
         );
         return [$area, $scatters, $path, $reference];
       });
@@ -193,7 +201,7 @@ export default class PerfherderWidget extends React.Component {
       series: (signatures
         ? [...signatures.keys()]
         : Object.values(this.props.signatures)).map((signature) => {
-          return `[mozilla-central,${signature},1,1]`;
+          return `[mozilla-central,${signature},1,${framework}]`;
         }),
     });
     const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;

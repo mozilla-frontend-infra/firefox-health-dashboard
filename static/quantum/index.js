@@ -144,7 +144,7 @@ export default class QuantumIndex extends React.Component {
           [
             <MissionControl
               title='Browser: Input Lag ≥ 2.5s/MTBF'
-              metric='nightly.mtbf_chrome_input_latency_gt_2500'
+              metric='input_event_response_coalesced_ms_main_above_2500_rate'
               reference={16}
               referenceArea='above'
               formatting='hrs'
@@ -159,7 +159,7 @@ export default class QuantumIndex extends React.Component {
             />,
             <MissionControl
               title='Browser: Input Lag ≥ 250ms/MTBF'
-              metric='nightly.mtbf_chrome_input_latency_gt_250'
+              metric='input_event_response_coalesced_ms_main_above_250_rate'
               reference={2}
               referenceArea='above'
               formatting='min'
@@ -169,7 +169,7 @@ export default class QuantumIndex extends React.Component {
           [
             <MissionControl
               title='Content: Input Lag ≥ 2.5s/MTBF'
-              metric='nightly.mtbf_content_input_latency_gt_2500'
+              metric='input_event_response_coalesced_ms_content_above_2500_rate'
               reference={4}
               referenceArea='above'
               formatting='hrs'
@@ -184,7 +184,7 @@ export default class QuantumIndex extends React.Component {
             />,
             <MissionControl
               title='Content: Input Lag ≥ 250ms/MTBF'
-              metric='nightly.mtbf_content_input_latency_gt_250'
+              metric='input_event_response_coalesced_ms_content_above_250_rate'
               reference={0.5}
               referenceArea='above'
               formatting='min'
@@ -206,35 +206,35 @@ export default class QuantumIndex extends React.Component {
               targetDiff={0}
               {...notes.hasal}
             />,
-            // <Perfherder
-            //   title='Hasal (Perfherder)'
-            //   target='Not set'
-            //   framework={9}
-            //   signatures={{
-            //     firefox:
-            //       'b1e9032dd4ffe6b477712c782a0ca4cac9ac1c2d,
-            //       6765a760486fb1fc1cf64df05b8a0b84d4fdac53,
-            //       e9fd56ad103296dfc346952385c284ef5f3e0dac,
-            //       563257d55ec4b07aa1650c25faac30e927053749,
-            //       7b287bc993dcd5a2a9e8d2d369740dd1c88fef25,
-            //       ac1fb385ad5752c63f5e9738637a4ed4607f755a,
-            //       711e0433e3e5f6d770f6062d7586c9131ee75aea,
-            //       7f49f98c7977658b265f7faa2a34b1164408f048,
-            //       d4af2fc60941e121cee03abe408902a47ff417dc,
-            //       fe07b55428ec7e40c7b1ec90e145df64c92ec002',
-            //     chrome: 'eab3f5a88c8e948b1d5c38f72a64ae11b6e15e69,
-            //     7ce812004afb2a2a5ab17b99e569d0f2588d6ab2,
-            //     2a2405c17da7a1b2bcb2443fd2b10ccc57f03052,
-            //     edd6249592205f06a19b46572e9b4d6f207dd08f,
-            //     85b7300002195cbb74be4117ddb4fdb5434749d5,
-            //     544ca251a3b363188f21d44f960b8537c7201861,
-            //     87eb7165f1a63facc4e26593bddc4cb2e6070bf9,
-            //     39af63dbc39efdd7b2eb9a0ec623626139f8b993,
-            //     1889707238a94395535e5d3c3360a541219a9376,
-            //     e3d6c348928907692aa5d01974a7c6d8237b5245',
-            //   }}
-            //   {...notes.talos_hasal}
-            // />,
+            <Perfherder
+              title='Hasal (Perfherder)'
+              target='Not set'
+              framework={9}
+              signatures={{
+                firefox:
+                  `b1e9032dd4ffe6b477712c782a0ca4cac9ac1c2d,
+                  6765a760486fb1fc1cf64df05b8a0b84d4fdac53,
+                  e9fd56ad103296dfc346952385c284ef5f3e0dac,
+                  563257d55ec4b07aa1650c25faac30e927053749,
+                  7b287bc993dcd5a2a9e8d2d369740dd1c88fef25,
+                  ac1fb385ad5752c63f5e9738637a4ed4607f755a,
+                  711e0433e3e5f6d770f6062d7586c9131ee75aea,
+                  7f49f98c7977658b265f7faa2a34b1164408f048,
+                  d4af2fc60941e121cee03abe408902a47ff417dc,
+                  fe07b55428ec7e40c7b1ec90e145df64c92ec002`,
+                chrome: `eab3f5a88c8e948b1d5c38f72a64ae11b6e15e69,
+                7ce812004afb2a2a5ab17b99e569d0f2588d6ab2,
+                2a2405c17da7a1b2bcb2443fd2b10ccc57f03052,
+                edd6249592205f06a19b46572e9b4d6f207dd08f,
+                85b7300002195cbb74be4117ddb4fdb5434749d5,
+                544ca251a3b363188f21d44f960b8537c7201861,
+                87eb7165f1a63facc4e26593bddc4cb2e6070bf9,
+                39af63dbc39efdd7b2eb9a0ec623626139f8b993,
+                1889707238a94395535e5d3c3360a541219a9376,
+                e3d6c348928907692aa5d01974a7c6d8237b5245`,
+              }}
+              {...notes.talos_hasal}
+            />,
           ],
         ],
       },
@@ -258,6 +258,7 @@ export default class QuantumIndex extends React.Component {
             />,
             <Perfherder
               title='Talos TP6: Loaded'
+              reference='2017-07-29'
               target='Not set'
               signatures={{
                 'win10-64':

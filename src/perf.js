@@ -8,6 +8,7 @@ import { stringify } from 'query-string';
 import { median, quantile } from 'simple-statistics';
 import { getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
+import fetchRedash from './fetch/redash';
 import channels from './release/channels';
 import getVersions from './release/versions';
 import { getReleaseDate } from './release/history';
@@ -213,25 +214,37 @@ router
   })
   .get('/mission-control', async (ctx) => {
     const { metric } = ctx.request.query;
-    const fields = metric.split('.');
-    fields[0] += '_quantumready';
-    const current = moment('2017-06-05');
-    const days = moment().diff(current, 'days') - 1;
-    const dates = [];
-    for (let i = 0; i <= days; i += 1) {
-      current.add(1, 'days');
-      const data = await fetchJson(
-        `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(
-          current,
-        ).format('YYYYMMDD')}.json`,
-      );
-      if (data && data[fields[0]][fields[1]]) {
-        dates.push({
-          time: current.valueOf(),
-          value: data[fields[0]][fields[1]],
-        });
+    if (metric.includes('.')) {
+      const dates = [];
+      const fields = metric.split('.');
+      fields[0] += '_quantumready';
+      const current = moment('2017-06-05');
+      const days = moment().diff(current, 'days') - 1;
+      for (let i = 0; i <= days; i += 1) {
+        current.add(1, 'days');
+        const data = await fetchJson(
+          `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(
+            current,
+          ).format('YYYYMMDD')}.json`,
+        );
+        if (data && data[fields[0]][fields[1]]) {
+          dates.push({
+            time: current.valueOf(),
+            value: data[fields[0]][fields[1]],
+          });
+        }
       }
+      ctx.body = dates;
+      return;
     }
+    const raw = await fetchRedash(4977);
+    const dates = raw.query_result.data.rows
+      .map((row) => {
+        return {
+          time: new Date(row.build_date).valueOf(),
+          value: row[metric],
+        };
+      });
     ctx.body = dates;
   })
   .get('/herder', async (ctx) => {
