@@ -7,11 +7,6 @@ import Widget from './widget';
 
 const dates = [
   {
-    idx: 'nightly',
-    label: [<strong>Nightly</strong>, ' ', 57],
-    date: moment('2017-08-02', 'YYYY-MM-DD'),
-  },
-  {
     idx: 'beta',
     label: [<strong>Beta</strong>, ' ', 57],
     date: moment('2017-09-25', 'YYYY-MM-DD'),
@@ -55,7 +50,7 @@ export default class CountdownWidget extends React.Component {
     return (
       <Widget
         title='Branch Dates'
-        target='*Feature Complete* by Nightly 57'
+        target='*Zarro Boogs* by Release 57'
         link='https://wiki.mozilla.org/RapidRelease/Calendar'
         className='widget-countdown'
         content={$counters}
