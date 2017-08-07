@@ -256,7 +256,6 @@ svg {
       background-color: #fff;
       padding-left: calc(var(--gutterX) / 2);
       padding-right: calc(var(--gutterX) / 2);
-      color: var(--darkGray);
       font-weight: 700;
       font-size: var(--smallFontSize);
       display: flex;
@@ -266,6 +265,9 @@ svg {
         font-weight: 700;
         color: #333;
         font-style: normal;
+      }
+      .status-reading {
+        font-size: var(--fontSize);
       }
       .status-icon {
         padding-left: calc(var(--gutterY) / 4);
@@ -281,6 +283,9 @@ svg {
   }
   &.status-green header {
     background-color: var(--newLime);
+    .widget-target-status {
+      color: var(--newLime);
+    }
   }
   .widget-content {
     flex: 1;
@@ -525,6 +530,7 @@ svg {
     justify-content: space-around;
     align-items: flex-start;
     .widget-entry {
+      max-width: calc(var(--gutterX) * 20);
       padding: calc(var(--gutterY) * 1) var(--gutterX) calc(var(--gutterY) * 0.5);
       em {
         font-weight: 700;

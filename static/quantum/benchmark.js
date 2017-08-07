@@ -33,6 +33,7 @@ export default class BenchmarkWidget extends React.Component {
     const { evolution } = this.state;
     const { metric, targetDiff, type } = this.props;
     const scatter = type === 'scatter';
+    let reading = '';
     let svg = null;
 
     if (evolution) {
@@ -87,6 +88,10 @@ export default class BenchmarkWidget extends React.Component {
           className={'series series-path series-target'}
         />
       );
+
+      if (!scatter) {
+        reading = `${evolution[evolution.length - 1][metric].toFixed(2)}%`;
+      }
 
       const formatTick = format('.0d');
       const $yAxis = yScale.ticks(tickCount).map((tick, idx) => {
@@ -148,6 +153,7 @@ export default class BenchmarkWidget extends React.Component {
     return (
       <Widget
         target='No regressions'
+        reading={reading}
         className='graphic-widget graphic-timeline widget-benchmark'
         content={svg}
         loading={!evolution}

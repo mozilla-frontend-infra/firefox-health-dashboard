@@ -35,12 +35,17 @@ export default class Widget extends React.Component {
     if (target) {
       target = ['Target: ', enrich(this.props.target)];
     }
+    const reading = this.props.reading;
     const targetCls = ['widget-target-status'];
     let $targetStatus = null;
     if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
       const targetStatus = this.props.targetStatus;
       $targetStatus = (
         <aside className={cx(targetCls)}>
+          {reading
+            ? <span className='status-reading'>{reading}</span>
+            : null
+          }
           {targetStatus === 'pass'
             ? <span role='img' aria-label='Pass' key='icon-pass' className='status-icon'>
                 😀
@@ -91,6 +96,7 @@ Widget.defaultProps = {
 Widget.propTypes = {
   content: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
   status: PropTypes.string,
+  reading: PropTypes.string,
   title: PropTypes.string,
   target: PropTypes.string,
   targetStatus: PropTypes.string,

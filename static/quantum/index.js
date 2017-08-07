@@ -13,10 +13,22 @@ import Countdown from './countdown';
 import Flow from './flow';
 
 const apzBugs = {
-  1376525: 'Keyboard Scrolling',
-  1349750: 'Scrollbar Dragging',
-  1367765: 'Touch Scrollbar Dragging',
-  1385463: 'Autoscrolling',
+  1376525: {
+    title: 'Keyboard Scrolling',
+    update: 'Landed in 56 behind a preference. Pending SV testing, will be enabled by default.',
+  },
+  1349750: {
+    title: 'Scrollbar Dragging',
+    update: '',
+  },
+  1367765: {
+    title: 'Touch Scrollbar Dragging',
+    update: 'Investigating.',
+  },
+  1385463: {
+    title: 'Autoscrolling',
+    update: 'Landing on nightly behind a preference, and will ride 56 disabled by default.',
+  },
 };
 
 const statusLabels = new Map([
@@ -69,7 +81,7 @@ export default class QuantumIndex extends React.Component {
           return (
             <div className={'widget-entry'} key={`apz-${id}`}>
               <h4>
-                {apzBugs[id]}
+                {apzBugs[id].title}
                 <small>
                   <a href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${id}`} target='_new'>
                     Bug {id}
@@ -77,7 +89,7 @@ export default class QuantumIndex extends React.Component {
                 </small>
               </h4>
               <span>
-                {label}
+                {apzBugs[id].update || label}
               </span>
             </div>
           );
