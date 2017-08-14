@@ -325,12 +325,11 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_tp5}
             />,
             <Perfherder
-              title='Window Opening (tpaint)'
-              reference='2017-05-07'
+              title='Window Opening (tpaint e10s)'
+              reference='2017-07-06'
               signatures={{
-                'win10-64': '1372d76b5e35afa687de06f8159d5e8c437be91d',
-                'win7-32': 'd0a85e9de2bec8153d2040f2958d979876542012',
-                'win8-64': 'c6caad67b3eb993652e0e986c372d016af4d6c8b',
+                'win10-64': '9525bb9b68bda10ed26b7c1999ba40830827c792',
+                'win7-32': '729285324ec4b164b8d3ecec42c2fdb344f7e581',
               }}
               {...notes.talos_tpaint}
             />,
