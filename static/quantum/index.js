@@ -154,63 +154,6 @@ export default class QuantumIndex extends React.Component {
         title: '#2 Responsiveness in Browser Chrome & Content',
         rows: [
           [
-            <MissionControl
-              title='Browser: Input Lag ≥ 2.5s/MTBF'
-              metric='input_event_response_coalesced_ms_main_above_2500_rate'
-              reference={16}
-              referenceArea='above'
-              formatting='hrs'
-              {...notes.chrome_il_mtbf_high}
-            />,
-            <MissionControl
-              title='Browser: Input Lag ≥ 2.5s/Population'
-              metric='weekly.chrome_input_latency_gt_2500'
-              formatting='%'
-              reference={0.02}
-              {...notes.chrome_il_sessions_high}
-            />,
-            <MissionControl
-              title='Browser: Input Lag ≥ 250ms/MTBF'
-              metric='input_event_response_coalesced_ms_main_above_250_rate'
-              reference={2}
-              referenceArea='above'
-              formatting='min'
-              {...notes.chrome_il_mtbf_low}
-            />,
-          ],
-          [
-            <MissionControl
-              title='Content: Input Lag ≥ 2.5s/MTBF'
-              metric='input_event_response_coalesced_ms_content_above_2500_rate'
-              reference={4}
-              referenceArea='above'
-              formatting='hrs'
-              {...notes.content_il_mtbf_high}
-            />,
-            <MissionControl
-              title='Content: Input Lag ≥ 2.5s/Population'
-              metric='weekly.content_input_latency_gt_2500'
-              formatting='%'
-              reference={0.05}
-              {...notes.content_il_sessions_high}
-            />,
-            <MissionControl
-              title='Content: Input Lag ≥ 250ms/MTBF'
-              metric='input_event_response_coalesced_ms_content_above_250_rate'
-              reference={0.5}
-              referenceArea='above'
-              formatting='min'
-              {...notes.content_il_mtbf_low}
-            />,
-          ],
-          [
-            <MissionControl
-              title='Browser: Ghost Windows'
-              formatting='%'
-              reference={0}
-              metric='nightly.ghost_windows_rate'
-              {...notes.chrome_ghost_windows}
-            />,
             <Benchmark
               title='Benchmark: Input Lag (Hasal)'
               id='hasal'
@@ -272,11 +215,12 @@ export default class QuantumIndex extends React.Component {
               title='Talos TP6: Loaded'
               reference='2017-07-29'
               target='Not set'
+              // first 4 are quantum_pageload, second 4 are tp6 (label changed in perfherder)
               signatures={{
                 'win10-64':
-                  'fd75e33f207c37d5b2af9f8bbe6ce2e2a8d626ee,b8d73ce351c36fb3f136064b85a051b2c393decd,177e98528def00a9399250b7fb71f2a3bdb6440e,47a93f1c5ceec5ef83f764c2cea3e24bfb50beeb',
+                  'fd75e33f207c37d5b2af9f8bbe6ce2e2a8d626ee,b8d73ce351c36fb3f136064b85a051b2c393decd,177e98528def00a9399250b7fb71f2a3bdb6440e,47a93f1c5ceec5ef83f764c2cea3e24bfb50beeb,d554681a57d858f77a7a3d8b58f5af9e82adae5c,9ef4e3fa8d78e5f459f804f2ddf0ee5e10e1c6a5,38fae8e31635a7dd92c7bde1b297f25cd5f6cdd0,a920958825b36891e19495c0669eccc21c751c03',
                 'win7-32':
-                  '7f1ea9f8f87c915b288fa99e69f19803799ec480,9ebf63ac2c9ab57a36bd523bc91bba78b22cd5ac,c2eb952711af078f8419af4f7b6fdad0e3a5028f,1a165eb0262c84b0e04e830d88844cf18c0fb8f8',
+                  '7f1ea9f8f87c915b288fa99e69f19803799ec480,9ebf63ac2c9ab57a36bd523bc91bba78b22cd5ac,c2eb952711af078f8419af4f7b6fdad0e3a5028f,1a165eb0262c84b0e04e830d88844cf18c0fb8f8,b218982f76037c94aa0bc2e6f3102a3745fb0ef8,40762f6820e6cfd4531505caebccf27d46b0f037,a4884e6435dff7ffe3dda82b383552c7fa267e55,af835391eb98960df2aaa74c2d76200064e73c65',
               }}
               {...notes.talos_tp6_loaded}
             />,
