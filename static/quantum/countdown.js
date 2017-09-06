@@ -50,7 +50,6 @@ export default class CountdownWidget extends React.Component {
     return (
       <Widget
         title='Branch Dates'
-        target='*Zarro Boogs* by Release 57'
         link='https://wiki.mozilla.org/RapidRelease/Calendar'
         className='widget-countdown'
         content={$counters}
