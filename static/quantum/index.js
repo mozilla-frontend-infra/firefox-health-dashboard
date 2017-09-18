@@ -23,7 +23,7 @@ const apzBugs = {
   },
   1367765: {
     title: 'Touch Scrollbar Dragging',
-    update: 'Investigating.',
+    update: 'Landed in 57.',
   },
   1385463: {
     title: 'Autoscrolling',
@@ -140,12 +140,22 @@ export default class QuantumIndex extends React.Component {
         rows: [
           [
             <Benchmark
-              title='Benchmark: Speedometer v2'
+              title='Benchmark: Speedometer v2 64-bit'
               id='speedometer'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
               type='line'
               {...notes.speedometer}
+            />,
+          ],
+          [
+            <Benchmark
+              title='Benchmark: Speedometer v2 32-bit'
+              id='speedometer32'
+              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometer32}
             />,
           ],
         ],

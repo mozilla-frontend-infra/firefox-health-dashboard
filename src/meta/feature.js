@@ -102,7 +102,7 @@ export function resolveStatus(test) {
 }
 
 export function extractLatestPlatforms() {
-  return browserslist.queries.lastVersions.select(1).reduce((result, str) => {
+  return browserslist("> 1%, last 1 version").reduce((result, str) => {
     const [platform, version] = str.split(/\s+/);
     result[platform] = +version;
     return result;

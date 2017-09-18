@@ -212,6 +212,39 @@ router
     const reference = transform(referenceSeries);
     ctx.body = reference;
   })
+  .get('/benchmark/speedometer32', async (ctx) => {
+    const referenceSeries = await fetchJson(
+      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-37.json',
+    );
+    const runs = {};
+    const transform = ({ graph }, start = null, end = null) => {
+      return graph.timelist
+        .map((date, idx) => {
+          const values = {
+            date: date * 1000,
+          };
+          graph.lines.forEach((line, lineIdx) => {
+            if (line && line.data[idx]) {
+              runs[lineIdx] = line.data[idx][0];
+            }
+          }, []);
+          if (runs[0] && (runs[1] || runs[2])) {
+            values.diff = ((runs[1] || runs[2]) - runs[0]) / runs[0] * 100;
+          }
+          return values;
+        })
+        .filter(entry => entry.diff)
+        .filter(entry => !end || entry.date < end)
+        .filter(entry => !start || entry.date > start);
+    };
+    // const legacy = transform(
+    //   legacySeries,
+    //   moment('2017-05-01').valueOf(),
+    //   moment('2017-06-01').valueOf(),
+    // );
+    const reference = transform(referenceSeries);
+    ctx.body = reference;
+  })
   .get('/mission-control', async (ctx) => {
     const { metric } = ctx.request.query;
     if (metric.includes('.')) {
