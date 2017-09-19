@@ -15,19 +15,19 @@ import Flow from './flow';
 const apzBugs = {
   1376525: {
     title: 'Keyboard Scrolling',
-    update: 'Landed in 56 behind a preference. Pending SV testing, will be enabled by default.',
+    update: 'Landed in 56 behind a preference. Enabled by default in 57.',
   },
-  1349750: {
+  1211610: {
     title: 'Scrollbar Dragging',
-    update: '',
+    update: 'Landed in 55 and enabled by default.',
   },
   1367765: {
     title: 'Touch Scrollbar Dragging',
-    update: 'Landed in 57.',
+    update: 'Landed in 57 and enabled by default.',
   },
   1385463: {
     title: 'Autoscrolling',
-    update: 'Landing on nightly behind a preference, and will ride 56 disabled by default.',
+    update: 'Landed in 56 behind a preference. Enabled by default in 57.',
   },
 };
 
