@@ -11,7 +11,7 @@ const firefoxBase = 'https://platform-status.mozilla.org/api/status';
 export async function getChromePopular() {
   const firefoxStatus = await fetchJson(firefoxBase);
   const chromeStatus = await fetchJson(base);
-  const latest = browserslist.queries.lastVersions.select(1).reduce((result, str) => {
+  const latest = browserslist('last 1 version').reduce((result, str) => {
     const [platform, version] = str.split(/\s+/);
     result[platform] = +version;
     return result;
