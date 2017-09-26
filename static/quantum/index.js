@@ -140,7 +140,7 @@ export default class QuantumIndex extends React.Component {
         rows: [
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 64-bit'
+              title='Benchmark: Speedometer v2 64-bit Nightly Reference'
               id='speedometer'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
@@ -150,12 +150,32 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 32-bit'
+              title='Benchmark: Speedometer v2 32-bit Nightly Reference'
               id='speedometer32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
               type='line'
               {...notes.speedometer32}
+            />,
+          ],
+          [
+            <Benchmark
+              title='Benchmark: Speedometer v2 64-Bit Beta Reference'
+              id='speedometerBeta'
+              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometerBeta}
+            />,
+          ],
+          [
+            <Benchmark
+              title='Benchmark: Speedometer v2 32-Bit Beta Reference'
+              id='speedometerBeta32'
+              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometerBeta32}
             />,
           ],
         ],
@@ -272,7 +292,7 @@ export default class QuantumIndex extends React.Component {
               title='Page Load (tp5)'
               reference='2017-04-20'
               signatures={{
-                'win10-32': 'c00763b23b39207671b795a12ba29d38ddc17f06',
+                'win10-64': 'c00763b23b39207671b795a12ba29d38ddc17f06',
                 'win7-32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
               }}
               {...notes.talos_tp5}
