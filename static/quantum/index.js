@@ -8,7 +8,6 @@ import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
-import MissionControl from './mission-control';
 import Countdown from './countdown';
 import Flow from './flow';
 
