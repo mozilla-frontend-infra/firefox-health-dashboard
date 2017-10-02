@@ -9,6 +9,7 @@ import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import Countdown from './countdown';
+import PhotonPerfContainer from './photon_perf';
 import Flow from './flow';
 
 const apzBugs = {
@@ -223,7 +224,19 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#3 Page Load Times',
+        title: '#3 Photon Performance',
+        rows: [
+          [
+            <Benchmark
+              title='Photon perf: winOpen'
+              id='winOpen'
+              link='http://astithas.com/perm/photon-perf/'
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#4 Page Load Times',
         rows: [
           [
             <Benchmark
@@ -257,7 +270,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#4 Browser Startup',
+        title: '#5 Browser Startup',
         rows: [
           [
             <Benchmark
@@ -280,11 +293,11 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#5 Smooth Scrolling',
+        title: '#6 Smooth Scrolling',
         rows: [[$apz]],
       },
       {
-        title: '#6 Regression',
+        title: '#7 Regression',
         rows: [
           [
             <Perfherder

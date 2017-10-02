@@ -13,6 +13,7 @@ import getVersions from './release/versions';
 import { getReleaseDate } from './release/history';
 import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
+import PHOTON_CONFIG from './photon_perf_config';
 
 // Project Dawn
 // channels.splice(2, 1);
@@ -299,6 +300,58 @@ router
     const reference = transform(referenceSeries);
     ctx.body = reference;
   })
+  .get('/benchmark/photon', async (ctx) => {
+    const { identifier } = ctx.request.query;
+    const { plot } = PHOTON_CONFIG.find(({ name }) => name === identifier);
+    console.log(plot);
+
+    const fetchEvolution = async (p) => {
+      const versions = await getVersions();
+      p.version = versions[p.channel];
+      console.log(p);
+      return getEvolution(p);
+    };
+
+    try {
+      const evolution = await fetchEvolution(plot);
+      ctx.body = {
+        evolution,
+      };
+      console.log(evolution);
+    } catch (e) {
+      console.log(e);
+      ctx.body = {
+        status: `505 Internal error - failed to fetch ${identifier}`,
+      };
+    }
+
+    // const referenceSeries = await fetchJson(
+    //   'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-37.json',
+    // );
+    // const runs = {};
+    // const transform = ({ graph }, start = null, end = null) => {
+    //   return graph.timelist
+    //     .map((date, idx) => {
+    //       const values = {
+    //         date: date * 1000,
+    //       };
+    //       graph.lines.forEach((line, lineIdx) => {
+    //         if (line && line.data[idx]) {
+    //           runs[lineIdx] = line.data[idx][0];
+    //         }
+    //       }, []);
+    //       if (runs[0] && runs[2]) {
+    //         values.diff = (runs[2] - runs[0]) / runs[0] * 100;
+    //       }
+    //       return values;
+    //     })
+    //     .filter(entry => entry.diff)
+    //     .filter(entry => !end || entry.date < end)
+    //     .filter(entry => !start || entry.date > start);
+    // };
+    // const reference = transform(referenceSeries);
+    // ctx.body = reference;
+  })
   .get('/herder', async (ctx) => {
     const { signatures, framework } = ctx.request.query;
     const data = await fetchJson(
@@ -355,6 +408,26 @@ router
       });
       return series;
     });
+  })
+  .get('/photon', async (ctx) => {
+    const versions = await getVersions();
+
+    try {
+      const evolutionMap = await Promise.all(
+        PHOTON_CONFIG.map(({ plot }) => {
+          plot.version = versions[plot.channel];
+          return getEvolution(plot);
+        }),
+      );
+      ctx.body = {
+        evolutions: evolutionMap,
+      };
+    } catch (e) {
+      console.log(e);
+      ctx.body = {
+        status: '505 Internal error',
+      };
+    }
   })
   .get('/version-evolutions', async (ctx) => {
     const query = Object.assign({}, ctx.request.query);
