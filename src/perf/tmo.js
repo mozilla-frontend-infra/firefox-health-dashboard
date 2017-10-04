@@ -13,6 +13,7 @@ export async function getEvolution(query) {
   const {
     metric,
     channel = 'release',
+    filters = {},
     useSubmissionDate = true,
     version,
   } = query;
@@ -30,7 +31,7 @@ export async function getEvolution(query) {
       channel,
       String(parseInt(version, 10)),
       metric,
-      query,
+      filters,
       useSubmissionDate,
       resolve,
     );
