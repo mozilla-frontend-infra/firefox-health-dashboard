@@ -130,7 +130,7 @@ export default class QuantumIndex extends React.Component {
         }
       />
     );
-
+    /*
     const sections = [
       {
         rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
@@ -404,6 +404,25 @@ export default class QuantumIndex extends React.Component {
                 'win7-32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
               }}
               {...notes.talos_tsvgx}
+            />,
+          ],
+        ],
+      },
+    ];
+    */
+
+    const sections = [
+      {
+        rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
+      },
+      {
+        title: '#3 Photon Performance',
+        rows: [
+          [
+            <Benchmark
+              title='Photon perf: winOpen'
+              id='winOpen'
+              link='http://astithas.com/perm/photon-perf/'
             />,
           ],
         ],
