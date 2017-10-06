@@ -315,42 +315,15 @@ router
     try {
       const evolution = await fetchEvolution(plot);
       ctx.body = {
+        plot,
         evolution,
       };
-      console.log(evolution);
     } catch (e) {
       console.log(e);
       ctx.body = {
         status: `505 Internal error - failed to fetch ${identifier}`,
       };
     }
-
-    // const referenceSeries = await fetchJson(
-    //   'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-37.json',
-    // );
-    // const runs = {};
-    // const transform = ({ graph }, start = null, end = null) => {
-    //   return graph.timelist
-    //     .map((date, idx) => {
-    //       const values = {
-    //         date: date * 1000,
-    //       };
-    //       graph.lines.forEach((line, lineIdx) => {
-    //         if (line && line.data[idx]) {
-    //           runs[lineIdx] = line.data[idx][0];
-    //         }
-    //       }, []);
-    //       if (runs[0] && runs[2]) {
-    //         values.diff = (runs[2] - runs[0]) / runs[0] * 100;
-    //       }
-    //       return values;
-    //     })
-    //     .filter(entry => entry.diff)
-    //     .filter(entry => !end || entry.date < end)
-    //     .filter(entry => !start || entry.date > start);
-    // };
-    // const reference = transform(referenceSeries);
-    // ctx.body = reference;
   })
   .get('/herder', async (ctx) => {
     const { signatures, framework } = ctx.request.query;

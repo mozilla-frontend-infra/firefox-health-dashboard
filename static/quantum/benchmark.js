@@ -23,6 +23,8 @@ export default class BenchmarkWidget extends React.Component {
     const { id, queryString } = this.props;
     try {
       const evolution = await (await fetch(`/api/perf/benchmark/${id}${queryString}`)).json();
+      console.log('HEREHEHEHHE');
+      console.log(evolution);
       this.setState({ evolution: evolution });
     } catch (e) {
       this.setState({ error: true });

@@ -9,7 +9,8 @@ Telemetry.getJSON = async (url, callback) => {
 
 // const didInit =
 
-export async function getEvolution(query) {
+export async function getEvolution(q) {
+  const query = Object.assign({}, q);
   const {
     metric,
     channel = 'release',

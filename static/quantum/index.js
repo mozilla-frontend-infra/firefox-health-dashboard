@@ -9,7 +9,6 @@ import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import Countdown from './countdown';
-import PhotonPerfContainer from './photon_perf';
 import Flow from './flow';
 
 const apzBugs = {
@@ -43,7 +42,9 @@ export default class QuantumIndex extends React.Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
-    this.fetchNotes();
+    if (process.env.GAUTH_JSON) {
+      this.fetchNotes();
+    }
   }
 
   state = {
@@ -411,22 +412,42 @@ export default class QuantumIndex extends React.Component {
     ];
     */
 
+    class PhotonPerfContainer extends React.Component {
+      render() {
+        // eslint-disable-next-line
+        const { nodeId } = this.props;
+
+        return (<div id={nodeId}>Hello world!</div>);
+      }
+    }
+
     const sections = [
-      {
-        rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
-      },
       {
         title: '#3 Photon Performance',
         rows: [
           [
-            <Benchmark
-              title='Photon perf: winOpen'
-              id='winOpen'
-              link='http://astithas.com/perm/photon-perf/'
+            <PhotonPerfContainer
+              key='winOpen'
+              nodeId='winOpen'
             />,
           ],
         ],
       },
+      // {
+      //   title: '#1 Speedometer v2',
+      //   rows: [
+      //     [
+      //       <Benchmark
+      //         title='Benchmark: Speedometer v2 64-bit Nightly Reference'
+      //         id='speedometer'
+      //         link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+      //         // targetDiff={20}
+      //         type='line'
+      //         {...notes.speedometer}
+      //       />,
+      //     ],
+      //   ],
+      // },
     ];
 
     let rowIdx = 0;
@@ -463,7 +484,7 @@ export default class QuantumIndex extends React.Component {
       }
       if ((!full || sectionId < 2) && title) {
         add.unshift(
-          <h2>
+          <h2 key='titleStatus'>
             <span>
               {title}
             </span>
@@ -476,7 +497,7 @@ export default class QuantumIndex extends React.Component {
 
     if (full) {
       $content.push(
-        <h2>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
+        <h2 key='moreData'>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
       );
     }
 
