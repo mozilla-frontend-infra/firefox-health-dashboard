@@ -119,25 +119,27 @@ let notesCache = null;
 
 router
   .get('/notes', async (ctx) => {
-    if (!notesCache) {
-      notesCache = (await getSpreadsheetValues({
-        id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-        range: 'Status!A1:F30',
-      })).reduce((hash, note) => {
-        hash[note.id] = note;
-        return hash;
-      }, {});
+    if (process.env.GAUTH_JSON) {
+      if (!notesCache) {
+        notesCache = (await getSpreadsheetValues({
+          id: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+          range: 'Status!A1:F30',
+        })).reduce((hash, note) => {
+          hash[note.id] = note;
+          return hash;
+        }, {});
 
-      // const result = await gsjson({
-      //   spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
-      //   worksheet: ['Status'],
-      //   credentials: process.env.GAUTH_JSON,
-      // });
-      setTimeout(() => {
-        notesCache = null;
-      }, process.env.NODE_ENV === 'production' ? 1000 * 60 * 5 : 1000 * 60);
+        // const result = await gsjson({
+        //   spreadsheetId: '1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A',
+        //   worksheet: ['Status'],
+        //   credentials: process.env.GAUTH_JSON,
+        // });
+        setTimeout(() => {
+          notesCache = null;
+        }, process.env.NODE_ENV === 'production' ? 1000 * 60 * 5 : 1000 * 60);
+      }
+      ctx.body = notesCache;
     }
-    ctx.body = notesCache;
   })
   .get('/benchmark/startup', async (ctx) => {
     const list = await getSpreadsheetValues({
