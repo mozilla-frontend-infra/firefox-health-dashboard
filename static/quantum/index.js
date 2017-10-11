@@ -10,6 +10,7 @@ import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import Countdown from './countdown';
 import Flow from './flow';
+import TelemetryContainer from '../telemetry/graph';
 
 const apzBugs = {
   1376525: {
@@ -242,7 +243,37 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#3 Page Load Times',
+        cssRowSecondClass: 'telemetry-generic-graph',
+        title: '#3 Photon Performance',
+        rows: [
+          [
+            <TelemetryContainer
+              key={'winOpen'}
+              id={'winOpen'}
+              title='Window open'
+            />,
+            <TelemetryContainer
+              key={'tabSwitch'}
+              id={'tabSwitch'}
+              title='Tab switch'
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key={'tabClose'}
+              id={'tabClose'}
+              title='Tab close'
+            />,
+            <TelemetryContainer
+              key={'firstPaint'}
+              id={'firstPaint'}
+              title='First paint'
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#4 Page Load Times',
         rows: [
           [
             <Benchmark
@@ -279,7 +310,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#4 Browser Startup',
+        title: '#5 Browser Startup',
         rows: [
           [
             <Benchmark
@@ -304,11 +335,11 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#5 Smooth Scrolling',
+        title: '#6 Smooth Scrolling',
         rows: [[$apz]],
       },
       {
-        title: '#6 Regression',
+        title: '#7 Regression',
         rows: [
           [
             <Perfherder
@@ -433,7 +464,7 @@ export default class QuantumIndex extends React.Component {
     ];
 
     let rowIdx = 0;
-    const $content = sections.reduce((reduced, { title, rows }, sectionId) => {
+    const $content = sections.reduce((reduced, { title, rows, cssRowSecondClass }, sectionId) => {
       const add = [];
       const statusList = new Map(Array.from(statusLabels.keys()).map(key => [key, 0]));
       for (const widgets of rows) {
@@ -445,10 +476,13 @@ export default class QuantumIndex extends React.Component {
             statusList.set('secondary', statusList.get('secondary') + 1);
           }
         }
+        let className = 'row';
+        // Add 2nd class if indicated
+        className += (cssRowSecondClass) ? ` ${cssRowSecondClass}` : '';
         rowIdx += 1;
         if (!full || sectionId < 2) {
           add.push(
-            <div className='row' key={`row-${rowIdx}`}>
+            <div className={className} key={`row-${rowIdx}`}>
               {widgets}
             </div>,
           );

@@ -870,3 +870,43 @@ svg {
     opacity: 1;
   }
 }
+
+/* Photon rows in the quantum page */
+.row.telemetry-generic-graph {
+  flex-flow: wrap;
+  font-size: 1em;
+  padding-bottom: 0.85em;
+}
+.telemetry-generic-graph {
+  .graph-subtitle {
+    margin-bottom: 1em;
+  }
+  .graph {
+    min-height: 300px;
+    min-width: 400px;
+    position: relative;
+  }
+  .graph-legend {
+    position: absolute;
+    right: 0;
+  }
+  /* This moves the container a bit below the graph-legend */
+  .mg-active-datapoint-container {
+    transform: translateY(2em);
+  }
+  .mg-active-datapoint {
+    fill: black;
+    font-size: 1em;
+    font-weight: 350;
+  }
+  .label, .mg-x-axis text, .mg-y-axis text {
+    fill: black;
+    font-size: 0.90em;
+    opacity: 0.5;
+    text-transform: none;
+  }
+  .mg-x-axis .label {
+    transform: translateY(-0.5em);
+  }
+}
+/* End of telemetry charts modifications */
