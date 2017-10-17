@@ -8,7 +8,6 @@ import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
-import MissionControl from './mission-control';
 import Countdown from './countdown';
 import Flow from './flow';
 
@@ -43,7 +42,9 @@ export default class QuantumIndex extends React.Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
-    this.fetchNotes();
+    if (process.env.GAUTH_JSON) {
+      this.fetchNotes();
+    }
   }
 
   state = {
@@ -130,7 +131,7 @@ export default class QuantumIndex extends React.Component {
         }
       />
     );
-
+    /*
     const sections = [
       {
         rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
@@ -235,7 +236,19 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#3 Page Load Times',
+        title: '#3 Photon Performance',
+        rows: [
+          [
+            <Benchmark
+              title='Photon perf: winOpen'
+              id='winOpen'
+              link='http://astithas.com/perm/photon-perf/'
+            />,
+          ],
+        ],
+      },
+      {
+        title: '#4 Page Load Times',
         rows: [
           [
             <Benchmark
@@ -269,7 +282,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#4 Browser Startup',
+        title: '#5 Browser Startup',
         rows: [
           [
             <Benchmark
@@ -292,11 +305,11 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#5 Smooth Scrolling',
+        title: '#6 Smooth Scrolling',
         rows: [[$apz]],
       },
       {
-        title: '#6 Regression',
+        title: '#7 Regression',
         rows: [
           [
             <Perfherder
@@ -408,6 +421,45 @@ export default class QuantumIndex extends React.Component {
         ],
       },
     ];
+    */
+
+    class PhotonPerfContainer extends React.Component {
+      render() {
+        // eslint-disable-next-line
+        const { nodeId } = this.props;
+
+        return (<div id={nodeId}>Hello world!</div>);
+      }
+    }
+
+    const sections = [
+      {
+        title: '#3 Photon Performance',
+        rows: [
+          [
+            <PhotonPerfContainer
+              key='winOpen'
+              nodeId='winOpen'
+            />,
+          ],
+        ],
+      },
+      // {
+      //   title: '#1 Speedometer v2',
+      //   rows: [
+      //     [
+      //       <Benchmark
+      //         title='Benchmark: Speedometer v2 64-bit Nightly Reference'
+      //         id='speedometer'
+      //         link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+      //         // targetDiff={20}
+      //         type='line'
+      //         {...notes.speedometer}
+      //       />,
+      //     ],
+      //   ],
+      // },
+    ];
 
     let rowIdx = 0;
     const $content = sections.reduce((reduced, { title, rows }, sectionId) => {
@@ -443,7 +495,7 @@ export default class QuantumIndex extends React.Component {
       }
       if ((!full || sectionId < 2) && title) {
         add.unshift(
-          <h2>
+          <h2 key='titleStatus'>
             <span>
               {title}
             </span>
@@ -456,7 +508,7 @@ export default class QuantumIndex extends React.Component {
 
     if (full) {
       $content.push(
-        <h2>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
+        <h2 key='moreData'>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
       );
     }
 

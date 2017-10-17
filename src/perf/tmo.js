@@ -9,10 +9,12 @@ Telemetry.getJSON = async (url, callback) => {
 
 // const didInit =
 
-export async function getEvolution(query) {
+export async function getEvolution(q) {
+  const query = Object.assign({}, q);
   const {
     metric,
     channel = 'release',
+    filters = {},
     useSubmissionDate = true,
     version,
   } = query;
@@ -30,7 +32,7 @@ export async function getEvolution(query) {
       channel,
       String(parseInt(version, 10)),
       metric,
-      query,
+      filters,
       useSubmissionDate,
       resolve,
     );

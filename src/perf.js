@@ -8,12 +8,12 @@ import { stringify } from 'query-string';
 import { median, quantile } from 'simple-statistics';
 import { getEvolution, getLatestEvolution } from './perf/tmo';
 import fetchJson from './fetch/json';
-import fetchRedash from './fetch/redash';
 import channels from './release/channels';
 import getVersions from './release/versions';
 import { getReleaseDate } from './release/history';
 import { sanitize } from './meta/version';
 import getCalendar from './release/calendar';
+import PHOTON_CONFIG from './photon_perf_config';
 
 // Project Dawn
 // channels.splice(2, 1);
@@ -300,40 +300,30 @@ router
     const reference = transform(referenceSeries);
     ctx.body = reference;
   })
-  .get('/mission-control', async (ctx) => {
-    const { metric } = ctx.request.query;
-    if (metric.includes('.')) {
-      const dates = [];
-      const fields = metric.split('.');
-      fields[0] += '_quantumready';
-      const current = moment('2017-06-05');
-      const days = moment().diff(current, 'days') - 1;
-      for (let i = 0; i <= days; i += 1) {
-        current.add(1, 'days');
-        const data = await fetchJson(
-          `https://s3-us-west-2.amazonaws.com/telemetry-public-analysis-2/bsmedberg/daily-latency-metrics/${moment(
-            current,
-          ).format('YYYYMMDD')}.json`,
-        );
-        if (data && data[fields[0]][fields[1]]) {
-          dates.push({
-            time: current.valueOf(),
-            value: data[fields[0]][fields[1]],
-          });
-        }
-      }
-      ctx.body = dates;
-      return;
+  .get('/benchmark/photon', async (ctx) => {
+    const { identifier } = ctx.request.query;
+    const { plot } = PHOTON_CONFIG.find(({ name }) => name === identifier);
+    console.log(plot);
+
+    const fetchEvolution = async (p) => {
+      const versions = await getVersions();
+      p.version = versions[p.channel];
+      console.log(p);
+      return getEvolution(p);
+    };
+
+    try {
+      const evolution = await fetchEvolution(plot);
+      ctx.body = {
+        plot,
+        evolution,
+      };
+    } catch (e) {
+      console.log(e);
+      ctx.body = {
+        status: `505 Internal error - failed to fetch ${identifier}`,
+      };
     }
-    const raw = await fetchRedash(4977);
-    const dates = raw.query_result.data.rows
-      .map((row) => {
-        return {
-          time: new Date(row.build_date).valueOf(),
-          value: row[metric],
-        };
-      });
-    ctx.body = dates;
   })
   .get('/herder', async (ctx) => {
     const { signatures, framework } = ctx.request.query;
@@ -391,6 +381,26 @@ router
       });
       return series;
     });
+  })
+  .get('/photon', async (ctx) => {
+    const versions = await getVersions();
+
+    try {
+      const evolutionMap = await Promise.all(
+        PHOTON_CONFIG.map(({ plot }) => {
+          plot.version = versions[plot.channel];
+          return getEvolution(plot);
+        }),
+      );
+      ctx.body = {
+        evolutions: evolutionMap,
+      };
+    } catch (e) {
+      console.log(e);
+      ctx.body = {
+        status: '505 Internal error',
+      };
+    }
   })
   .get('/version-evolutions', async (ctx) => {
     const query = Object.assign({}, ctx.request.query);
