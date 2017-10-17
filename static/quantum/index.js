@@ -178,6 +178,17 @@ export default class QuantumIndex extends React.Component {
               {...notes.speedometerBeta32}
             />,
           ],
+          [
+            <Perfherder
+              title='Talos: Speedometer mozilla-central'
+              reference='2017-10-12'
+              signatures={{
+                'win10-64': '797a2bfbbac2c632f4f354aff7677a3df3c749a3',
+                'win7-32': '78730407dee56521f26d3621fa8156914b83025a',
+              }}
+              {...notes.talos_speedometer}
+            />,
+          ],
         ],
       },
       {
