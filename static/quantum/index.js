@@ -8,7 +8,6 @@ import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
-import MissionControl from './mission-control';
 import Countdown from './countdown';
 import Flow from './flow';
 
@@ -69,6 +68,7 @@ export default class QuantumIndex extends React.Component {
 
     const $apz = (
       <Widget
+        key='ApzScrolling'
         title='APZ Scrolling'
         content={Object.keys(apzBugs).map((id) => {
           const bug = apzStatus.find(needle => String(needle.id) === String(id));
@@ -107,6 +107,7 @@ export default class QuantumIndex extends React.Component {
 
     const statusWidget = (
       <Widget
+        key='RiskTargetStatusSummary'
         title='Risk/Target Status Summary'
         target='Be *on track* to be *within target*'
         className='widget-status-all'
@@ -141,6 +142,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: Speedometer v2 64-bit Nightly Reference'
+              key='speedometer'
               id='speedometer'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
@@ -151,6 +153,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: Speedometer v2 32-bit Nightly Reference'
+              key='speedometer32'
               id='speedometer32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
@@ -161,6 +164,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: Speedometer v2 64-Bit Beta Reference'
+              key='speedometerBeta'
               id='speedometerBeta'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
@@ -171,6 +175,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: Speedometer v2 32-Bit Beta Reference'
+              key='speedometerBeta32'
               id='speedometerBeta32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
@@ -197,12 +202,14 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: Input Lag (Hasal)'
+              key='hasal'
               id='hasal'
               link='https://github.com/Mozilla-TWQA/Hasal/'
               targetDiff={0}
               {...notes.hasal}
             />,
             <Perfherder
+              key='hasal_perfherder'
               title='Hasal (Perfherder)'
               target='Not set'
               framework={9}
@@ -240,6 +247,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Benchmark: First Paint'
+              key='pageload_first_paint'
               id='pageload'
               metric='firstPaint'
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
@@ -247,12 +255,14 @@ export default class QuantumIndex extends React.Component {
             />,
             <Benchmark
               title='Benchmark: Hero Element'
+              key='pageload_hero'
               id='pageload'
               metric='heroElement'
               link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
               {...notes.pageload_hero}
             />,
             <Perfherder
+              key='tp6_loaded'
               title='Talos TP6: Loaded'
               reference='2017-07-29'
               target='Not set'
@@ -274,6 +284,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Benchmark
               title='Start-up: First Paint'
+              key='startup_first_paint'
               id='startup'
               metric='firstPaint'
               targetDiff={20}
@@ -282,6 +293,7 @@ export default class QuantumIndex extends React.Component {
             />,
             <Benchmark
               title='Start-up: Hero Element'
+              key='startup_hero'
               id='startup'
               metric='heroElement'
               targetDiff={20}
@@ -300,6 +312,7 @@ export default class QuantumIndex extends React.Component {
         rows: [
           [
             <Perfherder
+              key='pageload_tp5'
               title='Page Load (tp5)'
               reference='2017-04-20'
               signatures={{
@@ -309,6 +322,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_tp5}
             />,
             <Perfherder
+              key='tpaint'
               title='Window Opening (tpaint e10s)'
               reference='2017-07-06'
               signatures={{
@@ -320,6 +334,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Perfherder
+              key='startup_session_restore'
               title='Start-up (sessionrestore)'
               reference='2017-04-13'
               signatures={{
@@ -329,6 +344,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_sessionrestore}
             />,
             <Perfherder
+              key='startup_session_restore_no_auto_restore'
               title='Start-up (sessionrestore_no_auto_restore)'
               reference='2017-05-11'
               signatures={{
@@ -338,6 +354,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_sessionrestore_no_auto_restore}
             />,
             <Perfherder
+              key='startup_ts_paint'
               title='Start-Up (ts_paint)'
               reference='2017-05-07'
               signatures={{
@@ -350,6 +367,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Perfherder
               {...notes.talos_tabpaint}
+              key='tabpaint'
               title='Tab Opening (tabpaint)'
               reference='2017-06-15'
               signatures={{
@@ -359,6 +377,7 @@ export default class QuantumIndex extends React.Component {
             />,
             <Perfherder
               title='Tab Animation (TART)'
+              key='tart'
               reference='2017-05-07'
               signatures={{
                 'win10-64': '7207561755a8cb6b27c68eafeef64d019c29045e',
@@ -367,6 +386,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_tart}
             />,
             <Perfherder
+              key='tps'
               title='Tab Switch (tps)'
               reference='2017-05-07'
               signatures={{
@@ -379,6 +399,7 @@ export default class QuantumIndex extends React.Component {
           [
             <Perfherder
               {...notes.talos_tsvg_static}
+              key='tsvg_static'
               title='SVG (tsvg_static)'
               reference='2017-04-08'
               signatures={{
@@ -387,6 +408,7 @@ export default class QuantumIndex extends React.Component {
               }}
             />,
             <Perfherder
+              key='tsvgr_opacity'
               title='SVG (tsvgr_opacity)'
               reference='2016-10-26'
               signatures={{
@@ -396,6 +418,7 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_tsvgr_opacity}
             />,
             <Perfherder
+              key='tsvgx'
               title='SVG (tsvgx)'
               reference='2017-05-07'
               signatures={{
@@ -443,7 +466,7 @@ export default class QuantumIndex extends React.Component {
       }
       if ((!full || sectionId < 2) && title) {
         add.unshift(
-          <h2>
+          <h2 key={sectionId}>
             <span>
               {title}
             </span>
@@ -456,7 +479,7 @@ export default class QuantumIndex extends React.Component {
 
     if (full) {
       $content.push(
-        <h2>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
+        <h2 key='moreData'>More data on <strong>https://health.graphics/quantum</strong>. Ask questions in <strong>#quantum</strong> (IRC & Slack)</h2>,
       );
     }
 

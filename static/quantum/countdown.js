@@ -8,7 +8,7 @@ import Widget from './widget';
 const dates = [
   {
     idx: 'release',
-    label: [<strong>Release</strong>, ' ', 57],
+    label: [<strong key='release'>Release</strong>, ' ', 57],
     date: moment('2017-11-14', 'YYYY-MM-DD'),
   },
 ];

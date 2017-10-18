@@ -500,6 +500,7 @@ Telemetry.getEvolution = function Telemetry_getEvolution(channel, version,
     null, 'Telemetry.js must be initialized before use');
   assert(typeof channel === 'string', '`channel` must be a string');
   assert(typeof version === 'string', '`version` must be a string');
+  assert(version !== '', '`version` cannot be NaN');
   assert(typeof metric === 'string', '`metric` must be a string');
   assert(typeof filters === 'object', '`filters` must be an object');
   assert(typeof callback === 'function', '`callback` must be a function');
