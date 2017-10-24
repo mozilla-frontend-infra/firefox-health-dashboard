@@ -159,35 +159,37 @@ svg text {
 svg path {
 }
 
-.mg-header,
-.graphic.state-loading {
-  opacity: 1;
-  color: var(--lightGray);
-  fill: var(--lightGray);
-  font-weight: lighter;
-  @extend h3;
-}
-.mg-main-line {
-  stroke-width: 2 !important;
-}
-.mg-line2-color {
-  stroke: var(--flameYellowVibrant);
-}
-.mg-line3-color {
-  stroke: var(--mobileBlueVibrant);
-  opacity: 0.3 !important;
-}
-.mg-area1-color {
-  fill: var(--flameYellowVibrant);
-}
-
-.axis-rate {
-  line {
-    stroke: rgba(255, 255, 255, 0.3);
-    stroke-dasharray: 1, 2;
+.dashboard.crashes-release {
+  .mg-header,
+  .graphic.state-loading {
+    opacity: 1;
+    color: var(--lightGray);
+    fill: var(--lightGray);
+    font-weight: lighter;
+    @extend h3;
   }
-  text {
-    stroke: rgba(255, 255, 255, 1);
+  .mg-main-line {
+    stroke-width: 2 !important;
+  }
+  .mg-line2-color {
+    stroke: var(--flameYellowVibrant);
+  }
+  .mg-line3-color {
+    stroke: var(--mobileBlueVibrant);
+    opacity: 0.3 !important;
+  }
+  .mg-area1-color {
+    fill: var(--flameYellowVibrant);
+  }
+
+  .axis-rate {
+    line {
+      stroke: rgba(255, 255, 255, 0.3);
+      stroke-dasharray: 1, 2;
+    }
+    text {
+      stroke: rgba(255, 255, 255, 1);
+    }
   }
 }
 
