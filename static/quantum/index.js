@@ -141,7 +141,7 @@ export default class QuantumIndex extends React.Component {
         rows: [
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 64-bit Nightly Reference'
+              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary - Reference Hardware'
               key='speedometer'
               id='speedometer'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
@@ -152,7 +152,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 32-bit Nightly Reference'
+              title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary - Reference Hardware'
               key='speedometer32'
               id='speedometer32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
@@ -163,7 +163,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 64-Bit Beta Reference'
+              title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary - Reference Hardware'
               key='speedometerBeta'
               id='speedometerBeta'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
@@ -174,7 +174,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 32-Bit Beta Reference'
+              title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary - Reference Hardware'
               key='speedometerBeta32'
               id='speedometerBeta32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
