@@ -7,6 +7,7 @@ import _ from 'lodash/fp';
 import { stringify } from 'query-string';
 import { median, quantile } from 'simple-statistics';
 import { getEvolution, getLatestEvolution } from './perf/tmo';
+import { fetchTelemetryEvolution } from './perf/tmo-wrapper';
 import fetchJson from './fetch/json';
 import channels from './release/channels';
 import getVersions from './release/versions';
@@ -357,6 +358,18 @@ router
       });
       return series;
     });
+  })
+  .get('/telemetry/winOpen', async (ctx) => {
+    await fetchTelemetryEvolution(ctx, 'winOpen');
+  })
+  .get('/telemetry/tabSwitch', async (ctx) => {
+    await fetchTelemetryEvolution(ctx, 'tabSwitch');
+  })
+  .get('/telemetry/tabClose', async (ctx) => {
+    await fetchTelemetryEvolution(ctx, 'tabClose');
+  })
+  .get('/telemetry/firstPaint', async (ctx) => {
+    await fetchTelemetryEvolution(ctx, 'firstPaint');
   })
   .get('/version-evolutions', async (ctx) => {
     const query = Object.assign({}, ctx.request.query);

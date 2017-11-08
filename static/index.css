@@ -159,35 +159,37 @@ svg text {
 svg path {
 }
 
-.mg-header,
-.graphic.state-loading {
-  opacity: 1;
-  color: var(--lightGray);
-  fill: var(--lightGray);
-  font-weight: lighter;
-  @extend h3;
-}
-.mg-main-line {
-  stroke-width: 2 !important;
-}
-.mg-line2-color {
-  stroke: var(--flameYellowVibrant);
-}
-.mg-line3-color {
-  stroke: var(--mobileBlueVibrant);
-  opacity: 0.3 !important;
-}
-.mg-area1-color {
-  fill: var(--flameYellowVibrant);
-}
-
-.axis-rate {
-  line {
-    stroke: rgba(255, 255, 255, 0.3);
-    stroke-dasharray: 1, 2;
+.dashboard.crashes-release {
+  .mg-header,
+  .graphic.state-loading {
+    opacity: 1;
+    color: var(--lightGray);
+    fill: var(--lightGray);
+    font-weight: lighter;
+    @extend h3;
   }
-  text {
-    stroke: rgba(255, 255, 255, 1);
+  .mg-main-line {
+    stroke-width: 2 !important;
+  }
+  .mg-line2-color {
+    stroke: var(--flameYellowVibrant);
+  }
+  .mg-line3-color {
+    stroke: var(--mobileBlueVibrant);
+    opacity: 0.3 !important;
+  }
+  .mg-area1-color {
+    fill: var(--flameYellowVibrant);
+  }
+
+  .axis-rate {
+    line {
+      stroke: rgba(255, 255, 255, 0.3);
+      stroke-dasharray: 1, 2;
+    }
+    text {
+      stroke: rgba(255, 255, 255, 1);
+    }
   }
 }
 
@@ -870,3 +872,43 @@ svg {
     opacity: 1;
   }
 }
+
+/* Photon rows in the quantum page */
+.row.telemetry-generic-graph {
+  flex-flow: wrap;
+  font-size: 1em;
+  padding-bottom: 0.85em;
+}
+.telemetry-generic-graph {
+  .graph-subtitle {
+    margin-bottom: 1em;
+  }
+  .graph {
+    min-height: 300px;
+    min-width: 400px;
+    position: relative;
+  }
+  .graph-legend {
+    position: absolute;
+    right: 0;
+  }
+  /* This moves the container a bit below the graph-legend */
+  .mg-active-datapoint-container {
+    transform: translateY(2em);
+  }
+  .mg-active-datapoint {
+    fill: black;
+    font-size: 1em;
+    font-weight: 350;
+  }
+  .label, .mg-x-axis text, .mg-y-axis text {
+    fill: black;
+    font-size: 0.90em;
+    opacity: 0.5;
+    text-transform: none;
+  }
+  .mg-x-axis .label {
+    transform: translateY(-0.5em);
+  }
+}
+/* End of telemetry charts modifications */
