@@ -314,7 +314,7 @@ router
     );
     ctx.body = signatures.map((current) => {
       if (!data[current]) {
-        console.error('Could not load %s', current);
+        // console.error('Could not load %s', current);
         return null;
       }
       const series = data[current].reduce((reduced, entry) => {

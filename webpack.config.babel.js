@@ -43,22 +43,9 @@ const plugins = [
       collapseWhitespace: true,
     },
   }),
-  // new webpack.optimize.CommonsChunkPlugin({
-  //   names: ['vendor'],
-  // }),
 ];
 
-// ExtractTextPlugin does not work with hot reload
-// const cssLoader = isProd ? ExtractTextPlugin.extract(
-//   'style-loader',
-//   'css-loader!postcss-loader',
-// ) : 'style-loader!css-loader!postcss-loader';
-
-if (isProd) {
-  // plugins.push(new ExtractTextPlugin(cssFilename, {
-  //   allChunks: true,
-  // }));
-} else {
+if (!isProd) {
   plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
@@ -110,7 +97,6 @@ export default {
                 postcssImport(),
                 postcssSimpleExtend(),
                 postcssNested(),
-                // postcssSimpleVars(),
                 postcssVariables(),
                 postcssCssnext({
                   browsers: ['last 1 version'],

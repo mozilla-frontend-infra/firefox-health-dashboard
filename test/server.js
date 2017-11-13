@@ -70,20 +70,6 @@ describe('/crashes', () => {
         .expect(200, done);
       });
     });
-  }
-  describe('GET /crashes/adi/', () => {
-    it('should return 200', (done) => {
-      request()
-        .get('/api/crashes/adi/')
-        .expect(200, done);
-    });
-    it('should return 200 for Fennec', (done) => {
-      request()
-        .get('/api/crashes/adi/?product=fennec')
-        .expect(200, done);
-    });
-  });
-  if (process.env.REDASH_API_KEY) {
     describe('GET /crashes/beta/builds', () => {
       it('should return 200', (done) => {
         request()
@@ -92,15 +78,6 @@ describe('/crashes', () => {
       });
     });
   }
-  // if (process.env.CRASH_STATS_TOKEN) {
-  //   describe('GET /crashes/urls', () => {
-  //     it('should return 200', (done) => {
-  //       request()
-  //       .get('/api/crashes/urls')
-  //       .expect(200, done);
-  //     });
-  //   });
-  // }
 });
 
 describe('/bz', () => {

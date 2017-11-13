@@ -22,11 +22,11 @@ export async function getEvolution(query) {
   delete query.channel;
   delete query.useSubmissionDate;
   await new Promise((resolve, reject) => {
-    console.log('Init');
+    // console.log('Init');
     Telemetry.init(resolve);
   });
   const evolutionMap = await new Promise((resolve) => {
-    console.log('Telemetry.getEvolution', channel, String(parseInt(version, 10)));
+    // console.log('Telemetry.getEvolution', channel, String(parseInt(version, 10)));
     Telemetry.getEvolution(
       channel,
       String(parseInt(version, 10)),
