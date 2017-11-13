@@ -1391,9 +1391,9 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bytes@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.5.0.tgz#4c9423ea2d252c270c41b2bdefeff9bb6b62c06a"
+bytes@1:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bytes/-/bytes-1.0.0.tgz#3569ede8ba34315fab99c3e92cb04c7220de1fa8"
 
 bz@^0.4.5:
   version "0.4.5"
@@ -4750,11 +4750,11 @@ koa-is-json@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/koa-is-json/-/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
 
-koa-logger@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/koa-logger/-/koa-logger-3.1.0.tgz#81a353f41870119d56260e0e644f04e731810039"
+koa-logger@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/koa-logger/-/koa-logger-2.0.1.tgz#3ee42f457c40fb4d4a19a131c8022504b5b232b8"
   dependencies:
-    bytes "^2.5.0"
+    bytes "1"
     chalk "^1.1.3"
     humanize-number "0.0.2"
     passthrough-counter "^1.0.0"
@@ -4773,19 +4773,19 @@ koa-router@^7.2.1:
     methods "^1.0.1"
     path-to-regexp "^1.1.1"
 
-koa-static-cache@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/koa-static-cache/-/koa-static-cache-5.1.1.tgz#d73dc79183fd052f86a47a0b64080d8670de8a38"
+koa-static-cache@^4.0.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/koa-static-cache/-/koa-static-cache-4.1.1.tgz#2f82885e155fd46591ccb5d22f3f6a0d17d63982"
   dependencies:
     compressible "~2.0.6"
     debug "*"
     fs-readdir-recursive "~1.0.0"
     mime-types "~2.1.8"
-    mz "~2.6.0"
+    mz "~2.4.0"
 
-koa-webpack-dev-middleware@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/koa-webpack-dev-middleware/-/koa-webpack-dev-middleware-2.0.2.tgz#bab6207198beb6344a0688bf9bd15cfaafa89d91"
+koa-webpack-dev-middleware@^1.4.4:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/koa-webpack-dev-middleware/-/koa-webpack-dev-middleware-1.4.6.tgz#6ec20d3648c3c80b5edb0b721a6838f66a1fc47a"
   dependencies:
     webpack-dev-middleware "^1.10.0"
 
@@ -5355,9 +5355,9 @@ mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
 
-mz@~2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/mz/-/mz-2.6.0.tgz#c8b8521d958df0a4f2768025db69c719ee4ef1ce"
+mz@~2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/mz/-/mz-2.4.0.tgz#987ba9624d89395388c37cb4741e2caf4dd13b1a"
   dependencies:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
