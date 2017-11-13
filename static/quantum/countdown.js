@@ -9,7 +9,7 @@ const dates = [
   {
     idx: 'release',
     label: [<strong key='release'>Release</strong>, ' ', 57],
-    date: moment('2017-11-15', 'YYYY-MM-DD'),
+    date: moment('2017-11-14 14:00:00+0000'),
   },
 ];
 
@@ -27,7 +27,7 @@ export default class CountdownWidget extends React.Component {
               {entry.date.format('ddd, MMM D')}
             </small>
           </h4>
-          {extraDays < 1
+          {extraDays < 1 && weeks > 0
             ? <div key='weeks'>
               <em>{weeks}</em> work weeks
               </div>
