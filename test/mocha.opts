@@ -1,4 +1,4 @@
 --timeout 600000
---compilers js:babel-core/register
+--require babel-core/register
 --reporter list
 --recursive
