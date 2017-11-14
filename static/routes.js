@@ -8,6 +8,7 @@ import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
 import Quantum from './quantum/index';
+import Devtools from './devtools/index';
 import QuantumResponsivenessParent from './quantum/responsiveness-parent';
 import QuantumResponsivenessContent from './quantum/responsiveness-content';
 import QuantumPageLoadRender from './quantum/pageload-render';
@@ -62,6 +63,7 @@ export default class Routes extends Component {
           <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
           <Route path='quantum/track' component={QuantumTracking} />
           <Route path='status' component={Status} />
+          <Route path='devtools' component={Devtools} />
         </Route>
         <Route path='*' component={NoMatch} />
       </Router>

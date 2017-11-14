@@ -306,6 +306,12 @@ svg {
     &.series-open {
       stroke: color(var(--newLilac) saturation(100%) shade(20%));
     }
+    &.series-2 {
+      stroke: color(var(--newCoral) saturation(100%) shade(20%));
+    }
+    &.series-3 {
+      stroke: color(var(--newLime) saturation(100%) shade(20%));
+    }
     &.series-target {
       stroke: color(var(--newLime) saturation(100%) shade(20%));
       stroke-width: 1;
@@ -321,6 +327,12 @@ svg {
     &.series-open {
       fill: var(--newLilac);
     }
+    &.series-2 {
+      fill: var(--newCoral);
+    }
+    &.series-3 {
+      fill: var(--newLime);
+    }
   }
   .series-area {
     fill: var(--newCyan);
@@ -328,6 +340,12 @@ svg {
     &.series-1,
     &.series-open {
       fill: var(--newLilac);
+    }
+    &.series-2 {
+      fill: var(--newCoral);
+    }
+    &.series-3 {
+      fill: var(--newLime);
     }
     &.series-target {
       fill: var(--newLime);
@@ -343,6 +361,12 @@ svg {
     &.series-1,
     &.series-open {
       fill: color(var(--newLilac) saturation(100%) shade(20%));
+    }
+    &.series-2 {
+      stroke: color(var(--newCoral) saturation(100%) shade(20%));
+    }
+    &.series-3 {
+      stroke: color(var(--newLime) saturation(100%) shade(20%));
     }
     &.series-target {
       fill: color(var(--newLime) saturation(100%) shade(20%));
