@@ -11,6 +11,7 @@ import Benchmark from './benchmark';
 import Countdown from './countdown';
 import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
+import GraphWithTarget from '../plotting';
 
 const apzBugs = {
   1376525: {
@@ -141,23 +142,10 @@ export default class QuantumIndex extends React.Component {
       //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
       // },
       {
+        cssRowSecondClass: 'telemetry-generic-graph', // XXX: Improve this. This helps with CSS
         title: '#1 Speedometer v2',
         rows: [
-          [
-            <Benchmark
-              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
-              key='speedometer'
-              id='speedometer'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer}
-            />,
-          ],
-        ],
-      },
-    ];
-    /*
+          /*
           [
             <Perfherder
               title='Talos: Speedometer mozilla-central'
@@ -169,41 +157,55 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_speedometer}
             />,
           ],
+          */
           [
-            <Benchmark
+            <GraphWithTarget
+              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
+              key='speedometer-score'
+              id='speedometer-score'
+              fetchData={async () =>
+                (await fetch('/api/perf/benchmark/speedometer?channel=nightly&architecture=64')).json()
+              }
+              targetDiff={0.8}
+            />,
+          ],
+          [
+            <GraphWithTarget
               title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
-              key='speedometer32'
-              id='speedometer32'
-              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer32}
+              key='speedometer32-score'
+              id='speedometer32-score'
+              fetchData={async () =>
+                (await fetch('/api/perf/benchmark/speedometer?channel=nightly&architecture=32')).json()
+              }
+              targetDiff={0.8}
             />,
           ],
           [
-            <Benchmark
+            <GraphWithTarget
               title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta'
-              id='speedometerBeta'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometerBeta}
+              key='speedometerBeta-score'
+              id='speedometerBeta-score'
+              fetchData={async () =>
+                (await fetch('/api/perf/benchmark/speedometer?channel=beta&architecture=64')).json()
+              }
+              targetDiff={0.8}
             />,
           ],
           [
-            <Benchmark
+            <GraphWithTarget
               title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta32'
-              id='speedometerBeta32'
-              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometerBeta32}
+              key='speedometerBeta32-score'
+              id='speedometerBeta32-score'
+              fetchData={async () =>
+                (await fetch('/api/perf/benchmark/speedometer?channel=beta&architecture=32')).json()
+              }
+              targetDiff={0.8}
             />,
           ],
         ],
       },
+    ];
+    /*
       {
         title: '#2 Responsiveness in Browser Chrome & Content',
         rows: [

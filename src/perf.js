@@ -8,6 +8,7 @@ import { stringify } from 'query-string';
 import { median, quantile } from 'simple-statistics';
 import { getEvolution, getLatestEvolution } from './perf/tmo';
 import { fetchTelemetryEvolution } from './perf/tmo-wrapper';
+import fetchTransformSpeedometerData from './perf/speedometer';
 import fetchJson from './fetch/json';
 import channels from './release/channels';
 import getVersions from './release/versions';
@@ -182,125 +183,7 @@ router
     ctx.body = list;
   })
   .get('/benchmark/speedometer', async (ctx) => {
-    const referenceSeries = await fetchJson(
-      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json',
-    );
-    const runs = {};
-    const transform = ({ graph }, start = null, end = null) => {
-      return graph.timelist
-        .map((date, idx) => {
-          const values = {
-            date: date * 1000,
-          };
-          graph.lines.forEach((line, lineIdx) => {
-            if (line && line.data[idx]) {
-              runs[lineIdx] = line.data[idx][0];
-            }
-          }, []);
-          if (runs[0] && (runs[1] || runs[2])) {
-            values.diff = ((runs[1] || runs[2]) - runs[0]) / runs[0] * 100;
-          }
-          return values;
-        })
-        .filter(entry => entry.diff)
-        .filter(entry => !end || entry.date < end)
-        .filter(entry => !start || entry.date > start);
-    };
-    // const legacy = transform(
-    //   legacySeries,
-    //   moment('2017-05-01').valueOf(),
-    //   moment('2017-06-01').valueOf(),
-    // );
-    const reference = transform(referenceSeries);
-    ctx.body = reference;
-  })
-  .get('/benchmark/speedometer32', async (ctx) => {
-    const referenceSeries = await fetchJson(
-      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-37.json',
-    );
-    const runs = {};
-    const transform = ({ graph }, start = null, end = null) => {
-      return graph.timelist
-        .map((date, idx) => {
-          const values = {
-            date: date * 1000,
-          };
-          graph.lines.forEach((line, lineIdx) => {
-            if (line && line.data[idx]) {
-              runs[lineIdx] = line.data[idx][0];
-            }
-          }, []);
-          if (runs[0] && (runs[1] || runs[2])) {
-            values.diff = ((runs[1] || runs[2]) - runs[0]) / runs[0] * 100;
-          }
-          return values;
-        })
-        .filter(entry => entry.diff)
-        .filter(entry => !end || entry.date < end)
-        .filter(entry => !start || entry.date > start);
-    };
-    const reference = transform(referenceSeries);
-    ctx.body = reference;
-  })
-  .get('/benchmark/speedometerBeta', async (ctx) => {
-    // idx 4 == beta
-    // idx 0 == chrome
-    const referenceSeries = await fetchJson(
-      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-36.json',
-    );
-    const runs = {};
-    const transform = ({ graph }, start = null, end = null) => {
-      return graph.timelist
-        .map((date, idx) => {
-          const values = {
-            date: date * 1000,
-          };
-          graph.lines.forEach((line, lineIdx) => {
-            if (line && line.data[idx]) {
-              runs[lineIdx] = line.data[idx][0];
-            }
-          }, []);
-          if (runs[0] && runs[4]) {
-            values.diff = (runs[4] - runs[0]) / runs[0] * 100;
-          }
-          return values;
-        })
-        .filter(entry => entry.diff)
-        .filter(entry => !end || entry.date < end)
-        .filter(entry => !start || entry.date > start);
-    };
-    const reference = transform(referenceSeries);
-    ctx.body = reference;
-  })
-  .get('/benchmark/speedometerBeta32', async (ctx) => {
-    // idx 2 == beta
-    // idx 0 == chrome
-    const referenceSeries = await fetchJson(
-      'https://arewefastyet.com/data.php?file=aggregate-speedometer-misc-37.json',
-    );
-    const runs = {};
-    const transform = ({ graph }, start = null, end = null) => {
-      return graph.timelist
-        .map((date, idx) => {
-          const values = {
-            date: date * 1000,
-          };
-          graph.lines.forEach((line, lineIdx) => {
-            if (line && line.data[idx]) {
-              runs[lineIdx] = line.data[idx][0];
-            }
-          }, []);
-          if (runs[0] && runs[2]) {
-            values.diff = (runs[2] - runs[0]) / runs[0] * 100;
-          }
-          return values;
-        })
-        .filter(entry => entry.diff)
-        .filter(entry => !end || entry.date < end)
-        .filter(entry => !start || entry.date > start);
-    };
-    const reference = transform(referenceSeries);
-    ctx.body = reference;
+    ctx.body = await fetchTransformSpeedometerData(ctx.request.query);
   })
   .get('/herder', async (ctx) => {
     const { signatures, framework } = ctx.request.query;
