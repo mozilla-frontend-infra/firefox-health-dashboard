@@ -144,6 +144,21 @@ export default class QuantumIndex extends React.Component {
         title: '#1 Speedometer v2',
         rows: [
           [
+            <Benchmark
+              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
+              key='speedometer'
+              id='speedometer'
+              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometer}
+            />,
+          ],
+        ],
+      },
+    ];
+    /*
+          [
             <Perfherder
               title='Talos: Speedometer mozilla-central'
               key='talos-speedometer'
@@ -462,6 +477,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
     ];
+    */
 
     let rowIdx = 0;
     const $content = sections.reduce((reduced, { title, rows, cssRowSecondClass }, sectionId) => {
