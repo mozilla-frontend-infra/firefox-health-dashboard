@@ -137,9 +137,9 @@ export default class QuantumIndex extends React.Component {
     );
 
     const sections = [
-      {
-        rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
-      },
+      // {
+      //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
+      // },
       {
         title: '#1 Speedometer v2',
         rows: [
@@ -154,6 +154,10 @@ export default class QuantumIndex extends React.Component {
               {...notes.speedometer}
             />,
           ],
+        ],
+      },
+    ];
+    /*
           [
             <Perfherder
               title='Talos: Speedometer mozilla-central'
@@ -465,6 +469,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
     ];
+    */
 
     let rowIdx = 0;
     const $content = sections.reduce((reduced, { title, rows, cssRowSecondClass }, sectionId) => {
