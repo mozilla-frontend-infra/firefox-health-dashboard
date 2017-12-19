@@ -49,10 +49,10 @@ export default class Widget extends React.Component {
           {targetStatus === 'pass'
             ? <span role='img' aria-label='Pass' key='icon-pass' className='status-icon'>
                 😀
-              </span>
+            </span>
             : <span role='img' aria-label='Fail' key='icon-fail' className='status-icon'>
                 😟
-              </span>}
+            </span>}
         </aside>
       );
     }
