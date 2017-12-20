@@ -86,7 +86,6 @@ export default {
       },
       {
         test: /\.css$/,
-        include: srcDir,
         use: [
           'style-loader',
           'css-loader',
