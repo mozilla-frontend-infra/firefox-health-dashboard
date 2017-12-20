@@ -10,7 +10,7 @@ import Benchmark from './benchmark';
 import Countdown from './countdown';
 import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
-import GraphWithTarget from '../plotting';
+import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
 
 const apzBugs = {
@@ -146,6 +146,7 @@ export default class QuantumIndex extends React.Component {
       //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
       // },
       {
+        cssRowSecondClass: 'generic-metrics-graphics speedometer-metrics-graphics',
         title: '#1 Speedometer v2',
         rows: [
           [
@@ -161,7 +162,7 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <GraphWithTarget
+            <AWFY
               title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
               key='speedometer-score'
               id='speedometer-score'
@@ -172,7 +173,7 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <GraphWithTarget
+            <AWFY
               title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
               key='speedometer32-score'
               id='speedometer32-score'
@@ -183,7 +184,7 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <GraphWithTarget
+            <AWFY
               title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
               key='speedometerBeta-score'
               id='speedometerBeta-score'
@@ -194,7 +195,7 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <GraphWithTarget
+            <AWFY
               title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary (Reference Hardware)'
               key='speedometerBeta32-score'
               id='speedometerBeta32-score'
@@ -252,7 +253,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        cssRowSecondClass: 'telemetry-generic-graph',
+        cssRowSecondClass: 'generic-metrics-graphics photon-perf',
         title: '#3 Photon Performance',
         rows: [
           [
