@@ -75,7 +75,9 @@ export default class Widget extends React.Component {
             }
           }}
         >
-          {enrich(this.props.content, 'content')}
+          {this.props.children}
+          {this.props.content &&
+            enrich(this.props.content, 'content')}
           {target &&
             <div key='target' className='widget-target'>
               {target}
@@ -87,12 +89,17 @@ export default class Widget extends React.Component {
 }
 
 Widget.defaultProps = {
-  content: 'n\\a',
+  children: null,
+  content: null,
   title: 'Mission Control Metric',
   status: 'unknown',
   viewport: () => {},
 };
 Widget.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   content: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
   status: PropTypes.string,
   reading: PropTypes.string,
