@@ -30,7 +30,7 @@ export default class CountdownWidget extends React.Component {
           {extraDays < 1 && weeks > 0
             ? <div key='weeks'>
               <em>{weeks}</em> work weeks
-              </div>
+            </div>
             : (weeks < 1
                 ? <div key='weeks'>
                   <em>{moment().to(entry.date)}</em>
@@ -38,10 +38,10 @@ export default class CountdownWidget extends React.Component {
                 : [
                   <div key='weeks'>
                     <em>{weeks}</em> weeks
-                    </div>,
+                  </div>,
                   <div key='days'>
                     <em>{extraDays}</em> days
-                    </div>,
+                  </div>,
                 ]
               )
             }
