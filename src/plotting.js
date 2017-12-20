@@ -2,6 +2,7 @@
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Widget from './quantum/widget';
 
 // This graph shows multiple lines on a graph
 const graph = (graphEl, series, legend, title) => {
@@ -27,13 +28,18 @@ export default class GraphWithTarget extends Component {
     }
   }
 
+  state = {
+    series: undefined,
+  }
+
   componentDidMount() {
     this.fetchPlotGraph(this.props);
   }
 
+  viewport: [0, 0];
+
   async fetchPlotGraph({ fetchData, targetDiff }) {
     const data = await fetchData();
-    this.graphTitleLink.setAttribute('href', data.meta.viewUrl);
     if (targetDiff) {
       // XXX: Index 1 represents Chrome
       const targetLine = data.series[1].map(el => ({
@@ -41,24 +47,35 @@ export default class GraphWithTarget extends Component {
         value: el.value * targetDiff,
       }));
       data.series = data.series.concat(new Array(targetLine));
-      data.legendLabels = data.legendLabels.concat('Target');
+      data.legendLabels = data.legendLabels
+        .concat(`Target of ${targetDiff * 100}%`);
     }
     graph(this.graphEl, data.series, data.legendLabels, this.props.title);
+    this.setState({
+      series: data.series,
+      titleLink: data.meta.viewUrl,
+    });
   }
 
   render() {
-    const { id, title } = this.props;
+    const { id, title, targetDiff } = this.props;
+    const { series, titleLink } = this.state;
     return (
-      <div id={id} key={id} className='criteria-widget'>
-        <header>
-          <h3 className='graph-title'>
-            <a className='graph-title-link' ref={a => this.graphTitleLink = a}>{title}</a>
-          </h3>
-        </header>
-        <div className='graph' ref={div => this.graphEl = div}>
-          <div className='graph-legend'>{}</div>
+      <Widget
+        className='graphic-widget graphic-timeline widget-benchmark'
+        link={titleLink}
+        loading={!series}
+        viewport={size => (this.viewport = size)}
+        target={`Chrome <= ${targetDiff}%`}
+        targetStatus={'pass'}
+        {...this.props}
+      >
+        <div id={id} key={id} className='criteria-widget'>
+          <div className='graph' ref={div => this.graphEl = div}>
+            <div className='graph-legend'>{}</div>
+          </div>
         </div>
-      </div>
+      </Widget>
     );
   }
 }
