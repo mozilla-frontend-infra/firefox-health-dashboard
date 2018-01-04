@@ -12,6 +12,9 @@ export default class TelemetryContainer extends React.Component {
   async fetchPlotGraph(id) {
     const { graphData, telemetryUrl } = await (
       await fetch(`/api/perf/telemetry/${id}`)).json();
+    if (!this.graphTitleLink) {
+      return;
+    }
     this.graphTitleLink.setAttribute('href', telemetryUrl);
     this.graphSubtitleEl.textContent = graphData.description;
     this.graphEvolutionsTimeline(graphData, this.graphEl);

@@ -303,11 +303,15 @@ router
     ctx.body = reference;
   })
   .get('/herder', async (ctx) => {
-    const { signatures, framework } = ctx.request.query;
+    const { framework } = ctx.request.query;
+    let { signatures } = ctx.request.query;
+    if (!Array.isArray(signatures)) {
+      signatures = [signatures];
+    }
     const data = await fetchJson(
       `https://treeherder.mozilla.org/api/project/mozilla-central/performance/data/?${stringify({
         framework: framework != null ? framework : 1,
-        interval: 31536000 / 12 * 3,
+        interval: 31536000 / 12 * 4,
         signatures: signatures,
       })}`,
       { ttl: 'day' },

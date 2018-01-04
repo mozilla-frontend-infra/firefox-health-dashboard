@@ -19,7 +19,11 @@ const NoMatch = () => <div>404</div>;
 class App extends Component {
   componentWillMount() {
     this.resize();
-    window.addEventListener('resize', () => this.resize());
+    let throttle = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(throttle);
+      throttle = setTimeout(() => this.resize(), 100);
+    });
   }
 
   resize() {

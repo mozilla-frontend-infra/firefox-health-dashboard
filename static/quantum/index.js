@@ -137,26 +137,16 @@ export default class QuantumIndex extends React.Component {
     );
 
     const sections = [
-      {
-        rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
-      },
+      // {
+      //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
+      // },
       {
         title: '#1 Speedometer v2',
         rows: [
           [
-            <Benchmark
-              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
-              key='speedometer'
-              id='speedometer'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer}
-            />,
-          ],
-          [
             <Perfherder
               title='Talos: Speedometer mozilla-central'
+              key='talos-speedometer'
               reference='2017-10-12'
               signatures={{
                 'win10-64': '797a2bfbbac2c632f4f354aff7677a3df3c749a3',
@@ -167,7 +157,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
+              title='Benchmark: 32-bit Nightly vs Chrome Canary'
               key='speedometer32'
               id='speedometer32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
@@ -175,27 +165,34 @@ export default class QuantumIndex extends React.Component {
               type='line'
               {...notes.speedometer32}
             />,
-          ],
-          [
             <Benchmark
-              title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta'
-              id='speedometerBeta'
+              title='Benchmark: 64-bit Nightly vs Chrome Canary'
+              key='speedometer'
+              id='speedometer'
               link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
               type='line'
-              {...notes.speedometerBeta}
+              {...notes.speedometer}
             />,
           ],
           [
             <Benchmark
-              title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary (Reference Hardware)'
+              title='Benchmark: 32-Bit Beta vs Chrome Canary'
               key='speedometerBeta32'
               id='speedometerBeta32'
               link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
               targetDiff={20}
               type='line'
               {...notes.speedometerBeta32}
+            />,
+            <Benchmark
+              title='Benchmark: 64-Bit Beta vs Chrome Canary'
+              key='speedometerBeta'
+              id='speedometerBeta'
+              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
+              targetDiff={20}
+              type='line'
+              {...notes.speedometerBeta}
             />,
           ],
         ],
