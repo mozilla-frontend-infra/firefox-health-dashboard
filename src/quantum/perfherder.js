@@ -8,6 +8,7 @@ import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area, timeMonth } from 'd3';
 import { stringify } from 'query-string';
 import Widget from './widget';
+import SETTINGS from '../settings';
 
 const tickCount = 4;
 
@@ -32,7 +33,7 @@ export default class PerfherderWidget extends React.Component {
       framework: framework,
     });
     try {
-      const evolutions = await (await fetch(`/api/perf/herder?${query}`)).json();
+      const evolutions = await (await fetch(`${SETTINGS.backend}/api/perf/herder?${query}`)).json();
       this.setState({
         evolutions: evolutions,
         signatures: splitSignatures,

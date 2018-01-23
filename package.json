@@ -5,6 +5,7 @@
   "scripts": {
     "build": "neutrino build",
     "start": "neutrino start",
+    "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
     "test": "neutrino test"
   },

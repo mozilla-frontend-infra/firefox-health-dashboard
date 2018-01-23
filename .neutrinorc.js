@@ -1,3 +1,13 @@
+const acceptedExternalEnvs = {
+  BACKEND: 'BACKEND' in process.env ?
+    process.env.BACKEND : 'https://health.graphics'
+};
+
+// Set environment variables to their default values if not defined
+Object
+  .keys(acceptedExternalEnvs)
+.forEach(env => !(env in process.env) && (process.env[env] = acceptedExternalEnvs[env]));
+
 module.exports = {
   use: [
     [
@@ -75,7 +85,8 @@ module.exports = {
         },
         style: {
           loaders: ['postcss-loader']
-        }
+        },
+        env: Object.keys(acceptedExternalEnvs),
       }
     ],
     '@neutrinojs/mocha'

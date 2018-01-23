@@ -3,10 +3,11 @@
 import 'babel-polyfill';
 import React from 'react';
 import MG from 'metrics-graphics';
+import SETTINGS from '../settings';
 
 export default class XpCrashes extends React.Component {
   async componentDidMount() {
-    const crashes = await (await fetch('/api/crashes/xp')).json();
+    const crashes = await (await fetch(`${SETTINGS.backend}/api/crashes/xp`)).json();
     crashes[0] = MG.convert.date(crashes[0], 'date');
     crashes[1] = MG.convert.date(crashes[1], 'date');
     crashes[2] = MG.convert.date(crashes[2], 'date');

@@ -3,10 +3,11 @@
 import 'babel-polyfill';
 import React from 'react';
 import MG from 'metrics-graphics';
+import SETTINGS from './settings';
 
 export default class Regressions extends React.Component {
   async componentDidMount() {
-    const regressions = await (await fetch('/api/bz/regressions/missed')).json();
+    const regressions = await (await fetch(`${SETTINGS.backend}/api/bz/regressions/missed`)).json();
     const legend = regressions.map(entry => entry.count);
     MG.data_graphic({
       title: 'Number of Unevaluated Regressions Shipped',
