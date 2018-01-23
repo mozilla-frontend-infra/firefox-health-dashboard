@@ -16,6 +16,7 @@ import {
 } from 'd3';
 import { stringify } from 'query-string';
 import Dashboard from './../dashboard';
+import SETTINGS from '../settings';
 
 const tickCount = 5;
 
@@ -37,7 +38,7 @@ export default class ChannelMetric extends React.Component {
   async fetch() {
     const query = this.props.query;
     try {
-      const raw = await fetch(`/api/perf/version-evolutions?${stringify(query)}`);
+      const raw = await fetch(`${SETTINGS.backend}/api/perf/version-evolutions?${stringify(query)}`);
       const evolutions = await raw.json();
       this.setState({ evolutions });
     } catch (e) {

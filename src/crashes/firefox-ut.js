@@ -5,6 +5,7 @@ import MG from 'metrics-graphics';
 import moment from 'moment';
 import Graphic from '../graphic';
 import Score from '../score';
+import SETTINGS from '../settings';
 
 export default class FirefoxUtCrashes extends React.Component {
   state = {
@@ -18,15 +19,13 @@ export default class FirefoxUtCrashes extends React.Component {
   }
 
   async fetch() {
-    const crashes = await (await fetch('/api/crashes')).json();
+    const crashes = await (await fetch(`${SETTINGS.backend}/api/crashes`)).json();
     const data = MG.convert.date(crashes, 'date');
-    const releases = await (await fetch('/api/release/history?tailVersion=5')).json();
-    const markers = releases.map((entry) => {
-      return {
-        date: moment(entry.date, 'YYYY MM DD').toDate(),
-        label: entry.version,
-      };
-    });
+    const releases = await (await fetch(`${SETTINGS.backend}/api/release/history?tailVersion=5`)).json();
+    const markers = releases.map(entry => ({
+      date: moment(entry.date, 'YYYY MM DD').toDate(),
+      label: entry.version,
+    }));
     markers.push({
       date: moment('2016-04-01', 'YYYY MM DD').toDate(),
       label: 'Aggregate Start',

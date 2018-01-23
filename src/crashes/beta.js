@@ -8,6 +8,7 @@ import cx from 'classnames';
 import find from 'lodash/fp/find';
 import sumBy from 'lodash/fp/sumBy';
 import Dashboard from './../dashboard';
+import SETTINGS from '../settings';
 
 const rateRange = [0, 5.5];
 const colorScale = scaleOrdinal(schemeCategory10);
@@ -40,9 +41,9 @@ export default class FirefoxBeta extends React.Component {
     }
     // parallel
     const raw = await Promise.all([
-      fetch('/api/crashes/beta/builds'),
-      fetch('/api/release/history?tailVersion=6&major=1'),
-      fetch('/api/release/calendar'),
+      fetch(`${SETTINGS.backend}/api/crashes/beta/builds`),
+      fetch(`${SETTINGS.backend}/api/release/history?tailVersion=6&major=1`),
+      fetch(`${SETTINGS.backend}/api/release/calendar`),
     ]);
     const [crashes, history, calendar] = await Promise.all(raw.map(buffer => buffer.json()));
     crashes.forEach(({ builds }) => {

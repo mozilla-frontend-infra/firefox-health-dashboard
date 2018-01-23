@@ -2,6 +2,7 @@
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
+import SETTINGS from '../settings';
 
 export default class TelemetryContainer extends React.Component {
   async componentDidMount() {
@@ -11,7 +12,7 @@ export default class TelemetryContainer extends React.Component {
 
   async fetchPlotGraph(id) {
     const { graphData, telemetryUrl } = await (
-      await fetch(`/api/perf/telemetry/${id}`)).json();
+      await fetch(`${SETTINGS.backend}/api/perf/telemetry/${id}`)).json();
     if (!this.graphTitleLink) {
       return;
     }

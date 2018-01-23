@@ -6,6 +6,7 @@ import cx from 'classnames';
 import { maxBy, minBy } from 'lodash/fp';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat } from 'd3';
 import Widget from './widget';
+import SETTINGS from './../settings';
 
 const tickCount = 5;
 const noise = 1000 * 60 * 60 * 12;
@@ -22,8 +23,8 @@ export default class BenchmarkWidget extends React.Component {
   async fetch() {
     const id = this.props.id;
     try {
-      const evolution = await (await fetch(`/api/perf/benchmark/${id}`)).json();
-      this.setState({ evolution: evolution });
+      const evolution = await (await fetch(`${SETTINGS.backend}/api/perf/benchmark/${id}`)).json();
+      this.setState({ evolution });
     } catch (e) {
       this.setState({ error: true });
     }

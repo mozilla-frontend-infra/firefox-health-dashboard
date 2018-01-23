@@ -9,6 +9,7 @@ import sortBy from 'lodash/fp/sortBy';
 import reverse from 'lodash/fp/reverse';
 import flow from 'lodash/fp/flow';
 import Dashboard from '../dashboard';
+import SETTINGS from '../settings';
 
 const Table = ({ title, rows }) => {
   const headers = ['firefox', 'chrome', 'ie', 'safari'].map((platform) => {
@@ -106,8 +107,8 @@ export default class Status extends React.Component {
   }
 
   async fetchStatus() {
-    const popular = await (await fetch('/api/status/chrome/popular')).json();
-    const caniuse = await (await fetch('/api/status/caniuse')).json();
+    const popular = await (await fetch(`${SETTINGS.backend}/api/status/chrome/popular`)).json();
+    const caniuse = await (await fetch(`${SETTINGS.backend}/api/status/caniuse`)).json();
     this.setState({ popular, caniuse });
   }
 

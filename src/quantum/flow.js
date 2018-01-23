@@ -6,6 +6,7 @@ import cx from 'classnames';
 // import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area } from 'd3';
 import Widget from './widget';
+import SETTINGS from '../settings';
 
 const tickCount = 4;
 
@@ -19,7 +20,7 @@ export default class FlowWidget extends React.Component {
   viewport: [0, 0];
 
   async fetch() {
-    const burnup = await (await fetch('/api/bz/burnup')).json();
+    const burnup = await (await fetch(`${SETTINGS.backend}/api/bz/burnup`)).json();
     this.setState({ burnup });
   }
 

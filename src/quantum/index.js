@@ -11,6 +11,7 @@ import Benchmark from './benchmark';
 import Countdown from './countdown';
 import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
+import SETTINGS from '../settings';
 
 const apzBugs = {
   1376525: {
@@ -52,14 +53,14 @@ export default class QuantumIndex extends React.Component {
   };
 
   async fetchNotes() {
-    const notes = await (await fetch('/api/perf/notes')).json();
+    const notes = await (await fetch(`${SETTINGS.backend}/api/perf/notes`)).json();
     this.setState({ notes });
     this.fetchApzStatus();
   }
 
   async fetchApzStatus() {
     const bugQuery = stringify({ ids: Object.keys(apzBugs) });
-    const apzStatus = await (await fetch(`/api/bz/status?${bugQuery}`)).json();
+    const apzStatus = await (await fetch(`${SETTINGS.backend}/api/bz/status?${bugQuery}`)).json();
     this.setState({ apzStatus });
   }
 
