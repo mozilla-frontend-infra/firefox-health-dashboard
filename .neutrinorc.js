@@ -72,6 +72,9 @@ module.exports = {
       {
         html: {
           title: 'platform-health'
+        },
+        style: {
+          loaders: ['postcss-loader']
         }
       }
     ],
