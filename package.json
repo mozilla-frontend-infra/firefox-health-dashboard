@@ -13,11 +13,12 @@
     "clean": "rm -rf dist",
     "test": "npm-run-all --parallel test:*",
     "watch": "npm-run-all --parallel watch:*",
-    "build": "npm run build:prod",
-    "start": "node server.js",
+    "build": "neutrino build",
+    "start": "neutrino start",
     "heroku-postbuild": "npm run build:prod && npm run flush-cdn",
     "flush-cdn": "node postinstall.js"
   },
+  "main": "TBD.js",
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
   "dependencies": {
@@ -122,7 +123,12 @@
     "wolfy87-eventemitter": "^5.2.2"
   },
   "devDependencies": {
+    "@neutrinojs/airbnb-base": "^8.0.18",
+    "@neutrinojs/mocha": "^8.0.18",
+    "@neutrinojs/node": "^8.0.18",
+    "eslint-plugin-babel": "^4.1.2",
     "mocha": "^4.0.1",
+    "neutrino": "^8.0.18",
     "nyc": "^11.1.0",
     "supertest": "^3.0.0"
   }
