@@ -14,7 +14,7 @@ import { createClient } from 'then-redis';
 dotenv.config();
 
 /* eslint-disable import/first */
-import webpackConfig from './../webpack.config.babel';
+// import webpackConfig from './../webpack.config.babel';
 
 import { router as release } from './release';
 import { router as crashes } from './crashes';
@@ -34,7 +34,7 @@ app.use(cors());
 const api = new Router();
 api.get('/version', (ctx) => {
   ctx.body = {
-    version: version,
+    version,
     source: process.env.SOURCE_VERSION || '',
   };
 });
@@ -74,15 +74,15 @@ if (process.env.NODE_ENV !== 'test') {
       maxAge: 24 * 60 * 60,
     }));
   } else {
-    const compiler = webpack(webpackConfig);
-    app.use(webpackDevMiddleware(compiler, {
-      publicPath: webpackConfig.output.publicPath,
-      noInfo: true,
-      hot: true,
-      // lazy: true,
-      historyApiFallback: true,
-    }));
-    app.use(webpackHotMiddleware(compiler));
+    // const compiler = webpack(webpackConfig);
+    // app.use(webpackDevMiddleware(compiler, {
+    //   publicPath: webpackConfig.output.publicPath,
+    //   noInfo: true,
+    //   hot: true,
+    //   // lazy: true,
+    //   historyApiFallback: true,
+    // }));
+    // app.use(webpackHotMiddleware(compiler));
   }
 
   const server = http.createServer(app.callback());
