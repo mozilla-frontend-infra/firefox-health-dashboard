@@ -18,7 +18,6 @@
     "heroku-postbuild": "npm run build:prod && npm run flush-cdn",
     "flush-cdn": "node postinstall.js"
   },
-  "main": "TBD.js",
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
   "dependencies": {

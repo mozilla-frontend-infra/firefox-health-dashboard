@@ -1,4 +1,7 @@
 module.exports = {
+  options: {
+    debug: true
+  },
   use: [
     [
       '@neutrinojs/airbnb-base',
@@ -68,7 +71,8 @@ module.exports = {
           title: 'platform-health'
         },
         devServer: {
-          port: 3000
+          port: 3010,
+          quiet: false
         },
       }
     ],
