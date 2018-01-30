@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   options: {
     debug: true
@@ -62,6 +64,19 @@ module.exports = {
             "indent": 0
           }
         }
+      }
+    ],
+    [
+      '@neutrinojs/copy', {
+        patterns: [
+          {
+            from: 'static',
+          }
+        ],
+        options: {
+          context: path.join(__dirname),
+        },
+        pluginId: 'copy-static-dir'
       }
     ],
     [
