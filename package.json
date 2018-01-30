@@ -124,7 +124,7 @@
   "devDependencies": {
     "@neutrinojs/airbnb-base": "^8.0.18",
     "@neutrinojs/mocha": "^8.0.18",
-    "@neutrinojs/node": "^8.0.18",
+    "@neutrinojs/react": "^8.1.1",
     "eslint-plugin-babel": "^4.1.2",
     "mocha": "^4.0.1",
     "neutrino": "^8.0.18",

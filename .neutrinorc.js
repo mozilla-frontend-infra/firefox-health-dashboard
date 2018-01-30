@@ -65,7 +65,7 @@ module.exports = {
       }
     ],
     [
-      '@neutrinojs/node',
+      '@neutrinojs/react',
       {
         html: {
           title: 'platform-health'
