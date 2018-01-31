@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { curveMonotoneX, line, scaleTime, scaleLinear, scaleOrdinal, schemeCategory10 } from 'd3';

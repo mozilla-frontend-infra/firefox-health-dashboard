@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import MG from 'metrics-graphics';
 import moment from 'moment';

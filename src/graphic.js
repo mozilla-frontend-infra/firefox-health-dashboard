@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MG from 'metrics-graphics';

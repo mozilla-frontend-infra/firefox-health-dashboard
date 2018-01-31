@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import { Link } from 'react-router';
 import Dashboard from './dashboard';

@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { min, maxBy, minBy } from 'lodash/fp';
