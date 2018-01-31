@@ -81,7 +81,14 @@ module.exports = {
       '@neutrinojs/react',
       {
         html: {
-          title: 'Firefox Health Dashboard'
+          title: 'Firefox Health Dashboard',
+          links: [
+            {
+              href: '/static/favicon.ico',
+              rel: 'icon',
+              type: 'image/x-icon'
+            }
+          ]
         },
         style: {
           loaders: ['postcss-loader']
