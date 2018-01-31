@@ -7,7 +7,8 @@
     "start": "neutrino start",
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
-    "test": "neutrino test"
+    "test": "neutrino test",
+    "heroku-postbuild": "neutrino build"
   },
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
