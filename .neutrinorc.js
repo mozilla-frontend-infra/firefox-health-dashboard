@@ -81,7 +81,7 @@ module.exports = {
       '@neutrinojs/react',
       {
         html: {
-          title: 'platform-health'
+          title: 'Firefox Health Dashboard'
         },
         style: {
           loaders: ['postcss-loader']
