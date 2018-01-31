@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import ChannelMetric from './channel-metric';
 

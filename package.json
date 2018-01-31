@@ -13,7 +13,6 @@
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
   "license": "MPL-2.0",
   "dependencies": {
-    "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "d3": "^4.10.0",
     "lodash": "^4.17.2",

@@ -1,5 +1,4 @@
 /* global fetch */
-import 'babel-polyfill';
 import React from 'react';
 import moment from 'moment';
 import business from 'moment-business';
