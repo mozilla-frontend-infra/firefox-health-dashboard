@@ -1,12 +1,15 @@
+dist: trusty
 language: node_js
+cache: yarn
 node_js:
   - '8'
-env:
-  global:
-    - REDIS_URL=redis://localhost:6379
-install: npm install
+install:
+- yarn install --frozen-lockfile
+before_install:
+- curl -sSfL https://yarnpkg.com/install.sh | bash # Required due to: https://github.com/travis-ci/travis-ci/issues/7951
+- export PATH=$HOME/.yarn/bin:$PATH
+after_failure:
+- yarn build -- --inspect
 script:
-  - npm test
-services:
-  - 'redis-server'
-after_success: npm run coverage
+- yarn lint
+- yarn build
