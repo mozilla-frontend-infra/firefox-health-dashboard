@@ -7,7 +7,6 @@
     "start": "neutrino start",
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
-    "test": "neutrino test",
     "heroku-postbuild": "neutrino build"
   },
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
@@ -34,7 +33,6 @@
     "css-mqpacker": "^6.0.1",
     "mocha": "^4.0.1",
     "neutrino": "^8.1.1",
-    "nyc": "^11.1.0",
     "postcss-css-variables": "^0.7.0",
     "postcss-cssnext": "^2.11.0",
     "postcss-custom-properties": "^5.0.2",
@@ -43,8 +41,7 @@
     "postcss-nested": "^1.0.0",
     "postcss-reporter": "^3.0.0",
     "postcss-simple-extend": "^1.0.0",
-    "postcss-simple-vars": "^3.0.0",
-    "supertest": "^3.0.0"
+    "postcss-simple-vars": "^3.0.0"
   },
   "main": "index.js",
   "repository": "git@github.com:mozilla/firefox-health-dashboard.git"
