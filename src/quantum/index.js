@@ -53,8 +53,12 @@ export default class QuantumIndex extends React.Component {
   };
 
   async fetchNotes() {
-    const notes = await (await fetch(`${SETTINGS.backend}/api/perf/notes`)).json();
-    this.setState({ notes });
+    try {
+      const notes = await (await fetch(`${SETTINGS.backend}/api/perf/notes`)).json();
+      this.setState({ notes });
+    } catch (e) {
+      console.warn('Failed to fetch notes.');
+    }
     this.fetchApzStatus();
   }
 
