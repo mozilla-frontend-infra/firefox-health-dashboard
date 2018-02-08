@@ -1,4 +1,0 @@
---timeout 600000
---require babel-core/register
---reporter list
---recursive
