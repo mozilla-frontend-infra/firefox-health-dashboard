@@ -1,0 +1,26 @@
+{
+  "name": "fx-health-dashboard",
+  "description": "This allows creating Review apps with important environment variables from Heroku's production instance. It also includes the Heroku static buildpack.",
+  "scripts": {},
+  "env": {
+    "GAUTH_JSON": {
+      "required": true
+    },
+    "BACKEND": "https://firefox-health-backend.herokuapp.com",
+    "NPM_CONFIG_PRODUCTION": "false"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/hone/heroku-buildpack-static"
+    }
+  ]
+}
