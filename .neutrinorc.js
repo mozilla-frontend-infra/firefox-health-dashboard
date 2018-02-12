@@ -1,6 +1,6 @@
 const acceptedExternalEnvs = {
   BACKEND: 'BACKEND' in process.env ?
-    process.env.BACKEND : 'https://health.graphics'
+    process.env.BACKEND : 'https://firefox-health-backend.herokuapp.com'
 };
 
 // Set environment variables to their default values if not defined
