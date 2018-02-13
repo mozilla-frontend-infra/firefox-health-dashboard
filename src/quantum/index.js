@@ -10,6 +10,7 @@ import Benchmark from './benchmark';
 import Countdown from './countdown';
 import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
+import GraphWithTarget from '../plotting';
 import SETTINGS from '../settings';
 
 const apzBugs = {
@@ -156,43 +157,47 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <Benchmark
-              title='Benchmark: 32-bit Nightly vs Chrome Canary'
-              key='speedometer32'
-              id='speedometer32'
-              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer32}
-            />,
-            <Benchmark
-              title='Benchmark: 64-bit Nightly vs Chrome Canary'
-              key='speedometer'
-              id='speedometer'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometer}
+            <GraphWithTarget
+              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
+              key='speedometer-score'
+              id='speedometer-score'
+              fetchData={async () =>
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=64`)).json()
+              }
+              targetDiff={0.8}
             />,
           ],
           [
-            <Benchmark
-              title='Benchmark: 32-Bit Beta vs Chrome Canary'
-              key='speedometerBeta32'
-              id='speedometerBeta32'
-              link='https://arewefastyet.com/#machine=37&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometerBeta32}
+            <GraphWithTarget
+              title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
+              key='speedometer32-score'
+              id='speedometer32-score'
+              fetchData={async () =>
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=32`)).json()
+              }
+              targetDiff={0.8}
             />,
-            <Benchmark
-              title='Benchmark: 64-Bit Beta vs Chrome Canary'
-              key='speedometerBeta'
-              id='speedometerBeta'
-              link='https://arewefastyet.com/#machine=36&view=breakdown&suite=speedometer-misc'
-              targetDiff={20}
-              type='line'
-              {...notes.speedometerBeta}
+          ],
+          [
+            <GraphWithTarget
+              title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
+              key='speedometerBeta-score'
+              id='speedometerBeta-score'
+              fetchData={async () =>
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=64`)).json()
+              }
+              targetDiff={0.8}
+            />,
+          ],
+          [
+            <GraphWithTarget
+              title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary (Reference Hardware)'
+              key='speedometerBeta32-score'
+              id='speedometerBeta32-score'
+              fetchData={async () =>
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=32`)).json()
+              }
+              targetDiff={0.8}
             />,
           ],
         ],
