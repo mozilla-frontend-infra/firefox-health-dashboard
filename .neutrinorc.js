@@ -91,6 +91,7 @@ module.exports = {
         html: {
           title: 'Firefox Health Dashboard',
           links: [
+            "https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,500",
             {
               href: '/static/favicon.ico',
               rel: 'icon',
