@@ -163,33 +163,11 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <AWFY
-              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
-              key='speedometer-score'
-              id='speedometer-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=64`)).json()
-              }
-              targetDiff={0.8}
-            />,
-          ],
-          [
-            <AWFY
               title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
               key='speedometer32-score'
               id='speedometer32-score'
               fetchData={async () =>
                 (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=32`)).json()
-              }
-              targetDiff={0.8}
-            />,
-          ],
-          [
-            <AWFY
-              title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta-score'
-              id='speedometerBeta-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=64`)).json()
               }
               targetDiff={0.8}
             />,
