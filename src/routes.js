@@ -7,7 +7,8 @@ import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import Quantum from './quantum/index';
+import Quantum32 from './quantum/index32bit';
+import Quantum64 from './quantum/index64bit';
 import Devtools from './devtools/index';
 import QuantumResponsivenessParent from './quantum/responsiveness-parent';
 import QuantumResponsivenessContent from './quantum/responsiveness-content';
@@ -61,7 +62,8 @@ export default class Routes extends Component {
           <IndexRoute component={Home} />
           <Route path='crashes' component={ReleaseCrashes} />
           <Route path='crashes/beta' component={BetaCrashes} />
-          <Route path='quantum' component={Quantum} />
+          <Route path='quantum/32' component={Quantum32} />
+          <Route path='quantum/64' component={Quantum64} />
           <Route path='quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
           <Route path='quantum/responsiveness/content' component={QuantumResponsivenessContent} />
           <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
