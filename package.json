@@ -5,6 +5,7 @@
   "scripts": {
     "build": "neutrino build",
     "start": "neutrino start",
+    "start:prod": "neutrino build && node .",
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
     "heroku-postbuild": "neutrino build"
@@ -43,6 +44,6 @@
     "postcss-simple-extend": "^1.0.0",
     "postcss-simple-vars": "^3.0.0"
   },
-  "main": "index.js",
+  "main": "build/index.js",
   "repository": "git@github.com:mozilla/firefox-health-dashboard.git"
 }
