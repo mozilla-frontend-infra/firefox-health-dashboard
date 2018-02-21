@@ -162,8 +162,11 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
+            <h2 key='speedometer-64'>Reference hardware - 64bit</h2>,
+          ],
+          [
             <AWFY
-              title='Benchmark: Speedometer v2 64-bit Nightly vs Chrome Canary (Reference Hardware)'
+              title='Nightly, Chrome Canary & Beta'
               key='speedometer-score'
               id='speedometer-score'
               fetchData={async () =>
@@ -174,7 +177,27 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <AWFY
-              title='Benchmark: Speedometer v2 32-bit Nightly vs Chrome Canary (Reference Hardware)'
+              title='Nightly vs Canary December 2017'
+              key='speedometer-dec-2017'
+              id='speedometer-dec-2017'
+              fetchData={async () =>
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=64`)).json()
+              }
+              // AWFY after certain number of weeks it only shows a data point
+              // per week. This score is what AWFY showed on Dec. 27th, 2017 for this revision
+              // https://chromium.googlesource.com/v8/v8/+log/45ffb540b45a391f5e9848615d5654297a14eb14..bb5733a4d8b54bd49cf7053811d7ea1f41243d2f
+              // Grabed from:
+              // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
+              targetLine={50}
+              targetDiff={0.95}
+            />,
+          ],
+          [
+            <h2 key='speedometer-32'>Reference hardware - 32bit</h2>,
+          ],
+          [
+            <AWFY
+              title='Nightly, Chrome Canary & Beta'
               key='speedometer32-score'
               id='speedometer32-score'
               fetchData={async () =>
@@ -185,76 +208,26 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <AWFY
-              title='Benchmark: Speedometer v2 64-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta-score'
-              id='speedometerBeta-score'
+              title='Nightly vs Canary December 2017'
+              key='speedometer32-dec-2017'
+              id='speedometer32-dec-2017'
               fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=64`)).json()
+                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=32`)).json()
               }
-              targetDiff={0.8}
-            />,
-          ],
-          [
-            <AWFY
-              title='Benchmark: Speedometer v2 32-Bit Beta vs Chrome Canary (Reference Hardware)'
-              key='speedometerBeta32-score'
-              id='speedometerBeta32-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=32`)).json()
-              }
-              targetDiff={0.8}
-            />,
-          ],
-        ],
-      },
-      {
-        title: '#2 Responsiveness in Browser Chrome & Content',
-        rows: [
-          [
-            <Benchmark
-              title='Benchmark: Input Lag (Hasal)'
-              key='hasal'
-              id='hasal'
-              link='https://github.com/Mozilla-TWQA/Hasal/'
-              targetDiff={0}
-              {...notes.hasal}
-            />,
-            <Perfherder
-              key='hasal_perfherder'
-              title='Hasal (Perfherder)'
-              target='Not set'
-              framework={9}
-              signatures={{
-                firefox:
-                  `b1e9032dd4ffe6b477712c782a0ca4cac9ac1c2d,
-                  6765a760486fb1fc1cf64df05b8a0b84d4fdac53,
-                  e9fd56ad103296dfc346952385c284ef5f3e0dac,
-                  563257d55ec4b07aa1650c25faac30e927053749,
-                  7b287bc993dcd5a2a9e8d2d369740dd1c88fef25,
-                  ac1fb385ad5752c63f5e9738637a4ed4607f755a,
-                  711e0433e3e5f6d770f6062d7586c9131ee75aea,
-                  7f49f98c7977658b265f7faa2a34b1164408f048,
-                  d4af2fc60941e121cee03abe408902a47ff417dc,
-                  fe07b55428ec7e40c7b1ec90e145df64c92ec002`,
-                chrome: `eab3f5a88c8e948b1d5c38f72a64ae11b6e15e69,
-                7ce812004afb2a2a5ab17b99e569d0f2588d6ab2,
-                2a2405c17da7a1b2bcb2443fd2b10ccc57f03052,
-                edd6249592205f06a19b46572e9b4d6f207dd08f,
-                85b7300002195cbb74be4117ddb4fdb5434749d5,
-                544ca251a3b363188f21d44f960b8537c7201861,
-                87eb7165f1a63facc4e26593bddc4cb2e6070bf9,
-                39af63dbc39efdd7b2eb9a0ec623626139f8b993,
-                1889707238a94395535e5d3c3360a541219a9376,
-                e3d6c348928907692aa5d01974a7c6d8237b5245`,
-              }}
-              {...notes.talos_hasal}
+              // AWFY after certain number of weeks it only shows a data point
+              // per week. This score is what AWFY showed on Dec. 30th, 2017 for this revision
+              // https://chromium.googlesource.com/v8/v8/+log/3cbf26e8a21aa76703d2c3c51adb9c96119500da..0c287882ea233f299a91f6b72b56d8faaecf52c0
+              // Grabed from:
+              // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
+              targetLine={51}
+              targetDiff={0.95}
             />,
           ],
         ],
       },
       {
         cssRowSecondClass: 'generic-metrics-graphics photon-perf',
-        title: '#3 Photon Performance',
+        title: '#2 Photon Performance',
         rows: [
           [
             <TelemetryContainer
@@ -283,7 +256,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#4 Page Load Times',
+        title: '#3 Regression',
         rows: [
           [
             <Benchmark
@@ -317,40 +290,6 @@ export default class QuantumIndex extends React.Component {
               {...notes.talos_tp6_loaded}
             />,
           ],
-        ],
-      },
-      {
-        title: '#5 Browser Startup',
-        rows: [
-          [
-            <Benchmark
-              title='Start-up: First Paint'
-              key='startup_first_paint'
-              id='startup'
-              metric='firstPaint'
-              targetDiff={20}
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
-              {...notes.startup_render}
-            />,
-            <Benchmark
-              title='Start-up: Hero Element'
-              key='startup_hero'
-              id='startup'
-              metric='heroElement'
-              targetDiff={20}
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-Responsiveness:Content'
-              {...notes.startup_hero}
-            />,
-          ],
-        ],
-      },
-      {
-        title: '#6 Smooth Scrolling',
-        rows: [[$apz]],
-      },
-      {
-        title: '#7 Regression',
-        rows: [
           [
             <Perfherder
               key='pageload_tp5'
