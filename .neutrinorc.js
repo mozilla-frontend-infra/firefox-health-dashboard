@@ -130,6 +130,9 @@ module.exports = {
       // This is the key to making React Router work with neutrino
       // Fix issue with nested routes e.g /index/garbage
       neutrino.config.output.publicPath('/');
+      neutrino.config.when(process.env.NODE_ENV === 'production', config => {
+        config.devtool('source-map');
+      });
     }
   ]
 };
