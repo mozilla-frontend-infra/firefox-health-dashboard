@@ -961,46 +961,63 @@ svg {
     stroke-width: 2
   }
   .mg-area1-color {
-    fill: var(--firefoxOrange);
+    fill: var(--firefoxOrangeVibrantTint);
   }
   .mg-line1-color {
-    stroke: var(--firefoxOrange);
+    stroke: var(--firefoxOrangeVibrantTint);
   }
   .mg-hover-line1-color {
-    fill: var(--firefoxOrange);
+    fill: var(--firefoxOrangeVibrantTint);
   }
   .mg-line1-legend-color {
-    color: var(--firefoxOrange);
-    fill: var(--firefoxOrange);
+    color: var(--firefoxOrangeVibrantTint);
+    fill: var(--firefoxOrangeVibrantTint);
   }
   path.mg-line2 {
-    stroke-width: 2
+    stroke-width: 1
   }
   .mg-area2-color {
-    fill: var(--chromeYellow);
+    fill: black;
   }
   .mg-line2-color {
-    stroke: var(--chromeYellow);
+    stroke: black;
+    stroke-opacity: 0.5;
   }
   .mg-hover-line2-color {
-    fill: var(--chromeYellow);
+    fill: black;
   }
   .mg-line2-legend-color {
+    color: black;
+    fill: black;
+  }
+  path.mg-line3 {
+    stroke-width: 2
+  }
+  .mg-area3-color {
+    fill: var(--chromeYellow);
+  }
+  .mg-line3-color {
+    stroke: var(--chromeYellow);
+  }
+  .mg-hover-line3-color {
+    fill: var(--chromeYellow);
+  }
+  .mg-line3-legend-color {
     color: var(--chromeYellow);
     fill: var(--chromeYellow);
   }
   /* Target line */
-  .mg-area3-color {
+  .mg-area4-color {
       fill: var(--lightGray);
   }
-  .mg-line3-color {
+  .mg-line4-color {
     stroke: var(--lightGray);
     stroke-dasharray: 10;
   }
-  .mg-hover-line3-color {
+  .mg-hover-line4-color {
     fill: var(--lightGray);
   }
-  .mg-line3-legend-color {
+  .mg-line4-legend-color {
     color: var(--lightGray);
     fill: var(--lightGray);
   }

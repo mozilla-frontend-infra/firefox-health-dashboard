@@ -166,7 +166,7 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <AWFY
-              title='Nightly vs Chrome Canary'
+              title='Nightly, Chrome Canary & Beta'
               key='speedometer-score'
               id='speedometer-score'
               fetchData={async () =>
@@ -193,22 +193,11 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <AWFY
-              title='Beta vs Chrome Canary'
-              key='speedometerBeta-score'
-              id='speedometerBeta-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=64`)).json()
-              }
-              targetDiff={0.8}
-            />,
-          ],
-          [
             <h2 key='speedometer-32'>Reference hardware - 32bit</h2>,
           ],
           [
             <AWFY
-              title='Nightly vs Chrome Canary'
+              title='Nightly, Chrome Canary & Beta'
               key='speedometer32-score'
               id='speedometer32-score'
               fetchData={async () =>
@@ -232,17 +221,6 @@ export default class QuantumIndex extends React.Component {
               // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
               targetLine={51}
               targetDiff={0.95}
-            />,
-          ],
-          [
-            <AWFY
-              title='Beta vs Chrome Canary'
-              key='speedometerBeta32-score'
-              id='speedometerBeta32-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=32`)).json()
-              }
-              targetDiff={0.8}
             />,
           ],
         ],

@@ -41,23 +41,14 @@ export default class Speedometer extends Component {
         }
         return newEl;
       });
-      // XXX: Index 1 represents Chrome
-      // We need to replace Canary's data with an empty line
-      data.series.splice(1, 1, []);
-      // Let's add a third line with a single line to display
-      data.series = data.series.concat(
-        new Array([
-          {
-            date: data.series[0][0].date,
-            value: targetLine,
-          },
-          {
-            date: data.series[0][data.series[0].length - 1].date,
-            value: targetLine,
-          },
-        ]));
-      data.legendLabels = data.legendLabels
-        .concat('Canary December 2017');
+      const line = [
+        { date: data.series[0][0].date, value: targetLine },
+        { date: data.series[0][data.series[0].length - 1].date, value: targetLine },
+      ];
+      // We need to replace Canary's & Beta's data with an empty line
+      // We want the target to be the 4th in line to match the CSS
+      data.series.splice(1, 2, [], [], line);
+      data.legendLabels.splice(1, 2, '', '', 'Target - Canary Dec. 2017');
     } else if (targetDiff) {
       canaryLastDataPoint = data.series[1][data.series[1].length - 1].value;
       // XXX: Index 1 represents Chrome
