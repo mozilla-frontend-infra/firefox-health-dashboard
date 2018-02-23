@@ -1,15 +1,53 @@
 /* global fetch */
 import PropTypes from 'prop-types';
+import { stringify } from 'query-string';
 import React, { Component } from 'react';
 import Widget from '../../quantum/widget';
 import graph from '../../utils/metrics-graphics';
+import SETTINGS from '../../settings';
+
+const queryParams = ({ architecture, browsers, targetRatio, baseValue }) => {
+  // XXX: Throw errors if we don't pass enough parameters
+  let params = stringify({
+      architecture,
+      browser: browsers,
+  });
+  params += targetRatio ? `&${stringify({ targetRatio })}` : '';
+  params += baseValue ? `&${stringify({ baseValue })}` : '';
+  return params;
+};
+
+// Convert fx-health API data to fit metrics-graphics expectation
+const transform = (data) => {
+  const dataKeys = Object.keys(data);
+  const result = {
+    labels: [],
+    series: [],
+  };
+  // Our CSS expects Target to be first and Canary second
+  for (const k of ['Target', 'Canary']) {
+    if (dataKeys.includes(k)) {
+      result.labels.push(data[k].label);
+      result.series.push(data[k].data);
+      delete data[k];
+    } else {
+      result.labels.push('');
+      result.series.push([]);
+    }
+  }
+  for (const key in data) {
+    result.labels.push(data[key].label);
+    result.series.push(data[key].data);
+  }
+  return result;
+};
 
 export default class Speedometer extends Component {
   constructor(props) {
     super(props);
-    const { targetDiff } = props;
-    if (targetDiff && (targetDiff < 0 || targetDiff > 1)) {
-      throw Error('targetDiff should be a value between 0 and 1');
+    const { targetRatio } = props;
+    if (targetRatio && (targetRatio < 0 || targetRatio > 1)) {
+      throw Error('targetRatio should be a value between 0 and 1');
     }
   }
 
@@ -23,80 +61,49 @@ export default class Speedometer extends Component {
 
   viewport: [0, 0];
 
-  async fetchPlotGraph({ fetchData, targetDiff, targetLine }) {
-    const data = await fetchData();
-    const fxLastDataPoint = data.series[0][data.series[0].length - 1].value;
-    let canaryLastDataPoint;
-    let status;
-
-    if (targetLine && targetDiff) {
-      canaryLastDataPoint = targetLine;
-      // In September, we adjusted the benchmark and caused Canary and Firefox
-      // to have a new baseline. For this graph we need to drop data before then
-      data.series[0] = data.series[0].filter((el) => {
-        const date = new Date(el.date);
-        let newEl = null;
-        if (date >= new Date('2017-10-01')) {
-          newEl = el;
-        }
-        return newEl;
-      });
-      // XXX: Index 1 represents Chrome
-      // We need to replace Canary's data with an empty line
-      data.series.splice(1, 1, []);
-      // Let's add a third line with a single line to display
-      data.series = data.series.concat(
-        new Array([
-          {
-            date: data.series[0][0].date,
-            value: targetLine,
-          },
-          {
-            date: data.series[0][data.series[0].length - 1].date,
-            value: targetLine,
-          },
-        ]));
-      data.legendLabels = data.legendLabels
-        .concat('Canary December 2017');
-    } else if (targetDiff) {
-      canaryLastDataPoint = data.series[1][data.series[1].length - 1].value;
-      // XXX: Index 1 represents Chrome
-      const newLine = data.series[1].map(el => ({
-        date: el.date,
-        value: el.value * targetDiff,
-      }));
-      data.series = data.series.concat(new Array(newLine));
-      data.legendLabels = data.legendLabels
-        .concat(`Target of ${targetDiff * 100}%`);
+  async fetchPlotGraph({
+    architecture, benchmark, browsers, targetBrowser, targetRatio, baseValue,
+  }) {
+    const { meta, data } = await (
+      await fetch(`${SETTINGS.backend}/api/perf/benchmark/${benchmark}?` +
+        `${queryParams({ architecture, browsers, targetRatio, baseValue })}`,
+      )).json();
+    const lastDataPoint = data[targetBrowser].data[data[targetBrowser].data.length - 1].value;
+    let targetLastDataPoint;
+    if (baseValue && targetRatio) {
+      targetLastDataPoint = data.Target.data[data.Target.data.length - 1].value;
+    } else {
+      targetLastDataPoint = data.Canary.data[data.Canary.data.length - 1].value;
     }
 
-    const difference = Number.parseFloat(fxLastDataPoint - canaryLastDataPoint);
-    const ratio = fxLastDataPoint / canaryLastDataPoint;
-    if (targetLine && targetDiff) {
-      status = targetLine + difference >= targetDiff * targetLine;
+    const difference = Number.parseFloat(lastDataPoint - targetLastDataPoint);
+    const ratio = lastDataPoint / targetLastDataPoint;
+    let status;
+    if (baseValue && targetRatio) {
+      status = baseValue + difference >= targetRatio * baseValue;
     } else {
-      status = ratio >= targetDiff;
+      status = ratio >= targetRatio;
     }
     const moreProps = {
       status: status ? 'green' : 'yellow',
       reading: `${difference.toFixed(2)} runs/minute (${((1 - ratio) * 100).toFixed(2)}%)`,
       targetStatus: status ? 'pass' : 'fail',
     };
-
-    graph(this.graphEl, data.series, data.legendLabels, this.props.title);
+    const { labels, series } = transform(data);
+    graph(this.graphEl, series, labels, this.props.title);
     this.setState({
       moreProps,
-      series: data.series,
-      titleLink: data.meta.viewUrl,
+      series: series,
+      titleLink: meta.viewUrl,
     });
   }
 
   render() {
-    const { id, targetDiff, targetLine } = this.props;
+    const { id, targetRatio, baseValue } = this.props;
     const { moreProps, series, titleLink } = this.state;
     return (
       <Widget
-        target={`&le; Chrome + ${100 * (1 - targetDiff).toFixed(2)}%`}
+        target={`&le; Chrome + ${100 * (1 - targetRatio).toFixed(2)}%`}
         className='graphic-widget graphic-timeline widget-benchmark'
         link={titleLink}
         loading={!series}
@@ -118,9 +125,10 @@ export default class Speedometer extends Component {
 }
 
 Speedometer.propTypes = {
-  fetchData: PropTypes.func.isRequired,
+  benchmark: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  targetDiff: PropTypes.number,
-  targetLine: PropTypes.number,
+  targetBrowser: PropTypes.string.isRequired,
+  targetRatio: PropTypes.number,
+  baseValue: PropTypes.number,
 };

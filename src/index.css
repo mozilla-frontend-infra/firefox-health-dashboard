@@ -957,21 +957,20 @@ svg {
 
 /* Overwrite default colours for speedometer-metrics-graphics */
 .speedometer-metrics-graphics {
-  path.mg-line1 {
-    stroke-width: 2
-  }
+  /* Target line */
   .mg-area1-color {
-    fill: var(--firefoxOrange);
+      fill: var(--lightGray);
   }
   .mg-line1-color {
-    stroke: var(--firefoxOrange);
+    stroke: var(--lightGray);
+    stroke-dasharray: 10;
   }
   .mg-hover-line1-color {
-    fill: var(--firefoxOrange);
+    fill: var(--lightGray);
   }
   .mg-line1-legend-color {
-    color: var(--firefoxOrange);
-    fill: var(--firefoxOrange);
+    color: var(--lightGray);
+    fill: var(--lightGray);
   }
   path.mg-line2 {
     stroke-width: 2
@@ -989,20 +988,21 @@ svg {
     color: var(--chromeYellow);
     fill: var(--chromeYellow);
   }
-  /* Target line */
+  path.mg-line3 {
+    stroke-width: 2
+  }
   .mg-area3-color {
-      fill: var(--lightGray);
+    fill: var(--firefoxOrange);
   }
   .mg-line3-color {
-    stroke: var(--lightGray);
-    stroke-dasharray: 10;
+    stroke: var(--firefoxOrange);
   }
   .mg-hover-line3-color {
-    fill: var(--lightGray);
+    fill: var(--firefoxOrange);
   }
   .mg-line3-legend-color {
-    color: var(--lightGray);
-    fill: var(--lightGray);
+    color: var(--firefoxOrange);
+    fill: var(--firefoxOrange);
   }
 }
 /* End of speedometer-metrics-graphics */
