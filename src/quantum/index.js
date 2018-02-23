@@ -169,9 +169,10 @@ export default class QuantumIndex extends React.Component {
               title='Nightly vs Chrome Canary'
               key='speedometer-score'
               id='speedometer-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=64`)).json()
-              }
+              benchmark='speedometer'
+              architecture={64}
+              browsers={['Nightly', 'Canary']}
+              targetBrowser={'Nightly'}
               targetDiff={0.8}
             />,
           ],
@@ -180,15 +181,16 @@ export default class QuantumIndex extends React.Component {
               title='Nightly vs Canary December 2017'
               key='speedometer-dec-2017'
               id='speedometer-dec-2017'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=64`)).json()
-              }
+              benchmark='speedometer'
+              architecture={64}
+              browsers={['Nightly', 'Canary']}
+              targetBrowser={'Nightly'}
               // AWFY after certain number of weeks it only shows a data point
               // per week. This score is what AWFY showed on Dec. 27th, 2017 for this revision
               // https://chromium.googlesource.com/v8/v8/+log/45ffb540b45a391f5e9848615d5654297a14eb14..bb5733a4d8b54bd49cf7053811d7ea1f41243d2f
               // Grabed from:
               // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
-              targetLine={50}
+              baseValue={50}
               targetDiff={0.95}
             />,
           ],
@@ -197,9 +199,10 @@ export default class QuantumIndex extends React.Component {
               title='Beta vs Chrome Canary'
               key='speedometerBeta-score'
               id='speedometerBeta-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=64`)).json()
-              }
+              benchmark='speedometer'
+              architecture={64}
+              browsers={['Beta', 'Canary']}
+              targetBrowser={'Beta'}
               targetDiff={0.8}
             />,
           ],
@@ -211,9 +214,10 @@ export default class QuantumIndex extends React.Component {
               title='Nightly vs Chrome Canary'
               key='speedometer32-score'
               id='speedometer32-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=32`)).json()
-              }
+              benchmark='speedometer'
+              architecture={32}
+              browsers={['Nightly', 'Canary']}
+              targetBrowser={'Nightly'}
               targetDiff={0.8}
             />,
           ],
@@ -222,15 +226,16 @@ export default class QuantumIndex extends React.Component {
               title='Nightly vs Canary December 2017'
               key='speedometer32-dec-2017'
               id='speedometer32-dec-2017'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=nightly&architecture=32`)).json()
-              }
+              benchmark='speedometer'
+              architecture={32}
+              browsers={['Nightly', 'Canary']}
+              targetBrowser={'Nightly'}
               // AWFY after certain number of weeks it only shows a data point
               // per week. This score is what AWFY showed on Dec. 30th, 2017 for this revision
               // https://chromium.googlesource.com/v8/v8/+log/3cbf26e8a21aa76703d2c3c51adb9c96119500da..0c287882ea233f299a91f6b72b56d8faaecf52c0
               // Grabed from:
               // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
-              targetLine={51}
+              baseValue={51}
               targetDiff={0.95}
             />,
           ],
@@ -239,9 +244,10 @@ export default class QuantumIndex extends React.Component {
               title='Beta vs Chrome Canary'
               key='speedometerBeta32-score'
               id='speedometerBeta32-score'
-              fetchData={async () =>
-                (await fetch(`${SETTINGS.backend}/api/perf/benchmark/speedometer?channel=beta&architecture=32`)).json()
-              }
+              benchmark='speedometer'
+              architecture={32}
+              browsers={['Beta', 'Canary']}
+              targetBrowser={'Beta'}
               targetDiff={0.8}
             />,
           ],

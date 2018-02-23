@@ -1,8 +1,30 @@
 /* global fetch */
 import PropTypes from 'prop-types';
+import { stringify } from 'query-string';
 import React, { Component } from 'react';
 import Widget from '../../quantum/widget';
 import graph from '../../utils/metrics-graphics';
+import SETTINGS from '../../settings';
+
+const queryParams = ({ architecture, browsers, targetDiff, baseValue }) => {
+  // XXX: Throw errors if we don't pass enough parameters
+  let params = stringify({
+      architecture,
+      browser: browsers,
+  });
+  params += targetDiff ? `&${stringify({ targetDiff })}` : '';
+  params += baseValue ? `&${stringify({ baseValue })}` : '';
+  return params;
+};
+
+// Convert fx-health API data to fit metrics-graphics expectation
+const transform = (data) => {
+  return Object.values(data).reduce((result, el) => {
+    result.labels.push(el.label);
+    result.series.push(el.data);
+    return result;
+  }, { labels: [], series: [] });
+};
 
 export default class Speedometer extends Component {
   constructor(props) {
@@ -23,57 +45,21 @@ export default class Speedometer extends Component {
 
   viewport: [0, 0];
 
-  async fetchPlotGraph({ fetchData, targetDiff, targetLine }) {
-    const data = await fetchData();
-    const fxLastDataPoint = data.series[0][data.series[0].length - 1].value;
-    let canaryLastDataPoint;
+  async fetchPlotGraph({
+    architecture, benchmark, browsers, targetBrowser, targetDiff, baseValue,
+  }) {
+    const { meta, data } = await (
+      await fetch(`${SETTINGS.backend}/api/perf/benchmark/${benchmark}?` +
+        `${queryParams({ architecture, browsers, targetDiff, baseValue })}`,
+      )).json();
+    const lastDataPoint = data[targetBrowser].data[data[targetBrowser].data.length - 1].value;
+    const canaryLastDataPoint = data.Canary.data[data.Canary.data.length - 1].value;
+
+    const difference = Number.parseFloat(lastDataPoint - canaryLastDataPoint);
+    const ratio = lastDataPoint / canaryLastDataPoint;
     let status;
-
-    if (targetLine && targetDiff) {
-      canaryLastDataPoint = targetLine;
-      // In September, we adjusted the benchmark and caused Canary and Firefox
-      // to have a new baseline. For this graph we need to drop data before then
-      data.series[0] = data.series[0].filter((el) => {
-        const date = new Date(el.date);
-        let newEl = null;
-        if (date >= new Date('2017-10-01')) {
-          newEl = el;
-        }
-        return newEl;
-      });
-      // XXX: Index 1 represents Chrome
-      // We need to replace Canary's data with an empty line
-      data.series.splice(1, 1, []);
-      // Let's add a third line with a single line to display
-      data.series = data.series.concat(
-        new Array([
-          {
-            date: data.series[0][0].date,
-            value: targetLine,
-          },
-          {
-            date: data.series[0][data.series[0].length - 1].date,
-            value: targetLine,
-          },
-        ]));
-      data.legendLabels = data.legendLabels
-        .concat('Canary December 2017');
-    } else if (targetDiff) {
-      canaryLastDataPoint = data.series[1][data.series[1].length - 1].value;
-      // XXX: Index 1 represents Chrome
-      const newLine = data.series[1].map(el => ({
-        date: el.date,
-        value: el.value * targetDiff,
-      }));
-      data.series = data.series.concat(new Array(newLine));
-      data.legendLabels = data.legendLabels
-        .concat(`Target of ${targetDiff * 100}%`);
-    }
-
-    const difference = Number.parseFloat(fxLastDataPoint - canaryLastDataPoint);
-    const ratio = fxLastDataPoint / canaryLastDataPoint;
-    if (targetLine && targetDiff) {
-      status = targetLine + difference >= targetDiff * targetLine;
+    if (baseValue && targetDiff) {
+      status = baseValue + difference >= targetDiff * baseValue;
     } else {
       status = ratio >= targetDiff;
     }
@@ -82,17 +68,17 @@ export default class Speedometer extends Component {
       reading: `${difference.toFixed(2)} runs/minute (${((1 - ratio) * 100).toFixed(2)}%)`,
       targetStatus: status ? 'pass' : 'fail',
     };
-
-    graph(this.graphEl, data.series, data.legendLabels, this.props.title);
+    const { labels, series } = transform(data);
+    graph(this.graphEl, series, labels, this.props.title);
     this.setState({
       moreProps,
-      series: data.series,
-      titleLink: data.meta.viewUrl,
+      series: series,
+      titleLink: meta.viewUrl,
     });
   }
 
   render() {
-    const { id, targetDiff, targetLine } = this.props;
+    const { id, targetDiff, baseValue } = this.props;
     const { moreProps, series, titleLink } = this.state;
     return (
       <Widget
@@ -118,9 +104,10 @@ export default class Speedometer extends Component {
 }
 
 Speedometer.propTypes = {
-  fetchData: PropTypes.func.isRequired,
+  benchmark: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  targetBrowser: PropTypes.string.isRequired,
   targetDiff: PropTypes.number,
-  targetLine: PropTypes.number,
+  baseValue: PropTypes.number,
 };
