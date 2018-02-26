@@ -166,12 +166,12 @@ export default class QuantumIndex extends React.Component {
           ],
           [
             <AWFY
-              title='Nightly vs Chrome Canary'
+              title='Nightly, Beta & Canary'
               key='speedometer-score'
               id='speedometer-score'
               benchmark='speedometer'
               architecture={64}
-              browsers={['Nightly', 'Canary']}
+              browsers={['Nightly', 'Canary', 'Beta']}
               targetBrowser={'Nightly'}
               targetRatio={0.8}
             />,
@@ -195,28 +195,16 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <AWFY
-              title='Beta vs Chrome Canary'
-              key='speedometerBeta-score'
-              id='speedometerBeta-score'
-              benchmark='speedometer'
-              architecture={64}
-              browsers={['Beta', 'Canary']}
-              targetBrowser={'Beta'}
-              targetRatio={0.8}
-            />,
-          ],
-          [
             <h2 key='speedometer-32'>Reference hardware - 32bit</h2>,
           ],
           [
             <AWFY
-              title='Nightly vs Chrome Canary'
+              title='Nightly, Beta & Canary'
               key='speedometer32-score'
               id='speedometer32-score'
               benchmark='speedometer'
               architecture={32}
-              browsers={['Nightly', 'Canary']}
+              browsers={['Nightly', 'Canary', 'Beta']}
               targetBrowser={'Nightly'}
               targetRatio={0.8}
             />,
@@ -237,18 +225,6 @@ export default class QuantumIndex extends React.Component {
               // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
               baseValue={51}
               targetRatio={0.95}
-            />,
-          ],
-          [
-            <AWFY
-              title='Beta vs Chrome Canary'
-              key='speedometerBeta32-score'
-              id='speedometerBeta32-score'
-              benchmark='speedometer'
-              architecture={32}
-              browsers={['Beta', 'Canary']}
-              targetBrowser={'Beta'}
-              targetRatio={0.8}
             />,
           ],
         ],
