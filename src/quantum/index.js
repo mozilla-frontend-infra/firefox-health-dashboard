@@ -13,6 +13,11 @@ import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
 
+// Before this date we had a Speedometer benchmark update
+// and that caused a baseline bump for all browsers
+// Skipping this data makes the graphs easier to understand
+const skipDataBefore = '2017-09-20';
+
 const apzBugs = {
   1376525: {
     title: 'Keyboard Scrolling',
@@ -174,9 +179,8 @@ export default class QuantumIndex extends React.Component {
               browsers={['Nightly', 'Canary', 'Beta']}
               targetBrowser={'Nightly'}
               targetRatio={0.8}
+              skipDataBefore={skipDataBefore}
             />,
-          ],
-          [
             <AWFY
               title='Nightly vs Canary December 2017'
               key='speedometer-dec-2017'
@@ -192,6 +196,7 @@ export default class QuantumIndex extends React.Component {
               // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
               baseValue={50}
               targetRatio={0.95}
+              skipDataBefore={skipDataBefore}
             />,
           ],
           [
@@ -207,9 +212,8 @@ export default class QuantumIndex extends React.Component {
               browsers={['Nightly', 'Canary', 'Beta']}
               targetBrowser={'Nightly'}
               targetRatio={0.8}
+              skipDataBefore={skipDataBefore}
             />,
-          ],
-          [
             <AWFY
               title='Nightly vs Canary December 2017'
               key='speedometer32-dec-2017'
@@ -225,6 +229,7 @@ export default class QuantumIndex extends React.Component {
               // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
               baseValue={51}
               targetRatio={0.95}
+              skipDataBefore={skipDataBefore}
             />,
           ],
         ],
