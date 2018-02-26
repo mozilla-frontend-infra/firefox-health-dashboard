@@ -1004,5 +1004,23 @@ svg {
     color: var(--firefoxOrange);
     fill: var(--firefoxOrange);
   }
+  /* 4th line represents Beta */
+  path.mg-line4 {
+    stroke-width: 1
+  }
+  .mg-area4-color {
+    fill: black;
+  }
+  .mg-line4-color {
+    stroke: black;
+    stroke-opacity: 0.5;
+  }
+  .mg-hover-line4-color {
+    fill: black;
+  }
+  .mg-line4-legend-color {
+    color: black;
+    fill: black;
+  }
 }
 /* End of speedometer-metrics-graphics */
