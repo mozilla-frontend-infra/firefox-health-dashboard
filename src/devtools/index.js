@@ -38,12 +38,12 @@ export default class DevtoolsIndex extends React.Component {
     });
 
     let rowIdx = 0;
-    const $content = sections.reduce((reduced, { title, rows, cssRowSecondClass }, sectionId) => {
+    const $content = sections.reduce((reduced, { title, rows, cssRowExtraClasses }, sectionId) => {
       const add = [];
       for (const widgets of rows) {
         let className = 'row';
         // Add 2nd class if indicated
-        className += (cssRowSecondClass) ? ` ${cssRowSecondClass}` : '';
+        className += (cssRowExtraClasses) ? ` ${cssRowExtraClasses}` : '';
         rowIdx += 1;
         add.push(
           <div className={className} key={`row-${rowIdx}`}>

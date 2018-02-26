@@ -151,7 +151,7 @@ export default class QuantumIndex extends React.Component {
       //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
       // },
       {
-        cssRowSecondClass: 'generic-metrics-graphics speedometer-metrics-graphics',
+        cssRowExtraClasses: 'generic-metrics-graphics speedometer-metrics-graphics',
         title: '#1 Speedometer v2',
         rows: [
           [
@@ -235,7 +235,7 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        cssRowSecondClass: 'generic-metrics-graphics photon-perf',
+        cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
         title: '#2 Photon Performance',
         rows: [
           [
@@ -422,7 +422,7 @@ export default class QuantumIndex extends React.Component {
     ];
 
     let rowIdx = 0;
-    const $content = sections.reduce((reduced, { title, rows, cssRowSecondClass }, sectionId) => {
+    const $content = sections.reduce((reduced, { title, rows, cssRowExtraClasses }, sectionId) => {
       const add = [];
       const statusList = new Map(Array.from(statusLabels.keys()).map(key => [key, 0]));
       for (const widgets of rows) {
@@ -436,7 +436,7 @@ export default class QuantumIndex extends React.Component {
         }
         let className = 'row';
         // Add 2nd class if indicated
-        className += (cssRowSecondClass) ? ` ${cssRowSecondClass}` : '';
+        className += (cssRowExtraClasses) ? ` ${cssRowExtraClasses}` : '';
         rowIdx += 1;
         if (!full || sectionId < 2) {
           add.push(
