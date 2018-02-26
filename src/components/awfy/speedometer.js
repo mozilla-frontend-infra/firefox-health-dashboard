@@ -6,11 +6,12 @@ import Widget from '../../quantum/widget';
 import graph from '../../utils/metrics-graphics';
 import SETTINGS from '../../settings';
 
-const queryParams = ({ architecture, browsers, targetRatio, baseValue }) => {
+const queryParams = ({ architecture, browsers, targetRatio, baseValue, skipDataBefore }) => {
   // XXX: Throw errors if we don't pass enough parameters
   let params = stringify({
       architecture,
       browser: browsers,
+      skipDataBefore,
   });
   params += targetRatio ? `&${stringify({ targetRatio })}` : '';
   params += baseValue ? `&${stringify({ baseValue })}` : '';
@@ -62,11 +63,11 @@ export default class Speedometer extends Component {
   viewport: [0, 0];
 
   async fetchPlotGraph({
-    architecture, benchmark, browsers, targetBrowser, targetRatio, baseValue,
+    architecture, benchmark, browsers, targetBrowser, targetRatio, baseValue, skipDataBefore,
   }) {
     const { meta, data } = await (
       await fetch(`${SETTINGS.backend}/api/perf/benchmark/${benchmark}?` +
-        `${queryParams({ architecture, browsers, targetRatio, baseValue })}`,
+        `${queryParams({ architecture, browsers, targetRatio, baseValue, skipDataBefore })}`,
       )).json();
     const lastDataPoint = data[targetBrowser].data[data[targetBrowser].data.length - 1].value;
     let targetLastDataPoint;
@@ -131,4 +132,5 @@ Speedometer.propTypes = {
   targetBrowser: PropTypes.string.isRequired,
   targetRatio: PropTypes.number,
   baseValue: PropTypes.number,
+  skipDataBefore: PropTypes.string,
 };
