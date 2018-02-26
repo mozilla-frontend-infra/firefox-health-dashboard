@@ -167,70 +167,74 @@ export default class QuantumIndex extends React.Component {
             />,
           ],
           [
-            <h2 key='speedometer-64'>Reference hardware - 64bit</h2>,
+            <div className='speedometer-hardware-block'>
+              <h2>Reference hardware - 64bit</h2>
+              <div className='speedometer-grid'>
+                <AWFY
+                  title='Nightly, Beta & Canary'
+                  key='speedometer-score'
+                  id='speedometer-score'
+                  benchmark='speedometer'
+                  architecture={64}
+                  browsers={['Nightly', 'Canary', 'Beta']}
+                  targetBrowser={'Nightly'}
+                  targetRatio={0.8}
+                  skipDataBefore={skipDataBefore}
+                />
+                <AWFY
+                  title='Nightly vs Canary December 2017'
+                  key='speedometer-dec-2017'
+                  id='speedometer-dec-2017'
+                  benchmark='speedometer'
+                  architecture={64}
+                  browsers={['Nightly']}
+                  targetBrowser={'Nightly'}
+                  // AWFY after certain number of weeks it only shows a data point
+                  // per week. This score is what AWFY showed on Dec. 27th, 2017 for this revision
+                  // https://chromium.googlesource.com/v8/v8/+log/45ffb540b45a391f5e9848615d5654297a14eb14..bb5733a4d8b54bd49cf7053811d7ea1f41243d2f
+                  // Grabed from:
+                  // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
+                  baseValue={50}
+                  targetRatio={0.95}
+                  skipDataBefore={skipDataBefore}
+                />
+              </div>
+            </div>,
           ],
           [
-            <AWFY
-              title='Nightly, Beta & Canary'
-              key='speedometer-score'
-              id='speedometer-score'
-              benchmark='speedometer'
-              architecture={64}
-              browsers={['Nightly', 'Canary', 'Beta']}
-              targetBrowser={'Nightly'}
-              targetRatio={0.8}
-              skipDataBefore={skipDataBefore}
-            />,
-            <AWFY
-              title='Nightly vs Canary December 2017'
-              key='speedometer-dec-2017'
-              id='speedometer-dec-2017'
-              benchmark='speedometer'
-              architecture={64}
-              browsers={['Nightly']}
-              targetBrowser={'Nightly'}
-              // AWFY after certain number of weeks it only shows a data point
-              // per week. This score is what AWFY showed on Dec. 27th, 2017 for this revision
-              // https://chromium.googlesource.com/v8/v8/+log/45ffb540b45a391f5e9848615d5654297a14eb14..bb5733a4d8b54bd49cf7053811d7ea1f41243d2f
-              // Grabed from:
-              // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
-              baseValue={50}
-              targetRatio={0.95}
-              skipDataBefore={skipDataBefore}
-            />,
-          ],
-          [
-            <h2 key='speedometer-32'>Reference hardware - 32bit</h2>,
-          ],
-          [
-            <AWFY
-              title='Nightly, Beta & Canary'
-              key='speedometer32-score'
-              id='speedometer32-score'
-              benchmark='speedometer'
-              architecture={32}
-              browsers={['Nightly', 'Canary', 'Beta']}
-              targetBrowser={'Nightly'}
-              targetRatio={0.8}
-              skipDataBefore={skipDataBefore}
-            />,
-            <AWFY
-              title='Nightly vs Canary December 2017'
-              key='speedometer32-dec-2017'
-              id='speedometer32-dec-2017'
-              benchmark='speedometer'
-              architecture={32}
-              browsers={['Nightly']}
-              targetBrowser={'Nightly'}
-              // AWFY after certain number of weeks it only shows a data point
-              // per week. This score is what AWFY showed on Dec. 30th, 2017 for this revision
-              // https://chromium.googlesource.com/v8/v8/+log/3cbf26e8a21aa76703d2c3c51adb9c96119500da..0c287882ea233f299a91f6b72b56d8faaecf52c0
-              // Grabed from:
-              // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
-              baseValue={51}
-              targetRatio={0.95}
-              skipDataBefore={skipDataBefore}
-            />,
+            <div className='speedometer-hardware-block'>
+              <h2>Reference hardware - 32bit</h2>
+              <div className='speedometer-grid'>
+                <AWFY
+                  title='Nightly, Beta & Canary'
+                  key='speedometer32-score'
+                  id='speedometer32-score'
+                  benchmark='speedometer'
+                  architecture={32}
+                  browsers={['Nightly', 'Canary', 'Beta']}
+                  targetBrowser={'Nightly'}
+                  targetRatio={0.8}
+                  skipDataBefore={skipDataBefore}
+                />
+                <AWFY
+                  title='Nightly vs Canary December 2017'
+                  key='speedometer32-dec-2017'
+                  id='speedometer32-dec-2017'
+                  benchmark='speedometer'
+                  architecture={32}
+                  browsers={['Nightly']}
+                  targetBrowser={'Nightly'}
+                  // AWFY after certain number of weeks it only shows a data point
+                  // per week. This score is what AWFY showed on Dec. 30th, 2017 for this revision
+                  // https://chromium.googlesource.com/v8/v8/+log/3cbf26e8a21aa76703d2c3c51adb9c96119500da..0c287882ea233f299a91f6b72b56d8faaecf52c0
+                  // Grabed from:
+                  // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
+                  baseValue={51}
+                  targetRatio={0.95}
+                  skipDataBefore={skipDataBefore}
+                />
+              </div>
+            </div>,
           ],
         ],
       },
