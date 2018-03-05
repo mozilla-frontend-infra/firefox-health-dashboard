@@ -87,7 +87,7 @@ export default class Speedometer extends Component {
     }
     const moreProps = {
       status: status ? 'green' : 'yellow',
-      reading: `${difference.toFixed(2)} runs/minute (${((1 - ratio) * 100).toFixed(2)}%)`,
+      reading: `${difference.toFixed(2)} runs/minute (${((ratio - 1) * 100).toFixed(2)}%)`,
       targetStatus: status ? 'pass' : 'fail',
     };
     const { labels, series } = transform(data);
