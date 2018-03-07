@@ -272,22 +272,6 @@ export default class QuantumIndex extends React.Component {
         title: '#3 Regression',
         rows: [
           [
-            <Benchmark
-              title='Benchmark: First Paint'
-              key='pageload_first_paint'
-              id='pageload'
-              metric='firstPaint'
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
-              {...notes.pageload_render}
-            />,
-            <Benchmark
-              title='Benchmark: Hero Element'
-              key='pageload_hero'
-              id='pageload'
-              metric='heroElement'
-              link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria#QuantumReleaseCriteria-PageLoadTime'
-              {...notes.pageload_hero}
-            />,
             <Perfherder
               key='tp6_loaded'
               title='Talos TP6: Loaded'
