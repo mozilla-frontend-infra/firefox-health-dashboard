@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './home';
 import ReleaseCrashes from './crashes/release';
@@ -56,21 +56,23 @@ App.propTypes = {
 export default class Routes extends Component {
   render() {
     return (
-      <Router history={browserHistory}>
-        <Route path='/' component={App}>
-          <IndexRoute component={Home} />
-          <Route path='crashes' component={ReleaseCrashes} />
-          <Route path='crashes/beta' component={BetaCrashes} />
-          <Route path='quantum' component={Quantum} />
-          <Route path='quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
-          <Route path='quantum/responsiveness/content' component={QuantumResponsivenessContent} />
-          <Route path='quantum/pageload/render' component={QuantumPageLoadRender} />
-          <Route path='quantum/track' component={QuantumTracking} />
-          <Route path='status' component={Status} />
-          <Route path='devtools' component={Devtools} />
-        </Route>
-        <Route path='*' component={NoMatch} />
-      </Router>
+      <BrowserRouter>
+        <App>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/crashes' component={ReleaseCrashes} />
+            <Route path='/crashes/beta' component={BetaCrashes} />
+            <Route path='/quantum' component={Quantum} />
+            <Route path='/quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
+            <Route path='/quantum/responsiveness/content' component={QuantumResponsivenessContent} />
+            <Route path='/quantum/pageload/render' component={QuantumPageLoadRender} />
+            <Route path='/quantum/track' component={QuantumTracking} />
+            <Route path='/status' component={Status} />
+            <Route path='/devtools' component={Devtools} />
+            <Route component={NoMatch} />
+          </Switch>
+        </App>
+      </BrowserRouter>
     );
   }
 }

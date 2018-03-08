@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { stringify } from 'query-string';
+import { stringify, parse } from 'query-string';
 import Dashboard from './../dashboard';
 import Widget from './widget';
 import Perfherder from './perfherder';
@@ -75,7 +75,7 @@ export default class QuantumIndex extends React.Component {
 
   render() {
     const { apzStatus, notes } = this.state;
-    const full = !!this.props.location.query.full;
+    const { full } = parse(this.props.location.search);
 
     const $apz = (
       <Widget
