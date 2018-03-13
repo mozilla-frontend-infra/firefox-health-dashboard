@@ -230,39 +230,27 @@ svg {
       opacity: 0.7;
     }
   }
+  .sides-padding {
+    padding: 0 calc(var(--gutterX) / 4) 0 calc(var(--gutterX) / 4);
+  }
   header {
     display: flex;
     align-items: flex-start;
     text-align: left;
     background-color: var(--lightGray);
-    margin-bottom: calc(var(--gutterY) / 4);
+    justify-content: space-between;
+    line-height: initial;
+    .space-around {
+      justify-content: space-around;
+    }
     h3 {
       margin: 0;
-      padding: 0;
-      align-self: stretch;
       font-size: var(--h4FontSize);
-      padding-top: calc(var(--gutterY) / 4);
-      padding: 0 calc(var(--gutterX) / 2);
       font-weight: 400;
       display: inline-block;
       color: #000;
     }
     .widget-target-status {
-      flex: 1;
-      flex-shrink: 1;
-      text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      align-self: flex-end;
-      background-color: #fff;
-      padding-left: calc(var(--gutterX) / 2);
-      padding-right: calc(var(--gutterX) / 2);
-      font-weight: 700;
-      font-size: var(--smallFontSize);
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
       em {
         font-weight: 700;
         color: #333;

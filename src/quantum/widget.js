@@ -1,8 +1,8 @@
 /* global fetch */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-// import moment from 'moment';
 
 const enrich = (text, key = 'none') => {
   return typeof text === 'string'
@@ -30,17 +30,24 @@ export default class Widget extends React.Component {
         {title}
       </a>)
       : title;
+    let $secondTitle;
+    if (this.props.secondTitle) {
+      if (this.props.secondLink) {
+        $secondTitle = <Link to={this.props.secondLink}>{this.props.secondTitle}</Link>;
+      } else {
+        $secondTitle = this.props.secondTitle;
+      }
+    }
     let target = this.props.target;
     if (target) {
       target = ['Target: ', enrich(this.props.target)];
     }
     const reading = this.props.reading;
-    const targetCls = ['widget-target-status'];
     let $targetStatus = null;
     if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
       const targetStatus = this.props.targetStatus;
       $targetStatus = (
-        <aside className={cx(targetCls)}>
+        <aside className='widget-target-status'>
           {reading
             ? <span className='status-reading'>{reading}</span>
             : null
@@ -58,10 +65,13 @@ export default class Widget extends React.Component {
 
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
-        <header>
-          <h3>
-            {$title}
-          </h3>
+        <header className='sides-padding'>
+          <div>
+            <h3>
+              {$title}
+            </h3>
+            <span className='sides-padding'>{$secondTitle}</span>
+          </div>
           {$targetStatus}
         </header>
         <div
@@ -104,6 +114,8 @@ Widget.propTypes = {
   status: PropTypes.string,
   reading: PropTypes.string,
   title: PropTypes.string,
+  secondLink: PropTypes.string,
+  secondTitle: PropTypes.string,
   target: PropTypes.string,
   targetStatus: PropTypes.string,
   explainer: PropTypes.string,
