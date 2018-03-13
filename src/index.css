@@ -1019,3 +1019,28 @@ svg {
 .speedometer-grid {
   display: flex;
 }
+
+.subbenchmarks {
+  .header {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .header-item {
+    align-self: center;
+  }
+  .wider-letter-spacing {
+    letter-spacing: 0.06em;
+  }
+  .black-bar {
+    margin-top: calc(var(--gutterY) * 0.3);
+    margin-bottom: calc(var(--gutterY) * 0.3);
+  }
+  .metricsGraphicsCon {
+    background-color: white;
+  }
+}
+
+.align-center {
+  text-align: center;
+}
