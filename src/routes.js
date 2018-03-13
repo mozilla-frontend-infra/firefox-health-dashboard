@@ -7,12 +7,8 @@ import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import Quantum from './quantum/index';
 import Devtools from './devtools/index';
-import QuantumResponsivenessParent from './quantum/responsiveness-parent';
-import QuantumResponsivenessContent from './quantum/responsiveness-content';
-import QuantumPageLoadRender from './quantum/pageload-render';
-import QuantumTracking from './quantum/metric';
+import QuantumRoutes from './quantum/routes';
 
 const NoMatch = () => <div>404</div>;
 
@@ -60,15 +56,11 @@ export default class Routes extends Component {
         <App>
           <Switch>
             <Route path='/' exact component={Home} />
-            <Route path='/crashes' component={ReleaseCrashes} />
+            <Route path='/crashes' exact component={ReleaseCrashes} />
             <Route path='/crashes/beta' component={BetaCrashes} />
-            <Route path='/quantum' component={Quantum} />
-            <Route path='/quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
-            <Route path='/quantum/responsiveness/content' component={QuantumResponsivenessContent} />
-            <Route path='/quantum/pageload/render' component={QuantumPageLoadRender} />
-            <Route path='/quantum/track' component={QuantumTracking} />
             <Route path='/status' component={Status} />
             <Route path='/devtools' component={Devtools} />
+            <QuantumRoutes />
             <Route component={NoMatch} />
           </Switch>
         </App>
