@@ -286,8 +286,6 @@ export default class QuantumIndex extends React.Component {
               }}
               {...notes.talos_tp6_loaded}
             />,
-          ],
-          [
             <Perfherder
               key='pageload_tp5'
               title='Page Load (tp5)'
