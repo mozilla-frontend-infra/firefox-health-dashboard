@@ -162,6 +162,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '797a2bfbbac2c632f4f354aff7677a3df3c749a3',
                 'win7-32': '78730407dee56521f26d3621fa8156914b83025a',
+                'win10-64-new': 'be6032b74e5c65e733f105927222b0880c2e9822',
+                'win7-32-new': '5457539d78e242701e37dc114d79ff47b0fe4baa',
               }}
               {...notes.talos_speedometer}
             />,
@@ -277,12 +279,15 @@ export default class QuantumIndex extends React.Component {
               title='Talos TP6: Loaded'
               reference='2017-07-29'
               target='Not set'
-              // first 4 are quantum_pageload, second 4 are tp6 (label changed in perfherder)
               signatures={{
                 'win10-64':
-                  'fd75e33f207c37d5b2af9f8bbe6ce2e2a8d626ee,b8d73ce351c36fb3f136064b85a051b2c393decd,177e98528def00a9399250b7fb71f2a3bdb6440e,47a93f1c5ceec5ef83f764c2cea3e24bfb50beeb,d554681a57d858f77a7a3d8b58f5af9e82adae5c,9ef4e3fa8d78e5f459f804f2ddf0ee5e10e1c6a5,38fae8e31635a7dd92c7bde1b297f25cd5f6cdd0,a920958825b36891e19495c0669eccc21c751c03',
+                  'd554681a57d858f77a7a3d8b58f5af9e82adae5c,9ef4e3fa8d78e5f459f804f2ddf0ee5e10e1c6a5,38fae8e31635a7dd92c7bde1b297f25cd5f6cdd0,a920958825b36891e19495c0669eccc21c751c03',
                 'win7-32':
-                  '7f1ea9f8f87c915b288fa99e69f19803799ec480,9ebf63ac2c9ab57a36bd523bc91bba78b22cd5ac,c2eb952711af078f8419af4f7b6fdad0e3a5028f,1a165eb0262c84b0e04e830d88844cf18c0fb8f8,b218982f76037c94aa0bc2e6f3102a3745fb0ef8,40762f6820e6cfd4531505caebccf27d46b0f037,a4884e6435dff7ffe3dda82b383552c7fa267e55,af835391eb98960df2aaa74c2d76200064e73c65',
+                  'b218982f76037c94aa0bc2e6f3102a3745fb0ef8,40762f6820e6cfd4531505caebccf27d46b0f037,a4884e6435dff7ffe3dda82b383552c7fa267e55,af835391eb98960df2aaa74c2d76200064e73c65',
+                'win10-64-new':
+                  'd3a968d51b5910ee0036b6e12b4dfe94b85fbf02,d2034c5b7b5b09f5056be096fb0c0cc302dbaa8a,15a824692389cd975bb75c1a20f018d89d3a1e2c,14be17a94af5bdeceb0d2e737583f8834cbdff01',
+                'win7-32-new':
+                  '9db2ed0e8ae67914cbfc72a3c8771e287eab6c8b,ae1e0fe16eef66bea2a5042ecb82be23423ff40c,054706052ce54d631bf45439012af2b2ce9baefc,842c3562d0e72fec5cdb9b6bb417f27e449369fb',
               }}
               {...notes.talos_tp6_loaded}
             />,
@@ -293,6 +298,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': 'c00763b23b39207671b795a12ba29d38ddc17f06',
                 'win7-32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
+                'win10-64-new': '47e116b3dd2d879046075f5e335b645375770dac',
+                'win7-32-new': '849809c194f30c8e676e8ba6f8cb4ac55b82ab1b',
               }}
               {...notes.talos_tp5}
             />,
@@ -303,6 +310,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '9525bb9b68bda10ed26b7c1999ba40830827c792',
                 'win7-32': '729285324ec4b164b8d3ecec42c2fdb344f7e581',
+                'win10-64-new': '1d2a194fc59a1e8a7635d05f9ecac80a73770bb5',
+                'win7-32-new': 'a97a6a22157860fba4f5668be057d65b1aed6166',
               }}
               {...notes.talos_tpaint}
             />,
@@ -315,6 +324,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '577f4c3e31bc186dbfebdef9e40571569764d613',
                 'win7-32': '196b82960327035de720500e1a5f9f0154cf97ad',
+                'win10-64-new': 'ada730f8a61c3e00f17c42d9ddf694922e77ab90',
+                'win7-32-new': 'da50dcf77aeed243002772e4ff03028209aabc17',
               }}
               {...notes.talos_sessionrestore}
             />,
@@ -325,6 +336,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': 'aea56740bf668dd859d84f71e384023cc11e53e1',
                 'win7-32': 'ba16f34b35fb3492dc22f3774aff2d010e5f10ba',
+                'win10-64-new': '7c207334aaddef8b6c6d46b25fe48179bae49b31',
+                'win7-32-new': '0a88cb395efeb9e107e9175ccf8540156716d53b',
               }}
               {...notes.talos_sessionrestore_no_auto_restore}
             />,
@@ -335,6 +348,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '78fd32fcd82cb8bfa53b8c4a19f3f51b4e03ee1d',
                 'win7-32': 'e394aab72917d169024558cbab33eb4e7e9504e1',
+                'win10-64-new': '46dc6bb121842c6cd39243b81a22cd0ff869c4eb',
+                'win7-32-new': '4dd563a14dd7e35efe136651cfd8fe8ab24f7f37',
               }}
               {...notes.talos_ts_paint}
             />,
@@ -348,6 +363,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': 'a9cd333dff68ce0812dc85e0657af4edfc51ebe3',
                 'win7-32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
+                'win10-64-new': 'a59bffa7d0919fe8fc8b4b4aca26f3b8b81de87d',
+                'win7-32-new': '39384d8456427b60deeb4485dcf2f0ba480fea56',
               }}
             />,
             <Perfherder
@@ -357,6 +374,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '7207561755a8cb6b27c68eafeef64d019c29045e',
                 'win7-32': '710f43a8c2041fe3e67124305649c12a9d708858',
+                'win10-64-new': '0eadaaff11bf7f50881f20b7980d21143c08d555',
+                'win7-32-new': '41098223c1c7585b9af92ff51b83ea579d41e6d0',
               }}
               {...notes.talos_tart}
             />,
@@ -367,6 +386,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '7bdaad0fa21778103f4cd0d6bbe81fe3dc49040c',
                 'win7-32': 'a86a2a069ed634663dbdef7193f2dee69b50dbc9',
+                'win10-64-new': 'af6ed7d2f1403570f601af30927a2c95bf83a18b',
+                'win7-32-new': '36fd1982e422701cc428a807b4d8826fc90d2ec1',
               }}
               {...notes.talos_tps}
             />,
@@ -380,6 +401,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': 'e4e0081ff90530932c463fc917d113936690baa3',
                 'win7-32': '18cf40355e5b20164ab9307f83dd6d6eb6184aa8',
+                'win10-64-new': '407876d55248b06a79bd35ad225d78391ea1241e',
+                'win7-32-new': '9a0e5a9474c2dab77f47a7186c87f22d14492820',
               }}
             />,
             <Perfherder
@@ -389,6 +412,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '18983f13f41e96fd1802d7e2cfc4bc07d200ec04',
                 'win7-32': 'f22a87e9898beb0c7dc5fefec8267c3a9ad89a8b',
+                'win10-64-new': 'dadfe12765e78b2d83e0fdd7a2a228e1d3d90224',
+                'win7-32-new': '56fdd7810758d702786ed9ee002f3aa396ff327c',
               }}
               {...notes.talos_tsvgr_opacity}
             />,
@@ -399,6 +424,8 @@ export default class QuantumIndex extends React.Component {
               signatures={{
                 'win10-64': '190ff873a76e95b50748042f1d6cb21c7ce77575',
                 'win7-32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
+                'win10-64-new': 'a5811b7de0ffdfe834238f831a4d0c8d1f3413e9',
+                'win7-32-new': '8ea36ed17eee7c7dda797d9369d5f49f66436bf5',
               }}
               {...notes.talos_tsvgx}
             />,
