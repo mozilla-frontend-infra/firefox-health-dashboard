@@ -13,3 +13,5 @@ after_failure:
 script:
 - yarn lint
 - yarn build
+- yarn coverage # This runs the tests and generates coverage data
+after_success: npm run coveralls # It expects "coverage" to run first
