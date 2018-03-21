@@ -68,7 +68,7 @@ const perherderGraphUrl = (signatureIds, platform, project = PROJECT, timerange 
   return baseDataUrl;
 };
 
-const adjustedData = (data, percentileThreshold, measure = 'value') => {
+export const adjustedData = (data, percentileThreshold, measure = 'value') => {
   let transformedData = data;
   if (percentileThreshold < 100) {
     const threshold = percentile(

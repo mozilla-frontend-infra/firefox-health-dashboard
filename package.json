@@ -8,6 +8,7 @@
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
     "precommit": "lint-staged",
+    "test": "neutrino test ./test/**/*.test.js",
     "heroku-postbuild": "neutrino build"
   },
   "lint-staged": {
@@ -42,6 +43,7 @@
     "@neutrinojs/airbnb": "^8.1.1",
     "@neutrinojs/mocha": "^8.1.1",
     "@neutrinojs/react": "^8.1.1",
+    "chai": "^4.1.2",
     "css-mqpacker": "^6.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
