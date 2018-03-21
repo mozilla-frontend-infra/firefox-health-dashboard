@@ -6,3 +6,5 @@ dist
 .eslintcache
 *.log
 build
+// Coverage (nyc)
+coverage

@@ -8,8 +8,15 @@
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
     "precommit": "lint-staged",
+    "coverage": "rm -rf coverage && nyc --all neutrino test ./test/**/*.test.js && nyc report -r lcov",
     "test": "neutrino test ./test/**/*.test.js",
     "heroku-postbuild": "neutrino build"
+  },
+  "nyc": {
+    "include": ["src/**"],
+    "extension": [
+      ".jsx"
+    ]
   },
   "lint-staged": {
     "*.js": [
@@ -48,6 +55,7 @@
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
     "neutrino": "^8.1.1",
+    "nyc": "^11.6.0",
     "postcss-css-variables": "^0.7.0",
     "postcss-cssnext": "^2.11.0",
     "postcss-custom-properties": "^5.0.2",
