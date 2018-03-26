@@ -12,6 +12,7 @@ import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
+import CONFIG from './config';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -271,7 +272,24 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
-        title: '#3 Regression',
+        title: '#3 Other benchmarks',
+        rows: [
+          CONFIG.regression[0].map(config => (
+            <Perfherder
+              {...config}
+              key={config.title}
+            />
+          )),
+          CONFIG.regression[1].map(config => (
+            <Perfherder
+              {...config}
+              key={config.title}
+            />
+          )),
+        ],
+      },
+      {
+        title: '#4 Regression',
         rows: [
           [
             <Perfherder
