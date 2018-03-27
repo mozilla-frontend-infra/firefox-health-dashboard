@@ -173,7 +173,7 @@ export default class QuantumIndex extends React.Component {
               <h2>Reference hardware - 64bit</h2>
               <div className='speedometer-grid'>
                 <AWFY
-                  title='Nightly, Beta & Canary'
+                  title='Nightly, Beta & Current Canary'
                   key='speedometer-score'
                   id='speedometer-score'
                   benchmark='speedometer'
@@ -184,7 +184,7 @@ export default class QuantumIndex extends React.Component {
                   skipDataBefore={skipDataBefore}
                 />
                 <AWFY
-                  title='Nightly vs Canary December 2017'
+                  title='Current Nightly vs Canary Dec. 2017'
                   key='speedometer-dec-2017'
                   id='speedometer-dec-2017'
                   benchmark='speedometer'
@@ -197,7 +197,7 @@ export default class QuantumIndex extends React.Component {
                   // Grabed from:
                   // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
                   baseValue={50}
-                  targetRatio={0.95}
+                  targetRatio={1.05}
                   skipDataBefore={skipDataBefore}
                 />
               </div>
@@ -208,7 +208,7 @@ export default class QuantumIndex extends React.Component {
               <h2>Reference hardware - 32bit</h2>
               <div className='speedometer-grid'>
                 <AWFY
-                  title='Nightly, Beta & Canary'
+                  title='Nightly, Beta & Current Canary'
                   key='speedometer32-score'
                   id='speedometer32-score'
                   benchmark='speedometer'
@@ -219,7 +219,7 @@ export default class QuantumIndex extends React.Component {
                   skipDataBefore={skipDataBefore}
                 />
                 <AWFY
-                  title='Nightly vs Canary December 2017'
+                  title='Current Nightly vs Canary Dec. 2017'
                   key='speedometer32-dec-2017'
                   id='speedometer32-dec-2017'
                   benchmark='speedometer'
@@ -232,7 +232,7 @@ export default class QuantumIndex extends React.Component {
                   // Grabed from:
                   // https://arewefastyet.com/#machine=37&view=single&suite=speedometer-misc&subtest=score
                   baseValue={51}
-                  targetRatio={0.95}
+                  targetRatio={1.05}
                   skipDataBefore={skipDataBefore}
                 />
               </div>

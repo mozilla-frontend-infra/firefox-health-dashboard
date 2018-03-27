@@ -62,7 +62,6 @@ export default class Widget extends React.Component {
         </aside>
       );
     }
-
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
         <header className='sides-padding'>
