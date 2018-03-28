@@ -90,15 +90,13 @@ export default class Speedometer extends Component {
       reading: `${difference.toFixed(2)} runs/minute (${((ratio - 1) * 100).toFixed(2)}%)`,
       targetStatus: status ? 'pass' : 'fail',
     };
-    const baselines = baseValue ? [{ value: baseValue * targetRatio, label: `Target ${targetRatio * 100}%` }] : null;
     const { labels, series } = transform(data);
     graph({
       target: this.graphEl,
       data: series,
       legend: labels,
       title: this.props.title,
-      legend_target: this.legendEl,
-      baselines });
+      legend_target: this.legendEl });
 
     this.setState({
       moreProps,
