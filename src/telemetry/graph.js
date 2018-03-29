@@ -2,6 +2,7 @@
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { stringify } from 'query-string';
 import SETTINGS from '../settings';
 
 export default class TelemetryContainer extends React.Component {
@@ -11,8 +12,14 @@ export default class TelemetryContainer extends React.Component {
   }
 
   async fetchPlotGraph(id) {
+    const { queryParams } = this.props;
+    let url = `${SETTINGS.backend}/api/perf/telemetry/${id}`;
+
+    if (Object.keys(queryParams).length > 0) {
+      url += `?${stringify(queryParams)}`;
+    }
     const { graphData, telemetryUrl } = await (
-      await fetch(`${SETTINGS.backend}/api/perf/telemetry/${id}`)).json();
+      await fetch(url)).json();
     if (!this.graphTitleLink) {
       return;
     }
@@ -68,4 +75,5 @@ export default class TelemetryContainer extends React.Component {
 TelemetryContainer.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  queryParams: PropTypes.shape({}),
 };

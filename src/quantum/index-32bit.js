@@ -12,6 +12,7 @@ import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
+import { quantum32QueryParams } from './constants';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -212,11 +213,13 @@ export default class QuantumIndex extends React.Component {
               key={'winOpen'}
               id={'winOpen'}
               title='Window open'
+              queryParams={quantum32QueryParams}
             />,
             <TelemetryContainer
               key={'tabSwitch'}
               id={'tabSwitch'}
               title='Tab switch'
+              queryParams={quantum32QueryParams}
             />,
           ],
           [
@@ -224,11 +227,13 @@ export default class QuantumIndex extends React.Component {
               key={'tabClose'}
               id={'tabClose'}
               title='Tab close'
+              queryParams={quantum32QueryParams}
             />,
             <TelemetryContainer
               key={'firstPaint'}
               id={'firstPaint'}
               title='First paint'
+              queryParams={quantum32QueryParams}
             />,
           ],
         ],
