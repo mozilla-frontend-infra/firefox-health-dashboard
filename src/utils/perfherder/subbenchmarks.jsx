@@ -24,6 +24,7 @@ const parentInfo = async (suite, platform, option = 'pgo') => {
   // be the key and track the signatureHash as a property
   const suites = Object.keys(signatures).reduce((res, signatureHash) => {
     const value = signatures[signatureHash];
+    console.log(value);
     if (value.suite === suite) {
       res[value.option_collection_hash] = {
         parentSignatureHash: signatureHash,
@@ -34,7 +35,7 @@ const parentInfo = async (suite, platform, option = 'pgo') => {
     }
     return res;
   }, {});
-
+  console.log(suites);
   const result = [];
   // Remove from suites any suite that does not match the wanted 'option'
   options.forEach((elem) => {

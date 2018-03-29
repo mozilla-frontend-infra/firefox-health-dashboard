@@ -69,6 +69,7 @@ class PerfherderContainer extends Component {
   async componentDidUpdate(prevProps) {
     // The component has been called with new props and we
     // need to update the state or the old state will be used
+    console.log(this.props);
     if (this.props.suite !== prevProps.suite) {
       this.data(this.props);
     }
@@ -78,6 +79,7 @@ class PerfherderContainer extends Component {
     const { perfherderUrl, data, parentSignature } =
       await getData({ suite, platform, percentileThreshold });
     this.setState({ perfherderUrl, data, parentSignature });
+    console.log(data.length);
   }
 
   render() {
