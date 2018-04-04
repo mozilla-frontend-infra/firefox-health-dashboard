@@ -14,8 +14,8 @@ export default class Home extends React.Component {
         <Link to='/crashes'>Crashes</Link>
         <Link to='/crashes/beta'>Beta Crashes</Link>
         <Link to='/status'>Feature Status</Link>
-        <Link to='/quantum32bit'>Quantum 32bit</Link>
-        <Link to='/quantum64bit'>Quantum 64bit</Link>
+        <Link to='/quantum/32'>Quantum 32bit</Link>
+        <Link to='/quantum/64'>Quantum 64bit</Link>
       </Dashboard>
     );
   }

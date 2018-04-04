@@ -7,3 +7,8 @@ export const quantum64QueryParams = {
   // 64 bit
   architecture: 'x86-64',
 };
+
+export const architecture = {
+  32: 'x86',
+  64: 'x86-64',
+};
