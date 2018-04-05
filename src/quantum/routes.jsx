@@ -1,21 +1,35 @@
 import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import Quantum from './index';
+import Quantum64 from './index-64bit';
+import Quantum32 from './index-32bit';
 import QuantumResponsivenessParent from './responsiveness-parent';
 import QuantumResponsivenessContent from './responsiveness-content';
 import QuantumPageLoadRender from './pageload-render';
 import QuantumTracking from './metric';
 import Subbenchmark from './subbenchmarks';
 
-const routes = () => (
+const routes = props => (
   <Switch>
-    <Route path='/quantum' exact component={Quantum} />
-    <Route path='/quantum/responsiveness/parent' component={QuantumResponsivenessParent} />
-    <Route path='/quantum/responsiveness/content' component={QuantumResponsivenessContent} />
-    <Route path='/quantum/pageload/render' component={QuantumPageLoadRender} />
-    <Route path='/quantum/track' component={QuantumTracking} />
+    <Route
+      path='/quantum/:architecture'
+      exact
+      render={() => (
+        props.location.pathname === '/quantum/32' ?
+          <Quantum32 {...props} /> :
+          <Quantum64 {...props} />
+      )}
+    />
+    <Route path='/quantum/:architecture/responsiveness/parent' component={QuantumResponsivenessParent} />
+    <Route path='/quantum/:architecture/responsiveness/content' component={QuantumResponsivenessContent} />
+    <Route path='/quantum/:architecture/pageload/render' component={QuantumPageLoadRender} />
+    <Route path='/quantum/:architecture/track' component={QuantumTracking} />
     <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
   </Switch>
 );
+
+routes.propTypes = {
+  location: PropTypes.object,
+};
 
 export default routes;

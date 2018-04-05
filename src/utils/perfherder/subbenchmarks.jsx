@@ -34,7 +34,6 @@ const parentInfo = async (suite, platform, option = 'pgo') => {
     }
     return res;
   }, {});
-
   const result = [];
   // Remove from suites any suite that does not match the wanted 'option'
   options.forEach((elem) => {

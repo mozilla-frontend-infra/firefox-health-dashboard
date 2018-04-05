@@ -47,8 +47,8 @@ export default class Speedometer extends Component {
   constructor(props) {
     super(props);
     const { targetRatio } = props;
-    if (targetRatio && (targetRatio < 0 || targetRatio > 1)) {
-      throw Error('targetRatio should be a value between 0 and 1');
+    if (targetRatio && (targetRatio < 0 || targetRatio > 2)) {
+      throw Error('targetRatio should be a value between 0 and 2');
     }
   }
 
@@ -91,7 +91,13 @@ export default class Speedometer extends Component {
       targetStatus: status ? 'pass' : 'fail',
     };
     const { labels, series } = transform(data);
-    graph(this.graphEl, series, labels, this.props.title);
+    graph({
+      target: this.graphEl,
+      data: series,
+      legend: labels,
+      title: this.props.title,
+      legend_target: this.legendEl });
+
     this.setState({
       moreProps,
       series: series,
@@ -117,7 +123,7 @@ export default class Speedometer extends Component {
             <div>Loading...</div>
           }
           <div className='graph' ref={div => this.graphEl = div}>
-            <div className='graph-legend'>{}</div>
+            <div className='legend' ref={div => this.legendEl = div}>{}</div>
           </div>
         </div>
       </Widget>
