@@ -46,7 +46,7 @@ const statusLabels = new Map([
   ['secondary', 'regression criteria at risk'],
 ]);
 
-export default class QuantumIndex extends React.Component {
+export default class QuantumIndex32 extends React.Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
@@ -449,6 +449,6 @@ export default class QuantumIndex extends React.Component {
   }
 }
 
-QuantumIndex.propTypes = {
+QuantumIndex32.propTypes = {
   location: PropTypes.object,
 };

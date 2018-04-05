@@ -21,7 +21,7 @@ const QuantumTracking = ({ match, location }) => {
   return (
     !metric ?
       <div>
-        <p className='align-center'>Please enter a metric query parameter</p>
+        <p className='align-center'>A metric query string is required</p>
       </div> :
       <ChannelMetric
         title={metric}
