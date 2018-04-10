@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Quantum64 from './index-64bit';
@@ -11,6 +11,7 @@ import Subbenchmark from './subbenchmarks';
 
 const routes = props => (
   <Switch>
+    <Redirect exact from='/quantum' to='/' />
     <Route
       path='/quantum/:architecture'
       exact
