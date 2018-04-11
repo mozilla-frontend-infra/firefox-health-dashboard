@@ -13,6 +13,7 @@ import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
 import { quantum32QueryParams } from './constants';
+import CONFIG from './config';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -239,7 +240,24 @@ export default class QuantumIndex32 extends React.Component {
         ],
       },
       {
-        title: '#3 Regression',
+        title: '#3 Other benchmarks',
+        rows: [
+          CONFIG.windows32Regression[0].map(config => (
+            <Perfherder
+              {...config}
+              key={config.title}
+            />
+          )),
+          CONFIG.windows32Regression[1].map(config => (
+            <Perfherder
+              {...config}
+              key={config.title}
+            />
+          )),
+        ],
+      },
+      {
+        title: '#4 Regression',
         rows: [
           [
             <Perfherder

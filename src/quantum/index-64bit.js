@@ -242,13 +242,13 @@ export default class QuantumIndex64 extends React.Component {
       {
         title: '#3 Other benchmarks',
         rows: [
-          CONFIG.regression[0].map(config => (
+          CONFIG.windows64Regression[0].map(config => (
             <Perfherder
               {...config}
               key={config.title}
             />
           )),
-          CONFIG.regression[1].map(config => (
+          CONFIG.windows64Regression[1].map(config => (
             <Perfherder
               {...config}
               key={config.title}
