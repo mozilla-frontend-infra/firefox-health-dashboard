@@ -206,7 +206,7 @@ export default class QuantumIndex extends React.Component {
               unit='ms'
               status={{
                 telemetry: {
-                  metric: 'TIME_TO_NON_BLANK_PAINT_MS',
+                  metric: 'TIME_TO_NON_BLANK_PAINT_NO_NETOPT_MS',
                   format: '0,0',
                 },
                 benchmark: {
