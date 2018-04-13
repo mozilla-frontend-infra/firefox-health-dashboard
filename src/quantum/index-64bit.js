@@ -12,8 +12,9 @@ import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
-import { quantum64QueryParams } from './constants';
+import { quantum64QueryParams, flowWhiteboardTags, getBugUrl } from './constants';
 import CONFIG from './config';
+import TargetStatus from './target-status';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -96,7 +97,7 @@ export default class QuantumIndex64 extends React.Component {
               <h4>
                 {apzBugs[id].title}
                 <small>
-                  <a href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${id}`} target='_new'>
+                  <a href={getBugUrl(id)} target='_new'>
                     Bug {id}
                   </a>
                 </small>
@@ -111,47 +112,15 @@ export default class QuantumIndex64 extends React.Component {
       />
     );
 
-    const allStatus = new Map([['green', 0], ['yellow', 0], ['red', 0]]);
-    for (const note of Object.values(notes)) {
-      if (note.status) {
-        allStatus.set(note.status, allStatus.get(note.status) + 1);
-      }
-    }
-
-    const statusWidget = (
-      <Widget
-        key='RiskTargetStatusSummary'
-        title='Risk/Target Status Summary'
-        target='Be *on track* to be *within target*'
-        className='widget-status-all'
-        loading={Object.keys(notes).length === 0}
-        content={
-          Object.keys(notes).length
-            ? [
-              <div className='widget-entry' key='confidence'>
-                {Array.from(allStatus.entries()).map(([color, count]) => {
-                  if (!count) {
-                    return null;
-                  }
-                  return (
-                    <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
-                      <span>
-                        <em>{count}</em> criteria {statusLabels.get(color)}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>,
-            ]
-            : 'Loading status …'
-        }
-      />
-    );
-
     const sections = [
-      // {
-      //   rows: [[<Flow key='flow' />, <Countdown key='countdown' />, statusWidget]],
-      // },
+      {
+        cssRowExtraClasses: 'generic-metrics-graphics',
+        rows: [[<Flow
+          key='flow'
+          whiteboard={flowWhiteboardTags}
+          link='/quantum/64/bugs'
+        />, <Countdown />, <TargetStatus notes={notes} />]],
+      },
       {
         cssRowExtraClasses: 'generic-metrics-graphics speedometer-metrics-graphics',
         title: '#1 Speedometer v2',
