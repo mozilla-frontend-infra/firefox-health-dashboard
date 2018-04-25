@@ -16,8 +16,12 @@ export default class Countdown extends React.Component {
   }
 
   fetchData() {
-    fetch(`${SETTINGS.backend}/api/release/history`).then(response => response.json()).then(data =>
-    this.setState({ date: data[data.length - 1].date, version: data[data.length - 1].version }));
+    fetch(SETTINGS.firefoxReleases).then(response => response.json()).then(
+      (data) => {
+        const releases = Object.entries(data);
+        return this.setState({ date: releases[releases.length - 1][1],
+          version: parseInt(releases[releases.length - 1][0], 10) });
+      });
   }
 
   render() {
@@ -27,17 +31,19 @@ export default class Countdown extends React.Component {
     let timespan = null;
 
     if (date) {
-      const weekDays = business.weekDays(moment(), moment(date));
-      weeks = Math.floor(weekDays / 5);
+      const weekDays = business.weekDays(moment(date), moment());
+      weeks = Math.round(weekDays / 5);
       extraDays = weekDays - weeks * 5;
+      const weekText = weeks === 1 ? 'week' : 'weeks';
+      const dayText = extraDays === 1 ? 'day' : 'days';
 
       if (extraDays < 1 && weeks > 0) {
-        timespan = `${weeks} work weeks`;
+        timespan = `${weeks} work weeks ago`;
       } else if (weeks < 1) {
         const timeTo = moment().to(date);
         timespan = (timeTo === 'a few seconds ago' ? 'today' : timeTo);
       } else {
-        timespan = `${weeks} weeks, ${extraDays} days`;
+        timespan = `${weeks} work ${weekText}, ${extraDays} ${dayText} ago`;
       }
     }
     return (
