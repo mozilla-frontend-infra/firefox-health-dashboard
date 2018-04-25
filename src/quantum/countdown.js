@@ -3,60 +3,67 @@ import React from 'react';
 import moment from 'moment';
 import business from 'moment-business';
 import Widget from './widget';
+import SETTINGS from '../settings';
 
-const dates = [
-  {
-    idx: 'release',
-    label: [<strong key='release'>Release</strong>, ' ', 57],
-    date: moment('2017-11-14 14:00:00+0000'),
-  },
-];
+export default class Countdown extends React.Component {
+  state = {
+    date: null,
+    version: null,
+  };
 
-export default class CountdownWidget extends React.Component {
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(SETTINGS.firefoxReleases).then(response => response.json()).then(
+      (data) => {
+        const releases = Object.entries(data);
+        return this.setState({ date: releases[releases.length - 1][1],
+          version: parseInt(releases[releases.length - 1][0], 10) });
+      });
+  }
+
   render() {
-    const $counters = dates.map((entry) => {
-      const weekDays = business.weekDays(moment(), entry.date);
-      const weeks = Math.floor(weekDays / 5);
-      const extraDays = weekDays - weeks * 5;
-      return (
-        <div className='widget-entry' key={`countdown-${entry.idx}`}>
-          <h4>
-            {entry.label}
-            <small>
-              {entry.date.format('ddd, MMM D')}
-            </small>
-          </h4>
-          {extraDays < 1 && weeks > 0
-            ? <div key='weeks'>
-              <em>{weeks}</em> work weeks
-            </div>
-            : (weeks < 1
-                ? <div key='weeks'>
-                  <em>{moment().to(entry.date)}</em>
-                </div>
-                : [
-                  <div key='weeks'>
-                    <em>{weeks}</em> weeks
-                  </div>,
-                  <div key='days'>
-                    <em>{extraDays}</em> days
-                  </div>,
-                ]
-              )
-            }
-        </div>
-      );
-    });
+    const { date, version } = this.state;
+    let weeks = null;
+    let extraDays = null;
+    let timespan = null;
+
+    if (date) {
+      const weekDays = business.weekDays(moment(date), moment());
+      weeks = Math.round(weekDays / 5);
+      extraDays = weekDays - weeks * 5;
+      const weekText = weeks === 1 ? 'week' : 'weeks';
+      const dayText = extraDays === 1 ? 'day' : 'days';
+
+      if (extraDays < 1 && weeks > 0) {
+        timespan = `${weeks} work weeks ago`;
+      } else if (weeks < 1) {
+        const timeTo = moment().to(date);
+        timespan = (timeTo === 'a few seconds ago' ? 'today' : timeTo);
+      } else {
+        timespan = `${weeks} work ${weekText}, ${extraDays} ${dayText} ago`;
+      }
+    }
     return (
       <Widget
-        title='Branch Dates'
+        title='Release Dates'
         link='https://wiki.mozilla.org/RapidRelease/Calendar'
-        className='widget-countdown'
-        content={$counters}
-      />
+        className='widget-countdown narrow-content'
+      >
+        {date && timespan &&
+          <div className='widget-entry' key='countdown-release'>
+            <span>
+              <em>{`${version} `}</em>is the current release
+              <br />
+              {`Launched ${moment(date).format('ddd, MMM D')} - ${timespan}`}
+            </span>
+          </div>}
+      </Widget>
     );
   }
 }
 
-CountdownWidget.defaultProps = {};
-CountdownWidget.propTypes = {};
+Countdown.defaultProps = {};
+Countdown.propTypes = {};

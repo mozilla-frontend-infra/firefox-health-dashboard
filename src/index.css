@@ -1044,3 +1044,11 @@ svg {
 .align-center {
   text-align: center;
 }
+
+.narrow-content {
+  width: 25%;
+}
+
+.wide-content {
+  flex: 2;
+}

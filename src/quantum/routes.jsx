@@ -8,6 +8,7 @@ import QuantumResponsivenessContent from './responsiveness-content';
 import QuantumPageLoadRender from './pageload-render';
 import QuantumTracking from './metric';
 import Subbenchmark from './subbenchmarks';
+import FlowTable from './flow-table';
 
 const routes = props => (
   <Switch>
@@ -24,8 +25,9 @@ const routes = props => (
     <Route path='/quantum/:architecture/responsiveness/parent' component={QuantumResponsivenessParent} />
     <Route path='/quantum/:architecture/responsiveness/content' component={QuantumResponsivenessContent} />
     <Route path='/quantum/:architecture/pageload/render' component={QuantumPageLoadRender} />
-    <Route path='/quantum/:architecture/track' component={QuantumTracking} />
-    <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
+    <Route exact path='/quantum/:architecture/track' component={QuantumTracking} />
+    <Route exact path='/quantum/:architecture/bugs' component={FlowTable} />
+    <Route exact path='/quantum/:platform/:suite' component={Subbenchmark} />
   </Switch>
 );
 
