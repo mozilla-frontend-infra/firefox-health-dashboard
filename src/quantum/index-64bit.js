@@ -8,13 +8,13 @@ import Widget from './widget';
 import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import Countdown from './countdown';
-import Flow from './flow';
 import TelemetryContainer from '../telemetry/graph';
 import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
-import { quantum64QueryParams, flowWhiteboardTags, getBugUrl } from './constants';
+import { quantum64QueryParams, flowGraphProps, getBugUrl, statusLabels } from './constants';
 import CONFIG from './config';
 import TargetStatus from './target-status';
+import GraphContainer from '../components/graph-container';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -39,14 +39,6 @@ const apzBugs = {
     update: 'Landed in 56 behind a preference. Enabled by default in 57.',
   },
 };
-
-const statusLabels = new Map([
-  ['red', 'at risk and not within target'],
-  ['yellow', 'on track but not within target'],
-  ['green', 'within target'],
-  ['blue', 'signed off'],
-  ['secondary', 'regression criteria at risk'],
-]);
 
 export default class QuantumIndex64 extends React.Component {
   constructor(props) {
@@ -115,11 +107,20 @@ export default class QuantumIndex64 extends React.Component {
     const sections = [
       {
         cssRowExtraClasses: 'generic-metrics-graphics',
-        rows: [[<Flow
-          key='flow'
-          whiteboard={flowWhiteboardTags}
-          link='/quantum/64/bugs'
-        />, <Countdown />, <TargetStatus notes={notes} />]],
+        rows: [[
+          <GraphContainer
+            query={flowGraphProps.query}
+            customClass={flowGraphProps.customClass}
+            title={flowGraphProps.title}
+            legend={flowGraphProps.legend}
+            target={flowGraphProps.target}
+            api={flowGraphProps.api}
+            graphData={{ total: [], closed: [], needsAnalysis: [], analyzed: [] }}
+            width={flowGraphProps.width}
+            height={flowGraphProps.height}
+            link='/quantum/64/bugs'
+          />,
+          <Countdown />, <TargetStatus notes={notes} />]],
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics speedometer-metrics-graphics',

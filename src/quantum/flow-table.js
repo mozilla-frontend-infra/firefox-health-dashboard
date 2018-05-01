@@ -6,7 +6,7 @@ import { stringify } from 'query-string';
 import cx from 'classnames';
 
 import SETTINGS from '../settings';
-import { getBugUrl, flowWhiteboardTags } from './constants';
+import { getBugUrl, flowGraphProps } from './constants';
 import Dashboard from '../dashboard';
 
 export default class FlowTable extends React.Component {
@@ -20,7 +20,7 @@ export default class FlowTable extends React.Component {
   }
 
   fetchData() {
-    fetch(`${SETTINGS.backend}/api/bz/burnup?${stringify(flowWhiteboardTags)}&list=true`)
+    fetch(`${SETTINGS.backend}/api/bz/burnup?${stringify(flowGraphProps.query)}&list=true`)
     .then(response => response.json()).then(data => this.setState({ data }));
   }
 

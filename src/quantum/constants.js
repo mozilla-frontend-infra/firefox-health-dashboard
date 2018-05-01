@@ -13,11 +13,6 @@ export const architecture = {
   64: 'x86-64',
 };
 
-// [qf:f61] to be updated to [qf:f64] with firefox 61's release
-export const flowWhiteboardTags = {
-  whiteboard: '[qf:p1][qf:f61]',
-};
-
 export const getBugUrl = function getBugUrl(id) {
   return `https://bugzilla.mozilla.org/show_bug.cgi?id=${id}`;
 };
@@ -29,3 +24,15 @@ export const statusLabels = new Map([
   ['blue', 'signed off'],
   ['secondary', 'regression criteria at risk'],
 ]);
+
+// [qf:f61] whiteboard tags to be replaced with [qf:f64] with firefox 61's release
+export const flowGraphProps = {
+  api: 'bz/burnup',
+  customClass: 'wide-content',
+  title: 'Quantum Flow P1 Bugs Data',
+  legend: ['Total', 'Closed', 'Needs-analysis', 'Analyzed'],
+  target: 'Fix P1 Bugs',
+  width: 950,
+  height: 300,
+  query: { whiteboard: '[qf:p1][qf:f61]' },
+};
