@@ -54,13 +54,29 @@ export default class Speedometer extends Component {
 
   state = {
     series: undefined,
+    markers: undefined,
   }
 
   componentDidMount() {
-    this.fetchPlotGraph(this.props);
+    this.fetchMarkerData();
   }
 
   viewport: [0, 0];
+
+  transformMarkerData(data) {
+    const newData = [];
+    for (const item of data) {
+      newData.push({ date: new Date(item.date), label: item.version });
+    }
+    return newData;
+  }
+
+  fetchMarkerData() {
+    fetch(`${SETTINGS.backend}/api/release/calendar?channel=nightly&days=210`).then(
+      response => response.json()).then(
+      data => this.setState({ markers: this.transformMarkerData(data) },
+      () => this.fetchPlotGraph(this.props)));
+  }
 
   async fetchPlotGraph({
     architecture, benchmark, browsers, targetBrowser, targetRatio, baseValue, skipDataBefore,
@@ -96,7 +112,8 @@ export default class Speedometer extends Component {
       data: series,
       legend: labels,
       title: this.props.title,
-      legend_target: this.legendEl });
+      legend_target: this.legendEl,
+      markers: this.state.markers });
 
     this.setState({
       moreProps,
