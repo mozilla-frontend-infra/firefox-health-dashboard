@@ -116,7 +116,7 @@ export default class QuantumIndex32 extends React.Component {
             legend={flowGraphProps.legend}
             target={flowGraphProps.target}
             api={flowGraphProps.api}
-            graphData={{ total: [], closed: [], needsAnalysis: [], analyzed: [] }}
+            keys={flowGraphProps.keys}
             width={flowGraphProps.width}
             height={flowGraphProps.height}
             link='/quantum/32/bugs'

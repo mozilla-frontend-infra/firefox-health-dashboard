@@ -35,4 +35,5 @@ export const flowGraphProps = {
   width: 950,
   height: 300,
   query: { whiteboard: '[qf:p1][qf:f61]' },
+  keys: ['total', 'closed', 'needsAnalysis', 'analyzed'],
 };

@@ -13,4 +13,5 @@ export const graphProps = {
   target: '+20% of Focus average',
   width: 600,
   height: 300,
+  keys: ['focus', 'klar'],
 };

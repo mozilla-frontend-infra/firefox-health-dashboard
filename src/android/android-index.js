@@ -30,7 +30,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets['abcnews.go.com'], label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus
@@ -45,7 +45,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets['wikia-fandom'], label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus
@@ -60,7 +60,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets.buzzfeed, label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus
@@ -76,7 +76,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets['yelp.de'], label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus
@@ -91,7 +91,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets['eurosport.eu'], label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus
@@ -106,7 +106,7 @@ export default class AndroidIndex extends React.Component {
             baselines={[{ value: klarTargets['m.ranker.com'], label: '+20%' }]}
             target={graphProps.target}
             api={graphProps.api}
-            graphData={{ focus: [], klar: [] }}
+            keys={graphProps.keys}
             width={graphProps.width}
             height={graphProps.height}
             checkStatus

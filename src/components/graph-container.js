@@ -35,8 +35,8 @@ export default class GraphContainer extends React.Component {
   }
 
   parseData(data) {
-    const { checkStatus, graphData, targetValue, targetLine } = this.props;
-    const stateObj = { data: transformGraphData(graphData, data) };
+    const { checkStatus, keys, targetValue, targetLine } = this.props;
+    const stateObj = { data: transformGraphData(keys, data) };
     if (checkStatus) {
       stateObj.status = determineStatusColor(data, targetLine, targetValue);
     }
@@ -59,7 +59,7 @@ export default class GraphContainer extends React.Component {
       >
         <div>
           <div className='legend' ref={ele => this.legendTarget = ele} />
-          {data && this.legendTarget &&
+          {(data && !legend || data && this.legendTarget && legend) &&
           <MetricsGraphics
             width={width}
             height={height}
@@ -84,7 +84,7 @@ GraphContainer.propTypes = {
   baselines: PropTypes.array,
   specialClass: PropTypes.string,
   query: PropTypes.shape({}),
-  graphData: PropTypes.shape({}),
+  keys: PropTypes.array,
   legend: PropTypes.array,
   api: PropTypes.string,
   height: PropTypes.number,
