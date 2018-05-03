@@ -17,6 +17,7 @@ export default class GraphContainer extends React.Component {
     this.state = {
       data: null,
       status: null,
+      apiFailed: false,
     };
   }
 
@@ -31,7 +32,15 @@ export default class GraphContainer extends React.Component {
     if (query) {
       url += `/?${stringify(query)}`;
     }
-    fetch(url).then(response => response.json()).then(data => this.parseData(data));
+
+    fetch(url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw response;
+      })
+      .then(data => this.parseData(data))
+      .catch(() => this.setState({ apiFailed: true }));
   }
 
   parseData(data) {
@@ -44,7 +53,7 @@ export default class GraphContainer extends React.Component {
   }
 
   render() {
-    const { data, status } = this.state;
+    const { data, status, apiFailed } = this.state;
     const { title, link, legend, baselines, target, width, height, customClass } = this.props;
     let viewport = [0, 0];
     return (
@@ -57,21 +66,26 @@ export default class GraphContainer extends React.Component {
         viewport={size => (viewport = size)}
         status={status}
       >
-        <div>
-          <div className='legend' ref={ele => this.legendTarget = ele} />
-          {(data && !legend || data && this.legendTarget && legend) &&
-          <MetricsGraphics
-            width={width}
-            height={height}
-            data={data}
-            x_accessor='date'
-            y_accessor='value'
-            interpolate={curveLinear}
-            legend={legend}
-            legend_target={this.legendTarget}
-            baselines={baselines}
-          />}
-        </div>
+        {apiFailed ?
+          <div>Oops, something went wrong.</div> :
+          <div>
+            {!data &&
+            <div>Loading...</div>}
+
+            <div className='legend' ref={ele => this.legendTarget = ele} />
+            {(data && !legend || data && this.legendTarget && legend) &&
+            <MetricsGraphics
+              width={width}
+              height={height}
+              data={data}
+              x_accessor='date'
+              y_accessor='value'
+              interpolate={curveLinear}
+              legend={legend}
+              legend_target={this.legendTarget}
+              baselines={baselines}
+            />}
+          </div>}
       </Widget>
     );
   }
