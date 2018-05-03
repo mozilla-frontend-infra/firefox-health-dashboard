@@ -16,6 +16,7 @@ export default class Home extends React.Component {
         <Link to='/status'>Feature Status</Link>
         <Link to='/quantum/32'>Quantum 32bit</Link>
         <Link to='/quantum/64'>Quantum 64bit</Link>
+        <Link to='/android'>Android</Link>
       </Dashboard>
     );
   }
