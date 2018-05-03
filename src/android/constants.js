@@ -10,7 +10,7 @@ export const klarTargets = {
 export const graphProps = {
   api: 'android/klar',
   legend: ['focus (WV)', 'klar (GV)'],
-  target: '+20% of Focus average',
+  target: 'GV within 20% of WV',
   width: 600,
   height: 300,
   keys: ['focus', 'klar'],

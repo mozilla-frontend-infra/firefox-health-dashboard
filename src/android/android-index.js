@@ -19,7 +19,7 @@ export default class AndroidIndex extends React.Component {
     return (
       <Dashboard
         title='Android'
-        subtitle='Page load (lower is better)'
+        subtitle='GeckoView vs WebView Page load (time in seconds, lower is better)'
         className={cx('summary')}
       >
         <div className='row'>
