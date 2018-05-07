@@ -35,6 +35,8 @@ describe('determineStatusColor', () => {
   it('should return a color based value/target comparison of most recent data point', () => {
     const targetValue = 5;
     const targetLine = 'value2';
+    const targetLine2 = 'value1';
+    const targetValue2 = 7;
     const dataInput = [
       { value1: 3, value2: 8, date: "2018-05-01" },
       { value1: 7, value2: 13, date: "2018-05-03" },
@@ -42,7 +44,10 @@ describe('determineStatusColor', () => {
     ];
     
     const actual = determineStatusColor(dataInput, targetLine, targetValue);
+    const actual2 = determineStatusColor(dataInput, targetLine2, targetValue2);
+
     expect(dataInput[0]).to.have.own.property(targetLine);
     expect(actual).to.be.equal('red');
+    expect(actual2).to.be.equal('green');    
   })
 });
