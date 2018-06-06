@@ -34,6 +34,6 @@ export const flowGraphProps = {
   target: 'Fix P1 Bugs',
   width: 950,
   height: 300,
-  query: { whiteboard: '[qf:f61][qf:p1]' },
+  query: { whiteboard: '[qf:f61],[qf:p1]' },
   keys: ['total', 'closed', 'needsAnalysis', 'analyzed'],
 };
