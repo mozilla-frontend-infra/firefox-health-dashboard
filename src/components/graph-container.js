@@ -44,6 +44,10 @@ export default class GraphContainer extends React.Component {
   }
 
   parseData(data) {
+    if (data.length === 0) {
+      this.setState({ apiFailed: true });
+      return;
+    }
     const { checkStatus, keys, targetValue, targetLine } = this.props;
     const stateObj = { data: transformGraphData(keys, data) };
     if (checkStatus) {
