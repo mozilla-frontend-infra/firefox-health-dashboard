@@ -18,6 +18,7 @@ export default class GraphContainer extends React.Component {
       data: null,
       status: null,
       apiFailed: false,
+      noDataFound: false,
     };
   }
 
@@ -45,7 +46,7 @@ export default class GraphContainer extends React.Component {
 
   parseData(data) {
     if (data.length === 0) {
-      this.setState({ apiFailed: true });
+      this.setState({ noDataFound: true });
       return;
     }
     const { checkStatus, keys, targetValue, targetLine } = this.props;
@@ -57,9 +58,15 @@ export default class GraphContainer extends React.Component {
   }
 
   render() {
-    const { data, status, apiFailed } = this.state;
+    const { data, status, apiFailed, noDataFound } = this.state;
     const { title, link, legend, baselines, target, width, height, customClass } = this.props;
     let viewport = [0, 0];
+    let message = 'Oops, something went wrong.';
+
+    if (noDataFound) {
+      message = 'No data found';
+    }
+
     return (
       <Widget
         className={`graphic-timeline graphic-widget ${customClass}`}
@@ -70,8 +77,8 @@ export default class GraphContainer extends React.Component {
         viewport={size => (viewport = size)}
         status={status}
       >
-        {apiFailed ?
-          <div>Oops, something went wrong.</div> :
+        {apiFailed || noDataFound ?
+          <div>{message}</div> :
           <div>
             {!data &&
             <div>Loading...</div>}
