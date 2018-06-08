@@ -207,6 +207,15 @@ export default class QuantumIndex64 extends React.Component {
               queryParams={quantum64QueryParams}
             />,
           ],
+          [
+            <TelemetryContainer
+              key={'blankWindowShown'}
+              id={'blankWindowShown'}
+              title='Blank window shown'
+              queryParams={quantum64QueryParams}
+            />,
+            <div style={{ width: '50%' }} />,
+          ],
         ],
       },
       {
