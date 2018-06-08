@@ -6,7 +6,7 @@
     "GAUTH_JSON": {
       "required": true
     },
-    "BACKEND": "https://firefox-health-backend.herokuapp.com",
+    "BACKEND": "https://firefox-health-backend-pr-32.herokuapp.com",
     "NPM_CONFIG_PRODUCTION": "false"
   },
   "formation": {
