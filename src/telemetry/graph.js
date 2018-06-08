@@ -7,17 +7,15 @@ import SETTINGS from '../settings';
 
 export default class TelemetryContainer extends React.Component {
   async componentDidMount() {
-    const { id } = this.props;
-    this.fetchPlotGraph(id);
+    this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
 
-  async fetchPlotGraph(id) {
-    const { queryParams } = this.props;
-    let url = `${SETTINGS.backend}/api/perf/telemetry/${id}`;
-
-    if (Object.keys(queryParams).length > 0) {
-      url += `?${stringify(queryParams)}`;
-    }
+  async fetchPlotGraph(id, queryParams) {
+    let url = `${SETTINGS.backend}/api/perf/telemetry?`;
+    url += stringify({
+      name: id,
+      ...queryParams,
+    });
     const { graphData, telemetryUrl } = await (
       await fetch(url)).json();
     if (!this.graphTitleLink) {
