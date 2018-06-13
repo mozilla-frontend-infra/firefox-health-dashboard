@@ -2,6 +2,7 @@ import Raven from 'raven-js';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import './index.css';
+import GenericErrorBoundary from './components/genericErrorBoundary';
 import Routes from './routes';
 
 if (process.env.NODE_ENV === 'production') {
@@ -12,7 +13,9 @@ const root = document.getElementById('root');
 const load = () => render(
   (
     <AppContainer>
-      <Routes />
+      <GenericErrorBoundary critical>
+        <Routes />
+      </GenericErrorBoundary>
     </AppContainer>
   ), root,
 );
