@@ -15,6 +15,7 @@ import { quantum32QueryParams, flowGraphProps, getBugUrl, statusLabels } from '.
 import GraphContainer from '../components/graph-container';
 import CONFIG from './config';
 import TargetStatus from './target-status';
+import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 
 // Before this date we had a Speedometer benchmark update
 // and that caused a baseline bump for all browsers
@@ -105,7 +106,7 @@ export default class QuantumIndex32 extends React.Component {
       />
     );
 
-    const sections = [
+    const sections = wrapSectionComponentsWithErrorBoundaries([
       {
         cssRowExtraClasses: 'generic-metrics-graphics',
         rows: [[
@@ -363,7 +364,7 @@ export default class QuantumIndex32 extends React.Component {
           ],
         ],
       },
-    ];
+    ]);
 
     let rowIdx = 0;
     const $content = sections.reduce((reduced, { title, rows, cssRowExtraClasses }, sectionId) => {
