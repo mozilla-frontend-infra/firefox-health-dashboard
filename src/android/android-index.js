@@ -32,6 +32,34 @@ export default class AndroidIndex extends React.Component {
             </GenericErrorBoundary>
           ))}
         </div>
+        <div className='row'>
+          {[config.healthyway, config.fashionbeans, config.lifehacker].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.spiegel, config.nytimes, config.reddit].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.wired, config.guardian, config.medium].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.washingtonpost, config.cnbc].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
       </Dashboard>
     );
   }
