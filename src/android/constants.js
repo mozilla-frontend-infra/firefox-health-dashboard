@@ -197,8 +197,8 @@ const configuration = {
   },
   googlemaps: {
     ...graphDefaults,
-    query: { site: 'google.com/maps?force=pwa' },
-    title: 'google.com/maps?force=pwa',
+    query: { site: 'google.com/maps' },
+    title: 'google.com/maps',
     baselines: [{ value: klarTargets.googlemaps, label: '+20%' }],
     targetValue: klarTargets.googlemaps,
   },
@@ -218,8 +218,8 @@ const configuration = {
   },
   wikipedia: {
       ...graphDefaults,
-      query: { site: 'en.m.wikipedia.com' },
-      title: 'en.m.wikipedia.com',
+      query: { site: 'en.m.wikipedia.org' },
+      title: 'en.m.wikipedia.org',
       baselines: [{ value: klarTargets.wikipedia, label: '+20%' }],
       targetValue: klarTargets.wikipedia,
   },
