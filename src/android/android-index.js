@@ -54,7 +54,49 @@ export default class AndroidIndex extends React.Component {
           ))}
         </div>
         <div className='row'>
-          {[config.washingtonpost, config.cnbc].map(siteConfig => (
+          {[config.washingtonpost, config.cnbc, config.gizmodo].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.facebook, config.flipkart, config.twitter].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.googlemaps, config.urbandictionary, config.glassdoor].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.wikipedia, config.imgur, config.amazon].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.yelpdotcom, config.zalando, config.ebaydotDE].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.expedia, config.booking, config.tripadvisor].map(siteConfig => (
+            <GenericErrorBoundary>
+              <GraphContainer {...siteConfig} />
+            </GenericErrorBoundary>
+          ))}
+        </div>
+        <div className='row'>
+          {[config.rumble, config.google].map(siteConfig => (
             <GenericErrorBoundary>
               <GraphContainer {...siteConfig} />
             </GenericErrorBoundary>
