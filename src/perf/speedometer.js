@@ -1,4 +1,4 @@
-import fetchJson from '../utils/fetch';
+import fetchJson from '../utils/fetchJson';
 
 const AWFY = 'https://arewefastyet.com';
 const MACHINE = { 32: '37', 64: '36' };
