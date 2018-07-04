@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import cx from 'classnames';
 
-import Dashboard from '../dashboard';
-import GraphContainer from '../components/graph-container';
+import Dashboard from '../../dashboard';
+import GraphContainer from '../../components/graph-container';
+import GenericErrorBoundary from '../../components/genericErrorBoundary';
 import config from './constants';
-import GenericErrorBoundary from '../components/genericErrorBoundary';
 
-export default class AndroidIndex extends React.Component {
+export default class Android extends React.Component {
   render() {
     return (
       <Dashboard

@@ -9,7 +9,7 @@ import BetaCrashes from './crashes/beta';
 import Status from './status/index';
 import Devtools from './devtools/index';
 import QuantumRoutes from './quantum/routes';
-import Android from './android/android-index';
+import Android from './views/Android';
 
 const NoMatch = () => <div>404</div>;
 
