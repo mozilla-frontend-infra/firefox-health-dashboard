@@ -1052,3 +1052,7 @@ svg {
 .wide-content {
   flex: 2;
 }
+
+.no-left-margin {
+  margin-left: 0 !important;
+}
