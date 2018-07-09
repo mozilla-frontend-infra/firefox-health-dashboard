@@ -71,11 +71,14 @@ export default class Speedometer extends Component {
     return newData;
   }
 
-  fetchMarkerData() {
-    fetch(`${SETTINGS.backend}/api/release/calendar?channel=nightly&days=210`).then(
-      response => response.json()).then(
-      data => this.setState({ markers: this.transformMarkerData(data) },
-      () => this.fetchPlotGraph(this.props)));
+  async fetchMarkerData() {
+    const response = await fetch(
+      `${SETTINGS.backend}/api/release/calendar?channel=nightly&days=210`);
+    if (response.ok) {
+      const data = await response.json();
+      await this.setState({ markers: this.transformMarkerData(data) });
+      this.fetchPlotGraph(this.props);
+    }
   }
 
   async fetchPlotGraph({
