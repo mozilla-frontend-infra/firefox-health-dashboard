@@ -18,6 +18,7 @@ const NimbledroidGraphs = ({ nimbledroidData }) => (
             <NimbledroidWidget
               key={profileName}
               profile={nimbledroidData[profileName]}
+              targetRatio={1.2}
             />
           </GenericErrorBoundary>
         ))}

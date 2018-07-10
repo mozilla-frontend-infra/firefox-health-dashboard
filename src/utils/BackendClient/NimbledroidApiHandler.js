@@ -37,6 +37,18 @@ const transformedDataForMetrisGraphics = (nimbledroidData) => {
   return metricsGraphicsData;
 };
 
+const sortDataPointsByRecency = (a, b) => {
+  let retVal;
+  if (a.date < b.date) {
+    retVal = -1;
+  } else if (a.date === b.date) {
+    retVal = 0;
+  } else {
+    retVal = 1;
+  }
+  return retVal;
+};
+
 const mergeProductsData = (productsData) => {
   const mergedData = productsData
     .reduce((result, productData) => {
@@ -45,14 +57,21 @@ const mergeProductsData = (productsData) => {
 
       profileKeys.forEach((profileKey) => {
         const { data, title } = productData[product][profileKey];
+        const sortedData = data.sort(sortDataPointsByRecency);
+        const lastDataPoint = sortedData[sortedData.length - 1].value;
 
         // This is the first time we're seing this scenario
         if (!result[profileKey]) {
-          result[profileKey] = { data: {}, title };
+          result[profileKey] = {
+            data: {},
+            title,
+            lastDataPoints: {}, // This is a shortcut
+           };
         }
         // This is the first time we're seing this product for this scenario
         if (!result[profileKey].data[product]) {
-          result[profileKey].data[product] = data;
+          result[profileKey].data[product] = sortedData;
+          result[profileKey].lastDataPoints[product] = lastDataPoint;
         }
       });
       return result;

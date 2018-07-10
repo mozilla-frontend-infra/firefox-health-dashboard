@@ -15,6 +15,7 @@ export default class NimbledroidWidget extends Component {
     const { profile } = this.props;
     const labels = Object.keys(profile.data);
     const data = labels.map(product => profile.data[product]);
+    const target = this.props.targetRatio * profile.lastDataPoints.focus;
 
     return (
       <Widget
@@ -34,6 +35,10 @@ export default class NimbledroidWidget extends Component {
               legend={labels}
               legend_target={this.legendTarget}
               interpolate={curveLinear}
+              baselines={[{
+                value: target,
+                label: 'Target',
+              }]}
             />
           }
         </div>
@@ -47,4 +52,5 @@ NimbledroidWidget.propTypes = {
     title: PropTypes.string.isRequired,
     data: PropTypes.shape({}).isRequired,
   }),
+  targetRatio: PropTypes.number.isRequired,
 };
