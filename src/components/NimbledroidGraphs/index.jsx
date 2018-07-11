@@ -9,7 +9,7 @@ const NimbledroidGraphs = ({ nimbledroidData }) => (
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(1, 1fr)',
-          gridGap: '0.1em',
+          gridGap: '1em',
           width: '100%',
         }}
       >

@@ -23,6 +23,7 @@ export default class NimbledroidWidget extends Component {
         // This classname is to undo what .criteria-widget:not:first-child sets
         className={'no-left-margin'}
         title={profile.title}
+        target='Klar <= Focus + 20%'
         targetStatus={status < 1 ? 'pass' : 'fail'}
         status={status < 1 ? 'green' : 'yellow'}
       >
