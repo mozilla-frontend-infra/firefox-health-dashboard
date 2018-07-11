@@ -26,10 +26,12 @@ const transformedDataForMetrisGraphics = (nimbledroidData) => {
             title: matchSiteName(scenario_name),
           };
         }
-        result[product][scenario_name].data.push({
-          date: new Date(elem.added),
-          value: profile.time_in_ms / 1000,
-        });
+        if (time_in_ms > 0) {
+          result[product][scenario_name].data.push({
+            date: new Date(elem.added),
+            value: time_in_ms / 1000,
+          });
+        }
       }
     });
     return result;
