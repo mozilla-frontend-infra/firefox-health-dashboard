@@ -33,6 +33,9 @@ export default class AndroidV2 extends Component {
               nimbledroidData={nimbledroidData}
             />
           }
+          {Object.keys(nimbledroidData).length === 0 &&
+            <h2>The backend is loading data from Nimbledroid. Thanks for waiting.</h2>
+          }
         </div>
       </Dashboard>
     );
