@@ -10,6 +10,7 @@ import Status from './status/index';
 import Devtools from './devtools/index';
 import QuantumRoutes from './quantum/routes';
 import Android from './views/Android';
+import AndroidV2 from './views/AndroidV2';
 
 const NoMatch = () => <div>404</div>;
 
@@ -57,6 +58,7 @@ export default class Routes extends Component {
         <App>
           <Switch>
             <Route path='/android' exact component={Android} />
+            <Route path='/android/v2' exact component={AndroidV2} />
             <Route path='/' exact component={Home} />
             <Route path='/crashes' exact component={ReleaseCrashes} />
             <Route path='/crashes/beta' component={BetaCrashes} />
