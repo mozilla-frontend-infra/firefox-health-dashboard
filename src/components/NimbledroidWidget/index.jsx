@@ -5,6 +5,22 @@ import MetricsGraphics from 'react-metrics-graphics';
 
 import Widget from '../../quantum/widget';
 
+const widgetStatus = (status) => {
+  let smileyFace = 'pass';
+  let widgetColor = 'green';
+
+  if (status > 2) {
+    widgetColor = 'red';
+  } else if (status >= 1) {
+    widgetColor = 'yellow';
+  }
+
+  if (widgetColor !== 'green') {
+    smileyFace = 'fail';
+  }
+  return { smileyFace, widgetColor };
+};
+
 export default class NimbledroidWidget extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +34,7 @@ export default class NimbledroidWidget extends Component {
     const target = this.props.targetRatio * profile.lastDataPoints.WV;
     const status = profile.lastDataPoints.GV /
       (this.props.targetRatio * profile.lastDataPoints.WV);
+    const { smileyFace, widgetColor } = widgetStatus(status);
 
     return (
       <Widget
@@ -25,8 +42,8 @@ export default class NimbledroidWidget extends Component {
         className={'no-left-margin'}
         title={profile.title}
         target='GeckoView <= WebView + 20%'
-        targetStatus={status < 1 ? 'pass' : 'fail'}
-        status={status < 1 ? 'green' : 'yellow'}
+        targetStatus={smileyFace}
+        status={widgetColor}
       >
         <div>
           <div className='legend' ref={ele => this.legendTarget = ele} />
