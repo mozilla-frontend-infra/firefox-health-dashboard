@@ -16,7 +16,8 @@ export default class NimbledroidWidget extends Component {
     const labels = Object.keys(profile.data);
     const data = labels.map(product => profile.data[product]);
     const target = this.props.targetRatio * profile.lastDataPoints.focus;
-    const status = profile.lastDataPoints.klar / profile.lastDataPoints.focus;
+    const status = profile.lastDataPoints.klar /
+      (this.props.targetRatio * profile.lastDataPoints.focus);
 
     return (
       <Widget
