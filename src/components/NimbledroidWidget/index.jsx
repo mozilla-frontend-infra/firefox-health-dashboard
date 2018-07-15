@@ -15,16 +15,16 @@ export default class NimbledroidWidget extends Component {
     const { profile } = this.props;
     const labels = Object.keys(profile.data);
     const data = labels.map(product => profile.data[product]);
-    const target = this.props.targetRatio * profile.lastDataPoints.focus;
-    const status = profile.lastDataPoints.klar /
-      (this.props.targetRatio * profile.lastDataPoints.focus);
+    const target = this.props.targetRatio * profile.lastDataPoints.WV;
+    const status = profile.lastDataPoints.GV /
+      (this.props.targetRatio * profile.lastDataPoints.WV);
 
     return (
       <Widget
         // This classname is to undo what .criteria-widget:not:first-child sets
         className={'no-left-margin'}
         title={profile.title}
-        target='Klar <= Focus + 20%'
+        target='GeckoView <= WebView + 20%'
         targetStatus={status < 1 ? 'pass' : 'fail'}
         status={status < 1 ? 'green' : 'yellow'}
       >
