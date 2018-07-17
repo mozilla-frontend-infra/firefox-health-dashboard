@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import cx from 'classnames';
+import Raven from 'raven-js';
 
 import BackendClient from '../../utils/BackendClient';
 import Dashboard from '../../dashboard';
@@ -15,12 +16,22 @@ export default class AndroidV2 extends Component {
   client = new BackendClient();
 
   async fetchAndroidData() {
-    const nimbledroidData = await this.client.getData('nimbledroid');
-    this.setState({ nimbledroidData });
+    try {
+      const nimbledroidData = await this.client.getData('nimbledroid');
+      this.setState({ nimbledroidData });
+    } catch (e) {
+      this.setState({
+        errorMessage: 'Failed to fetch data from the backend. We have reported it.',
+      });
+      if (e.message === 'Failed to fetch' && process.env.NODE_ENV === 'production') {
+        Raven.captureMessage('Failed to fetch the Nimbledroid data from the backend.');
+        Raven.captureException(e);
+      }
+    }
   }
 
   render() {
-    const { nimbledroidData } = this.state;
+    const { errorMessage, nimbledroidData } = this.state;
     return (
       <Dashboard
         title='Android'
@@ -33,6 +44,9 @@ export default class AndroidV2 extends Component {
             <NimbledroidGraphs
               nimbledroidData={nimbledroidData}
             />
+          }
+          {errorMessage &&
+            <h2 style={{ color: 'red' }}>{errorMessage}</h2>
           }
         </div>
       </Dashboard>

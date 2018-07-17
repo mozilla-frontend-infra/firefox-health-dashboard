@@ -1,11 +1,15 @@
 import fetchJson from '../fetchJson';
 
+const renameProduct = product => (
+  product === 'klar' ? 'GV' : 'WV'
+);
+
 const matchSiteName = profileName => profileName
   .replace(/.*.*http[s]*:\/\/[www]*\.*(.*)[/].*/, (match, firstMatch) => firstMatch);
 
 const transformedDataForMetrisGraphics = (nimbledroidData) => {
   const metricsGraphicsData = nimbledroidData.reduce((result, elem) => {
-    const product = elem.package_id.replace('org.mozilla.', '');
+    const product = renameProduct(elem.package_id.replace('org.mozilla.', ''));
     if (!result[product]) {
       result[product] = {};
     }
