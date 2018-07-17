@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import LinearIndeterminate from './components/LinearIndeterminate';
 
 const Dashboard = (props) => {
   const { title, subtitle, children, className, note, source, sourceTitle, link } = props;
@@ -35,6 +36,7 @@ const Dashboard = (props) => {
         {$note}
         {$source}
       </div>
+      {props.loading && <LinearIndeterminate />}
       <div className='dashboard-main'>
         {$content}
       </div>
@@ -51,6 +53,7 @@ Dashboard.propTypes = {
   source: PropTypes.string,
   sourceTitle: PropTypes.string,
   link: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export default Dashboard;
