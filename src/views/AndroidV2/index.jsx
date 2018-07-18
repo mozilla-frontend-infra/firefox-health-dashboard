@@ -37,7 +37,7 @@ export default class AndroidV2 extends Component {
         title='Android'
         subtitle='GeckoView vs WebView Page load (time in seconds, lower is better)'
         className={cx('summary')}
-        loading={Object.keys(nimbledroidData).length === 0}
+        loading={!errorMessage && Object.keys(nimbledroidData).length === 0}
       >
         <div className='row'>
           {Object.keys(nimbledroidData).length > 0 &&
