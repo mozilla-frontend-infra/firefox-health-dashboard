@@ -33,6 +33,13 @@ export default class AndroidV2 extends Component {
           });
           console.error(e);
         }
+      } else if (e.message === 'The backend has no data available.') {
+        this.setState({ errorMessage: e.message });
+        if (process.env.NODE_ENV === 'production') {
+          Raven.captureException(e);
+        } else if (process.env.NODE_ENV === 'development') {
+          console.error(e);
+        }
       } else {
         // Unknown error; Raise it and let it report via Sentry
         throw e;
