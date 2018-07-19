@@ -6,7 +6,7 @@ import BackendClient from '../../utils/BackendClient';
 import Dashboard from '../../dashboard';
 import NimbledroidGraphs from '../../components/NimbledroidGraphs';
 
-export default class AndroidV2 extends Component {
+export default class Android extends Component {
   state = { nimbledroidData: {} }
 
   componentDidMount() {
