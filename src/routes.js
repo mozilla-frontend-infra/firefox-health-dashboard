@@ -7,7 +7,6 @@ import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import Devtools from './devtools/index';
 import QuantumRoutes from './quantum/routes';
 import Android from './views/Android';
 import AndroidV2 from './views/AndroidV2';
@@ -63,7 +62,6 @@ export default class Routes extends Component {
             <Route path='/crashes' exact component={ReleaseCrashes} />
             <Route path='/crashes/beta' component={BetaCrashes} />
             <Route path='/status' component={Status} />
-            <Route path='/devtools' component={Devtools} />
             <QuantumRoutes />
             <Route component={NoMatch} />
           </Switch>
