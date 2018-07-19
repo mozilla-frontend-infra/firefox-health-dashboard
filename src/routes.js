@@ -21,6 +21,7 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
+      <Route path='/android/graph' component={Android} />
       <Route path="/android" component={Android} />
       <Route path="/crashes/beta" component={BetaCrashes} />
       <Route path="/crashes" component={ReleaseCrashes} />
