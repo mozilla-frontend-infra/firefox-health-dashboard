@@ -6,7 +6,6 @@ import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import Android from './views/Android';
 import AndroidV2 from './views/AndroidV2';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
@@ -22,8 +21,7 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/android/v2" component={AndroidV2} />
-      <Route path="/android" component={Android} />
+      <Route path="/android" component={AndroidV2} />
       <Route path="/crashes/beta" component={BetaCrashes} />
       <Route path="/crashes" component={ReleaseCrashes} />
       <Route path="/status" component={Status} />
@@ -36,6 +34,7 @@ const Routes = () => (
       <Route path="/quantum/32" component={Quantum32} />
       <Route path="/quantum/64" component={Quantum64} />
       <Route path="/" component={Home} />
+      <Redirect from='/android/v2' to='/android' />
       <Redirect from="/quantum" to="/" />
       <Route component={NoMatch} />
     </Switch>
