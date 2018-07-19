@@ -1,72 +1,49 @@
-/* eslint react/no-multi-comp: 0 */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import QuantumRoutes from './quantum/routes';
 import Android from './views/Android';
 import AndroidV2 from './views/AndroidV2';
+import Quantum64 from './quantum/index-64bit';
+import Quantum32 from './quantum/index-32bit';
+import QuantumResponsivenessParent from './quantum/responsiveness-parent';
+import QuantumResponsivenessContent from './quantum/responsiveness-content';
+import QuantumPageLoadRender from './quantum/pageload-render';
+import QuantumTracking from './quantum/metric';
+import Subbenchmark from './quantum/subbenchmarks';
+import FlowTable from './quantum/flow-table';
 
 const NoMatch = () => <div>404</div>;
 
-class App extends Component {
-  componentWillMount() {
-    this.resize();
-    let throttle = 0;
-    window.addEventListener('resize', () => {
-      clearTimeout(throttle);
-      throttle = setTimeout(() => this.resize(), 100);
-    });
-  }
+const Routes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/android/v2" component={AndroidV2} />
+      <Route path="/android" component={Android} />
+      <Route path="/crashes/beta" component={BetaCrashes} />
+      <Route path="/crashes" component={ReleaseCrashes} />
+      <Route path="/status" component={Status} />
+      <Route path="/quantum/:architecture/responsiveness/parent" component={QuantumResponsivenessParent} />
+      <Route path="/quantum/:architecture/responsiveness/content" component={QuantumResponsivenessContent} />
+      <Route path="/quantum/:architecture/pageload/render" component={QuantumPageLoadRender} />
+      <Route path="/quantum/:architecture/track" component={QuantumTracking} />
+      <Route path="/quantum/:architecture/bugs" component={FlowTable} />
+      <Route path="/quantum/:platform/:suite" component={Subbenchmark} />
+      <Route path="/quantum/32" component={Quantum32} />
+      <Route path="/quantum/64" component={Quantum64} />
+      <Route path="/" component={Home} />
+      <Redirect from="/quantum" to="/" />
+      <Route component={NoMatch} />
+    </Switch>
+  </BrowserRouter>
+);
 
-  resize() {
-    this.setState({
-      gridX: parseInt(
-        window.getComputedStyle(document.body, null).getPropertyValue('font-size'),
-        10,
-      ),
-      gridY: parseInt(
-        window.getComputedStyle(document.body, null).getPropertyValue('line-height'),
-        10,
-      ),
-      viewport: [window.innerWidth, window.innerHeight],
-    });
-    const children = this.props.children;
-    if (children && children.onResize) {
-      children.onResize(this.state);
-    }
-  }
-
-  render() {
-    return React.cloneElement(this.props.children, this.state);
-  }
-}
-
-App.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+Routes.propTypes = {
+  location: PropTypes.object,
 };
 
-export default class Routes extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <App>
-          <Switch>
-            <Route path='/android' exact component={Android} />
-            <Route path='/android/v2' exact component={AndroidV2} />
-            <Route path='/' exact component={Home} />
-            <Route path='/crashes' exact component={ReleaseCrashes} />
-            <Route path='/crashes/beta' component={BetaCrashes} />
-            <Route path='/status' component={Status} />
-            <QuantumRoutes />
-            <Route component={NoMatch} />
-          </Switch>
-        </App>
-      </BrowserRouter>
-    );
-  }
-}
+export default Routes;
