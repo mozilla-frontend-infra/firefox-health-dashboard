@@ -20,12 +20,29 @@ export default class AndroidV2 extends Component {
       const nimbledroidData = await this.client.getData('nimbledroid');
       this.setState({ nimbledroidData });
     } catch (e) {
-      this.setState({
-        errorMessage: 'Failed to fetch data from the backend. We have reported it.',
-      });
-      if (e.message === 'Failed to fetch' && process.env.NODE_ENV === 'production') {
-        Raven.captureMessage('Failed to fetch the Nimbledroid data from the backend.');
-        Raven.captureException(e);
+      if (e.message === 'Failed to fetch') {
+        if (process.env.NODE_ENV === 'production') {
+          this.setState({
+            errorMessage: 'Failed to fetch data from the backend. We have reported it.',
+          });
+          Raven.captureMessage('Failed to fetch the Nimbledroid data from the backend.');
+          Raven.captureException(e);
+        } else if (process.env.NODE_ENV === 'development') {
+          this.setState({
+            errorMessage: 'Failed to fetch data from the backend. Check the console.',
+          });
+          console.error(e);
+        }
+      } else if (e.message === 'The backend has no data available.') {
+        this.setState({ errorMessage: e.message });
+        if (process.env.NODE_ENV === 'production') {
+          Raven.captureException(e);
+        } else if (process.env.NODE_ENV === 'development') {
+          console.error(e);
+        }
+      } else {
+        // Unknown error; Raise it and let it report via Sentry
+        throw e;
       }
     }
   }

@@ -110,6 +110,12 @@ class NimbledroidApiHandler {
     const productsData = await Promise.all(
       this.products.map(async product => this.fetchProductData(product)),
     );
+    if (
+      Object.keys(productsData[0]).length === 0 ||
+      Object.keys(productsData[1]).length === 0
+    ) {
+      throw Error('The backend has no data available.');
+    }
     return mergeProductsData(productsData);
   }
 }
