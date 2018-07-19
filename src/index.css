@@ -1056,3 +1056,64 @@ svg {
 .no-left-margin {
   margin-left: 0 !important;
 }
+
+.status-widget {
+  display: flex;
+  justify-content: space-between;
+  .enrich {
+    font-size: 1em;
+    font-weight: bold;
+  }
+}
+
+.summary-table {
+  border-spacing: 0;
+  text-align: right;
+  white-space: nowrap;
+  .column {
+    padding: 0 0 0 0.7em;
+  }
+  .title-container {
+    max-width: 480px;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+  }
+}
+
+.sites-table {
+  width: 800px;
+}
+.sites-overview {
+   margin: 1em auto 2em auto;
+   width: 480px;
+}
+
+.status-red {
+  background-color: var(--newCoral);
+}
+.status-yellow {
+  background-color: var(--newYellow);
+}
+.status-green {
+  background-color: var(--newLime);
+}
+
+.padded {
+  line-height: 1em;
+  padding: 0.45em;
+}
+
+.aligned-center {
+  margin: 0px auto;
+}
+
+.error-message {
+  color: 'red';
+}
+
+.android-view {
+  background-color: white;
+  color: black;
+  padding: 1em;
+}

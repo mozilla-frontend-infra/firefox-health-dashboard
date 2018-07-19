@@ -4,8 +4,11 @@ const renameProduct = product => (
   product === 'klar' ? 'GV' : 'WV'
 );
 
-const matchSiteName = profileName => profileName
-  .replace(/.*.*http[s]*:\/\/[www]*\.*(.*)[/].*/, (match, firstMatch) => firstMatch);
+const matchUrl = profileName => profileName
+  .replace(/.*(http[s]?:\/\/w*\.?.*?)[/]?[)]/, (match, firstMatch) => firstMatch);
+
+const matchShorterUrl = url => url
+  .replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
 
 const transformedDataForMetrisGraphics = (nimbledroidData) => {
   const metricsGraphicsData = nimbledroidData.reduce((result, elem) => {
@@ -19,19 +22,17 @@ const transformedDataForMetrisGraphics = (nimbledroidData) => {
       // some of them test websites and contain the URL in the name.
       // There are other profiles testing non-site behaviours, however,
       // we're not interested on plotting those
-      if (
-        status !== 'fail' &&
-        scenario_name.startsWith('customFlow') &&
-        scenario_name.includes('http')
-      ) {
-        if (!result[product][scenario_name]) {
-          result[product][scenario_name] = {
+      if (scenario_name.includes('http')) {
+        const url = matchUrl(scenario_name);
+        if (!result[product][url]) {
+          result[product][url] = {
             data: [],
-            title: matchSiteName(scenario_name),
+            title: matchShorterUrl(url),
+            url,
           };
         }
         if (time_in_ms > 0) {
-          result[product][scenario_name].data.push({
+          result[product][url].data.push({
             date: new Date(elem.added),
             value: time_in_ms / 1000,
           });
@@ -62,22 +63,22 @@ const mergeProductsData = (productsData) => {
       const profileKeys = Object.keys(productData[product]);
 
       profileKeys.forEach((profileKey) => {
-        const { data, title } = productData[product][profileKey];
-        const sortedData = data.sort(sortDataPointsByRecency);
-        const lastDataPoint = sortedData[sortedData.length - 1].value;
+        const profileInfo = productData[product][profileKey];
+        const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
+        const lastDataPoint = (sortedData[sortedData.length - 1].value).toFixed(2);
 
         // This is the first time we're seing this scenario
         if (!result[profileKey]) {
+          delete profileInfo.data;
           result[profileKey] = {
             data: {},
-            title,
-            lastDataPoints: {}, // This is a shortcut
+            ...profileInfo,
            };
         }
         // This is the first time we're seing this product for this scenario
         if (!result[profileKey].data[product]) {
           result[profileKey].data[product] = sortedData;
-          result[profileKey].lastDataPoints[product] = lastDataPoint;
+          result[profileKey][product] = lastDataPoint;
         }
       });
       return result;
