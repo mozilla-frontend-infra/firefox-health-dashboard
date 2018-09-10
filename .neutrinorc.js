@@ -8,7 +8,7 @@ const mqpacker = require('css-mqpacker');
 
 const acceptedExternalEnvs = {
   BACKEND: 'BACKEND' in process.env ?
-    process.env.BACKEND : 'https://firefox-health-backend.herokuapp.com'
+    process.env.BACKEND : 'https://firefox-health-backend-pr-46.herokuapp.com'
 };
 
 // Set environment variables to their default values if not defined
