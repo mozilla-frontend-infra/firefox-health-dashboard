@@ -10,8 +10,8 @@ class BackendClient {
     };
   }
 
-  getData(apiName) {
-    return this.handlers[apiName].getData();
+  getData(apiName, parameters) {
+    return this.handlers[apiName].getData(parameters);
   }
 }
 

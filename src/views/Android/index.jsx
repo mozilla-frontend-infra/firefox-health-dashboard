@@ -26,7 +26,14 @@ export default class Android extends Component {
 
   async fetchAndroidData() {
     try {
-      const nimbledroidData = await this.client.getData('nimbledroid');
+      const nimbledroidData = await this.client.getData(
+        'nimbledroid',
+        { products: [
+          'org.mozilla.klar',
+          'org.mozilla.focus',
+          'com.chrome.beta',
+        ] },
+      );
       this.setState({ nimbledroidData });
     } catch (e) {
       if (e.message === 'Failed to fetch') {

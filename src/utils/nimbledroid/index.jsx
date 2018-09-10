@@ -1,10 +1,16 @@
-const percentageSymbol = (GV, WV, targetRatio) => ((GV < (targetRatio * WV)) ? '+' : '');
+const TARGET1 = 'GV';
+const TARGET2 = 'ChromeBeta';
 
-const ratioWithTarget = (GV, WV, targetRatio) => GV / (targetRatio * WV);
+const percentageSymbol = (target1, target2, targetRatio) =>
+  ((target1 < (targetRatio * target2)) ? '+' : '');
+
+const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRatio * target2);
 
 export const sortSitesByTargetRatio = (a, b) => {
-  const aRatio = a.GV / a.WV;
-  const bRatio = b.GV / b.WV;
+  const aRatio = a[TARGET1] / a[TARGET2];
+  const bRatio = b[TARGET1] / b[TARGET2];
+  console.log(aRatio);
+  console.log(bRatio);
   return bRatio - aRatio;
 };
 
@@ -28,11 +34,11 @@ const statusColor = (ratio, targetRatio) => {
   return { smileyFace, widgetColor };
 };
 
-export const siteMetrics = (GV, WV, targetRatio) => {
-  const ratio = ratioWithTarget(GV, WV, targetRatio);
+export const siteMetrics = (target1, target2, targetRatio) => {
+  const ratio = ratioWithTarget(target1, target2, targetRatio);
   return {
     ratio,
-    symbol: percentageSymbol(GV, WV, targetRatio),
+    symbol: percentageSymbol(target1, target2, targetRatio),
     color: statusColor(ratio, targetRatio).widgetColor,
   };
 };
@@ -73,13 +79,13 @@ export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
     green: 0,
   };
   const tableContent = sites.map(({
-    title, url, GV, WV,
+    title, url, GV, WV, ChromeBeta,
   }) => {
-    const { ratio, symbol, color } = siteMetrics(GV, WV, targetRatio);
+    const { ratio, symbol, color } = siteMetrics(GV, ChromeBeta, targetRatio);
     count[color] += 1;
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: [GV, WV],
+      dataPoints: [GV, WV, ChromeBeta],
       statusColor: color,
       summary: `${symbol}${((1 - ratio) * 100).toFixed(2)}%`,
       title: {

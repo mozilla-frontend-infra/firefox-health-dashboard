@@ -1,8 +1,10 @@
 import fetchJson from '../fetchJson';
 
-const renameProduct = product => (
-  product === 'klar' ? 'GV' : 'WV'
-);
+const PRODUCT_KEYS = {
+  'org.mozilla.klar': 'GV',
+  'org.mozilla.focus': 'WV',
+  'com.chrome.beta': 'ChromeBeta',
+};
 
 const matchUrl = profileName => profileName
   .replace(/.*(http[s]?:\/\/w*\.?.*?)[/]?[)]/, (match, firstMatch) => firstMatch);
@@ -12,7 +14,7 @@ const matchShorterUrl = url => url
 
 const transformedDataForMetrisGraphics = (nimbledroidData) => {
   const metricsGraphicsData = nimbledroidData.reduce((result, elem) => {
-    const product = renameProduct(elem.package_id.replace('org.mozilla.', ''));
+    const product = PRODUCT_KEYS[elem.package_id];
     if (!result[product]) {
       result[product] = {};
     }
@@ -86,30 +88,33 @@ const mergeProductsData = (productsData) => {
   return mergedData;
 };
 
-class NimbledroidApiHandler {
-  products = ['focus', 'klar'];
+let ENDPOINT;
 
+const productUrl = product => `${ENDPOINT}?product=${product}`;
+
+const fetchProductData = async (product) => {
+  const url = productUrl(product);
+  const productData = await fetchJson(url);
+  return transformedDataForMetrisGraphics(productData);
+};
+
+// XXX: There's a strong coupling of data fetching from the API and
+//      data transformation for UI purposes (e.g. mergeProducts data)
+class NimbledroidApiHandler {
   constructor(backendUrl) {
-    this.nimbledroidApiUrl = `${backendUrl}/api/android/nimbledroid`;
+    ENDPOINT = `${backendUrl}/api/android/nimbledroid`;
   }
 
   // No clean way to have interfaces on Javascript
-  getData() {
-    return this.fetchProducts();
+  getData({ products }) {
+    return this.fetchProducts(products);
   }
 
-  productUrl(product) {
-    return `${this.nimbledroidApiUrl}?product=${product}`;
-  }
-
-  async fetchProductData(product) {
-    const productData = await fetchJson(this.productUrl(product));
-    return transformedDataForMetrisGraphics(productData);
-  }
-
-  async fetchProducts() {
+  // e.g. org.mozilla.klar, com.chrome.beta
+  async fetchProducts(products) {
     const productsData = await Promise.all(
-      this.products.map(async product => this.fetchProductData(product)));
+      products.map(async product => fetchProductData(product)),
+    );
     return mergeProductsData(productsData);
   }
 }
