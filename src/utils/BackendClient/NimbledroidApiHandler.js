@@ -86,16 +86,16 @@ const mergeProductsData = (productsData) => {
   return mergedData;
 };
 
+// XXX: There's a strong coupling of data fetching from the API and
+//      data transformation for UI purposes (e.g. mergeProducts data)
 class NimbledroidApiHandler {
-  products = ['focus', 'klar'];
-
   constructor(backendUrl) {
     this.nimbledroidApiUrl = `${backendUrl}/api/android/nimbledroid`;
   }
 
   // No clean way to have interfaces on Javascript
-  getData() {
-    return this.fetchProducts();
+  getData(parameters) {
+    return this.fetchProducts(parameters.products);
   }
 
   productUrl(product) {
@@ -107,9 +107,10 @@ class NimbledroidApiHandler {
     return transformedDataForMetrisGraphics(productData);
   }
 
-  async fetchProducts() {
+  // e.g. org.mozilla.klar, com.chrome.beta
+  async fetchProducts(products) {
     const productsData = await Promise.all(
-      this.products.map(async product => this.fetchProductData(product)),
+      products.map(async product => this.fetchProductData(product)),
     );
     return mergeProductsData(productsData);
   }
