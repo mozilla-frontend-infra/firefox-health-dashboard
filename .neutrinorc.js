@@ -124,7 +124,7 @@ module.exports = {
         env: Object.keys(acceptedExternalEnvs),
       }
     ],
-    '@neutrinojs/mocha',
+    '@neutrinojs/jest',
     (neutrino) => {
       // Read https://stackoverflow.com/a/36623117
       // This is the key to making React Router work with neutrino
