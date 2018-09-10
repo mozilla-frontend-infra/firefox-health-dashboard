@@ -20,7 +20,7 @@ const SitesTable = ({ nimbledroidData, targetRatio }) => {
       </GenericErrorBoundary>
       <div className="aligned-center">
         <SummaryTable
-          header={['GeckoView', 'WebView', '% from target']}
+          header={['GeckoView', 'WebView', 'Chrome beta', '% from target']}
           content={tableContent}
         />
       </div>

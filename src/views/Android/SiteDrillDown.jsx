@@ -13,7 +13,7 @@ const SiteDrillDown = ({ nimbledroidData, site, targetRatio }) => {
   return (
     <GenericErrorBoundary>
       <StatusWidget
-        extraInfo="Target: GeckoView <= WebView + 20%"
+        extraInfo="Target: GeckoView <= Chrome Beta + 20%"
         statusColor={color}
         title={{
           enrich: true,

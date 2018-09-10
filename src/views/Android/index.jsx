@@ -26,7 +26,14 @@ export default class Android extends Component {
 
   async fetchAndroidData() {
     try {
-      const nimbledroidData = await this.client.getData('nimbledroid');
+      const nimbledroidData = await this.client.getData(
+        'nimbledroid',
+        { products: [
+          'org.mozilla.klar',
+          'org.mozilla.focus',
+          'com.chrome.beta',
+        ] },
+      );
       this.setState({ nimbledroidData });
     } catch (e) {
       if (e.message === 'Failed to fetch') {
@@ -56,7 +63,7 @@ export default class Android extends Component {
     return (
       <Dashboard
         title="Android"
-        subtitle="GeckoView vs WebView Page load (time in seconds, lower is better)"
+        subtitle="GeckoView vs Chrome Beta Page load (time in seconds, lower is better)"
         className={cx('summary')}
       >
         <div className="android-view">
