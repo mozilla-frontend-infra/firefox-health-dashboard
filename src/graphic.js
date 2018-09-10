@@ -24,9 +24,7 @@ export default class Graphic extends React.Component {
       const override = {};
       const { baseline, baselines } = this.props;
       if (baseline) {
-        const needle = this.props.data.filter((point) => {
-          return moment(point.date).format('YYYY-MM-DD') === baseline;
-        })[0];
+        const needle = this.props.data.filter(point => moment(point.date).format('YYYY-MM-DD') === baseline)[0];
         if (needle && needle.rate > 0) {
           const high = needle.rate;
           const low = high * 0.67;

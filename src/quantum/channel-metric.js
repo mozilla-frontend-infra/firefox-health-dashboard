@@ -94,32 +94,27 @@ export default class ChannelMetric extends React.Component {
       const alphaScale = scalePow().exponent(0.5).domain([0, 3]).range([1, 0.3]);
       const xDomain = [
         // first day of release for oldest version
-        new Date(
-          evolutions
-            .slice()
-            .reverse()
-            .find(evolution => evolution.channels[0])
-            .channels.slice(-3)
-            .find(channel => channel).dates[0].date,
-        ),
+        new Date(evolutions
+          .slice()
+          .reverse()
+          .find(evolution => evolution.channels[0])
+          .channels.slice(-3)
+          .find(channel => channel).dates[0].date),
         // last day of current nightly
-        new Date(
-          evolutions.find(evolution => evolution.channels[0]).channels[0].dates.slice(-1)[0].date,
-        ),
+        new Date(evolutions
+          .find(evolution => evolution.channels[0]).channels[0].dates.slice(-1)[0].date),
       ];
       const xScale = scaleTime().domain(xDomain).range([50, this.width - 5]);
       const $labels = [];
       const $evolutions = evolutions.map((version, versionIdx) => {
         // console.log(moment(xDomain[1]).diff(xDomain[0], 'weeks', true));
-        const paths = yRangeFields.reduce((map, field) => {
-          return map.set(
-            field,
-            line()
-              .x(d => xScale(new Date(d.date)))
-              .y(d => yScales.get(field)(d[field]))
-              .curve(curveLinear),
-          );
-        }, new Map());
+        const paths = yRangeFields.reduce((map, field) => map.set(
+          field,
+          line()
+            .x(d => xScale(new Date(d.date)))
+            .y(d => yScales.get(field)(d[field]))
+            .curve(curveLinear),
+        ), new Map());
         const $channels = version.channels.map((channel, channelIdx) => {
           if (!channel) {
             return null;
@@ -136,20 +131,18 @@ export default class ChannelMetric extends React.Component {
             };
             const key = `${versionIdx}-${channelIdx}-${pathIdx}`;
             if (channel.dates.length > 1) {
-              $labels.push(
-                <g key={`label-${key}`} className='channel-label'>
-                  <text {...labelProps}>
-                    {`${version.version}`}
-                  </text>
-                  <circle cx={labelProps.x} cy={labelProps.y} r={3} />
-                  <text {...labelProps}>
-                    {`${channel.channel}`}
-                  </text>
-                </g>,
-              );
+              $labels.push(<g key={`label-${key}`} className="channel-label">
+                <text {...labelProps}>
+                  {`${version.version}`}
+                </text>
+                <circle cx={labelProps.x} cy={labelProps.y} r={3} />
+                <text {...labelProps}>
+                  {`${channel.channel}`}
+                </text>
+              </g>);
             }
             return (
-              <g key={`line-${key}`} className='channel-line'>
+              <g key={`line-${key}`} className="channel-line">
                 <path
                   stroke={color}
                   strokeWidth={alpha === 1 ? 2 : 1}
@@ -267,11 +260,11 @@ export default class ChannelMetric extends React.Component {
       <Dashboard
         title={`Quantum Nightly Telemetry: ${this.props.title}`}
         subtitle={this.props.subtitle}
-        className='dashboard-metric'
-        note='14-day Moving Median'
+        className="dashboard-metric"
+        note="14-day Moving Median"
         source={source}
         sourceTitle={`${query.metric} (t.m.o)`}
-        link='https://bit.ly/quantum-dashboards'
+        link="https://bit.ly/quantum-dashboards"
       >
         <section className={cls} ref={target => (this.target = target)}>
           {svg}

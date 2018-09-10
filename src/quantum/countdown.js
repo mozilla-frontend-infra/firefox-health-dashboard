@@ -16,12 +16,13 @@ export default class Countdown extends React.Component {
   }
 
   fetchData() {
-    fetch(SETTINGS.firefoxReleases).then(response => response.json()).then(
-      (data) => {
-        const releases = Object.entries(data);
-        return this.setState({ date: releases[releases.length - 1][1],
-          version: parseInt(releases[releases.length - 1][0], 10) });
+    fetch(SETTINGS.firefoxReleases).then(response => response.json()).then((data) => {
+      const releases = Object.entries(data);
+      return this.setState({
+        date: releases[releases.length - 1][1],
+        version: parseInt(releases[releases.length - 1][0], 10),
       });
+    });
   }
 
   render() {
@@ -48,12 +49,12 @@ export default class Countdown extends React.Component {
     }
     return (
       <Widget
-        title='Release Dates'
-        link='https://wiki.mozilla.org/RapidRelease/Calendar'
-        className='widget-countdown narrow-content'
+        title="Release Dates"
+        link="https://wiki.mozilla.org/RapidRelease/Calendar"
+        className="widget-countdown narrow-content"
       >
         {date && timespan &&
-          <div className='widget-entry' key='countdown-release'>
+          <div className="widget-entry" key="countdown-release">
             <span>
               <em>{`${version} `}</em>is the current release
               <br />

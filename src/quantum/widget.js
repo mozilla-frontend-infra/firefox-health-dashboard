@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const enrich = (text, key = 'none') => {
-  return typeof text === 'string'
-    ? <span
-      key={`enriched-${key}`}
-      dangerouslySetInnerHTML={{
+const enrich = (text, key = 'none') => (typeof text === 'string'
+  ? <span
+    key={`enriched-${key}`}
+    dangerouslySetInnerHTML={{
           // eslint-disable-line
         __html: text
             .replace(/\*([^*]+)\*/g, '<em>$1</em>')
@@ -17,16 +16,15 @@ const enrich = (text, key = 'none') => {
               '<a href="$2" target="_blank" rel="noopener noreferrer">$1</em>',
             ),
       }}
-    />
-    : text;
-};
+  />
+  : text);
 
 export default class Widget extends React.Component {
   render() {
     const title = enrich(this.props.title);
     // const updated = this.props.updated && moment(this.props.updated);
     const $title = this.props.link
-      ? (<a href={this.props.link} target='_blank' rel='noopener noreferrer'>
+      ? (<a href={this.props.link} target="_blank" rel="noopener noreferrer">
         {title}
       </a>)
       : title;
@@ -47,16 +45,16 @@ export default class Widget extends React.Component {
     if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
       const targetStatus = this.props.targetStatus;
       $targetStatus = (
-        <aside className='widget-target-status'>
+        <aside className="widget-target-status">
           {reading
-            ? <span className='status-reading'>{reading}</span>
+            ? <span className="status-reading">{reading}</span>
             : null
           }
           {targetStatus === 'pass'
-            ? <span role='img' aria-label='Pass' key='icon-pass' className='status-icon'>
+            ? <span role="img" aria-label="Pass" key="icon-pass" className="status-icon">
                 😀
             </span>
-            : <span role='img' aria-label='Fail' key='icon-fail' className='status-icon'>
+            : <span role="img" aria-label="Fail" key="icon-fail" className="status-icon">
                 😟
             </span>}
         </aside>
@@ -65,12 +63,12 @@ export default class Widget extends React.Component {
 
     return (
       <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
-        <header className='sides-padding'>
+        <header className="sides-padding">
           <div>
             <h3>
               {$title}
             </h3>
-            <span className='sides-padding'>{$secondTitle}</span>
+            <span className="sides-padding">{$secondTitle}</span>
           </div>
           {$targetStatus}
         </header>
@@ -89,7 +87,7 @@ export default class Widget extends React.Component {
           {this.props.content &&
             enrich(this.props.content, 'content')}
           {target &&
-            <div key='target' className='widget-target'>
+            <div key="target" className="widget-target">
               {target}
             </div>}
         </div>

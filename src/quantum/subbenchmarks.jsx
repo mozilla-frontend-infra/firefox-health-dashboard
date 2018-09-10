@@ -21,12 +21,12 @@ const Subbenchmarks = ({ match }) => (
 );
 
 Subbenchmarks.propTypes = {
- match: propTypes.shape({}).isRequired,
+  match: propTypes.shape({}).isRequired,
 };
 
 const Graph = ({ data, name, url }) => (
   <div key={name}>
-    <div className='black-bar'>
+    <div className="black-bar">
       <a href={`#${name}`}>
         <FontAwesomeIcon
           id={name}
@@ -52,9 +52,9 @@ const Graph = ({ data, name, url }) => (
 );
 
 Graph.propTypes = {
- data: propTypes.array.isRequired,
- name: propTypes.string.isRequired,
- url: propTypes.string.isRequired,
+  data: propTypes.array.isRequired,
+  name: propTypes.string.isRequired,
+  url: propTypes.string.isRequired,
 };
 
 class PerfherderContainer extends Component {
@@ -96,21 +96,21 @@ class PerfherderContainer extends Component {
     }
 
     return (
-      <div className='subbenchmarks align-center'>
+      <div className="subbenchmarks align-center">
         {!data ?
           <div>
             <h3>Loading...</h3>
           </div> :
           <div>
-            <div className='header'>
-              <h2 className='wider-letter-spacing'>
+            <div className="header">
+              <h2 className="wider-letter-spacing">
                 {this.props.suite}
               </h2>
               <a
-                className='header-item'
+                className="header-item"
                 href={perfherderUrl}
                 target="_blank"
-                alt='View all subtests on Perfherder'
+                alt="View all subtests on Perfherder"
               >
                 <FontAwesomeIcon
                   icon={faExternalLinkAlt}

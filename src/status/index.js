@@ -19,14 +19,10 @@ const Table = ({ title, rows }) => {
       </span>
     );
   });
-  const main = flow(
-    map((entry) => {
-      return <Feature key={`feature-${entry.id}`} entry={entry} />;
-    }),
-  )(rows);
+  const main = flow(map(entry => <Feature key={`feature-${entry.id}`} entry={entry} />))(rows);
   return (
-    <div className='features'>
-      <header className='table-row'>
+    <div className="features">
+      <header className="table-row">
         <h2>
           {title}
         </h2>
@@ -68,12 +64,12 @@ const Feature = ({ entry }) => {
     let icon = null;
     if (platform === 'firefox' && state.ref) {
       icon = (
-        <i className='icon-ref' title='Shipping status from platform-status.mozilla.org'>
+        <i className="icon-ref" title="Shipping status from platform-status.mozilla.org">
           ✓
         </i>
       );
     } else if (state.bz) {
-      icon = <i className='icon-ref icon-bz' title='Shipping status from bugzilla' />;
+      icon = <i className="icon-ref icon-bz" title="Shipping status from bugzilla" />;
     }
     return (
       <span key={`feature-${id}-${platform}`} className={tdCls} title={state.alt || ''}>
@@ -83,9 +79,9 @@ const Feature = ({ entry }) => {
     );
   });
   return (
-    <div className='table-row feature'>
-      <span key={`feature-${id}-title`} className='feature-title'>
-        <a href={entry.link} target='_blank' rel='noopener noreferrer'>
+    <div className="table-row feature">
+      <span key={`feature-${id}-title`} className="feature-title">
+        <a href={entry.link} target="_blank" rel="noopener noreferrer">
           {entry.name}
         </a>
       </span>
@@ -117,8 +113,8 @@ export default class Status extends React.Component {
     if (popular) {
       tables = [
         <Table
-          key='table-popular-missing'
-          title='Chrome but not FF'
+          key="table-popular-missing"
+          title="Chrome but not FF"
           rows={flow(
             // filter((feature) => feature.recent),
             filter(({ firefox }) => firefox.status !== 'shipped'),
@@ -128,24 +124,22 @@ export default class Status extends React.Component {
           )(popular)}
         />,
         <Table
-          key='table-popular-done'
-          title='FF but not Chrome'
+          key="table-popular-done"
+          title="FF but not Chrome"
           rows={flow(
-            filter(({ firefox, chrome }) => {
-              return (
+            filter(({ firefox, chrome }) => (
                 (firefox.version ||
                   firefox.status === 'shipped' ||
                   firefox.status === 'in-development') &&
                 chrome.status !== 'shipped'
-              );
-            }),
+              )),
             sortBy(['recency']),
             reverse,
           )(popular)}
         />,
         <Table
-          key='table-caniuse'
-          title='CanIUse: Not FF'
+          key="table-caniuse"
+          title="CanIUse: Not FF"
           rows={flow(
             // filter((feature) => feature.recency > 0),
             filter(feature => !feature.firefox || feature.firefox.status !== 'shipped'),
@@ -157,9 +151,9 @@ export default class Status extends React.Component {
     }
     return (
       <Dashboard
-        title='Platform Feature Comparison'
-        subtitle='Aggregated from chromestatus.com and caniuse.com'
-        className='status-index'
+        title="Platform Feature Comparison"
+        subtitle="Aggregated from chromestatus.com and caniuse.com"
+        className="status-index"
       >
         {tables}
       </Dashboard>

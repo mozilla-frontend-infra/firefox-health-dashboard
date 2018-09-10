@@ -73,7 +73,7 @@ const mergeProductsData = (productsData) => {
           result[profileKey] = {
             data: {},
             ...profileInfo,
-           };
+          };
         }
         // This is the first time we're seing this product for this scenario
         if (!result[profileKey].data[product]) {
@@ -109,8 +109,7 @@ class NimbledroidApiHandler {
 
   async fetchProducts() {
     const productsData = await Promise.all(
-      this.products.map(async product => this.fetchProductData(product)),
-    );
+      this.products.map(async product => this.fetchProductData(product)));
     return mergeProductsData(productsData);
   }
 }

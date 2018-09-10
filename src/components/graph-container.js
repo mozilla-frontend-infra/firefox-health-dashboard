@@ -39,7 +39,7 @@ export default class GraphContainer extends React.Component {
         return response.json();
       }
       throw response;
-      })
+    })
       .then(data => this.parseData(data))
       .catch(() => this.setState({ apiFailed: true }));
   }
@@ -49,7 +49,9 @@ export default class GraphContainer extends React.Component {
       this.setState({ noDataFound: true });
       return;
     }
-    const { checkStatus, keys, targetValue, targetLine } = this.props;
+    const {
+      checkStatus, keys, targetValue, targetLine,
+    } = this.props;
     const stateObj = { data: transformGraphData(keys, data) };
     if (checkStatus) {
       stateObj.status = determineStatusColor(data, targetLine, targetValue);
@@ -58,8 +60,12 @@ export default class GraphContainer extends React.Component {
   }
 
   render() {
-    const { data, status, apiFailed, noDataFound } = this.state;
-    const { title, link, legend, baselines, target, width, height, customClass } = this.props;
+    const {
+      data, status, apiFailed, noDataFound,
+    } = this.state;
+    const {
+      title, link, legend, baselines, target, width, height, customClass,
+    } = this.props;
     let viewport = [0, 0];
     let message = 'Oops, something went wrong.';
 
@@ -83,14 +89,14 @@ export default class GraphContainer extends React.Component {
             {!data &&
             <div>Loading...</div>}
 
-            <div className='legend' ref={ele => this.legendTarget = ele} />
+            <div className="legend" ref={ele => this.legendTarget = ele} />
             {(data && !legend || data && this.legendTarget && legend) &&
             <MetricsGraphics
               width={width}
               height={height}
               data={data}
-              x_accessor='date'
-              y_accessor='value'
+              x_accessor="date"
+              y_accessor="value"
               interpolate={curveLinear}
               legend={legend}
               legend_target={this.legendTarget}

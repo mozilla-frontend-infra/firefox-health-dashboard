@@ -15,9 +15,7 @@
 export const transformGraphData = (keys, data) => {
   const finalData = [];
   for (const key of keys) {
-    finalData.push(
-      data.map(item => ({ date: new Date(item.date), value: item[key] })),
-    );
+    finalData.push(data.map(item => ({ date: new Date(item.date), value: item[key] })));
   }
   return finalData;
 };

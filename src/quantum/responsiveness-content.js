@@ -6,9 +6,9 @@ import { architecture } from './constants';
 
 const QuantumResponsivenessContent = ({ match }) => (
   <ChannelMetric
-    title='Responsiveness'
-    subtitle='Content Input Response Latency (ms)'
-    unit='ms'
+    title="Responsiveness"
+    subtitle="Content Input Response Latency (ms)"
+    unit="ms"
     query={{
       metric: 'INPUT_EVENT_RESPONSE_MS',
       child: 'content',
