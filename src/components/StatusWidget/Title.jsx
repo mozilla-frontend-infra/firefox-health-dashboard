@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 
-const Title = ({ enrich, hyperlink, text, tooltip }) => {
+const Title = ({
+  enrich, hyperlink, text, tooltip,
+}) => {
   const className = enrich ? 'enrich' : '';
   const span = <span className={className}>{text}</span>;
   return (hyperlink) ?

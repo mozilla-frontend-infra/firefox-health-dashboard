@@ -5,22 +5,24 @@ import cx from 'classnames';
 import LinearIndeterminate from './components/LinearIndeterminate';
 
 const Dashboard = (props) => {
-  const { title, subtitle, children, className, note, source, sourceTitle, link } = props;
+  const {
+    title, subtitle, children, className, note, source, sourceTitle, link,
+  } = props;
   const empty = !children;
   const $content = !empty ? children : 'Loading …';
   const cls = cx('dashboard', className, {
     'state-loading': empty,
     'state-fullscreen': window.frameElement || document.fullscreen,
   });
-  const $note = note ? <div className='dashboard-note'>{note}</div> : null;
+  const $note = note ? <div className="dashboard-note">{note}</div> : null;
   const $link = link
-    ? (<a href={link} target='_new'>
+    ? (<a href={link} target="_new">
       {link.replace(/.*\/\//, '')}
     </a>)
     : null;
   const $source = source
-    ? (<div className='dashboard-source'>
-        Source: <a href={source} target='_new' rel='noopener noreferrer'>
+    ? (<div className="dashboard-source">
+        Source: <a href={source} target="_new" rel="noopener noreferrer">
           {sourceTitle}
         </a>
       {$link}
@@ -28,7 +30,7 @@ const Dashboard = (props) => {
     : null;
   return (
     <div className={cls}>
-      <div className='dashboard-title'>
+      <div className="dashboard-title">
         <h1>
           {title}
           <small>{subtitle}</small>
@@ -37,7 +39,7 @@ const Dashboard = (props) => {
         {$source}
       </div>
       {props.loading && <LinearIndeterminate />}
-      <div className='dashboard-main'>
+      <div className="dashboard-main">
         {$content}
       </div>
     </div>

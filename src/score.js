@@ -22,11 +22,11 @@ export default function Score({ data, baselines }) {
     }
   }
   return (
-    <div className='graphic-scores'>
-      <div className='score'>
-        <span className='score-label'>{ago}</span>
-        <span className='score-display'>
-          <span className='score-main'>{baselining(last)}</span>
+    <div className="graphic-scores">
+      <div className="score">
+        <span className="score-label">{ago}</span>
+        <span className="score-display">
+          <span className="score-main">{baselining(last)}</span>
         </span>
       </div>
     </div>

@@ -15,8 +15,8 @@ class NimbledroidGraph extends Component {
         full_width
         height={600}
         data={data}
-        x_accessor='date'
-        y_accessor='value'
+        x_accessor="date"
+        y_accessor="value"
         legend={labels}
         legend_target={this.legendTarget}
         aggregate_rollover

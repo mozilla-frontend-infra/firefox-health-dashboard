@@ -72,7 +72,9 @@ export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
     yellow: 0,
     green: 0,
   };
-  const tableContent = sites.map(({ title, url, GV, WV }) => {
+  const tableContent = sites.map(({
+    title, url, GV, WV,
+  }) => {
     const { ratio, symbol, color } = siteMetrics(GV, WV, targetRatio);
     count[color] += 1;
     // This matches the format expected by the SummaryTable component

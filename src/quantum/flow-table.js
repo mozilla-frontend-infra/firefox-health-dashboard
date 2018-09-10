@@ -21,7 +21,7 @@ export default class FlowTable extends React.Component {
 
   fetchData() {
     fetch(`${SETTINGS.backend}/api/bz/burnup?${stringify(flowGraphProps.query)}&list=true`)
-    .then(response => response.json()).then(data => this.setState({ data }));
+      .then(response => response.json()).then(data => this.setState({ data }));
   }
 
   render() {
@@ -63,8 +63,8 @@ export default class FlowTable extends React.Component {
     ];
     return (
       <Dashboard
-        title='Quantum'
-        subtitle='P1 Bugs'
+        title="Quantum"
+        subtitle="P1 Bugs"
         className={cx('summary')}
       >
         <div style={{ backgroundColor: 'white' }}>

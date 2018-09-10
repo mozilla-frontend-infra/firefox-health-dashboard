@@ -9,7 +9,7 @@ const QuantumTracking = ({ match, location }) => {
   const { metric, child } = parse(location.search);
   const params = {
     architecture: architecture[match.params.architecture],
-    metric: metric,
+    metric,
     os: 'Windows_NT',
     e10sEnabled: true,
   };
@@ -21,7 +21,7 @@ const QuantumTracking = ({ match, location }) => {
   return (
     !metric ?
       <div>
-        <p className='align-center'>A metric query string is required</p>
+        <p className="align-center">A metric query string is required</p>
       </div> :
       <ChannelMetric
         title={metric}

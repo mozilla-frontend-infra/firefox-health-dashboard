@@ -29,14 +29,14 @@ export default class PerfherderWidget extends React.Component {
     }, new Map());
     const query = stringify({
       signatures: [...splitSignatures.keys()],
-      framework: framework,
+      framework,
     });
     try {
       const evolutions = await (await fetch(`${SETTINGS.backend}/api/perf/herder?${query}`)).json();
       this.setState({
-        evolutions: evolutions,
+        evolutions,
         signatures: splitSignatures,
-        signatureLabels: signatureLabels,
+        signatureLabels,
       });
     } catch (e) {
       this.setState({ error: true });
@@ -55,9 +55,7 @@ export default class PerfherderWidget extends React.Component {
       const referenceFit = referenceTime ? moment(referenceTime).add(-5, 'days').unix() : 0;
       const [width, height] = this.viewport;
 
-      const full = evolutions.reduce((reduced, evolution) => {
-        return reduced.concat(evolution);
-      }, []);
+      const full = evolutions.reduce((reduced, evolution) => reduced.concat(evolution), []);
       const xRange = [
         Math.max(referenceFit, minBy('time', full).time) * 1000,
         maxBy('time', full).time * 1000,
@@ -81,9 +79,7 @@ export default class PerfherderWidget extends React.Component {
         if (!evolution) {
           return null;
         }
-        const ref = evolution.find(
-          d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime,
-        );
+        const ref = evolution.find(d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime);
         let $reference = null;
         if (ref) {
           const refY = yScale(ref.avg);
@@ -91,7 +87,7 @@ export default class PerfherderWidget extends React.Component {
           $reference = busy ? null : (
             <line
               key={`reference-${idx}`}
-              className='reference reference-x'
+              className="reference reference-x"
               x1={referenceX}
               y1={refY}
               x2={width}
@@ -111,14 +107,12 @@ export default class PerfherderWidget extends React.Component {
         );
         const $scatters = busy ? null : evolution.reduce((reduced, entry) => {
           entry.runs.forEach((run) => {
-            reduced.push(
-              <circle
-                cx={xScale(run.time * 1000)}
-                cy={yScale(run.value)}
-                r={1.5}
-                className={`series series-${idx}`}
-              />,
-            );
+            reduced.push(<circle
+              cx={xScale(run.time * 1000)}
+              cy={yScale(run.value)}
+              r={1.5}
+              className={`series series-${idx}`}
+            />);
           }, reduced);
           return reduced;
         }, []);
@@ -169,19 +163,17 @@ export default class PerfherderWidget extends React.Component {
       });
 
       const $legend = signatureLabels.length > 1
-        ? signatureLabels.map((label, idx) => {
-          return (
-            <text className={`legend series-${idx}`} x={27 + 60 * idx} y={15} key={`legend-${label}`}>
-              {label}
-            </text>
-          );
-        })
+        ? signatureLabels.map((label, idx) => (
+          <text className={`legend series-${idx}`} x={27 + 60 * idx} y={15} key={`legend-${label}`}>
+            {label}
+          </text>
+        ))
         : null;
 
       const $reference = referenceX ? (
         <line
-          key='reference-y'
-          className='reference reference-y'
+          key="reference-y"
+          className="reference reference-y"
           x1={referenceX}
           y1={min(referenceYs)}
           x2={referenceX}
@@ -206,9 +198,7 @@ export default class PerfherderWidget extends React.Component {
       timerange: 7776000,
       series: (signatures
         ? [...signatures.keys()]
-        : Object.values(this.props.signatures)).map((signature) => {
-          return `[mozilla-central,${signature},1,${framework}]`;
-        }),
+        : Object.values(this.props.signatures)).map(signature => `[mozilla-central,${signature},1,${framework}]`),
     });
     const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;
 
@@ -217,7 +207,7 @@ export default class PerfherderWidget extends React.Component {
         {...this.props}
         link={link}
         target={(this.props.target != null) ? this.props.target : 'No regressions'}
-        className='graphic-widget graphic-timeline'
+        className="graphic-widget graphic-timeline"
         content={svg}
         loading={!evolutions}
         explainer={`${explainer} (14-day moving median, variance band between 1st/3rd quantile)`}

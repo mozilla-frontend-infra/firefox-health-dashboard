@@ -36,16 +36,16 @@ export default class FirefoxUtCrashes extends React.Component {
 
   render() {
     return (
-      <div className='row'>
-        <header className='aside'>
+      <div className="row">
+        <header className="aside">
           <span>Firefox Crashes / 1000 hrs</span>
         </header>
         <Graphic
           {...this.state}
-          x_accessor='date'
-          y_accessor='rate'
-          min_y='0'
-          max_y='10'
+          x_accessor="date"
+          y_accessor="rate"
+          min_y="0"
+          max_y="10"
           max_x={moment().subtract(1, 'days').toDate()}
           y_extended_ticks
           cleaned

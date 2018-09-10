@@ -55,13 +55,13 @@ export default class Android extends Component {
     const site = this.props.location.search.replace('?site=', '');
     return (
       <Dashboard
-        title='Android'
-        subtitle='GeckoView vs WebView Page load (time in seconds, lower is better)'
+        title="Android"
+        subtitle="GeckoView vs WebView Page load (time in seconds, lower is better)"
         className={cx('summary')}
       >
         <div className="android-view">
           {/* Needed until the background of the site is not black */}
-          <div className='aligned-center'>
+          <div className="aligned-center">
             {numSites > 0 && !site && (
               <SitesTable
                 nimbledroidData={nimbledroidData}

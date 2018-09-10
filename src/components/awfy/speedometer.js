@@ -6,12 +6,14 @@ import Widget from '../../quantum/widget';
 import graph from '../../utils/metrics-graphics';
 import SETTINGS from '../../settings';
 
-const queryParams = ({ architecture, browsers, targetRatio, baseValue, skipDataBefore }) => {
+const queryParams = ({
+  architecture, browsers, targetRatio, baseValue, skipDataBefore,
+}) => {
   // XXX: Throw errors if we don't pass enough parameters
   let params = stringify({
-      architecture,
-      browser: browsers,
-      skipDataBefore,
+    architecture,
+    browser: browsers,
+    skipDataBefore,
   });
   params += targetRatio ? `&${stringify({ targetRatio })}` : '';
   params += baseValue ? `&${stringify({ baseValue })}` : '';
@@ -72,8 +74,7 @@ export default class Speedometer extends Component {
   }
 
   async fetchMarkerData() {
-    const response = await fetch(
-      `${SETTINGS.backend}/api/release/calendar?channel=nightly&days=210`);
+    const response = await fetch(`${SETTINGS.backend}/api/release/calendar?channel=nightly&days=210`);
     if (response.ok) {
       const data = await response.json();
       await this.setState({ markers: this.transformMarkerData(data) });
@@ -86,8 +87,9 @@ export default class Speedometer extends Component {
   }) {
     const { meta, data } = await (
       await fetch(`${SETTINGS.backend}/api/perf/benchmark/${benchmark}?` +
-        `${queryParams({ architecture, browsers, targetRatio, baseValue, skipDataBefore })}`,
-      )).json();
+        `${queryParams({
+          architecture, browsers, targetRatio, baseValue, skipDataBefore,
+        })}`)).json();
     const lastDataPoint = data[targetBrowser].data[data[targetBrowser].data.length - 1].value;
     let targetLastDataPoint;
     if (baseValue && targetRatio) {
@@ -116,11 +118,12 @@ export default class Speedometer extends Component {
       legend: labels,
       title: this.props.title,
       legend_target: this.legendEl,
-      markers: this.state.markers });
+      markers: this.state.markers,
+    });
 
     this.setState({
       moreProps,
-      series: series,
+      series,
       titleLink: meta.viewUrl,
     });
   }
@@ -131,19 +134,19 @@ export default class Speedometer extends Component {
     return (
       <Widget
         target={`&le; Chrome + ${100 * (1 - targetRatio).toFixed(2)}%`}
-        className='graphic-widget graphic-timeline widget-benchmark'
+        className="graphic-widget graphic-timeline widget-benchmark"
         link={titleLink}
         loading={!series}
         viewport={size => (this.viewport = size)}
         {...this.props}
         {...moreProps}
       >
-        <div id={id} key={id} className='criteria-widget'>
+        <div id={id} key={id} className="criteria-widget">
           {!series &&
             <div>Loading...</div>
           }
-          <div className='graph' ref={div => this.graphEl = div}>
-            <div className='legend' ref={div => this.legendEl = div}>{}</div>
+          <div className="graph" ref={div => this.graphEl = div}>
+            <div className="legend" ref={div => this.legendEl = div}>{}</div>
           </div>
         </div>
       </Widget>
