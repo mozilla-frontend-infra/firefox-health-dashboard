@@ -9,7 +9,6 @@ import Perfherder from './perfherder';
 import Benchmark from './benchmark';
 import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
-import AWFY from '../components/awfy/speedometer';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, getBugUrl, statusLabels } from './constants';
 import CONFIG from './config';
@@ -138,41 +137,6 @@ export default class QuantumIndex64 extends React.Component {
               }}
               {...notes.talos_speedometer}
             />,
-          ],
-          [
-            <div className="speedometer-hardware-block">
-              <h2>Reference hardware</h2>
-              <div className="speedometer-grid">
-                <AWFY
-                  title="Nightly, Beta & Current Canary"
-                  key="speedometer-score"
-                  id="speedometer-score"
-                  benchmark="speedometer"
-                  architecture={64}
-                  browsers={['Nightly', 'Canary', 'Beta']}
-                  targetBrowser="Nightly"
-                  targetRatio={0.8}
-                  skipDataBefore={skipDataBefore}
-                />
-                <AWFY
-                  title="Current Nightly vs Canary Dec. 2017"
-                  key="speedometer-dec-2017"
-                  id="speedometer-dec-2017"
-                  benchmark="speedometer"
-                  architecture={64}
-                  browsers={['Nightly']}
-                  targetBrowser="Nightly"
-                  // AWFY after certain number of weeks it only shows a data point
-                  // per week. This score is what AWFY showed on Dec. 27th, 2017 for this revision
-                  // https://chromium.googlesource.com/v8/v8/+log/45ffb540b45a391f5e9848615d5654297a14eb14..bb5733a4d8b54bd49cf7053811d7ea1f41243d2f
-                  // Grabed from:
-                  // https://arewefastyet.com/#machine=36&view=single&suite=speedometer-misc&subtest=score
-                  baseValue={50}
-                  targetRatio={1.05}
-                  skipDataBefore={skipDataBefore}
-                />
-              </div>
-            </div>,
           ],
         ],
       },

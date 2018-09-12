@@ -1013,13 +1013,6 @@ svg {
 }
 /* End of speedometer-metrics-graphics */
 
-.speedometer-hardware-block {
-  flex: 1 100%;
-}
-.speedometer-grid {
-  display: flex;
-}
-
 .subbenchmarks {
   .header {
     display: flex;
