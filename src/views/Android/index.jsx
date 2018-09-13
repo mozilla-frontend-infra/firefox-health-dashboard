@@ -2,14 +2,25 @@ import { Component } from 'react';
 import cx from 'classnames';
 import propTypes from 'prop-types';
 import Raven from 'raven-js';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import CriticalErrorMessage from '../../components/criticalErrorMessage';
 import BackendClient from '../../utils/BackendClient';
 import Dashboard from '../../dashboard';
-import SitesTable from './SitesTable';
+import SummaryTable from '../../components/SummaryTable';
 import SiteDrillDown from './SiteDrillDown';
+import StatusWidget from '../../components/StatusWidget';
+import { generateSitesTableContent } from '../../utils/nimbledroid';
 
-export default class Android extends Component {
+const styles = () => ({
+  button: {},
+  sitesSummary: {
+    width: '400px',
+  },
+});
+
+class Android extends Component {
   static propTypes = {
     site: propTypes.string,
     location: propTypes.shape({
@@ -17,7 +28,10 @@ export default class Android extends Component {
     }),
   }
 
-  state = { nimbledroidData: {} }
+  state = {
+    nimbledroidData: {},
+    showSites: false,
+  }
 
   componentDidMount() {
     this.fetchAndroidData();
@@ -56,6 +70,7 @@ export default class Android extends Component {
     const { errorMessage, nimbledroidData } = this.state;
     const numSites = Object.keys(nimbledroidData).length;
     const targetRatio = 1.2;
+    const { tableContent, summary } = generateSitesTableContent(nimbledroidData, targetRatio);
     // Using replace instead of query-string's parse() method allow for supporting
     // data for URLs like this "flipkart.com/search?q=moto%20g5%20plus&sid=tyy"
     // parse() would return 'flipkart.com/search?q' instead of the full url.
@@ -70,10 +85,29 @@ export default class Android extends Component {
           {/* Needed until the background of the site is not black */}
           <div className="aligned-center">
             {numSites > 0 && !site && (
-              <SitesTable
-                nimbledroidData={nimbledroidData}
-                targetRatio={targetRatio}
-              />
+              <div className="aligned-center">
+                {!this.state.showSites && (
+                  <div className={this.props.classes.sitesSummary}>
+                    <Button
+                      className={this.props.classes.button}
+                      onClick={() => this.setState({ showSites: true })}
+                    >Show detail view</Button>
+                    {summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
+                  </div>
+                )}
+                {this.state.showSites && (
+                  <div className="aligned-center">
+                    <Button
+                      className={this.props.classes.button}
+                      onClick={() => this.setState({ showSites: false })}
+                    >Show summary view</Button>
+                    <SummaryTable
+                      header={['GeckoView', 'WebView', 'Chrome beta', '% from target']}
+                      content={tableContent}
+                    />
+                  </div>
+                )}
+              </div>
             )}
             {errorMessage && <CriticalErrorMessage />}
             {numSites > 0 && site && (
@@ -89,3 +123,5 @@ export default class Android extends Component {
     );
   }
 }
+
+export default withStyles(styles)(Android);
