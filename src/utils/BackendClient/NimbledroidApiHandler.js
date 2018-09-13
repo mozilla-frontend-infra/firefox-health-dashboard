@@ -1,6 +1,6 @@
 import fetchJson from '../fetchJson';
 
-const PRODUCT_KEYS = {
+const PRODUCT_TO_LABEL = {
   'org.mozilla.klar': 'GV',
   'org.mozilla.focus': 'WV',
   'com.chrome.beta': 'ChromeBeta',
@@ -12,31 +12,31 @@ const matchUrl = profileName => profileName
 const matchShorterUrl = url => url
   .replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
 
-const transformedDataForMetrisGraphics = (nimbledroidData) => {
-  const metricsGraphicsData = nimbledroidData.reduce((result, elem) => {
-    const product = PRODUCT_KEYS[elem.package_id];
-    if (!result[product]) {
-      result[product] = {};
+const transformedDataForMetrisGraphics = (nimbledroidData, product) => {
+  const scenarios = Object.keys(nimbledroidData[product]);
+  const metricsGraphicsData = scenarios.reduce((result, scenarioName) => {
+    const productKey = PRODUCT_TO_LABEL[product];
+    if (!result[productKey]) {
+      result[productKey] = {};
     }
-    elem.profiles.forEach((profile) => {
-      const { scenario_name, status, time_in_ms } = profile;
+    nimbledroidData[product][scenarioName].forEach(({ date, ms }) => {
       // In Nimbledroid we have create a number of profiles
       // some of them test websites and contain the URL in the name.
       // There are other profiles testing non-site behaviours, however,
       // we're not interested on plotting those
-      if (scenario_name.includes('http')) {
-        const url = matchUrl(scenario_name);
-        if (!result[product][url]) {
-          result[product][url] = {
+      if (scenarioName.includes('http')) {
+        const url = matchUrl(scenarioName);
+        if (!result[productKey][url]) {
+          result[productKey][url] = {
             data: [],
             title: matchShorterUrl(url),
             url,
           };
         }
-        if (time_in_ms > 0) {
-          result[product][url].data.push({
-            date: new Date(elem.added),
-            value: time_in_ms / 1000,
+        if (ms > 0) {
+          result[productKey][url].data.push({
+            date: new Date(date),
+            value: ms / 1000,
           });
         }
       }
@@ -90,12 +90,12 @@ const mergeProductsData = (productsData) => {
 
 let ENDPOINT;
 
-const productUrl = product => `${ENDPOINT}?product=${product}`;
+const productUrl = product => `${ENDPOINT}?product=${product}&version=2`;
 
 const fetchProductData = async (product) => {
   const url = productUrl(product);
   const productData = await fetchJson(url);
-  return transformedDataForMetrisGraphics(productData);
+  return transformedDataForMetrisGraphics(productData, product);
 };
 
 // XXX: There's a strong coupling of data fetching from the API and
