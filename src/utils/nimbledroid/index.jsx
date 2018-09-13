@@ -9,8 +9,6 @@ const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRati
 export const sortSitesByTargetRatio = (a, b) => {
   const aRatio = a[TARGET1] / a[TARGET2];
   const bRatio = b[TARGET1] / b[TARGET2];
-  console.log(aRatio);
-  console.log(bRatio);
   return bRatio - aRatio;
 };
 
