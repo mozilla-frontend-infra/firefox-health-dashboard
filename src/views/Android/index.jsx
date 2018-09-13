@@ -3,6 +3,7 @@ import cx from 'classnames';
 import propTypes from 'prop-types';
 import Raven from 'raven-js';
 
+import CriticalErrorMessage from '../../components/criticalErrorMessage';
 import BackendClient from '../../utils/BackendClient';
 import Dashboard from '../../dashboard';
 import SitesTable from './SitesTable';
@@ -37,9 +38,7 @@ export default class Android extends Component {
       this.setState({ nimbledroidData });
     } catch (e) {
       if (e.message === 'Failed to fetch') {
-        this.setState({
-          errorMessage: 'Failed to fetch data from the backend. We have reported it.',
-        });
+        this.setState({ errorMessage: true });
         if (process.env.NODE_ENV === 'production') {
           Raven.captureMessage('Failed to fetch the Nimbledroid data from the backend.');
           Raven.captureException(e);
@@ -47,6 +46,7 @@ export default class Android extends Component {
           console.error(e);
         }
       } else {
+        this.setState({ errorMessage: true });
         throw e;
       }
     }
@@ -75,7 +75,7 @@ export default class Android extends Component {
                 targetRatio={targetRatio}
               />
             )}
-            {errorMessage && <h2 className="error-message">{errorMessage}</h2>}
+            {errorMessage && <CriticalErrorMessage />}
             {numSites > 0 && site && (
               <SiteDrillDown
                 nimbledroidData={nimbledroidData}
