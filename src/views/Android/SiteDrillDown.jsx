@@ -31,10 +31,7 @@ const SiteDrillDown = ({ nimbledroidData, site, targetRatio }) => {
 };
 
 SiteDrillDown.propTypes = ({
-  nimbledroidData: PropTypes.shape({
-    GV: PropTypes.string.isRequired,
-    WV: PropTypes.string.isRequired,
-  }).isRequired,
+  nimbledroidData: PropTypes.shape({}).isRequired,
   site: PropTypes.string.isRequired,
   targetRatio: PropTypes.number.isRequired,
 });
