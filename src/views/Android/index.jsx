@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles';
 import CriticalErrorMessage from '../../components/criticalErrorMessage';
 import BackendClient from '../../utils/BackendClient';
 import Dashboard from '../../dashboard';
+import SectionHeader from '../../components/SectionHeader';
+import SectionContent from '../../components/SectionContent';
 import SummaryTable from '../../components/SummaryTable';
 import SiteDrillDown from './SiteDrillDown';
 import StatusWidget from '../../components/StatusWidget';
@@ -16,6 +18,7 @@ import { generateSitesTableContent } from '../../utils/nimbledroid';
 const styles = () => ({
   button: {},
   sitesSummary: {
+    color: 'black',
     width: '400px',
   },
 });
@@ -81,22 +84,27 @@ class Android extends Component {
         subtitle="GeckoView vs Chrome Beta Page load (time in seconds, lower is better)"
         className={cx('summary')}
       >
-        <div className="android-view">
-          {/* Needed until the background of the site is not black */}
-          <div className="aligned-center">
-            {numSites > 0 && !site && (
-              <div className="aligned-center">
-                {!this.state.showSites && (
-                  <div className={this.props.classes.sitesSummary}>
+        <div className="dashboard-main">
+          {numSites > 0 && !site && (
+            <div>
+              {!this.state.showSites && (
+                <div>
+                  <SectionHeader title='Nimbledroid summary' />
+                  <SectionContent>
                     <Button
                       className={this.props.classes.button}
                       onClick={() => this.setState({ showSites: true })}
                     >Show detail view</Button>
-                    {summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
-                  </div>
-                )}
-                {this.state.showSites && (
-                  <div className="aligned-center">
+                    <div className={this.props.classes.sitesSummary}>
+                      {summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
+                    </div>
+                  </SectionContent>
+                </div>
+              )}
+              {this.state.showSites && (
+                <div className="aligned-center">
+                  <SectionHeader title='Nimbledroid sites' />
+                  <SectionContent>
                     <Button
                       className={this.props.classes.button}
                       onClick={() => this.setState({ showSites: false })}
@@ -105,19 +113,21 @@ class Android extends Component {
                       header={['GeckoView', 'WebView', 'Chrome beta', '% from target']}
                       content={tableContent}
                     />
-                  </div>
-                )}
-              </div>
-            )}
-            {errorMessage && <CriticalErrorMessage />}
-            {numSites > 0 && site && (
+                  </SectionContent>
+                </div>
+              )}
+            </div>
+          )}
+          {errorMessage && <CriticalErrorMessage />}
+          {numSites > 0 && site && (
+            <SectionContent>
               <SiteDrillDown
                 nimbledroidData={nimbledroidData}
                 targetRatio={targetRatio}
                 site={site}
               />
-            )}
-          </div>
+            </SectionContent>
+          )}
         </div>
       </Dashboard>
     );
