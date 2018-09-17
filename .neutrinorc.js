@@ -91,6 +91,12 @@ module.exports = {
       {
         html: {
           title: 'Firefox Health Dashboard',
+          meta: [
+            {
+              name: 'viewport',
+              content: 'width=800, initial-scale=1',
+            }
+          ],
           links: [
             "https://fonts.googleapis.com/css?family=Fira+Sans:300,400,400i,500",
             {
