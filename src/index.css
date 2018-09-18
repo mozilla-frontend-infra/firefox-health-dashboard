@@ -589,8 +589,8 @@ svg {
   justify-content: space-around;
 }
 .score {
-  display: flex;
-  flex-direction: column-reverse;
+  display: grid;
+  grid-template-rows: auto auto;
   align-items: center;
   text-align: center;
   .score-main {
@@ -608,6 +608,7 @@ svg {
     padding-left: calc(var(--gutterX) / 2);
   }
   .score-label {
+    grid-row-start:2;
     text-transform: uppercase;
     color: var(--darkGray);
     display: inline-block;
