@@ -1097,9 +1097,3 @@ svg {
 .error-message {
   color: 'red';
 }
-
-.android-view {
-  background-color: white;
-  color: black;
-  padding: 1em;
-}

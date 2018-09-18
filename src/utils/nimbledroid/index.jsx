@@ -38,6 +38,8 @@ export const siteMetrics = (target1, target2, targetRatio) => {
     ratio,
     symbol: percentageSymbol(target1, target2, targetRatio),
     color: statusColor(ratio, targetRatio).widgetColor,
+    // TODO: This could be improved
+    widgetLabel: `Target: GeckoView <= Chrome Beta + ${targetRatio}%`,
   };
 };
 
@@ -94,7 +96,9 @@ export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
       uid: url,
     };
   });
+  const tableHeader = ['GeckoView', 'WebView', 'Chrome beta', '% from target'];
   return {
+    tableHeader,
     tableContent,
     summary: generateSitesSummary(count, numSites),
   };
