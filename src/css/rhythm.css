@@ -3,7 +3,7 @@
 }
 @media (min-width: 1400px) and (min-height: 700px) {
   :root {
-    --fontSize: 1rem;
+    --fontSize: 0.75rem;
   }
 }
 

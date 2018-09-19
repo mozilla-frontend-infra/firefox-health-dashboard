@@ -9,8 +9,6 @@ const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRati
 export const sortSitesByTargetRatio = (a, b) => {
   const aRatio = a[TARGET1] / a[TARGET2];
   const bRatio = b[TARGET1] / b[TARGET2];
-  console.log(aRatio);
-  console.log(bRatio);
   return bRatio - aRatio;
 };
 
@@ -40,6 +38,8 @@ export const siteMetrics = (target1, target2, targetRatio) => {
     ratio,
     symbol: percentageSymbol(target1, target2, targetRatio),
     color: statusColor(ratio, targetRatio).widgetColor,
+    // TODO: This could be improved
+    widgetLabel: `Target: GeckoView <= Chrome Beta + ${targetRatio}%`,
   };
 };
 
@@ -96,7 +96,9 @@ export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
       uid: url,
     };
   });
+  const tableHeader = ['GeckoView', 'WebView', 'Chrome beta', '% from target'];
   return {
+    tableHeader,
     tableContent,
     summary: generateSitesSummary(count, numSites),
   };

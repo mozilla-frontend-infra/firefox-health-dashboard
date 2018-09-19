@@ -1075,14 +1075,6 @@ svg {
   }
 }
 
-.sites-table {
-  width: 800px;
-}
-.sites-overview {
-   margin: 1em auto 2em auto;
-   width: 480px;
-}
-
 .status-red {
   background-color: var(--newCoral);
 }
@@ -1104,10 +1096,4 @@ svg {
 
 .error-message {
   color: 'red';
-}
-
-.android-view {
-  background-color: white;
-  color: black;
-  padding: 1em;
 }
