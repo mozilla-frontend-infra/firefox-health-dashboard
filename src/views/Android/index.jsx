@@ -6,6 +6,7 @@ import Dashboard from '../../dashboard';
 import Section from '../../components/Section';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
 import NimbledroidSiteDrilldown from '../../containers/NimbledroidSiteDrilldown';
+import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
 class Android extends Component {
   static propTypes = {
@@ -49,6 +50,39 @@ class Android extends Component {
             />
           </Section>
         )}
+        <Section title='Speedometer'>
+          <PerfherderGraphContainer
+            series={[
+              {
+                color: '#e55525',
+                label: 'Moto G5',
+                frameworkId: 10,
+                platform: 'android-hw-g5-7-0-arm7-api-16',
+                option: 'opt',
+                project: 'mozilla-central',
+                suite: 'raptor-speedometer-geckoview',
+              },
+              {
+                color: '#ffcd02',
+                label: 'Pixel 2 (x64)',
+                frameworkId: 10,
+                option: 'opt',
+                platform: 'android-hw-p2-8-0-android-aarch64',
+                project: 'mozilla-central',
+                suite: 'raptor-speedometer-geckoview',
+              },
+              {
+                color: '#45a1ff',
+                label: 'Pixel 2 (arm7)',
+                frameworkId: 10,
+                option: 'opt',
+                platform: 'android-hw-p2-8-0-arm7-api-16',
+                project: 'mozilla-central',
+                suite: 'raptor-speedometer-geckoview',
+              },
+            ]}
+          />
+        </Section>
       </Dashboard>
     );
   }
