@@ -1,8 +1,7 @@
 import { Component } from 'react';
-import cx from 'classnames';
 import propTypes from 'prop-types';
 
-import Dashboard from '../../dashboard';
+import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
 import NimbledroidSiteDrilldown from '../../containers/NimbledroidSiteDrilldown';
@@ -20,11 +19,7 @@ class Android extends Component {
     const targetRatio = 1.2;
     const site = this.props.location.search.replace('?site=', '');
     return (
-      <Dashboard
-        title="Android"
-        subtitle="GeckoView vs Chrome Beta Page load (time in seconds, lower is better)"
-        className={cx('summary')}
-      >
+      <DashboardPage title="Android" subtitle="Release criteria">
         {!site && (
           <Section title='Nimbledroid'>
             <NimbledroidSitesTable
@@ -83,7 +78,7 @@ class Android extends Component {
             ]}
           />
         </Section>
-      </Dashboard>
+      </DashboardPage>
     );
   }
 }

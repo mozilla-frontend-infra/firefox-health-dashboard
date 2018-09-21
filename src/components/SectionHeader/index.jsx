@@ -3,18 +3,18 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   root: {
-    backgroundColor: 'black',
+    color: '#d1d2d3',
+    fontWeight: '300',
+    margin: '.5rem .75rem .5rem',
   },
 });
 
-// eslint-disable-next-line react/prop-types
 const SectionHeader = ({ classes, title }) => (
-  <h2 className={classes.root}>
-    <span>{title}</span>
-  </h2>
+  <h2 className={classes.root}>{title}</h2>
 );
 
 SectionHeader.propTypes = {
+  classes: PropTypes.shape({}),
   title: PropTypes.string.isRequired,
 };
 
