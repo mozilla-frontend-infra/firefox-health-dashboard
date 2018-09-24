@@ -8,9 +8,10 @@
     "start:local": "BACKEND=http://localhost:3000 neutrino start",
     "lint": "neutrino lint",
     "precommit": "lint-staged",
-    "coverage": "rm -rf coverage && nyc --all neutrino test ./test/**/*.test.js && nyc report -r lcov",
+    "prepush": "neutrino test",
+    "coverage": "rm -rf coverage && nyc --all neutrino test && nyc report -r lcov",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "neutrino test ./test/**/*.test.js",
+    "test": "neutrino test",
     "heroku-postbuild": "neutrino build"
   },
   "nyc": {
