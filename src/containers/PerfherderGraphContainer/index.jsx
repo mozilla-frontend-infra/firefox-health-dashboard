@@ -18,9 +18,9 @@ class PerfherderGraphContainer extends Component {
         const data = await Promise.all(series
             .map(async (config) => {
                 const seriesData = await queryPerformanceData(config, timeRange);
+                const seriesDatum = (Object.values(seriesData)).pop();
                 return {
-                    data: seriesData.data,
-                    meta: seriesData.meta,
+                    ...seriesDatum,
                     color: config.color,
                     label: config.label,
                 };
