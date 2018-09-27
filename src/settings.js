@@ -4,6 +4,6 @@ const SETTINGS = {
 };
 
 // This is less than ideal but it helps
-export const COLORS = ['#e55525', '#ffcd02', '#45a1ff'];
+export const COLORS = ['#e55525', '#ffcd02', '#45a1ff', '#b2ff46', '#fd79ff'];
 
 export default SETTINGS;
