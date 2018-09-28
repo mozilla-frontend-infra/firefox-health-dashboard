@@ -1,8 +1,7 @@
 const TARGET1 = 'GV';
 const TARGET2 = 'ChromeBeta';
 
-const percentageSymbol = (target1, target2, targetRatio) =>
-  ((target1 < (targetRatio * target2)) ? '+' : '');
+const percentageSymbol = (target1, target2, targetRatio) => ((target1 < (targetRatio * target2)) ? '+' : '');
 
 const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRatio * target2);
 
@@ -71,8 +70,8 @@ const generateSitesSummary = (count, numSites) => (
 
 export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
   const numSites = Object.keys(nimbledroidData).length;
-  const sites = (numSites > 0) ?
-    Object.values(nimbledroidData).sort(sortSitesByTargetRatio) : [];
+  const sites = (numSites > 0)
+    ? Object.values(nimbledroidData).sort(sortSitesByTargetRatio) : [];
   const count = {
     red: 0,
     yellow: 0,

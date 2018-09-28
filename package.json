@@ -3,16 +3,16 @@
   "version": "0.0.1",
   "description": "Project Platform Health",
   "scripts": {
-    "build": "neutrino build",
-    "start": "neutrino start",
-    "start:local": "BACKEND=http://localhost:3000 neutrino start",
-    "lint": "neutrino lint",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open",
+    "start:local": "BACKEND=http://localhost:3000 webpack-dev-server --mode development --open",
+    "test": "jest",
+    "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src",
     "precommit": "lint-staged",
-    "prepush": "neutrino test",
-    "coverage": "rm -rf coverage && nyc --all neutrino test && nyc report -r lcov",
+    "prepush": "yarn test",
+    "coverage": "rm -rf coverage && nyc --all yarn test && nyc report -r lcov",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "neutrino test",
-    "heroku-postbuild": "neutrino build"
+    "heroku-postbuild": "yarn build"
   },
   "nyc": {
     "include": [
@@ -24,7 +24,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "neutrino lint"
+      "yarn lint"
     ]
   },
   "author": "Harald Kirschner <npm@digitarald.com> (http://digitarald.de/)",
@@ -57,15 +57,18 @@
     "react-table": "^6.8.2"
   },
   "devDependencies": {
-    "@neutrinojs/airbnb": "^8.3.0",
-    "@neutrinojs/jest": "^8.3.0",
-    "@neutrinojs/react": "^8.3.0",
+    "@neutrinojs/airbnb": "^9.0.0-beta.0",
+    "@neutrinojs/copy": "^9.0.0-beta.0",
+    "@neutrinojs/jest": "^9.0.0-beta.0",
+    "@neutrinojs/react": "^9.0.0-beta.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "css-mqpacker": "^6.0.1",
+    "eslint": "^5",
     "husky": "^0.14.3",
+    "jest": "^23",
     "lint-staged": "^7.0.5",
-    "neutrino": "^8.3.0",
+    "neutrino": "^9.0.0-beta.0",
     "nyc": "^11.6.0",
     "postcss-css-variables": "^0.7.0",
     "postcss-cssnext": "^2.11.0",
@@ -75,7 +78,10 @@
     "postcss-nested": "^1.0.0",
     "postcss-reporter": "^3.0.0",
     "postcss-simple-extend": "^1.0.0",
-    "postcss-simple-vars": "^3.0.0"
+    "postcss-simple-vars": "^3.0.0",
+    "webpack": "^4",
+    "webpack-cli": "^3",
+    "webpack-dev-server": "^3"
   },
   "main": "index.js",
   "repository": "git@github.com:mozilla/firefox-health-dashboard.git"

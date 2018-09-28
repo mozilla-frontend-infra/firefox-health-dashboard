@@ -1,9 +1,10 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 
 const PerfherderGraph = ({ data, options }) => (
   <Chart
-    type="scatter"
+    type='scatter'
     data={data}
     height={50}
     options={options}

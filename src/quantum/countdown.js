@@ -49,18 +49,21 @@ export default class Countdown extends React.Component {
     }
     return (
       <Widget
-        title="Release Dates"
-        link="https://wiki.mozilla.org/RapidRelease/Calendar"
-        className="widget-countdown narrow-content"
+        title='Release Dates'
+        link='https://wiki.mozilla.org/RapidRelease/Calendar'
+        className='widget-countdown narrow-content'
       >
-        {date && timespan &&
-          <div className="widget-entry" key="countdown-release">
+        {date && timespan
+          && (
+          <div className='widget-entry' key='countdown-release'>
             <span>
-              <em>{`${version} `}</em>is the current release
+              <em>{`${version} `}</em>
+is the current release
               <br />
               {`Launched ${moment(date).format('ddd, MMM D')} - ${timespan}`}
             </span>
-          </div>}
+          </div>
+)}
       </Widget>
     );
   }

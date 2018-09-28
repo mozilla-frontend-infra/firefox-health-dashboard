@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
 import DashboardPage from '../../components/DashboardPage';
@@ -13,13 +13,13 @@ class Android extends Component {
     location: propTypes.shape({
       search: propTypes.string,
     }),
-  }
+  };
 
   render() {
     const targetRatio = 1.2;
     const site = this.props.location.search.replace('?site=', '');
     return (
-      <DashboardPage title="Android" subtitle="Release criteria">
+      <DashboardPage title='Android' subtitle='Release criteria'>
         {!site && (
           <Section title='Nimbledroid'>
             <NimbledroidSitesTable

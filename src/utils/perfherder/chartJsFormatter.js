@@ -1,5 +1,4 @@
-const dataToChartJSformat = data =>
-  data.map(({ datetime, value }) => ({
+const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
     x: datetime,
     y: value,
   }));

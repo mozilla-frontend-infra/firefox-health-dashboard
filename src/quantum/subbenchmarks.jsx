@@ -1,6 +1,5 @@
 import { curveLinear } from 'd3';
 import { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -26,7 +25,7 @@ Subbenchmarks.propTypes = {
 
 const Graph = ({ data, name, url }) => (
   <div key={name}>
-    <div className="black-bar">
+    <div className='black-bar'>
       <a href={`#${name}`}>
         <FontAwesomeIcon
           id={name}
@@ -34,7 +33,7 @@ const Graph = ({ data, name, url }) => (
           style={{ marginRight: '0.3em' }}
         />
       </a>
-      <a href={url} target="_blank">{name}</a>
+      <a href={url} target='_blank'>{name}</a>
     </div>
     <MetricsGraphics
       key={name}
@@ -60,7 +59,7 @@ Graph.propTypes = {
 class PerfherderContainer extends Component {
   state = {
     data: undefined,
-  }
+  };
 
   async componentDidMount() {
     this.data(this.props);
@@ -75,8 +74,8 @@ class PerfherderContainer extends Component {
   }
 
   async data({ platform, suite }, percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD) {
-    const { perfherderUrl, data, parentSignature } =
-      await getData({ suite, platform, percentileThreshold });
+    const { perfherderUrl, data, parentSignature } = await
+      getData({ suite, platform, percentileThreshold });
     this.setState({ perfherderUrl, data, parentSignature });
   }
 
@@ -96,29 +95,32 @@ class PerfherderContainer extends Component {
     }
 
     return (
-      <div className="subbenchmarks align-center">
-        {!data ?
-          <div>
-            <h3>Loading...</h3>
-          </div> :
-          <div>
-            <div className="header">
-              <h2 className="wider-letter-spacing">
-                {this.props.suite}
-              </h2>
-              <a
-                className="header-item"
-                href={perfherderUrl}
-                target="_blank"
-                alt="View all subtests on Perfherder"
-              >
-                <FontAwesomeIcon
-                  icon={faExternalLinkAlt}
-                  style={{ marginLeft: '0.3em' }}
-                />
-              </a>
+      <div className='subbenchmarks align-center'>
+        {!data
+          ? (
+            <div>
+              <h3>Loading...</h3>
             </div>
-            {parent && (
+)
+          : (
+            <div>
+              <div className='header'>
+                <h2 className='wider-letter-spacing'>
+                  {this.props.suite}
+                </h2>
+                <a
+                  className='header-item'
+                  href={perfherderUrl}
+                  target='_blank'
+                  alt='View all subtests on Perfherder'
+                >
+                  <FontAwesomeIcon
+                    icon={faExternalLinkAlt}
+                    style={{ marginLeft: '0.3em' }}
+                  />
+                </a>
+              </div>
+              {parent && (
               <Graph
                 key={parent.meta.test}
                 data={[parent.data]}
@@ -126,15 +128,16 @@ class PerfherderContainer extends Component {
                 url={parent.meta.url}
               />
             )}
-            {Object.values(data).sort(sortAlphabetically).map(el => (
-              <Graph
-                key={el.meta.test}
-                data={[el.data]}
-                name={el.meta.test}
-                url={el.meta.url}
-              />
+              {Object.values(data).sort(sortAlphabetically).map(el => (
+                <Graph
+                  key={el.meta.test}
+                  data={[el.data]}
+                  name={el.meta.test}
+                  url={el.meta.url}
+                />
             ))}
-          </div>
+            </div>
+)
         }
       </div>
     );

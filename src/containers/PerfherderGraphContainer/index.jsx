@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryPerformanceData from '@mozilla-frontend-infra/perf-goggles';
 import PerfherderGraph from '../../components/PerfherderGraph';
@@ -8,7 +8,7 @@ class PerfherderGraphContainer extends Component {
     state = {
         data: null,
         option: null,
-    }
+    };
 
     async componentDidMount() {
         this.fetchSetData(this.props.series, this.props.timeRange);

@@ -21,7 +21,7 @@ export default class XpCrashes extends React.Component {
 
   render() {
     return (
-      <div id="graph" />
+      <div id='graph' />
     );
   }
 }

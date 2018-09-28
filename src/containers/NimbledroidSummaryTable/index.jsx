@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -21,7 +21,7 @@ class NimbledroidSummaryTable extends Component {
   state = {
     tableContent: null,
     showSites: false,
-  }
+  };
 
   async componentDidMount() {
     const { nimbledroidData, targetRatio } = this.props;

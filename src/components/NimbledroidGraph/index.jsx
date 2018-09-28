@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { curveLinear } from 'd3';
 import PropTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
@@ -15,8 +15,8 @@ class NimbledroidGraph extends Component {
         full_width
         height={600}
         data={data}
-        x_accessor="date"
-        y_accessor="value"
+        x_accessor='date'
+        y_accessor='value'
         legend={labels}
         legend_target={this.legendTarget}
         aggregate_rollover

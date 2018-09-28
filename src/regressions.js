@@ -22,7 +22,7 @@ export default class Regressions extends React.Component {
 
   render() {
     return (
-      <div id="graph" />
+      <div id='graph' />
     );
   }
 }

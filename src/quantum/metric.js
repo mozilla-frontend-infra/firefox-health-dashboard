@@ -19,15 +19,19 @@ const QuantumTracking = ({ match, location }) => {
     subtitle.push('For', child);
   }
   return (
-    !metric ?
-      <div>
-        <p className="align-center">A metric query string is required</p>
-      </div> :
-      <ChannelMetric
-        title={metric}
-        subtitle={subtitle.join(' ')}
-        query={params}
-      />
+    !metric
+      ? (
+        <div>
+          <p className='align-center'>A metric query string is required</p>
+        </div>
+)
+      : (
+        <ChannelMetric
+          title={metric}
+          subtitle={subtitle.join(' ')}
+          query={params}
+        />
+)
   );
 };
 
