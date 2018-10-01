@@ -54,7 +54,8 @@
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-table": "^6.8.2"
+    "react-table": "^6.8.2",
+    "typeface-fira-sans": "^0.0.54"
   },
   "devDependencies": {
     "@neutrinojs/airbnb": "^9.0.0-beta.0",

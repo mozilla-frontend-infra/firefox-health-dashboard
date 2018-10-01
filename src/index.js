@@ -6,6 +6,8 @@ import './index.css';
 import GenericErrorBoundary from './components/genericErrorBoundary';
 import Routes from './routes';
 
+require('typeface-fira-sans');
+
 if (process.env.NODE_ENV === 'production') {
   Raven.config('https://77916a47017347528d25824beb0a077e@sentry.io/1225660').install();
 }
