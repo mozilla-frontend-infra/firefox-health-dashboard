@@ -1,11 +1,3 @@
-const postcssCssnext = require('postcss-cssnext');
-const postcssVariables = require('postcss-css-variables');
-const postcssImport = require('postcss-import');
-const postcssNested = require('postcss-nested');
-const postcssReporter = require('postcss-reporter');
-const postcssSimpleExtend = require('postcss-simple-extend');
-const mqpacker = require('css-mqpacker');
-
 module.exports = {
   options: {
     root: __dirname,
@@ -92,28 +84,6 @@ module.exports = {
               type: 'image/x-icon',
             },
           ],
-        },
-        style: {
-          loaders: [
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [
-                  postcssImport(),
-                  postcssSimpleExtend(),
-                  postcssNested(),
-                  postcssVariables(),
-                  postcssCssnext({
-                    browsers: ['last 1 version'],
-                  }),
-                  postcssReporter({
-                    throwError: true,
-                  }),
-                  mqpacker(),
-                ]
-              }
-            }
-          ]
         },
         devtool: {
           // Enable source-maps in production
