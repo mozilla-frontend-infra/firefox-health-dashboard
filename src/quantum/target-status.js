@@ -14,22 +14,26 @@ const TargetStatus = ({ notes }) => {
 
   return (
     <Widget
-      key="RiskTargetStatusSummary"
-      title="Risk/Target Status Summary"
-      target="Be *on track* to be *within target*"
-      className="widget-status-all narrow-content"
+      key='RiskTargetStatusSummary'
+      title='Risk/Target Status Summary'
+      target='Be *on track* to be *within target*'
+      className='widget-status-all narrow-content'
       loading={Object.keys(notes).length === 0}
     >
-      {Object.keys(notes).length > 0 &&
-        <div className="widget-entry" key="confidence">
+      {Object.keys(notes).length > 0
+        && (
+        <div className='widget-entry' key='confidence'>
           {Array.from(allStatus.entries()).map(([color, count]) => {
             if (!count) {
-              return <span />;
+              return undefined;
             }
             return (
               <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
                 <span>
-                  <em>{count}</em> criteria {statusLabels.get(color)}
+                  <em>{count}</em>
+                  {' '}
+criteria
+                  {statusLabels.get(color)}
                 </span>
                 <br />
               </div>
@@ -37,6 +41,7 @@ const TargetStatus = ({ notes }) => {
           })
         }
         </div>
+)
       }
     </Widget>
   );

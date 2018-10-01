@@ -18,8 +18,6 @@ export default class PerfherderWidget extends React.Component {
     this.fetch();
   }
 
-  viewport: [0, 0];
-
   async fetch() {
     const { signatures, framework } = this.props;
     const signatureLabels = Object.keys(signatures);
@@ -87,7 +85,7 @@ export default class PerfherderWidget extends React.Component {
           $reference = busy ? null : (
             <line
               key={`reference-${idx}`}
-              className="reference reference-x"
+              className='reference reference-x'
               x1={referenceX}
               y1={refY}
               x2={width}
@@ -172,8 +170,8 @@ export default class PerfherderWidget extends React.Component {
 
       const $reference = referenceX ? (
         <line
-          key="reference-y"
-          className="reference reference-y"
+          key='reference-y'
+          className='reference reference-y'
           x1={referenceX}
           y1={min(referenceYs)}
           x2={referenceX}
@@ -207,7 +205,7 @@ export default class PerfherderWidget extends React.Component {
         {...this.props}
         link={link}
         target={(this.props.target != null) ? this.props.target : 'No regressions'}
-        className="graphic-widget graphic-timeline"
+        className='graphic-widget graphic-timeline'
         content={svg}
         loading={!evolutions}
         explainer={`${explainer} (14-day moving median, variance band between 1st/3rd quantile)`}

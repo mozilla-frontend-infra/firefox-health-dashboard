@@ -6,7 +6,7 @@ import moment from 'moment';
 import cx from 'classnames';
 import find from 'lodash/fp/find';
 import sumBy from 'lodash/fp/sumBy';
-import Dashboard from './../dashboard';
+import Dashboard from '../dashboard';
 import SETTINGS from '../settings';
 
 const rateRange = [0, 5.5];
@@ -28,6 +28,7 @@ export default class FirefoxBeta extends React.Component {
   }
 
   height = 0;
+
   width = 0;
 
   async fetch() {
@@ -61,6 +62,7 @@ export default class FirefoxBeta extends React.Component {
       planned,
     });
   }
+
   renderRelease({
     release, start, yScale, idx, crashes,
   }) {
@@ -108,8 +110,8 @@ export default class FirefoxBeta extends React.Component {
     });
     if (current) {
       candidates.push(<g
-        key="release-today"
-        className="release-today"
+        key='release-today'
+        className='release-today'
         style={{
             transform: `translateX(${xScale(new Date())}px)`,
           }}
@@ -144,30 +146,30 @@ export default class FirefoxBeta extends React.Component {
           transform: `translateX(${x}px)`,
         }}
       >
-        <line className="release-tick" x1={0} y1={0} x2={0} y2={this.height} />
+        <line className='release-tick' x1={0} y1={0} x2={0} y2={this.height} />
         <text
-          className="release-label"
-          key="release-label"
-          textAnchor="middle"
+          className='release-label'
+          key='release-label'
+          textAnchor='middle'
           x={-ratio * wide / 2}
           y={gridY * 2.5}
         >
           {version}
         </text>
         <text
-          className="release-date"
-          key="release-date"
-          textAnchor="end"
+          className='release-date'
+          key='release-date'
+          textAnchor='end'
           y={this.height - gridY / 2}
           x={-gridX}
         >
           {moment(release.date).format('MMM D')}
         </text>
         {candidates}
-        <path className="release-line" key="release-line" stroke={color} d={path(mainRates)} />
+        <path className='release-line' key='release-line' stroke={color} d={path(mainRates)} />
         <path
-          className="release-line-content"
-          key="release-line-content"
+          className='release-line-content'
+          key='release-line-content'
           stroke={color}
           d={path(contentRates)}
         />
@@ -206,7 +208,7 @@ export default class FirefoxBeta extends React.Component {
           }}
         >
           <line
-            className="candidate-marker"
+            className='candidate-marker'
             x1={0}
             y1={mainRate - 5}
             x2={0}
@@ -214,7 +216,7 @@ export default class FirefoxBeta extends React.Component {
             stroke={color}
           />
           <line
-            className="candidate-marker"
+            className='candidate-marker'
             x1={0}
             y1={contentRate - 2}
             x2={0}
@@ -222,15 +224,15 @@ export default class FirefoxBeta extends React.Component {
             stroke={color}
           />
           <line
-            className="candidate-tick"
-            key="candidate-tick-high"
+            className='candidate-tick'
+            key='candidate-tick-high'
             x1={0}
             y1={topY + 5}
             x2={0}
             y2={topY - 5}
             stroke={color}
           />
-          <text className="candidate-label" textAnchor="middle" y={topY - gridY} stroke={color}>
+          <text className='candidate-label' textAnchor='middle' y={topY - gridY} stroke={color}>
             {release.candidate || '?'}
           </text>
           <title>
@@ -263,21 +265,21 @@ export default class FirefoxBeta extends React.Component {
         const y = yScale(i);
         axis.push(<g
           key={`axis-rate-${i}`}
-          className="axis-rate"
+          className='axis-rate'
           style={{
               transform: `translateY(${y}px)`,
             }}
         >
           <line x1={0} y1={0} x2={this.width} y2={0} />
-          <text x={5} y={5} textAnchor="start">
+          <text x={5} y={5} textAnchor='start'>
             {i}
           </text>
         </g>);
       }
 
       const hasNext = find({ version: planned.version })(crashes);
-      const timeline =
-        hasNext && hasNext.rate ? [planned].concat(history.slice(0, 4)) : history.slice(0, 5);
+      const timeline = hasNext && hasNext.rate
+        ? [planned].concat(history.slice(0, 4)) : history.slice(0, 5);
 
       const releases = timeline.map((release, idx) => {
         const before = timeline[idx + 1] || history[idx];
@@ -295,11 +297,11 @@ export default class FirefoxBeta extends React.Component {
           const scores = [];
           const entry = find({ version })(crashes);
           if (entry && entry.rate) {
-            scores.push(<div className="score" key="score-avg">
-              <span className="score-label">Avg per Build</span>
-              <span className="score-main">
+            scores.push(<div className='score' key='score-avg'>
+              <span className='score-label'>Avg per Build</span>
+              <span className='score-main'>
                 {entry.rate.toFixed(1)}
-                <span className="score-extra">
+                <span className='score-extra'>
                   {entry.contentRate.toFixed(1)}
                 </span>
               </span>
@@ -307,13 +309,15 @@ export default class FirefoxBeta extends React.Component {
             if (!idx) {
               const crash = find({ version: entry.version })(crashes);
               const last = find(({ rate }) => rate)(crash.builds);
-              scores.push(<div className="score" key="score-last">
-                <span className="score-label">
-                    Beta {last.candidate}
+              scores.push(<div className='score' key='score-last'>
+                <span className='score-label'>
+                    Beta
+                  {' '}
+                  {last.candidate}
                 </span>
-                <span className="score-main">
+                <span className='score-main'>
                   {last.rate.toFixed(1)}
-                  <span className="score-extra">
+                  <span className='score-extra'>
                     {last.contentRate.toFixed(1)}
                   </span>
                 </span>
@@ -355,14 +359,14 @@ export default class FirefoxBeta extends React.Component {
 
     return (
       <Dashboard
-        title="Firefox Beta Stability"
-        subtitle="Main & Content C/1kUH (E10S Only)"
-        className="crashes-beta"
+        title='Firefox Beta Stability'
+        subtitle='Main & Content C/1kUH (E10S Only)'
+        className='crashes-beta'
       >
         <section className={cls} ref={target => (this.target = target)}>
           {svg}
         </section>
-        <section className="graphic-details">
+        <section className='graphic-details'>
           {details}
         </section>
       </Dashboard>

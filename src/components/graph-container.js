@@ -1,10 +1,9 @@
 /* global fetch */
 import React from 'react';
 import MetricsGraphics from 'react-metrics-graphics';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { stringify, parse } from 'query-string';
+import { stringify } from 'query-string';
 import { curveLinear } from 'd3';
 import Widget from '../quantum/widget';
 import SETTINGS from '../settings';
@@ -66,6 +65,7 @@ export default class GraphContainer extends React.Component {
     const {
       title, link, legend, baselines, target, width, height, customClass,
     } = this.props;
+    // eslint-disable-next-line
     let viewport = [0, 0];
     let message = 'Oops, something went wrong.';
 
@@ -83,26 +83,30 @@ export default class GraphContainer extends React.Component {
         viewport={size => (viewport = size)}
         status={status}
       >
-        {apiFailed || noDataFound ?
-          <div>{message}</div> :
-          <div>
-            {!data &&
-            <div>Loading...</div>}
+        {apiFailed || noDataFound
+          ? <div>{message}</div>
+          : (
+            <div>
+              {!data
+            && <div>Loading...</div>}
 
-            <div className="legend" ref={ele => this.legendTarget = ele} />
-            {(data && !legend || data && this.legendTarget && legend) &&
+              <div className='legend' ref={ele => this.legendTarget = ele} />
+              {(data && !legend || data && this.legendTarget && legend)
+            && (
             <MetricsGraphics
               width={width}
               height={height}
               data={data}
-              x_accessor="date"
-              y_accessor="value"
+              x_accessor='date'
+              y_accessor='value'
               interpolate={curveLinear}
               legend={legend}
               legend_target={this.legendTarget}
               baselines={baselines}
-            />}
-          </div>}
+            />
+)}
+            </div>
+)}
       </Widget>
     );
   }

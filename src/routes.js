@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
@@ -21,22 +21,22 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/android/graph" component={Android} />
-      <Route path="/android" component={Android} />
-      <Route path="/crashes/beta" component={BetaCrashes} />
-      <Route path="/crashes" component={ReleaseCrashes} />
-      <Route path="/status" component={Status} />
-      <Route path="/quantum/:architecture/responsiveness/parent" component={QuantumResponsivenessParent} />
-      <Route path="/quantum/:architecture/responsiveness/content" component={QuantumResponsivenessContent} />
-      <Route path="/quantum/:architecture/pageload/render" component={QuantumPageLoadRender} />
-      <Route path="/quantum/:architecture/track" component={QuantumTracking} />
-      <Route path="/quantum/:architecture/bugs" component={FlowTable} />
-      <Route path="/quantum/:platform/:suite" component={Subbenchmark} />
-      <Route path="/quantum/32" component={Quantum32} />
-      <Route path="/quantum/64" component={Quantum64} />
-      <Route path="/" component={Home} />
-      <Redirect from="/android/v2" to="/android" />
-      <Redirect from="/quantum" to="/" />
+      <Route path='/android/graph' component={Android} />
+      <Route path='/android' component={Android} />
+      <Route path='/crashes/beta' component={BetaCrashes} />
+      <Route path='/crashes' component={ReleaseCrashes} />
+      <Route path='/status' component={Status} />
+      <Route path='/quantum/:architecture/responsiveness/parent' component={QuantumResponsivenessParent} />
+      <Route path='/quantum/:architecture/responsiveness/content' component={QuantumResponsivenessContent} />
+      <Route path='/quantum/:architecture/pageload/render' component={QuantumPageLoadRender} />
+      <Route path='/quantum/:architecture/track' component={QuantumTracking} />
+      <Route path='/quantum/:architecture/bugs' component={FlowTable} />
+      <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
+      <Route path='/quantum/32' component={Quantum32} />
+      <Route path='/quantum/64' component={Quantum64} />
+      <Route path='/' component={Home} />
+      <Redirect from='/android/v2' to='/android' />
+      <Redirect from='/quantum' to='/' />
       <Route component={NoMatch} />
     </Switch>
   </BrowserRouter>

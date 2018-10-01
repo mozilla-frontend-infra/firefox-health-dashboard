@@ -14,7 +14,7 @@ import {
   timeFormat,
 } from 'd3';
 import { stringify } from 'query-string';
-import Dashboard from './../dashboard';
+import Dashboard from '../dashboard';
 import SETTINGS from '../settings';
 
 const tickCount = 5;
@@ -32,6 +32,7 @@ export default class ChannelMetric extends React.Component {
   }
 
   height = 0;
+
   width = 0;
 
   async fetch() {
@@ -131,7 +132,7 @@ export default class ChannelMetric extends React.Component {
             };
             const key = `${versionIdx}-${channelIdx}-${pathIdx}`;
             if (channel.dates.length > 1) {
-              $labels.push(<g key={`label-${key}`} className="channel-label">
+              $labels.push(<g key={`label-${key}`} className='channel-label'>
                 <text {...labelProps}>
                   {`${version.version}`}
                 </text>
@@ -142,7 +143,7 @@ export default class ChannelMetric extends React.Component {
               </g>);
             }
             return (
-              <g key={`line-${key}`} className="channel-line">
+              <g key={`line-${key}`} className='channel-line'>
                 <path
                   stroke={color}
                   strokeWidth={alpha === 1 ? 2 : 1}
@@ -260,11 +261,11 @@ export default class ChannelMetric extends React.Component {
       <Dashboard
         title={`Quantum Nightly Telemetry: ${this.props.title}`}
         subtitle={this.props.subtitle}
-        className="dashboard-metric"
-        note="14-day Moving Median"
+        className='dashboard-metric'
+        note='14-day Moving Median'
         source={source}
         sourceTitle={`${query.metric} (t.m.o)`}
-        link="https://bit.ly/quantum-dashboards"
+        link='https://bit.ly/quantum-dashboards'
       >
         <section className={cls} ref={target => (this.target = target)}>
           {svg}

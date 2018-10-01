@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import cx from 'classnames';
-import Dashboard from './../dashboard';
+import Dashboard from '../dashboard';
 
 export default class QuantumIndex extends React.Component {
   state = {};
@@ -21,9 +21,9 @@ export default class QuantumIndex extends React.Component {
   render() {
     return (
       <Dashboard
-        title="Year End Release (Quantum)"
-        subtitle="Perceived Performance Release Criteria"
-        className="quantum-metrics"
+        title='Year End Release (Quantum)'
+        subtitle='Perceived Performance Release Criteria'
+        className='quantum-metrics'
       >
         <section
           style={{
@@ -31,22 +31,24 @@ export default class QuantumIndex extends React.Component {
             gridRow: '1',
           }}
         >
-          <h3 className="metrics-head"><span>Smoothness</span></h3>
-          <div className="metrics-group">
-            <div className="metric metric-info">
-              <p>This dashboard is a work in progress.
+          <h3 className='metrics-head'><span>Smoothness</span></h3>
+          <div className='metrics-group'>
+            <div className='metric metric-info'>
+              <p>
+This dashboard is a work in progress.
               Keep an eye out for more metrics and targets to come online.
               </p>
-              <p><em>
+              <p>
+                <em>
                 Telemetry data are a 7-day window from Beta.
                 Lower numbers are better.
-              </em>
+                </em>
               </p>
             </div>
             <Metric
-              title="Content Animations"
-              subtitle="Frame Throughp."
-              unit="fps"
+              title='Content Animations'
+              subtitle='Frame Throughp.'
+              unit='fps'
               status={{
                 priority: 0,
                 telemetry: {
@@ -61,9 +63,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Frontend Animations"
-              subtitle="Frame Throughp."
-              unit="fps"
+              title='Frontend Animations'
+              subtitle='Frame Throughp.'
+              unit='fps'
               status={{
                 priority: 1,
                 telemetry: {
@@ -73,9 +75,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Scrolling"
-              subtitle="Frame Throughput"
-              unit="fps"
+              title='Scrolling'
+              subtitle='Frame Throughput'
+              unit='fps'
               status={{
                 priority: 0,
                 telemetry: {
@@ -90,10 +92,10 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Scroll Quality"
-              subtitle="Checkerboarding"
-              format="0,0"
-              unit="severity"
+              title='Scroll Quality'
+              subtitle='Checkerboarding'
+              format='0,0'
+              unit='severity'
               status={{
                 priority: 2,
                 telemetry: {
@@ -125,11 +127,11 @@ export default class QuantumIndex extends React.Component {
             gridRow: '2',
           }}
         >
-          <h3 className="metrics-head"><span>Responsiveness</span></h3>
-          <div className="metrics-group">
+          <h3 className='metrics-head'><span>Responsiveness</span></h3>
+          <div className='metrics-group'>
             <Metric
-              title="Input Latency"
-              unit="ms"
+              title='Input Latency'
+              unit='ms'
               status={{
                 telemetry: [
                   {
@@ -153,8 +155,8 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Scroll Latency"
-              unit="ms"
+              title='Scroll Latency'
+              unit='ms'
               status={{
                 telemetry: [
                   {
@@ -165,8 +167,8 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Content Hangs"
-              unit="Hangs > 100ms / Minute"
+              title='Content Hangs'
+              unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
                   status: 'Backlog',
@@ -174,8 +176,8 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Frontend Hangs"
-              unit="Hangs > 100ms / Minute"
+              title='Frontend Hangs'
+              unit='Hangs > 100ms / Minute'
               status={{
                 telemetry: {
                   status: 'Backlog',
@@ -183,9 +185,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Slow Script"
-              subtitle="Page Count"
-              unit="count"
+              title='Slow Script'
+              subtitle='Page Count'
+              unit='count'
               status={{
                 telemetry: {
                   metric: 'SLOW_SCRIPT_PAGE_COUNT',
@@ -200,12 +202,12 @@ export default class QuantumIndex extends React.Component {
             gridRow: '3',
           }}
         >
-          <h3 className="metrics-head"><span>Page Load</span></h3>
-          <div className="metrics-group">
+          <h3 className='metrics-head'><span>Page Load</span></h3>
+          <div className='metrics-group'>
             <Metric
-              title="Non-Blank Paint"
-              subtitle="TTFP"
-              unit="ms"
+              title='Non-Blank Paint'
+              subtitle='TTFP'
+              unit='ms'
               status={{
                 telemetry: {
                   metric: 'TIME_TO_NON_BLANK_PAINT_NO_NETOPT_MS',
@@ -222,9 +224,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Meaningful Paint"
-              subtitle="TTFMP"
-              unit="ms"
+              title='Meaningful Paint'
+              subtitle='TTFMP'
+              unit='ms'
               status={{
                 telemetry: {
                   status: 'In Progress',
@@ -237,9 +239,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Fully Loaded"
-              subtitle="Tab Throbber"
-              unit="ms"
+              title='Fully Loaded'
+              subtitle='Tab Throbber'
+              unit='ms'
               status={{
                 telemetry: {
                   metric: 'FX_PAGE_LOAD_MS',
@@ -256,9 +258,9 @@ export default class QuantumIndex extends React.Component {
               }}
             />
             <Metric
-              title="Interactive"
-              subtitle="TTI"
-              unit="ms"
+              title='Interactive'
+              subtitle='TTI'
+              unit='ms'
               status={{
                 telemetry: {
                   status: 'Backlog',
@@ -269,11 +271,14 @@ export default class QuantumIndex extends React.Component {
                 },
               }}
             />
-            <div className="metric metric-info">
+            <div className='metric metric-info'>
               <p>Feedback, questions or reports of bad performance?</p>
               <p>
-                <h4><a href="https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team">quantum-team@mozilla.com</a></h4><br />
-                <h4>#quantum</h4> (Slack/IRC)
+                <h4><a href='https://groups.google.com/a/mozilla.com/forum/#!forum/quantum-team'>quantum-team@mozilla.com</a></h4>
+                <br />
+                <h4>#quantum</h4>
+                {' '}
+(Slack/IRC)
               </p>
               <p><em>https://health.graphics/quantum</em></p>
             </div>
@@ -363,30 +368,38 @@ class Metric extends React.Component {
     const evolution = this.state[metric];
     const cls = ['metric-line', 'metric-telemetry'];
     const $content = [];
-    const $title = <em>Telemetry ({unit || this.props.unit})</em>;
+    const $title = (
+      <em>
+Telemetry (
+        {unit || this.props.unit}
+)
+      </em>
+);
     if (label) {
-      $content.push(<div className="metric-source">
-        {$title} {label}
+      $content.push(<div className='metric-source'>
+        {$title}
+        {' '}
+        {label}
       </div>);
     } else {
-      $content.push(<div className="metric-source">{$title}</div>);
+      $content.push(<div className='metric-source'>{$title}</div>);
     }
     if (evolution) {
       if (typeof evolution === 'object') {
-        $content.push(<div className="metric-summary">
-          <div className="metric-median">
-            <span className="metric-value">{numeral(evolution.p50).format(format)}</span>
+        $content.push(<div className='metric-summary'>
+          <div className='metric-median'>
+            <span className='metric-value'>{numeral(evolution.p50).format(format)}</span>
             <em>p50</em>
           </div>
-          <div className="metric-95h">
-            <span className="metric-value">{numeral(evolution.p95).format(format)}</span>
+          <div className='metric-95h'>
+            <span className='metric-value'>{numeral(evolution.p95).format(format)}</span>
             <em>p95</em>
           </div>
         </div>);
       }
     } else {
       cls.push('status-wip');
-      $content.push(<span className="metric-status">{status || '…'}</span>);
+      $content.push(<span className='metric-status'>{status || '…'}</span>);
     }
     return (
       <div className={cx(cls)} title={metric} key={metric}>
@@ -397,7 +410,7 @@ class Metric extends React.Component {
 
   renderBenchmark({ framework, status }) {
     const $content = [
-      <div className="metric-source">
+      <div className='metric-source'>
         <em>Benchmark:</em>
         {framework}
       </div>,
@@ -405,7 +418,7 @@ class Metric extends React.Component {
     const cls = ['metric-line', 'metric-benchmark'];
     if (status) {
       cls.push('status-wip');
-      $content.push(<span className="metric-status">{status}</span>);
+      $content.push(<span className='metric-status'>{status}</span>);
     }
     return (
       <div className={cx(cls)}>
@@ -426,10 +439,13 @@ class Metric extends React.Component {
       $status.push(this.renderBenchmark(benchmark));
     }
     return (
-      <div className="metric">
-        <h4 className="metric-head">{title} {
+      <div className='metric'>
+        <h4 className='metric-head'>
+          {title}
+          {' '}
+          {
           subtitle
-            ? <small className="metric-head-sub">{subtitle}</small>
+            ? <small className='metric-head-sub'>{subtitle}</small>
             : ''
         }
         </h4>

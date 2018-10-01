@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
 import NimbledroidGraph from '../../components/NimbledroidGraph';
@@ -9,7 +9,7 @@ import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 class SiteDrillDown extends Component {
   state = {
     profile: null,
-  }
+  };
 
   async componentDidMount() {
     const { nimbledroidData, site, targetRatio } = this.props;

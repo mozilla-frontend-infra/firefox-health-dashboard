@@ -37,7 +37,7 @@ export default class FlowTable extends React.Component {
       {
         Header: 'Bug',
         accessor: 'id',
-        Cell: props => <a href={getBugUrl(props.value)} target="_blank">{props.value}</a>,
+        Cell: props => <a href={getBugUrl(props.value)} target='_blank'>{props.value}</a>,
       },
       {
         Header: 'Date created',
@@ -63,18 +63,20 @@ export default class FlowTable extends React.Component {
     ];
     return (
       <Dashboard
-        title="Quantum"
-        subtitle="P1 Bugs"
+        title='Quantum'
+        subtitle='P1 Bugs'
         className={cx('summary')}
       >
         <div style={{ backgroundColor: 'white' }}>
           <div style={tableStyle}>
-            {this.state.data &&
+            {this.state.data
+            && (
             <ReactTable
               data={this.state.data}
               columns={columns}
-              className="-striped"
-            />}
+              className='-striped'
+            />
+)}
           </div>
         </div>
       </Dashboard>

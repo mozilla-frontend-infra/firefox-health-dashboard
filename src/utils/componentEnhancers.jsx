@@ -1,3 +1,4 @@
+import React from 'react';
 import GenericErrorBoundary from '../components/genericErrorBoundary';
 
 const wrapSectionComponentsWithErrorBoundaries = (sections = []) => (

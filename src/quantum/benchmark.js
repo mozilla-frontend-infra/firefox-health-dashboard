@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { maxBy, minBy } from 'lodash/fp';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat } from 'd3';
 import Widget from './widget';
-import SETTINGS from './../settings';
+import SETTINGS from '../settings';
 
 const tickCount = 5;
 const noise = 1000 * 60 * 60 * 12;
@@ -16,8 +16,6 @@ export default class BenchmarkWidget extends React.Component {
   componentDidMount() {
     this.fetch();
   }
-
-  viewport: [0, 0];
 
   async fetch() {
     const id = this.props.id;
@@ -61,10 +59,10 @@ export default class BenchmarkWidget extends React.Component {
             cy={yScale(entry[metric])}
             r={4}
             key={`scatter-${idx}`}
-            className="series series-0"
+            className='series series-0'
           />
         ))
-        : <path d={path(evolution)} className="series series-path series-0" />;
+        : <path d={path(evolution)} className='series series-path series-0' />;
 
       const topArea = Math.min(yScale.range()[0], yScale(targetDiff));
 
@@ -74,7 +72,7 @@ export default class BenchmarkWidget extends React.Component {
           y={yScale(targetDiff)}
           width={xScale.range()[0] + xScale.range()[1]}
           height={yScale.range()[0] - yScale(targetDiff)}
-          className="series series-area series-target"
+          className='series series-area series-target'
         />
       );
       const $path = (
@@ -83,7 +81,7 @@ export default class BenchmarkWidget extends React.Component {
           y1={yScale(0)}
           x2={xScale.range()[1]}
           y2={yScale(0)}
-          className="series series-path series-target"
+          className='series series-path series-target'
         />
       );
 
@@ -125,10 +123,10 @@ export default class BenchmarkWidget extends React.Component {
       }
       const $legend = (
         <text
-          className="legend series-target"
+          className='legend series-target'
           x={xScale.range()[0] + 5}
           y={Math.min(yScale(0) + 15, topArea + 15)}
-          key="legend-target"
+          key='legend-target'
         >
           {label}
         </text>
@@ -150,9 +148,9 @@ export default class BenchmarkWidget extends React.Component {
 
     return (
       <Widget
-        target="No regressions"
+        target='No regressions'
         reading={reading}
-        className="graphic-widget graphic-timeline widget-benchmark"
+        className='graphic-widget graphic-timeline widget-benchmark'
         content={svg}
         loading={!evolution}
         viewport={size => (this.viewport = size)}

@@ -1,5 +1,5 @@
 import Raven from 'raven-js';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import CriticalErrorMessage from './criticalErrorMessage';
@@ -7,7 +7,7 @@ import CriticalErrorMessage from './criticalErrorMessage';
 export default class ErrorBoundary extends Component {
   state = {
     caughtBoundaryError: false,
-  }
+  };
 
   componentDidCatch(error, info) {
     this.setState({ caughtBoundaryError: true });
