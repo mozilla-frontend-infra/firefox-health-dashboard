@@ -25,7 +25,7 @@ const TargetStatus = ({ notes }) => {
         <div className='widget-entry' key='confidence'>
           {Array.from(allStatus.entries()).map(([color, count]) => {
             if (!count) {
-              return <span />;
+              return undefined;
             }
             return (
               <div className={`widget-entry-row status-${color}`} key={`status-${color}`}>
