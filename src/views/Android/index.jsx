@@ -21,7 +21,7 @@ class Android extends Component {
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
         {!site && (
-          <Section title='Nimbledroid'>
+          <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
             <NimbledroidSitesTable
               products={[
                 'org.mozilla.klar',
@@ -45,8 +45,9 @@ class Android extends Component {
             />
           </Section>
         )}
-        <Section title='Speedometer'>
+        <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
           <PerfherderGraphContainer
+            title='Speedometer'
             series={[
               {
                 color: '#e55525',
@@ -78,6 +79,7 @@ class Android extends Component {
             ]}
           />
           <PerfherderGraphContainer
+            title='Unity WebGl'
             series={[
               {
                 color: '#e55525',
