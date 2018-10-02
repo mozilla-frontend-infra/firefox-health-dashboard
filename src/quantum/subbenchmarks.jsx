@@ -2,9 +2,8 @@ import { curveLinear } from 'd3';
 import { Component } from 'react';
 import propTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faLink from '@fortawesome/fontawesome-free-solid/faLink';
-import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt, faLink } from '@fortawesome/free-solid-svg-icons';
 
 import getData from '../utils/perfherder/subbenchmarks';
 
