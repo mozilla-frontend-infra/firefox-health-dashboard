@@ -1,9 +1,9 @@
 import { curveLinear } from 'd3';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExternalLinkAlt, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import getData from '../utils/perfherder/subbenchmarks';
 
@@ -25,14 +25,18 @@ Subbenchmarks.propTypes = {
 const Graph = ({ data, name, url }) => (
   <div key={name}>
     <div className='black-bar'>
-      <a href={`#${name}`}>
+      <span>{name}</span>
+      <a
+        className='header-item'
+        href={url}
+        target='_blank'
+        alt='View all subtests on Perfherder'
+      >
         <FontAwesomeIcon
-          id={name}
-          icon={faLink}
-          style={{ marginRight: '0.3em' }}
+          icon={faExternalLinkAlt}
+          style={{ marginLeft: '0.3em' }}
         />
       </a>
-      <a href={url} target='_blank'>{name}</a>
     </div>
     <MetricsGraphics
       key={name}

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const newIssue = 'https://github.com/mozilla/firefox-health-dashboard/issues/new';
 
 const CriticalErrorMessage = () => (
