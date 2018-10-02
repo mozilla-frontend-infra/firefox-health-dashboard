@@ -21,7 +21,7 @@ class Android extends Component {
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
         {!site && (
-          <Section title='Nimbledroid'>
+          <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
             <NimbledroidSitesTable
               products={[
                 'org.mozilla.klar',
@@ -45,8 +45,9 @@ class Android extends Component {
             />
           </Section>
         )}
-        <Section title='Speedometer'>
+        <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
           <PerfherderGraphContainer
+            title='Speedometer'
             series={[
               {
                 color: '#e55525',
@@ -78,7 +79,17 @@ class Android extends Component {
             ]}
           />
           <PerfherderGraphContainer
+            title='Unity WebGl'
             series={[
+              {
+                color: '#e55525',
+                label: 'Moto G5',
+                frameworkId: 10,
+                platform: 'android-hw-g5-7-0-arm7-api-16',
+                option: 'opt',
+                project: 'mozilla-central',
+                suite: 'raptor-unity-webgl-geckoview',
+              },
               {
                 color: '#45a1ff',
                 label: 'Pixel 2 (arm7)',

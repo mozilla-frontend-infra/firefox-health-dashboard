@@ -36,10 +36,13 @@ class PerfherderGraphContainer extends Component {
             return null;
         }
         return (
-          <PerfherderGraph
-            data={data}
-            options={options}
-          />
+          <div>
+            {this.props.title && <h2>{this.props.title}</h2>}
+            <PerfherderGraph
+              data={data}
+              options={options}
+            />
+          </div>
         );
     }
 }
@@ -54,6 +57,7 @@ PerfherderGraphContainer.propTypes = {
         project: PropTypes.string.isRequired,
         suite: PropTypes.string.isRequired,
     })),
+    title: PropTypes.string,
     timeRange: PropTypes.string,
 };
 
