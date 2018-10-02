@@ -80,6 +80,15 @@ class Android extends Component {
           <PerfherderGraphContainer
             series={[
               {
+                color: '#e55525',
+                label: 'Moto G5',
+                frameworkId: 10,
+                platform: 'android-hw-g5-7-0-arm7-api-16',
+                option: 'opt',
+                project: 'mozilla-central',
+                suite: 'raptor-unity-webgl-geckoview',
+              },
+              {
                 color: '#45a1ff',
                 label: 'Pixel 2 (arm7)',
                 frameworkId: 10,
