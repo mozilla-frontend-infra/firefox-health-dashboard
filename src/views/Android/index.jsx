@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
+import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
 import NimbledroidSiteDrilldown from '../../containers/NimbledroidSiteDrilldown';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
@@ -20,6 +21,29 @@ class Android extends Component {
     const site = this.props.location.search.replace('?site=', '');
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
+        <Section title='Bugzilla'>
+          <BugzillaUrlContainer
+            includeBugCount
+            queries={[
+              {
+                text: 'GeckoView P1 bugs',
+                parameters: {
+                  component: 'GeckoView',
+                  resolution: '---',
+                  priority: ['P1'],
+                },
+              },
+              {
+                text: 'GeckoView backlog bugs',
+                parameters: {
+                  component: 'GeckoView',
+                  resolution: '---',
+                  priority: ['P2', 'P3'],
+                },
+              },
+            ]}
+          />
+        </Section>
         {!site && (
           <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
             <NimbledroidSitesTable
