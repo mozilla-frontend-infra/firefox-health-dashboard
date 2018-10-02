@@ -77,6 +77,19 @@ class Android extends Component {
               },
             ]}
           />
+          <PerfherderGraphContainer
+            series={[
+              {
+                color: '#45a1ff',
+                label: 'Pixel 2 (arm7)',
+                frameworkId: 10,
+                platform: 'android-hw-p2-8-0-arm7-api-16',
+                option: 'opt',
+                project: 'mozilla-central',
+                suite: 'raptor-unity-webgl-geckoview',
+              },
+            ]}
+          />
         </Section>
       </DashboardPage>
     );
