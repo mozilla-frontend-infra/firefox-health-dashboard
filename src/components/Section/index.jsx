@@ -11,7 +11,10 @@ const Section = ({ children, subtitle, title }) => (
 );
 
 Section.propTypes = {
-    children: PropTypes.shape({}).isRequired,
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node,
+    ]).isRequired,
     subtitle: PropTypes.string,
     title: PropTypes.string.isRequired,
 };

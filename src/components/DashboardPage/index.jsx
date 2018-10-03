@@ -35,7 +35,10 @@ const DashboardPage = ({ classes, children, title, subtitle }) => {
 
 DashboardPage.propTypes = {
   classes: PropTypes.shape({}),
-  children: PropTypes.array.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   title: PropTypes.string,
   subtitle: PropTypes.string,
 };
