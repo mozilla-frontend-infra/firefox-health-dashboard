@@ -1,40 +1,29 @@
 import fetchJson from '../fetchJson';
 
-const PRODUCT_TO_LABEL = {
-  'org.mozilla.klar': 'GV',
-  'org.mozilla.focus': 'WV',
-  'com.chrome.beta': 'ChromeBeta',
-};
-
 const matchUrl = profileName => profileName
   .replace(/.*(http[s]?:\/\/w*\.?.*?)[/]?[)]/, (match, firstMatch) => firstMatch);
 
 const matchShorterUrl = url => url
   .replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
 
-const transformedDataForMetrisGraphics = (nimbledroidData, product) => {
-  const scenarios = Object.keys(nimbledroidData[product]);
-  const metricsGraphicsData = scenarios.reduce((result, scenarioName) => {
-    const productKey = PRODUCT_TO_LABEL[product];
-    if (!result[productKey]) {
-      result[productKey] = {};
-    }
-    nimbledroidData[product][scenarioName].forEach(({ date, ms }) => {
-      // In Nimbledroid we have create a number of profiles
+const transformedDataForMetrisGraphics = (scenarios) => {
+  const metricsGraphicsData = Object.keys(scenarios).reduce((result, scenarioName) => {
+    scenarios[scenarioName].forEach(({ date, ms }) => {
+      // In Nimbledroid we have created a number of profiles
       // some of them test websites and contain the URL in the name.
       // There are other profiles testing non-site behaviours, however,
       // we're not interested on plotting those
       if (scenarioName.includes('http')) {
         const url = matchUrl(scenarioName);
-        if (!result[productKey][url]) {
-          result[productKey][url] = {
+        if (!result[url]) {
+          result[url] = {
             data: [],
             title: matchShorterUrl(url),
             url,
           };
         }
         if (ms > 0) {
-          result[productKey][url].data.push({
+          result[url].data.push({
             date: new Date(date),
             value: ms / 1000,
           });
@@ -59,43 +48,52 @@ const sortDataPointsByRecency = (a, b) => {
 };
 
 const mergeProductsData = (productsData) => {
-  const mergedData = productsData
-    .reduce((result, productData) => {
-      const product = Object.keys(productData);
-      const profileKeys = Object.keys(productData[product]);
+  const mergedMeta = {};
+  const mergedScenarios = productsData
+    .reduce((result, { meta, scenarios }) => {
+      const { latestVersion, packageId } = meta;
+      mergedMeta[packageId] = {
+        latestVersion,
+      };
 
-      profileKeys.forEach((profileKey) => {
-        const profileInfo = productData[product][profileKey];
+      Object.keys(scenarios).forEach((scenarioKey) => {
+        const profileInfo = scenarios[scenarioKey];
         const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
         const lastDataPoint = (sortedData[sortedData.length - 1].value).toFixed(2);
 
         // This is the first time we're seing this scenario
-        if (!result[profileKey]) {
+        if (!result[scenarioKey]) {
           delete profileInfo.data;
-          result[profileKey] = {
+          result[scenarioKey] = {
             data: {},
             ...profileInfo,
           };
         }
         // This is the first time we're seing this product for this scenario
-        if (!result[profileKey].data[product]) {
-          result[profileKey].data[product] = sortedData;
-          result[profileKey][product] = lastDataPoint;
+        if (!result[scenarioKey].data[packageId]) {
+          result[scenarioKey].data[packageId] = sortedData;
+          result[scenarioKey][packageId] = lastDataPoint;
         }
       });
       return result;
     }, {});
-  return mergedData;
+  return {
+    meta: mergedMeta,
+    scenarios: mergedScenarios,
+  };
 };
 
 let ENDPOINT;
 
-const productUrl = product => `${ENDPOINT}?product=${product}&version=2`;
+const productUrl = product => `${ENDPOINT}?product=${product}&version=3`;
 
 const fetchProductData = async (product) => {
   const url = productUrl(product);
-  const productData = await fetchJson(url);
-  return transformedDataForMetrisGraphics(productData, product);
+  const { meta, scenarios } = await fetchJson(url);
+  return {
+    meta,
+    scenarios: transformedDataForMetrisGraphics(scenarios),
+  };
 };
 
 // XXX: There's a strong coupling of data fetching from the API and

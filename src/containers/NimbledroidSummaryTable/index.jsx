@@ -24,50 +24,51 @@ class NimbledroidSummaryTable extends Component {
   };
 
   async componentDidMount() {
-    const { nimbledroidData, targetRatio } = this.props;
-    if (nimbledroidData) {
-      this.setTableContents(nimbledroidData, targetRatio);
-    } else {
-      try {
-        const data = await fetchNimbledroidData(this.props.products);
-        this.setTableContents(data, targetRatio);
-      } catch (error) {
-        this.props.handleError(error);
-      }
+    const { configuration, nimbledroidData, handleError } = this.props;
+    const { products } = configuration;
+
+    try {
+      const data = nimbledroidData || await fetchNimbledroidData(products);
+      this.setTableContents(data, configuration);
+    } catch (error) {
+      handleError(error);
     }
   }
 
-  setTableContents(nimbledroidData, targetRatio) {
+  setTableContents(nimbledroidData, configuration) {
     this.setState({
-      ...generateSitesTableContent(nimbledroidData, targetRatio),
+      ...generateSitesTableContent(nimbledroidData, configuration),
     });
   }
 
   render() {
-    if (!this.state.tableContent) {
+    const { showSites, summary, tableContent, tableHeader } = this.state;
+    const { classes } = this.props;
+
+    if (!tableContent) {
       return null;
     }
 
     return (
-      <div className={this.props.classes.root}>
-        {!this.state.showSites && (
+      <div className={classes.root}>
+        {!showSites && (
           <div>
             <Button onClick={() => this.setState({ showSites: true })}>
-              Show detail view
+              Show detailed view
             </Button>
-            <div className={this.props.classes.summary}>
-              {this.state.summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
+            <div className={classes.summary}>
+              {summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
             </div>
           </div>
         )}
-        {this.state.showSites && (
+        {showSites && (
           <div>
             <Button onClick={() => this.setState({ showSites: false })}>
               Show summary view
             </Button>
             <SummaryTable
-              header={this.state.tableHeader}
-              content={this.state.tableContent}
+              header={tableHeader}
+              content={tableContent}
             />
           </div>
         )}
@@ -77,9 +78,14 @@ class NimbledroidSummaryTable extends Component {
 }
 
 NimbledroidSummaryTable.propTypes = {
+  classes: PropTypes.shape({}),
   nimbledroidData: PropTypes.shape({}),
-  products: PropTypes.arrayOf(PropTypes.string),
-  targetRatio: PropTypes.number.isRequired,
+  configuration: PropTypes.shape({
+    baseProduct: PropTypes.string.isRequired,
+    compareProduct: PropTypes.string.isRequired,
+    products: PropTypes.arrayOf(PropTypes.string).isRequired,
+    targetRatio: PropTypes.number.isRequired,
+  }),
 };
 
 export default withErrorBoundary(withStyles(styles)(NimbledroidSummaryTable));

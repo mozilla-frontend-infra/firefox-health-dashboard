@@ -12,38 +12,37 @@ class SiteDrillDown extends Component {
   };
 
   async componentDidMount() {
-    const { nimbledroidData, site, targetRatio } = this.props;
-    if (nimbledroidData) {
-      this.setSiteData(nimbledroidData[site], targetRatio);
-    } else {
-      try {
-        const data = await fetchNimbledroidData(this.props.products);
-        this.setSiteData(data[site], targetRatio);
-      } catch (error) {
-        // eslint-disable-next-line react/prop-types
-        this.props.handleError(error);
-      }
+    const { handleError, nimbledroidData, configuration } = this.props;
+    const { site, products } = configuration;
+
+    try {
+      const { scenarios } = nimbledroidData || await fetchNimbledroidData(products);
+      this.setSiteData(scenarios[site], configuration);
+    } catch (error) {
+      handleError(error);
     }
   }
 
-  setSiteData(profile, targetRatio) {
-    const { GV, WV } = profile;
+  setSiteData(profile, { baseProduct, compareProduct, targetRatio }) {
     this.setState({
       profile,
-      ...siteMetrics(GV, WV, targetRatio),
+      ...siteMetrics(profile[baseProduct], profile[compareProduct], targetRatio),
     });
   }
 
   render() {
-    const { site, targetRatio } = this.props;
-    if (!this.state.profile) {
+    const { color, profile, widgetLabel } = this.state;
+    const { configuration } = this.props;
+    const { site, targetRatio } = configuration;
+
+    if (!profile) {
       return null;
     }
 
     return (
       <StatusWidget
-        extraInfo={this.state.widgetLabel}
-        statusColor={this.state.color}
+        extraInfo={widgetLabel}
+        statusColor={color}
         title={{
           enrich: true,
           text: site,
@@ -51,7 +50,7 @@ class SiteDrillDown extends Component {
         }}
       >
         <NimbledroidGraph
-          profile={this.state.profile}
+          profile={profile}
           targetRatio={targetRatio}
         />
       </StatusWidget>
@@ -61,9 +60,13 @@ class SiteDrillDown extends Component {
 
 SiteDrillDown.propTypes = ({
   nimbledroidData: PropTypes.shape({}),
-  products: PropTypes.arrayOf(PropTypes.string),
-  site: PropTypes.string.isRequired,
-  targetRatio: PropTypes.number.isRequired,
+  configuration: PropTypes.shape({
+    baseProduct: PropTypes.string.isRequired,
+    compareProduct: PropTypes.string.isRequired,
+    products: PropTypes.arrayOf(PropTypes.string),
+    site: PropTypes.string.isRequired,
+    targetRatio: PropTypes.number.isRequired,
+  }).isRequired,
 });
 
 export default withErrorBoundary(SiteDrillDown);
