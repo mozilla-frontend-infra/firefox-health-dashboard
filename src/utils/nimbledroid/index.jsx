@@ -1,14 +1,11 @@
-const TARGET1 = 'GV';
-const TARGET2 = 'ChromeBeta';
+import CONFIG from './config';
 
 const percentageSymbol = (target1, target2, targetRatio) => ((target1 < (targetRatio * target2)) ? '+' : '');
 
 const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRatio * target2);
 
 export const sortSitesByTargetRatio = (a, b) => {
-  const aRatio = a[TARGET1] / a[TARGET2];
-  const bRatio = b[TARGET1] / b[TARGET2];
-  return bRatio - aRatio;
+  return b.ratio - a.ratio;
 };
 
 const statusColor = (ratio, targetRatio) => {
@@ -68,23 +65,36 @@ const generateSitesSummary = (count, numSites) => (
   ]
 );
 
-export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
-  const numSites = Object.keys(nimbledroidData).length;
+export const generateSitesTableContent = (
+  nimbledroidData,
+  { baseProduct, compareProduct, targetRatio },
+  ) => {
+  const { meta, scenarios } = nimbledroidData;
+  const packageIds = Object.keys(meta);
+  const numSites = Object.keys(scenarios).length;
   const sites = (numSites > 0)
-    ? Object.values(nimbledroidData).sort(sortSitesByTargetRatio) : [];
+    ? Object.values(scenarios)
+      .map((scenario) => {
+        scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
+        return scenario;
+      })
+      .sort(sortSitesByTargetRatio) : [];
   const count = {
     red: 0,
     yellow: 0,
     green: 0,
   };
-  const tableContent = sites.map(({
-    title, url, GV, WV, ChromeBeta,
-  }) => {
-    const { ratio, symbol, color } = siteMetrics(GV, ChromeBeta, targetRatio);
+  const tableHeader = packageIds.map(packageId => CONFIG.packageIdLabels[packageId]);
+  tableHeader.push('% from target');
+  const tableContent = sites.map((scenario) => {
+    const { title, url } = scenario;
+    const { ratio, symbol, color } = siteMetrics(
+      scenario[baseProduct],
+      scenario[compareProduct], targetRatio);
     count[color] += 1;
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: [GV, WV, ChromeBeta],
+      dataPoints: packageIds.map(packageId => scenario[packageId]),
       statusColor: color,
       summary: `${symbol}${((1 - ratio) * 100).toFixed(2)}%`,
       title: {
@@ -95,7 +105,6 @@ export const generateSitesTableContent = (nimbledroidData, targetRatio) => {
       uid: url,
     };
   });
-  const tableHeader = ['GeckoView', 'WebView', 'Chrome beta', '% from target'];
   return {
     tableHeader,
     tableContent,
