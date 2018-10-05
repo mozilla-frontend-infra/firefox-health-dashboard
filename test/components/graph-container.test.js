@@ -1,4 +1,5 @@
 /* global describe, it */
+/* eslint-disable */
 import assert from 'assert';
 import { expect } from 'chai';
 import { transformGraphData, determineStatusColor } from '../../src/utils/helpers';

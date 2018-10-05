@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --mode development --open",
     "start:local": "BACKEND=http://localhost:3000 webpack-dev-server --mode development --open",
     "test": "jest",
-    "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src",
+    "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
     "precommit": "lint-staged",
     "prepush": "yarn test",
     "coverage": "rm -rf coverage && nyc --all yarn test && nyc report -r lcov",
@@ -23,7 +23,7 @@
     ]
   },
   "lint-staged": {
-    "*.js": [
+    "*.js[x]": [
       "yarn lint"
     ]
   },
