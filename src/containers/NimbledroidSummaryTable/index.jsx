@@ -23,22 +23,22 @@ class NimbledroidSummaryTable extends Component {
     showSites: false,
   };
 
-  async componentDidMount() {
-    const { configuration, nimbledroidData, handleError } = this.props;
-    const { products } = configuration;
-
-    try {
-      const data = nimbledroidData || await fetchNimbledroidData(products);
-      this.setTableContents(data, configuration);
-    } catch (error) {
-      handleError(error);
+  constructor(props) {
+    super(props);
+    const { configuration, nimbledroidData } = this.props;
+    if (nimbledroidData) {
+      this.state = generateSitesTableContent(nimbledroidData, configuration);
     }
   }
 
-  setTableContents(nimbledroidData, configuration) {
-    this.setState({
-      ...generateSitesTableContent(nimbledroidData, configuration),
-    });
+  async componentDidMount() {
+    const { configuration, handleError } = this.props;
+    try {
+      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      this.setState(generateSitesTableContent(nimbledroidData, configuration));
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   render() {
@@ -85,7 +85,7 @@ NimbledroidSummaryTable.propTypes = {
     compareProduct: PropTypes.string.isRequired,
     products: PropTypes.arrayOf(PropTypes.string).isRequired,
     targetRatio: PropTypes.number.isRequired,
-  }),
+  }).isRequired,
 };
 
 export default withErrorBoundary(withStyles(styles)(NimbledroidSummaryTable));
