@@ -6,28 +6,40 @@ import StatusWidget from '../../components/StatusWidget';
 import { siteMetrics } from '../../utils/nimbledroid';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 
-class SiteDrillDown extends Component {
+class NimbledroidSiteDrilldown extends Component {
   state = {
     profile: null,
   };
 
-  async componentDidMount() {
-    const { handleError, nimbledroidData, configuration } = this.props;
-    const { site, products } = configuration;
+  constructor(props) {
+    super(props);
+    const { configuration, nimbledroidData } = this.props;
+    if (nimbledroidData) {
+      this.state = this.generateData(configuration, nimbledroidData);
+    }
+  }
 
+  async componentDidMount() {
+    const { configuration, handleError } = this.props;
     try {
-      const { scenarios } = nimbledroidData || await fetchNimbledroidData(products);
-      this.setSiteData(scenarios[site], configuration);
+      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      const data = this.generateData(configuration, nimbledroidData);
+      this.setState(data);
     } catch (error) {
       handleError(error);
     }
   }
 
-  setSiteData(profile, { baseProduct, compareProduct, targetRatio }) {
-    this.setState({
+  generateData(configuration, nimbledroidData) {
+    const { baseProduct, compareProduct, targetRatio, site } = configuration;
+
+    const { scenarios } = nimbledroidData;
+    const profile = scenarios[site];
+    const generatedData = {
       profile,
       ...siteMetrics(profile[baseProduct], profile[compareProduct], targetRatio),
-    });
+    };
+    return generatedData;
   }
 
   render() {
@@ -58,7 +70,7 @@ class SiteDrillDown extends Component {
   }
 }
 
-SiteDrillDown.propTypes = ({
+NimbledroidSiteDrilldown.propTypes = ({
   nimbledroidData: PropTypes.shape({}),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,
@@ -69,4 +81,4 @@ SiteDrillDown.propTypes = ({
   }).isRequired,
 });
 
-export default withErrorBoundary(SiteDrillDown);
+export default withErrorBoundary(NimbledroidSiteDrilldown);
