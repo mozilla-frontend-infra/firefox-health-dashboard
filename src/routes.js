@@ -6,7 +6,8 @@ import Home from './home';
 import ReleaseCrashes from './crashes/release';
 import BetaCrashes from './crashes/beta';
 import Status from './status/index';
-import Android from './views/Android';
+import AndroidPage from './views/Android';
+import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
 import QuantumResponsivenessParent from './quantum/responsiveness-parent';
@@ -21,8 +22,8 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path='/android/graph' component={Android} />
-      <Route path='/android' component={Android} />
+      <Route path='/android/graph' component={NimbledroidGraphPage} />
+      <Route path='/android' component={AndroidPage} />
       <Route path='/crashes/beta' component={BetaCrashes} />
       <Route path='/crashes' component={ReleaseCrashes} />
       <Route path='/status' component={Status} />

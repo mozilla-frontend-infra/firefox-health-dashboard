@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import propTypes from 'prop-types';
 
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
-import NimbledroidSiteDrilldown from '../../containers/NimbledroidSiteDrilldown';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
 class Android extends Component {
-  static propTypes = {
-    site: propTypes.string,
-    location: propTypes.shape({
-      search: propTypes.string,
-    }),
-  };
-
   render() {
     const products = [
       'org.mozilla.klar',
@@ -24,7 +15,6 @@ class Android extends Component {
       'com.chrome.beta',
     ];
     const targetRatio = 1.2;
-    const site = this.props.location.search.replace('?site=', '');
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
         <Section title='Bugzilla'>
@@ -52,27 +42,14 @@ class Android extends Component {
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
           <NimbledroidProductVersions products={products} />
-          {!site && (
-            <NimbledroidSitesTable
-              configuration={{
-                baseProduct: 'org.mozilla.focus',
-                compareProduct: 'com.chrome.beta',
-                products: products,
-                targetRatio: targetRatio,
-              }}
-            />
-          )}
-          {site && (
-            <NimbledroidSiteDrilldown
-              configuration={{
-                baseProduct: 'org.mozilla.focus',
-                compareProduct: 'com.chrome.beta',
-                products: products,
-                site: site,
-                targetRatio: targetRatio,
-              }}
-            />
-          )}
+          <NimbledroidSitesTable
+            configuration={{
+              baseProduct: 'org.mozilla.focus',
+              compareProduct: 'com.chrome.beta',
+              products: products,
+              targetRatio: targetRatio,
+            }}
+          />
         </Section>
         <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
           <PerfherderGraphContainer
