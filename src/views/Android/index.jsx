@@ -6,6 +6,7 @@ import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
+import { COLORS } from '../../settings';
 
 class Android extends Component {
   render() {
@@ -56,7 +57,7 @@ class Android extends Component {
             title='Speedometer'
             series={[
               {
-                color: '#e55525',
+                color: COLORS[0],
                 label: 'Moto G5',
                 frameworkId: 10,
                 platform: 'android-hw-g5-7-0-arm7-api-16',
@@ -65,7 +66,7 @@ class Android extends Component {
                 suite: 'raptor-speedometer-geckoview',
               },
               {
-                color: '#ffcd02',
+                color: COLORS[1],
                 label: 'Pixel 2 (x64)',
                 frameworkId: 10,
                 option: 'opt',
@@ -74,7 +75,7 @@ class Android extends Component {
                 suite: 'raptor-speedometer-geckoview',
               },
               {
-                color: '#45a1ff',
+                color: COLORS[2],
                 label: 'Pixel 2 (arm7)',
                 frameworkId: 10,
                 option: 'opt',
@@ -88,7 +89,7 @@ class Android extends Component {
             title='Unity WebGl'
             series={[
               {
-                color: '#e55525',
+                color: COLORS[0],
                 label: 'Moto G5',
                 frameworkId: 10,
                 platform: 'android-hw-g5-7-0-arm7-api-16',
@@ -97,7 +98,7 @@ class Android extends Component {
                 suite: 'raptor-unity-webgl-geckoview',
               },
               {
-                color: '#45a1ff',
+                color: COLORS[1],
                 label: 'Pixel 2 (arm7)',
                 frameworkId: 10,
                 platform: 'android-hw-p2-8-0-arm7-api-16',
