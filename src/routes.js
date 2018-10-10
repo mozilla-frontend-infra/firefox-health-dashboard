@@ -10,10 +10,6 @@ import AndroidPage from './views/Android';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
-import QuantumResponsivenessParent from './quantum/responsiveness-parent';
-import QuantumResponsivenessContent from './quantum/responsiveness-content';
-import QuantumPageLoadRender from './quantum/pageload-render';
-import QuantumTracking from './quantum/metric';
 import Subbenchmark from './quantum/subbenchmarks';
 import FlowTable from './quantum/flow-table';
 
@@ -27,10 +23,6 @@ const Routes = () => (
       <Route path='/crashes/beta' component={BetaCrashes} />
       <Route path='/crashes' component={ReleaseCrashes} />
       <Route path='/status' component={Status} />
-      <Route path='/quantum/:architecture/responsiveness/parent' component={QuantumResponsivenessParent} />
-      <Route path='/quantum/:architecture/responsiveness/content' component={QuantumResponsivenessContent} />
-      <Route path='/quantum/:architecture/pageload/render' component={QuantumPageLoadRender} />
-      <Route path='/quantum/:architecture/track' component={QuantumTracking} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />
       <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
       <Route path='/quantum/32' component={Quantum32} />
