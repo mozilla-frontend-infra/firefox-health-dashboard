@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './home';
 import ReleaseCrashes from './crashes/release';
@@ -28,8 +28,6 @@ const Routes = () => (
       <Route path='/quantum/32' component={Quantum32} />
       <Route path='/quantum/64' component={Quantum64} />
       <Route path='/' component={Home} />
-      <Redirect from='/android/v2' to='/android' />
-      <Redirect from='/quantum' to='/' />
       <Route component={NoMatch} />
     </Switch>
   </BrowserRouter>
