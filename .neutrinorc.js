@@ -77,6 +77,12 @@ module.exports = {
       {
         html: {
           title: 'Firefox Health Dashboard',
+          meta: [
+            {
+              name: 'viewport',
+              content: 'width=800, initial-scale=1',
+            }
+          ],
           links: [
             {
               href: '/static/favicon.ico',
