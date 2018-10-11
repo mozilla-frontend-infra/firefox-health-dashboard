@@ -6,6 +6,7 @@ import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
 import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
+import RedashContainer from '../../containers/RedashContainer';
 import { COLORS } from '../../settings';
 
 class Android extends Component {
@@ -51,6 +52,24 @@ class Android extends Component {
               targetRatio: targetRatio,
             }}
           />
+        </Section>
+        <Section title='Telemetry'>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <RedashContainer
+              chartOptions={{
+                title: 'TOTAL_CONTENT_PAGE_LOAD_TIME (no 95th)',
+              }}
+              redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F'
+              redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59395'
+            />
+            <RedashContainer
+              chartOptions={{
+                title: 'TOTAL_CONTENT_PAGE_LOAD_TIME',
+              }}
+              redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83'
+              redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59397'
+            />
+          </div>
         </Section>
         <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
           <PerfherderGraphContainer
