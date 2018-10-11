@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Lock } from '@material-ui/icons';
 import fetchJson from '../../utils/fetchJson';
-import { COLORS } from '../../settings';
+import SETTINGS from '../../settings';
 
 const chartJsOptions = ({
   title,
@@ -76,8 +76,8 @@ const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
     const datum = buckets[key];
     return {
       label: key,
-      backgroundColor: COLORS[index],
-      borderColor: COLORS[index],
+      backgroundColor: SETTINGS.colors[index],
+      borderColor: SETTINGS.colors[index],
       fill: false,
       pointRadius: '0',
       pointHoverBackgroundColor: 'white',
