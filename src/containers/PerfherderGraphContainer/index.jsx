@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryPerformanceData from '@mozilla-frontend-infra/perf-goggles';
 import PerfherderGraph from '../../components/PerfherderGraph';
-import chartJsFormatter from '../../utils/perfherder/chartJsFormatter';
+import chartJsFormatter from '../../utils/chartJs/perfherderFormatter';
 
 class PerfherderGraphContainer extends Component {
     state = {
