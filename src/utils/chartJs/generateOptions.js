@@ -1,6 +1,6 @@
 const generateOptions = ({
-    title = '',
-    scaleLabel = 'Miliseconds',
+    title,
+    scaleLabel,
     reverse = false,
 }) => {
     const options = {

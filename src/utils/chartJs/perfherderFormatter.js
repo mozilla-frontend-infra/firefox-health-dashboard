@@ -7,8 +7,10 @@ const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
 
 const generateChartJsOptions = (meta) => {
   const higherIsBetter = (meta.lower_is_better === false);
-  const yLabel = higherIsBetter ? 'Score' : 'Execution time (ms)';
-  return generateOptions(higherIsBetter, yLabel);
+  return generateOptions({
+    reverse: higherIsBetter,
+    scaleLabel: higherIsBetter ? 'Score' : 'Execution time (ms)',
+  });
 };
 
 // This function combines Perfherder series and transforms it into ChartJS formatting

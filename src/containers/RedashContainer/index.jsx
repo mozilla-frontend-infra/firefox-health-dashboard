@@ -34,7 +34,9 @@ class RedashContainer extends Component {
   };
 
   static defaultProps = {
-    chartOptions: {},
+    chartOptions: {
+      scaleLabel: 'Miliseconds',
+    },
     dataKeyIdentifier: 'label',
   };
 
