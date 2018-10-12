@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Chart from 'react-chartjs-2';
+import ChartJsWrapper from '../ChartJsWrapper';
 
 const PerfherderGraph = ({ data, options }) => (
-  <Chart
+  <ChartJsWrapper
     type='scatter'
     data={data}
     height={50}

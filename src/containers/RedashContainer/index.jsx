@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Chart from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Lock } from '@material-ui/icons';
+import ChartJsWrapper from '../../components/ChartJsWrapper';
 import fetchJson from '../../utils/fetchJson';
 import SETTINGS from '../../settings';
 
@@ -88,10 +88,6 @@ const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
 };
 
 const styles = {
-  chartContainer: {
-    width: '45vw',
-    minWidth: '400px',
-  },
   linkContainer: {
     fontSize: '0.8rem',
     textAlign: 'center',
@@ -138,19 +134,13 @@ class RedashContainer extends Component {
     const { datasets, options } = this.state;
     return (
       <div>
-        {/*
-        This div helps with canvas size changes
-        https://www.chartjs.org/docs/latest/general/responsive.html#important-note
-        */}
-        <div className={classes.chartContainer}>
-          {datasets && (
-            <Chart
-              type='line'
-              data={datasets}
-              options={options}
-            />
-          )}
-        </div>
+        {datasets && (
+          <ChartJsWrapper
+            type='line'
+            data={datasets}
+            options={options}
+          />
+        )}
         <div className={classes.linkContainer}>
           <a href={redashQueryUrl} target='_blank' rel='noopener noreferrer'>
             <span className={classes.middleVerticalAlignment}>Redash query</span>
