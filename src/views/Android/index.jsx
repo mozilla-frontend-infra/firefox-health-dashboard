@@ -72,61 +72,63 @@ class Android extends Component {
           </div>
         </Section>
         <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
-          <PerfherderGraphContainer
-            title='Speedometer'
-            series={[
-              {
-                color: SETTINGS.colors[0],
-                label: 'Moto G5',
-                frameworkId: 10,
-                platform: 'android-hw-g5-7-0-arm7-api-16',
-                option: 'opt',
-                project: 'mozilla-central',
-                suite: 'raptor-speedometer-geckoview',
-              },
-              {
-                color: SETTINGS.colors[1],
-                label: 'Pixel 2 (x64)',
-                frameworkId: 10,
-                option: 'opt',
-                platform: 'android-hw-p2-8-0-android-aarch64',
-                project: 'mozilla-central',
-                suite: 'raptor-speedometer-geckoview',
-              },
-              {
-                color: SETTINGS.colors[2],
-                label: 'Pixel 2 (arm7)',
-                frameworkId: 10,
-                option: 'opt',
-                platform: 'android-hw-p2-8-0-arm7-api-16',
-                project: 'mozilla-central',
-                suite: 'raptor-speedometer-geckoview',
-              },
-            ]}
-          />
-          <PerfherderGraphContainer
-            title='Unity WebGl'
-            series={[
-              {
-                color: SETTINGS.colors[0],
-                label: 'Moto G5',
-                frameworkId: 10,
-                platform: 'android-hw-g5-7-0-arm7-api-16',
-                option: 'opt',
-                project: 'mozilla-central',
-                suite: 'raptor-unity-webgl-geckoview',
-              },
-              {
-                color: SETTINGS.colors[1],
-                label: 'Pixel 2 (arm7)',
-                frameworkId: 10,
-                platform: 'android-hw-p2-8-0-arm7-api-16',
-                option: 'opt',
-                project: 'mozilla-central',
-                suite: 'raptor-unity-webgl-geckoview',
-              },
-            ]}
-          />
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <PerfherderGraphContainer
+              title='Speedometer'
+              series={[
+                {
+                  color: SETTINGS.colors[0],
+                  label: 'Moto G5',
+                  frameworkId: 10,
+                  platform: 'android-hw-g5-7-0-arm7-api-16',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-geckoview',
+                },
+                {
+                  color: SETTINGS.colors[1],
+                  label: 'Pixel 2 (x64)',
+                  frameworkId: 10,
+                  option: 'opt',
+                  platform: 'android-hw-p2-8-0-android-aarch64',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-geckoview',
+                },
+                {
+                  color: SETTINGS.colors[2],
+                  label: 'Pixel 2 (arm7)',
+                  frameworkId: 10,
+                  option: 'opt',
+                  platform: 'android-hw-p2-8-0-arm7-api-16',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-geckoview',
+                },
+              ]}
+            />
+            <PerfherderGraphContainer
+              title='Unity WebGl'
+              series={[
+                {
+                  color: SETTINGS.colors[0],
+                  label: 'Moto G5',
+                  frameworkId: 10,
+                  platform: 'android-hw-g5-7-0-arm7-api-16',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-unity-webgl-geckoview',
+                },
+                {
+                  color: SETTINGS.colors[1],
+                  label: 'Pixel 2 (arm7)',
+                  frameworkId: 10,
+                  platform: 'android-hw-p2-8-0-arm7-api-16',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-unity-webgl-geckoview',
+                },
+              ]}
+            />
+          </div>
         </Section>
       </DashboardPage>
     );
