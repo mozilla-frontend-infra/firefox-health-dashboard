@@ -4,6 +4,12 @@ const generateOptions = ({
     reverse = false,
 }) => {
     const options = {
+        legend: {
+            labels: {
+                boxWidth: 10,
+                fontSize: 10,
+            },
+        },
         scales: {
             xAxes: [{
                 type: 'time',
