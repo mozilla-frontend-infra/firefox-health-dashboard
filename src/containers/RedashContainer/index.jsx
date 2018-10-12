@@ -10,7 +10,6 @@ import fetchJson from '../../utils/fetchJson';
 const styles = {
   linkContainer: {
     fontSize: '0.8rem',
-    textAlign: 'center',
   },
   middleVerticalAlignment: {
     verticalAlign: 'middle',
@@ -23,17 +22,19 @@ class RedashContainer extends Component {
   };
 
   static propTypes = {
+    chartOptions: PropTypes.shape({
+      title: PropTypes.string,
+      scaleLabel: PropTypes.string,
+    }),
     classes: PropTypes.shape().isRequired,
     dataKeyIdentifier: PropTypes.string.isRequired,
     redashDataUrl: PropTypes.string.isRequired,
     redashQueryUrl: PropTypes.string.isRequired,
-    chartOptions: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      scaleLabel: PropTypes.string,
-    }).isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
+    chartOptions: {},
     dataKeyIdentifier: 'label',
   };
 
@@ -50,10 +51,11 @@ class RedashContainer extends Component {
   }
 
   render() {
-    const { classes, redashQueryUrl } = this.props;
+    const { classes, redashQueryUrl, title } = this.props;
     const { datasets, options } = this.state;
     return (
       <div>
+        {title && <h2>{title}</h2>}
         {datasets && (
           <ChartJsWrapper
             type='line'

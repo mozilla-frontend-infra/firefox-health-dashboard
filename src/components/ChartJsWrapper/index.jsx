@@ -19,6 +19,7 @@ const ChartJsWrapper = ({ classes, data, options, type }) => (
     <Chart
       type={type}
       data={data}
+      height={80}
       options={options}
     />
   </div>

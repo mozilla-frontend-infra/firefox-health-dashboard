@@ -56,16 +56,12 @@ class Android extends Component {
         <Section title='Telemetry'>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <RedashContainer
-              chartOptions={{
-                title: 'TOTAL_CONTENT_PAGE_LOAD_TIME (no 95th)',
-              }}
+              title='Total content page load time (no 95th)'
               redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F'
               redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59395'
             />
             <RedashContainer
-              chartOptions={{
-                title: 'TOTAL_CONTENT_PAGE_LOAD_TIME',
-              }}
+              title='Total content page load time'
               redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83'
               redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59397'
             />

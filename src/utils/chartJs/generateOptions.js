@@ -1,5 +1,5 @@
 const generateOptions = ({
-    title,
+    title = '',
     scaleLabel = 'Miliseconds',
     reverse = false,
 }) => {
