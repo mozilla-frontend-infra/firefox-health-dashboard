@@ -12,7 +12,7 @@ const generateChartJsOptions = (meta) => {
 };
 
 // This function combines Perfherder series and transforms it into ChartJS formatting
-const chartJsFormatter = (series) => {
+const perfherderFormatter = (series) => {
   const newData = {
     data: { datasets: [] },
     // The first series defines the whole set
@@ -30,4 +30,4 @@ const chartJsFormatter = (series) => {
   return newData;
 };
 
-export default chartJsFormatter;
+export default perfherderFormatter;
