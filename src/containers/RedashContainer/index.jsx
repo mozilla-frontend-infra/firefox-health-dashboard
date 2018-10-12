@@ -3,50 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Lock } from '@material-ui/icons';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
+import generateOptions from '../../utils/chartJs/generateOptions';
 import fetchJson from '../../utils/fetchJson';
 import SETTINGS from '../../settings';
-
-const chartJsOptions = ({
-  title,
-  scaleLabel = 'Miliseconds',
-  reverse = false,
- }) => {
-  const options = {
-    scales: {
-      xAxes: [
-        {
-          type: 'time',
-          time: {
-            displayFormats: {
-              hour: 'MMM D',
-            },
-          },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            reverse,
-          },
-        },
-      ],
-    },
-  };
-  if (title) {
-    options.title = {
-      display: true,
-      text: title,
-    };
-  }
-  if (scaleLabel) {
-    options.scales.yAxes[0].scaleLabel = {
-      display: true,
-      labelString: scaleLabel,
-    };
-  }
-  return options;
-};
 
 const sortByDate = (a, b) => {
   return new Date(b.submission_date) - new Date(a.submission_date);
@@ -125,7 +84,7 @@ class RedashContainer extends Component {
     const redashData = await fetchJson(redashDataUrl);
     this.setState({
       datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
-      options: chartJsOptions(chartOptions),
+      options: generateOptions(chartOptions),
     });
   }
 
