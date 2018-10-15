@@ -21,7 +21,6 @@ class PerfherderGraphContainer extends Component {
                 const seriesDatum = (Object.values(seriesData)).pop();
                 return {
                     ...seriesDatum,
-                    color: config.color,
                     label: config.label,
                 };
         }));
@@ -49,7 +48,6 @@ class PerfherderGraphContainer extends Component {
 
 PerfherderGraphContainer.propTypes = {
     series: PropTypes.arrayOf(PropTypes.shape({
-        color: PropTypes.string.isRequired,
         label: PropTypes.string.isRequired,
         extraOptions: PropTypes.shape({}),
         frameworkId: PropTypes.number.isRequired,
