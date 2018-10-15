@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
+import NimbledroidGraphContainer from '../NimbledroidGraphContainer';
 import NimbledroidProductVersions from '../NimbledroidProductVersions';
 import NimbledroidSummaryTable from '../NimbledroidSummaryTable';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
@@ -38,8 +39,13 @@ class NimbledroidSection extends Component {
           products={configuration.products}
         />
         <NimbledroidSummaryTable
-          nimbledroidData={nimbledroidData}
           configuration={configuration}
+          nimbledroidData={nimbledroidData}
+        />
+        <NimbledroidGraphContainer
+          configuration={configuration}
+          scenarioData={nimbledroidData.scenarios['Cold Startup']}
+          scenarioName='Cold Startup'
         />
       </div>
     ) : <div />;
