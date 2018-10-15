@@ -4,9 +4,8 @@ import ChartJsWrapper from '../ChartJsWrapper';
 
 const PerfherderGraph = ({ data, options }) => (
   <ChartJsWrapper
-    type='scatter'
+    type='line'
     data={data}
-    height={50}
     options={options}
   />
 );

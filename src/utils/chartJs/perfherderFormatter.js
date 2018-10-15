@@ -1,4 +1,6 @@
 import generateOptions from './generateOptions';
+import generateLineChartStyles from './generateLineChartStyles';
+import SETTINGS from '../../settings';
 
 const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
     x: datetime,
@@ -21,9 +23,9 @@ const perfherderFormatter = (series) => {
     options: generateChartJsOptions(series[0].meta),
   };
 
-  series.forEach(({ color, data, label }) => {
+  series.forEach(({ data, label }, index) => {
     newData.data.datasets.push({
-      backgroundColor: color,
+      ...generateLineChartStyles(SETTINGS.colors[index]),
       label,
       data: dataToChartJSformat(data),
     });
