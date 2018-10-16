@@ -68,7 +68,7 @@ class Android extends Component {
               title='Speedometer'
               series={[
                 {
-                  label: 'Moto G5',
+                  label: 'Moto G5 (arm7)',
                   frameworkId: 10,
                   platform: 'android-hw-g5-7-0-arm7-api-16',
                   option: 'opt',
@@ -84,7 +84,7 @@ class Android extends Component {
                   suite: 'raptor-speedometer-geckoview',
                 },
                 {
-                  label: 'Pixel 2 (x64)',
+                  label: 'Pixel 2 (ARM64)',
                   frameworkId: 10,
                   option: 'opt',
                   platform: 'android-hw-p2-8-0-android-aarch64',
@@ -98,7 +98,7 @@ class Android extends Component {
               series={[
                 {
                   color: SETTINGS.colors[0],
-                  label: 'Moto G5',
+                  label: 'Moto G5 (arm7)',
                   frameworkId: 10,
                   platform: 'android-hw-g5-7-0-arm7-api-16',
                   option: 'opt',
