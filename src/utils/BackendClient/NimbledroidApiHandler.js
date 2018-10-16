@@ -9,25 +9,19 @@ const matchShorterUrl = url => url
 const transformedDataForMetrisGraphics = (scenarios) => {
   const metricsGraphicsData = Object.keys(scenarios).reduce((result, scenarioName) => {
     scenarios[scenarioName].forEach(({ date, ms }) => {
-      // In Nimbledroid we have created a number of profiles
-      // some of them test websites and contain the URL in the name.
-      // There are other profiles testing non-site behaviours, however,
-      // we're not interested on plotting those
-      if (scenarioName.includes('http')) {
-        const url = matchUrl(scenarioName);
-        if (!result[url]) {
-          result[url] = {
-            data: [],
-            title: matchShorterUrl(url),
-            url,
-          };
-        }
-        if (ms > 0) {
-          result[url].data.push({
-            date: new Date(date),
-            value: ms / 1000,
-          });
-        }
+      const url = matchUrl(scenarioName);
+      if (!result[url]) {
+        result[url] = {
+          data: [],
+          title: matchShorterUrl(url),
+          url,
+        };
+      }
+      if (ms > 0) {
+        result[url].data.push({
+          date: new Date(date),
+          value: ms / 1000,
+        });
       }
     });
     return result;
@@ -56,8 +50,12 @@ const mergeProductsData = (productsData) => {
         latestVersion,
       };
 
+      // eslint-disable-next-line consistent-return
       Object.keys(scenarios).forEach((scenarioKey) => {
         const profileInfo = scenarios[scenarioKey];
+        if (profileInfo.data.length === 0) {
+          return;
+        }
         const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
         const lastDataPoint = (sortedData[sortedData.length - 1].value).toFixed(2);
 

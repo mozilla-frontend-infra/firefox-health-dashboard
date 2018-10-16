@@ -70,10 +70,13 @@ export const generateSitesTableContent = (
   { baseProduct, compareProduct, targetRatio },
   ) => {
   const { meta, scenarios } = nimbledroidData;
+  const filteredScenarios = Object.keys(scenarios)
+    .filter(scenario => scenario.includes('http'))
+    .map(scenario => scenarios[scenario]);
   const packageIds = Object.keys(meta);
-  const numSites = Object.keys(scenarios).length;
+  const numSites = Object.keys(filteredScenarios).length;
   const sites = (numSites > 0)
-    ? Object.values(scenarios)
+    ? Object.values(filteredScenarios)
       .map((scenario) => {
         scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
         return scenario;

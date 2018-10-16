@@ -1,9 +1,6 @@
-const generateOptions = ({
-    title,
-    scaleLabel,
-    reverse = false,
-}) => {
-    const options = {
+const generateOptions = (options = {}) => {
+    const { title, scaleLabel, reverse = false } = options;
+    const chartJsOptions = {
         legend: {
             labels: {
                 boxWidth: 10,
@@ -28,18 +25,18 @@ const generateOptions = ({
         },
     };
     if (title) {
-        options.title = {
+        chartJsOptions.title = {
             display: true,
             text: title,
         };
     }
     if (scaleLabel) {
-        options.scales.yAxes[0].scaleLabel = {
+        chartJsOptions.scales.yAxes[0].scaleLabel = {
             display: true,
             labelString: scaleLabel,
         };
     }
-    return options;
+    return chartJsOptions;
 };
 
 export default generateOptions;

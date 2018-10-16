@@ -3,19 +3,13 @@ import React, { Component } from 'react';
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
-import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
-import NimbledroidSitesTable from '../../containers/NimbledroidSummaryTable';
+import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
 import SETTINGS from '../../settings';
 
 class Android extends Component {
   render() {
-    const products = [
-      'org.mozilla.klar',
-      'com.chrome.beta',
-    ];
-    const targetRatio = 1.2;
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
         <Section title='Bugzilla'>
@@ -42,13 +36,15 @@ class Android extends Component {
           />
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
-          <NimbledroidProductVersions products={products} />
-          <NimbledroidSitesTable
+          <NimbledroidSection
             configuration={{
               baseProduct: 'org.mozilla.klar',
               compareProduct: 'com.chrome.beta',
-              products: products,
-              targetRatio: targetRatio,
+              products: [
+                'org.mozilla.klar',
+                'com.chrome.beta',
+              ],
+              targetRatio: 1.2,
             }}
           />
         </Section>

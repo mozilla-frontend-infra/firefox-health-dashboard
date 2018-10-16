@@ -57,9 +57,9 @@ class RedashContainer extends Component {
     const { datasets, options } = this.state;
     return (
       <div>
-        {title && <h2>{title}</h2>}
         {datasets && (
           <ChartJsWrapper
+            title={title}
             type='line'
             data={datasets}
             options={options}
