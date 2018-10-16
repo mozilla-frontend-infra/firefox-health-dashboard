@@ -17,7 +17,6 @@ class NimbledroidGraph extends Component {
   render() {
     const products = [
       'org.mozilla.klar',
-      'org.mozilla.focus',
       'com.chrome.beta',
     ];
     const targetRatio = 1.2;
@@ -28,7 +27,7 @@ class NimbledroidGraph extends Component {
           <NimbledroidProductVersions products={products} />
           <NimbledroidSiteDrilldown
             configuration={{
-            baseProduct: 'org.mozilla.focus',
+            baseProduct: 'org.mozilla.klar',
             compareProduct: 'com.chrome.beta',
             products: products,
             site: site,
