@@ -13,7 +13,6 @@ class Android extends Component {
   render() {
     const products = [
       'org.mozilla.klar',
-      'org.mozilla.focus',
       'com.chrome.beta',
     ];
     const targetRatio = 1.2;
@@ -46,7 +45,7 @@ class Android extends Component {
           <NimbledroidProductVersions products={products} />
           <NimbledroidSitesTable
             configuration={{
-              baseProduct: 'org.mozilla.focus',
+              baseProduct: 'org.mozilla.klar',
               compareProduct: 'com.chrome.beta',
               products: products,
               targetRatio: targetRatio,

@@ -10,11 +10,10 @@ it('renders correctly', () => {
       <NimbledroidSiteDrilldown
         nimbledroidData={nimbledroidData}
         configuration={{
-          baseProduct: 'org.mozilla.focus',
+          baseProduct: 'org.mozilla.klar',
           compareProduct: 'com.chrome.beta',
           products: [
             'org.mozilla.klar',
-            'org.mozilla.focus',
             'com.chrome.beta',
           ],
           site: 'reddit.com',
