@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryPerformanceData from '@mozilla-frontend-infra/perf-goggles';
-import PerfherderGraph from '../../components/PerfherderGraph';
+import ChartJsWrapper from '../../components/ChartJsWrapper';
 import chartJsFormatter from '../../utils/chartJs/perfherderFormatter';
 
 class PerfherderGraphContainer extends Component {
@@ -28,6 +28,7 @@ class PerfherderGraphContainer extends Component {
     }
 
     render() {
+        const { title } = this.props;
         const { data, options } = this.state;
 
         if (!data) {
@@ -35,13 +36,12 @@ class PerfherderGraphContainer extends Component {
             return null;
         }
         return (
-          <div>
-            {this.props.title && <h2>{this.props.title}</h2>}
-            <PerfherderGraph
-              data={data}
-              options={options}
-            />
-          </div>
+          <ChartJsWrapper
+            type='line'
+            data={data}
+            options={options}
+            title={title}
+          />
         );
     }
 }
