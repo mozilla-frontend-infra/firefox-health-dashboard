@@ -1,9 +1,5 @@
 import CONFIG from './config';
 
-const percentageSymbol = (target1, target2, targetRatio) => ((target1 < (targetRatio * target2)) ? '+' : '');
-
-const ratioWithTarget = (target1, target2, targetRatio) => target1 / (targetRatio * target2);
-
 export const sortSitesByTargetRatio = (a, b) => {
   return b.ratio - a.ratio;
 };
@@ -29,10 +25,9 @@ const statusColor = (ratio, targetRatio) => {
 };
 
 export const siteMetrics = (target1, target2, targetRatio) => {
-  const ratio = ratioWithTarget(target1, target2, targetRatio);
+  const ratio = target1 / target2;
   return {
     ratio,
-    symbol: percentageSymbol(target1, target2, targetRatio),
     color: statusColor(ratio, targetRatio).widgetColor,
     // TODO: This could be improved
     widgetLabel: `Target: GeckoView <= Chrome Beta + ${targetRatio}%`,
@@ -91,15 +86,15 @@ export const generateSitesTableContent = (
   tableHeader.push('% from target');
   const tableContent = sites.map((scenario) => {
     const { title, url } = scenario;
-    const { ratio, symbol, color } = siteMetrics(
-      scenario[baseProduct],
-      scenario[compareProduct], targetRatio);
+    const { ratio, color } = siteMetrics(
+      scenario[baseProduct], scenario[compareProduct], targetRatio,
+    );
     count[color] += 1;
     // This matches the format expected by the SummaryTable component
     return {
       dataPoints: packageIds.map(packageId => scenario[packageId]),
       statusColor: color,
-      summary: `${symbol}${((1 - ratio) * 100).toFixed(2)}%`,
+      summary: `${((1 - ratio) * 100).toFixed(2)}%`,
       title: {
         text: title,
         hyperlink: `android/graph?site=${url}`,
