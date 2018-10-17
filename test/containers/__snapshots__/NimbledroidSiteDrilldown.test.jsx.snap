@@ -44,7 +44,7 @@ exports[`renders correctly 1`] = `
             GeckoView &gt; 20% slower than Chrome Beta
           </span>
           <span>
-            63/76
+            37/46
           </span>
         </div>
       </div>
@@ -58,7 +58,7 @@ exports[`renders correctly 1`] = `
             GeckoView &gt; 0% and &lt;= 20% slower than Chrome Beta
           </span>
           <span>
-            3/76
+            2/46
           </span>
         </div>
       </div>
@@ -72,7 +72,7 @@ exports[`renders correctly 1`] = `
             GeckoView &lt;= 0% (i.e. faster than) Chrome Beta
           </span>
           <span>
-            10/76
+            7/46
           </span>
         </div>
       </div>
