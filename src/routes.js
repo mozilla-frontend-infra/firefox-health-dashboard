@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './home';
-import ReleaseCrashes from './crashes/release';
-import BetaCrashes from './crashes/beta';
-import Status from './status/index';
 import AndroidPage from './views/Android';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
@@ -20,9 +17,6 @@ const Routes = () => (
     <Switch>
       <Route path='/android/graph' component={NimbledroidGraphPage} />
       <Route path='/android' component={AndroidPage} />
-      <Route path='/crashes/beta' component={BetaCrashes} />
-      <Route path='/crashes' component={ReleaseCrashes} />
-      <Route path='/status' component={Status} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />
       <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
       <Route path='/quantum/32' component={Quantum32} />
