@@ -1,11 +1,11 @@
-[![Build Status](https://api.travis-ci.org/mozilla/firefox-health-dashboard.svg?branch=master)](https://travis-ci.org/mozilla/firefox-health-dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/mozilla/firefox-health-dashboard/badge.svg?branch=test)](https://coveralls.io/github/mozilla/firefox-health-dashboard?branch=test)
+[![Build Status](https://api.travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard.svg?branch=master)](https://travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard)
+[![Coverage Status](https://coveralls.io/repos/github/mozilla-frontend-infra/firefox-health-dashboard/badge.svg?branch=test)](https://coveralls.io/github/mozilla-frontend-infra/firefox-health-dashboard?branch=test)
 
 # Firefox health dashboard
 
 This project show Firefox metrics and insights to help meeting release criteria.
 Find the official site [here](https://health.graphics/).
-The repository for the backend can be found [here](https://github.com/mozilla/firefox-health-backend).
+The repository for the backend can be found [here](https://github.com/mozilla-frontend-infra/firefox-health-backend).
 
 # Developing
 
