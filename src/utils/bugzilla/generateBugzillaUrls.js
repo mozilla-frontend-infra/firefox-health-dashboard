@@ -1,7 +1,6 @@
 import { stringify } from 'query-string';
-import fetchJson from '../fetchJson';
-
-const BZ_HOST = 'https://bugzilla.mozilla.org';
+import BZ_HOST from './settings';
+import queryBugzilla from './queryBugzilla';
 
 const DEFAULT_COLUMNLIST = [
     'priority',
@@ -22,11 +21,6 @@ const generateBugzillaUrl = (queryParameters) => {
     return `${BZ_HOST}/buglist.cgi?${query}`;
 };
 
-const generateBugzillaRestApiUrl = (queryParameters) => {
-    const query = stringify({ ...queryParameters });
-    return `${BZ_HOST}/rest/bug?${query}`;
-};
-
 const generateBugzillaUrls = async (queries, includeBugCount) => (
     Promise.all(
         queries.map(async ({ parameters, text }) => {
@@ -35,7 +29,7 @@ const generateBugzillaUrls = async (queries, includeBugCount) => (
                 url: generateBugzillaUrl(parameters),
             };
             if (includeBugCount) {
-                const { bugs } = await fetchJson(generateBugzillaRestApiUrl(parameters));
+                const { bugs } = await queryBugzilla(parameters);
                 urlInfo.bugCount = bugs.length;
             }
             return urlInfo;
