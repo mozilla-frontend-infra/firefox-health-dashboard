@@ -10,8 +10,8 @@
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
     "precommit": "lint-staged",
     "prepush": "yarn test",
-    "coverage": "rm -rf coverage && nyc --all yarn test && nyc report -r lcov",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc --all jest --collectCoverage",
+    "coveralls": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "yarn build"
   },
   "nyc": {
