@@ -1,5 +1,5 @@
 [![Build Status](https://api.travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard.svg?branch=master)](https://travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/mozilla-frontend-infra/firefox-health-dashboard/badge.svg?branch=test)](https://coveralls.io/github/mozilla-frontend-infra/firefox-health-dashboard?branch=test)
+[![Coverage Status](https://coveralls.io/repos/github/mozilla-frontend-infra/firefox-health-dashboard/badge.svg?branch=master)](https://coveralls.io/github/mozilla-frontend-infra/firefox-health-dashboard?branch=master)
 
 # Firefox health dashboard
 
