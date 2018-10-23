@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import generateOptions from '../../utils/chartJs/generateOptions';
 import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 
@@ -31,20 +30,17 @@ class NimbledroidGraphContainer extends Component {
   }
 
   generateData(scenarioData) {
-    return {
-        data: nimbledroidFormatter(scenarioData),
-        options: generateOptions({ scaleLabel: 'Seconds' }),
-    };
+    return { data: nimbledroidFormatter(scenarioData) };
   }
 
   render() {
     const { scenarioName } = this.props;
-    const { data, options } = this.state;
+    const { data } = this.state;
 
     return data ? (
       <ChartJsWrapper
         data={data}
-        options={options}
+        options={{ scaleLabel: 'Seconds' }}
         title={scenarioName}
       />
     ) : <div />;

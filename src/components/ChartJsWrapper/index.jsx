@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import { withStyles } from '@material-ui/core/styles';
+import generateOptions from '../../utils/chartJs/generateOptions';
 
 const styles = {
     // This div helps with canvas size changes
@@ -24,7 +25,7 @@ const ChartJsWrapper = ({ classes, data, options, title, type = 'line' }) => (
       type={type}
       data={data}
       height={80}
-      options={options}
+      options={generateOptions(options)}
     />
   </div>
 );
@@ -32,6 +33,11 @@ const ChartJsWrapper = ({ classes, data, options, title, type = 'line' }) => (
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
     classes: PropTypes.shape({}).isRequired,
+    options: PropTypes.shape({
+      reverse: PropTypes.bool,
+      scaleLabel: PropTypes.string,
+      title: PropTypes.string,
+    }).isRequired,
     data: PropTypes.shape({
       datasets: PropTypes.arrayOf(
         PropTypes.shape({
@@ -50,7 +56,6 @@ ChartJsWrapper.propTypes = {
         }),
       ).isRequired,
     }).isRequired,
-    options: PropTypes.shape({}).isRequired,
     title: PropTypes.string,
     type: PropTypes.string,
 };

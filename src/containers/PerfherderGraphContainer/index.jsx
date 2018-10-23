@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import queryPerformanceData from '@mozilla-frontend-infra/perf-goggles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import chartJsFormatter from '../../utils/chartJs/perfherderFormatter';
+import perfherderFormatter from '../../utils/chartJs/perfherderFormatter';
 
 class PerfherderGraphContainer extends Component {
     state = {
         data: null,
-        option: null,
     };
 
     async componentDidMount() {
@@ -24,7 +23,7 @@ class PerfherderGraphContainer extends Component {
                     label: config.label,
                 };
         }));
-        this.setState({ ...chartJsFormatter(data) });
+        this.setState({ ...perfherderFormatter(data) });
     }
 
     render() {

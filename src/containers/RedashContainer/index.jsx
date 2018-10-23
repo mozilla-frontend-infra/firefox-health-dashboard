@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Lock } from '@material-ui/icons';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import generateOptions from '../../utils/chartJs/generateOptions';
 import telemetryDataToDatasets from '../../utils/chartJs/redashFormatter';
 import fetchJson from '../../utils/fetchJson';
 
@@ -22,7 +21,7 @@ class RedashContainer extends Component {
   };
 
   static propTypes = {
-    chartOptions: PropTypes.shape({
+    options: PropTypes.shape({
       title: PropTypes.string,
       scaleLabel: PropTypes.string,
     }),
@@ -34,7 +33,7 @@ class RedashContainer extends Component {
   };
 
   static defaultProps = {
-    chartOptions: {
+    options: {
       scaleLabel: 'Miliseconds',
     },
     dataKeyIdentifier: 'label',
@@ -44,17 +43,16 @@ class RedashContainer extends Component {
     this.fetchSetState(this.props);
   }
 
-  async fetchSetState({ dataKeyIdentifier, redashDataUrl, chartOptions }) {
+  async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
     const redashData = await fetchJson(redashDataUrl);
     this.setState({
       datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
-      options: generateOptions(chartOptions),
     });
   }
 
   render() {
-    const { classes, redashQueryUrl, title } = this.props;
-    const { datasets, options } = this.state;
+    const { classes, options, redashQueryUrl, title } = this.props;
+    const { datasets } = this.state;
     return (
       <div>
         {datasets && (
