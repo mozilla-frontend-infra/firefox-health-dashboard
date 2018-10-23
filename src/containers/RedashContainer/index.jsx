@@ -66,7 +66,7 @@ class RedashContainer extends Component {
         <div className={classes.linkContainer}>
           <a href={redashQueryUrl} target='_blank' rel='noopener noreferrer'>
             <span className={classes.middleVerticalAlignment}>Redash query</span>
-            <Lock className={classes.middleVerticalAlignment} />
+            <Lock className={classes.middleVerticalAlignment} style={{ height: '1rem' }} />
           </a>
         </div>
       </div>

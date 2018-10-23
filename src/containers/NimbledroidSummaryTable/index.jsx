@@ -10,7 +10,9 @@ import SummaryTable from '../../components/SummaryTable';
 import StatusWidget from '../../components/StatusWidget';
 
 const styles = {
-  root: {},
+  root: {
+    margin: '0 0 0.7rem 0',
+  },
   summary: {
     color: 'black',
     width: '400px',

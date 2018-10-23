@@ -14,7 +14,7 @@ const styles = {
       minWidth: '400px',
     },
     title: {
-      margin: '1rem 0 0 0',
+      margin: '0.1rem 0 0 0',
     },
 };
 
