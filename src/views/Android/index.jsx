@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
+import BugzillaBurndown from '../../containers/BugzillaBurndown';
 import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
@@ -33,6 +34,28 @@ class Android extends Component {
                 },
               },
             ]}
+          />
+          <BugzillaBurndown
+            queries={[
+              {
+                label: 'Open P1 bugs',
+                parameters: {
+                  component: 'GeckoView',
+                  resolution: '---',
+                  priority: ['P1'],
+                },
+              },
+              {
+                label: 'Open backlog bugs',
+                parameters: {
+                  component: 'GeckoView',
+                  resolution: '---',
+                  priority: ['P2', 'P3'],
+                },
+              },
+            ]}
+            startDate='2018-03-01'
+            title='GeckoView burndown'
           />
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>

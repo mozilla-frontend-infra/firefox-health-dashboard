@@ -1,9 +1,11 @@
 import { stringify } from 'query-string';
 import fetchJson from '../fetchJson';
 import BZ_HOST from './settings';
+import advancedSearchToRestApi from './advancedSearchToRestApi';
 
 const generateBugzillaRestApiUrl = (queryParameters) => {
-    const query = stringify({ ...queryParameters });
+    const transformedParameters = advancedSearchToRestApi(queryParameters);
+    const query = stringify({ ...transformedParameters });
     return `${BZ_HOST}/rest/bug?${query}`;
 };
 
