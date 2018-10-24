@@ -8,8 +8,7 @@ const styles = {
     // This div helps with canvas size changes
     // https://www.chartjs.org/docs/latest/general/responsive.html#important-note
     chartContainer: {
-      // Two graphs side by side should fit on a 13" screen
-      width: '48vw',
+      width: '600px',
       // Do not let it squeeze too much and deform
       minWidth: '400px',
     },

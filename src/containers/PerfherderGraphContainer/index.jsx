@@ -13,7 +13,7 @@ class PerfherderGraphContainer extends Component {
     }
 
     async fetchSetData({ series, timeRange }) {
-        this.setState(await getPerferherderData(series, timeRange));
+        this.setState(await getPerferherderData(series, { timeRange }));
     }
 
     render() {

@@ -13,6 +13,7 @@ import GraphContainer from '../components/graph-container';
 import CONFIG from './config';
 import TargetStatus from './target-status';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
+import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex32 extends React.Component {
   constructor(props) {
@@ -56,24 +57,6 @@ export default class QuantumIndex32 extends React.Component {
             link='/quantum/32/bugs'
           />,
           <Countdown />, <TargetStatus notes={notes} />]],
-      },
-      {
-        cssRowExtraClasses: 'generic-metrics-graphics speedometer-metrics-graphics',
-        title: '#1 Speedometer v2',
-        rows: [
-          [
-            <Perfherder
-              title='Talos: Speedometer mozilla-central'
-              key='talos-speedometer'
-              reference='2017-10-12'
-              signatures={{
-                'win7-32': '78730407dee56521f26d3621fa8156914b83025a',
-                'win7-32-new': '5457539d78e242701e37dc114d79ff47b0fe4baa',
-              }}
-              {...notes.talos_speedometer}
-            />,
-          ],
-        ],
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
@@ -127,137 +110,281 @@ export default class QuantumIndex32 extends React.Component {
         ],
       },
       {
-        title: '#4 Regression',
+        title: '#3 Other benchmarks',
         rows: [
           [
-            <Perfherder
-              key='tp6_loaded'
-              title='Talos TP6: Loaded'
-              reference='2017-07-29'
-              target='Not set'
-              signatures={{
-                'win7-32':
-                  'b218982f76037c94aa0bc2e6f3102a3745fb0ef8,40762f6820e6cfd4531505caebccf27d46b0f037,a4884e6435dff7ffe3dda82b383552c7fa267e55,af835391eb98960df2aaa74c2d76200064e73c65',
-                'win7-32-new':
-                  '9db2ed0e8ae67914cbfc72a3c8771e287eab6c8b,ae1e0fe16eef66bea2a5042ecb82be23423ff40c,054706052ce54d631bf45439012af2b2ce9baefc,842c3562d0e72fec5cdb9b6bb417f27e449369fb',
-              }}
-              {...notes.talos_tp6_loaded}
+            <PerfherderGraphContainer
+              title='Speedometer'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-speedometer-chrome',
+                },
+              ]}
             />,
-            <Perfherder
-              key='pageload_tp5'
-              title='Page Load (tp5)'
-              reference='2017-04-20'
-              signatures={{
-                'win7-32': 'ac46ba40f08bbbf209a6c34b8c054393bf222e67',
-                'win7-32-new': '849809c194f30c8e676e8ba6f8cb4ac55b82ab1b',
-              }}
-              {...notes.talos_tp5}
+            <PerfherderGraphContainer
+              title='Tp6: Amazon'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-amazon-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-amazon-chrome',
+                },
+              ]}
             />,
-            <Perfherder
-              key='tpaint'
+          ],
+          [
+            <PerfherderGraphContainer
+              title='Tp6: Facebook'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-facebook-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-facebook-chrome',
+                },
+              ]}
+            />,
+            <PerfherderGraphContainer
+              title='Tp6: Google'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-google-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-google-chrome',
+                },
+              ]}
+            />,
+          ],
+          [
+            <PerfherderGraphContainer
+              title='Tp6: YouTube'
+              series={[
+                {
+                  label: 'Firefox',
+                  frameworkId: 10,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-youtube-firefox',
+                },
+                {
+                  label: 'Chrome',
+                  frameworkId: 10,
+                  platform: 'windows7-32-nightly',
+                  option: 'opt',
+                  project: 'mozilla-central',
+                  suite: 'raptor-tp6-youtube-chrome',
+                },
+              ]}
+            />,
+            <PerfherderGraphContainer
+              title='Page load (tp5)'
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tp5o',
+                },
+              ]}
+            />,
+          ],
+          [
+            <PerfherderGraphContainer
               title='Window Opening (tpaint e10s)'
-              reference='2017-07-06'
-              signatures={{
-                'win7-32': '729285324ec4b164b8d3ecec42c2fdb344f7e581',
-                'win7-32-new': 'a97a6a22157860fba4f5668be057d65b1aed6166',
-              }}
-              {...notes.talos_tpaint}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tpaint',
+                },
+              ]}
             />,
-          ],
-          [
-            <Perfherder
-              key='startup_session_restore'
+            <PerfherderGraphContainer
               title='Start-up (sessionrestore)'
-              reference='2017-04-13'
-              signatures={{
-                'win7-32': '196b82960327035de720500e1a5f9f0154cf97ad',
-                'win7-32-new': 'da50dcf77aeed243002772e4ff03028209aabc17',
-              }}
-              {...notes.talos_sessionrestore}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'sessionrestore',
+                },
+              ]}
             />,
-            <Perfherder
-              key='startup_session_restore_no_auto_restore'
+          ],
+          [
+            <PerfherderGraphContainer
               title='Start-up (sessionrestore_no_auto_restore)'
-              reference='2017-05-11'
-              signatures={{
-                'win7-32': 'ba16f34b35fb3492dc22f3774aff2d010e5f10ba',
-                'win7-32-new': '0a88cb395efeb9e107e9175ccf8540156716d53b',
-              }}
-              {...notes.talos_sessionrestore_no_auto_restore}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'sessionrestore_no_auto_restore',
+                },
+              ]}
             />,
-            <Perfherder
-              key='startup_ts_paint'
+            <PerfherderGraphContainer
               title='Start-Up (ts_paint)'
-              reference='2017-05-07'
-              signatures={{
-                'win7-32': 'e394aab72917d169024558cbab33eb4e7e9504e1',
-                'win7-32-new': '4dd563a14dd7e35efe136651cfd8fe8ab24f7f37',
-              }}
-              {...notes.talos_ts_paint}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'ts_paint',
+                },
+              ]}
             />,
           ],
           [
-            <Perfherder
-              {...notes.talos_tabpaint}
-              key='tabpaint'
+            <PerfherderGraphContainer
               title='Tab Opening (tabpaint)'
-              reference='2017-06-15'
-              signatures={{
-                'win7-32': '0bec96d78bc54370bd027af09bdd0edc8df7afd7',
-                'win7-32-new': '39384d8456427b60deeb4485dcf2f0ba480fea56',
-              }}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tabpaint',
+                },
+              ]}
             />,
-            <Perfherder
+            <PerfherderGraphContainer
               title='Tab Animation (TART)'
-              key='tart'
-              reference='2017-05-07'
-              signatures={{
-                'win7-32': '710f43a8c2041fe3e67124305649c12a9d708858',
-                'win7-32-new': '41098223c1c7585b9af92ff51b83ea579d41e6d0',
-              }}
-              {...notes.talos_tart}
-            />,
-            <Perfherder
-              key='tps'
-              title='Tab Switch (tps)'
-              reference='2017-05-07'
-              signatures={{
-                'win7-32': 'a86a2a069ed634663dbdef7193f2dee69b50dbc9',
-                'win7-32-new': '36fd1982e422701cc428a807b4d8826fc90d2ec1',
-              }}
-              {...notes.talos_tps}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tart',
+                },
+              ]}
             />,
           ],
           [
-            <Perfherder
-              {...notes.talos_tsvg_static}
-              key='tsvg_static'
+            <PerfherderGraphContainer
+              title='Tab Switch (tps)'
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tps',
+                },
+              ]}
+            />,
+            <PerfherderGraphContainer
               title='SVG (tsvg_static)'
-              reference='2017-04-08'
-              signatures={{
-                'win7-32': '18cf40355e5b20164ab9307f83dd6d6eb6184aa8',
-                'win7-32-new': '9a0e5a9474c2dab77f47a7186c87f22d14492820',
-              }}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvg_static',
+                },
+              ]}
             />,
-            <Perfherder
-              key='tsvgr_opacity'
+          ],
+          [
+            <PerfherderGraphContainer
               title='SVG (tsvgr_opacity)'
-              reference='2016-10-26'
-              signatures={{
-                'win7-32': 'f22a87e9898beb0c7dc5fefec8267c3a9ad89a8b',
-                'win7-32-new': '56fdd7810758d702786ed9ee002f3aa396ff327c',
-              }}
-              {...notes.talos_tsvgr_opacity}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvgr_opacity',
+                },
+              ]}
             />,
-            <Perfherder
-              key='tsvgx'
+            <PerfherderGraphContainer
               title='SVG (tsvgx)'
-              reference='2017-05-07'
-              signatures={{
-                'win7-32': 'c547c2f07fba319e59da1f6ffaf604a47ccfeaf0',
-                'win7-32-new': '8ea36ed17eee7c7dda797d9369d5f49f66436bf5',
-              }}
-              {...notes.talos_tsvgx}
+              series={[
+                {
+                  label: 'Firefox',
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: 'windows7-32',
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvgx',
+                },
+              ]}
             />,
           ],
         ],
