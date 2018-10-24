@@ -77,13 +77,6 @@ module.exports = {
       {
         html: {
           title: 'Firefox Health Dashboard',
-          links: [
-            {
-              href: '/static/favicon.ico',
-              rel: 'icon',
-              type: 'image/x-icon',
-            },
-          ],
         },
         devtool: {
           // Enable source-maps in production
