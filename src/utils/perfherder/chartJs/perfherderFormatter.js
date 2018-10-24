@@ -1,5 +1,5 @@
-import generateLineChartStyles from './generateLineChartStyles';
-import SETTINGS from '../../settings';
+import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
+import SETTINGS from '../../../settings';
 
 const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
     x: datetime,
