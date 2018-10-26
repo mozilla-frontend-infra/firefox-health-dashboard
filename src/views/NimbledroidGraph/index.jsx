@@ -17,6 +17,7 @@ class NimbledroidGraph extends Component {
   render() {
     const products = [
       'org.mozilla.klar',
+      'org.mozilla.geckoview_example',
       'com.chrome.beta',
     ];
     const targetRatio = 1.2;
