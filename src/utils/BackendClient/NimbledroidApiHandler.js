@@ -51,14 +51,15 @@ const mergeProductsData = (productsData) => {
       };
 
       // eslint-disable-next-line consistent-return
-      Object.keys(scenarios).forEach((scenarioKey) => {
-        const profileInfo = scenarios[scenarioKey];
+      Object.keys(scenarios).forEach((originalKey) => {
+        const profileInfo = scenarios[originalKey];
         if (profileInfo.data.length === 0) {
           return;
         }
         const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
         const lastDataPoint = (sortedData[sortedData.length - 1].value).toFixed(2);
 
+        const scenarioKey = originalKey.split('#')[0];
         // This is the first time we're seing this scenario
         if (!result[scenarioKey]) {
           delete profileInfo.data;
