@@ -65,6 +65,7 @@ class Android extends Component {
               compareProduct: 'com.chrome.beta',
               products: [
                 'org.mozilla.klar',
+                'org.mozilla.geckoview_example',
                 'com.chrome.beta',
               ],
               targetRatio: 1.2,
