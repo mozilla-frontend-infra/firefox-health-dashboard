@@ -3,20 +3,24 @@ import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
 import SETTINGS from '../../../settings';
 
 const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
-    x: datetime,
-    y: value,
-  }));
+  x: datetime,
+  y: value,
+}));
+
+const generateInitialOptions = (meta) => {
+  const higherIsBetter = (meta.lower_is_better === false);
+  return {
+    reverse: higherIsBetter,
+    scaleLabel: higherIsBetter ? 'Score' : 'Load time',
+  };
+};
 
 // This function combines Perfherder series and transforms it into ChartJS formatting
 const perfherderFormatter = (series) => {
-  // The first series defines the whole set
-  const reverse = (series[0].meta && series[0].meta.lower_is_better) || true;
+  // The first series' metadata defines the whole set
   const newData = {
     data: { datasets: [] },
-    options: {
-      reverse,
-      scaleLabel: reverse ? 'Score' : 'Execution time (ms)',
-    },
+    options: generateInitialOptions(series[0].meta),
   };
 
   series.forEach(({ data, perfherderUrl, label }, index) => {
