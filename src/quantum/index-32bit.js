@@ -56,7 +56,7 @@ export default class QuantumIndex32 extends React.Component {
             height={flowGraphProps.height}
             link='/quantum/32/bugs'
           />,
-          <Countdown />, <TargetStatus notes={notes} />]],
+          <Countdown />]],
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
