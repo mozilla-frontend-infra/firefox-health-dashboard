@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import LinkIcon from '@material-ui/icons/Link';
+import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+
+const styles = () => ({
+    linkIcon: {
+        marginLeft: '0.2rem',
+        marginBottom: -5,
+    },
+  });
 
 class PerfherderGraphContainer extends Component {
     state = {
@@ -17,21 +26,33 @@ class PerfherderGraphContainer extends Component {
     }
 
     render() {
-        const { title } = this.props;
-        const { data, options } = this.state;
+        const { classes, title } = this.props;
+        const { data, jointUrl, options } = this.state;
 
-        return data ? (
-          <ChartJsWrapper
-            type='line'
-            data={data}
-            options={options}
-            title={title}
-          />
-        ) : <div />;
+        return (
+          <div key={title}>
+            <h2>
+              <span>{title}</span>
+              {jointUrl && (
+                <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
+                  <LinkIcon className={classes.linkIcon} color='black' />
+                </a>
+              )}
+            </h2>
+            {data && (
+              <ChartJsWrapper
+                type='line'
+                data={data}
+                options={options}
+              />
+            )}
+          </div>
+        );
     }
 }
 
 PerfherderGraphContainer.propTypes = {
+    classes: PropTypes.shape({}).isRequired,
     series: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string.isRequired,
         extraOptions: PropTypes.arrayOf(PropTypes.string),
@@ -44,4 +65,4 @@ PerfherderGraphContainer.propTypes = {
     timeRange: PropTypes.string,
 };
 
-export default PerfherderGraphContainer;
+export default withStyles(styles)(PerfherderGraphContainer);
