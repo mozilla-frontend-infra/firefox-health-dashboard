@@ -1,3 +1,4 @@
+import { parse } from 'query-string';
 import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
 import SETTINGS from '../../../settings';
 
@@ -18,13 +19,20 @@ const perfherderFormatter = (series) => {
     },
   };
 
-  series.forEach(({ data, label }, index) => {
+  series.forEach(({ data, perfherderUrl, label }, index) => {
     if (data) {
       newData.data.datasets.push({
         ...generateLineChartStyles(SETTINGS.colors[index]),
         label,
         data: dataToChartJSformat(data),
       });
+    }
+    if (!newData.jointUrl) {
+      newData.jointUrl = perfherderUrl;
+    } else {
+      // We're joining the different series for each subbenchmark
+      const parsedUrl = parse(perfherderUrl);
+      newData.jointUrl += `&series=${parsedUrl.series}`;
     }
   });
 
