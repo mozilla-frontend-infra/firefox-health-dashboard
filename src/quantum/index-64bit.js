@@ -124,19 +124,23 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  frameworkId: 10,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-firefox',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-firefox',
+                  },
                 },
                 {
                   label: 'Chrome',
-                  frameworkId: 10,
-                  platform: 'windows10-64-nightly',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-chrome',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64-nightly',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-chrome',
+                  },
                 },
               ]}
             />,
@@ -145,19 +149,23 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  frameworkId: 10,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-amazon-firefox',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-amazon-firefox',
+                  },
                 },
                 {
                   label: 'Chrome',
-                  frameworkId: 10,
-                  platform: 'windows10-64-nightly',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-amazon-chrome',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64-nightly',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-amazon-chrome',
+                  },
                 },
               ]}
             />,
@@ -168,19 +176,23 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  frameworkId: 10,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-facebook-firefox',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-facebook-firefox',
+                  },
                 },
                 {
                   label: 'Chrome',
-                  frameworkId: 10,
-                  platform: 'windows10-64-nightly',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-facebook-chrome',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64-nightly',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-facebook-chrome',
+                  },
                 },
               ]}
             />,
@@ -189,19 +201,23 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  frameworkId: 10,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-google-firefox',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-google-firefox',
+                  },
                 },
                 {
                   label: 'Chrome',
-                  frameworkId: 10,
-                  platform: 'windows10-64-nightly',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-google-chrome',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64-nightly',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-google-chrome',
+                  },
                 },
               ]}
             />,
@@ -212,19 +228,23 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  frameworkId: 10,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-youtube-firefox',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-youtube-firefox',
+                  },
                 },
                 {
                   label: 'Chrome',
-                  frameworkId: 10,
-                  platform: 'windows10-64-nightly',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-tp6-youtube-chrome',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'windows10-64-nightly',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-tp6-youtube-chrome',
+                  },
                 },
               ]}
             />,
@@ -233,12 +253,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tp5o',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tp5o',
+                  },
                 },
               ]}
             />,
@@ -249,12 +271,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tpaint',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tpaint',
+                  },
                 },
               ]}
             />,
@@ -263,12 +287,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'sessionrestore',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'sessionrestore',
+                  },
                 },
               ]}
             />,
@@ -279,12 +305,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'sessionrestore_no_auto_restore',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'sessionrestore_no_auto_restore',
+                  },
                 },
               ]}
             />,
@@ -293,12 +321,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'ts_paint',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'ts_paint',
+                  },
                 },
               ]}
             />,
@@ -309,12 +339,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tabpaint',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tabpaint',
+                  },
                 },
               ]}
             />,
@@ -323,12 +355,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tart',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tart',
+                  },
                 },
               ]}
             />,
@@ -339,12 +373,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tps',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tps',
+                  },
                 },
               ]}
             />,
@@ -353,12 +389,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tsvg_static',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tsvg_static',
+                  },
                 },
               ]}
             />,
@@ -369,12 +407,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tsvgr_opacity',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tsvgr_opacity',
+                  },
                 },
               ]}
             />,
@@ -383,12 +423,14 @@ export default class QuantumIndex64 extends React.Component {
               series={[
                 {
                   label: 'Firefox',
-                  extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
-                  platform: 'windows10-64',
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tsvgx',
+                  seriesConfig: {
+                    extraOptions: ['e10s', 'stylo'],
+                    frameworkId: 1,
+                    platform: 'windows10-64',
+                    option: 'pgo',
+                    project: 'mozilla-central',
+                    suite: 'tsvgx',
+                  },
                 },
               ]}
             />,
