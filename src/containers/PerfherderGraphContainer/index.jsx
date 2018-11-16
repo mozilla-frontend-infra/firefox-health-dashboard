@@ -35,7 +35,7 @@ class PerfherderGraphContainer extends Component {
               <span>{title}</span>
               {jointUrl && (
                 <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
-                  <LinkIcon className={classes.linkIcon} color='black' />
+                  <LinkIcon className={classes.linkIcon} />
                 </a>
               )}
             </h2>
