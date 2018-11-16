@@ -93,27 +93,33 @@ class Android extends Component {
               series={[
                 {
                   label: 'Moto G5 (arm7)',
-                  frameworkId: 10,
-                  platform: 'android-hw-g5-7-0-arm7-api-16',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-geckoview',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
                 },
                 {
                   label: 'Pixel 2 (arm7)',
-                  frameworkId: 10,
-                  option: 'opt',
-                  platform: 'android-hw-p2-8-0-arm7-api-16',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-geckoview',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    option: 'opt',
+                    platform: 'android-hw-p2-8-0-arm7-api-16',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
                 },
                 {
                   label: 'Pixel 2 (ARM64)',
-                  frameworkId: 10,
-                  option: 'opt',
-                  platform: 'android-hw-p2-8-0-android-aarch64',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-geckoview',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    option: 'opt',
+                    platform: 'android-hw-p2-8-0-android-aarch64',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
                 },
               ]}
             />
@@ -123,20 +129,24 @@ class Android extends Component {
                 {
                   color: SETTINGS.colors[0],
                   label: 'Moto G5 (arm7)',
-                  frameworkId: 10,
-                  platform: 'android-hw-g5-7-0-arm7-api-16',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-unity-webgl-geckoview',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
                 },
                 {
                   color: SETTINGS.colors[1],
                   label: 'Pixel 2 (arm7)',
-                  frameworkId: 10,
-                  platform: 'android-hw-p2-8-0-arm7-api-16',
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-unity-webgl-geckoview',
+                  seriesConfig: {
+                    frameworkId: 10,
+                    platform: 'android-hw-p2-8-0-arm7-api-16',
+                    option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
                 },
               ]}
             />
