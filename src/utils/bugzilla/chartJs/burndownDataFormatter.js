@@ -1,16 +1,29 @@
 import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
 import SETTINGS from '../../../settings';
 
+const newDate = (datetime, startDate) => {
+    const onlyDate = datetime.substring(0, 10);
+    return startDate && (onlyDate < startDate) ? startDate : onlyDate;
+};
+
+// startDate enables counting into a starting date all previous data points
 const bugsByCreationDate = (bugs, startDate) => {
     // Count bugs created on each day
-    const byCreationDate = bugs.reduce((result, { creation_time }) => {
-        const date = creation_time.substring(0, 10);
-        // startDate enables counting into a starting date all previous data points
-        const actualDate = (startDate && (date < startDate)) ? startDate : date;
-        if (!result[actualDate]) {
-            result[actualDate] = 0;
+    const byCreationDate = bugs.reduce((result, { creation_time, cf_last_resolved }) => {
+        const createdDate = newDate(creation_time, startDate);
+        if (!result[createdDate]) {
+            result[createdDate] = 0;
         }
-        result[actualDate] += 1;
+        result[createdDate] += 1;
+
+        if (cf_last_resolved) {
+            const resolvedDate = newDate(cf_last_resolved, startDate);
+            if (!result[resolvedDate]) {
+                result[resolvedDate] = 0;
+            }
+            result[resolvedDate] -= 1;
+        }
+
         return result;
     }, {});
 

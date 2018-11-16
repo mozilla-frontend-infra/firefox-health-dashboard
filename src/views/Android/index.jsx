@@ -18,7 +18,7 @@ class Android extends Component {
             includeBugCount
             queries={[
               {
-                text: 'GeckoView P1 bugs',
+                text: 'Open P1 bugs',
                 parameters: {
                   component: 'GeckoView',
                   resolution: '---',
@@ -26,7 +26,7 @@ class Android extends Component {
                 },
               },
               {
-                text: 'GeckoView backlog bugs',
+                text: 'Open P2/P3 bugs',
                 parameters: {
                   component: 'GeckoView',
                   resolution: '---',
@@ -38,18 +38,18 @@ class Android extends Component {
           <BugzillaBurndown
             queries={[
               {
-                label: 'Open P1 bugs',
+                label: 'P1 bugs',
                 parameters: {
                   component: 'GeckoView',
-                  resolution: '---',
+                  resolution: ['---', 'FIXED'],
                   priority: ['P1'],
                 },
               },
               {
-                label: 'Open backlog bugs',
+                label: 'P2/P3 bugs',
                 parameters: {
                   component: 'GeckoView',
-                  resolution: '---',
+                  resolution: ['---', 'FIXED'],
                   priority: ['P2', 'P3'],
                 },
               },
