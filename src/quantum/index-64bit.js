@@ -10,7 +10,6 @@ import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
 import CONFIG from './config';
-import TargetStatus from './target-status';
 import GraphContainer from '../components/graph-container';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
@@ -36,7 +35,6 @@ export default class QuantumIndex64 extends React.Component {
   }
 
   render() {
-    const { notes } = this.state;
     const { full } = parse(this.props.location.search);
 
     const sections = wrapSectionComponentsWithErrorBoundaries([
