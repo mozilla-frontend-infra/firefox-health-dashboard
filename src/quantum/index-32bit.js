@@ -11,7 +11,6 @@ import SETTINGS from '../settings';
 import { quantum32QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
 import CONFIG from './config';
-import TargetStatus from './target-status';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -37,7 +36,6 @@ export default class QuantumIndex32 extends React.Component {
   }
 
   render() {
-    const { notes } = this.state;
     const { full } = parse(this.props.location.search);
 
     const sections = wrapSectionComponentsWithErrorBoundaries([
