@@ -51,7 +51,10 @@ BugzillaUrlContainer.propTypes = {
         parameters: PropTypes.shape({
             include_fields: PropTypes.string,
             component: PropTypes.string,
-            resolution: PropTypes.string,
+            resolution: PropTypes.oneOfType([
+                PropTypes.arrayOf(PropTypes.string),
+                PropTypes.string,
+            ]),
             priority: PropTypes.arrayOf(PropTypes.string),
         }),
     })),
