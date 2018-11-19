@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import getData from '../utils/perfherder/subbenchmarks';
+import ChartJsWrapper from '../components/ChartJsWrapper';
+import generateOptions from '../utils/chartJs/generateOptions';
+
 
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
 
@@ -38,6 +41,26 @@ const Graph = ({ data, name, url }) => (
         />
       </a>
     </div>
+    <ChartJsWrapper
+      title={name}
+      type='line'
+      height={80}
+      options={generateOptions()}
+      data={{
+        datasets: data.map((part) => {
+          return {
+            data: part.map(({ datetime, value }) => {
+              return {
+                x: datetime,
+                y: value,
+              };
+            }),
+            label: name,
+          };
+        }),
+      }}
+    />
+
     <MetricsGraphics
       key={name}
       data={data}
