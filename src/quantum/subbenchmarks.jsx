@@ -1,7 +1,6 @@
 import { curveLinear } from 'd3';
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import MetricsGraphics from 'react-metrics-graphics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -60,18 +59,18 @@ const Graph = ({ data, name, url }) => (
       }}
     />
 
-    <MetricsGraphics
-      key={name}
-      data={data}
-      {...{
-        x_accessor: 'datetime',
-        y_accessor: 'value',
-        min_y_from_data: true,
-        full_width: true,
-        area: false,
-        interpolate: curveLinear,
-      }}
-    />
+    {/* <MetricsGraphics */}
+    {/* key={name} */}
+    {/* data={data} */}
+    {/* {...{ */}
+    {/* x_accessor: 'datetime', */}
+    {/* y_accessor: 'value', */}
+    {/* min_y_from_data: true, */}
+    {/* full_width: true, */}
+    {/* area: false, */}
+    {/* interpolate: curveLinear, */}
+    {/* }} */}
+    {/* /> */}
   </div>
 );
 
