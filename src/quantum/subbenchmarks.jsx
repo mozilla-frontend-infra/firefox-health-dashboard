@@ -42,7 +42,6 @@ const Graph = ({ data, name, url }) => (
       </a>
     </div>
     <ChartJsWrapper
-      title={name}
       type='line'
       height={80}
       options={generateOptions()}
