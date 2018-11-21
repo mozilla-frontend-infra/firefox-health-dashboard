@@ -55,7 +55,7 @@ class Android extends Component {
               },
             ]}
             startDate='2018-03-01'
-            title='GeckoView burndown'
+            title='GeckoView bugs'
           />
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
