@@ -431,7 +431,7 @@ export default class QuantumIndex32 extends React.Component {
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#5 Tier 1 Performance Probes',
+        title: '#5 Performance Probe Monitoring',
         rows: [
           [
             <TelemetryContainer
