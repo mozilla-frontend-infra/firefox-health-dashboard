@@ -58,20 +58,21 @@ export default class QuantumIndex64 extends React.Component {
       {
         title: 'Benchmarks',
         rows: [
-          CONFIG.windows64Regression[0].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-          CONFIG.windows64Regression[1].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-        ],
-        [
+          [
+            CONFIG.windows64Regression[0].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
+            CONFIG.windows64Regression[1].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
+          ],
+          [
             <PerfherderGraphContainer
               title='Speedometer'
               series={[
@@ -98,6 +99,7 @@ export default class QuantumIndex64 extends React.Component {
               ]}
             />,
           ],
+        ],
       },
       {
         title: 'Performance Tests',
@@ -128,6 +130,7 @@ export default class QuantumIndex64 extends React.Component {
                 },
               ]}
             />,
+            <div style={{ width: '50%' }} />,
           ],
           [
             <PerfherderGraphContainer

@@ -57,56 +57,23 @@ export default class QuantumIndex32 extends React.Component {
           <Countdown />]],
       },
       {
-        cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#2 Photon Performance',
-        rows: [
-          [
-            <TelemetryContainer
-              key='winOpen'
-              id='winOpen'
-              title='Window open'
-              queryParams={quantum32QueryParams}
-            />,
-            <TelemetryContainer
-              key='tabSwitch'
-              id='tabSwitch'
-              title='Tab switch'
-              queryParams={quantum32QueryParams}
-            />,
-          ],
-          [
-            <TelemetryContainer
-              key='tabClose'
-              id='tabClose'
-              title='Tab close'
-              queryParams={quantum32QueryParams}
-            />,
-            <TelemetryContainer
-              key='firstPaint'
-              id='firstPaint'
-              title='First paint'
-              queryParams={quantum32QueryParams}
-            />,
-          ],
-        ],
-      },
-      {
         title: 'Benchmarks',
         rows: [
-          CONFIG.windows32Regression[0].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-          CONFIG.windows32Regression[1].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-        ],
-        [
+          [
+            CONFIG.windows32Regression[0].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
+            CONFIG.windows32Regression[1].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
+          ],
+          [
             <PerfherderGraphContainer
               title='Speedometer'
               series={[
@@ -133,6 +100,7 @@ export default class QuantumIndex32 extends React.Component {
               ]}
             />,
           ],
+        ],
       },
       {
         title: 'Performance Tests',
@@ -163,6 +131,7 @@ export default class QuantumIndex32 extends React.Component {
                 },
               ]}
             />,
+            <div style={{ width: '50%' }} />,
           ],
           [
             <PerfherderGraphContainer
