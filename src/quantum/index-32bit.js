@@ -91,7 +91,7 @@ export default class QuantumIndex32 extends React.Component {
         ],
       },
       {
-        title: '#3 Other benchmarks',
+        title: 'Benchmarks',
         rows: [
           CONFIG.windows32Regression[0].map(config => (
             <Perfherder
@@ -106,11 +106,7 @@ export default class QuantumIndex32 extends React.Component {
             />
           )),
         ],
-      },
-      {
-        title: '#3 Other benchmarks',
-        rows: [
-          [
+        [
             <PerfherderGraphContainer
               title='Speedometer'
               series={[
@@ -136,6 +132,12 @@ export default class QuantumIndex32 extends React.Component {
                 },
               ]}
             />,
+          ],
+      },
+      {
+        title: 'Performance Tests',
+        rows: [
+          [
             <PerfherderGraphContainer
               title='Tp6: Amazon'
               series={[
@@ -431,8 +433,36 @@ export default class QuantumIndex32 extends React.Component {
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#5 Performance Probe Monitoring',
+        title: 'Performance Metrics',
         rows: [
+          [
+            <TelemetryContainer
+              key='winOpen'
+              id='winOpen'
+              title='Window open'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='tabSwitch'
+              id='tabSwitch'
+              title='Tab switch'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='tabClose'
+              id='tabClose'
+              title='Tab close'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='firstPaint'
+              id='firstPaint'
+              title='First paint'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
           [
             <TelemetryContainer
               key='sessionRestoreWindow'

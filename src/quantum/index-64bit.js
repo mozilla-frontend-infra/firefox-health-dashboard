@@ -56,50 +56,7 @@ export default class QuantumIndex64 extends React.Component {
           <Countdown />]],
       },
       {
-        cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#2 Photon Performance',
-        rows: [
-          [
-            <TelemetryContainer
-              key='winOpen'
-              id='winOpen'
-              title='Window open'
-              queryParams={quantum64QueryParams}
-            />,
-            <TelemetryContainer
-              key='tabSwitch'
-              id='tabSwitch'
-              title='Tab switch'
-              queryParams={quantum64QueryParams}
-            />,
-          ],
-          [
-            <TelemetryContainer
-              key='tabClose'
-              id='tabClose'
-              title='Tab close'
-              queryParams={quantum64QueryParams}
-            />,
-            <TelemetryContainer
-              key='firstPaint'
-              id='firstPaint'
-              title='First paint'
-              queryParams={quantum64QueryParams}
-            />,
-          ],
-          [
-            <TelemetryContainer
-              key='blankWindowShown'
-              id='blankWindowShown'
-              title='Blank window shown'
-              queryParams={quantum64QueryParams}
-            />,
-            <div style={{ width: '50%' }} />,
-          ],
-        ],
-      },
-      {
-        title: '#3 Other benchmarks',
+        title: 'Benchmarks',
         rows: [
           CONFIG.windows64Regression[0].map(config => (
             <Perfherder
@@ -114,11 +71,7 @@ export default class QuantumIndex64 extends React.Component {
             />
           )),
         ],
-      },
-      {
-        title: '#4 Regression',
-        rows: [
-          [
+        [
             <PerfherderGraphContainer
               title='Speedometer'
               series={[
@@ -144,6 +97,12 @@ export default class QuantumIndex64 extends React.Component {
                 },
               ]}
             />,
+          ],
+      },
+      {
+        title: 'Performance Tests',
+        rows: [
+          [
             <PerfherderGraphContainer
               title='Tp6: Amazon'
               series={[
@@ -439,8 +398,36 @@ export default class QuantumIndex64 extends React.Component {
       },
       {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#5 Performance Probe Monitoring',
+        title: 'Performance Metrics',
         rows: [
+          [
+            <TelemetryContainer
+              key='winOpen'
+              id='winOpen'
+              title='Window open'
+              queryParams={quantum64QueryParams}
+            />,
+            <TelemetryContainer
+              key='tabSwitch'
+              id='tabSwitch'
+              title='Tab switch'
+              queryParams={quantum64QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='tabClose'
+              id='tabClose'
+              title='Tab close'
+              queryParams={quantum64QueryParams}
+            />,
+            <TelemetryContainer
+              key='firstPaint'
+              id='firstPaint'
+              title='First paint'
+              queryParams={quantum64QueryParams}
+            />,
+          ],
           [
             <TelemetryContainer
               key='sessionRestoreWindow'
@@ -636,6 +623,15 @@ export default class QuantumIndex64 extends React.Component {
               title='Time to First Scroll ms'
               queryParams={quantum64QueryParams}
             />,
+          ],
+          [
+            <TelemetryContainer
+              key='blankWindowShown'
+              id='blankWindowShown'
+              title='Blank window shown'
+              queryParams={quantum64QueryParams}
+            />,
+            <div style={{ width: '50%' }} />,
           ],
         ],
       },
