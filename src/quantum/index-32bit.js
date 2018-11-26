@@ -39,7 +39,6 @@ export default class QuantumIndex32 extends React.Component {
 
   render() {
     const { full } = parse(this.props.location.search);
-
     const sections = wrapSectionComponentsWithErrorBoundaries([
       {
         cssRowExtraClasses: 'generic-metrics-graphics',
@@ -113,13 +112,14 @@ export default class QuantumIndex32 extends React.Component {
         title: '#3 Pages',
         rows:
           _
-          .chain(PAGES)
+          .chain(PAGES.data)
           // ZIP HEADER WITH ROWS TO GET OBJECTS
           .map(row => _.zipObject(PAGES.header, row))
           // GROUP BY title
           .groupBy(row => row.title)
           // LOOP OVER EACH KEY/VALUE
-          .forIn((series, title, i) => {
+          .toPairs()
+          .map(([title, series], i) => {
             return (
               <PerfherderGraphContainer
                 key={`pages${i}`}
