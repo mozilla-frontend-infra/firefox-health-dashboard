@@ -11,7 +11,7 @@ import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
-import { CONFIG, PAGES } from './config';
+import { CONFIG, PAGES, PLATFORMS } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -139,8 +139,8 @@ export default class QuantumIndex64 extends React.Component {
                     return {
                       label: s.label,
                       seriesConfig: {
-                        platform: s.label === 'Chrome' ? 'windows10-64-nightly' : s.platform,
                         ...s,
+                        ...PLATFORMS[`${s.label}64`],
                       },
                     };
                   })
