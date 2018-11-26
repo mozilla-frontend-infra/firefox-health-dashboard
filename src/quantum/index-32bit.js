@@ -119,22 +119,21 @@ export default class QuantumIndex32 extends React.Component {
           // GROUP BY title
           .groupBy(row => row.title)
           // CONVERT TO ROWS [{key=row.title, values=[series ....]}
-          .toPairs()
-          .map((row) => {
+          .forIn((series, title) => {
             return (
               <PerfherderGraphContainer
-                title={row.key}
-                series={[
+                title={title}
+                series={
                 _
-                .chain(row.value)
+                .chain(series)
                   .map((s) => {
                     return {
                       label: s.label,
                       seriesConfig: s,
                     };
                   })
-                  .value(),
-              ]}
+                  .value()
+              }
               />
             );
           })
