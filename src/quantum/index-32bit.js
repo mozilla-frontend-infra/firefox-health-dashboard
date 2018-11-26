@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { parse } from 'query-string';
-import { _ } from 'lodash';
+import _ from 'lodash';
 import Dashboard from '../dashboard';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
