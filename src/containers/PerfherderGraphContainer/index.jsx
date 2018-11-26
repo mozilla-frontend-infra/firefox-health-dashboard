@@ -21,8 +21,8 @@ class PerfherderGraphContainer extends Component {
         this.fetchSetData(this.props);
     }
 
-    async fetchSetData({ series, timeRange }) {
-        this.setState(await getPerferherderData(series, { timeRange }));
+    async fetchSetData({ series }) {
+        this.setState(await getPerferherderData(series));
     }
 
     render() {
@@ -35,7 +35,7 @@ class PerfherderGraphContainer extends Component {
               <span>{title}</span>
               {jointUrl && (
                 <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
-                  <LinkIcon className={classes.linkIcon} color='black' />
+                  <LinkIcon className={classes.linkIcon} />
                 </a>
               )}
             </h2>
@@ -55,11 +55,16 @@ PerfherderGraphContainer.propTypes = {
     classes: PropTypes.shape({}).isRequired,
     series: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string.isRequired,
-        extraOptions: PropTypes.arrayOf(PropTypes.string),
-        frameworkId: PropTypes.number.isRequired,
-        option: PropTypes.string.isRequired,
-        project: PropTypes.string.isRequired,
-        suite: PropTypes.string.isRequired,
+        seriesConfig: PropTypes.shape({
+            extraOptions: PropTypes.arrayOf(PropTypes.string),
+            frameworkId: PropTypes.number.isRequired,
+            option: PropTypes.string.isRequired,
+            project: PropTypes.string.isRequired,
+            suite: PropTypes.string.isRequired,
+        }),
+        options: PropTypes.shape({
+            includeSubtests: PropTypes.bool,
+        }),
     })),
     title: PropTypes.string,
     timeRange: PropTypes.string,

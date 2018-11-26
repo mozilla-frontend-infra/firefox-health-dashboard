@@ -23,10 +23,10 @@ const perfherderFormatter = (series) => {
     options: generateInitialOptions(series[0].meta),
   };
 
-  series.forEach(({ data, perfherderUrl, label }, index) => {
+  series.forEach(({ color, data, label, perfherderUrl }, index) => {
     if (data) {
       newData.data.datasets.push({
-        ...generateLineChartStyles(SETTINGS.colors[index]),
+        ...generateLineChartStyles(color || SETTINGS.colors[index]),
         label,
         data: dataToChartJSformat(data),
       });

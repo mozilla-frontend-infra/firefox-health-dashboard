@@ -68,12 +68,12 @@ Link to [source code](https://github.com/mozilla-frontend-infra/firefox-health-d
 
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/44410/48093030-369b4400-e1dc-11e8-9da5-a481ce158809.png">
 
-In a Bugzilla burndown you want Bugzilla queries (generally two) to be plotted on a graph.
+In a Bugzilla graph you want Bugzilla queries (generally two) to be plotted on a graph.
 To do so, pass a `queries` array for each query you want with a `label` string and a `parameter` object with standard
 Bugzilla parameters. The parameters use the same nomenclature you would use when doing a Bugzilla advanced search.
 See code below for a sample.
 
-You can use `startDate` with a date (YYYY-MM-DD) to start plotting the burndown data from such date.
+You can use `startDate` with a date (YYYY-MM-DD) to start plotting the data from such date.
 In other words, all bugs before that date will be counted as created on that date. This is useful if you
 have bugs that were created few years ago and would make the X axis quite wide.
 
@@ -101,7 +101,7 @@ Sample code:
     },
   ]}
   startDate='2018-03-01'
-  title='GeckoView burndown'
+  title='GeckoView bugs'
 />
 ```
 
