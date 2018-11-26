@@ -3,14 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { parse } from 'query-string';
+import _ from 'lodash';
 import Dashboard from '../dashboard';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
-import { CONFIG } from './config';
 import GraphContainer from '../components/graph-container';
+import { CONFIG, PAGES } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -116,326 +117,42 @@ export default class QuantumIndex64 extends React.Component {
         ],
       },
       {
-        title: '#4 Regression',
-        rows: [
-          [
-            <PerfherderGraphContainer
-              title='Speedometer'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-chrome',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Tp6: Amazon'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-chrome',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: Facebook'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-chrome',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Tp6: Google'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-chrome',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: YouTube'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-chrome',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Page load (tp5)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tp5o',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Window Opening (tpaint e10s)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tpaint',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Start-up (sessionrestore)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'sessionrestore',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Start-up (sessionrestore_no_auto_restore)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'sessionrestore_no_auto_restore',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Start-Up (ts_paint)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'ts_paint',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tab Opening (tabpaint)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tabpaint',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Tab Animation (TART)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tart',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tab Switch (tps)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tps',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='SVG (tsvg_static)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvg_static',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='SVG (tsvgr_opacity)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvgr_opacity',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='SVG (tsvgx)'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvgx',
-                  },
-                },
-              ]}
-            />,
-          ],
-        ],
+        title: '#3 Pages',
+        rows:
+          _
+          .chain(PAGES.data)
+          // ZIP HEADER WITH ROWS TO GET OBJECTS
+          .map(row => _.zipObject(PAGES.header, row))
+          // GROUP BY title
+          .groupBy(row => row.title)
+          // LOOP OVER EACH KEY/VALUE
+          .toPairs()
+          .map(([title, series], i) => {
+            return (
+              <PerfherderGraphContainer
+                key={`pages${i}`}
+                title={title}
+                series={
+                _
+                .chain(series)
+                  .map((s) => {
+                    return {
+                      label: s.label,
+                      seriesConfig: {
+                        platform: s.label === 'Chrome' ? 'windows10-64-nightly' : s.platform,
+                        ...s,
+                      },
+                    };
+                  })
+                  .value()
+              }
+              />
+            );
+          })
+          // GROUP IN PAIRS
+          .chunk(2)
+          // ADD BLANK IF REQUIRED
+          .value(),
       },
     ]);
 

@@ -70,7 +70,6 @@ const PAGES = {
     ['title', 'label', 'frameworkId', 'platform',            'option', 'project',      'suite',                                            'extraOptions'],
 
   data: [
-    ['Speedometer',    'Firefox', 10, 'windows7-32',         'pgo', 'mozilla-central', 'raptor-speedometer-firefox'  ],
 
     ['Tp6: Facebook',  'Firefox', 10, 'windows7-32',         'pgo', 'mozilla-central', 'raptor-tp6-facebook-firefox' ],
     ['Tp6: Amazon',    'Firefox', 10, 'windows7-32',         'pgo', 'mozilla-central', 'raptor-tp6-amazon-firefox'   ],
@@ -98,6 +97,8 @@ const PAGES = {
     ['Tp6: microsoft', 'Chrome',  10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-microsoft-chrome' ],
     ['Tp6: reddit',    'Chrome',  10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-reddit-chrome'    ],
 
+    ['Speedometer',    'Firefox', 10, 'windows7-32',         'pgo', 'mozilla-central', 'raptor-speedometer-firefox'  ],
+  
     ['Page load (tp5)',                           'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tp5o',                           ['e10s', 'stylo']],
     ['Window Opening (tpaint e10s)',              'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tpaint',                         ['e10s', 'stylo']],
     ['Start-up (sessionrestore)',                 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'sessionrestore',                 ['e10s', 'stylo']],
