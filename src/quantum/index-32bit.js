@@ -118,10 +118,11 @@ export default class QuantumIndex32 extends React.Component {
           .map(row => _.zipObject(PAGES.header, row))
           // GROUP BY title
           .groupBy(row => row.title)
-          // CONVERT TO ROWS [{key=row.title, values=[series ....]}
-          .forIn((series, title) => {
+          // LOOP OVER EACH KEY/VALUE
+          .forIn((series, title, i) => {
             return (
               <PerfherderGraphContainer
+                key={`pages${i}`}
                 title={title}
                 series={
                 _
