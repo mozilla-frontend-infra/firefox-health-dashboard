@@ -57,59 +57,22 @@ export default class QuantumIndex32 extends React.Component {
           <Countdown />]],
       },
       {
-        cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
-        title: '#2 Photon Performance',
+        title: 'Benchmarks',
         rows: [
           [
-            <TelemetryContainer
-              key='winOpen'
-              id='winOpen'
-              title='Window open'
-              queryParams={quantum32QueryParams}
-            />,
-            <TelemetryContainer
-              key='tabSwitch'
-              id='tabSwitch'
-              title='Tab switch'
-              queryParams={quantum32QueryParams}
-            />,
+            CONFIG.windows32Regression[0].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
+            CONFIG.windows32Regression[1].map(config => (
+              <Perfherder
+                {...config}
+                key={config.title}
+              />
+            )),
           ],
-          [
-            <TelemetryContainer
-              key='tabClose'
-              id='tabClose'
-              title='Tab close'
-              queryParams={quantum32QueryParams}
-            />,
-            <TelemetryContainer
-              key='firstPaint'
-              id='firstPaint'
-              title='First paint'
-              queryParams={quantum32QueryParams}
-            />,
-          ],
-        ],
-      },
-      {
-        title: '#3 Other benchmarks',
-        rows: [
-          CONFIG.windows32Regression[0].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-          CONFIG.windows32Regression[1].map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
-          )),
-        ],
-      },
-      {
-        title: '#3 Other benchmarks',
-        rows: [
           [
             <PerfherderGraphContainer
               title='Speedometer'
@@ -136,6 +99,13 @@ export default class QuantumIndex32 extends React.Component {
                 },
               ]}
             />,
+          ],
+        ],
+      },
+      {
+        title: 'Performance Tests',
+        rows: [
+          [
             <PerfherderGraphContainer
               title='Tp6: Amazon'
               series={[
@@ -161,6 +131,7 @@ export default class QuantumIndex32 extends React.Component {
                 },
               ]}
             />,
+            <div style={{ width: '50%' }} />,
           ],
           [
             <PerfherderGraphContainer
@@ -425,6 +396,236 @@ export default class QuantumIndex32 extends React.Component {
                   },
                 },
               ]}
+            />,
+          ],
+        ],
+      },
+      {
+        cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
+        title: 'Performance Metrics',
+        rows: [
+          [
+            <TelemetryContainer
+              key='winOpen'
+              id='winOpen'
+              title='Window open'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='tabSwitch'
+              id='tabSwitch'
+              title='Tab switch'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='tabClose'
+              id='tabClose'
+              title='Tab close'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='firstPaint'
+              id='firstPaint'
+              title='First paint'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='sessionRestoreWindow'
+              id='sessionRestoreWindow'
+              title='Session Restore Window ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='sessionRestoreStartupInit'
+              id='sessionRestoreStartupInit'
+              title='Session Restore Startup Init ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='sessionRestoreStartupOnload'
+              id='sessionRestoreStartupOnload'
+              title='Session Restore Startup Onload ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='tabSwitchUpdate'
+              id='tabSwitchUpdate'
+              title='Tab Switch Update ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='gcAnimation'
+              id='gcAnimation'
+              title='GC Animation ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='gpuProcessInit'
+              id='gpuProcessInit'
+              title='GPU Process Initialization ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='gpuProcessLaunch'
+              id='gpuProcessLaunch'
+              title='GPU Process Launch ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='inputEventCoalesced'
+              id='inputEventCoalesced'
+              title='Input Event Response Coalesced ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='networkCacheHit'
+              id='networkCacheHit'
+              title='Network Cache Hit ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='networkCacheMiss'
+              id='networkCacheMiss'
+              title='Network Cache Miss ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='placesAutocomplete'
+              id='placesAutocomplete'
+              title='Places Autocomplete 6  First Results ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='searchServiceInit'
+              id='searchServiceInit'
+              title='Search Service Init ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='timeToDomComplete'
+              id='timeToDomComplete'
+              title='Time to DOM Complete ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='timeToDomInteractive'
+              id='timeToDomInteractive'
+              title='Time to DOM Interactive ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='timeToDomLoading'
+              id='timeToDomLoading'
+              title='Time to DOM Loading ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='timeToFirstInteraction'
+              id='timeToFirstInteraction'
+              title='Time to First Interaction ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='timeToNonBlankPaint'
+              id='timeToNonBlankPaint'
+              title='Time to Non Blank Paint ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='timeToResponseStart'
+              id='timeToResponseStart'
+              title='Time to Response Start ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='webextBackgroundPageLoad'
+              id='webextBackgroundPageLoad'
+              title='Webext Background Page Load ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='webextContentScriptInjection'
+              id='webextContentScriptInjection'
+              title='Webext Content Script Injection ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='webextExtensionStartup'
+              id='webextExtensionStartup'
+              title='Webext Extension Startup ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='timeToLoadEventEnd'
+              id='timeToLoadEventEnd'
+              title='Time to Load Event End ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='timeToDomContentLoadedEnd'
+              id='timeToDomContentLoadedEnd'
+              title='Time to DOM Content Loaded End ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='contentPaintTime'
+              id='contentPaintTime'
+              title='Content Paint Time ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='pageLoad'
+              id='pageLoad'
+              title='FX Page Load ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='simpleSessionRestored'
+              id='simpleSessionRestored'
+              title='Simple Measures Session Restored ms'
+              queryParams={quantum32QueryParams}
+            />,
+          ],
+          [
+            <TelemetryContainer
+              key='scalarFirstPaint'
+              id='scalarFirstPaint'
+              title='Scalars Timestamp - First Paint ms'
+              queryParams={quantum32QueryParams}
+            />,
+            <TelemetryContainer
+              key='timeToFirstScroll'
+              id='timeToFirstScroll'
+              title='Time to First Scroll ms'
+              queryParams={quantum32QueryParams}
             />,
           ],
         ],
