@@ -65,7 +65,7 @@ const CONFIG = {
 };
 
 
-export const PAGES = {
+const PAGES = {
   header:
     ['title', 'label', 'frameworkId', 'platform',            'option', 'project',      'suite',                                            'extraOptions'],
 
@@ -114,4 +114,4 @@ export const PAGES = {
 };
 
 
-export default CONFIG;
+export { CONFIG, PAGES };

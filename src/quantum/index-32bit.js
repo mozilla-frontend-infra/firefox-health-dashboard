@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { parse } from 'query-string';
-import { _ } from 'lodash/fp';
+import { _ } from 'lodash';
 import Dashboard from '../dashboard';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
@@ -11,7 +11,7 @@ import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum32QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
-import CONFIG, { PAGES } from './config';
+import { CONFIG, PAGES } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -137,10 +137,10 @@ export default class QuantumIndex32 extends React.Component {
               ]}
               />
             );
-        })
-         // GROUP IN PAIRS
-         .chunk(2)
-         // ADD BLANK IF REQUIRED
+          })
+          // GROUP IN PAIRS
+          .chunk(2)
+          // ADD BLANK IF REQUIRED
           .value(),
       },
     ]);

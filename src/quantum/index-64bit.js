@@ -9,7 +9,7 @@ import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
-import CONFIG from './config';
+import { CONFIG } from './config';
 import GraphContainer from '../components/graph-container';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
