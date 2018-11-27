@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+
 import getData from '../utils/perfherder/subbenchmarks';
 
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
