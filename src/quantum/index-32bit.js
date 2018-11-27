@@ -109,7 +109,7 @@ export default class QuantumIndex32 extends React.Component {
         ],
       },
       {
-        title: '#3 Pages',
+        title: '#3 Benchmarks',
         rows:
           _
           .chain(PAGES.data)
