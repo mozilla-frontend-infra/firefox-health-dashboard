@@ -70,7 +70,7 @@
  }
  .dashboard-title .dashboard-note,.dashboard-title h1 small {
   padding-left:.75rem;
-  color:#d1d2d3
+  color:#000
  }
  .dashboard-title .dashboard-source {
   font-size:.5618rem;
@@ -406,7 +406,7 @@
   align-items:flex-start;
   border-top:1px solid #fff;
   font-weight:300;
-  color:#d1d2d3;
+  color:#000;
   padding:.53572rem 0;
   margin:.80357rem .75rem .26786rem
  }
@@ -745,7 +745,7 @@
  }
  .dashboard-metric .title text {
   font-size:1.78445rem;
-  stroke:#d1d2d3;
+  stroke:#000;
   font-weight:300;
   text-anchor:start;
   opacity:.3;
@@ -756,7 +756,7 @@
   stroke-width:1
  }
  .dashboard-metric .tick text {
-  fill:#d1d2d3;
+  fill:#000;
   font-size:.75rem;
   text-anchor:start;
   font-weight:300;
