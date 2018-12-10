@@ -1,9 +1,8 @@
 /* global fetch */
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { parse } from 'query-string';
-import Dashboard from '../dashboard';
+import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
@@ -674,7 +673,7 @@ export default class QuantumIndex64 extends React.Component {
         }
       }
       if ((!full || sectionId < 2) && title) {
-        add.unshift(<h2 key={sectionId}>
+        add.unshift(<h2 className='section-header' key={sectionId}>
           <span>
             {title}
           </span>
@@ -698,16 +697,12 @@ More data on
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
     const $dashboard = (
-      <Dashboard
+      <DashboardPage
         title='Quantum'
         subtitle='Release Criteria Report'
-        className={cx('summary')}
-        sourceTitle='Status Spreadsheet'
-        source='https://docs.google.com/spreadsheets/d/1UMsy_sZkdgtElr2buwRtABuyA3GY6wNK_pfF01c890A/view'
-        link='https://mana.mozilla.org/wiki/display/PM/Quantum+Release+Criteria'
       >
         {$content}
-      </Dashboard>
+      </DashboardPage>
     );
 
     return $dashboard;

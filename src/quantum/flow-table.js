@@ -7,7 +7,7 @@ import cx from 'classnames';
 
 import SETTINGS from '../settings';
 import { getBugUrl, flowGraphProps } from './constants';
-import Dashboard from '../dashboard';
+import DashboardPage from '../components/DashboardPage';
 
 export default class FlowTable extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ export default class FlowTable extends React.Component {
       },
     ];
     return (
-      <Dashboard
+      <DashboardPage
         title='Quantum'
         subtitle='P1 Bugs'
         className={cx('summary')}
@@ -79,7 +79,7 @@ export default class FlowTable extends React.Component {
 )}
           </div>
         </div>
-      </Dashboard>
+      </DashboardPage>
     );
   }
 }
