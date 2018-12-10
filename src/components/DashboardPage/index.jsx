@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-  root: {},
-  dashboardTitle: {
-    borderBottom: '1px solid #fff',
-    padding: '0.25rem 0 0 0.75rem',
+  root: {
+    display: 'flex',
+    flex: '1',
+    flexDirection: 'column',
   },
-  title: {},
+  title: {
+    color: 'white',
+    backgroundColor: 'black',
+    borderBottom: '1px solid #fff',
+    padding: '0.35rem 0 0 1rem',
+  },
   subtitle: {
       color: '#d1d2d3',
       fontWeight: '400',
@@ -17,21 +22,17 @@ const styles = {
   },
 };
 
-const DashboardPage = ({ classes, children, title, subtitle }) => {
-  return (
-    <div className={classes.root}>
-      <div className={classes.dashboardTitle}>
-        <h1 className={classes.title}>
-          {title}
-          <small className={classes.subtitle}>{subtitle}</small>
-        </h1>
-      </div>
-      <div>
-        {children}
-      </div>
+const DashboardPage = ({ classes, children, title, subtitle }) => (
+  <div className={classes.root}>
+    <div className={classes.title}>
+      <h1>
+        {title}
+        <small className={classes.subtitle}>{subtitle}</small>
+      </h1>
     </div>
-  );
-};
+    {children}
+  </div>
+);
 
 DashboardPage.propTypes = {
   classes: PropTypes.shape({}),

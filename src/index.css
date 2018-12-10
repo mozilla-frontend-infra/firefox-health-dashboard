@@ -13,7 +13,6 @@
   margin-top:0
  }
  .dashboard-link,h1,small {
-  font-size:1.00125rem;
   line-height:1.07143rem;
   padding-top:.25447rem;
   margin-bottom:.81696rem;
@@ -35,8 +34,6 @@
   font-size:.75rem;
   line-height:1.07143rem;
   -webkit-text-size-adjust:100%;
-  color:#fff;
-  background-color:#000;
   display:flex;
   align-content:stretch
  }
@@ -54,23 +51,25 @@
   flex-direction:column
  }
  .dashboard-title {
+  background-color: black;
   text-align:left;
   padding:0 .75rem;
   display:flex;
   align-items:center
  }
  .dashboard-title h1 {
+  color: white;
   flex:1;
   margin-bottom:0;
   font-weight:700
  }
  .dashboard-title h1 small {
+  color: gray;
   display:inline-block;
   font-weight:400
  }
  .dashboard-title .dashboard-note,.dashboard-title h1 small {
   padding-left:.75rem;
-  color:#000
  }
  .dashboard-title .dashboard-source {
   font-size:.5618rem;
@@ -123,7 +122,7 @@
  .row {
   flex:1;
   display:flex;
-  padding:1.33929rem .75rem 1.875rem
+  padding:0.5rem 0 0 1rem;
  }
  .row .aside {
   width:2.14286rem;
@@ -194,7 +193,6 @@
   height:5.35715rem
  }
  .criteria-widget,.graphic-widget {
-  background-color:#fff;
   color:#56565a;
   flex-direction:column;
   align-items:stretch
@@ -401,12 +399,20 @@
  .widget-secondary header h3 {
   font-size:.75rem
  }
+ .summary {
+  background-color: black;
+ }
+ .section-header {
+  color: white;
+  background-color: black;
+  padding: .5rem 0 .5rem 1rem;
+ }
  .summary h2 {
   display:flex;
   align-items:flex-start;
   border-top:1px solid #fff;
   font-weight:300;
-  color:#777;
+  color: white;
   padding:.53572rem 0;
   margin:.80357rem .75rem .26786rem
  }
@@ -787,7 +793,7 @@
  .row.photon-perf {
   flex-flow:wrap;
   font-size:1em;
-  padding-bottom:.85em
+  padding-bottom:0;
  }
  .photon-perf path.mg-line1,.photon-perf path.mg-line2,.photon-perf path.mg-line3,.photon-perf path.mg-line4,.photon-perf path.mg-line5 {
   stroke-width:2
@@ -820,69 +826,6 @@
  }
  .generic-metrics-graphics .mg-x-axis .label {
   transform:translateY(-.5em)
- }
- .speedometer-metrics-graphics .mg-area1-color {
-  fill:#d1d2d3
- }
- .speedometer-metrics-graphics .mg-line1-color {
-  stroke:#d1d2d3;
-  stroke-dasharray:10
- }
- .speedometer-metrics-graphics .mg-hover-line1-color {
-  fill:#d1d2d3
- }
- .speedometer-metrics-graphics .mg-line1-legend-color {
-  color:#d1d2d3;
-  fill:#d1d2d3
- }
- .speedometer-metrics-graphics path.mg-line2 {
-  stroke-width:2
- }
- .speedometer-metrics-graphics .mg-area2-color {
-  fill:#ffcd02
- }
- .speedometer-metrics-graphics .mg-line2-color {
-  stroke:#ffcd02
- }
- .speedometer-metrics-graphics .mg-hover-line2-color {
-  fill:#ffcd02
- }
- .speedometer-metrics-graphics .mg-line2-legend-color {
-  color:#ffcd02;
-  fill:#ffcd02
- }
- .speedometer-metrics-graphics path.mg-line3 {
-  stroke-width:2
- }
- .speedometer-metrics-graphics .mg-area3-color {
-  fill:#e55525
- }
- .speedometer-metrics-graphics .mg-line3-color {
-  stroke:#e55525
- }
- .speedometer-metrics-graphics .mg-hover-line3-color {
-  fill:#e55525
- }
- .speedometer-metrics-graphics .mg-line3-legend-color {
-  color:#e55525;
-  fill:#e55525
- }
- .speedometer-metrics-graphics path.mg-line4 {
-  stroke-width:1
- }
- .speedometer-metrics-graphics .mg-area4-color {
-  fill:#000
- }
- .speedometer-metrics-graphics .mg-line4-color {
-  stroke:#000;
-  stroke-opacity:.5
- }
- .speedometer-metrics-graphics .mg-hover-line4-color {
-  fill:#000
- }
- .speedometer-metrics-graphics .mg-line4-legend-color {
-  color:#000;
-  fill:#000
  }
  .subbenchmarks .header {
   display:flex;
@@ -1003,11 +946,6 @@
   .summary h2,h1 {
    margin-bottom:.81696rem
   }
-  h1 {
-   padding-top:.25447rem;
-   line-height:1.07143rem;
-   font-size:1.00125rem
-  }
   small {
    padding-top:.25447rem;
    line-height:1.07143rem;
@@ -1046,7 +984,7 @@
    margin-top:.53572rem
   }
   .row {
-   padding:1.33929rem .75rem 1.875rem
+   padding: 0;
   }
   .row .aside {
    width:2.14286rem

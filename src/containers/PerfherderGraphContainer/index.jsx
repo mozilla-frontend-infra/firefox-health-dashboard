@@ -6,6 +6,9 @@ import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 
 const styles = () => ({
+    title: {
+        color: 'black',
+    },
     linkIcon: {
         marginLeft: '0.2rem',
         marginBottom: -5,
@@ -32,7 +35,7 @@ class PerfherderGraphContainer extends Component {
         return (
           <div key={title}>
             <h2>
-              <span>{title}</span>
+              <span className={classes.title}>{title}</span>
               {jointUrl && (
                 <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
                   <LinkIcon className={classes.linkIcon} />
