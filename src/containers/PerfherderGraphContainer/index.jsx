@@ -10,6 +10,11 @@ const styles = () => ({
         marginLeft: '0.2rem',
         marginBottom: -5,
     },
+      title: {
+        backgroundColor: 'black',
+        padding: '.3em',
+
+      },
   });
 
 class PerfherderGraphContainer extends Component {
@@ -31,7 +36,7 @@ class PerfherderGraphContainer extends Component {
 
         return (
           <div key={title}>
-            <h2>
+            <h2 className={classes.title}>
               <span>{title}</span>
               {jointUrl && (
                 <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
