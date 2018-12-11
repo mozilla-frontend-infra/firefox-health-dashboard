@@ -62,13 +62,6 @@ const CONFIG = {
 
 };
 
-const PLATFORMS = {
-  Firefox32: { platform: 'windows7-32', option: 'pgo', project: 'mozilla-central' },
-  Firefox64: { platform: 'windows10-64', option: 'pgo', project: 'mozilla-central' },
-  Chrome32: { platform: 'windows7-32-nightly', option: 'opt', project: 'mozilla-central' },
-  Chrome64: { platform: 'windows10-64-nightly', option: 'opt', project: 'mozilla-central' },
-};
-
 const PAGES = {
   header:
     ['title', 'label', 'frameworkId', 'platform', 'option', 'project', 'suite', 'extraOptions'],
@@ -101,21 +94,8 @@ const PAGES = {
     ['Tp6: microsoft', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-microsoft-chrome'],
     ['Tp6: reddit', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-reddit-chrome'],
 
-    ['Speedometer', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-speedometer-firefox'],
-    ['Page load (tp5)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tp5o', ['e10s', 'stylo']],
-    ['Window Opening (tpaint e10s)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tpaint', ['e10s', 'stylo']],
-    ['Start-up (sessionrestore)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'sessionrestore', ['e10s', 'stylo']],
-    ['Start-up (sessionrestore_no_auto_restore)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'sessionrestore_no_auto_restore', ['e10s', 'stylo']],
-    ['Start-Up (ts_paint)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'ts_paint', ['e10s', 'stylo']],
-    ['Tab Opening (tabpaint)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tabpaint', ['e10s', 'stylo']],
-    ['Tab Animation (TART)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tart', ['e10s', 'stylo']],
-    ['Tab Switch (tps)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tps', ['e10s', 'stylo']],
-    ['SVG (tsvg_static)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tsvg_static', ['e10s', 'stylo']],
-    ['SVG (tsvgr_opacity)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tsvgr_opacity', ['e10s', 'stylo']],
-    ['SVG (tsvgx)', 'Firefox', 1, 'windows7-32', 'pgo', 'mozilla-central', 'tsvgx', ['e10s', 'stylo']],
-
   ],
 };
 
 
-export { CONFIG, PAGES, PLATFORMS };
+export { CONFIG, PAGES };
