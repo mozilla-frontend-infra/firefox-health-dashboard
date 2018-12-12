@@ -15,7 +15,7 @@ const styles = {
     backgroundColor: 'black',
     textAlign: 'center',
     fontSize: '2rem',
-    padding: '1rem',
+    padding: '1rem 1rem .7rem 1rem',
   },
   subtitle: {
     color: '#d1d2d3',

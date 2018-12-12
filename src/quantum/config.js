@@ -1,3 +1,6 @@
+import _ from '../utils/more_lodash';
+
+
 const CONFIG = {
   windows64Regression: [
     [
@@ -62,40 +65,89 @@ const CONFIG = {
 
 };
 
-const PAGES = {
+
+const PLATFORMS = [
+  {
+    browser: 'Firefox',
+    bits: 32,
+    os: 'win',
+    label: 'Firefox',
+    frameworkId: 10,
+    platform: 'windows7-32',
+    option: 'pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Firefox',
+    bits: 64,
+    os: 'win',
+    label: 'Firefox',
+    frameworkId: 10,
+    platform: 'windows10-64',
+    option: 'pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Chrome',
+    bits: 32,
+    os: 'win',
+    label: 'Chrome',
+    frameworkId: 10,
+    platform: 'windows7-32-nightly',
+    option: 'opt',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Chrome',
+    bits: 64,
+    os: 'win',
+    label: 'Chrome',
+    frameworkId: 10,
+    platform: 'windows10-64-nightly',
+    option: 'opt',
+    project: 'mozilla-central',
+  },
+];
+
+const SUITES = {
   header:
-    ['title', 'label', 'frameworkId', 'platform', 'option', 'project', 'suite', 'extraOptions'],
+    ['browser', 'title', 'suite'],
 
   data: [
 
-    ['Tp6: Facebook', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-facebook-firefox'],
-    ['Tp6: Amazon', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-amazon-firefox'],
-    ['Tp6: YouTube', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-youtube-firefox'],
-    ['Tp6: Google', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-google-firefox'],
-    ['Tp6: imdb', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-imdb-firefox'],
-    ['Tp6: imgur', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-imgur-firefox'],
-    ['Tp6: wikia', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-wikia-firefox'],
-    ['Tp6: bing', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-bing-firefox'],
-    ['Tp6: yandex', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-yandex-firefox'],
-    ['Tp6: apple', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-apple-firefox'],
-    ['Tp6: microsoft', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-microsoft-firefox'],
-    ['Tp6: reddit', 'Firefox', 10, 'windows7-32', 'pgo', 'mozilla-central', 'raptor-tp6-reddit-firefox'],
+    ['Firefox', 'Tp6: Facebook', 'raptor-tp6-facebook-firefox'],
+    ['Firefox', 'Tp6: Amazon', 'raptor-tp6-amazon-firefox'],
+    ['Firefox', 'Tp6: YouTube', 'raptor-tp6-youtube-firefox'],
+    ['Firefox', 'Tp6: Google', 'raptor-tp6-google-firefox'],
+    ['Firefox', 'Tp6: imdb', 'raptor-tp6-imdb-firefox'],
+    ['Firefox', 'Tp6: imgur', 'raptor-tp6-imgur-firefox'],
+    ['Firefox', 'Tp6: wikia', 'raptor-tp6-wikia-firefox'],
+    ['Firefox', 'Tp6: bing', 'raptor-tp6-bing-firefox'],
+    ['Firefox', 'Tp6: yandex', 'raptor-tp6-yandex-firefox'],
+    ['Firefox', 'Tp6: apple', 'raptor-tp6-apple-firefox'],
+    ['Firefox', 'Tp6: microsoft', 'raptor-tp6-microsoft-firefox'],
+    ['Firefox', 'Tp6: reddit', 'raptor-tp6-reddit-firefox'],
 
-    ['Tp6: Facebook', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-facebook-chrome'],
-    ['Tp6: Amazon', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-amazon-chrome'],
-    ['Tp6: Google', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-google-chrome'],
-    ['Tp6: YouTube', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-youtube-chrome'],
-    ['Tp6: imdb', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-imdb-chrome'],
-    ['Tp6: imgur', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-imgur-chrome'],
-    ['Tp6: wikia', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-wikia-chrome'],
-    ['Tp6: bing', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-bing-chrome'],
-    ['Tp6: yandex', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-yandex-chrome'],
-    ['Tp6: apple', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-apple-chrome'],
-    ['Tp6: microsoft', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-microsoft-chrome'],
-    ['Tp6: reddit', 'Chrome', 10, 'windows7-32-nightly', 'opt', 'mozilla-central', 'raptor-tp6-reddit-chrome'],
+    ['Chrome', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
+    ['Chrome', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
+    ['Chrome', 'Tp6: Google', 'raptor-tp6-google-chrome'],
+    ['Chrome', 'Tp6: YouTube', 'raptor-tp6-youtube-chrome'],
+    ['Chrome', 'Tp6: imdb', 'raptor-tp6-imdb-chrome'],
+    ['Chrome', 'Tp6: imgur', 'raptor-tp6-imgur-chrome'],
+    ['Chrome', 'Tp6: wikia', 'raptor-tp6-wikia-chrome'],
+    ['Chrome', 'Tp6: bing', 'raptor-tp6-bing-chrome'],
+    ['Chrome', 'Tp6: yandex', 'raptor-tp6-yandex-chrome'],
+    ['Chrome', 'Tp6: apple', 'raptor-tp6-apple-chrome'],
+    ['Chrome', 'Tp6: microsoft', 'raptor-tp6-microsoft-chrome'],
+    ['Chrome', 'Tp6: reddit', 'raptor-tp6-reddit-chrome'],
 
   ],
 };
 
-
-export { CONFIG, PAGES };
+// ALL PAGE COMBINATIONS
+const TP6_PAGES = _
+  .chain(SUITES.data)
+  .map(row => _.zipObject(SUITES.header, row))
+  .join('browser', PLATFORMS, 'browser')
+  .value();
+export { CONFIG, PLATFORMS, TP6_PAGES };

@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { PAGES } from './config';
+import _ from '../utils/more_lodash';
+import { TP6_PAGES } from './config';
 import DashboardPage from '../components/DashboardPage/index';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer/index';
 
@@ -23,24 +23,23 @@ const styles = {
   chart: {
     justifyContent: 'center',
     padding: '1rem',
-
   },
-
 };
 
 class TP6_32 extends React.Component {
-  constructor({ classes }) {
-    super({});
-    const allCharts = _
-      .chain(PAGES.data)
-      // ZIP HEADER WITH ROWS TO GET OBJECTS
-      .map(row => _.zipObject(PAGES.header, row))
-      // GROUP BY title
-      .groupBy(row => row.title)
-      // LOOP OVER EACH KEY/VALUE
-      .toPairs()
-      .map(([title, series], i) => {
-        return (
+  constructor(props) {
+    super(props);
+    const { classes } = this.props;
+
+    this.state = {
+      allCharts: _
+        .chain(TP6_PAGES)
+        .filter(row => row.bits === 32)
+        // GROUP BY title
+        .groupBy(row => row.title)
+        // LOOP OVER EACH KEY/VALUE
+        .toPairs()
+        .map(([title, series], i) => (
           <div className={classes.chart}>
             <PerfherderGraphContainer
               key={`pages${i}`}
@@ -57,20 +56,18 @@ class TP6_32 extends React.Component {
               }
             />
           </div>
-        );
-      })
-      // SPLIT INTO TWO
-      .chunk(2)
-      // TRANSPOSE, SO WE HAVE TWO COLUMNS
-      .unzip()
-      .value();
-    this.props = { classes: classes, allCharts: allCharts };
-    const temp = this.props.allCharts;
-    console.log(temp);
+        ))
+        // SPLIT INTO TWO
+        .chunk(2)
+        // TRANSPOSE, SO WE HAVE TWO COLUMNS
+        .unzip()
+        .value(),
+    };
   }
 
   render() {
-    const { classes, allCharts } = this.props;
+    const { classes } = this.props;
+    const { allCharts } = this.state;
     return (
       <div className={classes.body}>
         <DashboardPage title='TP6 - Page load on 32bit'>
@@ -91,7 +88,6 @@ class TP6_32 extends React.Component {
 
 TP6_32.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  allCharts: PropTypes.shape({}),
 };
 
 
