@@ -8,7 +8,6 @@ import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
 import TP6_32 from './quantum/tp6-32bit';
-import TP6_64 from './quantum/tp6-64bit';
 import Subbenchmark from './quantum/subbenchmarks';
 import FlowTable from './quantum/flow-table';
 
@@ -20,7 +19,6 @@ const Routes = () => (
       <Route path='/quantum/32' component={Quantum32} />
       <Route path='/quantum/64' component={Quantum64} />
       <Route path='/quantum/tp6/32' component={TP6_32} />
-      <Route path='/quantum/tp6/64' component={TP6_64} />
       <Route path='/android/graph' component={NimbledroidGraphPage} />
       <Route path='/android' component={AndroidPage} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />
