@@ -11,9 +11,9 @@ const generateOptions = (options = {}) => {
             xAxes: [{
                 type: 'time',
                 time: {
-                    displayFormats: {
-                    hour: 'MMM D',
-                    },
+                    unit: 'month',
+                    displayFormats: { hour: 'MMM D' },
+                    tooltipFormat: 'll',
                 },
             }],
             yAxes: [{

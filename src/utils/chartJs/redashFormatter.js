@@ -22,7 +22,9 @@ const redashFormatter = (data, dataKeyIdentifier) => {
       if (!result[key]) {
         result[key] = [];
       }
+      console.log(datum);
       result[key].push(datum);
+      console.log(result);
       return result;
     }, {});
     const datasets = Object.keys(buckets).map((key, index) => {
