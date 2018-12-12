@@ -16,13 +16,13 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path='/quantum/32' component={Quantum32} />
-      <Route path='/quantum/64' component={Quantum64} />
       <Route path='/quantum/tp6/32' component={TP6_32} />
       <Route path='/android/graph' component={NimbledroidGraphPage} />
       <Route path='/android' component={AndroidPage} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />
       <Route path='/quantum/:platform/:suite' component={Subbenchmark} />
+      <Route path='/quantum/32' component={Quantum32} />
+      <Route path='/quantum/64' component={Quantum64} />
       <Route path='/' component={Home} />
       <Route component={NoMatch} />
     </Switch>
