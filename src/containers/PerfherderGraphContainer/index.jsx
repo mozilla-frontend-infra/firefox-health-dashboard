@@ -10,11 +10,11 @@ const styles = () => ({
         marginLeft: '0.2rem',
         marginBottom: -5,
     },
-      title: {
-        backgroundColor: 'black',
-        padding: '.3em',
+    title: {
+    backgroundColor: 'black',
+    padding: '.3rem',
 
-      },
+    },
   });
 
 class PerfherderGraphContainer extends Component {

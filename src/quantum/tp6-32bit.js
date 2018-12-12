@@ -28,61 +28,70 @@ const styles = {
 
 };
 
-const TP6_32 = ({ classes }) => {
-  const allCharts = _
-    .chain(PAGES.data)
-    // ZIP HEADER WITH ROWS TO GET OBJECTS
-    .map(row => _.zipObject(PAGES.header, row))
-    // GROUP BY title
-    .groupBy(row => row.title)
-    // LOOP OVER EACH KEY/VALUE
-    .toPairs()
-    .map(([title, series], _i) => {
-      return (
-        <div className={classes.chart}>
-          <PerfherderGraphContainer
-          // key={`pages${i}`}
-            title={title}
-            series={
-            _
-              .chain(series)
-              .map((s) => {
-                return {
-                  label: s.label,
-                  seriesConfig: s,
-                };
-              })
-              .value()
-          }
-          />
-        </div>
-      );
-    })
-    // SPLIT INTO TWO
-    .chunk(2)
-    // TRANSPOSE, SO WE HAVE TWO COLUMNS
-    .unzip()
-    .value();
+class TP6_32 extends React.Component {
+  constructor({ classes }) {
+    super({});
+    const allCharts = _
+      .chain(PAGES.data)
+      // ZIP HEADER WITH ROWS TO GET OBJECTS
+      .map(row => _.zipObject(PAGES.header, row))
+      // GROUP BY title
+      .groupBy(row => row.title)
+      // LOOP OVER EACH KEY/VALUE
+      .toPairs()
+      .map(([title, series], i) => {
+        return (
+          <div className={classes.chart}>
+            <PerfherderGraphContainer
+              key={`pages${i}`}
+              title={title}
+              series={_
+                .chain(series)
+                .map((s) => {
+                  return {
+                    label: s.label,
+                    seriesConfig: s,
+                  };
+                })
+                .value()
+              }
+            />
+          </div>
+        );
+      })
+      // SPLIT INTO TWO
+      .chunk(2)
+      // TRANSPOSE, SO WE HAVE TWO COLUMNS
+      .unzip()
+      .value();
+    this.props = { classes: classes, allCharts: allCharts };
+    const temp = this.props.allCharts;
+    console.log(temp);
+  }
 
-  return (
-    <div className={classes.body}>
-      <DashboardPage title='TP6 - Page load on 32bit'>
-        <div className={classes.area}>
-          <div className={classes.column}>
-            {allCharts[0]}
+  render() {
+    const { classes, allCharts } = this.props;
+    return (
+      <div className={classes.body}>
+        <DashboardPage title='TP6 - Page load on 32bit'>
+          <div className={classes.area}>
+            <div className={classes.column}>
+              {allCharts[0]}
+            </div>
+            <div className={classes.column}>
+              {allCharts[1]}
+            </div>
           </div>
-          <div className={classes.column}>
-            {allCharts[1]}
-          </div>
-        </div>
-      </DashboardPage>
-    </div>
-);
-};
+        </DashboardPage>
+      </div>
+    );
+  }
+}
 
 
 TP6_32.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  allCharts: PropTypes.shape({}),
 };
 
 
