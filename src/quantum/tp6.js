@@ -35,10 +35,11 @@ class TP6 extends React.Component {
     this.state = {
       allCharts: _
         .chain(TP6_PAGES)
+        // CHOOSE CHARTS BASED ON bits
         .filter(row => row.bits === bits)
         // GROUP BY title
         .groupBy(row => row.title)
-        // LOOP OVER EACH KEY/VALUE
+        // LOOP OVER EACH title FILL MAKE ONE CHART
         .toPairs()
         .map(([title, series], i) => (
           <div key={`page_${bits}_${i}`} className={classes.chart}>
@@ -57,7 +58,7 @@ class TP6 extends React.Component {
             />
           </div>
         ))
-        // SPLIT INTO TWO
+        // SPLIT INTO LIST OF 2-TUPLES
         .chunk(2)
         // TRANSPOSE, SO WE HAVE TWO COLUMNS
         .unzip()
