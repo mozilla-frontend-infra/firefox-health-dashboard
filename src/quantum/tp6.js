@@ -41,9 +41,8 @@ class TP6 extends React.Component {
         // LOOP OVER EACH KEY/VALUE
         .toPairs()
         .map(([title, series], i) => (
-          <div className={classes.chart}>
+          <div key={`page_${bits}_${i}`} className={classes.chart}>
             <PerfherderGraphContainer
-              key={`pages${i}`}
               title={title}
               series={_
                 .chain(series)
@@ -73,7 +72,7 @@ class TP6 extends React.Component {
 
     return (
       <div className={classes.body}>
-        <DashboardPage title={`TP6 - Page load on ${bits} bits`}>
+        <DashboardPage key={bits} title={`TP6 - Page load on ${bits} bits`}>
           <div className={classes.area}>
             <div className={classes.column}>
               {allCharts[0]}
