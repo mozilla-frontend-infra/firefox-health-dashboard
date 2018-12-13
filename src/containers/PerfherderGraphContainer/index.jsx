@@ -6,16 +6,16 @@ import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 
 const styles = () => ({
-    linkIcon: {
-        marginLeft: '0.2rem',
-        marginBottom: -5,
-    },
-    title: {
+  linkIcon: {
+    marginLeft: '0.2rem',
+    marginBottom: -5,
+  },
+  title: {
     backgroundColor: 'black',
-    padding: '.3rem',
+    padding: '.1rem .3rem .3rem .3rem',
 
-    },
-  });
+  },
+});
 
 class PerfherderGraphContainer extends Component {
     state = {
@@ -31,7 +31,7 @@ class PerfherderGraphContainer extends Component {
     }
 
     render() {
-        const { classes, title } = this.props;
+        const { classes, title, type = 'line' } = this.props;
         const { data, jointUrl, options } = this.state;
 
         return (
@@ -46,7 +46,7 @@ class PerfherderGraphContainer extends Component {
             </h2>
             {data && (
               <ChartJsWrapper
-                type='line'
+                type={type}
                 data={data}
                 options={options}
               />
@@ -72,6 +72,7 @@ PerfherderGraphContainer.propTypes = {
         }),
     })),
     title: PropTypes.string,
+    type: PropTypes.string,
     timeRange: PropTypes.string,
 };
 

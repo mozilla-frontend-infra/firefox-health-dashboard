@@ -44,6 +44,7 @@ class TP6_32 extends React.Component {
             <PerfherderGraphContainer
               key={`pages${i}`}
               title={title}
+              type='scatter'
               series={_
                 .chain(series)
                 .map((s) => {
