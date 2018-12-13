@@ -69,7 +69,7 @@ const CONFIG = {
 const PLATFORMS = [
   {
     browser: 'Firefox',
-    bits: 32,
+    bits: "32",
     os: 'win',
     label: 'Firefox',
     frameworkId: 10,
@@ -79,7 +79,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Firefox',
-    bits: 64,
+    bits: "64",
     os: 'win',
     label: 'Firefox',
     frameworkId: 10,
@@ -89,7 +89,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Chrome',
-    bits: 32,
+    bits: "32",
     os: 'win',
     label: 'Chrome',
     frameworkId: 10,
@@ -99,7 +99,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Chrome',
-    bits: 64,
+    bits: "64",
     os: 'win',
     label: 'Chrome',
     frameworkId: 10,

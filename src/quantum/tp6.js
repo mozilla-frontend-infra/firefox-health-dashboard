@@ -26,15 +26,16 @@ const styles = {
   },
 };
 
-class TP6_32 extends React.Component {
+class TP6 extends React.Component {
   constructor(props) {
     super(props);
-    const { classes } = this.props;
+    const { classes, match } = this.props;
+    const bits = match.params.bits;
 
     this.state = {
       allCharts: _
         .chain(TP6_PAGES)
-        .filter(row => row.bits === 32)
+        .filter(row => row.bits === bits)
         // GROUP BY title
         .groupBy(row => row.title)
         // LOOP OVER EACH KEY/VALUE
@@ -66,11 +67,13 @@ class TP6_32 extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { allCharts } = this.state;
+    const { classes, match } = this.props;
+    const bits = match.params.bits;
+
     return (
       <div className={classes.body}>
-        <DashboardPage title='TP6 - Page load on 32bit'>
+        <DashboardPage title={`TP6 - Page load on ${bits} bits`}>
           <div className={classes.area}>
             <div className={classes.column}>
               {allCharts[0]}
@@ -86,9 +89,14 @@ class TP6_32 extends React.Component {
 }
 
 
-TP6_32.propTypes = {
+TP6.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      bits: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 
-export default withStyles(styles)(TP6_32);
+export default withStyles(styles)(TP6);
