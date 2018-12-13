@@ -36,6 +36,10 @@ ChartJsWrapper.propTypes = {
       reverse: PropTypes.bool,
       scaleLabel: PropTypes.string,
       title: PropTypes.string,
+      tooltipFormat: PropTypes.bool,
+      tooltips: PropTypes.shape({
+        callbacks: PropTypes.object,
+      }),
     }).isRequired,
     data: PropTypes.shape({
       datasets: PropTypes.arrayOf(
