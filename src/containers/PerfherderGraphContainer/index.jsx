@@ -6,16 +6,16 @@ import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 
 const styles = () => ({
-    linkIcon: {
-        marginLeft: '0.2rem',
-        marginBottom: -5,
-    },
-    title: {
+  linkIcon: {
+    marginLeft: '0.2rem',
+    marginBottom: -5,
+  },
+  title: {
     backgroundColor: 'black',
     padding: '.3rem',
 
-    },
-  });
+  },
+});
 
 class PerfherderGraphContainer extends Component {
     state = {
