@@ -40,6 +40,7 @@ ChartJsWrapper.propTypes = {
       tooltips: PropTypes.shape({
         callbacks: PropTypes.object,
       }),
+      ticksCallback: PropTypes.func,
     }).isRequired,
     data: PropTypes.shape({
       datasets: PropTypes.arrayOf(
