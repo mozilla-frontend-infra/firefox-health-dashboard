@@ -1,5 +1,5 @@
 const generateOptions = (options = {}) => {
-    const { title, scaleLabel, reverse = false } = options;
+    const { title, scaleLabel, reverse = false, tooltipFormat, tooltips } = options;
     const chartJsOptions = {
         legend: {
             labels: {
@@ -11,9 +11,7 @@ const generateOptions = (options = {}) => {
             xAxes: [{
                 type: 'time',
                 time: {
-                    displayFormats: {
-                    hour: 'MMM D',
-                    },
+                    displayFormats: { hour: 'MMM D' },
                 },
             }],
             yAxes: [{
@@ -30,6 +28,14 @@ const generateOptions = (options = {}) => {
             text: title,
         };
     }
+    if (tooltipFormat) {
+        chartJsOptions.scales.xAxes[0].time.tooltipFormat = 'll';
+    }
+
+    if (tooltips) {
+        chartJsOptions.tooltips = tooltips;
+    }
+
     if (scaleLabel) {
         chartJsOptions.scales.yAxes[0].scaleLabel = {
             display: true,
