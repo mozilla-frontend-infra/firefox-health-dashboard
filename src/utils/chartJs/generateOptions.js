@@ -1,5 +1,5 @@
 const generateOptions = (options = {}) => {
-    const { title, scaleLabel, reverse = false, tooltipFormat, tooltips } = options;
+    const { title, scaleLabel, reverse = false, tooltipFormat, tooltips, ticksCallback } = options;
     const chartJsOptions = {
         legend: {
             labels: {
@@ -22,6 +22,11 @@ const generateOptions = (options = {}) => {
             }],
         },
     };
+
+    if (ticksCallback) {
+        chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
+    }
+
     if (title) {
         chartJsOptions.title = {
             display: true,

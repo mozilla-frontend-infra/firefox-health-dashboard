@@ -28,6 +28,7 @@ class RedashContainer extends Component {
       tooltips: PropTypes.shape({
         callbacks: PropTypes.object,
       }),
+      ticksCallback: PropTypes.func,
     }),
     classes: PropTypes.shape().isRequired,
     dataKeyIdentifier: PropTypes.string.isRequired,
@@ -47,6 +48,7 @@ class RedashContainer extends Component {
           },
         },
       },
+      ticksCallback: value => (value > 999 ? `${(value / 1000)}k` : value),
     },
     dataKeyIdentifier: 'label',
   };
