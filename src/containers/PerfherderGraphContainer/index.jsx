@@ -13,7 +13,6 @@ const styles = () => ({
   title: {
     backgroundColor: 'black',
     padding: '.3rem',
-
   },
 });
 

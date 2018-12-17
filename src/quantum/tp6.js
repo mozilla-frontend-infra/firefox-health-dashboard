@@ -8,8 +8,6 @@ import PerfherderGraphContainer from '../containers/PerfherderGraphContainer/ind
 
 
 const styles = {
-  // This div helps with canvas size changes
-  // https://www.chartjs.org/docs/latest/general/responsive.html#important-note
   body: {
     backgroundColor: 'white',
   },
@@ -45,16 +43,7 @@ class TP6 extends React.Component {
           <div key={`page_${bits}_${i}`} className={classes.chart}>
             <PerfherderGraphContainer
               title={title}
-              series={_
-                .chain(series)
-                .map((s) => {
-                  return {
-                    label: s.label,
-                    seriesConfig: s,
-                  };
-                })
-                .value()
-              }
+              series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
             />
           </div>
         ))

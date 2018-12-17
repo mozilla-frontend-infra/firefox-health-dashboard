@@ -19,7 +19,7 @@ const styles = {
   },
   subtitle: {
     color: '#d1d2d3',
-    fontWeight: '400',
+    fontWeight: 400,
     margin: '.5rem .6rem .5rem',
     padding: '.5em 0',
   },
