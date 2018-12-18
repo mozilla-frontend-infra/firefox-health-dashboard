@@ -48,7 +48,7 @@ class TP6 extends React.Component {
                     />
                   </Grid>
                 ))
-                .value()
+                .toArray()
             }
           </Grid>
         </DashboardPage>

@@ -14,7 +14,7 @@ class Wrapper {
     this.list = list;
   }
 
-  value() {
+  toArray() {
     return this.list;
   }
 }
@@ -60,6 +60,7 @@ const listwrap = (value) => {
 };
 
 // Groupby one, or many, columns by name
+// return array of [rows, key, index] tuples
 extend_wrapper({
   groupBy: function groupBy(list, columns) {
     const cs = frum(listwrap(columns))
@@ -71,7 +72,7 @@ extend_wrapper({
       })
       .flatten()
       .sortBy(([col_name]) => col_name)
-      .value();
+      .toArray();
 
     const output = {};
     let i = 0;
@@ -79,13 +80,13 @@ extend_wrapper({
       const key = fromPairs(cs.map(([name, func]) => [name, func(row)]));
       const skey = JSON.stringify(key);
 
-      let pair = output[skey];
-      if (!pair) {
-        pair = [[], key, i];
+      let triple = output[skey];
+      if (!triple) {
+        triple = [[], key, i];
         i += 1;
-        output[skey] = pair;
+        output[skey] = triple;
       }
-      pair[0].push(row);
+      triple[0].push(row);
     });
     return Object.values(output);
   },
@@ -97,12 +98,12 @@ extend_wrapper({
   join: function join(listA, propA, listB, propB) {
     const lookup = frum(listB)
       .lodashGroupBy(rowB => rowB[propB])
-      .value();
+      .toArray();
 
     return frum(listA)
       .map(rowA => lookup[rowA[propA]].map((rowB) => { return { ...rowB, ...rowA }; }))
       .flatten()
-      .value();
+      .toArray();
   },
 });
 

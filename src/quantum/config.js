@@ -148,5 +148,5 @@ const SUITES = {
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser')
-  .value();
+  .toArray();
 export { CONFIG, PLATFORMS, TP6_PAGES };
