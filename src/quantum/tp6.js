@@ -36,11 +36,8 @@ class TP6 extends React.Component {
           <Grid container spacing={24} className={classes.area}>
             {
               frum(TP6_PAGES)
-                // CHOOSE CHARTS BASED ON bits
                 .filter(limits)
-                // GROUP BY title
                 .groupBy('title')
-                // LOOP OVER EACH title FILL MAKE ONE CHART
                 .map(([series, { title }]) => (
                   <Grid item xs={6} key={`page_${title}_${limits.bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
