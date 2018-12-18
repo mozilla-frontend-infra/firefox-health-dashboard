@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import _ from '../utils/more_lodash';
+import { frum } from '../utils/query_ops';
 import { TP6_PAGES } from './config';
 import DashboardPage from '../components/DashboardPage/index';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer/index';
@@ -31,15 +31,13 @@ class TP6 extends React.Component {
     const bits = match.params.bits;
 
     this.state = {
-      allCharts: _
-        .chain(TP6_PAGES)
+      allCharts: frum(TP6_PAGES)
         // CHOOSE CHARTS BASED ON bits
         .filter(row => row.bits === bits)
         // GROUP BY title
-        .groupBy(row => row.title)
+        .groupBy('title')
         // LOOP OVER EACH title FILL MAKE ONE CHART
-        .toPairs()
-        .map(([title, series], i) => (
+        .map(([series, { title }, i]) => (
           <div key={`page_${bits}_${i}`} className={classes.chart}>
             <PerfherderGraphContainer
               title={title}
@@ -47,9 +45,7 @@ class TP6 extends React.Component {
             />
           </div>
         ))
-        // SPLIT INTO LIST OF 2-TUPLES
         .chunk(2)
-        // TRANSPOSE, SO WE HAVE TWO COLUMNS
         .unzip()
         .value(),
     };
