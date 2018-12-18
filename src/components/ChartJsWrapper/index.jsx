@@ -16,7 +16,7 @@ const styles = {
     title: {
       color: 'white',
       backgroundColor: 'black',
-      margin: '0.1rem 0 0 0',
+      padding: '.3rem .3rem .3rem .3rem',
     },
 };
 

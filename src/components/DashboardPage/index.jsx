@@ -15,8 +15,8 @@ const styles = {
     backgroundColor: 'black',
     borderBottom: '1px solid #fff',
     textAlign: 'center',
-    fontSize: '2rem',
-    padding: '0.35rem 0 0 1rem',
+    fontWeight: 100,
+    padding: '0.4rem 0 0 0',
   },
   subtitle: {
     color: '#d1d2d3',

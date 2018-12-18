@@ -32,7 +32,11 @@ class TP6 extends React.Component {
 
     return (
       <div className={classes.body}>
-        <DashboardPage key={limits.bits} title={`TP6 - Page load on ${limits.bits} bits`}>
+        <DashboardPage
+          key={limits.bits}
+          title={'TP6'}
+          subtitle={`Page load on ${limits.bits} bits`}
+        >
           <Grid container spacing={24} className={classes.area}>
             {
               frum(TP6_PAGES)
