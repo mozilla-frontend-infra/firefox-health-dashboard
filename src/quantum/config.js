@@ -141,7 +141,6 @@ const SUITES = {
     ['Chrome', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
     ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
-
   ],
 };
 
