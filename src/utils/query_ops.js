@@ -2,7 +2,7 @@
 import lodashGroupBy from 'lodash/groupBy';
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
-import filter from 'lodash/filter';
+import lodashFilter from 'lodash/filter';
 import toPairs from 'lodash/toPairs';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
@@ -39,7 +39,7 @@ const frum = (list) => {
 
 extend_wrapper({
   map: map,
-  filter: filter,
+  lodashFilter: lodashFilter,
   flatten: flatten,
   toPairs: toPairs,
   chunk: chunk,
@@ -50,7 +50,7 @@ extend_wrapper({
 });
 
 
-const listwrap = (value) => {
+const toArray = (value) => {
   if (Array.isArray(value)) {
     return value;
   } if (value == null) {
@@ -59,16 +59,26 @@ const listwrap = (value) => {
     return [value];
 };
 
-// Groupby one, or many, columns by name
-// return array of [rows, key, index] tuples
+// convert string into function that selects column from row
+const selector = (column_name) => {
+  if (typeof column_name === 'string') {
+    return row => row[column_name];
+  }
+    return column_name;
+
+};
+
+
 extend_wrapper({
+  // Groupby one, or many, columns by name or by {name: selector} pairs
+  // return array of [rows, key, index] tuples
   groupBy: function groupBy(list, columns) {
-    const cs = frum(listwrap(columns))
+    const cs = frum(toArray(columns))
       .map((col_name) => {
         if (typeof col_name === 'string') {
-          return [[col_name, row => row[col_name]]];
+          return [[col_name, selector(col_name)]];
         }
-        return toPairs(col_name);
+        return toPairs(col_name).map(([name, value]) => [name, selector(value)]);
       })
       .flatten()
       .sortBy(([col_name]) => col_name)
@@ -90,11 +100,8 @@ extend_wrapper({
     });
     return Object.values(output);
   },
-});
 
-
-// SELECT a.*, b.* FROM listA a LEFT JOIN listB b ON a.propA = b.propB
-extend_wrapper({
+  // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   join: function join(listA, propA, listB, propB) {
     const lookup = frum(listB)
       .lodashGroupBy(rowB => rowB[propB])
@@ -104,6 +111,19 @@ extend_wrapper({
       .map(rowA => lookup[rowA[propA]].map((rowB) => { return { ...rowB, ...rowA }; }))
       .flatten()
       .toArray();
+  },
+
+  // Expecting a object of {column_name: value} form to use as a filter
+  // return only m
+  filter: function filter(list, expression) {
+    const func = (row) => {
+      for (const [name, value] of toPairs(expression)) {
+        if (row[name] !== value) return false;
+      }
+      return true;
+    };
+
+    return lodashFilter(list, func);
   },
 });
 

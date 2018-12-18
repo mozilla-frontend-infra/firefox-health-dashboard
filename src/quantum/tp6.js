@@ -26,22 +26,23 @@ const styles = {
 
 class TP6 extends React.Component {
   render() {
-    const { classes, match } = this.props;
-    const bits = match.params.bits;
+    const { classes, location } = this.props;
+    const params = new URLSearchParams(location.search);
+    const limits = { bits: params.get('bits') };
 
     return (
       <div className={classes.body}>
-        <DashboardPage key={bits} title={`TP6 - Page load on ${bits} bits`}>
+        <DashboardPage key={limits.bits} title={`TP6 - Page load on ${limits.bits} bits`}>
           <Grid container spacing={24} className={classes.area}>
             {
               frum(TP6_PAGES)
                 // CHOOSE CHARTS BASED ON bits
-                .filter(row => row.bits === bits)
+                .filter(limits)
                 // GROUP BY title
                 .groupBy('title')
                 // LOOP OVER EACH title FILL MAKE ONE CHART
-                .map(([series, { title }, i]) => (
-                  <Grid item xs={6} key={`page_${bits}_${i}`} className={classes.chart}>
+                .map(([series, { title }]) => (
+                  <Grid item xs={6} key={`page_${title}_${limits.bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
                       title={title}
                       series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
@@ -60,10 +61,8 @@ class TP6 extends React.Component {
 
 TP6.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      bits: PropTypes.string.isRequired,
-    }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
   }).isRequired,
 };
 

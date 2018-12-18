@@ -16,7 +16,7 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path='/quantum/tp6/:bits' component={TP6} />
+      <Route path='/quantum/tp6' component={TP6} />
       <Route path='/android/graph' component={NimbledroidGraphPage} />
       <Route path='/android' component={AndroidPage} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />
