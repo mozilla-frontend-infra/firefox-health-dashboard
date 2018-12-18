@@ -11,13 +11,6 @@ const styles = {
   body: {
     backgroundColor: 'white',
   },
-  area: {
-    display: 'flex',
-  },
-  column: {
-    flex: '50%',
-    alignItems: 'center',
-  },
   chart: {
     justifyContent: 'center',
     padding: '1rem',
@@ -37,7 +30,7 @@ class TP6 extends React.Component {
           title={'TP6'}
           subtitle={`Page load on ${limits.bits} bits`}
         >
-          <Grid container spacing={24} className={classes.area}>
+          <Grid container spacing={24}>
             {
               frum(TP6_PAGES)
                 .filter(limits)

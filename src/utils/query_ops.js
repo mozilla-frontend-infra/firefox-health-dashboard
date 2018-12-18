@@ -114,7 +114,7 @@ extend_wrapper({
   },
 
   // Expecting a object of {column_name: value} form to use as a filter
-  // return only m
+  // return only matching rows
   filter: function filter(list, expression) {
     const func = (row) => {
       for (const [name, value] of toPairs(expression)) {
