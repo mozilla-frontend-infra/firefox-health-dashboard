@@ -25,32 +25,7 @@ const styles = {
 };
 
 class TP6 extends React.Component {
-  constructor(props) {
-    super(props);
-    const { classes, match } = this.props;
-    const bits = match.params.bits;
-
-    this.state = {
-      allCharts: frum(TP6_PAGES)
-        // CHOOSE CHARTS BASED ON bits
-        .filter(row => row.bits === bits)
-        // GROUP BY title
-        .groupBy('title')
-        // LOOP OVER EACH title FILL MAKE ONE CHART
-        .map(([series, { title }, i]) => (
-          <Grid item xs={6} key={`page_${bits}_${i}`} className={classes.chart}>
-            <PerfherderGraphContainer
-              title={title}
-              series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
-            />
-          </Grid>
-        ))
-        .value(),
-    };
-  }
-
   render() {
-    const { allCharts } = this.state;
     const { classes, match } = this.props;
     const bits = match.params.bits;
 
@@ -58,7 +33,23 @@ class TP6 extends React.Component {
       <div className={classes.body}>
         <DashboardPage key={bits} title={`TP6 - Page load on ${bits} bits`}>
           <Grid container spacing={24} className={classes.area}>
-            {allCharts}
+            {
+              frum(TP6_PAGES)
+              // CHOOSE CHARTS BASED ON bits
+                .filter(row => row.bits === bits)
+                // GROUP BY title
+                .groupBy('title')
+                // LOOP OVER EACH title FILL MAKE ONE CHART
+                .map(([series, { title }, i]) => (
+                  <Grid item xs={6} key={`page_${bits}_${i}`} className={classes.chart}>
+                    <PerfherderGraphContainer
+                      title={title}
+                      series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
+                    />
+                  </Grid>
+                ))
+                .value()
+            }
           </Grid>
         </DashboardPage>
       </div>
