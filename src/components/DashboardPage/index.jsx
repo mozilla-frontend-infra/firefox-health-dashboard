@@ -4,18 +4,19 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   root: {
+    display: 'flex',
+    flex: '1',
+    flexDirection: 'column',
     backgroundColor: 'white',
     padding: '2rem',
-  },
-  dashboardTitle: {
-    borderBottom: '1px solid #fff',
   },
   title: {
     color: 'white',
     backgroundColor: 'black',
+    borderBottom: '1px solid #fff',
     textAlign: 'center',
     fontSize: '2rem',
-    padding: '1rem 1rem .7rem 1rem',
+    padding: '0.35rem 0 0 1rem',
   },
   subtitle: {
     color: '#d1d2d3',
@@ -25,21 +26,17 @@ const styles = {
   },
 };
 
-const DashboardPage = ({ classes, children, title, subtitle }) => {
-  return (
-    <div className={classes.root}>
-      <div className={classes.dashboardTitle}>
-        <h1 className={classes.title}>
-          {title}
-          <small className={classes.subtitle}>{subtitle}</small>
-        </h1>
-      </div>
-      <div>
-        {children}
-      </div>
+const DashboardPage = ({ classes, children, title, subtitle }) => (
+  <div className={classes.root}>
+    <div className={classes.title}>
+      <h1>
+        {title}
+        <small className={classes.subtitle}>{subtitle}</small>
+      </h1>
     </div>
-  );
-};
+    {children}
+  </div>
+);
 
 DashboardPage.propTypes = {
   classes: PropTypes.shape({}),
