@@ -35,7 +35,7 @@ class TP6 extends React.Component {
           <Grid container spacing={24} className={classes.area}>
             {
               frum(TP6_PAGES)
-              // CHOOSE CHARTS BASED ON bits
+                // CHOOSE CHARTS BASED ON bits
                 .filter(row => row.bits === bits)
                 // GROUP BY title
                 .groupBy('title')
