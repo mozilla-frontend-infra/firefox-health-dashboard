@@ -1,11 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import { frum } from '../utils/query_ops';
 import { TP6_PAGES } from './config';
 import DashboardPage from '../components/DashboardPage/index';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer/index';
-
 
 const styles = {
   body: {
@@ -38,15 +38,13 @@ class TP6 extends React.Component {
         .groupBy('title')
         // LOOP OVER EACH title FILL MAKE ONE CHART
         .map(([series, { title }, i]) => (
-          <div key={`page_${bits}_${i}`} className={classes.chart}>
+          <Grid item xs={6} key={`page_${bits}_${i}`} className={classes.chart}>
             <PerfherderGraphContainer
               title={title}
               series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
             />
-          </div>
+          </Grid>
         ))
-        .chunk(2)
-        .unzip()
         .value(),
     };
   }
@@ -59,14 +57,9 @@ class TP6 extends React.Component {
     return (
       <div className={classes.body}>
         <DashboardPage key={bits} title={`TP6 - Page load on ${bits} bits`}>
-          <div className={classes.area}>
-            <div className={classes.column}>
-              {allCharts[0]}
-            </div>
-            <div className={classes.column}>
-              {allCharts[1]}
-            </div>
-          </div>
+          <Grid container spacing={24} className={classes.area}>
+            {allCharts}
+          </Grid>
         </DashboardPage>
       </div>
     );
