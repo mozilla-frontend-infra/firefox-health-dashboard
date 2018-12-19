@@ -5,21 +5,21 @@
 
 I found it difficult to understand why `import _ from 'lodash';` got strong rejection from my peers:
 
-https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r241036252
-https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r241915232
-https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r242160214
+* https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r241036252
+* https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r241915232
+* https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r242160214
 
 The main argument they gave was
 
 > only import what you need, so that "tree shaking" can minimize the size of the executable
 
-But this logic was not good answer for me:
+But this logic was not a good explanation for me:
 
 1. I **am** including only what I needed: specifically, `chain()`, which demands all of Lodash get imported.
 2. Without `chain()` I must implement the same functionality myself, which is more code, and probably slower code. 
 3. Looking at [the Lodash site](https://lodash.com/), it was "only" 24kb to download. It seemed to be a small library.
 4. Lodash is already included, via dependencies, over 40 times, what's the chance Lodash is not already included?
-5. `import Grid from '@material-ui/core/Grid'` is just fine ([link](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r242165492)) - If size is an issue, then we should be looking at each import and how it affects the size of the final executable: Importing "only what we need" from one library may be much larger than import everything from another.
+5. `import Grid from '@material-ui/core/Grid'` is just fine ([link](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/pull/233#discussion_r242165492)) - If size is an issue, then we should be looking at each import and how it affects the size of the final executable: Importing "only what we need" from one library may be much larger than importing everything from another library.
 
 ## Analysis
 
