@@ -2,10 +2,10 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { frum } from '../utils/query_ops';
-import { TP6_PAGES } from './config';
-import DashboardPage from '../components/DashboardPage/index';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer/index';
+import frum from '../../utils/queryOps';
+import { TP6_PAGES } from '../../quantum/config';
+import DashboardPage from '../../components/DashboardPage/index';
+import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer/index';
 
 const styles = {
   body: {
@@ -18,25 +18,31 @@ const styles = {
 };
 
 class TP6 extends React.Component {
-  render() {
-    const { classes, location } = this.props;
+  constructor(props) {
+    super(props);
+    const { location } = this.props;
     const params = new URLSearchParams(location.search);
-    const limits = { bits: params.get('bits') };
+    this.state = { bits: params.get('bits') };
+  }
+
+  render() {
+    const { classes } = this.props;
+    const state = this.state;
 
     return (
       <div className={classes.body}>
         <DashboardPage
-          key={limits.bits}
+          key={state.bits}
           title={'TP6'}
-          subtitle={`Page load on ${limits.bits} bits`}
+          subtitle={`Page load on ${state.bits} bits`}
         >
           <Grid container spacing={24}>
             {
               frum(TP6_PAGES)
-                .filter(limits)
+                .filter(state)
                 .groupBy('title')
                 .map(([series, { title }]) => (
-                  <Grid item xs={6} key={`page_${title}_${limits.bits}`} className={classes.chart}>
+                  <Grid item xs={6} key={`page_${title}_${state.bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
                       title={title}
                       series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}

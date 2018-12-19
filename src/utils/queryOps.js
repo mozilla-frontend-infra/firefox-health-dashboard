@@ -1,4 +1,3 @@
-
 import lodashGroupBy from 'lodash/groupBy';
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
@@ -127,4 +126,4 @@ extend_wrapper({
   },
 });
 
-export { frum };
+export default frum;

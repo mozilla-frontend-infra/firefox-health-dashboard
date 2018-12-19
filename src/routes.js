@@ -8,7 +8,7 @@ import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
-import TP6 from './quantum/tp6';
+import TP6 from './views/QuantumTP6/index';
 import Subbenchmark from './quantum/subbenchmarks';
 import FlowTable from './quantum/flow-table';
 

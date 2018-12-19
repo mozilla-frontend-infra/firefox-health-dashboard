@@ -1,5 +1,5 @@
 import zipObject from 'lodash/zipObject';
-import { frum } from '../utils/query_ops';
+import frum from '../utils/queryOps';
 
 
 const CONFIG = {
