@@ -8,8 +8,8 @@ import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
-import CONFIG from './config';
 import GraphContainer from '../components/graph-container';
+import { CONFIG } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -104,111 +104,7 @@ export default class QuantumIndex64 extends React.Component {
         title: 'Performance Tests',
         rows: [
           [
-            <PerfherderGraphContainer
-              title='Tp6: Amazon'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-chrome',
-                  },
-                },
-              ]}
-            />,
-            <div style={{ width: '50%' }} />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: Facebook'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-chrome',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Tp6: Google'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-chrome',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: YouTube'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows10-64-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-chrome',
-                  },
-                },
-              ]}
-            />,
+            null,
             <PerfherderGraphContainer
               title='Page load (tp5)'
               series={[
@@ -625,15 +521,6 @@ export default class QuantumIndex64 extends React.Component {
               title='Time to First Scroll ms'
               queryParams={quantum64QueryParams}
             />,
-          ],
-          [
-            <TelemetryContainer
-              key='blankWindowShown'
-              id='blankWindowShown'
-              title='Blank window shown'
-              queryParams={quantum64QueryParams}
-            />,
-            <div style={{ width: '50%' }} />,
           ],
         ],
       },

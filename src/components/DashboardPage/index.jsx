@@ -7,18 +7,22 @@ const styles = {
     display: 'flex',
     flex: '1',
     flexDirection: 'column',
+    backgroundColor: 'white',
+    padding: '2rem',
   },
   title: {
     color: 'white',
     backgroundColor: 'black',
     borderBottom: '1px solid #fff',
-    padding: '0.35rem 0 0 1rem',
+    textAlign: 'center',
+    fontWeight: 100,
+    padding: '0.4rem 0 0 0',
   },
   subtitle: {
-      color: '#d1d2d3',
-      fontWeight: '400',
-      margin: '.5rem .6rem .5rem',
-      padding: '.5em 0',
+    color: '#d1d2d3',
+    fontWeight: 400,
+    margin: '.5rem .6rem .5rem',
+    padding: '.5em 0',
   },
 };
 

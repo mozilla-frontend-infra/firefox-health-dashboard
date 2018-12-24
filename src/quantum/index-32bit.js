@@ -9,7 +9,7 @@ import TelemetryContainer from '../telemetry/graph';
 import SETTINGS from '../settings';
 import { quantum32QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
-import CONFIG from './config';
+import { CONFIG } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -21,7 +21,6 @@ export default class QuantumIndex32 extends React.Component {
   }
 
   state = {
-    apzStatus: [],
     notes: {},
   };
 
@@ -105,111 +104,7 @@ export default class QuantumIndex32 extends React.Component {
         title: 'Performance Tests',
         rows: [
           [
-            <PerfherderGraphContainer
-              title='Tp6: Amazon'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-amazon-chrome',
-                  },
-                },
-              ]}
-            />,
-            <div style={{ width: '50%' }} />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: Facebook'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-facebook-chrome',
-                  },
-                },
-              ]}
-            />,
-            <PerfherderGraphContainer
-              title='Tp6: Google'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-google-chrome',
-                  },
-                },
-              ]}
-            />,
-          ],
-          [
-            <PerfherderGraphContainer
-              title='Tp6: YouTube'
-              series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-firefox',
-                  },
-                },
-                {
-                  label: 'Chrome',
-                  seriesConfig: {
-                    frameworkId: 10,
-                    platform: 'windows7-32-nightly',
-                    option: 'opt',
-                    project: 'mozilla-central',
-                    suite: 'raptor-tp6-youtube-chrome',
-                  },
-                },
-              ]}
-            />,
+            null,
             <PerfherderGraphContainer
               title='Page load (tp5)'
               series={[

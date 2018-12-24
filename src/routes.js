@@ -8,6 +8,7 @@ import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum64 from './quantum/index-64bit';
 import Quantum32 from './quantum/index-32bit';
+import TP6 from './views/QuantumTP6/index';
 import Subbenchmark from './quantum/subbenchmarks';
 import FlowTable from './quantum/flow-table';
 
@@ -16,6 +17,7 @@ const NoMatch = () => <div>404</div>;
 const Routes = () => (
   <BrowserRouter>
     <Switch>
+      <Route path='/quantum/tp6' component={TP6} />
       <Route path='/android/graph' component={NimbledroidGraphPage} />
       <Route path='/android' component={AndroidPage} />
       <Route path='/quantum/:architecture/bugs' component={FlowTable} />

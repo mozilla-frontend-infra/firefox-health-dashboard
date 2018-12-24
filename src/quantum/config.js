@@ -1,3 +1,7 @@
+import zipObject from 'lodash/zipObject';
+import frum from '../utils/queryOps';
+
+
 const CONFIG = {
   windows64Regression: [
     [
@@ -62,4 +66,87 @@ const CONFIG = {
 
 };
 
-export default CONFIG;
+
+const PLATFORMS = [
+  {
+    browser: 'Firefox',
+    bits: '32',
+    os: 'win',
+    label: 'Firefox',
+    frameworkId: 10,
+    platform: 'windows7-32',
+    option: 'pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Firefox',
+    bits: '64',
+    os: 'win',
+    label: 'Firefox',
+    frameworkId: 10,
+    platform: 'windows10-64',
+    option: 'pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Chrome',
+    bits: '32',
+    os: 'win',
+    label: 'Chrome',
+    frameworkId: 10,
+    platform: 'windows7-32-nightly',
+    option: 'opt',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'Chrome',
+    bits: '64',
+    os: 'win',
+    label: 'Chrome',
+    frameworkId: 10,
+    platform: 'windows10-64-nightly',
+    option: 'opt',
+    project: 'mozilla-central',
+  },
+];
+
+const SUITES = {
+  header:
+    ['browser', 'title', 'suite'],
+
+  data: [
+
+    ['Firefox', 'Tp6: Facebook', 'raptor-tp6-facebook-firefox'],
+    ['Firefox', 'Tp6: Amazon', 'raptor-tp6-amazon-firefox'],
+    ['Firefox', 'Tp6: YouTube', 'raptor-tp6-youtube-firefox'],
+    ['Firefox', 'Tp6: Google', 'raptor-tp6-google-firefox'],
+    ['Firefox', 'Tp6: Imdb', 'raptor-tp6-imdb-firefox'],
+    ['Firefox', 'Tp6: Imgur', 'raptor-tp6-imgur-firefox'],
+    ['Firefox', 'Tp6: Wikia', 'raptor-tp6-wikia-firefox'],
+    ['Firefox', 'Tp6: Bing', 'raptor-tp6-bing-firefox'],
+    ['Firefox', 'Tp6: Yandex', 'raptor-tp6-yandex-firefox'],
+    ['Firefox', 'Tp6: Apple', 'raptor-tp6-apple-firefox'],
+    ['Firefox', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
+    ['Firefox', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
+
+    ['Chrome', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
+    ['Chrome', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
+    ['Chrome', 'Tp6: Google', 'raptor-tp6-google-chrome'],
+    ['Chrome', 'Tp6: YouTube', 'raptor-tp6-youtube-chrome'],
+    ['Chrome', 'Tp6: Imdb', 'raptor-tp6-imdb-chrome'],
+    ['Chrome', 'Tp6: Imgur', 'raptor-tp6-imgur-chrome'],
+    ['Chrome', 'Tp6: Wikia', 'raptor-tp6-wikia-chrome'],
+    ['Chrome', 'Tp6: Bing', 'raptor-tp6-bing-chrome'],
+    ['Chrome', 'Tp6: Yandex', 'raptor-tp6-yandex-chrome'],
+    ['Chrome', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
+    ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
+    ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
+  ],
+};
+
+// ALL PAGE COMBINATIONS
+const TP6_PAGES = frum(SUITES.data)
+  .map(row => zipObject(SUITES.header, row))
+  .join('browser', PLATFORMS, 'browser')
+  .toArray();
+export { CONFIG, PLATFORMS, TP6_PAGES };
