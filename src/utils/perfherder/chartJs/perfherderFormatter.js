@@ -12,8 +12,23 @@ const generateInitialOptions = (meta) => {
   return {
     reverse: higherIsBetter,
     scaleLabel: higherIsBetter ? 'Score' : 'Load time',
+    tooltips: {
+      callbacks: {
+        footer: (tooltipItems, data) => {
+          let delta = 0;
+          if (tooltipItems[0].index > 0) {
+            delta = (data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index].y
+              - data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index - 1].y)
+              .toFixed(2);
+            } else {
+              delta = 'n/a';
+            }
+            return `Delta: ${delta}`;
+          },
+        },
+      },
+    };
   };
-};
 
 // This function combines Perfherder series and transforms it into ChartJS formatting
 const perfherderFormatter = (series) => {
