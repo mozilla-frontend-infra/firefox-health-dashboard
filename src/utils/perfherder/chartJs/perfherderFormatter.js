@@ -15,13 +15,11 @@ const generateInitialOptions = (meta) => {
     tooltips: {
       callbacks: {
         footer: (tooltipItems, data) => {
-          let delta = 0;
+          let delta = 'n/a';
           if (tooltipItems[0].index > 0) {
             delta = (data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index].y
               - data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index - 1].y)
               .toFixed(2);
-            } else {
-              delta = 'n/a';
             }
             return `Delta: ${delta}`;
           },
