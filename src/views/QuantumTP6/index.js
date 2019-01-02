@@ -27,22 +27,22 @@ class TP6 extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const state = this.state;
+    const { bits } = this.state;
 
     return (
       <div className={classes.body}>
         <DashboardPage
-          key={state.bits}
+          key={bits}
           title={'TP6'}
-          subtitle={`Page load on ${state.bits} bits`}
+          subtitle={`Page load on ${bits} bits`}
         >
           <Grid container spacing={24}>
             {
               frum(TP6_PAGES)
-                .filter(state)
+                .filter({ bits: bits })
                 .groupBy('title')
                 .map(([series, { title }]) => (
-                  <Grid item xs={6} key={`page_${title}_${state.bits}`} className={classes.chart}>
+                  <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
                       title={title}
                       series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}

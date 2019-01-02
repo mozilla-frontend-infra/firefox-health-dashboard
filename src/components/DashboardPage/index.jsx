@@ -8,15 +8,13 @@ const styles = {
     flex: '1',
     flexDirection: 'column',
     backgroundColor: 'white',
-    padding: '2rem',
   },
   title: {
     color: 'white',
     backgroundColor: 'black',
     borderBottom: '1px solid #fff',
-    textAlign: 'center',
     fontWeight: 100,
-    padding: '0.4rem 0 0 0',
+    padding: '0.4rem 0 0 1rem',
   },
   subtitle: {
     color: '#d1d2d3',
