@@ -29,8 +29,9 @@ const generateBugzillaUrls = async (queries, includeBugCount) => (
                 url: generateBugzillaUrl(parameters),
             };
             if (includeBugCount) {
-                const { bugs } = await queryBugzilla(parameters);
-                urlInfo.bugCount = bugs.length;
+                parameters.count_only = 1;
+                const { bug_count } = await queryBugzilla(parameters);
+                urlInfo.bugCount = bug_count;
             }
             return urlInfo;
         }))
