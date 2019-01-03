@@ -1,4 +1,3 @@
-/* global fetch */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
@@ -6,7 +5,6 @@ import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
-import SETTINGS from '../settings';
 import { quantum32QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG } from './config';
@@ -17,20 +15,6 @@ export default class QuantumIndex32 extends React.Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
-    this.fetchNotes();
-  }
-
-  state = {
-    notes: {},
-  };
-
-  async fetchNotes() {
-    try {
-      const notes = await (await fetch(`${SETTINGS.backend}/api/perf/notes`)).json();
-      this.setState({ notes });
-    } catch (e) {
-      console.warn('Failed to fetch notes.');
-    }
   }
 
   render() {

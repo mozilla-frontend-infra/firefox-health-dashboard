@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="DashboardPage-root-2"
+>
+  <div
+    className="DashboardPage-title-3"
+  >
+    <h1>
+      Firefox health
+      <small
+        className="DashboardPage-subtitle-4"
+      >
+        Tracking metrics for Firefox products
+      </small>
+    </h1>
+  </div>
+  <div
+    className="Home-links-1"
+  >
+    <a
+      href="/android"
+      onClick={[Function]}
+    >
+      Android
+    </a>
+    <a
+      href="/quantum/32"
+      onClick={[Function]}
+    >
+      Quantum 32bit
+    </a>
+    <a
+      href="/quantum/64"
+      onClick={[Function]}
+    >
+      Quantum 64bit
+    </a>
+    <a
+      href="/js-team"
+      onClick={[Function]}
+    >
+      JS team
+    </a>
+  </div>
+</div>
+`;
