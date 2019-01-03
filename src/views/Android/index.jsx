@@ -20,7 +20,7 @@ class Android extends Component {
               {
                 text: 'Open P1 bugs',
                 parameters: {
-                  component: 'GeckoView',
+                  product: 'GeckoView',
                   resolution: '---',
                   priority: ['P1'],
                 },
@@ -28,7 +28,7 @@ class Android extends Component {
               {
                 text: 'Open P2/P3 bugs',
                 parameters: {
-                  component: 'GeckoView',
+                  product: 'GeckoView',
                   resolution: '---',
                   priority: ['P2', 'P3'],
                 },
@@ -40,7 +40,7 @@ class Android extends Component {
               {
                 label: 'P1 bugs',
                 parameters: {
-                  component: 'GeckoView',
+                  product: 'GeckoView',
                   resolution: ['---', 'FIXED'],
                   priority: ['P1'],
                 },
@@ -48,7 +48,7 @@ class Android extends Component {
               {
                 label: 'P2/P3 bugs',
                 parameters: {
-                  component: 'GeckoView',
+                  product: 'GeckoView',
                   resolution: ['---', 'FIXED'],
                   priority: ['P2', 'P3'],
                 },

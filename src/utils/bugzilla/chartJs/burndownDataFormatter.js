@@ -40,7 +40,7 @@ const bugsByCreationDate = (bugs, startDate) => {
     // This guarantees that the line goes all the way to the end of the graph
     const today = new Date();
     const todaysDate = `${today.getUTCFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-    if (lastDataPoint.x !== todaysDate) {
+    if (lastDataPoint && lastDataPoint.x !== todaysDate) {
         accumulatedCount.push({ x: todaysDate, y: count });
     }
 
