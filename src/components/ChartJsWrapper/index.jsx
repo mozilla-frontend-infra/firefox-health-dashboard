@@ -11,9 +11,12 @@ const styles = {
       width: '600px',
       // Do not let it squeeze too much and deform
       minWidth: '400px',
+      background: 'white',
     },
     title: {
-      margin: '0.1rem 0 0 0',
+      color: 'white',
+      backgroundColor: 'black',
+      padding: '.3rem .3rem .3rem .3rem',
     },
 };
 
