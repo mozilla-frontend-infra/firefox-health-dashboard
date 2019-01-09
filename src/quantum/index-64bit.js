@@ -5,20 +5,30 @@ import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
 import TelemetryContainer from '../telemetry/graph';
-import { quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
+import { quantum32QueryParams, quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
-export default class QuantumIndex64 extends React.Component {
+export default class QuantumIndex extends React.Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
   }
 
   render() {
+    // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
+    const defaultBits = 64;
     const { full } = parse(this.props.location.search);
+    const { location } = this.props;
+    const params = new URLSearchParams(location.search);
+    const bits = params.get('bits') || defaultBits;
+    const quantumQueryParams = bits === '32' ? quantum32QueryParams : quantum64QueryParams;
+    const platform = bits === '32' ? 'windows7-32' : 'windows10-64';
+    const nightlyPlatform = bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
+    const regressionConfig = bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
+
 
     const sections = wrapSectionComponentsWithErrorBoundaries([
       {
@@ -34,7 +44,7 @@ export default class QuantumIndex64 extends React.Component {
             keys={flowGraphProps.keys}
             width={flowGraphProps.width}
             height={flowGraphProps.height}
-            link='/quantum/64/bugs'
+            link={`/quantum/${bits}/bugs`}
           />,
           <Countdown />]],
       },
@@ -42,13 +52,13 @@ export default class QuantumIndex64 extends React.Component {
         title: 'Benchmarks',
         rows: [
           [
-            CONFIG.windows64Regression[0].map(config => (
+            regressionConfig[0].map(config => (
               <Perfherder
                 {...config}
                 key={config.title}
               />
             )),
-            CONFIG.windows64Regression[1].map(config => (
+            regressionConfig[1].map(config => (
               <Perfherder
                 {...config}
                 key={config.title}
@@ -63,7 +73,7 @@ export default class QuantumIndex64 extends React.Component {
                   label: 'Firefox',
                   seriesConfig: {
                     frameworkId: 10,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-speedometer-firefox',
@@ -73,7 +83,7 @@ export default class QuantumIndex64 extends React.Component {
                   label: 'Chrome',
                   seriesConfig: {
                     frameworkId: 10,
-                    platform: 'windows10-64-nightly',
+                    platform: nightlyPlatform,
                     option: 'opt',
                     project: 'mozilla-central',
                     suite: 'raptor-speedometer-chrome',
@@ -97,7 +107,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tp5o',
@@ -115,7 +125,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tpaint',
@@ -131,7 +141,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'sessionrestore',
@@ -149,7 +159,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'sessionrestore_no_auto_restore',
@@ -165,7 +175,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'ts_paint',
@@ -183,7 +193,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tabpaint',
@@ -199,7 +209,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tart',
@@ -217,7 +227,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tps',
@@ -233,7 +243,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tsvg_static',
@@ -251,7 +261,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tsvgr_opacity',
@@ -267,7 +277,7 @@ export default class QuantumIndex64 extends React.Component {
                   seriesConfig: {
                     extraOptions: ['e10s', 'stylo'],
                     frameworkId: 1,
-                    platform: 'windows10-64',
+                    platform: platform,
                     option: 'pgo',
                     project: 'mozilla-central',
                     suite: 'tsvgx',
@@ -287,13 +297,13 @@ export default class QuantumIndex64 extends React.Component {
               key='winOpen'
               id='winOpen'
               title='Window open'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='tabSwitch'
               id='tabSwitch'
               title='Tab switch'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -301,13 +311,13 @@ export default class QuantumIndex64 extends React.Component {
               key='tabClose'
               id='tabClose'
               title='Tab close'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='firstPaint'
               id='firstPaint'
               title='First paint'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -315,13 +325,13 @@ export default class QuantumIndex64 extends React.Component {
               key='sessionRestoreWindow'
               id='sessionRestoreWindow'
               title='Session Restore Window ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='sessionRestoreStartupInit'
               id='sessionRestoreStartupInit'
               title='Session Restore Startup Init ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -329,13 +339,13 @@ export default class QuantumIndex64 extends React.Component {
               key='sessionRestoreStartupOnload'
               id='sessionRestoreStartupOnload'
               title='Session Restore Startup Onload ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='tabSwitchUpdate'
               id='tabSwitchUpdate'
               title='Tab Switch Update ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -343,13 +353,13 @@ export default class QuantumIndex64 extends React.Component {
               key='gcAnimation'
               id='gcAnimation'
               title='GC Animation ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='gpuProcessInit'
               id='gpuProcessInit'
               title='GPU Process Initialization ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -357,13 +367,13 @@ export default class QuantumIndex64 extends React.Component {
               key='gpuProcessLaunch'
               id='gpuProcessLaunch'
               title='GPU Process Launch ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='inputEventCoalesced'
               id='inputEventCoalesced'
               title='Input Event Response Coalesced ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -371,13 +381,13 @@ export default class QuantumIndex64 extends React.Component {
               key='networkCacheHit'
               id='networkCacheHit'
               title='Network Cache Hit ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='networkCacheMiss'
               id='networkCacheMiss'
               title='Network Cache Miss ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -385,13 +395,13 @@ export default class QuantumIndex64 extends React.Component {
               key='placesAutocomplete'
               id='placesAutocomplete'
               title='Places Autocomplete 6  First Results ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='searchServiceInit'
               id='searchServiceInit'
               title='Search Service Init ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -399,13 +409,13 @@ export default class QuantumIndex64 extends React.Component {
               key='timeToDomComplete'
               id='timeToDomComplete'
               title='Time to DOM Complete ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='timeToDomInteractive'
               id='timeToDomInteractive'
               title='Time to DOM Interactive ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -413,13 +423,13 @@ export default class QuantumIndex64 extends React.Component {
               key='timeToDomLoading'
               id='timeToDomLoading'
               title='Time to DOM Loading ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='timeToFirstInteraction'
               id='timeToFirstInteraction'
               title='Time to First Interaction ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -427,13 +437,13 @@ export default class QuantumIndex64 extends React.Component {
               key='timeToNonBlankPaint'
               id='timeToNonBlankPaint'
               title='Time to Non Blank Paint ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='timeToResponseStart'
               id='timeToResponseStart'
               title='Time to Response Start ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -441,13 +451,13 @@ export default class QuantumIndex64 extends React.Component {
               key='webextBackgroundPageLoad'
               id='webextBackgroundPageLoad'
               title='Webext Background Page Load ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='webextContentScriptInjection'
               id='webextContentScriptInjection'
               title='Webext Content Script Injection ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -455,13 +465,13 @@ export default class QuantumIndex64 extends React.Component {
               key='webextExtensionStartup'
               id='webextExtensionStartup'
               title='Webext Extension Startup ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='timeToLoadEventEnd'
               id='timeToLoadEventEnd'
               title='Time to Load Event End ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -469,13 +479,13 @@ export default class QuantumIndex64 extends React.Component {
               key='timeToDomContentLoadedEnd'
               id='timeToDomContentLoadedEnd'
               title='Time to DOM Content Loaded End ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='contentPaintTime'
               id='contentPaintTime'
               title='Content Paint Time ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -483,13 +493,13 @@ export default class QuantumIndex64 extends React.Component {
               key='pageLoad'
               id='pageLoad'
               title='FX Page Load ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='simpleSessionRestored'
               id='simpleSessionRestored'
               title='Simple Measures Session Restored ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
           [
@@ -497,13 +507,13 @@ export default class QuantumIndex64 extends React.Component {
               key='scalarFirstPaint'
               id='scalarFirstPaint'
               title='Scalars Timestamp - First Paint ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
             <TelemetryContainer
               key='timeToFirstScroll'
               id='timeToFirstScroll'
               title='Time to First Scroll ms'
-              queryParams={quantum64QueryParams}
+              queryParams={quantumQueryParams}
             />,
           ],
         ],
@@ -580,6 +590,6 @@ More data on
   }
 }
 
-QuantumIndex64.propTypes = {
+QuantumIndex.propTypes = {
   location: PropTypes.object,
 };

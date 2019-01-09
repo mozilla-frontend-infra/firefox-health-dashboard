@@ -2,11 +2,11 @@ import lodashGroupBy from 'lodash/groupBy';
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import lodashFilter from 'lodash/filter';
-import toPairs from 'lodash/toPairs';
+import lodashToPairs from 'lodash/toPairs';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
-import fromPairs from 'lodash/fromPairs';
+import lodashFromPairs from 'lodash/fromPairs';
 
 class Wrapper {
   constructor(list) {
@@ -16,12 +16,25 @@ class Wrapper {
   toArray() {
     return this.list;
   }
+
+  fromPairs() {
+    return lodashFromPairs(this.list);
+  }
+
 }
+
+const toPairs = (obj) => {
+  return new Wrapper(lodashToPairs(obj));
+};
+
+const frum = (list) => {
+  return new Wrapper(list);
+};
 
 
 // Add a chainable method to Wrapper
 const extend_wrapper = (methods) => {
-  toPairs(methods).forEach(([name, method]) => {
+  lodashToPairs(methods).forEach(([name, method]) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
       this.list = method(this.list, ...args);
@@ -31,20 +44,14 @@ const extend_wrapper = (methods) => {
 };
 
 
-const frum = (list) => {
-  return new Wrapper(list);
-};
-
-
 extend_wrapper({
   map: map,
   lodashFilter: lodashFilter,
   flatten: flatten,
-  toPairs: toPairs,
+  toPairs: lodashToPairs,
   chunk: chunk,
   unzip: unzip,
   sortBy: sortBy,
-  fromPairs: fromPairs,
   lodashGroupBy: lodashGroupBy,
 });
 
@@ -77,7 +84,7 @@ extend_wrapper({
         if (typeof col_name === 'string') {
           return [[col_name, selector(col_name)]];
         }
-        return toPairs(col_name).map(([name, value]) => [name, selector(value)]);
+        return lodashToPairs(col_name).map(([name, value]) => [name, selector(value)]);
       })
       .flatten()
       .sortBy(([col_name]) => col_name)
@@ -86,7 +93,7 @@ extend_wrapper({
     const output = {};
     let i = 0;
     list.forEach((row) => {
-      const key = fromPairs(cs.map(([name, func]) => [name, func(row)]));
+      const key = lodashFromPairs(cs.map(([name, func]) => [name, func(row)]));
       const skey = JSON.stringify(key);
 
       let triple = output[skey];
@@ -116,7 +123,7 @@ extend_wrapper({
   // return only matching rows
   filter: function filter(list, expression) {
     const func = (row) => {
-      for (const [name, value] of toPairs(expression)) {
+      for (const [name, value] of lodashToPairs(expression)) {
         if (row[name] !== value) return false;
       }
       return true;
@@ -124,6 +131,7 @@ extend_wrapper({
 
     return lodashFilter(list, func);
   },
+
 });
 
-export default frum;
+export { frum, toPairs };
