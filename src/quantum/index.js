@@ -23,7 +23,7 @@ export default class QuantumIndex extends React.Component {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
     const defaultBits = '32';
     const { full } = parse(this.props.location.search);
-    const {location, match: {params}} = this.props;
+    const { location, match: { params } } = this.props;
     const urlParams = new URLSearchParams(location.search);
     const bits = urlParams.get('bits') || params.bits;
     const quantumQueryParams = bits === '32' ? quantum32QueryParams : quantum64QueryParams;

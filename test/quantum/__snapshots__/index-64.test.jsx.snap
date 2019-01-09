@@ -42,7 +42,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="/quantum/32/bugs"
+                  href="/quantum/64/bugs"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -149,7 +149,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2Cf90f8f88d6397a66fb9a586ddf19064f41ee3ce3%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2Cb7794dcfc9a7522e7c1615e4a59b13ee86c0d7a6%2C1%2C1%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -166,7 +166,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows7-32/motionmark_htmlsuite"
+                  href="/quantum/windows10-64/motionmark_htmlsuite"
                   onClick={[Function]}
                 >
                   Breakdown
@@ -211,7 +211,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C4bbe842bb4e492b5f546291db455660287d10d84%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2Cb34709c79b6de3d4e1a260a60da9717f20163d66%2C1%2C1%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -228,7 +228,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows7-32/motionmark_animometer"
+                  href="/quantum/windows10-64/motionmark_animometer"
                   onClick={[Function]}
                 >
                   Breakdown
@@ -273,7 +273,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C9585321f110f16414e272956c8892a38d03e7797%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C22a0985bd873492d70d49c335a21fd49a73c87cf%2C1%2C1%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -290,7 +290,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows7-32/ARES6"
+                  href="/quantum/windows10-64/ARES6"
                   onClick={[Function]}
                 >
                   Breakdown
@@ -335,7 +335,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C95535e0278558bd59ae324920ca0469278faadb4%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C799db0d801c7248924e93ca5a0b770020498da69%2C1%2C1%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -352,7 +352,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows7-32/JetStream"
+                  href="/quantum/windows10-64/JetStream"
                   onClick={[Function]}
                 >
                   Breakdown

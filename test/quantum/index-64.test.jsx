@@ -6,7 +6,7 @@ import Quantum from '../../src/quantum/index';
 it('renders correctly', () => {
   const tree = renderer.create((
     <BrowserRouter>
-      <Quantum location={{ pathname: '/quantum/64' }} params={{ match: { bits: 64 } }} />
+      <Quantum location={{ pathname: '/quantum/64' }} match={{ params: { bits: 64 } }} />
     </BrowserRouter>
   )).toJSON();
   expect(tree).toMatchSnapshot();
