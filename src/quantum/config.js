@@ -1,5 +1,5 @@
 import zipObject from 'lodash/zipObject';
-import frum from '../utils/queryOps';
+import { frum } from '../utils/queryOps';
 
 
 const CONFIG = {
@@ -34,34 +34,30 @@ const CONFIG = {
     ],
   ],
   windows32Regression: [
-    [
-      {
-        title: 'MotionMark HTML suite',
-        secondLink: '/quantum/windows7-32/motionmark_htmlsuite',
-        secondTitle: 'Breakdown',
-        signatures: { 'windows7-32': 'f90f8f88d6397a66fb9a586ddf19064f41ee3ce3' },
-      },
-      {
-        title: 'MotionMark Animometer',
-        secondLink: '/quantum/windows7-32/motionmark_animometer',
-        secondTitle: 'Breakdown',
-        signatures: { 'windows7-32': '4bbe842bb4e492b5f546291db455660287d10d84' },
-      },
-    ],
-    [
-      {
-        title: 'ARES6',
-        secondLink: '/quantum/windows7-32/ARES6',
-        secondTitle: 'Breakdown',
-        signatures: { 'windows7-32': '9585321f110f16414e272956c8892a38d03e7797' },
-      },
-      {
-        title: 'JetStream',
-        secondLink: '/quantum/windows7-32/JetStream',
-        secondTitle: 'Breakdown',
-        signatures: { 'windows7-32': '95535e0278558bd59ae324920ca0469278faadb4' },
-      },
-    ],
+    {
+      title: 'MotionMark HTML suite',
+      secondLink: '/quantum/windows7-32/motionmark_htmlsuite',
+      secondTitle: 'Breakdown',
+      signatures: { 'windows7-32': 'f90f8f88d6397a66fb9a586ddf19064f41ee3ce3' },
+    },
+    {
+      title: 'MotionMark Animometer',
+      secondLink: '/quantum/windows7-32/motionmark_animometer',
+      secondTitle: 'Breakdown',
+      signatures: { 'windows7-32': '4bbe842bb4e492b5f546291db455660287d10d84' },
+    },
+    {
+      title: 'ARES6',
+      secondLink: '/quantum/windows7-32/ARES6',
+      secondTitle: 'Breakdown',
+      signatures: { 'windows7-32': '9585321f110f16414e272956c8892a38d03e7797' },
+    },
+    {
+      title: 'JetStream',
+      secondLink: '/quantum/windows7-32/JetStream',
+      secondTitle: 'Breakdown',
+      signatures: { 'windows7-32': '95535e0278558bd59ae324920ca0469278faadb4' },
+    },
   ],
 
 };
