@@ -32,7 +32,7 @@ export default class QuantumIndex extends React.Component {
     const regressionConfig = bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
 
 
-    const sections = ([
+    const sections = wrapSectionComponentsWithErrorBoundaries([
       {
         title: 'Overview',
         cssRowExtraClasses: 'generic-metrics-graphics',
