@@ -16,14 +16,18 @@ export default class TelemetryContainer extends React.Component {
       name: id,
       ...queryParams,
     });
-    const { graphData, telemetryUrl } = await (
-      await fetch(url)).json();
-    if (!this.graphTitleLink) {
-      return;
+    try {
+      const { graphData, telemetryUrl } = await (
+        await fetch(url)).json();
+      if (!this.graphTitleLink) {
+        return;
+      }
+      this.graphTitleLink.setAttribute('href', telemetryUrl);
+      this.graphSubtitleEl.textContent = graphData.description;
+      this.graphEvolutionsTimeline(graphData, this.graphEl);
+    } catch (error) {
+      console.error(error.message);
     }
-    this.graphTitleLink.setAttribute('href', telemetryUrl);
-    this.graphSubtitleEl.textContent = graphData.description;
-    this.graphEvolutionsTimeline(graphData, this.graphEl);
   }
 
   graphEvolutionsTimeline({
