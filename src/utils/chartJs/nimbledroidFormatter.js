@@ -1,4 +1,4 @@
-import generateLineChartStyles from './generateLineChartStyles';
+import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
 
 const dataToChartJSformat = data => (
@@ -12,7 +12,7 @@ const nimbledroidFormatter = ({ data }) => ({
     datasets: Object.keys(data).map((packageId, index) => ({
         data: dataToChartJSformat(data[packageId]),
         label: packageId,
-        ...generateLineChartStyles(SETTINGS.colors[index]),
+        ...generateDatasetStyle(SETTINGS.colors[index]),
     })),
 });
 
