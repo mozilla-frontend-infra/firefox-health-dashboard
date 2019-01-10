@@ -66,10 +66,14 @@ const chartJsFormatter = (bugSeries, startDate) => {
 // It formats the data and options to meet chartJs' data structures
 const getBugsData = async (queries = [], startDate) => {
     const data = await Promise.all(
-        queries.map(async ({ label, parameters }) => ({
-            label,
-            ...(await queryBugzilla(parameters)),
-        })));
+        queries.map(async ({ label, parameters }) => {
+            // This speeds up and the size of the call to Bugzilla
+            parameters.include_fields = ['cf_last_resolved', 'creation_time'];
+            return ({
+                label,
+                ...(await queryBugzilla(parameters)),
+            });
+        }));
     return chartJsFormatter(data, startDate);
 };
 
