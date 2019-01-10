@@ -197,3 +197,7 @@ Sample code:
   ]}
 />
 ```
+
+## Credit
+
+[![Netlify](https://www.netlify.com/img/global/badges/netlify-color-accent.svg)](https://www.netlify.com)
