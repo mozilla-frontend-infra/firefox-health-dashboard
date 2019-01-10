@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   root: {
     display: 'flex',
-    flex: '1',
     flexDirection: 'column',
-    backgroundColor: 'white',
   },
   title: {
     color: 'white',
@@ -32,7 +30,7 @@ const DashboardPage = ({ classes, children, title, subtitle }) => (
         <small className={classes.subtitle}>{subtitle}</small>
       </h1>
     </div>
-    {children}
+    <Fragment>{children}</Fragment>
   </div>
 );
 

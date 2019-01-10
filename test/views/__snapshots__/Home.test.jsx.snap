@@ -2,22 +2,22 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="DashboardPage-root-2"
+  className="DashboardPage-root-4 Home-root-1"
 >
   <div
-    className="DashboardPage-title-3"
+    className="DashboardPage-title-5"
   >
     <h1>
       Firefox health
       <small
-        className="DashboardPage-subtitle-4"
+        className="DashboardPage-subtitle-6"
       >
         Tracking metrics for Firefox products
       </small>
     </h1>
   </div>
   <div
-    className="Home-links-1"
+    className="Home-links-2"
   >
     <a
       href="/android"
@@ -42,6 +42,18 @@ exports[`renders correctly 1`] = `
       onClick={[Function]}
     >
       JS team
+    </a>
+  </div>
+  <div
+    className="Home-netlify-3"
+  >
+    <a
+      href="https://www.netlify.com"
+    >
+      <img
+        alt="Netlify"
+        src="https://www.netlify.com/img/global/badges/netlify-dark.svg"
+      />
     </a>
   </div>
 </div>
