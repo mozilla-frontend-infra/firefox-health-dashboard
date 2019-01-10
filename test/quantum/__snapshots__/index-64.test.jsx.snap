@@ -394,6 +394,41 @@ exports[`renders correctly 1`] = `
               Speedometer
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -445,6 +480,41 @@ exports[`renders correctly 1`] = `
               Page load (tp5)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -458,6 +528,41 @@ exports[`renders correctly 1`] = `
               Window Opening (tpaint e10s)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -471,6 +576,41 @@ exports[`renders correctly 1`] = `
               Start-up (sessionrestore)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -484,6 +624,41 @@ exports[`renders correctly 1`] = `
               Start-up (sessionrestore_no_auto_restore)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -497,6 +672,41 @@ exports[`renders correctly 1`] = `
               Start-Up (ts_paint)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -510,6 +720,41 @@ exports[`renders correctly 1`] = `
               Tab Opening (tabpaint)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -523,6 +768,41 @@ exports[`renders correctly 1`] = `
               Tab Animation (TART)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -536,6 +816,41 @@ exports[`renders correctly 1`] = `
               Tab Switch (tps)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -549,6 +864,41 @@ exports[`renders correctly 1`] = `
               SVG (tsvg_static)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -562,6 +912,41 @@ exports[`renders correctly 1`] = `
               SVG (tsvgr_opacity)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -575,6 +960,41 @@ exports[`renders correctly 1`] = `
               SVG (tsvgx)
             </span>
           </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "8rem",
+                "textAlign": "center",
+                "width": "8rem",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-110"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>

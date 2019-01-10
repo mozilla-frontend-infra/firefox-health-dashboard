@@ -1,5 +1,5 @@
 import { parse } from 'query-string';
-import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
+import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
 
 const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
@@ -39,7 +39,7 @@ const perfherderFormatter = (series) => {
   series.forEach(({ color, data, label, perfherderUrl }, index) => {
     if (data) {
       newData.data.datasets.push({
-        ...generateLineChartStyles(color || SETTINGS.colors[index]),
+        ...generateDatasetStyle(color || SETTINGS.colors[index]),
         label,
         data: dataToChartJSformat(data),
       });

@@ -1,4 +1,4 @@
-import generateLineChartStyles from './generateLineChartStyles';
+import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
 
 const sortByDate = (a, b) => {
@@ -29,7 +29,7 @@ const redashFormatter = (data, dataKeyIdentifier) => {
       const datum = buckets[key];
       return {
         label: key,
-        ...generateLineChartStyles(SETTINGS.colors[index]),
+        ...generateDatasetStyle(SETTINGS.colors[index]),
         data: dataToChartJSformat(datum.sort(sortByDate)),
       };
     });

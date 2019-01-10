@@ -37,13 +37,13 @@ class NimbledroidGraphContainer extends Component {
     const { scenarioName } = this.props;
     const { data } = this.state;
 
-    return data ? (
+    return (
       <ChartJsWrapper
         data={data}
         options={{ scaleLabel: 'Seconds' }}
         title={scenarioName}
       />
-    ) : <div />;
+    );
   }
 }
 
