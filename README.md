@@ -63,8 +63,8 @@ containers. Read below for some documented containers.
 
 NOTE: The `title` parameter is optional and it is available to most containers.
 
-## BugzillaBurndown
-Link to [source code](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/src/containers/BugzillaBurndown/index.jsx).
+## BugzillaGraph
+Link to [source code](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/src/containers/BugzillaGraph/index.jsx).
 
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/44410/48093030-369b4400-e1dc-11e8-9da5-a481ce158809.png">
 
@@ -81,7 +81,7 @@ NOTE: This is the slowest container you will encounter as querying Bugzilla's AP
 
 Sample code:
 ```javascript
-<BugzillaBurndown
+<BugzillaGraph
   queries={[
     {
       label: 'Open P1 bugs',

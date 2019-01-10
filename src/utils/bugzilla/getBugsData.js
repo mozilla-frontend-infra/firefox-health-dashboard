@@ -1,5 +1,6 @@
-import generateLineChartStyles from '../../chartJs/generateLineChartStyles';
-import SETTINGS from '../../../settings';
+import queryBugzilla from './queryBugzilla';
+import generateLineChartStyles from '../chartJs/generateLineChartStyles';
+import SETTINGS from '../../settings';
 
 const newDate = (datetime, startDate) => {
     const onlyDate = datetime.substring(0, 10);
@@ -47,7 +48,7 @@ const bugsByCreationDate = (bugs, startDate) => {
     return accumulatedCount;
 };
 
-const burndownDataFormatter = (bugSeries, startDate) => {
+const chartJsFormatter = (bugSeries, startDate) => {
     const newData = { data: { datasets: [] } };
 
     bugSeries.forEach(({ bugs, label }, index) => {
@@ -62,4 +63,14 @@ const burndownDataFormatter = (bugSeries, startDate) => {
   return newData;
 };
 
-export default burndownDataFormatter;
+// It formats the data and options to meet chartJs' data structures
+const getBugsData = async (queries = [], startDate) => {
+    const data = await Promise.all(
+        queries.map(async ({ label, parameters }) => ({
+            label,
+            ...(await queryBugzilla(parameters)),
+        })));
+    return chartJsFormatter(data, startDate);
+};
+
+export default getBugsData;
