@@ -576,7 +576,7 @@ export default class QuantumIndex extends React.Component {
             <strong>https://health.graphics/quantum</strong>
             {'. Ask questions in'}
             <strong>#quantum</strong>
-            {' IRC & Slack'}
+            {' (IRC & Slack)'}
           </h2>
         </DashboardPage>
       );
