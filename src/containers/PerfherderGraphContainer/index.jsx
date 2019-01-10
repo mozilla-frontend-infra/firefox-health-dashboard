@@ -11,6 +11,7 @@ const styles = () => ({
     fontSize: '1rem',
     backgroundColor: '#d1d2d3',
     padding: '.2rem .3rem .3rem .3rem',
+    margin: '0 1rem 0 0',
   },
   linkIcon: {
     marginLeft: '0.2rem',
@@ -45,13 +46,11 @@ class PerfherderGraphContainer extends Component {
                 </a>
               )}
             </h2>
-            {data && (
-              <ChartJsWrapper
-                type='line'
-                data={data}
-                options={options}
-              />
-            )}
+            <ChartJsWrapper
+              type='line'
+              data={data}
+              options={options}
+            />
           </div>
         );
     }

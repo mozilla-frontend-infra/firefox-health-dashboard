@@ -69,14 +69,12 @@ class RedashContainer extends Component {
     const { datasets } = this.state;
     return (
       <div>
-        {datasets && (
-          <ChartJsWrapper
-            title={title}
-            type='line'
-            data={datasets}
-            options={options}
-          />
-        )}
+        <ChartJsWrapper
+          title={title}
+          type='line'
+          data={datasets}
+          options={options}
+        />
         <div className={classes.linkContainer}>
           <a href={redashQueryUrl} target='_blank' rel='noopener noreferrer'>
             <span className={classes.middleVerticalAlignment}>Redash query</span>

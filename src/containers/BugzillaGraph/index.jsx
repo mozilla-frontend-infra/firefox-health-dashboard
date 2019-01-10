@@ -25,13 +25,13 @@ class BugzillaGraph extends Component {
         const { data } = this.state;
         const { title } = this.props;
 
-        return data ? (
+        return (
           <ChartJsWrapper
             data={data}
             options={{ scaleLabel: 'Number of bugs' }}
             title={title}
           />
-        ) : <div />;
+        );
     }
 }
 
