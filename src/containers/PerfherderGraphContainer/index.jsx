@@ -10,8 +10,7 @@ const styles = () => ({
     color: '#56565a',
     fontSize: '1rem',
     backgroundColor: '#d1d2d3',
-    padding: '0 0 0 0.1rem',
-    // padding: '.2rem .3rem .3rem .3rem',
+    padding: '.2rem .3rem .3rem .3rem',
   },
   linkIcon: {
     marginLeft: '0.2rem',

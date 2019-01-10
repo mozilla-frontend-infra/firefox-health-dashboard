@@ -23,7 +23,6 @@ exports[`renders correctly 1`] = `
       <span>
          
         Overview
-         
       </span>
        
     </h2>
@@ -130,7 +129,6 @@ exports[`renders correctly 1`] = `
       <span>
          
         Benchmarks
-         
       </span>
        
     </h2>
@@ -406,8 +404,30 @@ exports[`renders correctly 1`] = `
     >
       <span>
          
-        Performance Tests
+        Page Load tests (TP6)
+        <span>
+           (
+          <a
+            href="/quantum/tp6?bits=64"
+          >
+            more
+          </a>
+          )
+        </span>
+      </span>
+       
+    </h2>
+    <div
+      className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
+    />
+  </div>
+  <div>
+    <h2
+      className="section-header"
+    >
+      <span>
          
+        Performance Tests
       </span>
        
     </h2>
@@ -566,7 +586,6 @@ exports[`renders correctly 1`] = `
       <span>
          
         Performance Metrics
-         
       </span>
        
     </h2>

@@ -6,6 +6,7 @@ import lodashToPairs from 'lodash/toPairs';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
+import lodashTake from 'lodash/take';
 import lodashFromPairs from 'lodash/fromPairs';
 
 class Wrapper {
@@ -44,6 +45,7 @@ const extend_wrapper = (methods) => {
 };
 
 
+// Add Lodash functions
 extend_wrapper({
   map: map,
   lodashFilter: lodashFilter,
@@ -53,6 +55,7 @@ extend_wrapper({
   unzip: unzip,
   sortBy: sortBy,
   lodashGroupBy: lodashGroupBy,
+  limit: lodashTake,
 });
 
 
@@ -131,6 +134,7 @@ extend_wrapper({
 
     return lodashFilter(list, func);
   },
+
 
 });
 
