@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import getBurndownData from '../../utils/bugzilla/chartJs/getBurndownData';
+import getBugsData from '../../utils/bugzilla/getBugsData';
 
-class BugzillaBurndown extends Component {
+class BugzillaGraph extends Component {
     state = {
         data: null,
     };
@@ -15,7 +15,7 @@ class BugzillaBurndown extends Component {
 
     async fetchData({ handleError, queries, startDate }) {
         try {
-            this.setState(await getBurndownData(queries, startDate));
+            this.setState(await getBugsData(queries, startDate));
         } catch (error) {
             handleError(error);
         }
@@ -35,7 +35,7 @@ class BugzillaBurndown extends Component {
     }
 }
 
-BugzillaBurndown.propTypes = {
+BugzillaGraph.propTypes = {
     handleError: PropTypes.func.isRequired,
     queries: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string.isRequired,
@@ -53,4 +53,4 @@ BugzillaBurndown.propTypes = {
     title: PropTypes.string,
 };
 
-export default withErrorBoundary(BugzillaBurndown);
+export default withErrorBoundary(BugzillaGraph);

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
-import BugzillaBurndown from '../../containers/BugzillaBurndown';
+import BugzillaGraph from '../../containers/BugzillaGraph';
 import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
@@ -35,7 +35,7 @@ class Android extends Component {
               },
             ]}
           />
-          <BugzillaBurndown
+          <BugzillaGraph
             queries={[
               {
                 label: 'P1 bugs',
