@@ -1,15 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
-import { toPairs } from '../utils/queryOps';
+import { frum, toPairs } from '../utils/queryOps';
 import TelemetryContainer from '../telemetry/graph';
 import { quantum32QueryParams, quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
 import GraphContainer from '../components/graph-container';
-import { CONFIG } from './config';
+import { CONFIG, TP6_PAGES } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -21,7 +22,6 @@ export default class QuantumIndex extends React.Component {
 
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
-    const defaultBits = '32';
     const { full } = parse(this.props.location.search);
     const { location, match: { params } } = this.props;
     const urlParams = new URLSearchParams(location.search);
@@ -89,183 +89,199 @@ export default class QuantumIndex extends React.Component {
         ],
       },
       {
+        title: 'Page Load tests (TP6)',
+        more: `/quantum/tp6?bits=${bits}`,
+        rows: frum(TP6_PAGES)
+          .filter({ bits: bits })
+          .groupBy('title')
+          .map(([series, { title }]) => (
+            <PerfherderGraphContainer
+              title={title}
+              series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
+            />
+
+          ))
+          .limit(4)
+          .toArray(),
+      },
+      {
         title: 'Performance Tests',
         rows: [
           <PerfherderGraphContainer
             title='Page load (tp5)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tp5o',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tp5o',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Window Opening (tpaint e10s)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tpaint',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tpaint',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Start-up (sessionrestore)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'sessionrestore',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'sessionrestore',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Start-up (sessionrestore_no_auto_restore)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'sessionrestore_no_auto_restore',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'sessionrestore_no_auto_restore',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Start-Up (ts_paint)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'ts_paint',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'ts_paint',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Tab Opening (tabpaint)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tabpaint',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tabpaint',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Tab Animation (TART)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tart',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tart',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='Tab Switch (tps)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tps',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tps',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='SVG (tsvg_static)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvg_static',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvg_static',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='SVG (tsvgr_opacity)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvgr_opacity',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvgr_opacity',
                 },
-              ]}
+              },
+            ]}
           />,
           <PerfherderGraphContainer
             title='SVG (tsvgx)'
             series={[
-                {
-                  label: 'Firefox',
-                  seriesConfig: {
-                    extraOptions: ['e10s', 'stylo'],
-                    frameworkId: 1,
-                    platform: platform,
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'tsvgx',
-                  },
+              {
+                label: 'Firefox',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform: platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tsvgx',
                 },
-              ]}
+              },
+            ]}
           />,
         ],
       },
@@ -465,18 +481,19 @@ export default class QuantumIndex extends React.Component {
             title='Time to First Scroll ms'
             queryParams={quantumQueryParams}
           />,
-          ],
+        ],
       },
     ]);
 
 
-    let reduced = sections.map(({ title, rows, cssRowExtraClasses }, sectionId) => {
+    const reduced = sections.map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
       const statusList = toPairs(statusLabels).map(([key]) => [key, 0]).fromPairs();
 
       const section = (
         <Grid container spacing={24}>
           {
             rows.map((widget, wi) => {
+              // Acumulate the section's status
               if (widget.type.displayName !== 'PerfherderWidget') {
                 statusList[widget.props.status] += 1;
               } else if (widget.props.status === 'red') {
@@ -515,53 +532,67 @@ export default class QuantumIndex extends React.Component {
         })
         .toArray();
 
-      if ((!full || sectionId < 2) && title) {
-        return (
-          <div>
-            <h2 className='section-header' key={sectionId}>
-              <span>
-                {' '}
-                {title}
-                {' '}
-              </span>
+      return (
+        <div>
+          <h2 className='section-header' key={sectionId}>
+            <span>
               {' '}
-              {stati}
-            </h2>
-            {section}
-          </div>
-      );
-      }
-        return null;
+              {title}
+              {(() => {
+                    if (more) {
+                      return (
+                        <span>
+                          {' ('}
+                          {/* <Link to={more}>{'more'}</Link>  THIS DOES NOT WORK, NEED MORE ROUTERS AND STATE-CHANGE TRICKS */}
+                          <a href={more}>{'more'}</a>
+                          {')'}
+                        </span>
+                      );
+                    }
+                    return null;
 
+                  })()}
+            </span>
+            {' '}
+            {stati}
+          </h2>
+          {section}
+        </div>
+      );
 
     });
 
-    if (full) {
-      reduced += (
-        <h2 key='moreData'>
-More data on
-          <strong>https://health.graphics/quantum</strong>
-. Ask questions in
-          <strong>#quantum</strong>
-          {' '}
-(IRC & Slack)
-        </h2>
-);
-    }
-
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
-    return (
-      <DashboardPage
-        title='Quantum'
-        subtitle='Release Criteria Report'
-      >
-        {reduced}
-      </DashboardPage>
-);
+    if (full) {
+      return (
+        <DashboardPage
+          title='Quantum'
+          subtitle='Release Criteria Report'
+        >
+          {frum(reduced).limit(2).toArray()}
+          <h2 key='moreData'>
+            {'More data on'}
+            <strong>https://health.graphics/quantum</strong>
+            {'. Ask questions in'}
+            <strong>#quantum</strong>
+            {' IRC & Slack'}
+          </h2>
+        </DashboardPage>
+      );
+    }
+      return (
+        <DashboardPage
+          title='Quantum'
+          subtitle='Release Criteria Report'
+        >
+          {reduced}
+        </DashboardPage>
+      );
+
   }
 }
 
 QuantumIndex.propTypes = {
-  location: PropTypes.object,
-};
+    location: PropTypes.object,
+  };
