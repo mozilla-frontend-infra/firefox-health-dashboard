@@ -8,10 +8,10 @@ const handleOnClick = (_, items) => {
         // the current tooltip in view has a reference to the last active tooltip
         // eslint-disable-next-line no-underscore-dangle
         Chart.lastClickedDataPoint = items[0]._chart.tooltip._lastActive[0];
-        Chart.helpers.each(Chart.instances, (chartItem) => {
-            chartItem.update();
-        });
     }
+    Chart.helpers.each(Chart.instances, (chartItem) => {
+      chartItem.update();
+  });
 };
 
 const registerPlugin = () => {
