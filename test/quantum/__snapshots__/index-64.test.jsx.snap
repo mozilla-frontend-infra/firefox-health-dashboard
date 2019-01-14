@@ -21,7 +21,6 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
-         
         Overview
       </span>
        
@@ -127,7 +126,6 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
-         
         Benchmarks
       </span>
        
@@ -438,7 +436,6 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
-         
         Page Load tests (TP6)
         <span>
            (
@@ -461,7 +458,6 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
-         
         Performance Tests
       </span>
        
@@ -1004,7 +1000,6 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
-         
         Performance Metrics
       </span>
        
