@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import Quantum64 from '../../src/quantum/index-64bit';
+import Quantum from '../../src/quantum/index';
 
 it('renders correctly', () => {
   const tree = renderer.create((
     <BrowserRouter>
-      <Quantum64 location={{}} />
+      <Quantum location={{ pathname: '/quantum/64' }} match={{ params: { bits: 64 } }} />
     </BrowserRouter>
   )).toJSON();
   expect(tree).toMatchSnapshot();

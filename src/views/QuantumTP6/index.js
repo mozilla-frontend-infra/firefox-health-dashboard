@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import frum from '../../utils/queryOps';
+import { frum } from '../../utils/queryOps';
 import { TP6_PAGES } from '../../quantum/config';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
