@@ -7,8 +7,9 @@ import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderDat
 
 const styles = () => ({
   title: {
-    color: 'white',
-    backgroundColor: 'black',
+    color: '#56565a',
+    fontSize: '1rem',
+    backgroundColor: '#d1d2d3',
     padding: '.2rem .3rem .3rem .3rem',
   },
   linkIcon: {
