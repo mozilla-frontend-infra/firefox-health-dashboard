@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
@@ -530,31 +529,22 @@ export default class QuantumIndex extends React.Component {
           return null;
 
         })
-        .toArray();
+        .toArray().filter(Boolean);
 
       return (
         <div>
           <h2 className='section-header' key={sectionId}>
             <span>
-              {' '}
-              {title}
-              {(() => {
-                    if (more) {
-                      return (
-                        <span>
-                          {' ('}
-                          {/* <Link to={more}>{'more'}</Link>  THIS DOES NOT WORK, NEED MORE ROUTERS AND STATE-CHANGE TRICKS */}
-                          <a href={more}>{'more'}</a>
-                          {')'}
-                        </span>
-                      );
-                    }
-                    return null;
-
-                  })()}
+              {`${title}`}
+              {more && (
+                <span>
+                  {' ('}
+                  <a href={more}>{'more'}</a>
+                  {')'}
+                </span>
+              )}
             </span>
-            {' '}
-            {stati}
+            {stati && ` ${stati}`}
           </h2>
           {section}
         </div>
