@@ -6,6 +6,7 @@ import cx from 'classnames';
 import moment from 'moment';
 import { curveLinear, line, scaleTime, scaleLinear, format, timeFormat, area, timeMonth } from 'd3';
 import { stringify } from 'query-string';
+import CriticalErrorMessage from '../components/criticalErrorMessage';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
@@ -43,8 +44,12 @@ export default class PerfherderWidget extends React.Component {
 
   render() {
     const { explainer, framework } = this.props;
-    const { evolutions, signatures, signatureLabels } = this.state;
+    const { evolutions, signatures, signatureLabels, error } = this.state;
     let svg = null;
+
+    if (error) {
+      return <CriticalErrorMessage />;
+    }
 
     if (evolutions) {
       const busy = signatures.size > 5;
