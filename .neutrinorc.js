@@ -67,7 +67,6 @@ module.exports = {
             'react/jsx-closing-tag-location': 0,
             'react/jsx-curly-brace-presence': 0,
             'react/jsx-no-target-blank': 0,
-            'react/no-unused-state': 0,
           },
         },
       },
