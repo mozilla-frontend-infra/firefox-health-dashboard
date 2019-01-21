@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
+import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import generateOptions from '../../utils/chartJs/generateOptions';
 
 const styles = {
@@ -23,16 +24,30 @@ const styles = {
 
 const ChartJsWrapper = ({
   classes, data, options, title, type, chartHeight, spinnerSize,
+  missingDataError = false, showError = false,
 }) => (
   data ? (
     <div className={classes.chartContainer}>
       {title && <h2>{title}</h2>}
+
+      { missingDataError
+    // eslint-disable-next-line array-callback-return
+    ? data.datasets.map((x) => {
+        const latestDataDate = new Date(x.data[x.data.length - 1].x); // get data for latest index
+        const currentDate = new Date(); // get current date
+        const timeDifference = Math.abs(currentDate.getTime() - latestDataDate.getTime());
+        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+        showError = daysDifference > 0; // if days are more than 3 then show error
+    })
+    : null }
+
       <Chart
         type={type}
         data={data}
         height={chartHeight}
         options={generateOptions(options)}
       />
+      {showError ? <ErrorPanel error='Data is missing since 3 days.' /> : null }
     </div>
   ) : (
     <div style={{ lineHeight: spinnerSize, textAlign: 'center', width: spinnerSize }}>
@@ -76,6 +91,8 @@ ChartJsWrapper.propTypes = {
     type: PropTypes.string,
     chartHeight: PropTypes.number,
     spinnerSize: PropTypes.string,
+    missingDataError: PropTypes.bool,
+    showError: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {

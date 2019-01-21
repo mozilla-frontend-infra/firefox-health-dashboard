@@ -50,6 +50,7 @@ class PerfherderGraphContainer extends Component {
               type='line'
               data={data}
               options={options}
+              missingDataError
             />
           </div>
         );
