@@ -18,19 +18,19 @@ class Android extends Component {
             includeBugCount
             queries={[
               {
-                text: 'Open P1 bugs',
+                text: 'Open fenix:p1 bugs',
                 parameters: {
                   product: 'GeckoView',
                   resolution: '---',
-                  priority: ['P1'],
+                  whiteboard: '[geckoview:fenix:p1]',
                 },
               },
               {
-                text: 'Open P2/P3 bugs',
+                text: 'Open fenix:p2 bugs',
                 parameters: {
                   product: 'GeckoView',
                   resolution: '---',
-                  priority: ['P2', 'P3'],
+                  whiteboard: '[geckoview:fenix:p2]',
                 },
               },
             ]}
@@ -38,24 +38,24 @@ class Android extends Component {
           <BugzillaGraph
             queries={[
               {
-                label: 'P1 bugs',
+                label: 'fenix:p1 bugs',
                 parameters: {
                   product: 'GeckoView',
                   resolution: ['---', 'FIXED'],
-                  priority: ['P1'],
+                  whiteboard: '[geckoview:fenix:p1]',
                 },
               },
               {
-                label: 'P2/P3 bugs',
+                label: 'fenix:p2 bugs',
                 parameters: {
                   product: 'GeckoView',
                   resolution: ['---', 'FIXED'],
-                  priority: ['P2', 'P3'],
+                  whiteboard: '[geckoview:fenix:p2]',
                 },
               },
             ]}
             startDate='2018-03-01'
-            title='GeckoView bugs'
+            title='GeckoView Fenix bugs'
           />
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
