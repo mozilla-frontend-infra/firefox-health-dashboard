@@ -20,41 +20,46 @@ const styles = {
       backgroundColor: 'black',
       padding: '.3rem .3rem .3rem .3rem',
     },
+    errorPanel: {
+      marginTop: '10px',
+      width: '97%',
+    },
 };
 
 const ChartJsWrapper = ({
   classes, data, options, title, type, chartHeight, spinnerSize,
-  missingDataError = false, showError = false,
-}) => (
-  data ? (
-    <div className={classes.chartContainer}>
-      {title && <h2>{title}</h2>}
+  missingDataError = false,
+}) => {
+  let showError;
+  if (data && missingDataError) {
+    showError = data.datasets.some((dataset) => {
+      const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
+      const currentDate = new Date(); // get current date
+      const timeDifference = Math.abs(currentDate.getTime() - latestDataDate.getTime());
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      return daysDifference > 0; // if days are more than 3 then show error
+    });
+  }
 
-      { missingDataError
-    // eslint-disable-next-line array-callback-return
-    ? data.datasets.map((x) => {
-        const latestDataDate = new Date(x.data[x.data.length - 1].x); // get data for latest index
-        const currentDate = new Date(); // get current date
-        const timeDifference = Math.abs(currentDate.getTime() - latestDataDate.getTime());
-        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-        showError = daysDifference > 0; // if days are more than 3 then show error
-    })
-    : null }
-
-      <Chart
-        type={type}
-        data={data}
-        height={chartHeight}
-        options={generateOptions(options)}
-      />
-      {showError ? <ErrorPanel error='Data is missing since 3 days.' /> : null }
-    </div>
-  ) : (
-    <div style={{ lineHeight: spinnerSize, textAlign: 'center', width: spinnerSize }}>
-      <CircularProgress />
-    </div>
-  )
-);
+  return (
+    data ? (
+      <div className={classes.chartContainer}>
+        {showError && <ErrorPanel className={classes.errorPanel} error='This item has been missing data for at least 3 days.' /> }
+        {title && <h2>{title}</h2>}
+        <Chart
+          type={type}
+          data={data}
+          height={chartHeight}
+          options={generateOptions(options)}
+        />
+      </div>
+    ) : (
+      <div style={{ lineHeight: spinnerSize, textAlign: 'center', width: spinnerSize }}>
+        <CircularProgress />
+      </div>
+    )
+  );
+};
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
