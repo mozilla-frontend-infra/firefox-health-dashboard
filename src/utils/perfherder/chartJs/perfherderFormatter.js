@@ -42,7 +42,7 @@ const perfherderFormatter = series => {
   // The first series' metadata defines the whole set
   const newData = {
     data: { datasets: [] },
-    options: generateInitialOptions(series[0].meta),
+    options: generateInitialOptions(series[0]),
   };
 
   series.forEach(({ color, data, label, perfherderUrl }, index) => {
