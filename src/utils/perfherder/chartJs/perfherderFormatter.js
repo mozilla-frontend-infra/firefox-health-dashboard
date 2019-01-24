@@ -16,20 +16,22 @@ const generateInitialOptions = meta => {
     tooltips: {
       callbacks: {
         footer: (tooltipItems, data) => {
+          const tooltipData = [];
           let delta = 'n/a';
-
+          let deltaPercentage = 'n/a';
           if (tooltipItems[0].index > 0) {
-            delta = (
-              data.datasets[tooltipItems[0].datasetIndex].data[
-                tooltipItems[0].index
-              ].y -
-              data.datasets[tooltipItems[0].datasetIndex].data[
-                tooltipItems[0].index - 1
-              ].y
-            ).toFixed(2);
-          }
+            const currentData = data.datasets[tooltipItems[0].datasetIndex]
+              .data[tooltipItems[0].index].y;
+            const previousData = data.datasets[tooltipItems[0].datasetIndex]
+              .data[tooltipItems[0].index - 1].y;
 
-          return `Delta: ${delta}`;
+            delta = (currentData - previousData).toFixed(2);
+            deltaPercentage = (((currentData - previousData) / previousData) * 100).toFixed(2);
+          }
+          const indicator = `${data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index].y} (${higherOrLower})`;
+          delta = `Δ ${delta} (${deltaPercentage}%)`;
+          tooltipData.push(indicator, delta);
+          return tooltipData;
         },
       },
     },
