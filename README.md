@@ -5,7 +5,7 @@
 
 This project show Firefox metrics and insights to help meeting release criteria.
 Find the official site [here](https://health.graphics/).
-The repository for the backend can be found [here](https://github.com/mozilla-frontend-infra/firefox-health-backend).
+The repository for the backend can be found [here](https://github.com/mozilla/firefox-health-backend).
 
 # Developing
 
@@ -34,6 +34,7 @@ In some cases, you might want to make changes to [the backend](https://github.co
 and test them locally. You can do so with `yarn start:local`.
 
 # Extra information
+
 ## Neutrino and preset
 
 This project uses [Neutrino](https://github.com/neutrinojs/neutrino) and the
@@ -44,10 +45,12 @@ This project uses [Neutrino](https://github.com/neutrinojs/neutrino) and the
 - heartbeat icon by Creative Stall from the Noun Project
 
 # Making changes to a page
+
 This project is still in development and only certain pages are easy to modify (e.g. the Android page).
-In this section we will *only* be describing certain changes that are **very easy** to make and test.
+In this section we will _only_ be describing certain changes that are **very easy** to make and test.
 
 The modern pages use two important components (**DashboardPage** and **Section**):
+
 ```javascript
 <DashboardPage title='A title' subtitle='Some subtitle'>
   <Section title='The first section'>
@@ -58,12 +61,14 @@ The modern pages use two important components (**DashboardPage** and **Section**
   </Section>
 </DashboardPage>
 ```
+
 Inside of a `DashboardPage` you include sections and inside of a `Section` you can use HTML tags or use React
 containers. Read below for some documented containers.
 
 NOTE: The `title` parameter is optional and it is available to most containers.
 
 ## BugzillaGraph
+
 Link to [source code](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/src/containers/BugzillaGraph/index.jsx).
 
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/44410/48093030-369b4400-e1dc-11e8-9da5-a481ce158809.png">
@@ -80,6 +85,7 @@ have bugs that were created few years ago and would make the X axis quite wide.
 NOTE: This is the slowest container you will encounter as querying Bugzilla's APIs are quite slow.
 
 Sample code:
+
 ```javascript
 <BugzillaGraph
   queries={[
@@ -88,24 +94,25 @@ Sample code:
       parameters: {
         component: 'GeckoView',
         resolution: '---',
-        priority: ['P1'],
-      },
+        priority: ['P1']
+      }
     },
     {
       label: 'Open backlog bugs',
       parameters: {
         component: 'GeckoView',
         resolution: '---',
-        priority: ['P2', 'P3'],
-      },
-    },
+        priority: ['P2', 'P3']
+      }
+    }
   ]}
-  startDate='2018-03-01'
-  title='GeckoView bugs'
+  startDate="2018-03-01"
+  title="GeckoView bugs"
 />
 ```
 
 ## RedashContainer
+
 Link to [source code](https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/src/containers/RedashContainer/index.jsx).
 
 The idea is pretty simple. If you can create a Redash query that can plot what you want then you can include it
@@ -123,12 +130,13 @@ You can find the JSON URL under the hamburger menu:
 <img width="177" alt="image" src="https://user-images.githubusercontent.com/44410/48093942-c3470180-e1de-11e8-9846-e3f8cb0dfb01.png">
 
 Sample code:
+
 ```javascript
 <RedashContainer
-    title='Total content page load time'
-    redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83'
-    redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59397'
-  />
+  title="Total content page load time"
+  redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
+  redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
+/>
 ```
 
 ## PerfherderGraphContainer
@@ -146,18 +154,18 @@ Use [Perfherder](https://treeherder.mozilla.org/perf.html#/graphs) directly to d
 
 Pass a `series` array with each element describing one of your data series. To define a series you need these parameters:
 
-* label - It will be the legend value
-* frameworkId - 1 for Talos, 10 for Raptor and 11 for js-bench.
-* platform - Use Perfherder to determine value
-* option - Normally 'opt', 'debug' or 'pgo'
-* extraOption - **OPTIONAL** - Normally set it to `['e10s', 'stylo']`
-  * This only applies to Performance jobs using the Talos benchmark
-  * On Perfherder, you will see the test being named `sessionrestore opt e10s stylo`. All the strings after the `option`
+- label - It will be the legend value
+- frameworkId - 1 for Talos, 10 for Raptor and 11 for js-bench.
+- platform - Use Perfherder to determine value
+- option - Normally 'opt', 'debug' or 'pgo'
+- extraOption - **OPTIONAL** - Normally set it to `['e10s', 'stylo']`
+  - This only applies to Performance jobs using the Talos benchmark
+  - On Perfherder, you will see the test being named `sessionrestore opt e10s stylo`. All the strings after the `option`
     (in our case the word `opt`) is to be listed inside of an array
-* project - 'mozilla-central'
-  * This is the `repo` parameter on Treeherder - https://treeherder.mozilla.org/#/jobs?repo=mozilla-central
-* suite - This is equivalent to `test` on Perfherder
-  * On the screenshot above you will see `raptor-assorted-dom-chrome opt`. We only want the first part
+- project - 'mozilla-central'
+  - This is the `repo` parameter on Treeherder - https://treeherder.mozilla.org/#/jobs?repo=mozilla-central
+- suite - This is equivalent to `test` on Perfherder
+  - On the screenshot above you will see `raptor-assorted-dom-chrome opt`. We only want the first part
     before the white space.
 
 You can also pass an optional `timerange` value, however, this is not necessary for most cases.
@@ -166,9 +174,10 @@ NOTE: If you want to add Chrome jobs, you have to notice that they're not runnin
 This means that you need to append `-nightly` to it (e.g. `linux64` -> `linux64-nightly`).
 
 Sample code:
+
 ```javascript
 <PerfherderGraphContainer
-  title='Speedometer'
+  title="Speedometer"
   series={[
     {
       label: 'Moto G5 (arm7)',
@@ -176,7 +185,7 @@ Sample code:
       platform: 'android-hw-g5-7-0-arm7-api-16',
       option: 'opt',
       project: 'mozilla-central',
-      suite: 'raptor-speedometer-geckoview',
+      suite: 'raptor-speedometer-geckoview'
     },
     {
       label: 'Pixel 2 (arm7)',
@@ -184,7 +193,7 @@ Sample code:
       option: 'opt',
       platform: 'android-hw-p2-8-0-arm7-api-16',
       project: 'mozilla-central',
-      suite: 'raptor-speedometer-geckoview',
+      suite: 'raptor-speedometer-geckoview'
     },
     {
       label: 'Pixel 2 (ARM64)',
@@ -192,8 +201,8 @@ Sample code:
       option: 'opt',
       platform: 'android-hw-p2-8-0-android-aarch64',
       project: 'mozilla-central',
-      suite: 'raptor-speedometer-geckoview',
-    },
+      suite: 'raptor-speedometer-geckoview'
+    }
   ]}
 />
 ```
