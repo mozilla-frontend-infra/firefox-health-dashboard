@@ -45,7 +45,13 @@ class TP6 extends React.Component {
                   <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
                       title={title}
-                      series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
+                      series={
+                        frum(series)
+                          .sortBy(['browser'])
+                          .reverse()
+                          .map((s) => { return { label: s.label, seriesConfig: s }; })
+                          .toArray()
+                      }
                     />
                   </Grid>
                 ))
