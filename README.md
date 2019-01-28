@@ -5,7 +5,7 @@
 
 This project show Firefox metrics and insights to help meeting release criteria.
 Find the official site [here](https://health.graphics/).
-The repository for the backend can be found [here](https://github.com/mozilla-frontend-infra/firefox-health-backend).
+The repository for the backend can be found [here](https://github.com/mozilla/firefox-health-backend).
 
 # Developing
 
