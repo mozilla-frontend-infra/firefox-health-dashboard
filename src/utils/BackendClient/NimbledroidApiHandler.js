@@ -9,7 +9,7 @@ const matchShorterUrl = url => url
 const transformedDataForMetrisGraphics = (scenarios) => {
   const metricsGraphicsData = Object.keys(scenarios).reduce((result, scenarioName) => {
     scenarios[scenarioName].forEach(({ date, ms }) => {
-      const url = matchUrl(scenarioName);
+      const url = matchUrl(scenarioName);  // multiple scenarioName have same url
       if (!result[url]) {
         result[url] = {
           data: [],
@@ -18,6 +18,8 @@ const transformedDataForMetrisGraphics = (scenarios) => {
         };
       }
       if (ms > 0) {
+        // this appends contents of scenarios[scenarioName] to result[url].data
+        // **AND** concatenates data when matchUrl(scenarioName1) == matchUrl(scenarioName2)
         result[url].data.push({
           date: new Date(date),
           value: ms / 1000,
