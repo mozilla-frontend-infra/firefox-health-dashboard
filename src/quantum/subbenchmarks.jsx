@@ -4,11 +4,9 @@ import propTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-
 import getData from '../utils/perfherder/subbenchmarks';
 
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
-
 const Subbenchmarks = ({ match }) => (
   <div>
     <PerfherderContainer
@@ -24,14 +22,14 @@ Subbenchmarks.propTypes = {
 
 const Graph = ({ data, name, url }) => (
   <div key={name}>
-    <div className='black-bar'>
+    <div className="black-bar">
       <span>{name}</span>
       <a
-        className='header-item'
+        className="header-item"
         href={url}
-        target='_blank'
-        alt='View all subtests on Perfherder'
-      >
+        target="_blank"
+        rel="noopener noreferrer"
+        alt="View all subtests on Perfherder">
         <FontAwesomeIcon
           icon={faExternalLinkAlt}
           style={{ marginLeft: '0.3em' }}
@@ -76,54 +74,59 @@ class PerfherderContainer extends Component {
     }
   }
 
-  async data({ platform, suite }, percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD) {
-    const { perfherderUrl, data, parentSignature } = await
-      getData({ suite, platform, percentileThreshold });
+  async data(
+    { platform, suite },
+    percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD
+  ) {
+    const { perfherderUrl, data, parentSignature } = await getData({
+      suite,
+      platform,
+      percentileThreshold,
+    });
+
     this.setState({ perfherderUrl, data, parentSignature });
   }
 
   render() {
     const { perfherderUrl, data, parentSignature } = this.state;
-
     const sortAlphabetically = (a, b) => {
       if (a.meta.test < b.meta.test) return -1;
+
       if (a.meta.test > b.meta.test) return 1;
+
       return 0;
     };
 
     let parent;
+
     if (parentSignature && parentSignature in data) {
       parent = data[parentSignature];
       delete data[parentSignature];
     }
 
     return (
-      <div className='subbenchmarks align-center'>
-        {!data
-          ? (
-            <div>
-              <h3>Loading...</h3>
+      <div className="subbenchmarks align-center">
+        {!data ? (
+          <div>
+            <h3>Loading...</h3>
+          </div>
+        ) : (
+          <div>
+            <div className="header">
+              <h2 className="wider-letter-spacing">{this.props.suite}</h2>
+              <a
+                className="header-item"
+                href={perfherderUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                alt="View all subtests on Perfherder">
+                <FontAwesomeIcon
+                  icon={faExternalLinkAlt}
+                  style={{ marginLeft: '0.3em' }}
+                />
+              </a>
             </div>
-)
-          : (
-            <div>
-              <div className='header'>
-                <h2 className='wider-letter-spacing'>
-                  {this.props.suite}
-                </h2>
-                <a
-                  className='header-item'
-                  href={perfherderUrl}
-                  target='_blank'
-                  alt='View all subtests on Perfherder'
-                >
-                  <FontAwesomeIcon
-                    icon={faExternalLinkAlt}
-                    style={{ marginLeft: '0.3em' }}
-                  />
-                </a>
-              </div>
-              {parent && (
+            {parent && (
               <Graph
                 key={parent.meta.test}
                 data={[parent.data]}
@@ -131,17 +134,18 @@ class PerfherderContainer extends Component {
                 url={parent.meta.url}
               />
             )}
-              {Object.values(data).sort(sortAlphabetically).map(el => (
+            {Object.values(data)
+              .sort(sortAlphabetically)
+              .map(el => (
                 <Graph
                   key={el.meta.test}
                   data={[el.data]}
                   name={el.meta.test}
                   url={el.meta.url}
                 />
-            ))}
-            </div>
-)
-        }
+              ))}
+          </div>
+        )}
       </div>
     );
   }

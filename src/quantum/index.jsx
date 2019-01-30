@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
@@ -7,7 +9,12 @@ import Perfherder from './perfherder';
 import Countdown from './countdown';
 import { frum, toPairs } from '../utils/queryOps';
 import TelemetryContainer from '../telemetry/graph';
-import { quantum32QueryParams, quantum64QueryParams, flowGraphProps, statusLabels } from './constants';
+import {
+  quantum32QueryParams,
+  quantum64QueryParams,
+  flowGraphProps,
+  statusLabels,
+} from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
 import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
@@ -22,15 +29,19 @@ export default class QuantumIndex extends React.Component {
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
     const { full } = parse(this.props.location.search);
-    const { location, match: { params } } = this.props;
+    const {
+      location,
+      match: { params },
+    } = this.props;
     const urlParams = new URLSearchParams(location.search);
     const bits = urlParams.get('bits') || params.bits;
-    const quantumQueryParams = bits === '32' ? quantum32QueryParams : quantum64QueryParams;
+    const quantumQueryParams =
+      bits === '32' ? quantum32QueryParams : quantum64QueryParams;
     const platform = bits === '32' ? 'windows7-32' : 'windows10-64';
-    const nightlyPlatform = bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
-    const regressionConfig = bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
-
-
+    const nightlyPlatform =
+      bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
+    const regressionConfig =
+      bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = wrapSectionComponentsWithErrorBoundaries([
       {
         title: 'Overview',
@@ -55,19 +66,16 @@ export default class QuantumIndex extends React.Component {
         title: 'Benchmarks',
         rows: [
           ...regressionConfig.map(config => (
-            <Perfherder
-              {...config}
-              key={config.title}
-            />
+            <Perfherder {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
-            title='Speedometer'
+            title="Speedometer"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   frameworkId: 10,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'raptor-speedometer-firefox',
@@ -91,14 +99,13 @@ export default class QuantumIndex extends React.Component {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}`,
         rows: frum(TP6_PAGES)
-          .filter({ bits: bits })
+          .filter({ bits })
           .groupBy('title')
           .map(([series, { title }]) => (
             <PerfherderGraphContainer
               title={title}
-              series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
+              series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
-
           ))
           .limit(4)
           .toArray(),
@@ -107,14 +114,14 @@ export default class QuantumIndex extends React.Component {
         title: 'Performance Tests',
         rows: [
           <PerfherderGraphContainer
-            title='Page load (tp5)'
+            title="Page load (tp5)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tp5o',
@@ -123,14 +130,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Window Opening (tpaint e10s)'
+            title="Window Opening (tpaint e10s)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tpaint',
@@ -139,14 +146,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Start-up (sessionrestore)'
+            title="Start-up (sessionrestore)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'sessionrestore',
@@ -155,14 +162,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Start-up (sessionrestore_no_auto_restore)'
+            title="Start-up (sessionrestore_no_auto_restore)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'sessionrestore_no_auto_restore',
@@ -171,14 +178,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Start-Up (ts_paint)'
+            title="Start-Up (ts_paint)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'ts_paint',
@@ -187,14 +194,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Tab Opening (tabpaint)'
+            title="Tab Opening (tabpaint)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tabpaint',
@@ -203,14 +210,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Tab Animation (TART)'
+            title="Tab Animation (TART)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tart',
@@ -219,14 +226,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='Tab Switch (tps)'
+            title="Tab Switch (tps)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tps',
@@ -235,14 +242,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='SVG (tsvg_static)'
+            title="SVG (tsvg_static)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tsvg_static',
@@ -251,14 +258,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='SVG (tsvgr_opacity)'
+            title="SVG (tsvgr_opacity)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tsvgr_opacity',
@@ -267,14 +274,14 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            title='SVG (tsvgx)'
+            title="SVG (tsvgx)"
             series={[
               {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
-                  platform: platform,
+                  platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tsvgx',
@@ -289,209 +296,208 @@ export default class QuantumIndex extends React.Component {
         title: 'Performance Metrics',
         rows: [
           <TelemetryContainer
-            key='winOpen'
-            id='winOpen'
-            title='Window open'
+            key="winOpen"
+            id="winOpen"
+            title="Window open"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='tabSwitch'
-            id='tabSwitch'
-            title='Tab switch'
+            key="tabSwitch"
+            id="tabSwitch"
+            title="Tab switch"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='tabClose'
-            id='tabClose'
-            title='Tab close'
+            key="tabClose"
+            id="tabClose"
+            title="Tab close"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='firstPaint'
-            id='firstPaint'
-            title='First paint'
+            key="firstPaint"
+            id="firstPaint"
+            title="First paint"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='sessionRestoreWindow'
-            id='sessionRestoreWindow'
-            title='Session Restore Window ms'
+            key="sessionRestoreWindow"
+            id="sessionRestoreWindow"
+            title="Session Restore Window ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='sessionRestoreStartupInit'
-            id='sessionRestoreStartupInit'
-            title='Session Restore Startup Init ms'
+            key="sessionRestoreStartupInit"
+            id="sessionRestoreStartupInit"
+            title="Session Restore Startup Init ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='sessionRestoreStartupOnload'
-            id='sessionRestoreStartupOnload'
-            title='Session Restore Startup Onload ms'
+            key="sessionRestoreStartupOnload"
+            id="sessionRestoreStartupOnload"
+            title="Session Restore Startup Onload ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='tabSwitchUpdate'
-            id='tabSwitchUpdate'
-            title='Tab Switch Update ms'
+            key="tabSwitchUpdate"
+            id="tabSwitchUpdate"
+            title="Tab Switch Update ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='gcAnimation'
-            id='gcAnimation'
-            title='GC Animation ms'
+            key="gcAnimation"
+            id="gcAnimation"
+            title="GC Animation ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='gpuProcessInit'
-            id='gpuProcessInit'
-            title='GPU Process Initialization ms'
+            key="gpuProcessInit"
+            id="gpuProcessInit"
+            title="GPU Process Initialization ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='gpuProcessLaunch'
-            id='gpuProcessLaunch'
-            title='GPU Process Launch ms'
+            key="gpuProcessLaunch"
+            id="gpuProcessLaunch"
+            title="GPU Process Launch ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='inputEventCoalesced'
-            id='inputEventCoalesced'
-            title='Input Event Response Coalesced ms'
+            key="inputEventCoalesced"
+            id="inputEventCoalesced"
+            title="Input Event Response Coalesced ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='networkCacheHit'
-            id='networkCacheHit'
-            title='Network Cache Hit ms'
+            key="networkCacheHit"
+            id="networkCacheHit"
+            title="Network Cache Hit ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='networkCacheMiss'
-            id='networkCacheMiss'
-            title='Network Cache Miss ms'
+            key="networkCacheMiss"
+            id="networkCacheMiss"
+            title="Network Cache Miss ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='placesAutocomplete'
-            id='placesAutocomplete'
-            title='Places Autocomplete 6  First Results ms'
+            key="placesAutocomplete"
+            id="placesAutocomplete"
+            title="Places Autocomplete 6  First Results ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='searchServiceInit'
-            id='searchServiceInit'
-            title='Search Service Init ms'
+            key="searchServiceInit"
+            id="searchServiceInit"
+            title="Search Service Init ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToDomComplete'
-            id='timeToDomComplete'
-            title='Time to DOM Complete ms'
+            key="timeToDomComplete"
+            id="timeToDomComplete"
+            title="Time to DOM Complete ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToDomInteractive'
-            id='timeToDomInteractive'
-            title='Time to DOM Interactive ms'
+            key="timeToDomInteractive"
+            id="timeToDomInteractive"
+            title="Time to DOM Interactive ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToDomLoading'
-            id='timeToDomLoading'
-            title='Time to DOM Loading ms'
+            key="timeToDomLoading"
+            id="timeToDomLoading"
+            title="Time to DOM Loading ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToFirstInteraction'
-            id='timeToFirstInteraction'
-            title='Time to First Interaction ms'
+            key="timeToFirstInteraction"
+            id="timeToFirstInteraction"
+            title="Time to First Interaction ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToNonBlankPaint'
-            id='timeToNonBlankPaint'
-            title='Time to Non Blank Paint ms'
+            key="timeToNonBlankPaint"
+            id="timeToNonBlankPaint"
+            title="Time to Non Blank Paint ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToResponseStart'
-            id='timeToResponseStart'
-            title='Time to Response Start ms'
+            key="timeToResponseStart"
+            id="timeToResponseStart"
+            title="Time to Response Start ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='webextBackgroundPageLoad'
-            id='webextBackgroundPageLoad'
-            title='Webext Background Page Load ms'
+            key="webextBackgroundPageLoad"
+            id="webextBackgroundPageLoad"
+            title="Webext Background Page Load ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='webextContentScriptInjection'
-            id='webextContentScriptInjection'
-            title='Webext Content Script Injection ms'
+            key="webextContentScriptInjection"
+            id="webextContentScriptInjection"
+            title="Webext Content Script Injection ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='webextExtensionStartup'
-            id='webextExtensionStartup'
-            title='Webext Extension Startup ms'
+            key="webextExtensionStartup"
+            id="webextExtensionStartup"
+            title="Webext Extension Startup ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToLoadEventEnd'
-            id='timeToLoadEventEnd'
-            title='Time to Load Event End ms'
+            key="timeToLoadEventEnd"
+            id="timeToLoadEventEnd"
+            title="Time to Load Event End ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToDomContentLoadedEnd'
-            id='timeToDomContentLoadedEnd'
-            title='Time to DOM Content Loaded End ms'
+            key="timeToDomContentLoadedEnd"
+            id="timeToDomContentLoadedEnd"
+            title="Time to DOM Content Loaded End ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='contentPaintTime'
-            id='contentPaintTime'
-            title='Content Paint Time ms'
+            key="contentPaintTime"
+            id="contentPaintTime"
+            title="Content Paint Time ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='pageLoad'
-            id='pageLoad'
-            title='FX Page Load ms'
+            key="pageLoad"
+            id="pageLoad"
+            title="FX Page Load ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='simpleSessionRestored'
-            id='simpleSessionRestored'
-            title='Simple Measures Session Restored ms'
+            key="simpleSessionRestored"
+            id="simpleSessionRestored"
+            title="Simple Measures Session Restored ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='scalarFirstPaint'
-            id='scalarFirstPaint'
-            title='Scalars Timestamp - First Paint ms'
+            key="scalarFirstPaint"
+            id="scalarFirstPaint"
+            title="Scalars Timestamp - First Paint ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
-            key='timeToFirstScroll'
-            id='timeToFirstScroll'
-            title='Time to First Scroll ms'
+            key="timeToFirstScroll"
+            id="timeToFirstScroll"
+            title="Time to First Scroll ms"
             queryParams={quantumQueryParams}
           />,
         ],
       },
     ]);
-
-
-    const reduced = sections.map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
-      const statusList = toPairs(statusLabels).map(([key]) => [key, 0]).fromPairs();
-
-      const section = (
-        <Grid container spacing={24}>
-          {
-            rows.map((widget, wi) => {
+    const reduced = sections.map(
+      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+        const statusList = toPairs(statusLabels)
+          .map(([key]) => [key, 0])
+          .fromPairs();
+        const section = (
+          <Grid container spacing={24}>
+            {rows.map((widget, wi) => {
               // Acumulate the section's status
               if (widget.type.displayName !== 'PerfherderWidget') {
                 statusList[widget.props.status] += 1;
@@ -504,64 +510,65 @@ export default class QuantumIndex extends React.Component {
                   item
                   xs={6}
                   key={`page_${sectionId}_${wi}`}
-                  className={(cssRowExtraClasses) ? ` ${cssRowExtraClasses}` : ''}
-                >
+                  className={
+                    cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
+                  }>
                   {widget}
                 </Grid>
               );
-            })
-          }
-        </Grid>
-      );
+            })}
+          </Grid>
+        );
+        const stati = toPairs(statusList)
+          .map(([status, count]) => {
+            const desc = statusLabels[status];
 
-      const stati = toPairs(statusList)
-        .map(([status, count]) => {
-          const desc = statusLabels[status];
-          if (desc && count) {
-            return (
-              <div key={`status-${status}`} className={`header-status header-status-${status}`}>
-                <em>{count}</em>
-                {' '}
-                {desc}
-              </div>
-            );
-          }
-          return null;
+            if (desc && count) {
+              return (
+                <div
+                  key={`status-${status}`}
+                  className={`header-status header-status-${status}`}>
+                  <em>{count}</em>
+                  {desc}
+                </div>
+              );
+            }
 
-        })
-        .toArray().filter(Boolean);
+            return null;
+          })
+          .toArray()
+          .filter(Boolean);
 
-      return (
-        <div>
-          <h2 className='section-header' key={sectionId}>
-            <span>
-              {`${title}`}
-              {more && (
-                <span>
-                  {' ('}
-                  <a href={more}>{'more'}</a>
-                  {')'}
-                </span>
-              )}
-            </span>
-            {stati && ` ${stati}`}
-          </h2>
-          {section}
-        </div>
-      );
-
-    });
+        return (
+          <div>
+            <h2 className="section-header" key={sectionId}>
+              <span>
+                {`${title}`}
+                {more && (
+                  <span>
+                    {' ('}
+                    <a href={more}>more</a>
+                    {')'}
+                  </span>
+                )}
+              </span>
+              {stati && ` ${stati}`}
+            </h2>
+            {section}
+          </div>
+        );
+      }
+    );
 
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
     if (full) {
       return (
-        <DashboardPage
-          title='Quantum'
-          subtitle='Release Criteria Report'
-        >
-          {frum(reduced).limit(2).toArray()}
-          <h2 key='moreData'>
+        <DashboardPage title="Quantum" subtitle="Release Criteria Report">
+          {frum(reduced)
+            .limit(2)
+            .toArray()}
+          <h2 key="moreData">
             {'More data on'}
             <strong>https://health.graphics/quantum</strong>
             {'. Ask questions in'}
@@ -571,18 +578,15 @@ export default class QuantumIndex extends React.Component {
         </DashboardPage>
       );
     }
-      return (
-        <DashboardPage
-          title='Quantum'
-          subtitle='Release Criteria Report'
-        >
-          {reduced}
-        </DashboardPage>
-      );
 
+    return (
+      <DashboardPage title="Quantum" subtitle="Release Criteria Report">
+        {reduced}
+      </DashboardPage>
+    );
   }
 }
 
 QuantumIndex.propTypes = {
-    location: PropTypes.object,
-  };
+  location: PropTypes.object,
+};

@@ -25,7 +25,8 @@ export const statusLabels = new Map([
   ['secondary', 'regression criteria at risk'],
 ]);
 
-// [qf:f61] whiteboard tags to be replaced with [qf:f64] with firefox 61's release
+// [qf:f61] whiteboard tags to be replaced with [qf:f64] with
+// firefox 61's release
 export const flowGraphProps = {
   api: 'bz/burnup',
   customClass: 'wide-content',

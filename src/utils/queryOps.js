@@ -21,92 +21,91 @@ class Wrapper {
   fromPairs() {
     return lodashFromPairs(this.list);
   }
-
 }
 
-const toPairs = (obj) => {
-  return new Wrapper(lodashToPairs(obj));
-};
-
-const frum = (list) => {
-  return new Wrapper(list);
-};
-
-
+const toPairs = obj => new Wrapper(lodashToPairs(obj));
+const frum = list => new Wrapper(list);
 // Add a chainable method to Wrapper
-const extend_wrapper = (methods) => {
+const extendWrapper = methods => {
   lodashToPairs(methods).forEach(([name, method]) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
       this.list = method(this.list, ...args);
+
       return this;
     };
   });
 };
 
-
 // Add Lodash functions
-extend_wrapper({
-  map: map,
-  lodashFilter: lodashFilter,
-  flatten: flatten,
+extendWrapper({
+  map,
+  lodashFilter,
+  flatten,
   toPairs: lodashToPairs,
-  chunk: chunk,
-  unzip: unzip,
-  sortBy: sortBy,
-  lodashGroupBy: lodashGroupBy,
+  chunk,
+  unzip,
+  sortBy,
+  lodashGroupBy,
   limit: lodashTake,
 });
 
-
-const toArray = (value) => {
+const toArray = value => {
   if (Array.isArray(value)) {
     return value;
-  } if (value == null) {
+  }
+
+  if (value == null) {
     return [];
   }
-    return [value];
+
+  return [value];
 };
 
 // convert string into function that selects column from row
-const selector = (column_name) => {
-  if (typeof column_name === 'string') {
-    return row => row[column_name];
+const selector = columnName => {
+  if (typeof columnName === 'string') {
+    return row => row[columnName];
   }
-    return column_name;
 
+  return columnName;
 };
 
-
-extend_wrapper({
+extendWrapper({
   // Groupby one, or many, columns by name or by {name: selector} pairs
   // return array of [rows, key, index] tuples
   groupBy: function groupBy(list, columns) {
     const cs = frum(toArray(columns))
-      .map((col_name) => {
-        if (typeof col_name === 'string') {
-          return [[col_name, selector(col_name)]];
+      .map(colName => {
+        if (typeof colName === 'string') {
+          return [[colName, selector(colName)]];
         }
-        return lodashToPairs(col_name).map(([name, value]) => [name, selector(value)]);
+
+        return lodashToPairs(colName).map(([name, value]) => [
+          name,
+          selector(value),
+        ]);
       })
       .flatten()
-      .sortBy(([col_name]) => col_name)
+      .sortBy(([colName]) => colName)
       .toArray();
-
     const output = {};
     let i = 0;
-    list.forEach((row) => {
+
+    list.forEach(row => {
       const key = lodashFromPairs(cs.map(([name, func]) => [name, func(row)]));
       const skey = JSON.stringify(key);
-
       let triple = output[skey];
+
       if (!triple) {
         triple = [[], key, i];
         i += 1;
         output[skey] = triple;
       }
+
       triple[0].push(row);
     });
+
     return Object.values(output);
   },
 
@@ -117,25 +116,25 @@ extend_wrapper({
       .toArray();
 
     return frum(listA)
-      .map(rowA => lookup[rowA[propA]].map((rowB) => { return { ...rowB, ...rowA }; }))
+      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
       .flatten()
       .toArray();
   },
 
-  // Expecting a object of {column_name: value} form to use as a filter
+  // Expecting a object of {columnName: value} form to use as a filter
   // return only matching rows
   filter: function filter(list, expression) {
-    const func = (row) => {
+    const func = row => {
+      // eslint-disable-next-line no-restricted-syntax
       for (const [name, value] of lodashToPairs(expression)) {
         if (row[name] !== value) return false;
       }
+
       return true;
     };
 
     return lodashFilter(list, func);
   },
-
-
 });
 
 export { frum, toPairs };

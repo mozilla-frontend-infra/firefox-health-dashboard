@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
@@ -22,17 +21,18 @@ class NimbledroidGraph extends Component {
     ];
     const targetRatio = 1.2;
     const site = this.props.location.search.replace('?site=', '');
+
     return (
-      <DashboardPage title='Android' subtitle='Release criteria'>
-        <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
+      <DashboardPage title="Android" subtitle="Release criteria">
+        <Section title="Nimbledroid" subtitle="GeckoView vs Chrome Beta">
           <NimbledroidProductVersions products={products} />
           <NimbledroidSiteDrilldown
             configuration={{
-            baseProduct: 'org.mozilla.klar',
-            compareProduct: 'com.chrome.beta',
-            products: products,
-            site: site,
-            targetRatio: targetRatio,
+              baseProduct: 'org.mozilla.klar',
+              compareProduct: 'com.chrome.beta',
+              products,
+              site,
+              targetRatio,
             }}
           />
         </Section>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 const LEFT_MARGIN = '1rem';
-
 const styles = {
   content: {
     margin: LEFT_MARGIN,
@@ -24,7 +23,6 @@ const styles = {
     paddingLeft: '.9em',
   },
 };
-
 const Section = ({ classes, children, subtitle, title }) => (
   <div>
     <div className={classes.header}>
@@ -38,13 +36,13 @@ const Section = ({ classes, children, subtitle, title }) => (
 );
 
 Section.propTypes = {
-    classes: PropTypes.shape({}).isRequired,
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]).isRequired,
-    subtitle: PropTypes.string,
-    title: PropTypes.string.isRequired,
+  classes: PropTypes.shape({}).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  subtitle: PropTypes.string,
+  title: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(Section);

@@ -3,74 +3,7 @@ module.exports = {
     root: __dirname,
   },
   use: [
-    [
-      '@neutrinojs/airbnb',
-      {
-        eslint: {
-          rules: {
-            'arrow-body-style': 0,
-            camelcase: 0,
-            'class-methods-use-this': 0,
-            'generator-star-spacing': 0,
-            'global-require': 0,
-            'guard-for-in': 0,
-            'function-paren-newline': 0,
-            'import/prefer-default-export': 0,
-            indent: 0,
-            'jest/valid-expect': 0,
-            'jsx-a11y/anchor-is-valid': 0,
-            'jsx-quotes': [
-              'error',
-              'prefer-single',
-            ],
-            'max-len': 1,
-            'no-await-in-loop': 0,
-            'no-console': 0,
-            'no-confusing-arrow': [
-              'error',
-              {
-                allowParens: true,
-              },
-            ],
-            'no-loop-func': 0,
-            'no-mixed-operators': 0,
-            'no-nested-ternary': 0,
-            'no-param-reassign': 0,
-            'no-prototype-builtins': 0,
-            'no-return-assign': 0,
-            'no-restricted-syntax': 0,
-            'no-unused-vars': [
-              1,
-              {
-                vars: 'local',
-                args: 'after-used',
-                argsIgnorePattern: '^_',
-                ignoreRestSiblings: true,
-              },
-            ],
-            'object-curly-newline': 0,
-            'object-shorthand': 0,
-            'padded-blocks': 0,
-            'prefer-destructuring': 0,
-            'react/destructuring-assignment': 0,
-            'react/forbid-prop-types': 0,
-            'react/jsx-filename-extension': 0,
-            'react/prefer-stateless-function': 0,
-            'react/require-default-props': 0,
-            'react/no-array-index-key': 0,
-            'react/no-danger': 0,
-            'react/no-multi-comp': 0,
-            'react/no-unused-prop-types': 0,
-            'react/react-in-jsx-scope': 0,
-            'react/sort-comp': 0,
-            'react/default-props-match-prop-types': 0,
-            'react/jsx-closing-tag-location': 0,
-            'react/jsx-curly-brace-presence': 0,
-            'react/jsx-no-target-blank': 0,
-          },
-        },
-      },
-    ],
+    '@mozilla-frontend-infra/react-lint',
     [
       '@neutrinojs/react',
       {
@@ -92,10 +25,9 @@ module.exports = {
     ],
     '@neutrinojs/jest',
     [
-      '@neutrinojs/copy', {
-        patterns: [
-          { from: 'src/static/favicon.ico', to: 'favicon.ico' },
-        ],
+      '@neutrinojs/copy',
+      {
+        patterns: [{ from: 'src/static/favicon.ico', to: 'favicon.ico' }],
       },
     ],
   ],

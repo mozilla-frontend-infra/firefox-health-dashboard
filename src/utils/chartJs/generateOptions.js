@@ -1,53 +1,66 @@
 const generateOptions = (options = {}) => {
-    const { title, scaleLabel, reverse = false, tooltipFormat, tooltips, ticksCallback } = options;
-    const chartJsOptions = {
-        legend: {
-            labels: {
-                boxWidth: 10,
-                fontSize: 10,
-            },
+  const {
+    title,
+    scaleLabel,
+    reverse = false,
+    tooltipFormat,
+    tooltips,
+    ticksCallback,
+  } = options;
+  const chartJsOptions = {
+    legend: {
+      labels: {
+        boxWidth: 10,
+        fontSize: 10,
+      },
+    },
+    scales: {
+      xAxes: [
+        {
+          type: 'time',
+          time: {
+            displayFormats: { hour: 'MMM D' },
+          },
         },
-        scales: {
-            xAxes: [{
-                type: 'time',
-                time: {
-                    displayFormats: { hour: 'MMM D' },
-                },
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    reverse,
-                },
-            }],
+      ],
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            reverse,
+          },
         },
+      ],
+    },
+  };
+
+  if (ticksCallback) {
+    chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
+  }
+
+  if (title) {
+    chartJsOptions.title = {
+      display: true,
+      text: title,
     };
+  }
 
-    if (ticksCallback) {
-        chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
-    }
+  if (tooltipFormat) {
+    chartJsOptions.scales.xAxes[0].time.tooltipFormat = 'll';
+  }
 
-    if (title) {
-        chartJsOptions.title = {
-            display: true,
-            text: title,
-        };
-    }
-    if (tooltipFormat) {
-        chartJsOptions.scales.xAxes[0].time.tooltipFormat = 'll';
-    }
+  if (tooltips) {
+    chartJsOptions.tooltips = tooltips;
+  }
 
-    if (tooltips) {
-        chartJsOptions.tooltips = tooltips;
-    }
+  if (scaleLabel) {
+    chartJsOptions.scales.yAxes[0].scaleLabel = {
+      display: true,
+      labelString: scaleLabel,
+    };
+  }
 
-    if (scaleLabel) {
-        chartJsOptions.scales.yAxes[0].scaleLabel = {
-            display: true,
-            labelString: scaleLabel,
-        };
-    }
-    return chartJsOptions;
+  return chartJsOptions;
 };
 
 export default generateOptions;

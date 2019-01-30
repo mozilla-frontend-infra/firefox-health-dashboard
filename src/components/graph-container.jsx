@@ -2,7 +2,6 @@
 import React from 'react';
 import MetricsGraphics from 'react-metrics-graphics';
 import PropTypes from 'prop-types';
-
 import { stringify } from 'query-string';
 import { curveLinear } from 'd3';
 import Widget from '../quantum/widget';
@@ -33,12 +32,14 @@ export default class GraphContainer extends React.Component {
       url += `/?${stringify(query)}`;
     }
 
-    fetch(url).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    })
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+
+        throw response;
+      })
       .then(data => this.parseData(data))
       .catch(() => this.setState({ apiFailed: true }));
   }
@@ -46,24 +47,31 @@ export default class GraphContainer extends React.Component {
   parseData(data) {
     if (data.length === 0) {
       this.setState({ noDataFound: true });
+
       return;
     }
-    const {
-      checkStatus, keys, targetValue, targetLine,
-    } = this.props;
+
+    const { checkStatus, keys, targetValue, targetLine } = this.props;
     const stateObj = { data: transformGraphData(keys, data) };
+
     if (checkStatus) {
       stateObj.status = determineStatusColor(data, targetLine, targetValue);
     }
+
     this.setState(stateObj);
   }
 
   render() {
+    const { data, status, apiFailed, noDataFound } = this.state;
     const {
-      data, status, apiFailed, noDataFound,
-    } = this.state;
-    const {
-      title, link, legend, baselines, target, width, height, customClass,
+      title,
+      link,
+      legend,
+      baselines,
+      target,
+      width,
+      height,
+      customClass,
     } = this.props;
     // eslint-disable-next-line
     let viewport = [0, 0];
@@ -81,32 +89,29 @@ export default class GraphContainer extends React.Component {
         title={title}
         loading={!data}
         viewport={size => (viewport = size)}
-        status={status}
-      >
-        {apiFailed || noDataFound
-          ? <div>{message}</div>
-          : (
-            <div>
-              {!data
-            && <div>Loading...</div>}
+        status={status}>
+        {apiFailed || noDataFound ? (
+          <div>{message}</div>
+        ) : (
+          <div>
+            {!data && <div>Loading...</div>}
 
-              <div className='legend' ref={ele => this.legendTarget = ele} />
-              {(data && !legend || data && this.legendTarget && legend)
-            && (
-            <MetricsGraphics
-              width={width}
-              height={height}
-              data={data}
-              x_accessor='date'
-              y_accessor='value'
-              interpolate={curveLinear}
-              legend={legend}
-              legend_target={this.legendTarget}
-              baselines={baselines}
-            />
-)}
-            </div>
-)}
+            <div className="legend" ref={ele => (this.legendTarget = ele)} />
+            {((data && !legend) || (data && this.legendTarget && legend)) && (
+              <MetricsGraphics
+                width={width}
+                height={height}
+                data={data}
+                x_accessor="date"
+                y_accessor="value"
+                interpolate={curveLinear}
+                legend={legend}
+                legend_target={this.legendTarget}
+                baselines={baselines}
+              />
+            )}
+          </div>
+        )}
       </Widget>
     );
   }

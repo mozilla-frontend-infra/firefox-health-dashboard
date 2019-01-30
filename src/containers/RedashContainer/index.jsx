@@ -43,12 +43,13 @@ class RedashContainer extends Component {
       tooltipFormat: true,
       tooltips: {
         callbacks: {
-          label: (tooltipItems, data) => {
-            return `${data.datasets[tooltipItems.datasetIndex].label}: ${tooltipItems.yLabel} ms`;
-          },
+          label: (tooltipItems, data) =>
+            `${data.datasets[tooltipItems.datasetIndex].label}: ${
+              tooltipItems.yLabel
+            } ms`,
         },
       },
-      ticksCallback: value => (value > 999 ? `${(value / 1000)}k` : value),
+      ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
     },
     dataKeyIdentifier: 'label',
   };
@@ -59,6 +60,7 @@ class RedashContainer extends Component {
 
   async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
     const redashData = await fetchJson(redashDataUrl);
+
     this.setState({
       datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
     });
@@ -67,18 +69,24 @@ class RedashContainer extends Component {
   render() {
     const { classes, options, redashQueryUrl, title } = this.props;
     const { datasets } = this.state;
+
     return (
       <div>
         <ChartJsWrapper
           title={title}
-          type='line'
+          type="line"
           data={datasets}
           options={options}
         />
         <div className={classes.linkContainer}>
-          <a href={redashQueryUrl} target='_blank' rel='noopener noreferrer'>
-            <span className={classes.middleVerticalAlignment}>Redash query</span>
-            <Lock className={classes.middleVerticalAlignment} style={{ height: '1rem' }} />
+          <a href={redashQueryUrl} target="_blank" rel="noopener noreferrer">
+            <span className={classes.middleVerticalAlignment}>
+              Redash query
+            </span>
+            <Lock
+              className={classes.middleVerticalAlignment}
+              style={{ height: '1rem' }}
+            />
           </a>
         </div>
       </div>

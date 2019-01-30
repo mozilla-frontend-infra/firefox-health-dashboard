@@ -20,59 +20,57 @@ const styles = () => ({
 });
 
 class PerfherderGraphContainer extends Component {
-    state = {
-        data: null,
-    };
+  state = {
+    data: null,
+  };
 
-    async componentDidMount() {
-        this.fetchSetData(this.props);
-    }
+  async componentDidMount() {
+    this.fetchSetData(this.props);
+  }
 
-    async fetchSetData({ series }) {
-        this.setState(await getPerferherderData(series));
-    }
+  async fetchSetData({ series }) {
+    this.setState(await getPerferherderData(series));
+  }
 
-    render() {
-        const { classes, title } = this.props;
-        const { data, jointUrl, options } = this.state;
+  render() {
+    const { classes, title } = this.props;
+    const { data, jointUrl, options } = this.state;
 
-        return (
-          <div key={title}>
-            <h2 className={classes.title}>
-              <span>{title}</span>
-              {jointUrl && (
-                <a href={jointUrl} target='_blank' rel='noopener noreferrer'>
-                  <LinkIcon className={classes.linkIcon} />
-                </a>
-              )}
-            </h2>
-            <ChartJsWrapper
-              type='line'
-              data={data}
-              options={options}
-            />
-          </div>
-        );
-    }
+    return (
+      <div key={title}>
+        <h2 className={classes.title}>
+          <span>{title}</span>
+          {jointUrl && (
+            <a href={jointUrl} target="_blank" rel="noopener noreferrer">
+              <LinkIcon className={classes.linkIcon} />
+            </a>
+          )}
+        </h2>
+        <ChartJsWrapper type="line" data={data} options={options} />
+      </div>
+    );
+  }
 }
 
 PerfherderGraphContainer.propTypes = {
-    classes: PropTypes.shape({}).isRequired,
-    series: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        seriesConfig: PropTypes.shape({
-            extraOptions: PropTypes.arrayOf(PropTypes.string),
-            frameworkId: PropTypes.number.isRequired,
-            option: PropTypes.string.isRequired,
-            project: PropTypes.string.isRequired,
-            suite: PropTypes.string.isRequired,
-        }),
-        options: PropTypes.shape({
-            includeSubtests: PropTypes.bool,
-        }),
-    })),
-    title: PropTypes.string,
-    timeRange: PropTypes.string,
+  classes: PropTypes.shape({}).isRequired,
+  series: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      seriesConfig: PropTypes.shape({
+        extraOptions: PropTypes.arrayOf(PropTypes.string),
+        frameworkId: PropTypes.number.isRequired,
+        option: PropTypes.string.isRequired,
+        project: PropTypes.string.isRequired,
+        suite: PropTypes.string.isRequired,
+      }),
+      options: PropTypes.shape({
+        includeSubtests: PropTypes.bool,
+      }),
+    })
+  ),
+  title: PropTypes.string,
+  timeRange: PropTypes.string,
 };
 
 export default withStyles(styles)(PerfherderGraphContainer);
