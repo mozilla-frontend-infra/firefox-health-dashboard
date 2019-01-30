@@ -528,8 +528,7 @@ export default class QuantumIndex extends React.Component {
                 <div
                   key={`status-${status}`}
                   className={`header-status header-status-${status}`}>
-                  <em>{count}</em>
-                  {desc}
+                  <em>{count}</em> {desc}
                 </div>
               );
             }
