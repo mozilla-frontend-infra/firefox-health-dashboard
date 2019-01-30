@@ -72,7 +72,6 @@ export default class TelemetryContainer extends React.Component {
             <a
               className="graph-title-link"
               ref={a => (this.graphTitleLink = a)}>
-              onCic
               {title}
             </a>
           </h3>
