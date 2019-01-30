@@ -5,15 +5,12 @@ const generateLineChartStyle = color => ({
   pointRadius: '0',
   pointHoverBackgroundColor: 'white',
 });
-
 const generateScatterChartStyle = color => ({
   backgroundColor: color,
 });
-
-const generateDatasetStyle = (color, type = 'line') => (
+const generateDatasetStyle = (color, type = 'line') =>
   type === 'scatter'
     ? generateScatterChartStyle(color)
-    : generateLineChartStyle(color)
-);
+    : generateLineChartStyle(color);
 
 export default generateDatasetStyle;

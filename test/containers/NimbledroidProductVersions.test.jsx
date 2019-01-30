@@ -6,11 +6,8 @@ const nimbledroidData = require('../mocks/nimbledroidData.json');
 
 it('renders correctly', () => {
   const tree = renderer
-    .create((
-      <NimbledroidProductVersions
-        nimbledroidData={nimbledroidData}
-      />
-    ))
+    .create(<NimbledroidProductVersions nimbledroidData={nimbledroidData} />)
     .toJSON();
+
   expect(tree).toMatchSnapshot();
 });

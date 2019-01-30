@@ -2,13 +2,14 @@ import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
 
-const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
-  x: datetime,
-  y: value,
-}));
+const dataToChartJSformat = data =>
+  data.map(({ datetime, value }) => ({
+    x: datetime,
+    y: value,
+  }));
+const generateInitialOptions = meta => {
+  const higherIsBetter = meta.lower_is_better === false;
 
-const generateInitialOptions = (meta) => {
-  const higherIsBetter = (meta.lower_is_better === false);
   return {
     reverse: higherIsBetter,
     scaleLabel: higherIsBetter ? 'Score' : 'Load time',
@@ -16,20 +17,28 @@ const generateInitialOptions = (meta) => {
       callbacks: {
         footer: (tooltipItems, data) => {
           let delta = 'n/a';
+
           if (tooltipItems[0].index > 0) {
-            delta = (data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index].y
-              - data.datasets[tooltipItems[0].datasetIndex].data[tooltipItems[0].index - 1].y)
-              .toFixed(2);
-            }
-            return `Delta: ${delta}`;
-          },
+            delta = (
+              data.datasets[tooltipItems[0].datasetIndex].data[
+                tooltipItems[0].index
+              ].y -
+              data.datasets[tooltipItems[0].datasetIndex].data[
+                tooltipItems[0].index - 1
+              ].y
+            ).toFixed(2);
+          }
+
+          return `Delta: ${delta}`;
         },
       },
-    };
+    },
   };
+};
 
-// This function combines Perfherder series and transforms it into ChartJS formatting
-const perfherderFormatter = (series) => {
+/* This function combines Perfherder series and transforms it 
+into ChartJS formatting */
+const perfherderFormatter = series => {
   // The first series' metadata defines the whole set
   const newData = {
     data: { datasets: [] },
@@ -44,11 +53,13 @@ const perfherderFormatter = (series) => {
         data: dataToChartJSformat(data),
       });
     }
+
     if (!newData.jointUrl) {
       newData.jointUrl = perfherderUrl;
     } else {
       // We're joining the different series for each subbenchmark
       const parsedUrl = parse(perfherderUrl);
+
       newData.jointUrl += `&series=${parsedUrl.series}`;
     }
   });

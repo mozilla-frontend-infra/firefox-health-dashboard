@@ -13,6 +13,7 @@ class NimbledroidGraphContainer extends Component {
   constructor(props) {
     super(props);
     const { scenarioData } = this.props;
+
     if (scenarioData) {
       this.state = this.generateData(scenarioData);
     }
@@ -20,9 +21,13 @@ class NimbledroidGraphContainer extends Component {
 
   async componentDidMount() {
     const { configuration, handleError, scenarioName } = this.props;
+
     try {
-      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
       const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
+
       this.setState(data);
     } catch (error) {
       handleError(error);
@@ -47,13 +52,13 @@ class NimbledroidGraphContainer extends Component {
   }
 }
 
-NimbledroidGraphContainer.propTypes = ({
-    configuration: PropTypes.shape({
-        products: PropTypes.arrayOf(PropTypes.string),
-      }).isRequired,
-    handleError: PropTypes.func.isRequired,
-    scenarioData: PropTypes.shape({}),
-    scenarioName: PropTypes.string.isRequired,
-});
+NimbledroidGraphContainer.propTypes = {
+  configuration: PropTypes.shape({
+    products: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  handleError: PropTypes.func.isRequired,
+  scenarioData: PropTypes.shape({}),
+  scenarioName: PropTypes.string.isRequired,
+};
 
 export default withErrorBoundary(NimbledroidGraphContainer);

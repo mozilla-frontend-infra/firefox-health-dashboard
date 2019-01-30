@@ -6,9 +6,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 const styles = {
   root: {},
 };
-
-const LinearIndeterminate = (props) => {
+const LinearIndeterminate = props => {
   const { classes } = props;
+
   return (
     <div className={classes.root}>
       <LinearProgress />

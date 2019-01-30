@@ -14,17 +14,25 @@
 //  ]
 export const transformGraphData = (keys, data) => {
   const finalData = [];
+
+  // eslint-disable-next-line no-restricted-syntax
   for (const key of keys) {
-    finalData.push(data.map(item => ({ date: new Date(item.date), value: item[key] })));
+    finalData.push(
+      data.map(item => ({ date: new Date(item.date), value: item[key] }))
+    );
   }
+
   return finalData;
 };
 
-// determine header status color based on whether most recent graph data point is below target
+// determine header status color based on whether most recent graph data
+// point is below target
 export const determineStatusColor = (data, key, target) => {
   data.sort((item1, item2) => (item1.date <= item2.date ? -1 : 1));
+
   if (data[data.length - 1][key] <= target) {
     return 'green';
   }
+
   return 'red';
 };

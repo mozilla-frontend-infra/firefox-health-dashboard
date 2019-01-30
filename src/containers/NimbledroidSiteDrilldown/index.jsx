@@ -14,6 +14,7 @@ class NimbledroidSiteDrilldown extends Component {
   constructor(props) {
     super(props);
     const { configuration, nimbledroidData } = this.props;
+
     if (nimbledroidData) {
       this.state = this.generateData(configuration, nimbledroidData);
     }
@@ -21,9 +22,13 @@ class NimbledroidSiteDrilldown extends Component {
 
   async componentDidMount() {
     const { configuration, handleError } = this.props;
+
     try {
-      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
       const data = this.generateData(configuration, nimbledroidData);
+
       this.setState(data);
     } catch (error) {
       handleError(error);
@@ -32,13 +37,17 @@ class NimbledroidSiteDrilldown extends Component {
 
   generateData(configuration, nimbledroidData) {
     const { baseProduct, compareProduct, targetRatio, site } = configuration;
-
     const { scenarios } = nimbledroidData;
     const profile = scenarios[site];
     const generatedData = {
       profile,
-      ...siteMetrics(profile[baseProduct], profile[compareProduct], targetRatio),
+      ...siteMetrics(
+        profile[baseProduct],
+        profile[compareProduct],
+        targetRatio
+      ),
     };
+
     return generatedData;
   }
 
@@ -59,18 +68,14 @@ class NimbledroidSiteDrilldown extends Component {
           enrich: true,
           text: site,
           hyperlink: site,
-        }}
-      >
-        <NimbledroidGraph
-          profile={profile}
-          targetRatio={targetRatio}
-        />
+        }}>
+        <NimbledroidGraph profile={profile} targetRatio={targetRatio} />
       </StatusWidget>
     );
   }
 }
 
-NimbledroidSiteDrilldown.propTypes = ({
+NimbledroidSiteDrilldown.propTypes = {
   nimbledroidData: PropTypes.shape({}),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,
@@ -79,6 +84,6 @@ NimbledroidSiteDrilldown.propTypes = ({
     site: PropTypes.string.isRequired,
     targetRatio: PropTypes.number.isRequired,
   }).isRequired,
-});
+};
 
 export default withErrorBoundary(NimbledroidSiteDrilldown);

@@ -1,10 +1,9 @@
 import MG from 'metrics-graphics';
 
 // This graph shows multiple lines on a graph
-const graph = (specs) => {
-  const {
-    target, data, legend, title, legend_target, markers,
-  } = specs;
+const graph = specs => {
+  const { target, data, legend, title, legendTarget, markers } = specs;
+
   // For every series let's convert the values to proper dates
   data.map(evo => MG.convert.date(evo, 'date'));
   MG.data_graphic({
@@ -14,7 +13,7 @@ const graph = (specs) => {
     data,
     target,
     legend,
-    legend_target,
+    legendTarget,
     markers,
   });
 };
