@@ -1021,6 +1021,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Window open
               </a>
             </h3>
@@ -1051,6 +1052,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Tab switch
               </a>
             </h3>
@@ -1081,6 +1083,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Tab close
               </a>
             </h3>
@@ -1111,6 +1114,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 First paint
               </a>
             </h3>
@@ -1141,6 +1145,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Session Restore Window ms
               </a>
             </h3>
@@ -1171,6 +1176,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Session Restore Startup Init ms
               </a>
             </h3>
@@ -1201,6 +1207,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Session Restore Startup Onload ms
               </a>
             </h3>
@@ -1231,6 +1238,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Tab Switch Update ms
               </a>
             </h3>
@@ -1261,6 +1269,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 GC Animation ms
               </a>
             </h3>
@@ -1291,6 +1300,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 GPU Process Initialization ms
               </a>
             </h3>
@@ -1321,6 +1331,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 GPU Process Launch ms
               </a>
             </h3>
@@ -1351,6 +1362,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Input Event Response Coalesced ms
               </a>
             </h3>
@@ -1381,6 +1393,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Network Cache Hit ms
               </a>
             </h3>
@@ -1411,6 +1424,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Network Cache Miss ms
               </a>
             </h3>
@@ -1441,6 +1455,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Places Autocomplete 6  First Results ms
               </a>
             </h3>
@@ -1471,6 +1486,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Search Service Init ms
               </a>
             </h3>
@@ -1501,6 +1517,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to DOM Complete ms
               </a>
             </h3>
@@ -1531,6 +1548,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to DOM Interactive ms
               </a>
             </h3>
@@ -1561,6 +1579,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to DOM Loading ms
               </a>
             </h3>
@@ -1591,6 +1610,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to First Interaction ms
               </a>
             </h3>
@@ -1621,6 +1641,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to Non Blank Paint ms
               </a>
             </h3>
@@ -1651,6 +1672,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to Response Start ms
               </a>
             </h3>
@@ -1681,6 +1703,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Webext Background Page Load ms
               </a>
             </h3>
@@ -1711,6 +1734,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Webext Content Script Injection ms
               </a>
             </h3>
@@ -1741,6 +1765,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Webext Extension Startup ms
               </a>
             </h3>
@@ -1771,6 +1796,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to Load Event End ms
               </a>
             </h3>
@@ -1801,6 +1827,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to DOM Content Loaded End ms
               </a>
             </h3>
@@ -1831,6 +1858,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Content Paint Time ms
               </a>
             </h3>
@@ -1861,6 +1889,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 FX Page Load ms
               </a>
             </h3>
@@ -1891,6 +1920,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Simple Measures Session Restored ms
               </a>
             </h3>
@@ -1921,6 +1951,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Scalars Timestamp - First Paint ms
               </a>
             </h3>
@@ -1951,6 +1982,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
+                onCic
                 Time to First Scroll ms
               </a>
             </h3>
