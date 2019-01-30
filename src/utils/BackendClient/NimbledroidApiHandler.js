@@ -12,6 +12,7 @@ const transformedDataForMetrisGraphics = scenarios => {
   const metricsGraphicsData = Object.keys(scenarios).reduce(
     (result, scenarioName) => {
       scenarios[scenarioName].forEach(({ date, ms }) => {
+        // multiple scenarioName have same url0
         const url = matchUrl(scenarioName);
         // multiple scenarioName have same url
 
