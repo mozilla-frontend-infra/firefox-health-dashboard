@@ -47,15 +47,16 @@ const extend_wrapper = (methods) => {
 
 // Add Lodash functions
 extend_wrapper({
-  map: map,
-  lodashFilter: lodashFilter,
-  flatten: flatten,
-  toPairs: lodashToPairs,
   chunk: chunk,
-  unzip: unzip,
-  sortBy: sortBy,
-  lodashGroupBy: lodashGroupBy,
+  flatten: flatten,
   limit: lodashTake,
+  lodashFilter: lodashFilter,
+  lodashGroupBy: lodashGroupBy,
+  map: map,
+  sortBy: sortBy,
+  sort: sortBy,
+  toPairs: lodashToPairs,
+  unzip: unzip,
 });
 
 
@@ -133,6 +134,10 @@ extend_wrapper({
     };
 
     return lodashFilter(list, func);
+  },
+
+  reverse: function reverse(list) {
+    return list.reverse();
   },
 
 
