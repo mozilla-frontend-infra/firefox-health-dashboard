@@ -39,7 +39,7 @@ class TP6 extends React.Component {
           <Grid container spacing={24}>
             {
               frum(TP6_PAGES)
-                .filter({ bits: bits })
+                .where({ bits: bits })
                 .groupBy('title')
                 .map(([series, { title }]) => (
                   <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>

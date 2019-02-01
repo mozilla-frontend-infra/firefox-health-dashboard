@@ -529,11 +529,12 @@ export default class QuantumIndex extends React.Component {
           return null;
 
         })
-        .toArray().filter(Boolean);
+        .exists()
+        .toArray();
 
       return (
-        <div>
-          <h2 className='section-header' key={sectionId}>
+        <div key={sectionId}>
+          <h2 className='section-header'>
             <span>
               {`${title}`}
               {more && (
