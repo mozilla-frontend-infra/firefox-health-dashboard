@@ -1,30 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StatusWidget from '../StatusWidget';
+import CONFIG from '../../utils/nimbledroid/config';
+import { frum } from '../../utils/queryOps';
 
-const SummaryTable = ({ content = [], header }) => (
+const SummaryTable = ({ content = [], header }) => {
+  const compareName = CONFIG.packageIdLabels[CONFIG.baseProduct];
+  const compareColumn = frum(header)
+    .map((name, i) => (name === compareName ? i : null))
+    .exists()
+    .first();
+return (
   <table className='summary-table'>
     {header && (
-      <thead>
-        <tr>
-          <th />
-          {header.map(item => <th className='column' key={item}>{item}</th>)}
-        </tr>
-      </thead>
-    )}
+    <thead>
+      <tr>
+        <th />
+        {header.map(item => <th className='column' key={item}>{item}</th>)}
+      </tr>
+    </thead>
+      )}
     <tbody>
       {content.map(({ dataPoints = [], statusColor, summary, title, uid }) => (
         <tr key={uid}>
           <td className='title-container'>
             <StatusWidget statusColor={statusColor} title={title} />
           </td>
-          {dataPoints.map((datum, index) => <td key={index}>{datum}</td>)}
+          {dataPoints.map((datum, columnIndex) => {
+              const className = columnIndex === compareColumn ? `status-${statusColor}` : '';
+              return (<td key={columnIndex} className={className}>{datum}</td>);
+            })}
           <td>{summary}</td>
         </tr>
-            ))}
+              ))}
     </tbody>
   </table>
-);
+  );
+};
 
 SummaryTable.propTypes = ({
   content: PropTypes.arrayOf(PropTypes.shape({

@@ -8,6 +8,7 @@ import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
 import SETTINGS from '../../settings';
+import CONFIG from '../../utils/nimbledroid/config';
 
 class Android extends Component {
   render() {
@@ -60,16 +61,7 @@ class Android extends Component {
         </Section>
         <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
           <NimbledroidSection
-            configuration={{
-              baseProduct: 'org.mozilla.klar',
-              compareProduct: 'com.chrome.beta',
-              products: [
-                'org.mozilla.klar',
-                'org.mozilla.geckoview_example',
-                'com.chrome.beta',
-              ],
-              targetRatio: 1.2,
-            }}
+            configuration={{ ...CONFIG }}
           />
         </Section>
         <Section title='Telemetry'>
