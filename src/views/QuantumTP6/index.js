@@ -41,7 +41,7 @@ class TP6 extends React.Component {
               frum(TP6_PAGES)
                 .where({ bits: bits })
                 .groupBy('title')
-                .map(([series, { title }]) => (
+                .map(([series, title]) => (
                   <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>
                     <PerfherderGraphContainer
                       title={title}

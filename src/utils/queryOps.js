@@ -21,15 +21,15 @@ const last = (list) => {
 };
 
 
-// const toArray = (value) => {
-//   // return a list
-//   if (Array.isArray(value)) {
-//     return value;
-//   } if (value == null) {
-//     return [];
-//   }
-//     return [value];
-// };
+const toArray = (value) => {
+  // return a list
+  if (Array.isArray(value)) {
+    return value;
+  } if (value == null) {
+    return [];
+  }
+    return [value];
+};
 
 const selector = (column_name) => {
   // convert string into function that selects column from row
@@ -40,8 +40,8 @@ const selector = (column_name) => {
 
 
 class Wrapper {
-  constructor(args) {
-    this.args = args;
+  constructor(list) {
+    this.list = list;
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,13 @@ const toPairs = (obj) => {
 };
 
 const frum = (list) => {
-  return new Wrapper(list);
+  if (list instanceof Wrapper) {
+    return list;
+  } if (Array.isArray(list)) {
+    return new Wrapper(list);
+  }
+    return new Wrapper(Array.from(list));
+
 };
 
 
@@ -109,8 +115,7 @@ const extend_wrapper = (methods) => {
   lodashToPairs(methods).forEach(([name, method]) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
-      this.list = method(this.list, ...args);
-      return this;
+      return frum(method(this.list, ...args));
     };
   });
 };
@@ -214,22 +219,18 @@ extend_wrapper({
 
     if (columns == null) {
       func = row => row != null;
-    } else if (Array.isArray(columns)) {
+    } else {
+      const cols = toArray(columns);
       func = (row) => {
-        for (const name of columns) {
+        for (const name of cols) {
           const v = row[name];
           if (v == null || Number.isNaN(v)) return false;
         }
         return true;
       };
-    } else {
-      const s = selector(columns);
-      func = (row) => {
-        const v = s(row);
-        return (v != null && !Number.isNaN(v));
-      };
     }
     return lodashFilter(list, func);
+
   },
 
   append: function append(list, value) {
