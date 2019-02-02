@@ -48,6 +48,12 @@ class Wrapper {
     this.args = args;
   }
 
+  * [Symbol.iterator]() {
+    for (const [a] of this.args) {
+      yield a;
+    }
+  }
+
   // ///////////////////////////////////////////////////////////////////////////
   // CHAINABLE METHODS
   // ///////////////////////////////////////////////////////////////////////////
@@ -59,14 +65,15 @@ class Wrapper {
   }
 
   args() {
+    // Convert value into args
     return new Wrapper(
       this.args.map(([arg]) => arg),
     );
   }
 
   where(expression) {
-  // Expecting a object of {column_name: value} form to use as a filter
-  // return only matching rows
+    // Expecting a object of {column_name: value} form to use as a filter
+    // return only matching rows
     const func = (row) => {
       for (const [name, value] of Object.entries(expression)) {
         if (row[name] !== value) return false;
@@ -113,15 +120,15 @@ class Wrapper {
         .args();
 
       const output = {};
-      let i = 0;
+      let g = 0;
       for (const arg of this.args) {
         const key = cs.map(func => func(...arg)).fromPairs();
         const skey = JSON.stringify(key);
 
         let triple = output[skey];
         if (!triple) {
-          triple = [[], key, i];
-          i += 1;
+          triple = [[], key, g];
+          g += 1;
           output[skey] = triple;
         }
         triple[0].push(arg[0]);
@@ -189,13 +196,6 @@ class Wrapper {
     }
     return output;
   }
-
-  * [Symbol.iterator]() {
-    for (const [a] of this.args) {
-      yield a;
-    }
-  }
-
 }
 
 const frum = (list) => {
@@ -237,10 +237,6 @@ extend_wrapper({
   sortBy: sortBy,
   sort: sortBy,
   limit: lodashTake,
-});
-
-
-extend_wrapper({
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   join: function join(listA, propA, listB, propB) {
@@ -258,8 +254,6 @@ extend_wrapper({
   reverse: function reverse(list) {
     return list.reverse();
   },
-
-
 });
 
 export { frum, toPairs, first, last };
