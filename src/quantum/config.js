@@ -1,4 +1,3 @@
-import zipObject from 'lodash/zipObject';
 import { frum } from '../utils/queryOps';
 
 
@@ -138,7 +137,7 @@ const SUITES = {
 
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
-  .map(row => zipObject(SUITES.header, row))
+  .map(row => frum([row, SUITES.header]).zip().args().fromPairs())
   .join('browser', PLATFORMS, 'browser');
 
 export { CONFIG, PLATFORMS, TP6_PAGES };

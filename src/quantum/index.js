@@ -514,7 +514,7 @@ export default class QuantumIndex extends React.Component {
       );
 
       const stati = toPairs(statusList)
-        .map(([status, count]) => {
+        .map((count, status) => {
           const desc = statusLabels[status];
           if (desc && count) {
             return (
@@ -543,7 +543,7 @@ export default class QuantumIndex extends React.Component {
                 </span>
               )}
             </span>
-            {stati && ` ${stati}`}
+            {stati}
           </h2>
           {section}
         </div>

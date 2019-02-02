@@ -1,6 +1,5 @@
 import flatten from 'lodash/flatten';
 import lodashFilter from 'lodash/filter';
-import lodashToPairs from 'lodash/toPairs';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
@@ -8,7 +7,6 @@ import lodashTake from 'lodash/take';
 
 
 let internalFrum = null;
-let internalToPairs = null;
 
 const first = (list) => {
   for (const v of list) return v;
@@ -41,15 +39,16 @@ const selector = (column_name) => {
 
 
 class Wrapper {
-  constructor(args) {
-    if (!Array.isArray(args[0])) {
-      throw Error('expecting Array of tuples');
+  constructor(argslist) {
+    if (!Array.isArray(argslist) || (argslist.length > 0 && !Array.isArray(argslist[0]))) {
+      console.log(`expecting Array of tuples, not: ${JSON.stringify(argslist)}`);
+      throw Error(`expecting Array of tuples, not: ${JSON.stringify(argslist)}`);
     }
-    this.args = args;
+    this.argslist = argslist;
   }
 
   * [Symbol.iterator]() {
-    for (const [a] of this.args) {
+    for (const [a] of this.argslist) {
       yield a;
     }
   }
@@ -59,15 +58,23 @@ class Wrapper {
   // ///////////////////////////////////////////////////////////////////////////
 
   map(func) {
+    // map the value, do not touch the other args
     return new Wrapper(
-      this.args.map((args, i) => [func(...args, i), i]),
+      this.argslist.map(([value, ...args]) => [func(value, ...args), ...args]),
+    );
+  }
+
+  enumerate() {
+    // append extra index paramter to args
+    return new Wrapper(
+      this.argslist.map((args, i) => [...args, i]),
     );
   }
 
   args() {
     // Convert value into args
     return new Wrapper(
-      this.args.map(([arg]) => arg),
+      this.argslist.map(arg => arg[0]),
     );
   }
 
@@ -121,7 +128,7 @@ class Wrapper {
 
       const output = {};
       let g = 0;
-      for (const arg of this.args) {
+      for (const arg of this.argslist) {
         const key = cs.map(func => func(...arg)).fromPairs();
         const skey = JSON.stringify(key);
 
@@ -140,7 +147,7 @@ class Wrapper {
     const func = selector(columns);
     const output = {};
     let i = 0;
-    for (const [row, ...arg] of this.args) {
+    for (const [row, ...arg] of this.argslist) {
       const key = func(row, ...arg, i);
 
       let triple = output[key];
@@ -165,7 +172,7 @@ class Wrapper {
   fromPairs() {
     // return an object from (value, key) pairs
     const output = {};
-    for (const [v, k] of this.args) {
+    for (const [v, k] of this.argslist) {
       output[k] = v;
     }
     return output;
@@ -185,7 +192,7 @@ class Wrapper {
     // Return an object indexed on `column`
     // We assume the key is unique
     const output = {};
-    for (const [row] of this.args) {
+    for (const [row] of this.argslist) {
       const key = row[column];
       const value = output[key];
       if (value === undefined) {
@@ -211,18 +218,22 @@ internalFrum = frum;
 
 
 const toPairs = (obj) => {
-  return frum(Object.entries(obj).map(([k, v], i) => [v, k, i]));
+  if (obj instanceof Map) {
+    return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
+  }
+    return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
+
 };
-internalToPairs = toPairs;
 
 
 // Add a chainable method to Wrapper
 const extend_wrapper = (methods) => {
-  lodashToPairs(methods).forEach(([name, method]) => {
+  toPairs(methods).map((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
       return frum(method(this.toArray(), ...args));
     };
+    return null;
   });
 };
 
@@ -243,7 +254,7 @@ extend_wrapper({
     const lookup = frum(listB).groupBy(propB).fromPairs();
 
     return frum(listA)
-      .map(rowA => lookup[rowA[propA]].map((rowB) => { return { ...rowB, ...rowA }; }))
+      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
       .flatten();
   },
 
