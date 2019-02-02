@@ -1,7 +1,7 @@
 import fetchJson from '../fetchJson';
 
 const matchUrl = profileName => profileName
-  .replace(/.*(http[s]?:\/\/w*\.?.*?)[/]?[)]/, (match, firstMatch) => firstMatch);
+  .replace(/.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/, (match, firstMatch) => firstMatch);
 
 const matchShorterUrl = url => url
   .replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
