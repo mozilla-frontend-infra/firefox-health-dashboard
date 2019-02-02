@@ -93,7 +93,7 @@ export default class QuantumIndex extends React.Component {
         rows: frum(TP6_PAGES)
           .filter({ bits: bits })
           .groupBy('title')
-          .map(([series, { title }]) => (
+          .map((series, title) => (
             <PerfherderGraphContainer
               title={title}
               series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
@@ -485,7 +485,7 @@ export default class QuantumIndex extends React.Component {
 
 
     const reduced = sections.map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
-      const statusList = toPairs(statusLabels).map(([key]) => [key, 0]).fromPairs();
+      const statusList = toPairs(statusLabels).map(() => 0).fromPairs();
 
       const section = (
         <Grid container spacing={24}>
