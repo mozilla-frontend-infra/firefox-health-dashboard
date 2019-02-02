@@ -50,12 +50,10 @@ class TP6 extends React.Component {
                           .sortBy(['browser'])
                           .reverse()
                           .map((s) => { return { label: s.label, seriesConfig: s }; })
-                          .toArray()
                       }
                     />
                   </Grid>
                 ))
-                .toArray()
             }
           </Grid>
         </DashboardPage>

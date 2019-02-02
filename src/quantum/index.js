@@ -100,8 +100,7 @@ export default class QuantumIndex extends React.Component {
             />
 
           ))
-          .limit(4)
-          .toArray(),
+          .limit(4),
       },
       {
         title: 'Performance Tests',
@@ -529,8 +528,7 @@ export default class QuantumIndex extends React.Component {
           return null;
 
         })
-        .exists()
-        .toArray();
+        .exists();
 
       return (
         <div key={sectionId}>
@@ -561,7 +559,7 @@ export default class QuantumIndex extends React.Component {
           title='Quantum'
           subtitle='Release Criteria Report'
         >
-          {frum(reduced).limit(2).toArray()}
+          {frum(reduced).limit(2)}
           <h2 key='moreData'>
             {'More data on'}
             <strong>https://health.graphics/quantum</strong>

@@ -139,6 +139,5 @@ const SUITES = {
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
-  .join('browser', PLATFORMS, 'browser')
-  .toArray();
+  .join('browser', PLATFORMS, 'browser');
 export { CONFIG, PLATFORMS, TP6_PAGES };
