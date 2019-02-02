@@ -1,5 +1,4 @@
 import flatten from 'lodash/flatten';
-import lodashFilter from 'lodash/filter';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
@@ -76,6 +75,10 @@ class Wrapper {
     return new Wrapper(
       this.argslist.map(arg => arg[0]),
     );
+  }
+
+  filter(func) {
+    return new Wrapper(this.argslist.filter(args => func(...args)));
   }
 
   where(expression) {
@@ -240,7 +243,6 @@ const extend_wrapper = (methods) => {
 
 // Add Lodash functions
 extend_wrapper({
-  filter: lodashFilter,
   flatten: flatten,
   chunk: chunk,
   unzip: unzip,
