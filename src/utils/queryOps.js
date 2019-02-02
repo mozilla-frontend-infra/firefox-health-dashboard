@@ -132,7 +132,6 @@ extend_wrapper({
   zip: unzip,
   sortBy: sortBy,
   sort: sortBy,
-  lodashGroupBy: lodashGroupBy,
   limit: lodashTake,
 });
 
@@ -191,9 +190,7 @@ extend_wrapper({
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   join: function join(listA, propA, listB, propB) {
-    const lookup = frum(listB)
-      .lodashGroupBy(rowB => rowB[propB])
-      .toArray();
+    const lookup = lodashGroupBy(listB, rowB => rowB[propB]);
 
     return frum(listA)
       .map(rowA => lookup[rowA[propA]].map((rowB) => { return { ...rowB, ...rowA }; }))
