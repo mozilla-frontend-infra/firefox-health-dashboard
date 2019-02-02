@@ -91,7 +91,7 @@ export default class QuantumIndex extends React.Component {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}`,
         rows: frum(TP6_PAGES)
-          .filter({ bits: bits })
+          .where({ bits: bits })
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
