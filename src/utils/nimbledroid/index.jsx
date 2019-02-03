@@ -1,4 +1,3 @@
-import { toPairs } from '../queryOps';
 import CONFIG from './config';
 
 export const sortSitesByTargetRatio = (a, b) => {
@@ -109,14 +108,13 @@ export const generateSitesTableContent = (
     .map(scenario => scenarios[scenario]);
   const packageIds = Object.keys(meta);
   const numSites = Object.keys(filteredScenarios).length;
-  const sites = toPairs(filteredScenarios)
-    .map((scenario) => {
-      scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
-      return scenario;
-    })
-    .exists('ratio')
-    .sort('ratio')
-    .reverse();
+  const sites = (numSites > 0)
+    ? Object.values(filteredScenarios)
+      .map((scenario) => {
+        scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
+        return scenario;
+      })
+      .sort(sortSitesByTargetRatio) : [];
   const count = {
     red: 0,
     yellow: 0,
