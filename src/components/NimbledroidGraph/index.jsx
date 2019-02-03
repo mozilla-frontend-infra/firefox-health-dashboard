@@ -6,6 +6,7 @@ import MetricsGraphics from 'react-metrics-graphics';
 class NimbledroidGraph extends Component {
   render() {
     const { profile, targetRatio } = this.props;
+    profile.WV = profile['com.chrome.beta']; // temporary until other PRs get merged
     const labels = Object.keys(profile.data);
     const data = labels.map(product => profile.data[product]);
     const target = targetRatio * profile.WV;
