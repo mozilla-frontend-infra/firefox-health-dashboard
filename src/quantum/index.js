@@ -91,17 +91,16 @@ export default class QuantumIndex extends React.Component {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}`,
         rows: frum(TP6_PAGES)
-          .filter({ bits: bits })
+          .where({ bits: bits })
           .groupBy('title')
-          .map(([series, { title }]) => (
+          .map((series, title) => (
             <PerfherderGraphContainer
               title={title}
               series={series.map((s) => { return { label: s.label, seriesConfig: s }; })}
             />
 
           ))
-          .limit(4)
-          .toArray(),
+          .limit(4),
       },
       {
         title: 'Performance Tests',
@@ -486,7 +485,7 @@ export default class QuantumIndex extends React.Component {
 
 
     const reduced = sections.map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
-      const statusList = toPairs(statusLabels).map(([key]) => [key, 0]).fromPairs();
+      const statusList = toPairs(statusLabels).map(() => 0).fromPairs();
 
       const section = (
         <Grid container spacing={24}>
@@ -515,7 +514,7 @@ export default class QuantumIndex extends React.Component {
       );
 
       const stati = toPairs(statusList)
-        .map(([status, count]) => {
+        .map((count, status) => {
           const desc = statusLabels[status];
           if (desc && count) {
             return (
@@ -529,8 +528,7 @@ export default class QuantumIndex extends React.Component {
           return null;
 
         })
-        .exists()
-        .toArray();
+        .exists();
 
       return (
         <div key={sectionId}>
@@ -545,7 +543,7 @@ export default class QuantumIndex extends React.Component {
                 </span>
               )}
             </span>
-            {stati && ` ${stati}`}
+            {stati}
           </h2>
           {section}
         </div>
@@ -561,7 +559,7 @@ export default class QuantumIndex extends React.Component {
           title='Quantum'
           subtitle='Release Criteria Report'
         >
-          {frum(reduced).limit(2).toArray()}
+          {frum(reduced).limit(2)}
           <h2 key='moreData'>
             {'More data on'}
             <strong>https://health.graphics/quantum</strong>
