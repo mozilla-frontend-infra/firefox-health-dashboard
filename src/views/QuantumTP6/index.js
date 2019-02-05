@@ -39,7 +39,7 @@ class TP6 extends React.Component {
           <Grid container spacing={24}>
             {
               frum(TP6_PAGES)
-                .where({ bits: bits })
+                .where({ bits })
                 .groupBy('title')
                 .map((series, title) => (
                   <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>
@@ -50,6 +50,7 @@ class TP6 extends React.Component {
                           .sortBy(['browser'])
                           .reverse()
                           .map((s) => { return { label: s.label, seriesConfig: s }; })
+                          .toArray()
                       }
                     />
                   </Grid>

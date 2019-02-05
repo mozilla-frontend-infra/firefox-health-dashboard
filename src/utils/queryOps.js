@@ -36,10 +36,20 @@ const selector = (column_name) => {
   } return column_name;
 };
 
+const missing = (value) => {
+  // return true if value is null, or undefined, or not a legit value
+  return value == null || Number.isNaN(value) || value === '';
+};
+
+const exists = (value) => {
+  // return true if value is null, or undefined, or not a legit value
+  return !missing(value);
+};
+
 
 class Wrapper {
-  constructor(argslist) {
-    if (!Array.isArray(argslist) || (argslist.length > 0 && !Array.isArray(argslist[0]))) {
+  constructor(argslist, ok = false) {
+    if (!ok && (!Array.isArray(argslist) || (argslist.length > 0 && !Array.isArray(argslist[0])))) {
       console.log(`expecting Array of tuples, not: ${JSON.stringify(argslist)}`);
       throw Error(`expecting Array of tuples, not: ${JSON.stringify(argslist)}`);
     }
@@ -47,9 +57,18 @@ class Wrapper {
   }
 
   * [Symbol.iterator]() {
+    this.materialize();
     for (const [a] of this.argslist) {
       yield a;
     }
+  }
+
+  materialize() {
+    // ensure this.argslist is an array, any generators are exhausted
+    if (!Array.isArray(this.argslist)) {
+      this.argslist = Array.from(this.argslist); // materialize the array of arguments
+    }
+    return this;
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -58,27 +77,53 @@ class Wrapper {
 
   map(func) {
     // map the value, do not touch the other args
-    return new Wrapper(
-      this.argslist.map(([value, ...args]) => [func(value, ...args), ...args]),
-    );
+    function* output(argslist) {
+      let i = 0;
+      for (const [value, ...args] of argslist) {
+        yield [func(value, ...args), ...args, i];
+        i += 1;
+      }
+    }
+    return new Wrapper(output(this.argslist), true);
+  }
+
+  forEach(func) {
+    // execute func for each element, do not change this
+    this.materialize();
+
+    let i = 0;
+    for (const args of this.argslist) {
+      func(...args, i);
+      i += 1;
+    }
+    return this;
   }
 
   enumerate() {
     // append extra index paramter to args
-    return new Wrapper(
-      this.argslist.map((args, i) => [...args, i]),
-    );
+    function* output(argslist) {
+      let i = 0;
+      for (const args of argslist) {
+        yield [...args, i];
+        i += 1;
+      }
+    }
+
+    return new Wrapper(output(this.argslist));
   }
 
   args() {
     // Convert value into args
     return new Wrapper(
-      this.argslist.map(arg => arg[0]),
+      this.materialize().argslist.map(arg => arg[0]),
     );
   }
 
   filter(func) {
-    return new Wrapper(this.argslist.filter(args => func(...args)));
+    function* output(argslist) {
+      for (const args of argslist) if (func(...args)) yield args;
+    }
+    return new Wrapper(output(this.argslist), true);
   }
 
   where(expression) {
@@ -98,15 +143,12 @@ class Wrapper {
     // Expect a list of column names that must exist
     let func = null;
 
-    if (columns == null) {
-      func = row => row != null;
+    if (missing(columns)) {
+      func = exists;
     } else {
-      const cols = toArray(columns);
+      const selects = toArray(columns).map(selector);
       func = (row) => {
-        for (const name of cols) {
-          const v = row[name];
-          if (v == null || Number.isNaN(v)) return false;
-        }
+        for (const s of selects) if (missing(s(row))) return false;
         return true;
       };
     }
@@ -186,6 +228,17 @@ class Wrapper {
     return first(this);
   }
 
+  findIndex(func) {
+    // return index of first element where func returns true
+    // return null if not found
+    let i = 0;
+    for (const args of this.argslist) {
+      if (func(...args)) return i;
+      i += 1;
+    }
+    return null;
+  }
+
   last() {
     // return last element
     return last(this);
@@ -220,6 +273,8 @@ internalFrum = frum;
 
 
 const toPairs = (obj) => {
+  // convert Object (or Map) into [value, key] pairs
+  // notice the **value is first**
   if (obj instanceof Map) {
     return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
   }
@@ -228,14 +283,13 @@ const toPairs = (obj) => {
 };
 
 
-// Add a chainable method to Wrapper
 const extend_wrapper = (methods) => {
-  toPairs(methods).map((method, name) => {
+  // Add a chainable method to Wrapper
+  toPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
       return frum(method(this.toArray(), ...args));
     };
-    return null;
   });
 };
 
