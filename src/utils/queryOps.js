@@ -27,7 +27,7 @@ const index = (list, column) => {
   list.forEach((row) => {
     const key = row[column];
     const value = output[key];
-    if (value === undefined) {
+    if (value === undefined) { // TODO: simplify
       output[key] = row;
     } else {
       throw new Error('expecting index to be unique');
@@ -65,7 +65,7 @@ class Wrapper {
     this.list.forEach((row) => {
       const key = row[column];
       const value = output[key];
-      if (value === undefined) {
+      if (value === undefined) { // TODO: simplify
         output[key] = row;
       } else {
         throw new Error('expecting index to be unique');
@@ -202,7 +202,7 @@ extend_wrapper({
       func = (row) => {
         for (const name of cols) {
           const v = row[name];
-          if (v == null || Number.isNaN(v)) return false;
+          if (v == null || Number.isNaN(v)) return false; // TODO: simplify
         }
         return true;
       };

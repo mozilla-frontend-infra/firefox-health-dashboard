@@ -9,7 +9,7 @@ const SummaryTable = ({ content = [], header }) => {
   const compareColumn = frum(header)
     .map((name, i) => (name === compareName ? i : null))
     .exists()
-    .first();
+    .first(); // TODO: replace with findIndex()
 return (
   <table className='summary-table'>
     {header && (

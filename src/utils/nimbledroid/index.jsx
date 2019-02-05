@@ -121,8 +121,9 @@ export const generateSitesTableContent = (
     green: 0,
   };
 
-  const tableHeader = packageIds.map(packageId => CONFIG.packageIdLabels[packageId]);
-  tableHeader.push(`% from ${CONFIG.packageIdLabels[CONFIG.baseProduct]}`);
+  const { packageIdLabels } = CONFIG;
+  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
+  tableHeader.push(`% from ${packageIdLabels[baseProduct]}`);
 
   const tableContent = sites.map((scenario) => {
     const { title, url } = scenario;
