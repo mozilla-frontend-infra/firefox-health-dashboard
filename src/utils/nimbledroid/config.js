@@ -1,4 +1,5 @@
-const CONFIG = {
+const
+  CONFIG = {
     packageIdLabels: {
         'org.mozilla.klar': 'Firefox Klar',
         'org.mozilla.geckoview_example': 'GeckoView Example',
@@ -10,7 +11,7 @@ const CONFIG = {
     'org.mozilla.geckoview_example',
     'com.chrome.beta',
   ],
-  baseProduct: 'org.mozilla.klar',
+  baseProduct: 'org.mozilla.geckoview_example',
   compareProduct: 'com.chrome.beta',
   targetRatio: 1.2,
 };
