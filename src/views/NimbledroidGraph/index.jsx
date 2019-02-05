@@ -17,11 +17,11 @@ class NimbledroidGraph extends Component {
 
   render() {
     const { products } = CONFIG;
-    const title = `${CONFIG.packageIdLabels[CONFIG.baseProduct]} vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
+    const nimbledroidSubTitle = `${CONFIG.packageIdLabels[CONFIG.baseProduct]} vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
     const site = this.props.location.search.replace('?site=', '');
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
-        <Section title='Nimbledroid' subtitle={title}>
+        <Section title='Nimbledroid' subtitle={nimbledroidSubTitle}>
           <NimbledroidProductVersions products={products} />
           <NimbledroidSiteDrilldown
             configuration={{
