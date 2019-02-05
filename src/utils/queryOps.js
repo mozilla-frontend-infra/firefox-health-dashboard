@@ -121,7 +121,7 @@ class Wrapper {
 
   filter(func) {
     function* output(argslist) {
-      for (const args of argslist) if (func(...args)) yield args;
+      for (const [value, ...args] of argslist) if (func(value, ...args)) yield [value];
     }
     return new Wrapper(output(this.argslist), true);
   }
