@@ -123,7 +123,7 @@ export const generateSitesTableContent = (
 
   const { packageIdLabels } = CONFIG;
   const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
-  tableHeader.push(`% from ${packageIdLabels[baseProduct]}`);
+  tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
 
   const tableContent = sites.map((scenario) => {
     const { title, url } = scenario;

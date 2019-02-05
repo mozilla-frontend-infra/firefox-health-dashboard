@@ -12,6 +12,8 @@ import CONFIG from '../../utils/nimbledroid/config';
 
 class Android extends Component {
   render() {
+    const nimbledroidSubTitle = `${CONFIG.packageIdLabels[CONFIG.baseProduct]} vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
+
     return (
       <DashboardPage title='Android' subtitle='Release criteria'>
         <Section title='Bugzilla'>
@@ -59,7 +61,7 @@ class Android extends Component {
             title='GeckoView Fenix bugs'
           />
         </Section>
-        <Section title='Nimbledroid' subtitle='GeckoView vs Chrome Beta'>
+        <Section title='Nimbledroid' subtitle={nimbledroidSubTitle}>
           <NimbledroidSection
             configuration={{ ...CONFIG }}
           />
