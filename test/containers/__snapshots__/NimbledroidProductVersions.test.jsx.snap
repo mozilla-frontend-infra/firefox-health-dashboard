@@ -7,17 +7,17 @@ exports[`renders correctly 1`] = `
   <span
     className="NimbledroidProductVersions-spacing-2"
   >
-    GeckoView (8.0)
+    Firefox Klar (8.0)
   </span>
   <span
     className="NimbledroidProductVersions-spacing-2"
   >
-    WebView (8.0)
+    undefined (8.0)
   </span>
   <span
     className="NimbledroidProductVersions-spacing-2"
   >
-    ChromeBeta (70.0.3538.17)
+    Chrome Beta (70.0.3538.17)
   </span>
 </div>
 `;
