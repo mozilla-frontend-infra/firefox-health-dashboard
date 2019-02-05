@@ -9,6 +9,34 @@ import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
 import lodashFromPairs from 'lodash/fromPairs';
 
+
+const last = (list) => {
+  if (list.length === 0) return null;
+  return list[list.length - 1];
+};
+
+const first = (list) => {
+  if (list.length === 0) return null;
+  return list[0];
+};
+
+const index = (list, column) => {
+  // Return object indexed on column
+  // We assume the key is unique
+  const output = {};
+  list.forEach((row) => {
+    const key = row[column];
+    const value = output[key];
+    if (value === undefined) { // TODO: simplify
+      output[key] = row;
+    } else {
+      throw new Error('expecting index to be unique');
+    }
+  });
+  return output;
+};
+
+
 class Wrapper {
   constructor(list) {
     this.list = list;
@@ -21,6 +49,31 @@ class Wrapper {
   fromPairs() {
     return lodashFromPairs(this.list);
   }
+
+  last() {
+    return last(this.list);
+  }
+
+  first() {
+    return first(this.list);
+  }
+
+  index(column) {
+    // Return object indexed on column
+    // We assume the key is unique
+    const output = {};
+    this.list.forEach((row) => {
+      const key = row[column];
+      const value = output[key];
+      if (value === undefined) { // TODO: simplify
+        output[key] = row;
+      } else {
+        throw new Error('expecting index to be unique');
+      }
+    });
+    return output;
+  }
+
 
 }
 
@@ -47,16 +100,17 @@ const extend_wrapper = (methods) => {
 
 // Add Lodash functions
 extend_wrapper({
-  chunk: chunk,
-  flatten: flatten,
-  limit: lodashTake,
-  lodashFilter: lodashFilter,
-  lodashGroupBy: lodashGroupBy,
   map: map,
+  filter: lodashFilter,
+  flatten: flatten,
+  toPairs: lodashToPairs,
+  chunk: chunk,
+  unzip: unzip,
+  zip: unzip,
   sortBy: sortBy,
   sort: sortBy,
-  toPairs: lodashToPairs,
-  unzip: unzip,
+  lodashGroupBy: lodashGroupBy,
+  limit: lodashTake,
 });
 
 
@@ -80,9 +134,10 @@ const selector = (column_name) => {
 
 
 extend_wrapper({
-  // Groupby one, or many, columns by name or by {name: selector} pairs
-  // return array of [rows, key, index] tuples
   groupBy: function groupBy(list, columns) {
+    // Groupby one, or many, columns by name or by {name: selector} pairs
+    // return array of [rows, key, index] tuples
+
     const cs = frum(toArray(columns))
       .map((col_name) => {
         if (typeof col_name === 'string') {
@@ -123,9 +178,9 @@ extend_wrapper({
       .toArray();
   },
 
+  where: function where(list, expression) {
   // Expecting a object of {column_name: value} form to use as a filter
   // return only matching rows
-  filter: function filter(list, expression) {
     const func = (row) => {
       for (const [name, value] of lodashToPairs(expression)) {
         if (row[name] !== value) return false;
@@ -136,6 +191,30 @@ extend_wrapper({
     return lodashFilter(list, func);
   },
 
+  exists: function exists(list, columns = null) {
+    // Expect a list of column names that must exist
+    let func = null;
+
+    if (columns == null) {
+      func = row => row != null;
+    } else {
+      const cols = toArray(columns);
+      func = (row) => {
+        for (const name of cols) {
+          const v = row[name];
+          if (v == null || Number.isNaN(v)) return false; // TODO: simplify
+        }
+        return true;
+      };
+    }
+    return lodashFilter(list, func);
+
+  },
+
+  append: function append(list, value) {
+    return [...list, value];
+  },
+
   reverse: function reverse(list) {
     return list.reverse();
   },
@@ -143,4 +222,4 @@ extend_wrapper({
 
 });
 
-export { frum, toPairs };
+export { frum, toPairs, first, last, index };

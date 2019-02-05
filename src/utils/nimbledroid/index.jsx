@@ -120,8 +120,11 @@ export const generateSitesTableContent = (
     yellow: 0,
     green: 0,
   };
-  const tableHeader = packageIds.map(packageId => CONFIG.packageIdLabels[packageId]);
-  tableHeader.push('% from target');
+
+  const { packageIdLabels } = CONFIG;
+  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
+  tableHeader.push(`% from ${packageIdLabels[baseProduct]}`);
+
   const tableContent = sites.map((scenario) => {
     const { title, url } = scenario;
     const { ratio, color } = siteMetrics(
