@@ -402,7 +402,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -412,11 +412,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -486,7 +486,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -496,11 +496,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -534,7 +534,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -544,11 +544,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -582,7 +582,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -592,11 +592,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -630,7 +630,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -640,11 +640,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -678,7 +678,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -688,11 +688,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -726,7 +726,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -736,11 +736,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -774,7 +774,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -784,11 +784,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -822,7 +822,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -832,11 +832,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -870,7 +870,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -880,11 +880,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -918,7 +918,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -928,11 +928,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -966,7 +966,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -976,11 +976,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"

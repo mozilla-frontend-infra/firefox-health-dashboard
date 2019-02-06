@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
+import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import generateOptions from '../../utils/chartJs/generateOptions';
 
 const styles = {
@@ -19,27 +20,46 @@ const styles = {
       backgroundColor: 'black',
       padding: '.3rem .3rem .3rem .3rem',
     },
+    errorPanel: {
+      marginTop: '10px',
+      width: '97%',
+    },
 };
 
 const ChartJsWrapper = ({
   classes, data, options, title, type, chartHeight, spinnerSize,
-}) => (
-  data ? (
-    <div className={classes.chartContainer}>
-      {title && <h2>{title}</h2>}
-      <Chart
-        type={type}
-        data={data}
-        height={chartHeight}
-        options={generateOptions(options)}
-      />
-    </div>
-  ) : (
-    <div style={{ lineHeight: spinnerSize, textAlign: 'center', width: spinnerSize }}>
-      <CircularProgress />
-    </div>
-  )
-);
+  missingDataError = false,
+}) => {
+  let showError;
+  if (data && missingDataError) {
+    showError = data.datasets.some((dataset) => {
+      const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
+      const currentDate = new Date(); // get current date
+      const timeDifference = Math.abs(currentDate.getTime() - latestDataDate.getTime());
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      return daysDifference > 3; // if days are more than 3 then show error
+    });
+  }
+
+  return (
+    data ? (
+      <div className={classes.chartContainer}>
+        {showError && <ErrorPanel className={classes.errorPanel} error='This item has been missing data for at least 3 days.' /> }
+        {title && <h2>{title}</h2>}
+        <Chart
+          type={type}
+          data={data}
+          height={chartHeight}
+          options={generateOptions(options)}
+        />
+      </div>
+    ) : (
+      <div style={{ lineHeight: spinnerSize, textAlign: 'center', width: spinnerSize }}>
+        <CircularProgress />
+      </div>
+    )
+  );
+};
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
@@ -76,6 +96,8 @@ ChartJsWrapper.propTypes = {
     type: PropTypes.string,
     chartHeight: PropTypes.number,
     spinnerSize: PropTypes.string,
+    missingDataError: PropTypes.bool,
+    showError: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {
