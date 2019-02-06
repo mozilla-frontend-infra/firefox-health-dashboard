@@ -37,7 +37,7 @@ const ChartJsWrapper = ({
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(currentDate.getTime() - latestDataDate.getTime());
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-      return daysDifference > 0; // if days are more than 3 then show error
+      return daysDifference > 3; // if days are more than 3 then show error
     });
   }
 
