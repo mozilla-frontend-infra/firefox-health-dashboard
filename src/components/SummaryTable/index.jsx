@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import StatusWidget from '../StatusWidget';
@@ -36,9 +35,10 @@ const SummaryTable = ({ content = [], header }) => {
               {dataPoints.map((datum, columnIndex) => {
                 const className =
                   columnIndex === compareColumn ? `status-${statusColor}` : '';
+                const datumId = `${columnIndex}_datum`;
 
                 return (
-                  <td key={columnIndex} className={className}>
+                  <td key={datumId} className={className}>
                     {datum}
                   </td>
                 );

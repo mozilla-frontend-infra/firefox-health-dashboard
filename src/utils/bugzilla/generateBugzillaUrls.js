@@ -34,7 +34,6 @@ const generateBugzillaUrls = async (queries, includeBugCount) =>
       if (includeBugCount) {
         // eslint-disable-next-line no-param-reassign
         parameters.count_only = 1;
-        // eslint-disable-next-line camelcase
         const { bugCount } = await queryBugzilla(parameters);
 
         urlInfo.bugCount = bugCount;

@@ -10,7 +10,6 @@ const enrich = (text, key = 'none') =>
       key={`enriched-${key}`}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
-          // eslint-disable-line
         __html: text
           .replace(/\*([^*]+)\*/g, '<em>$1</em>')
           .replace(

@@ -66,7 +66,6 @@ const mergeProductsData = productsData => {
       latestVersion,
     };
 
-    // eslint-disable-next-line consistent-return
     Object.keys(scenarios).forEach(originalKey => {
       const profileInfo = scenarios[originalKey];
 

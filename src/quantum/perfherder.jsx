@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 /* global fetch */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -124,7 +123,7 @@ export default class PerfherderWidget extends React.Component {
           referenceYs.push(refY);
           $reference = busy ? null : (
             <line
-              key={`reference-${idx}`}
+              key={`reference-${evolution[0].date}`}
               className="reference reference-x"
               x1={referenceX}
               y1={refY}
@@ -197,15 +196,12 @@ export default class PerfherderWidget extends React.Component {
         );
       });
       const yFormat = timeFormat('%b');
-      const $xAxis = xScale.ticks(timeMonth.every(1)).map((tick, idx) => {
-        // if (!idx) {
-        //   return null;
-        // }
+      const $xAxis = xScale.ticks(timeMonth.every(1)).map(tick => {
         const x = xScale(tick);
         const label = yFormat(tick);
 
         return (
-          <g className={cx('tick', 'tick-x')} key={`tick-${idx}`}>
+          <g className={cx('tick', 'tick-x')} key={`tick-${tick}`}>
             <text x={x} y={height - 5}>
               {label}
             </text>
