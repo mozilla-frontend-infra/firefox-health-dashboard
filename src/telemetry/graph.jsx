@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* global fetch */
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
@@ -12,28 +13,31 @@ export default class TelemetryContainer extends React.Component {
 
   async fetchPlotGraph(id, queryParams) {
     let url = `${SETTINGS.backend}/api/perf/telemetry?`;
+
     url += stringify({
       name: id,
       ...queryParams,
     });
+
     try {
-      const { graphData, telemetryUrl } = await (
-        await fetch(url)).json();
+      const { graphData, telemetryUrl } = await (await fetch(url)).json();
+
       if (!this.graphTitleLink) {
         return;
       }
+
       this.graphTitleLink.setAttribute('href', telemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
     }
   }
 
-  graphEvolutionsTimeline({
-    datas, params, yLabel, legendLabels,
-  }, graphEl) {
+  graphEvolutionsTimeline({ datas, params, yLabel, legendLabels }, graphEl) {
     const newDatas = datas.map(evo => MG.convert.date(evo, 'date'));
+
     MG.data_graphic({
       data: newDatas,
       chart_type: 'line',
@@ -60,16 +64,26 @@ export default class TelemetryContainer extends React.Component {
 
   render() {
     const { id, title } = this.props;
+
     return (
-      <div id={id} key={id} className='criteria-widget'>
+      <div id={id} key={id} className="criteria-widget">
         <header>
-          <h3 className='graph-title'>
-            <a className='graph-title-link' ref={a => this.graphTitleLink = a}>{title}</a>
+          <h3 className="graph-title">
+            <a
+              className="graph-title-link"
+              ref={a => (this.graphTitleLink = a)}>
+              onCic
+              {title}
+            </a>
           </h3>
         </header>
-        <div className='graph-subtitle' ref={div => this.graphSubtitleEl = div}>{}</div>
-        <div className='graph' ref={div => this.graphEl = div}>
-          <div className='graph-legend'>{}</div>
+        <div
+          className="graph-subtitle"
+          ref={div => (this.graphSubtitleEl = div)}>
+          {}
+        </div>
+        <div className="graph" ref={div => (this.graphEl = div)}>
+          <div className="graph-legend">{}</div>
         </div>
       </div>
     );

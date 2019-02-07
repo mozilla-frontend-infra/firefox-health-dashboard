@@ -21,7 +21,6 @@ const styles = {
     padding: '.5em 0',
   },
 };
-
 const DashboardPage = ({ classes, children, title, subtitle }) => (
   <div className={classes.root}>
     <div className={classes.title}>

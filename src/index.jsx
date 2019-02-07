@@ -10,21 +10,24 @@ import registerTooltip from './utils/registerTooltip';
 require('typeface-roboto');
 
 if (process.env.NODE_ENV === 'production') {
-  Raven.config('https://77916a47017347528d25824beb0a077e@sentry.io/1225660').install();
+  Raven.config(
+    'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
+  ).install();
 }
+
 // handle sticky tooltip for all charts
 registerTooltip();
 
 const root = document.getElementById('root');
-const load = () => render(
-  (
+const load = () =>
+  render(
     <AppContainer>
       <GenericErrorBoundary critical>
         <Routes />
       </GenericErrorBoundary>
-    </AppContainer>
-  ), root,
-);
+    </AppContainer>,
+    root
+  );
 
 // This is needed for Hot Module Replacement
 if (module.hot) {

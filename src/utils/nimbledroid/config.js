@@ -1,11 +1,10 @@
-const
-  CONFIG = {
-    packageIdLabels: {
-        'org.mozilla.klar': 'Firefox Klar',
-        'org.mozilla.geckoview_example': 'GeckoView Example',
+const CONFIG = {
+  packageIdLabels: {
+    'org.mozilla.klar': 'Firefox Klar',
+    'org.mozilla.geckoview_example': 'GeckoView Example',
     // 'org.mozilla.focus': 'WebView',
-        'com.chrome.beta': 'Chrome Beta',
-    },
+    'com.chrome.beta': 'Chrome Beta',
+  },
   products: [
     'org.mozilla.klar',
     'org.mozilla.geckoview_example',

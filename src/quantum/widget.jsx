@@ -4,79 +4,94 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-const enrich = (text, key = 'none') => (typeof text === 'string'
-  ? (
+const enrich = (text, key = 'none') =>
+  typeof text === 'string' ? (
     <span
       key={`enriched-${key}`}
+      // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
           // eslint-disable-line
         __html: text
-            .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-            .replace(
-              /\[([^\]]+)\]\(([^)]+)/g,
-              '<a href="$2" target="_blank" rel="noopener noreferrer">$1</em>',
-            ),
+          .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+          .replace(
+            /\[([^\]]+)\]\(([^)]+)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</em>'
+          ),
       }}
     />
-)
-  : text);
+  ) : (
+    text
+  );
 
 export default class Widget extends React.Component {
   render() {
     const title = enrich(this.props.title);
     // const updated = this.props.updated && moment(this.props.updated);
-    const $title = this.props.link
-      ? (
-        <a href={this.props.link} target='_blank' rel='noopener noreferrer'>
-          {title}
-        </a>
-)
-      : title;
+    const $title = this.props.link ? (
+      <a href={this.props.link} target="_blank" rel="noopener noreferrer">
+        {title}
+      </a>
+    ) : (
+      title
+    );
     let $secondTitle;
+
     if (this.props.secondTitle) {
       if (this.props.secondLink) {
-        $secondTitle = <Link to={this.props.secondLink}>{this.props.secondTitle}</Link>;
+        $secondTitle = (
+          <Link to={this.props.secondLink}>{this.props.secondTitle}</Link>
+        );
       } else {
         $secondTitle = this.props.secondTitle;
       }
     }
-    let target = this.props.target;
+
+    let { target } = this.props;
+
     if (target) {
       target = ['Target: ', enrich(this.props.target)];
     }
-    const reading = this.props.reading;
+
+    const { reading } = this.props;
     let $targetStatus = null;
+
     if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
-      const targetStatus = this.props.targetStatus;
+      const { targetStatus } = this.props;
+
       $targetStatus = (
-        <aside className='widget-target-status'>
-          {reading
-            ? <span className='status-reading'>{reading}</span>
-            : null
-          }
-          {targetStatus === 'pass'
-            ? (
-              <span role='img' aria-label='Pass' key='icon-pass' className='status-icon'>
-                😀
-              </span>
-)
-            : (
-              <span role='img' aria-label='Fail' key='icon-fail' className='status-icon'>
-                😟
-              </span>
-)}
+        <aside className="widget-target-status">
+          {reading ? <span className="status-reading">{reading}</span> : null}
+          {targetStatus === 'pass' ? (
+            <span
+              role="img"
+              aria-label="Pass"
+              key="icon-pass"
+              className="status-icon">
+              😀
+            </span>
+          ) : (
+            <span
+              role="img"
+              aria-label="Fail"
+              key="icon-fail"
+              className="status-icon">
+              😟
+            </span>
+          )}
         </aside>
       );
     }
 
     return (
-      <div className={cx(`criteria-widget status-${this.props.status}`, this.props.className)}>
-        <header className='sides-padding'>
+      <div
+        className={cx(
+          `criteria-widget status-${this.props.status}`,
+          this.props.className
+        )}>
+        <header className="sides-padding">
           <div>
-            <h3>
-              {$title}
-            </h3>
-            <span className='sides-padding'>{$secondTitle}</span>
+            <h3>{$title}</h3>
+            <span className="sides-padding">{$secondTitle}</span>
           </div>
           {$targetStatus}
         </header>
@@ -84,22 +99,20 @@ export default class Widget extends React.Component {
           className={cx('widget-content', {
             'state-loading': this.props.loading,
           })}
-          ref={(node) => {
+          ref={node => {
             if (node && this.props.viewport) {
               const rect = node.getBoundingClientRect();
+
               this.props.viewport([rect.width, rect.height]);
             }
-          }}
-        >
+          }}>
           {this.props.children}
-          {this.props.content
-            && enrich(this.props.content, 'content')}
-          {target
-            && (
-            <div key='target' className='widget-target'>
+          {this.props.content && enrich(this.props.content, 'content')}
+          {target && (
+            <div key="target" className="widget-target">
               {target}
             </div>
-)}
+          )}
         </div>
       </div>
     );

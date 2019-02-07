@@ -14,6 +14,7 @@ class NimbledroidSection extends Component {
   constructor(props) {
     super(props);
     const { nimbledroidData } = this.props;
+
     if (nimbledroidData) {
       this.state = { nimbledroidData };
     }
@@ -21,8 +22,12 @@ class NimbledroidSection extends Component {
 
   async componentDidMount() {
     const { configuration, handleError } = this.props;
+
     try {
-      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
+
       this.setState({ nimbledroidData });
     } catch (error) {
       handleError(error);
@@ -32,6 +37,7 @@ class NimbledroidSection extends Component {
   render() {
     const { configuration } = this.props;
     const { nimbledroidData } = this.state;
+
     return nimbledroidData ? (
       <div>
         <NimbledroidProductVersions
@@ -45,14 +51,16 @@ class NimbledroidSection extends Component {
         <NimbledroidGraphContainer
           configuration={configuration}
           scenarioData={nimbledroidData.scenarios['Cold Startup']}
-          scenarioName='Cold Startup'
+          scenarioName="Cold Startup"
         />
       </div>
-    ) : <div />;
+    ) : (
+      <div />
+    );
   }
 }
 
-NimbledroidSection.propTypes = ({
+NimbledroidSection.propTypes = {
   handleError: PropTypes.func.isRequired,
   nimbledroidData: PropTypes.shape({}),
   configuration: PropTypes.shape({
@@ -61,6 +69,6 @@ NimbledroidSection.propTypes = ({
     products: PropTypes.arrayOf(PropTypes.string).isRequired,
     targetRatio: PropTypes.number.isRequired,
   }).isRequired,
-});
+};
 
 export default withErrorBoundary(NimbledroidSection);

@@ -60,6 +60,7 @@
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
+    "@mozilla-frontend-infra/react-lint": "^1.1.1",
     "@neutrinojs/airbnb": "^9.0.0-beta.1",
     "@neutrinojs/copy": "^9.0.0-beta.1",
     "@neutrinojs/jest": "^9.0.0-beta.1",

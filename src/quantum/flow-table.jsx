@@ -4,7 +4,6 @@ import 'react-table/react-table.css';
 import PropTypes from 'prop-types';
 import { stringify } from 'query-string';
 import cx from 'classnames';
-
 import SETTINGS from '../settings';
 import { getBugUrl, flowGraphProps } from './constants';
 import DashboardPage from '../components/DashboardPage';
@@ -20,8 +19,13 @@ export default class FlowTable extends React.Component {
   }
 
   fetchData() {
-    fetch(`${SETTINGS.backend}/api/bz/burnup?${stringify(flowGraphProps.query)}&list=true`)
-      .then(response => response.json()).then(data => this.setState({ data }));
+    fetch(
+      `${SETTINGS.backend}/api/bz/burnup?${stringify(
+        flowGraphProps.query
+      )}&list=true`
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ data }));
   }
 
   render() {
@@ -37,7 +41,14 @@ export default class FlowTable extends React.Component {
       {
         Header: 'Bug',
         accessor: 'id',
-        Cell: props => <a href={getBugUrl(props.value)} target='_blank'>{props.value}</a>,
+        Cell: props => (
+          <a
+            href={getBugUrl(props.value)}
+            rel="noopener noreferrer"
+            target="_blank">
+            {props.value}
+          </a>
+        ),
       },
       {
         Header: 'Date created',
@@ -61,22 +72,21 @@ export default class FlowTable extends React.Component {
         accessor: 'last_change_time',
       },
     ];
+
     return (
       <DashboardPage
-        title='Quantum'
-        subtitle='P1 Bugs'
-        className={cx('summary')}
-      >
+        title="Quantum"
+        subtitle="P1 Bugs"
+        className={cx('summary')}>
         <div style={{ backgroundColor: 'white' }}>
           <div style={tableStyle}>
-            {this.state.data
-            && (
-            <ReactTable
-              data={this.state.data}
-              columns={columns}
-              className='-striped'
-            />
-)}
+            {this.state.data && (
+              <ReactTable
+                data={this.state.data}
+                columns={columns}
+                className="-striped"
+              />
+            )}
           </div>
         </div>
       </DashboardPage>
