@@ -37,6 +37,15 @@ const index = (list, column) => {
 };
 
 
+const isNull = (v) => {
+  return v == null || Number.isNaN(v);
+};
+
+const coalesce = (...args) => {
+  for (const a of args) if (!isNull(a)) return a;
+  return null;
+};
+
 class Wrapper {
   constructor(list) {
     this.list = list;
@@ -222,4 +231,4 @@ extend_wrapper({
 
 });
 
-export { frum, toPairs, first, last, index };
+export { frum, toPairs, first, last, index, coalesce };

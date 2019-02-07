@@ -25,7 +25,7 @@ const statusColor = (ratio, targetRatio) => {
 };
 
 export const siteMetrics = (target1, target2, targetRatio) => {
-  const ratio = target1 / target2;
+  const ratio = target1 == null ? 1 : target1 / target2;
   return {
     ratio,
     color: statusColor(ratio, targetRatio).widgetColor,
@@ -133,7 +133,7 @@ export const generateSitesTableContent = (
     count[color] += 1;
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: packageIds.map(packageId => scenario[packageId]),
+      dataPoints: packageIds.map(packageId => scenario[packageId]) || [],
       statusColor: color,
       summary: `${((1 - ratio) * 100).toFixed(2)}%`,
       title: {
