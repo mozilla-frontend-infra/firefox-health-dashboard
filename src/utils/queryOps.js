@@ -5,6 +5,7 @@ import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
 
 let internalFrum = null;
+let internalToPairs = null;
 const first = list => {
   for (const v of list) return v;
 
@@ -41,25 +42,35 @@ const zipObject = (keys, values) => {
   return output;
 };
 
-const selector = columnName => {
-  // convert string into function that selects column from row
-  // convert array of strings into function that extract properties from row
+function preSelector(columnName) {
+  // convert to an array of [selector(), name] pairs
   if (Array.isArray(columnName)) {
     // select many columns
-    const cs = internalFrum(columnName)
-      .map(columnName => {
-        if (typeof columnName === 'string') {
-          return [[selector(columnName), columnName]];
-        }
-
-        return Object.entries(columnName).map((name, value) => [
-          selector(value),
-          name,
-        ]);
-      })
+    return internalFrum(columnName)
+      .map(preSelector)
       .flatten()
-      .sortBy(([, b]) => b)
-      .args();
+      .sortBy(([, b]) => b);
+  }
+
+  if (typeof columnName === 'object') {
+    return internalToPairs(columnName)
+      .map((value, name) => [preSelector(value), name])
+      .flatten()
+      .sortBy(([, b]) => b);
+  }
+
+  if (typeof columnName === 'string') {
+    return internalFrum([row => row[columnName], columnName]);
+  }
+}
+
+function selector(columnName) {
+  // convert string into function that selects column from row
+  // convert array of strings into function that extract properties from row
+  // convert an
+  if (typeof columnName === 'object' || Array.isArray(columnName)) {
+    // select many columns
+    const cs = preSelector(columnName).args();
 
     return row => cs.map(func => func(row)).fromPairs();
   }
@@ -69,7 +80,7 @@ const selector = columnName => {
   }
 
   return columnName;
-};
+}
 
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
@@ -353,6 +364,8 @@ const toPairs = obj => {
 
   return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
 };
+
+internalToPairs = toPairs;
 
 const extendWrapper = methods => {
   // Add a chainable method to Wrapper
