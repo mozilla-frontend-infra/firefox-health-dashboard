@@ -29,6 +29,7 @@ const toArray = (value) => {
 };
 
 const zipObject = (keys, values) => {
+  // accept list of keys and list of values to zip into a single object
   const output = {};
   for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
   return output;
@@ -192,6 +193,20 @@ class Wrapper {
     return new Wrapper(output(this.argslist), true);
   }
 
+  sort(...args) {
+    return internalFrum(sortBy(this.toArray(), ...args));
+  }
+
+  sortBy(...args) {
+    const output = internalFrum(sortBy(this.toArray(), ...args)).toArray();
+
+    if (output[0].browser > output[1].browser) {
+      console.log('eeror');
+    }
+    return internalFrum(output);
+  }
+
+
   groupBy(columns) {
     // Groupby one, or many, columns by name or by {name: selector} pairs
     // return array of [rows, key, index] tuples
@@ -325,8 +340,6 @@ extend_wrapper({
   chunk: chunk,
   unzip: unzip,
   zip: unzip,
-  sortBy: sortBy,
-  sort: sortBy,
   limit: lodashTake,
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
@@ -343,7 +356,12 @@ extend_wrapper({
   },
 
   reverse: function reverse(list) {
-    return list.reverse();
+    const output = list.reverse();
+
+    if (output[0].browser < output[1].browser) {
+      console.log('eeror');
+    }
+    return output;
   },
 });
 
