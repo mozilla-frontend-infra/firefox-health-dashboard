@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/no-array-index-key */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
@@ -49,6 +46,7 @@ export default class QuantumIndex extends React.Component {
         cssRowExtraClasses: 'generic-metrics-graphics',
         rows: [
           <GraphContainer
+            key="overview"
             query={flowGraphProps.query}
             customClass={flowGraphProps.customClass}
             title={flowGraphProps.title}
@@ -60,6 +58,7 @@ export default class QuantumIndex extends React.Component {
             height={flowGraphProps.height}
             link={`/quantum/${bits}/bugs`}
           />,
+          // eslint-disable-next-line react/jsx-key
           <Countdown />,
         ],
       },
@@ -70,6 +69,7 @@ export default class QuantumIndex extends React.Component {
             <Perfherder {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
+            key="speedometer"
             title="Speedometer"
             series={[
               {
@@ -104,6 +104,7 @@ export default class QuantumIndex extends React.Component {
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
+              key="page-load-tests-(tp6)"
               title={title}
               series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
@@ -114,6 +115,7 @@ export default class QuantumIndex extends React.Component {
         title: 'Performance Tests',
         rows: [
           <PerfherderGraphContainer
+            key="page-load-(tp5)"
             title="Page load (tp5)"
             series={[
               {
@@ -130,6 +132,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="window-opening-(tpaint-e10s)"
             title="Window Opening (tpaint e10s)"
             series={[
               {
@@ -146,6 +149,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="start-up-(sessionrestore)"
             title="Start-up (sessionrestore)"
             series={[
               {
@@ -162,6 +166,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="start-up-(sessionrestore_no_auto_restore)"
             title="Start-up (sessionrestore_no_auto_restore)"
             series={[
               {
@@ -178,6 +183,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="start-up-(ts_paint)"
             title="Start-Up (ts_paint)"
             series={[
               {
@@ -194,6 +200,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="tab-opening-(tabpaint)"
             title="Tab Opening (tabpaint)"
             series={[
               {
@@ -210,6 +217,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="tab-animation-(tart)"
             title="Tab Animation (TART)"
             series={[
               {
@@ -226,6 +234,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="tab-switch-(tps)"
             title="Tab Switch (tps)"
             series={[
               {
@@ -242,6 +251,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="svg-(tsvg_static)"
             title="SVG (tsvg_static)"
             series={[
               {
@@ -258,6 +268,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="svg-(tsvgr_opacity)"
             title="SVG (tsvgr_opacity)"
             series={[
               {
@@ -274,6 +285,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            key="svg-(tsvgx)"
             title="SVG (tsvgx)"
             series={[
               {
@@ -505,11 +517,13 @@ export default class QuantumIndex extends React.Component {
                 statusList.secondary += 1;
               }
 
+              const id = wi + title; // make unique id for key
+
               return (
                 <Grid
                   item
                   xs={6}
-                  key={`page_${sectionId}_${wi}`}
+                  key={`page_${title}_${id}`}
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
                   }>
@@ -526,6 +540,7 @@ export default class QuantumIndex extends React.Component {
             if (desc && count) {
               return (
                 <div
+                  // eslint-disable-next-line react/no-array-index-key
                   key={`status-${status}`}
                   className={`header-status header-status-${status}`}>
                   <em>{count}</em> {desc}
@@ -536,9 +551,10 @@ export default class QuantumIndex extends React.Component {
             return null;
           })
           .exists();
+        const secId = sectionId + title; // make unique section id for key
 
         return (
-          <div key={sectionId}>
+          <div key={secId}>
             <h2 className="section-header">
               <span>
                 {`${title}`}
