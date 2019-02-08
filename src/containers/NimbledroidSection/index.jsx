@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { first } from '../../utils/queryOps';
+import { frum, first } from '../../utils/queryOps';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 import NimbledroidGraphContainer from '../NimbledroidGraphContainer';
 import NimbledroidProductVersions from '../NimbledroidProductVersions';
@@ -42,7 +42,7 @@ class NimbledroidSection extends Component {
     return nimbledroidData ? (
       <div>
         <NimbledroidProductVersions
-          nimbledroidData={nimbledroidData
+          nimbledroidData={frum(nimbledroidData)
             .groupBy('productId')
             .map(first)
             .fromPairs()}
@@ -54,7 +54,9 @@ class NimbledroidSection extends Component {
         />
         <NimbledroidGraphContainer
           configuration={configuration}
-          scenarioData={nimbledroidData.where({ scenarioName: 'Cold Startup' })}
+          scenarioData={frum(nimbledroidData).where({
+            scenarioName: 'Cold Startup',
+          })}
           scenarioName="Cold Startup"
         />
       </div>

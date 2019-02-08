@@ -48,7 +48,7 @@ const mergeProductsData = productsData =>
       }))
     )
     .flatten()
-    .materialize();
+    .toArray();
 let ENDPOINT;
 const productUrl = product => `${ENDPOINT}?product=${product}&version=3`;
 const fetchProductData = async product => {

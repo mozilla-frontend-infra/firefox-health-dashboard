@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
+import { frum } from '../../utils/queryOps';
 import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 
@@ -26,7 +27,9 @@ class NimbledroidGraphContainer extends Component {
       const nimbledroidData = await fetchNimbledroidData(
         configuration.products
       );
-      const data = this.generateData(nimbledroidData.where({ scenarioName }));
+      const data = this.generateData(
+        frum(nimbledroidData).where({ scenarioName })
+      );
 
       this.setState(data);
     } catch (error) {

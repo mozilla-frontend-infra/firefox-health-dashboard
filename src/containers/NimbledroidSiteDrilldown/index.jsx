@@ -4,7 +4,7 @@ import withErrorBoundary from '../../hocs/withErrorBoundary';
 import NimbledroidGraph from '../../components/NimbledroidGraph';
 import StatusWidget from '../../components/StatusWidget';
 import { siteMetrics } from '../../utils/nimbledroid';
-import { zipObject } from '../../utils/queryOps';
+import { frum, zipObject } from '../../utils/queryOps';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 
 class NimbledroidSiteDrilldown extends Component {
@@ -40,11 +40,15 @@ class NimbledroidSiteDrilldown extends Component {
     const { baseProduct, compareProduct, targetRatio, site } = configuration;
     const defaults = zipObject(
       [baseProduct, compareProduct],
-      [{ data: [] }, { data: [] }]
+      [{ title: '', data: [] }, { title: '', data: [] }]
     );
+    const details = frum(nimbledroidData)
+      .where({ url: site })
+      .index('packageId');
     const profile = {
+      title: site,
       ...defaults,
-      ...nimbledroidData.where({ url: site }).index('packageId'),
+      ...details,
     };
 
     return {

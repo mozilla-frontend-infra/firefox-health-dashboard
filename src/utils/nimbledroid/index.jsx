@@ -1,5 +1,5 @@
 import CONFIG from './config';
-import { frum, first } from '../queryOps';
+import { frum, first, missing } from '../queryOps';
 
 export const sortSitesByTargetRatio = (a, b) => b.ratio - a.ratio;
 
@@ -115,7 +115,11 @@ export const generateSitesTableContent = (
       const lastDataPoint = frum(packages)
         .groupBy('packageId')
         .map(first)
-        .select('lastDataPoint')
+        .map(({ lastDataPoint }) => {
+          if (missing(lastDataPoint)) return '';
+
+          return lastDataPoint.toFixed(2);
+        })
         .fromPairs();
       const { title, url } = first(packages);
       const { ratio, color } = siteMetrics(

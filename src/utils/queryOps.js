@@ -71,12 +71,15 @@ const selector = columnName => {
   return columnName;
 };
 
-const missing = value =>
+function missing(value) {
   // return true if value is null, or undefined, or not a legit value
-  value == null || Number.isNaN(value) || value === '';
-const exists = value =>
+  return value == null || Number.isNaN(value) || value === '';
+}
+
+function exists(value) {
   // return true if value is null, or undefined, or not a legit value
-  !missing(value);
+  return !missing(value);
+}
 
 class Wrapper {
   constructor(argslist, ok = false) {
@@ -390,4 +393,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last };
+export { frum, zipObject, toPairs, first, last, missing };
