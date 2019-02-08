@@ -108,7 +108,7 @@ export const generateSitesTableContent = (
     yellow: 0,
     green: 0,
   };
-  const tableContent = nimbledroidData
+  const tableContent = frum(nimbledroidData)
     .filter(({ url }) => includeScenario(url))
     .groupBy('url')
     .map(packages => {

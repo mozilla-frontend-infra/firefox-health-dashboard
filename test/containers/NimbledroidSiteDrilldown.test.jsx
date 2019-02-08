@@ -1,8 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import NimbledroidSiteDrilldown from '../../src/containers/NimbledroidSummaryTable';
+import CONFIG from '../../src/utils/nimbledroid/config';
+import { flattenNimbledroid } from './NimbledroidProductVersions.test';
 
-const nimbledroidData = require('../mocks/nimbledroidData.json');
+const nimbledroidData = flattenNimbledroid(
+  require('../mocks/nimbledroidData.json')
+);
 
 it('renders correctly', () => {
   const tree = renderer
@@ -10,11 +14,8 @@ it('renders correctly', () => {
       <NimbledroidSiteDrilldown
         nimbledroidData={nimbledroidData}
         configuration={{
-          baseProduct: 'org.mozilla.klar',
-          compareProduct: 'com.chrome.beta',
-          products: ['org.mozilla.klar', 'com.chrome.beta'],
+          ...CONFIG,
           site: 'reddit.com',
-          targetRatio: 1.2,
         }}
       />
     )
