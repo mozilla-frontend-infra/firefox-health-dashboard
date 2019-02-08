@@ -51,7 +51,7 @@ class NimbledroidProductVersions extends Component {
 NimbledroidProductVersions.propTypes = {
   classes: PropTypes.shape({}),
   handleError: PropTypes.func.isRequired,
-  nimbledroidData: PropTypes.shape({}),
+  nimbledroidData: PropTypes.arrayOf(PropTypes.shape({})),
   products: PropTypes.arrayOf(PropTypes.string),
 };
 

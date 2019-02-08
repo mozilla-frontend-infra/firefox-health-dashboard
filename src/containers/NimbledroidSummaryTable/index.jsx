@@ -84,7 +84,7 @@ class NimbledroidSummaryTable extends Component {
 
 NimbledroidSummaryTable.propTypes = {
   classes: PropTypes.shape({}),
-  nimbledroidData: PropTypes.shape({}),
+  nimbledroidData: PropTypes.arrayOf(PropTypes.shape({})),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,
     compareProduct: PropTypes.string.isRequired,

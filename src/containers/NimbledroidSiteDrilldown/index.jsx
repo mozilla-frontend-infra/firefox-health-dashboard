@@ -82,7 +82,7 @@ class NimbledroidSiteDrilldown extends Component {
 }
 
 NimbledroidSiteDrilldown.propTypes = {
-  nimbledroidData: PropTypes.shape({}),
+  nimbledroidData: PropTypes.arrayOf(PropTypes.shape({})),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,
     compareProduct: PropTypes.string.isRequired,

@@ -66,7 +66,7 @@ class NimbledroidSection extends Component {
 
 NimbledroidSection.propTypes = {
   handleError: PropTypes.func.isRequired,
-  nimbledroidData: PropTypes.shape({}),
+  nimbledroidData: PropTypes.arrayOf(PropTypes.shape({})),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,
     compareProduct: PropTypes.string.isRequired,
