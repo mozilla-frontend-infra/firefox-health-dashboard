@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
@@ -12,11 +11,13 @@ import CONFIG from '../../utils/nimbledroid/config';
 
 class Android extends Component {
   render() {
-    const nimbledroidSubTitle = `${CONFIG.packageIdLabels[CONFIG.baseProduct]} vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
+    const nimbledroidSubTitle = `${
+      CONFIG.packageIdLabels[CONFIG.baseProduct]
+    } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
 
     return (
-      <DashboardPage title='Android' subtitle='Release criteria'>
-        <Section title='Bugzilla'>
+      <DashboardPage title="Android" subtitle="Release criteria">
+        <Section title="Bugzilla">
           <BugzillaUrlContainer
             includeBugCount
             queries={[
@@ -57,33 +58,33 @@ class Android extends Component {
                 },
               },
             ]}
-            startDate='2018-03-01'
-            title='GeckoView Fenix bugs'
+            startDate="2018-03-01"
+            title="GeckoView Fenix bugs"
           />
         </Section>
-        <Section title='Nimbledroid' subtitle={nimbledroidSubTitle}>
-          <NimbledroidSection
-            configuration={{ ...CONFIG }}
-          />
+        <Section title="Nimbledroid" subtitle={nimbledroidSubTitle}>
+          <NimbledroidSection configuration={{ ...CONFIG }} />
         </Section>
-        <Section title='Telemetry'>
+        <Section title="Telemetry">
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <RedashContainer
-              title='Total content page load time (no 95th)'
-              redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F'
-              redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59395'
+              title="Total content page load time (no 95th)"
+              redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
+              redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
             />
             <RedashContainer
-              title='Total content page load time'
-              redashDataUrl='https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83'
-              redashQueryUrl='https://sql.telemetry.mozilla.org/queries/59397'
+              title="Total content page load time"
+              redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
+              redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
             />
           </div>
         </Section>
-        <Section title='Perfherder' subtitle='Lower in the graph is better regardless if it is a score or execution time (read the Y label)'>
+        <Section
+          title="Perfherder"
+          subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)">
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             <PerfherderGraphContainer
-              title='Speedometer'
+              title="Speedometer"
               series={[
                 {
                   label: 'Moto G5 (arm7)',
@@ -118,7 +119,7 @@ class Android extends Component {
               ]}
             />
             <PerfherderGraphContainer
-              title='Unity WebGl'
+              title="Unity WebGl"
               series={[
                 {
                   color: SETTINGS.colors[0],

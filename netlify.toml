@@ -2,3 +2,6 @@
   from = "/*"
   to = "/"
   status = 200
+
+[build.environment]
+  YARN_VERSION = "1.10.1"

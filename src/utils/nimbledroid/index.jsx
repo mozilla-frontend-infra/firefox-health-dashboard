@@ -1,8 +1,7 @@
+/* eslint-disable no-param-reassign */
 import CONFIG from './config';
 
-export const sortSitesByTargetRatio = (a, b) => {
-  return b.ratio - a.ratio;
-};
+export const sortSitesByTargetRatio = (a, b) => b.ratio - a.ratio;
 
 const statusColor = (ratio, targetRatio) => {
   let smileyFace = 'pass';
@@ -21,11 +20,13 @@ const statusColor = (ratio, targetRatio) => {
   if (widgetColor !== 'green') {
     smileyFace = 'fail';
   }
+
   return { smileyFace, widgetColor };
 };
 
 export const siteMetrics = (target1, target2, targetRatio) => {
   const ratio = target1 == null ? 1 : target1 / target2;
+
   return {
     ratio,
     color: statusColor(ratio, targetRatio).widgetColor,
@@ -34,32 +35,29 @@ export const siteMetrics = (target1, target2, targetRatio) => {
   };
 };
 
-const generateSitesSummary = (count, numSites) => (
-  [
-    {
-      title: {
-        text: 'GeckoView > 20% slower than Chrome Beta',
-      },
-      statusColor: 'red',
-      summary: `${count.red}/${numSites}`,
+const generateSitesSummary = (count, numSites) => [
+  {
+    title: {
+      text: 'GeckoView > 20% slower than Chrome Beta',
     },
-    {
-      title: {
-        text: 'GeckoView > 0% and <= 20% slower than Chrome Beta',
-      },
-      statusColor: 'yellow',
-      summary: `${count.yellow}/${numSites}`,
+    statusColor: 'red',
+    summary: `${count.red}/${numSites}`,
+  },
+  {
+    title: {
+      text: 'GeckoView > 0% and <= 20% slower than Chrome Beta',
     },
-    {
-      title: {
-        text: 'GeckoView <= 0% (i.e. faster than) Chrome Beta',
-      },
-      statusColor: 'green',
-      summary: `${count.green}/${numSites}`,
+    statusColor: 'yellow',
+    summary: `${count.yellow}/${numSites}`,
+  },
+  {
+    title: {
+      text: 'GeckoView <= 0% (i.e. faster than) Chrome Beta',
     },
-  ]
-);
-
+    statusColor: 'green',
+    summary: `${count.green}/${numSites}`,
+  },
+];
 const FILTERED_OUT_SITES = [
   'http://m.spiegel.de',
   'http://m.spiegel.de/netzwelt/web/firefox-quantum-so-schlaegt-sich-der-mozilla-browser-gegen-google-chrome-a-1178579.html',
@@ -92,45 +90,49 @@ const FILTERED_OUT_SITES = [
   'https://www.washingtonpost.com/graphics/2018/national/amp-stories/border-wall',
   'https://www.wired.com/amp-stories/space-photos-of-the-week-111817',
 ];
-
-const includeScenario = scenario => (
-  scenario.includes('http')
-  && !FILTERED_OUT_SITES.includes(scenario)
-);
+const includeScenario = scenario =>
+  scenario.includes('http') && !FILTERED_OUT_SITES.includes(scenario);
 
 export const generateSitesTableContent = (
   nimbledroidData,
-  { baseProduct, compareProduct, targetRatio },
-  ) => {
+  { baseProduct, compareProduct, targetRatio }
+) => {
   const { meta, scenarios } = nimbledroidData;
   const filteredScenarios = Object.keys(scenarios)
     .filter(scenario => includeScenario(scenario))
     .map(scenario => scenarios[scenario]);
   const packageIds = Object.keys(meta);
   const numSites = Object.keys(filteredScenarios).length;
-  const sites = (numSites > 0)
-    ? Object.values(filteredScenarios)
-      .map((scenario) => {
-        scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
-        return scenario;
-      })
-      .sort(sortSitesByTargetRatio) : [];
+  const sites =
+    numSites > 0
+      ? Object.values(filteredScenarios)
+          .map(scenario => {
+            scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
+
+            return scenario;
+          })
+          .sort(sortSitesByTargetRatio)
+      : [];
   const count = {
     red: 0,
     yellow: 0,
     green: 0,
   };
-
   const { packageIdLabels } = CONFIG;
   const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
+
   tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
 
-  const tableContent = sites.map((scenario) => {
+  const tableContent = sites.map(scenario => {
     const { title, url } = scenario;
     const { ratio, color } = siteMetrics(
-      scenario[baseProduct], scenario[compareProduct], targetRatio,
+      scenario[baseProduct],
+      scenario[compareProduct],
+      targetRatio
     );
+
     count[color] += 1;
+
     // This matches the format expected by the SummaryTable component
     return {
       dataPoints: packageIds.map(packageId => scenario[packageId]) || [],
@@ -144,6 +146,7 @@ export const generateSitesTableContent = (
       uid: url,
     };
   });
+
   return {
     tableHeader,
     tableContent,

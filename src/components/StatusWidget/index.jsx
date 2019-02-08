@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import Title from './Title';
 
 const StatusWidget = ({
-  children, extraInfo,
+  children,
+  extraInfo,
   title,
-  statusColor, summary, uid,
+  statusColor,
+  summary,
+  uid,
 }) => (
   <div>
     <div
       key={uid || title.text}
-      className={`status-widget status-${statusColor} padded`}
-    >
+      className={`status-widget status-${statusColor} padded`}>
       <Title {...title} />
       {summary && <span>{summary}</span>}
     </div>
@@ -20,7 +22,7 @@ const StatusWidget = ({
   </div>
 );
 
-StatusWidget.propTypes = ({
+StatusWidget.propTypes = {
   children: PropTypes.shape({}),
   extraInfo: PropTypes.string,
   title: PropTypes.shape({
@@ -29,6 +31,6 @@ StatusWidget.propTypes = ({
   statusColor: PropTypes.string.isRequired,
   summary: PropTypes.string,
   uid: PropTypes.string,
-});
+};
 
 export default StatusWidget;

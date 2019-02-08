@@ -27,24 +27,25 @@ const styles = {
     textAlign: 'center',
   },
 };
-
 const Home = ({ classes }) => (
   <DashboardPage
     classes={{
       root: classes.root,
     }}
-    title='Firefox health'
-    subtitle='Tracking metrics for Firefox products'
-  >
+    title="Firefox health"
+    subtitle="Tracking metrics for Firefox products">
     <div className={classes.links}>
-      <Link to='/android'>Android</Link>
-      <Link to='/quantum/32'>Quantum 32bit</Link>
-      <Link to='/quantum/64'>Quantum 64bit</Link>
-      <Link to='/js-team'>JS team</Link>
+      <Link to="/android">Android</Link>
+      <Link to="/quantum/32">Quantum 32bit</Link>
+      <Link to="/quantum/64">Quantum 64bit</Link>
+      <Link to="/js-team">JS team</Link>
     </div>
     <div className={classes.netlify}>
-      <a href='https://www.netlify.com'>
-        <img src='https://www.netlify.com/img/global/badges/netlify-dark.svg' alt='Netlify' />
+      <a href="https://www.netlify.com">
+        <img
+          src="https://www.netlify.com/img/global/badges/netlify-dark.svg"
+          alt="Netlify"
+        />
       </a>
     </div>
   </DashboardPage>

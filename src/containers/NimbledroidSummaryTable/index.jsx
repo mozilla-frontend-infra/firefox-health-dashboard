@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { generateSitesTableContent } from '../../utils/nimbledroid';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 import withErrorBoundary from '../../hocs/withErrorBoundary';
-
 import SummaryTable from '../../components/SummaryTable';
 import StatusWidget from '../../components/StatusWidget';
 
@@ -28,6 +27,7 @@ class NimbledroidSummaryTable extends Component {
   constructor(props) {
     super(props);
     const { configuration, nimbledroidData } = this.props;
+
     if (nimbledroidData) {
       this.state = generateSitesTableContent(nimbledroidData, configuration);
     }
@@ -35,8 +35,12 @@ class NimbledroidSummaryTable extends Component {
 
   async componentDidMount() {
     const { configuration, handleError } = this.props;
+
     try {
-      const nimbledroidData = await fetchNimbledroidData(configuration.products);
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
+
       this.setState(generateSitesTableContent(nimbledroidData, configuration));
     } catch (error) {
       handleError(error);
@@ -59,7 +63,9 @@ class NimbledroidSummaryTable extends Component {
               Show detailed view
             </Button>
             <div className={classes.summary}>
-              {summary.map(s => (<StatusWidget key={s.title.text} {...s} />))}
+              {summary.map(s => (
+                <StatusWidget key={s.title.text} {...s} />
+              ))}
             </div>
           </div>
         )}
@@ -68,10 +74,7 @@ class NimbledroidSummaryTable extends Component {
             <Button onClick={() => this.setState({ showSites: false })}>
               Show summary view
             </Button>
-            <SummaryTable
-              header={tableHeader}
-              content={tableContent}
-            />
+            <SummaryTable header={tableHeader} content={tableContent} />
           </div>
         )}
       </div>

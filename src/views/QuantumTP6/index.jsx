@@ -22,6 +22,7 @@ class TP6 extends React.Component {
     super(props);
     const { location } = this.props;
     const params = new URLSearchParams(location.search);
+
     this.state = { bits: params.get('bits') };
   }
 
@@ -33,30 +34,29 @@ class TP6 extends React.Component {
       <div className={classes.body}>
         <DashboardPage
           key={bits}
-          title={'TP6'}
-          subtitle={`Page load on ${bits} bits`}
-        >
+          title="TP6"
+          subtitle={`Page load on ${bits} bits`}>
           <Grid container spacing={24}>
-            {
-              frum(TP6_PAGES)
-                .where({ bits: bits })
-                .groupBy('title')
-                .map(([series, { title }]) => (
-                  <Grid item xs={6} key={`page_${title}_${bits}`} className={classes.chart}>
-                    <PerfherderGraphContainer
-                      title={title}
-                      series={
-                        frum(series)
-                          .sortBy(['browser'])
-                          .reverse()
-                          .map((s) => { return { label: s.label, seriesConfig: s }; })
-                          .toArray()
-                      }
-                    />
-                  </Grid>
-                ))
-                .toArray()
-            }
+            {frum(TP6_PAGES)
+              .where({ bits })
+              .groupBy('title')
+              .map(([series, { title }]) => (
+                <Grid
+                  item
+                  xs={6}
+                  key={`page_${title}_${bits}`}
+                  className={classes.chart}>
+                  <PerfherderGraphContainer
+                    title={title}
+                    series={frum(series)
+                      .sortBy(['browser'])
+                      .reverse()
+                      .map(s => ({ label: s.label, seriesConfig: s }))
+                      .toArray()}
+                  />
+                </Grid>
+              ))
+              .toArray()}
           </Grid>
         </DashboardPage>
       </div>
@@ -64,13 +64,11 @@ class TP6 extends React.Component {
   }
 }
 
-
 TP6.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
 };
-
 
 export default withStyles(styles)(TP6);

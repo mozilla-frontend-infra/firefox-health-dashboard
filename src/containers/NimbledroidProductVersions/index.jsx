@@ -8,7 +8,7 @@ import withErrorBoundary from '../../hocs/withErrorBoundary';
 const styles = {
   root: {},
   spacing: {
-      paddingRight: '0.5rem',
+    paddingRight: '0.5rem',
   },
 };
 
@@ -21,25 +21,30 @@ class NimbledroidProductVersions extends Component {
     const { handleError, nimbledroidData, products } = this.props;
 
     try {
-        const { meta } = nimbledroidData || await fetchNimbledroidData(products);
-        this.setState({ meta });
+      const { meta } =
+        nimbledroidData || (await fetchNimbledroidData(products));
+
+      this.setState({ meta });
     } catch (error) {
-        handleError(error);
+      handleError(error);
     }
   }
 
   render() {
-      const { classes } = this.props;
-      const { meta } = this.state;
+    const { classes } = this.props;
+    const { meta } = this.state;
 
-      return (!meta) ? null : (
-        <div className={classes.root}>
-          {Object.keys(meta).map(packageId => (
-            <span key={packageId} className={classes.spacing}>
-              {`${CONFIG.packageIdLabels[packageId]} (${meta[packageId].latestVersion})`}
-            </span>))}
-        </div>
-      );
+    return !meta ? null : (
+      <div className={classes.root}>
+        {Object.keys(meta).map(packageId => (
+          <span key={packageId} className={classes.spacing}>
+            {`${CONFIG.packageIdLabels[packageId]} (${
+              meta[packageId].latestVersion
+            })`}
+          </span>
+        ))}
+      </div>
+    );
   }
 }
 
@@ -50,4 +55,6 @@ NimbledroidProductVersions.propTypes = {
   products: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default withErrorBoundary(withStyles(styles)(NimbledroidProductVersions));
+export default withErrorBoundary(
+  withStyles(styles)(NimbledroidProductVersions)
+);

@@ -1,7 +1,6 @@
 import Raven from 'raven-js';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import CriticalErrorMessage from './criticalErrorMessage';
 
 export default class ErrorBoundary extends Component {
@@ -20,13 +19,14 @@ export default class ErrorBoundary extends Component {
       if (this.props.critical) {
         return <CriticalErrorMessage />;
       }
+
       return (
         <div>
           <p style={{ color: 'black' }}>Oops; something went wrong</p>
         </div>
       );
     }
-    // eslint-disable-next-line react/prop-types
+
     return this.props.children;
   }
 }

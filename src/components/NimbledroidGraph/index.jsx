@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
 import CONFIG from '../../utils/nimbledroid/config';
 
-
 class NimbledroidGraph extends Component {
   render() {
     const { profile, targetRatio } = this.props;
-    const labels = CONFIG.products.map(productID => CONFIG.packageIdLabels[productID]);
-    const data = CONFIG.products.map(productID => profile.data[productID] || []);
+    const labels = CONFIG.products.map(
+      productID => CONFIG.packageIdLabels[productID]
+    );
+    const data = CONFIG.products.map(
+      productID => profile.data[productID] || []
+    );
     const target = targetRatio * profile[CONFIG.compareProduct];
 
     return (
@@ -17,17 +20,19 @@ class NimbledroidGraph extends Component {
         full_width
         height={600}
         data={data}
-        x_accessor='date'
-        y_accessor='value'
+        x_accessor="date"
+        y_accessor="value"
         legend={labels}
         legend_target={this.legendTarget}
         aggregate_rollover
         interpolate={curveLinear}
         right={100}
-        baselines={[{
-          value: target,
-          label: 'Target',
-        }]}
+        baselines={[
+          {
+            value: target,
+            label: 'Target',
+          },
+        ]}
       />
     );
   }

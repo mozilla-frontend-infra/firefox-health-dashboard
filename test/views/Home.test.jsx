@@ -4,9 +4,13 @@ import renderer from 'react-test-renderer';
 import Home from '../../src/views/Home';
 
 it('renders correctly', () => {
-  const tree = renderer.create((
-    <BrowserRouter>
-      <Home />
-    </BrowserRouter>)).toJSON();
+  const tree = renderer
+    .create(
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>
+    )
+    .toJSON();
+
   expect(tree).toMatchSnapshot();
 });
