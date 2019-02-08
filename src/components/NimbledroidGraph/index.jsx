@@ -10,9 +10,7 @@ class NimbledroidGraph extends Component {
     const labels = CONFIG.products.map(
       productID => CONFIG.packageIdLabels[productID]
     );
-    const data = CONFIG.products.map(
-      productID => profile.data[productID] || []
-    );
+    const data = CONFIG.products.map(productID => profile[productID].data);
     const target = targetRatio * profile[CONFIG.compareProduct];
 
     return (

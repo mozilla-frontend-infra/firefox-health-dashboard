@@ -26,7 +26,7 @@ class NimbledroidGraphContainer extends Component {
       const nimbledroidData = await fetchNimbledroidData(
         configuration.products
       );
-      const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
+      const data = this.generateData(nimbledroidData.where({ scenarioName }));
 
       this.setState(data);
     } catch (error) {
