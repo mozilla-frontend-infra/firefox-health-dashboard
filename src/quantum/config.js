@@ -1,4 +1,4 @@
-import { frum } from '../utils/queryOps';
+import { frum, zipObject } from '../utils/queryOps';
 
 
 const CONFIG = {
@@ -137,7 +137,7 @@ const SUITES = {
 
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
-  .map(row => frum([row, SUITES.header]).zip().args().fromPairs())
+  .map(row => zipObject(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
 
 export { CONFIG, PLATFORMS, TP6_PAGES };
