@@ -1,4 +1,3 @@
-import flatten from 'lodash/flatten';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
@@ -18,22 +17,44 @@ const last = (list) => {
   return value;
 };
 
-
 const toArray = (value) => {
   // return a list
   if (Array.isArray(value)) {
     return value;
-  } if (value == null) {
+  }
+  if (value == null) {
     return [];
   }
-    return [value];
+  return [value];
+};
+
+const zipObject = (keys, values) => {
+  const output = {};
+  for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
+  return output;
 };
 
 const selector = (column_name) => {
   // convert string into function that selects column from row
-  if (typeof column_name === 'string') {
+  // convert array of strings into function that extract properties from row
+  if (Array.isArray(column_name)) {
+    // select many columns
+    const cs = internalFrum(column_name)
+      .map((col_name) => {
+        if (typeof col_name === 'string') {
+          return [[selector(col_name), col_name]];
+        }
+        return Object.entries(col_name).map((name, value) => [selector(value), name]);
+      })
+      .flatten()
+      .sortBy(([_, b]) => b)
+      .args();
+
+    return row => cs.map(func => func(row)).fromPairs();
+  } if (typeof column_name === 'string') {
     return row => row[column_name];
-  } return column_name;
+  }
+  return column_name;
 };
 
 const missing = (value) => {
@@ -84,7 +105,12 @@ class Wrapper {
         i += 1;
       }
     }
+
     return new Wrapper(output(this.argslist), true);
+  }
+
+  select(columns) {
+    return this.map(selector(columns));
   }
 
   forEach(func) {
@@ -109,7 +135,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(output(this.argslist));
+    return new Wrapper(output(this.argslist), true);
   }
 
   args() {
@@ -123,6 +149,7 @@ class Wrapper {
     function* output(argslist) {
       for (const [value, ...args] of argslist) if (func(value, ...args)) yield [value];
     }
+
     return new Wrapper(output(this.argslist), true);
   }
 
@@ -155,26 +182,26 @@ class Wrapper {
     return this.filter(func);
   }
 
+  flatten() {
+    // assume this is an array of lists, return array of all elements
+    // append extra index paramter to args
+    function* output(argslist) {
+      for (const [values] of argslist) for (const value of values) yield [value];
+    }
+
+    return new Wrapper(output(this.argslist), true);
+  }
+
   groupBy(columns) {
     // Groupby one, or many, columns by name or by {name: selector} pairs
     // return array of [rows, key, index] tuples
+    const func = selector(columns);
 
+    const output = {};
     if (Array.isArray(columns)) {
-      const cs = internalFrum(columns)
-        .map((col_name) => {
-          if (typeof col_name === 'string') {
-            return [[selector(col_name), col_name]];
-          }
-          return Object.entries(col_name).map((name, value) => [selector(value), name]);
-        })
-        .flatten()
-        .sortBy(([_, b]) => b)
-        .args();
-
-      const output = {};
       let g = 0;
       for (const arg of this.argslist) {
-        const key = cs.map(func => func(...arg)).fromPairs();
+        const key = func(...arg);
         const skey = JSON.stringify(key);
 
         let triple = output[skey];
@@ -185,23 +212,20 @@ class Wrapper {
         }
         triple[0].push(arg[0]);
       }
-      return Object.values(output);
-    }
+    } else {
+      // single-column groupby is faster
+      let g = 0;
+      for (const [row, ...arg] of this.argslist) {
+        const key = func(row, ...arg, g);
 
-    // single-column groupby is faster
-    const func = selector(columns);
-    const output = {};
-    let i = 0;
-    for (const [row, ...arg] of this.argslist) {
-      const key = func(row, ...arg, i);
-
-      let triple = output[key];
-      if (!triple) {
-        triple = [[], key, i];
-        i += 1;
-        output[key] = triple;
+        let triple = output[key];
+        if (!triple) {
+          triple = [[], key, g];
+          g += 1;
+          output[key] = triple;
+        }
+        triple[0].push(row);
       }
-      triple[0].push(row);
     }
     return new Wrapper(Object.values(output));
   }
@@ -260,13 +284,15 @@ class Wrapper {
   }
 }
 
+
 const frum = (list) => {
   if (list instanceof Wrapper) {
     return list;
-  } if (Array.isArray(list)) {
+  }
+  if (Array.isArray(list)) {
     return new Wrapper(list.map(v => [v]));
   }
-    return new Wrapper(Array.from(list));
+  return new Wrapper(Array.from(list));
 
 };
 internalFrum = frum;
@@ -278,7 +304,7 @@ const toPairs = (obj) => {
   if (obj instanceof Map) {
     return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
   }
-    return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
+  return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
 
 };
 
@@ -296,7 +322,6 @@ const extend_wrapper = (methods) => {
 
 // Add Lodash functions
 extend_wrapper({
-  flatten: flatten,
   chunk: chunk,
   unzip: unzip,
   zip: unzip,
@@ -322,4 +347,4 @@ extend_wrapper({
   },
 });
 
-export { frum, toPairs, first, last };
+export { frum, zipObject, toPairs, first, last };
