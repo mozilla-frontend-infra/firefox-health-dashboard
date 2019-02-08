@@ -23,7 +23,6 @@ exports[`renders correctly 1`] = `
       <span>
         Overview
       </span>
-       
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
@@ -128,7 +127,6 @@ exports[`renders correctly 1`] = `
       <span>
         Benchmarks
       </span>
-       
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
@@ -447,7 +445,6 @@ exports[`renders correctly 1`] = `
           )
         </span>
       </span>
-       
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
@@ -460,7 +457,6 @@ exports[`renders correctly 1`] = `
       <span>
         Performance Tests
       </span>
-       
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
@@ -1002,7 +998,6 @@ exports[`renders correctly 1`] = `
       <span>
         Performance Metrics
       </span>
-       
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"

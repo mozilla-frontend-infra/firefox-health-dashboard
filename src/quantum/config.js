@@ -1,5 +1,4 @@
-import zipObject from 'lodash/zipObject';
-import { frum } from '../utils/queryOps';
+import { frum, zipObject } from '../utils/queryOps';
 
 const CONFIG = {
   windows64Regression: [
@@ -139,7 +138,6 @@ const SUITES = {
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
-  .join('browser', PLATFORMS, 'browser')
-  .toArray();
+  .join('browser', PLATFORMS, 'browser');
 
 export { CONFIG, PLATFORMS, TP6_PAGES };

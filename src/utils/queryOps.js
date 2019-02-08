@@ -1,119 +1,26 @@
 /* eslint-disable no-restricted-syntax */
-import lodashGroupBy from 'lodash/groupBy';
-import map from 'lodash/map';
-import flatten from 'lodash/flatten';
-import lodashFilter from 'lodash/filter';
-import lodashToPairs from 'lodash/toPairs';
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
-import lodashFromPairs from 'lodash/fromPairs';
+
+let internalFrum = null;
+const first = list => {
+  for (const v of list) return v;
+
+  return null;
+};
 
 const last = list => {
-  if (list.length === 0) return null;
+  let value = null;
 
-  return list[list.length - 1];
+  for (const v of list) value = v;
+
+  return value;
 };
-
-const first = list => {
-  if (list.length === 0) return null;
-
-  return list[0];
-};
-
-const index = (list, column) => {
-  // Return object indexed on column
-  // We assume the key is unique
-  const output = {};
-
-  list.forEach(row => {
-    const key = row[column];
-    const value = output[key];
-
-    if (value === undefined) {
-      // TODO: simplify
-      output[key] = row;
-    } else {
-      throw new Error('expecting index to be unique');
-    }
-  });
-
-  return output;
-};
-
-class Wrapper {
-  constructor(list) {
-    this.list = list;
-  }
-
-  toArray() {
-    return this.list;
-  }
-
-  fromPairs() {
-    return lodashFromPairs(this.list);
-  }
-
-  last() {
-    return last(this.list);
-  }
-
-  first() {
-    return first(this.list);
-  }
-
-  index(column) {
-    // Return object indexed on column
-    // We assume the key is unique
-    const output = {};
-
-    this.list.forEach(row => {
-      const key = row[column];
-      const value = output[key];
-
-      if (value === undefined) {
-        // TODO: simplify
-        output[key] = row;
-      } else {
-        throw new Error('expecting index to be unique');
-      }
-    });
-
-    return output;
-  }
-}
-
-const toPairs = obj => new Wrapper(lodashToPairs(obj));
-const frum = list => new Wrapper(list);
-// Add a chainable method to Wrapper
-const extendWrapper = methods => {
-  lodashToPairs(methods).forEach(([name, method]) => {
-    // USE function(){} DECLARATION TO BIND this AT CALL TIME
-    Wrapper.prototype[name] = function anonymous(...args) {
-      this.list = method(this.list, ...args);
-
-      return this;
-    };
-  });
-};
-
-// Add Lodash functions
-extendWrapper({
-  map,
-  filter: lodashFilter,
-  flatten,
-  toPairs: lodashToPairs,
-  chunk,
-  unzip,
-  zip: unzip,
-  sortBy,
-  sort: sortBy,
-  lodashGroupBy,
-  limit: lodashTake,
-});
 
 const toArray = value => {
+  // return a list
   if (Array.isArray(value)) {
     return value;
   }
@@ -125,8 +32,38 @@ const toArray = value => {
   return [value];
 };
 
-// convert string into function that selects column from row
+const zipObject = (keys, values) => {
+  // accept list of keys and list of values to zip into a single object
+  const output = {};
+
+  for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
+
+  return output;
+};
+
 const selector = columnName => {
+  // convert string into function that selects column from row
+  // convert array of strings into function that extract properties from row
+  if (Array.isArray(columnName)) {
+    // select many columns
+    const cs = internalFrum(columnName)
+      .map(columnName => {
+        if (typeof columnName === 'string') {
+          return [[selector(columnName), columnName]];
+        }
+
+        return Object.entries(columnName).map((name, value) => [
+          selector(value),
+          name,
+        ]);
+      })
+      .flatten()
+      .sortBy(([, b]) => b)
+      .args();
+
+    return row => cs.map(func => func(row)).fromPairs();
+  }
+
   if (typeof columnName === 'string') {
     return row => row[columnName];
   }
@@ -134,92 +71,314 @@ const selector = columnName => {
   return columnName;
 };
 
-extendWrapper({
-  groupBy: function groupBy(list, columns) {
-    // Groupby one, or many, columns by name or by {name: selector} pairs
-    // return array of [rows, key, index] tuples
+const missing = value =>
+  // return true if value is null, or undefined, or not a legit value
+  value == null || Number.isNaN(value) || value === '';
+const exists = value =>
+  // return true if value is null, or undefined, or not a legit value
+  !missing(value);
 
-    const cs = frum(toArray(columns))
-      .map(colName => {
-        if (typeof colName === 'string') {
-          return [[colName, selector(colName)]];
-        }
+class Wrapper {
+  constructor(argslist, ok = false) {
+    if (
+      !ok &&
+      (!Array.isArray(argslist) ||
+        (argslist.length > 0 && !Array.isArray(argslist[0])))
+    ) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
+      );
+      throw Error(
+        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
+      );
+    }
 
-        return lodashToPairs(colName).map(([name, value]) => [
-          name,
-          selector(value),
-        ]);
-      })
-      .flatten()
-      .sortBy(([colName]) => colName)
-      .toArray();
-    const output = {};
+    this.argslist = argslist;
+  }
+
+  *[Symbol.iterator]() {
+    this.materialize();
+
+    for (const [a] of this.argslist) {
+      yield a;
+    }
+  }
+
+  materialize() {
+    // ensure this.argslist is an array, any generators are exhausted
+    if (!Array.isArray(this.argslist)) {
+      // materialize the array of arguments
+      this.argslist = Array.from(this.argslist);
+    }
+
+    return this;
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////
+  // CHAINABLE METHODS
+  // ///////////////////////////////////////////////////////////////////////////
+
+  map(func) {
+    // map the value, do not touch the other args
+    function* output(argslist) {
+      let i = 0;
+
+      for (const [value, ...args] of argslist) {
+        yield [func(value, ...args), ...args, i];
+        i += 1;
+      }
+    }
+
+    return new Wrapper(output(this.argslist), true);
+  }
+
+  select(columns) {
+    return this.map(selector(columns));
+  }
+
+  forEach(func) {
+    // execute func for each element, do not change this
+    this.materialize();
+
     let i = 0;
 
-    list.forEach(row => {
-      const key = lodashFromPairs(cs.map(([name, func]) => [name, func(row)]));
-      const skey = JSON.stringify(key);
-      let triple = output[skey];
+    for (const args of this.argslist) {
+      func(...args, i);
+      i += 1;
+    }
 
-      if (!triple) {
-        triple = [[], key, i];
+    return this;
+  }
+
+  enumerate() {
+    // append extra index paramter to args
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        yield [...args, i];
         i += 1;
-        output[skey] = triple;
       }
+    }
 
-      triple[0].push(row);
-    });
+    return new Wrapper(output(this.argslist), true);
+  }
 
-    return Object.values(output);
-  },
+  args() {
+    // Convert value into args
+    return new Wrapper(this.materialize().argslist.map(arg => arg[0]));
+  }
 
-  // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
-  join: function join(listA, propA, listB, propB) {
-    const lookup = frum(listB)
-      .lodashGroupBy(rowB => rowB[propB])
-      .toArray();
+  filter(func) {
+    function* output(argslist) {
+      for (const [value, ...args] of argslist)
+        if (func(value, ...args)) yield [value];
+    }
 
-    return frum(listA)
-      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
-      .flatten()
-      .toArray();
-  },
+    return new Wrapper(output(this.argslist), true);
+  }
 
-  where: function where(list, expression) {
+  where(expression) {
     // Expecting a object of {columnName: value} form to use as a filter
     // return only matching rows
     const func = row => {
-      for (const [name, value] of lodashToPairs(expression)) {
+      for (const [name, value] of Object.entries(expression)) {
         if (row[name] !== value) return false;
       }
 
       return true;
     };
 
-    return lodashFilter(list, func);
-  },
+    return this.filter(func);
+  }
 
-  exists: function exists(list, columns = null) {
+  exists(columns = null) {
     // Expect a list of column names that must exist
     let func = null;
 
-    if (columns == null) {
-      func = row => row != null;
+    if (missing(columns)) {
+      func = exists;
     } else {
-      const cols = toArray(columns);
+      const selects = toArray(columns).map(selector);
 
       func = row => {
-        for (const name of cols) {
-          const v = row[name];
-
-          if (v == null || Number.isNaN(v)) return false; // TODO: simplify
-        }
+        for (const s of selects) if (missing(s(row))) return false;
 
         return true;
       };
     }
 
-    return lodashFilter(list, func);
+    return this.filter(func);
+  }
+
+  flatten() {
+    // assume this is an array of lists, return array of all elements
+    // append extra index paramter to args
+    function* output(argslist) {
+      for (const [values] of argslist)
+        for (const value of values) yield [value];
+    }
+
+    return new Wrapper(output(this.argslist), true);
+  }
+
+  groupBy(columns) {
+    // Groupby one, or many, columns by name or by {name: selector} pairs
+    // return array of [rows, key, index] tuples
+    const func = selector(columns);
+    const output = {};
+
+    if (Array.isArray(columns)) {
+      let g = 0;
+
+      for (const arg of this.argslist) {
+        const key = func(...arg);
+        const skey = JSON.stringify(key);
+        let triple = output[skey];
+
+        if (!triple) {
+          triple = [[], key, g];
+          g += 1;
+          output[skey] = triple;
+        }
+
+        triple[0].push(arg[0]);
+      }
+    } else {
+      // single-column groupby is faster
+      let g = 0;
+
+      for (const [row, ...arg] of this.argslist) {
+        const key = func(row, ...arg, g);
+        let triple = output[key];
+
+        if (!triple) {
+          triple = [[], key, g];
+          g += 1;
+          output[key] = triple;
+        }
+
+        triple[0].push(row);
+      }
+    }
+
+    return new Wrapper(Object.values(output));
+  }
+
+  // ///////////////////////////////////////////////////////////////////////////
+  // TERMINAL METHODS
+  // ///////////////////////////////////////////////////////////////////////////
+
+  toArray() {
+    return Array.from(this);
+  }
+
+  fromPairs() {
+    // return an object from (value, key) pairs
+    const output = {};
+
+    for (const [v, k] of this.argslist) {
+      output[k] = v;
+    }
+
+    return output;
+  }
+
+  first() {
+    // return first element
+    return first(this);
+  }
+
+  findIndex(func) {
+    // return index of first element where func returns true
+    // return null if not found
+    let i = 0;
+
+    for (const args of this.argslist) {
+      if (func(...args)) return i;
+      i += 1;
+    }
+
+    return null;
+  }
+
+  last() {
+    // return last element
+    return last(this);
+  }
+
+  index(column) {
+    // Return an object indexed on `column`
+    // We assume the key is unique
+    const output = {};
+
+    for (const [row] of this.argslist) {
+      const key = row[column];
+
+      if (!(key in output)) {
+        output[key] = row;
+      } else {
+        throw new Error('expecting index to be unique');
+      }
+    }
+
+    return output;
+  }
+}
+
+const frum = list => {
+  if (list instanceof Wrapper) {
+    return list;
+  }
+
+  if (Array.isArray(list)) {
+    return new Wrapper(list.map(v => [v]));
+  }
+
+  return new Wrapper(Array.from(list));
+};
+
+internalFrum = frum;
+
+const toPairs = obj => {
+  // convert Object (or Map) into [value, key] pairs
+  // notice the **value is first**
+  if (obj instanceof Map) {
+    return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
+  }
+
+  return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
+};
+
+const extendWrapper = methods => {
+  // Add a chainable method to Wrapper
+  toPairs(methods).forEach((method, name) => {
+    // USE function(){} DECLARATION TO BIND this AT CALL TIME
+    Wrapper.prototype[name] = function anonymous(...args) {
+      return frum(method(this.toArray(), ...args));
+    };
+  });
+};
+
+// Add Lodash functions
+extendWrapper({
+  chunk,
+  unzip,
+  zip: unzip,
+  limit: lodashTake,
+  sort: sortBy,
+  sortBy,
+
+  // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
+  join: function join(listA, propA, listB, propB) {
+    const lookup = frum(listB)
+      .groupBy(propB)
+      .fromPairs();
+
+    return frum(listA)
+      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
+      .flatten();
   },
 
   append: function append(list, value) {
@@ -231,4 +390,4 @@ extendWrapper({
   },
 });
 
-export { frum, toPairs, first, last, index };
+export { frum, zipObject, toPairs, first, last };
