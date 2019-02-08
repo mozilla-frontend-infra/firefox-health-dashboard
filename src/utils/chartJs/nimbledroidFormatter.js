@@ -11,8 +11,7 @@ const nimbledroidFormatter = scenario => ({
 
       return {
         data: pckage.data
-          .map(({ date, value }) => ({ x: date, y: value }))
-          .toArray(),
+          .map(({ date, value }) => ({ x: date, y: value })),
         label: CONFIG.packageIdLabels[packageId],
         ...generateDatasetStyle(SETTINGS.colors[index]),
       };
