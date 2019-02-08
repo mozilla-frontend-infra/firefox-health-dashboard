@@ -3,7 +3,7 @@ import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
 
 const getPerfherderData = async series => {
-  const newData = [];
+  const newData = series.map(()=>null);  //make empty array of correct size
 
   await Promise.all(
     series.map(async ({ label, seriesConfig, options = {} }, index) => {
@@ -25,12 +25,11 @@ const getPerfherderData = async series => {
             ? test.replace(`${seriesInfo.meta.suite}-`, '')
             : suite;
         }
-
-        newData.push({
+        newData[index]={
           ...seriesInfo,
           color,
           label: actualLabel,
-        });
+        };
       });
     })
   );
