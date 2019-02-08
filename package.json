@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
     "precommit": "lint-staged",
-    "prepush": "yarn test",
+    "prepush": "yarn lint --fix && yarn build && yarn test",
     "coverage": "nyc --all jest --collectCoverage",
     "coveralls": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov | coveralls",
     "heroku-postbuild": "yarn build"
