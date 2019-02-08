@@ -1,4 +1,5 @@
 import CONFIG from './config';
+import { frum, first } from '../queryOps';
 
 export const sortSitesByTargetRatio = (a, b) => {
   return b.ratio - a.ratio;
@@ -102,51 +103,57 @@ export const generateSitesTableContent = (
   nimbledroidData,
   { baseProduct, compareProduct, targetRatio },
   ) => {
-  const { meta, scenarios } = nimbledroidData;
-  const filteredScenarios = Object.keys(scenarios)
-    .filter(scenario => includeScenario(scenario))
-    .map(scenario => scenarios[scenario]);
-  const packageIds = Object.keys(meta);
-  const numSites = Object.keys(filteredScenarios).length;
-  const sites = (numSites > 0)
-    ? Object.values(filteredScenarios)
-      .map((scenario) => {
-        scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
-        return scenario;
-      })
-      .sort(sortSitesByTargetRatio) : [];
+
+
+  const { packageIdLabels } = CONFIG;
+  const packageIds = Object.keys(packageIdLabels);
+  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
+  tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
+
   const count = {
     red: 0,
     yellow: 0,
     green: 0,
   };
 
-  const { packageIdLabels } = CONFIG;
-  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
-  tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
+  const tableContent = nimbledroidData
+    .filter(({ url }) => includeScenario(url))
+    .groupBy('url')
+    .map((packages) => {
+      const lastDataPoint = frum(packages)
+        .groupBy('packageId')
+        .map(first)
+        .select('lastDataPoint')
+        .fromPairs();
+      const { title, url } = first(packages);
+      const { ratio, color } = siteMetrics(
+        lastDataPoint[baseProduct],
+        lastDataPoint[compareProduct],
+        targetRatio,
+      );
+      count[color] += 1;
 
-  const tableContent = sites.map((scenario) => {
-    const { title, url } = scenario;
-    const { ratio, color } = siteMetrics(
-      scenario[baseProduct], scenario[compareProduct], targetRatio,
-    );
-    count[color] += 1;
-    // This matches the format expected by the SummaryTable component
-    return {
-      dataPoints: packageIds.map(packageId => scenario[packageId]),
-      statusColor: color,
-      summary: `${((1 - ratio) * 100).toFixed(2)}%`,
-      title: {
-        text: title,
-        hyperlink: `android/graph?site=${url}`,
-        tooltip: url,
-      },
-      uid: url,
-    };
-  });
+      // This matches the format expected by the SummaryTable component
+      return {
+        ratio,
+        dataPoints: packageIds.map(packageId => lastDataPoint[packageId]),
+        statusColor: color,
+        summary: `${((1 - ratio) * 100).toFixed(2)}%`,
+        title: {
+          text: title,
+          hyperlink: `android/graph?site=${url}`,
+          tooltip: url,
+        },
+        uid: url,
+      };
+    })
+    .sort('ratio')
+    .reverse()
+    .toArray();
+
   return {
     tableHeader,
     tableContent,
-    summary: generateSitesSummary(count, numSites),
+    summary: generateSitesSummary(count, tableContent.length),
   };
 };

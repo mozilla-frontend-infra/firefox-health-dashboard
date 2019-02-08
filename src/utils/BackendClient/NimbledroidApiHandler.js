@@ -1,4 +1,5 @@
 import fetchJson from '../fetchJson';
+import { toPairs, frum, first, last } from '../queryOps';
 
 const matchUrl = profileName => profileName
   .replace(/.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/, (match, firstMatch) => firstMatch);
@@ -7,81 +8,47 @@ const matchShorterUrl = url => url
   .replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
 
 const transformedDataForMetrisGraphics = (scenarios) => {
-  const metricsGraphicsData = Object.keys(scenarios).reduce((result, scenarioName) => {
-    scenarios[scenarioName].forEach(({ date, ms }) => {
+  return toPairs(scenarios)
+    .map((data, scenarioName) => {
       const url = matchUrl(scenarioName); // multiple scenarioName have same url
-      if (!result[url]) {
-        result[url] = {
-          data: [],
-          title: matchShorterUrl(url),
-          url,
-        };
-      }
-      if (ms > 0) {
-        // this appends contents of scenarios[scenarioName] to result[url].data
-        // **AND** concatenates data when matchUrl(scenarioName1) == matchUrl(scenarioName2)
-        result[url].data.push({
-          date: new Date(date),
-          value: ms / 1000,
-        });
-      }
-    });
-    return result;
-  }, {});
-  return metricsGraphicsData;
-};
 
-const sortDataPointsByRecency = (a, b) => {
-  let retVal;
-  if (a.date < b.date) {
-    retVal = -1;
-  } else if (a.date === b.date) {
-    retVal = 0;
-  } else {
-    retVal = 1;
-  }
-  return retVal;
+      return {
+        url,
+        scenarioName,
+        title: matchShorterUrl(url),
+        data: frum(data)
+          .filter(({ ms }) => ms > 0)
+          .map(({ date, ms }) => ({
+            date: new Date(date),
+            value: ms / 1000,
+          })),
+      };
+    })
+    .groupBy('url')
+    .map((many) => {
+      const output = first(many);
+      output.data = frum(many)
+        .select('data')
+        .flatten()
+        .sort('date')
+        .toArray();
+      return output;
+    });
 };
 
 const mergeProductsData = (productsData) => {
-  const mergedMeta = {};
-  const mergedScenarios = productsData
-    .reduce((result, { meta, scenarios }) => {
-      const { latestVersion, packageId } = meta;
-      mergedMeta[packageId] = {
-        latestVersion,
-      };
-
-      // eslint-disable-next-line consistent-return
-      Object.keys(scenarios).forEach((originalKey) => {
-        const profileInfo = scenarios[originalKey];
-        if (profileInfo.data.length === 0) {
-          return;
-        }
-        const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
-        const lastDataPoint = (sortedData[sortedData.length - 1].value).toFixed(2);
-
-        const scenarioKey = originalKey.split('#')[0];
-        // This is the first time we're seing this scenario
-        if (!result[scenarioKey]) {
-          delete profileInfo.data;
-          result[scenarioKey] = {
-            data: {},
-            ...profileInfo,
-          };
-        }
-        // This is the first time we're seing this product for this scenario
-        if (!result[scenarioKey].data[packageId]) {
-          result[scenarioKey].data[packageId] = sortedData;
-          result[scenarioKey][packageId] = lastDataPoint;
-        }
-      });
-      return result;
-    }, {});
-  return {
-    meta: mergedMeta,
-    scenarios: mergedScenarios,
-  };
+  return frum(productsData)
+    .map(({ meta, scenarios }) => {
+      return frum(scenarios)
+        .map(scenario => ({
+          ...meta,
+          ...scenario,
+          scenarioKey: scenario.url.split('#')[0],
+          lastDataPoint: (last(scenario.data) || {}).value,
+        }));
+    })
+    .flatten()
+    .materialize();
 };
 
 let ENDPOINT;
