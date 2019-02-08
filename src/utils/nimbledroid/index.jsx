@@ -97,20 +97,21 @@ export const generateSitesTableContent = (
   nimbledroidData,
   { baseProduct, compareProduct, targetRatio }
 ) => {
-  const { packageIdLabels } = CONFIG;
-  const packageIds = Object.keys(packageIdLabels);
-  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
-
-  tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
-
+  const packageIds = Object.keys(CONFIG.packageIdLabels);
+  const sites = frum(nimbledroidData)
+    .filter(({ url }) => includeScenario(url))
+    .groupBy('url');
   const count = {
     red: 0,
     yellow: 0,
     green: 0,
   };
-  const tableContent = frum(nimbledroidData)
-    .filter(({ url }) => includeScenario(url))
-    .groupBy('url')
+  const { packageIdLabels } = CONFIG;
+  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
+
+  tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
+
+  const tableContent = sites
     .map(packages => {
       const lastDataPoint = frum(packages)
         .groupBy('packageId')
