@@ -34,6 +34,10 @@ function toArray(value) {
   return [value];
 }
 
+function* toArgs(list) {
+  for (const v of list) yield [v];
+}
+
 function zipObject(keys, values) {
   // accept list of keys and list of values to zip into a single object
   const output = {};
@@ -66,9 +70,19 @@ function preSelector(columnName) {
 }
 
 function selector(columnName) {
-  // convert string into function that selects column from row
-  // convert array of strings into function that extract properties from row
-  // convert an
+  /*
+     var row = { a: 1, b: '2', c: 3 };
+
+     convert string into function that selects property from row
+         selector('b')(row) === '2'
+
+     convert array of strings into function that extracts properties from a row
+         selector(['a', 'c'])(row) === {a: 1, c: 3}
+
+     convert an object into function that renames properties of a row
+         selector({x: 'a', y: 'b'})(row) === {x: 1, y: '2'}
+
+   */
   if (typeof columnName === 'object' || Array.isArray(columnName)) {
     // select many columns
     const cs = preSelector(columnName).args();
@@ -89,14 +103,15 @@ function missing(value) {
 }
 
 function exists(value) {
-  // return true if value is null, or undefined, or not a legit value
+  // return false if value is null, or undefined, or not a legit value
   return !missing(value);
 }
 
 class Wrapper {
-  constructor(argslist, ok = false) {
+  // Represent an iterable set of function arguments
+  constructor(argslist, isGenerator = false) {
     if (
-      !ok &&
+      !isGenerator &&
       (!Array.isArray(argslist) ||
         (argslist.length > 0 && !Array.isArray(argslist[0])))
     ) {
@@ -113,9 +128,7 @@ class Wrapper {
   }
 
   *[Symbol.iterator]() {
-    this.materialize();
-
-    for (const [a] of this.argslist) {
+    for (const [a] of this.materialize().argslist) {
       yield a;
     }
   }
@@ -128,14 +141,6 @@ class Wrapper {
     }
 
     return this;
-  }
-
-  get length() {
-    if (Array.isArray(this.argslist)) {
-      return this.argslist.length;
-    }
-
-    return this.materialize().argslist.length;
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -156,17 +161,16 @@ class Wrapper {
     return new Wrapper(output(this.argslist), true);
   }
 
-  select(columns) {
-    return this.map(selector(columns));
+  select(selectors) {
+    // run selector on all rows
+    return this.map(selector(selectors));
   }
 
   forEach(func) {
     // execute func for each element, do not change this
-    this.materialize();
-
     let i = 0;
 
-    for (const args of this.argslist) {
+    for (const args of this.materialize().argslist) {
       func(...args, i);
       i += 1;
     }
@@ -175,7 +179,7 @@ class Wrapper {
   }
 
   enumerate() {
-    // append extra index paramter to args
+    // append extra index parameter to args
     function* output(argslist) {
       let i = 0;
 
@@ -190,7 +194,11 @@ class Wrapper {
 
   args() {
     // Convert value into args
-    return new Wrapper(this.materialize().argslist.map(arg => arg[0]));
+    function *output(list){
+      for (const args of list) yield args[0];
+    }
+
+    return new Wrapper(output(this.materialize().argslist), true);
   }
 
   filter(func) {
@@ -255,8 +263,8 @@ class Wrapper {
     if (Array.isArray(columns)) {
       let g = 0;
 
-      for (const arg of this.argslist) {
-        const key = func(...arg);
+      for (const args of this.argslist) {
+        const key = func(...args);
         const skey = JSON.stringify(key);
         let triple = output[skey];
 
@@ -266,14 +274,14 @@ class Wrapper {
           output[skey] = triple;
         }
 
-        triple[0].push(arg[0]);
+        triple[0].push(args[0]);
       }
     } else {
       // single-column groupby is faster
       let g = 0;
 
-      for (const [row, ...arg] of this.argslist) {
-        const key = func(row, ...arg, g);
+      for (const args of this.argslist) {
+        const key = func(...args);
         let triple = output[key];
 
         if (!triple) {
@@ -282,7 +290,7 @@ class Wrapper {
           output[key] = triple;
         }
 
-        triple[0].push(row);
+        triple[0].push(args[0]);
       }
     }
 
@@ -313,6 +321,16 @@ class Wrapper {
     return first(this);
   }
 
+  last() {
+    // return last element
+    return last(this);
+  }
+
+  get length() {
+    return this.materialize().argslist.length;
+  }
+
+
   findIndex(func) {
     // return index of first element where func returns true
     // return null if not found
@@ -324,11 +342,6 @@ class Wrapper {
     }
 
     return null;
-  }
-
-  last() {
-    // return last element
-    return last(this);
   }
 
   index(column) {
@@ -355,11 +368,7 @@ function frum(list) {
     return list;
   }
 
-  if (Array.isArray(list)) {
-    return new Wrapper(list.map(v => [v]));
-  }
-
-  return new Wrapper(Array.from(list));
+  return new Wrapper(toArgs(list), true);
 }
 
 internalFrum = frum;

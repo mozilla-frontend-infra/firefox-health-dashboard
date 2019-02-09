@@ -5,11 +5,9 @@ import CONFIG from '../nimbledroid/config';
 
 const nimbledroidFormatter = scenario => ({
   datasets: frum(scenario)
-    .map((pckage, index) => {
-      const { packageId } = pckage;
-
+    .map(({ packageId, data }, index) => {
       return {
-        data: pckage.data.select({ x: 'date', y: 'value' }),
+        data: data.select({ x: 'date', y: 'value' }),
         label: CONFIG.packageIdLabels[packageId],
         ...generateDatasetStyle(SETTINGS.colors[index]),
       };
