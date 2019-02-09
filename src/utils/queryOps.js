@@ -5,21 +5,23 @@ import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
 
 let internalFrum = null;
-const first = list => {
+let internalToPairs = null;
+
+function first(list) {
   for (const v of list) return v;
 
   return null;
-};
+}
 
-const last = list => {
+function last(list) {
   let value = null;
 
   for (const v of list) value = v;
 
   return value;
-};
+}
 
-const toArray = value => {
+function toArray(value) {
   // return a list
   if (Array.isArray(value)) {
     return value;
@@ -30,36 +32,46 @@ const toArray = value => {
   }
 
   return [value];
-};
+}
 
-const zipObject = (keys, values) => {
+function zipObject(keys, values) {
   // accept list of keys and list of values to zip into a single object
   const output = {};
 
   for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
 
   return output;
-};
+}
 
-const selector = columnName => {
-  // convert string into function that selects column from row
-  // convert array of strings into function that extract properties from row
+function preSelector(columnName) {
+  // convert to an array of [selector(), name] pairs
   if (Array.isArray(columnName)) {
     // select many columns
-    const cs = internalFrum(columnName)
-      .map(columnName => {
-        if (typeof columnName === 'string') {
-          return [[selector(columnName), columnName]];
-        }
-
-        return Object.entries(columnName).map((name, value) => [
-          selector(value),
-          name,
-        ]);
-      })
+    return internalFrum(columnName)
+      .map(preSelector)
       .flatten()
-      .sortBy(([, b]) => b)
-      .args();
+      .sortBy(([, b]) => b);
+  }
+
+  if (typeof columnName === 'object') {
+    return internalToPairs(columnName)
+      .map((value, name) => [preSelector(value), name])
+      .flatten()
+      .sortBy(([, b]) => b);
+  }
+
+  if (typeof columnName === 'string') {
+    return internalFrum([row => row[columnName], columnName]);
+  }
+}
+
+function selector(columnName) {
+  // convert string into function that selects column from row
+  // convert array of strings into function that extract properties from row
+  // convert an
+  if (typeof columnName === 'object' || Array.isArray(columnName)) {
+    // select many columns
+    const cs = preSelector(columnName).args();
 
     return row => cs.map(func => func(row)).fromPairs();
   }
@@ -69,14 +81,17 @@ const selector = columnName => {
   }
 
   return columnName;
-};
+}
 
-const missing = value =>
+function missing(value) {
   // return true if value is null, or undefined, or not a legit value
-  value == null || Number.isNaN(value) || value === '';
-const exists = value =>
+  return value == null || Number.isNaN(value) || value === '';
+}
+
+function exists(value) {
   // return true if value is null, or undefined, or not a legit value
-  !missing(value);
+  return !missing(value);
+}
 
 class Wrapper {
   constructor(argslist, ok = false) {
@@ -113,6 +128,14 @@ class Wrapper {
     }
 
     return this;
+  }
+
+  get length() {
+    if (Array.isArray(this.argslist)) {
+      return this.argslist.length;
+    }
+
+    return this.materialize().argslist.length;
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -327,7 +350,7 @@ class Wrapper {
   }
 }
 
-const frum = list => {
+function frum(list) {
   if (list instanceof Wrapper) {
     return list;
   }
@@ -337,11 +360,11 @@ const frum = list => {
   }
 
   return new Wrapper(Array.from(list));
-};
+}
 
 internalFrum = frum;
 
-const toPairs = obj => {
+function toPairs(obj) {
   // convert Object (or Map) into [value, key] pairs
   // notice the **value is first**
   if (obj instanceof Map) {
@@ -349,17 +372,26 @@ const toPairs = obj => {
   }
 
   return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
-};
+}
 
-const extendWrapper = methods => {
+internalToPairs = toPairs;
+
+function length(list) {
+  // return length of this list
+  if (list instanceof Wrapper) return list.length;
+
+  return list.length;
+}
+
+function extendWrapper(methods) {
   // Add a chainable method to Wrapper
-  toPairs(methods).forEach((method, name) => {
+  internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
-      return frum(method(this.toArray(), ...args));
+      return internalFrum(method(this.toArray(), ...args));
     };
   });
-};
+}
 
 // Add Lodash functions
 extendWrapper({
@@ -372,11 +404,11 @@ extendWrapper({
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   join: function join(listA, propA, listB, propB) {
-    const lookup = frum(listB)
+    const lookup = internalFrum(listB)
       .groupBy(propB)
       .fromPairs();
 
-    return frum(listA)
+    return internalFrum(listA)
       .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
       .flatten();
   },
@@ -390,4 +422,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last };
+export { frum, zipObject, toPairs, first, last, missing, length };
