@@ -6,21 +6,22 @@ import lodashTake from 'lodash/take';
 
 let internalFrum = null;
 let internalToPairs = null;
-const first = list => {
+
+function first(list) {
   for (const v of list) return v;
 
   return null;
-};
+}
 
-const last = list => {
+function last(list) {
   let value = null;
 
   for (const v of list) value = v;
 
   return value;
-};
+}
 
-const toArray = value => {
+function toArray(value) {
   // return a list
   if (Array.isArray(value)) {
     return value;
@@ -31,16 +32,16 @@ const toArray = value => {
   }
 
   return [value];
-};
+}
 
-const zipObject = (keys, values) => {
+function zipObject(keys, values) {
   // accept list of keys and list of values to zip into a single object
   const output = {};
 
   for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
 
   return output;
-};
+}
 
 function preSelector(columnName) {
   // convert to an array of [selector(), name] pairs
@@ -127,6 +128,14 @@ class Wrapper {
     }
 
     return this;
+  }
+
+  get length() {
+    if (Array.isArray(this.argslist)) {
+      return this.argslist.length;
+    }
+
+    return this.materialize().argslist.length;
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -341,7 +350,7 @@ class Wrapper {
   }
 }
 
-const frum = list => {
+function frum(list) {
   if (list instanceof Wrapper) {
     return list;
   }
@@ -351,11 +360,11 @@ const frum = list => {
   }
 
   return new Wrapper(Array.from(list));
-};
+}
 
 internalFrum = frum;
 
-const toPairs = obj => {
+function toPairs(obj) {
   // convert Object (or Map) into [value, key] pairs
   // notice the **value is first**
   if (obj instanceof Map) {
@@ -363,19 +372,26 @@ const toPairs = obj => {
   }
 
   return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
-};
+}
 
 internalToPairs = toPairs;
 
-const extendWrapper = methods => {
+function length(list) {
+  // return length of this list
+  if (list instanceof Wrapper) return list.length;
+
+  return list.length;
+}
+
+function extendWrapper(methods) {
   // Add a chainable method to Wrapper
-  toPairs(methods).forEach((method, name) => {
+  internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     Wrapper.prototype[name] = function anonymous(...args) {
-      return frum(method(this.toArray(), ...args));
+      return internalFrum(method(this.toArray(), ...args));
     };
   });
-};
+}
 
 // Add Lodash functions
 extendWrapper({
@@ -388,11 +404,11 @@ extendWrapper({
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   join: function join(listA, propA, listB, propB) {
-    const lookup = frum(listB)
+    const lookup = internalFrum(listB)
       .groupBy(propB)
       .fromPairs();
 
-    return frum(listA)
+    return internalFrum(listA)
       .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
       .flatten();
   },
@@ -406,4 +422,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last, missing };
+export { frum, zipObject, toPairs, first, last, missing, length };
