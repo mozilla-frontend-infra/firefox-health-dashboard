@@ -1,5 +1,5 @@
+/* eslint-disable jest/valid-expect */
 /* global describe, it */
-/* eslint-disable */
 import assert from 'assert';
 import { expect } from 'chai';
 import { adjustedData } from '../../src/utils/perfherder/subbenchmarks';
@@ -14,6 +14,7 @@ const stubData = [
 describe('subbenchmarks', () => {
   it('adjustData() - only keep 50th percentile of data', () => {
     const data = adjustedData(stubData, 50);
+
     assert(data.length === 2);
     expect(data.map(d => d.value)).to.have.same.members([1, 2]);
   });
