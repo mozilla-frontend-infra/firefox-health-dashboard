@@ -26,7 +26,6 @@ export default class TelemetryContainer extends React.Component {
         return;
       }
 
-      // add processType parameter and overwrite default value
       const fullTelemetryUrl = `${telemetryUrl}&processType=parent`;
 
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
