@@ -2,14 +2,15 @@ import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
 
-const dataToChartJSformat = data => data.map(({ datetime, value }) => ({
-  x: datetime,
-  y: value,
-}));
-
-const generateInitialOptions = (series) => {
+const dataToChartJSformat = data =>
+  data.map(({ datetime, value }) => ({
+    x: datetime,
+    y: value,
+  }));
+const generateInitialOptions = series => {
   const higherIsBetter = !series.meta.lower_is_better;
   const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
+
   return {
     reverse: higherIsBetter,
     scaleLabel: higherIsBetter ? 'Score' : 'Load time',
@@ -21,6 +22,7 @@ const generateInitialOptions = (series) => {
           let deltaPercentage = 'n/a';
           let dataset = 'n/a';
           let currentData = 'n/a';
+
           if (tooltipItems[0].index > 0) {
             dataset = data.datasets[tooltipItems[0].datasetIndex].data;
 
@@ -28,10 +30,16 @@ const generateInitialOptions = (series) => {
             const previousData = dataset[tooltipItems[0].index - 1].y;
 
             delta = (currentData - previousData).toFixed(2);
-            deltaPercentage = (((currentData - previousData) / previousData) * 100).toFixed(2);
+            deltaPercentage = (
+              ((currentData - previousData) / previousData) *
+              100
+            ).toFixed(2);
           }
+
           const indicator = `${currentData} (${higherOrLower})`;
+
           tooltipData.push(indicator, `Δ ${delta} (${deltaPercentage}%)`);
+
           return tooltipData;
         },
       },
