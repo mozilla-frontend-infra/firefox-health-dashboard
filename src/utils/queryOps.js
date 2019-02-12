@@ -243,16 +243,16 @@ class Wrapper {
     return this.filter(func);
   }
 
-  // flatten() {
-  //   // assume this is an array of lists, return array of all elements
-  //   // append extra index paramter to args
-  //   function* output(argslist) {
-  //     for (const [values] of argslist)
-  //       for (const value of values) yield [value];
-  //   }
-  //
-  //   return new Wrapper(output(this.argslist), true);
-  // }
+  flatten() {
+    // assume this is an array of lists, return array of all elements
+    // append extra index paramter to args
+    function* output(argslist) {
+      for (const [values] of argslist)
+        for (const value of values) yield [value];
+    }
+
+    return new Wrapper(output(this.argslist), true);
+  }
 
   groupBy(columns) {
     // Groupby one, or many, columns by name or by {name: selector} pairs
@@ -430,10 +430,6 @@ extendWrapper({
 
   reverse: function reverse(list) {
     return list.reverse();
-  },
-
-  flatten: function flatten(list) {
-    return list.flatMap(x => x);
   },
 });
 
