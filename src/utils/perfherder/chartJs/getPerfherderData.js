@@ -1,4 +1,4 @@
-import queryPerformanceData from '@mozilla-frontend-infra/perf-goggles';
+import queryPerformanceData from '../../../vendor/perf-goggles';
 import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
 
