@@ -52,7 +52,11 @@ class TP6 extends React.Component {
                     series={frum(series)
                       .sortBy(['browser'])
                       .reverse()
-                      .map(s => ({ label: s.label, seriesConfig: s }))
+                      .map(s => ({
+                        label: s.label,
+                        seriesConfig: s,
+                        options: { includeSubtests: true },
+                      }))
                       .toArray()}
                   />
                 </Grid>
