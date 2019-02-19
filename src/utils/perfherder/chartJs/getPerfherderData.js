@@ -18,7 +18,7 @@ const getPerfherderData = async series => {
       Object.values(seriesData).forEach(seriesInfo => {
         let actualLabel = label;
 
-        if (options.includeSubtests) {
+        if (!seriesConfig.test && options.includeSubtests) {
           const { suite, test } = seriesInfo.meta;
 
           actualLabel = test

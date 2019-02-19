@@ -21,8 +21,11 @@ const styles = {
 class TP6M extends React.Component {
   constructor(props) {
     super(props);
+    const { location } = this.props;
+    const params = new URLSearchParams(location.search);
+
     this.state = {
-      test: 'loadtime',
+      test: params.get('test') || 'loadtime',
       platform: 'android-hw-g5-7-0-arm7-api-16',
     };
   }

@@ -193,10 +193,10 @@ const SUITES = {
     ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
 
-    // ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
-    // ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
+    ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
+    ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
     ['geckoview', 'Tp6 mobile: YouTube', 'raptor-tp6m-youtube-geckoview'],
-    // ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
+    ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
   ],
 };
 // ALL PAGE COMBINATIONS

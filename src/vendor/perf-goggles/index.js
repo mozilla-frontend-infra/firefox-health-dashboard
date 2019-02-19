@@ -201,7 +201,9 @@ const parentSignatureInfo = async seriesConfig => {
 };
 
 const fetchSubtestsData = async (seriesConfig, subtestsInfo, timeRange) => {
-  const signatureIds = Object.values(subtestsInfo).map(v => v.id);
+  const signatureIds = Object.values(subtestsInfo)
+    .filter(v => !seriesConfig.test || v.test === seriesConfig.test)
+    .map(v => v.id);
   const subtestsData = {};
   const dataPoints = await fetchPerfData(seriesConfig, signatureIds, timeRange);
 
