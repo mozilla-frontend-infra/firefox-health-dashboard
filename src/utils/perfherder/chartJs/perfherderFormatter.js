@@ -8,9 +8,11 @@ const dataToChartJSformat = data =>
     y: value,
   }));
 const generateInitialOptions = series => {
-  // TODO: map tests and suite scores to measurement units and some label for scale
-  const is_test = !!series.meta.test;  // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
-  const higherIsBetter = is_test ? false : !series.meta.lower_is_better;
+  // TODO: map tests and suite scores to measurement units and
+  // add some label for scale
+  const isTest = !!series.meta.test;
+  // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
+  const higherIsBetter = isTest ? false : !series.meta.lower_is_better;
   const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
 
   return {
