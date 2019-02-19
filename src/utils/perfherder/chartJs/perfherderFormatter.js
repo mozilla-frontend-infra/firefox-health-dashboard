@@ -25,21 +25,19 @@ const generateInitialOptions = series => {
           let delta = 0;
           let deltaPercentage = 0;
 
+          tooltipData.push(`${currentData} (${higherOrLower})`);
+
           if (tooltipItems[0].index > 0) {
             const previousData = dataset[tooltipItems[0].index - 1].y;
 
-            delta = currentData - previousData;
+            delta = (currentData - previousData).toFixed(2);
             // [(c - p) / p] * 100 is equivalent to (c / p - 1) * 100
-            deltaPercentage = (currentData / previousData - 1) * 100;
+            deltaPercentage = ((currentData / previousData - 1) * 100).toFixed(
+              2
+            );
+
+            tooltipData.push(`Δ ${delta} (${deltaPercentage}%)`);
           }
-
-          delta = delta.toFixed(2);
-          deltaPercentage = deltaPercentage.toFixed(2);
-
-          const indicator = `${currentData} (${higherOrLower})`;
-          const deltaLine = `Δ ${delta} (${deltaPercentage}%)`;
-
-          tooltipData.push(indicator, deltaLine);
 
           return tooltipData;
         },
