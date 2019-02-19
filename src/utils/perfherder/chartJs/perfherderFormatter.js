@@ -7,8 +7,9 @@ const dataToChartJSformat = data =>
     x: datetime,
     y: value,
   }));
-const generateInitialOptions = meta => {
-  const higherIsBetter = meta.lower_is_better === false;
+const generateInitialOptions = series => {
+  const higherIsBetter = !series.meta.lower_is_better;
+  const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
 
   return {
     reverse: higherIsBetter,
@@ -16,20 +17,30 @@ const generateInitialOptions = meta => {
     tooltips: {
       callbacks: {
         footer: (tooltipItems, data) => {
+          const tooltipData = [];
           let delta = 'n/a';
+          let deltaPercentage = 'n/a';
+          let dataset = 'n/a';
+          let currentData = 'n/a';
 
           if (tooltipItems[0].index > 0) {
-            delta = (
-              data.datasets[tooltipItems[0].datasetIndex].data[
-                tooltipItems[0].index
-              ].y -
-              data.datasets[tooltipItems[0].datasetIndex].data[
-                tooltipItems[0].index - 1
-              ].y
+            dataset = data.datasets[tooltipItems[0].datasetIndex].data;
+
+            currentData = dataset[tooltipItems[0].index].y;
+            const previousData = dataset[tooltipItems[0].index - 1].y;
+
+            delta = (currentData - previousData).toFixed(2);
+            deltaPercentage = (
+              ((currentData - previousData) / previousData) *
+              100
             ).toFixed(2);
           }
 
-          return `Delta: ${delta}`;
+          const indicator = `${currentData} (${higherOrLower})`;
+
+          tooltipData.push(indicator, `Δ ${delta} (${deltaPercentage}%)`);
+
+          return tooltipData;
         },
       },
     },
@@ -42,7 +53,7 @@ const perfherderFormatter = series => {
   // The first series' metadata defines the whole set
   const newData = {
     data: { datasets: [] },
-    options: generateInitialOptions(series[0].meta),
+    options: generateInitialOptions(series[0]),
   };
 
   series.forEach(({ color, data, label, perfherderUrl }, index) => {

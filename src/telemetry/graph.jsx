@@ -26,7 +26,9 @@ export default class TelemetryContainer extends React.Component {
         return;
       }
 
-      this.graphTitleLink.setAttribute('href', telemetryUrl);
+      const fullTelemetryUrl = `${telemetryUrl}&processType=parent`;
+
+      this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (error) {
