@@ -1,26 +1,20 @@
 import 'isomorphic-fetch';
 import isEqual from 'lodash.isequal';
 import { stringify } from 'query-string';
-import { frum, toPairs } from '../../utils/queryOps';
-import { Signal } from '../../utils/signal';
 
 export const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
 const DEFAULT_TIMERANGE = 14 * 24 * 3600;
-const objectToURI = obj =>
-  toPairs(obj)
-    .map((value, key) => `${key}=${encodeURIComponent(value)}`)
-    .concatenate('&');
 
 export const signaturesUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/signatures/`;
 
 const dataPointsEndpointUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/data/`;
-const platformSuitesUrl = ({ project, ...params }) =>
-  `${TREEHERDER}/api/project/${project}/performance/signatures/?${objectToURI(
-    params
-  )}`;
+const platformSuitesUrl = ({ frameworkId, platform, project }) =>
+  `${signaturesUrl(
+    project
+  )}?framework=${frameworkId}&platform=${platform}&subtests=0`;
 
 export const perfDataUrls = (
   { frameworkId, project },
@@ -126,6 +120,12 @@ const treeherderOptions = async () => {
   return transformOptionCollectionHash(optionCollectionHash);
 };
 
+const queryPlatformSignatures = async seriesConfig => {
+  const response = await fetch(platformSuitesUrl(seriesConfig));
+
+  return response.json();
+};
+
 const querySubtests = async ({ project }, parentHash) => {
   const response = await fetch(
     `${signaturesUrl(project)}?parent_signature=${parentHash}`
@@ -134,59 +134,46 @@ const querySubtests = async ({ project }, parentHash) => {
   return response.json();
 };
 
-const internalAllPlatformSignatures = {};
+const signaturesForPlatformSuite = async seriesConfig => {
+  const allPlatformSignatures = await queryPlatformSignatures(seriesConfig);
+  const filteredSignatures = Object.keys(allPlatformSignatures).reduce(
+    (res, signatureHash) => {
+      const jobSignature = allPlatformSignatures[signatureHash];
 
-async function allPlatformSignatures({ project }) {
-  const result = internalAllPlatformSignatures[project];
+      if (jobSignature.suite === jobSignature.test) {
+        jobSignature.test = null;
+      }
 
-  if (!result) {
-    internalAllPlatformSignatures[project] = Promise.all([
-      async () => {
-        const response = await fetch(
-          platformSuitesUrl({ project, framework: 10 })
-        );
-        const output = toPairs(response.json())
-          .map((jobSignature, signatureHash) => ({
-            parentSignatureHash: signatureHash,
-            ...jobSignature,
-            test:
-              jobSignature.suite === jobSignature.test
-                ? null
-                : jobSignature.test,
-          }))
-          .toArray();
+      if (
+        jobSignature.suite === seriesConfig.suite &&
+        jobSignature.test == seriesConfig.test // eslint-disable-line eqeqeq
+      ) {
+        res[signatureHash] = {
+          parentSignatureHash: signatureHash,
+          ...jobSignature,
+        };
+      }
 
-        return output;
-      },
-    ]);
-  }
+      return res;
+    },
+    {}
+  );
 
-  return internalAllPlatformSignatures[project];
-}
-
-const signaturesForPlatformSuite = async ({ project, suite, test }) => {
-  const platformSignatures = (await allPlatformSignatures({ project }))[0];
-  const output = frum(platformSignatures)
-    .filter(
-      jobSignature => jobSignature.suite === suite && jobSignature.test === test
-    )
-    .toArray();
-
-  return output;
+  return filteredSignatures;
 };
 
 const findParentSignatureInfo = (
-  { option = 'pgo', extraOptions },
+  { option, extraOptions },
   signatures,
   options
 ) => {
   const result = [];
 
-  frum(signatures).forEach(hash => {
+  Object.keys(signatures).forEach(hash => {
     const signature = signatures[hash];
     const optionCollection = options[signature.option_collection_hash];
 
-    if (optionCollection && optionCollection.includes(option)) {
+    if (!option || (optionCollection && optionCollection.includes(option))) {
       if (extraOptions && extraOptions.length > 0) {
         if (isEqual(signature.extra_options, extraOptions)) {
           result.push(signature);
@@ -219,19 +206,24 @@ const fetchSubtestsData = async (seriesConfig, subtestsInfo, timeRange) => {
   const dataPoints = await fetchPerfData(seriesConfig, signatureIds, timeRange);
 
   Object.keys(dataPoints).forEach(subtestHash => {
-    subtestsData[subtestHash] = {
-      data: dataPoints[subtestHash],
-      meta: subtestsInfo[subtestHash], // Original object from Perfherder
-      perfherderUrl: perfherderGraphUrl(seriesConfig, [subtestHash]),
-    };
+    if (
+      !seriesConfig.test ||
+      subtestsInfo[subtestHash].test === seriesConfig.test
+    ) {
+      subtestsData[subtestHash] = {
+        data: dataPoints[subtestHash],
+        meta: subtestsInfo[subtestHash], // Original object from Perfherder
+        perfherderUrl: perfherderGraphUrl(seriesConfig, [subtestHash]),
+      };
+    }
   });
 
   return subtestsData;
 };
 
-const queryPerformanceData = async (seriesConfig, options) => {
+export const queryPerformanceData = async (seriesConfig, options) => {
   const { includeSubtests = false, timeRange = DEFAULT_TIMERANGE } = options;
-  const parentInfo = await parentSignatureInfo(seriesConfig);
+  const parentInfo = await parentSignatureInfo({ ...seriesConfig, test: null });
 
   // XXX: Throw error instead
   if (!parentInfo) {
@@ -275,4 +267,4 @@ const queryPerformanceData = async (seriesConfig, options) => {
   return perfData;
 };
 
-export { queryPerformanceData };
+export default queryPerformanceData;

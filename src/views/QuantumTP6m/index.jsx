@@ -23,7 +23,7 @@ class TP6M extends React.Component {
     super(props);
     this.state = {
       test: 'loadtime',
-      platform: 'android-hw-g5-7-0-arm7-api-16-nightly',
+      platform: 'android-hw-g5-7-0-arm7-api-16',
     };
   }
 

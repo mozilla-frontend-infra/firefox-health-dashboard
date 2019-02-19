@@ -65,7 +65,7 @@ PerfherderGraphContainer.propTypes = {
       seriesConfig: PropTypes.shape({
         extraOptions: PropTypes.arrayOf(PropTypes.string),
         frameworkId: PropTypes.number.isRequired,
-        option: PropTypes.string.isRequired,
+        option: PropTypes.string,
         project: PropTypes.string.isRequired,
         suite: PropTypes.string.isRequired,
       }),

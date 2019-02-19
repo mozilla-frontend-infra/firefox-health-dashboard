@@ -193,16 +193,16 @@ const SUITES = {
     ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
 
-    ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
-    ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
+    // ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
+    // ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
     ['geckoview', 'Tp6 mobile: YouTube', 'raptor-tp6m-youtube-geckoview'],
-    ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
+    // ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
   ],
 };
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
-const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
+const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' }).materialize();
 
 export { CONFIG, PLATFORMS, TP6_PAGES, TP6M_PAGES, TP6_TESTS };
