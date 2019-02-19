@@ -21,8 +21,8 @@ const styles = {
     padding: '.3rem .3rem .3rem .3rem',
   },
   errorPanel: {
-    marginTop: '10px',
-    width: '97%',
+    margin: '26px auto 40px',
+    width: '70%',
   },
 };
 const ChartJsWrapper = ({
@@ -73,6 +73,10 @@ const ChartJsWrapper = ({
         textAlign: 'center',
         width: spinnerSize,
       }}>
+      <ErrorPanel
+        className={classes.errorPanel}
+        error="Something went wrong, please try again later."
+      />
       <CircularProgress />
     </div>
   );
@@ -123,7 +127,7 @@ ChartJsWrapper.defaultProps = {
   title: '',
   type: 'line',
   chartHeight: 80,
-  spinnerSize: '8rem',
+  spinnerSize: '100%',
 };
 
 export default withStyles(styles)(ChartJsWrapper);
