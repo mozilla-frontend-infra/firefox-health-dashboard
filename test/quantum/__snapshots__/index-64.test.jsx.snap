@@ -438,7 +438,7 @@ exports[`renders correctly 1`] = `
         <span>
            (
           <a
-            href="/quantum/tp6?bits=64"
+            href="/quantum/tp6?bits=64&test=pageload"
           >
             more
           </a>
