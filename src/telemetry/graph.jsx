@@ -4,9 +4,22 @@ import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
+import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
+import { withStyles } from '@material-ui/core/styles';
 import SETTINGS from '../settings';
 
-export default class TelemetryContainer extends React.Component {
+const styles = {
+  errorPanelClass: {
+    margin: '40px auto',
+    width: '50%',
+  },
+};
+
+class TelemetryContainer extends React.Component {
+  state = {
+    errorFlag: false,
+  };
+
   async componentDidMount() {
     this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
@@ -32,6 +45,7 @@ export default class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (error) {
+      this.setState({ errorFlag: true });
       // eslint-disable-next-line no-console
       console.error(error.message);
     }
@@ -65,29 +79,41 @@ export default class TelemetryContainer extends React.Component {
   }
 
   render() {
-    const { id, title } = this.props;
+    const { id, title, classes } = this.props;
+    const { errorFlag } = this.state;
 
-    return (
-      <div id={id} key={id} className="criteria-widget">
-        <header>
-          <h3 className="graph-title">
-            <a
-              className="graph-title-link"
-              ref={a => (this.graphTitleLink = a)}>
-              {title}
-            </a>
-          </h3>
-        </header>
-        <div
-          className="graph-subtitle"
-          ref={div => (this.graphSubtitleEl = div)}>
-          {}
+    if (title) {
+      return (
+        <div id={id} key={id} className="criteria-widget">
+          <header>
+            <h3 className="graph-title">
+              <a
+                className="graph-title-link"
+                ref={a => (this.graphTitleLink = a)}>
+                {title}
+              </a>
+            </h3>
+          </header>
+          {errorFlag ? (
+            <ErrorPanel
+              className={classes.errorPanelClass}
+              error="Something went wrong, please try again later."
+            />
+          ) : (
+            <div>
+              <div
+                className="graph-subtitle"
+                ref={div => (this.graphSubtitleEl = div)}>
+                {}
+              </div>
+              <div className="graph" ref={div => (this.graphEl = div)}>
+                <div className="graph-legend">{}</div>
+              </div>
+            </div>
+          )}
         </div>
-        <div className="graph" ref={div => (this.graphEl = div)}>
-          <div className="graph-legend">{}</div>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -96,3 +122,5 @@ TelemetryContainer.propTypes = {
   title: PropTypes.string.isRequired,
   queryParams: PropTypes.shape({}),
 };
+
+export default withStyles(styles)(TelemetryContainer);
