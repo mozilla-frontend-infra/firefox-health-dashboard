@@ -31,30 +31,15 @@ class TP6M extends React.Component {
   }
 
   render() {
-    const { test, platform } = this.state;
     const { classes } = this.props;
-
-    // const filters = frum([])
-    //   .append({label: "Test", id:"test", "options": TP6_TESTS})
-    //   .append({
-    //     label: "Platform",
-    //     id:"platform",
-    //     options: TP6M_PAGES
-    //       .where({browser:'geckoview'})
-    //       .groupBy("platform")
-    //       .map((v, k)=>({id:k, label:k}))
-    //   });
+    const { test, platform } = this.state;
+    const subtitle = frum(TP6_TESTS)
+      .where({ id: test })
+      .first().label;
 
     return (
       <div className={classes.body}>
-        <DashboardPage
-          key="tp6m"
-          title="TP6 Mobile"
-          subtitle={
-            frum(TP6_TESTS)
-              .where({ id: test })
-              .first().label
-          }>
+        <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
               .where({ platform })

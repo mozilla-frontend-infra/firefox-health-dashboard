@@ -202,7 +202,8 @@ const SUITES = {
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
-  .join('browser', PLATFORMS, 'browser');
+  .join('browser', PLATFORMS, 'browser')
+  .materialize();
 const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' }).materialize();
 
 export { CONFIG, PLATFORMS, TP6_PAGES, TP6M_PAGES, TP6_TESTS };

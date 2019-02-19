@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../utils/queryOps';
-import { TP6_PAGES } from '../../quantum/config';
+import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
@@ -24,19 +24,24 @@ class TP6 extends React.Component {
     const { location } = this.props;
     const params = new URLSearchParams(location.search);
 
-    this.state = { bits: params.get('bits') };
+    this.state = {
+      test: params.get('test') || 'loadtime',
+      bits: params.get('bits') || '64',
+    };
   }
 
   render() {
     const { classes } = this.props;
-    const { bits } = this.state;
+    const { test, bits } = this.state;
+    const subtitle = `${
+      frum(TP6_TESTS)
+        .where({ id: test })
+        .first().label
+    } on ${bits} bits`;
 
     return (
       <div className={classes.body}>
-        <DashboardPage
-          key={bits}
-          title="TP6"
-          subtitle={`Page load on ${bits} bits`}>
+        <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
           <Grid container spacing={24}>
             {frum(TP6_PAGES)
               .where({ bits })
@@ -45,7 +50,7 @@ class TP6 extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${title}_${bits}`}
+                  key={`page_${title}_${test}_${bits}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     title={title}
@@ -54,7 +59,7 @@ class TP6 extends React.Component {
                       .reverse()
                       .map(s => ({
                         label: s.label,
-                        seriesConfig: s,
+                        seriesConfig: { ...s, test },
                         options: { includeSubtests: true },
                       }))
                       .toArray()}
