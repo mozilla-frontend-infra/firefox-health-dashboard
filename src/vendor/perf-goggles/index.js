@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import isEqual from 'lodash.isequal';
+import isEqual from 'lodash/isEqual';
 import { stringify } from 'query-string';
 
 export const TREEHERDER = 'https://treeherder.mozilla.org';
@@ -208,22 +208,17 @@ const fetchSubtestsData = async (seriesConfig, subtestsInfo, timeRange) => {
   const dataPoints = await fetchPerfData(seriesConfig, signatureIds, timeRange);
 
   Object.keys(dataPoints).forEach(subtestHash => {
-    if (
-      !seriesConfig.test ||
-      subtestsInfo[subtestHash].test === seriesConfig.test
-    ) {
-      subtestsData[subtestHash] = {
-        data: dataPoints[subtestHash],
-        meta: subtestsInfo[subtestHash], // Original object from Perfherder
-        perfherderUrl: perfherderGraphUrl(seriesConfig, [subtestHash]),
-      };
-    }
+    subtestsData[subtestHash] = {
+      data: dataPoints[subtestHash],
+      meta: subtestsInfo[subtestHash], // Original object from Perfherder
+      perfherderUrl: perfherderGraphUrl(seriesConfig, [subtestHash]),
+    };
   });
 
   return subtestsData;
 };
 
-export const queryPerformanceData = async (seriesConfig, options) => {
+const queryPerformanceData = async (seriesConfig, options) => {
   const { includeSubtests = false, timeRange = DEFAULT_TIMERANGE } = options;
   const parentInfo = await parentSignatureInfo({ ...seriesConfig, test: null });
 
@@ -269,4 +264,4 @@ export const queryPerformanceData = async (seriesConfig, options) => {
   return perfData;
 };
 
-export default queryPerformanceData;
+export { queryPerformanceData };
