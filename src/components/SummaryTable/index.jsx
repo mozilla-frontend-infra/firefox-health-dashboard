@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import StatusWidget from '../StatusWidget';
@@ -6,10 +7,7 @@ import { frum } from '../../utils/queryOps';
 
 const SummaryTable = ({ content = [], header }) => {
   const compareName = CONFIG.packageIdLabels[CONFIG.baseProduct];
-  const compareColumn = frum(header)
-    .map((name, i) => (name === compareName ? i : null))
-    .exists()
-    .first(); // TODO: replace with findIndex()
+  const compareColumn = frum(header).findIndex(name => name === compareName);
 
   return (
     <table className="summary-table">
@@ -35,10 +33,9 @@ const SummaryTable = ({ content = [], header }) => {
               {dataPoints.map((datum, columnIndex) => {
                 const className =
                   columnIndex === compareColumn ? `status-${statusColor}` : '';
-                const datumId = `${columnIndex}_datum`;
 
                 return (
-                  <td key={datumId} className={className}>
+                  <td key={columnIndex} className={className}>
                     {datum}
                   </td>
                 );

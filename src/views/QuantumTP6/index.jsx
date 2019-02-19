@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -40,7 +41,7 @@ class TP6 extends React.Component {
             {frum(TP6_PAGES)
               .where({ bits })
               .groupBy('title')
-              .map(([series, { title }]) => (
+              .map((series, title) => (
                 <Grid
                   item
                   xs={6}
@@ -55,8 +56,7 @@ class TP6 extends React.Component {
                       .toArray()}
                   />
                 </Grid>
-              ))
-              .toArray()}
+              ))}
           </Grid>
         </DashboardPage>
       </div>
