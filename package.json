@@ -36,7 +36,6 @@
     "@material-ui/core": "^3.9.1",
     "@material-ui/icons": "^3.0.2",
     "@mozilla-frontend-infra/components": "^2.2.1",
-    "@mozilla-frontend-infra/perf-goggles": "^3.0.0",
     "aggregatejs": "^0.0.5",
     "chart.js": "chartjs/Chart.js#7c3e934",
     "classnames": "^2.2.5",
