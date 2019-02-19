@@ -17,28 +17,29 @@ const generateInitialOptions = series => {
     tooltips: {
       callbacks: {
         footer: (tooltipItems, data) => {
-          const tooltipData = [];
-          let delta = 'n/a';
-          let deltaPercentage = 'n/a';
-          let dataset = 'n/a';
-          let currentData = 'n/a';
+          // get data from all points of selected series
+          const dataset = data.datasets[tooltipItems[0].datasetIndex].data;
+          // get data from selected point
+          const currentData = dataset[tooltipItems[0].index].y;
+          const tooltipData = []; // footer's text lines will be stored here
+          let delta = 0;
+          let deltaPercentage = 0;
 
           if (tooltipItems[0].index > 0) {
-            dataset = data.datasets[tooltipItems[0].datasetIndex].data;
-
-            currentData = dataset[tooltipItems[0].index].y;
             const previousData = dataset[tooltipItems[0].index - 1].y;
 
-            delta = (currentData - previousData).toFixed(2);
-            deltaPercentage = (
-              ((currentData - previousData) / previousData) *
-              100
-            ).toFixed(2);
+            delta = currentData - previousData;
+            // [(c - p) / p] * 100 is equivalent to (c / p - 1) * 100
+            deltaPercentage = (currentData / previousData - 1) * 100;
           }
 
-          const indicator = `${currentData} (${higherOrLower})`;
+          delta = delta.toFixed(2);
+          deltaPercentage = deltaPercentage.toFixed(2);
 
-          tooltipData.push(indicator, `Δ ${delta} (${deltaPercentage}%)`);
+          const indicator = `${currentData} (${higherOrLower})`;
+          const deltaLine = `Δ ${delta} (${deltaPercentage}%)`;
+
+          tooltipData.push(indicator, deltaLine);
 
           return tooltipData;
         },
