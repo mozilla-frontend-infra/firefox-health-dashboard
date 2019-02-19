@@ -330,6 +330,12 @@ class Wrapper {
     return this.materialize().argslist.length;
   }
 
+  concatenate(separator) {
+    return this.materialize()
+      .argslist.map(a => a[0])
+      .join(separator);
+  }
+
   findIndex(func) {
     // return index of first element where func returns true
     // return null if not found

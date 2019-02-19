@@ -7,14 +7,20 @@ import { Signal } from '../../utils/signal';
 export const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
 const DEFAULT_TIMERANGE = 14 * 24 * 3600;
+const objectToURI = obj =>
+  toPairs(obj)
+    .map((value, key) => `${key}=${encodeURIComponent(value)}`)
+    .concatenate('&');
 
 export const signaturesUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/signatures/`;
 
 const dataPointsEndpointUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/data/`;
-const platformSuitesUrl = ({ frameworkId, platform, project }) =>
-  `${TREEHERDER}/api/project/${project}/performance/signatures/?framework=${frameworkId}&platform=${platform}&subtests=0`;
+const platformSuitesUrl = ({ project, ...params }) =>
+  `${TREEHERDER}/api/project/${project}/performance/signatures/?${objectToURI(
+    params
+  )}`;
 
 export const perfDataUrls = (
   { frameworkId, project },
@@ -128,40 +134,45 @@ const querySubtests = async ({ project }, parentHash) => {
   return response.json();
 };
 
-function cache(method) {
-  let output = null;
+const internalAllPlatformSignatures = {};
 
-  return async (...args) => {
-    if (!output) {
-      output = Signal();
-      output = await method(...args);
-    } else if (output instanceof Signal) {
-      await output.wait();
-    } else {
-      return output;
-    }
-  };
+async function allPlatformSignatures({ project }) {
+  const result = internalAllPlatformSignatures[project];
+
+  if (!result) {
+    internalAllPlatformSignatures[project] = Promise.all([
+      async () => {
+        const response = await fetch(
+          platformSuitesUrl({ project, framework: 10 })
+        );
+        const output = toPairs(response.json())
+          .map((jobSignature, signatureHash) => ({
+            parentSignatureHash: signatureHash,
+            ...jobSignature,
+            test:
+              jobSignature.suite === jobSignature.test
+                ? null
+                : jobSignature.test,
+          }))
+          .toArray();
+
+        return output;
+      },
+    ]);
+  }
+
+  return internalAllPlatformSignatures[project];
 }
 
-let allPlatformSignatures = null;
-const signaturesForPlatformSuite = async seriesConfig => {
-  const response = cache(await fetch(platformSuitesUrl({ framework: 10 })));
-
-  allPlatformSignatures = toPairs(response.json())
-    .map((jobSignature, signatureHash) => ({
-      parentSignatureHash: signatureHash,
-      ...jobSignature,
-      test: jobSignature.suite === jobSignature.test ? null : jobSignature.test,
-    }))
-    .toArray();
-
-  return frum(allPlatformSignatures)
+const signaturesForPlatformSuite = async ({ project, suite, test }) => {
+  const platformSignatures = (await allPlatformSignatures({ project }))[0];
+  const output = frum(platformSignatures)
     .filter(
-      jobSignature =>
-        jobSignature.suite === seriesConfig.suite &&
-        jobSignature.test === seriesConfig.test
+      jobSignature => jobSignature.suite === suite && jobSignature.test === test
     )
     .toArray();
+
+  return output;
 };
 
 const findParentSignatureInfo = (
