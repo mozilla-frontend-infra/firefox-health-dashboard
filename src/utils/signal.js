@@ -1,82 +1,53 @@
 class Timeout {
   constructor(milliseconds) {
+    const self = this;
+
     this.ready = false;
-    this.pending = [];
+    this.promise = new Promise(resolve => {
+      self.resolve = resolve;
+    });
 
     setTimeout(() => {
       this.ready = true;
-      this.pending.forEach(r => {
-        r();
-      });
+      this.resolve();
     }, milliseconds);
   }
 
   then(method) {
-    // RUN A METHOD WHEN SIGNALED
-    if (this.ready) {
-      method();
-    } else {
-      this.pending.push(method);
-    }
+    this.promise.then(method);
   }
 
   async wait() {
-    // STOP UNTIL SIGNALED
-    if (this.ready) return;
-
-    const self = this;
-    const p = new Promise(resolve => {
-      self.pending.push(resolve);
-    });
-
-    await p;
+    await this.promise;
   }
 }
 
 class Signal {
   constructor() {
-    this.ready = false;
+    const self = this;
 
-    this.pending = [];
+    this.ready = false;
+    this.promise = new Promise(resolve => {
+      self.resolve = resolve;
+    });
   }
 
   go() {
     // SIGNAL THIS, AND ALL WAITING ON THIS
     if (this.ready) return;
     this.ready = true;
-    this.pending.forEach(r => {
-      r();
-    });
+    this.resolve();
   }
 
   then(method) {
     // RUN A METHOD WHEN SIGNALED
-    if (this.ready) {
-      method();
-    } else {
-      this.pending.push(method);
-    }
+    this.promise.then(method);
   }
 
-  async wait(timeout) {
+  async wait() {
     // SET timeout IF YOU WANT TO SET A LIMIT ON WAIT TIME (Error IS THROWN)
     // STOP UNTIL SIGNALED
-    if (this.ready) return;
-
-    const self = this;
-    const p = new Promise(resolve => {
-      self.pending.push(resolve);
-    });
-
-    if (timeout) {
-      const t = Timeout(timeout);
-
-      await Signal.or(p, t);
-
-      if (t.ready) throw Error('Timeout');
-    } else {
-      await p;
-    }
+    await this.promise;
   }
 }
 

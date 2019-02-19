@@ -103,6 +103,65 @@ const PLATFORMS = [
     option: 'opt',
     project: 'mozilla-central',
   },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview',
+    frameworkId: 10,
+    platform: 'android-hw-p2-8-0-android-aarch64',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview',
+    frameworkId: 10,
+    platform: 'android-hw-p2-8-0-arm7-api-16',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview',
+    frameworkId: 10,
+    platform: 'android-hw-p2-8-0-arm7-api-16-nightly',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview',
+    frameworkId: 10,
+    platform: 'android-hw-g5-7-0-arm7-api-16',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview',
+    frameworkId: 10,
+    platform: 'android-hw-g5-7-0-arm7-api-16-nightly',
+    project: 'mozilla-central',
+    default: true,
+  },
+];
+const TP6_TESTS = [
+  {
+    id: 'fnbpaint',
+    label: 'First non-blank paint',
+  },
+  {
+    id: 'loadtime',
+    label: 'Load time',
+    default: true,
+  },
+  {
+    id: 'fcp',
+    label: 'First Content Paint',
+  },
+  {
+    id: 'dcf',
+    label: 'dcf',
+  },
+  {
+    id: 'ttfi',
+    label: 'Time to first interactive',
+  },
 ];
 const SUITES = {
   header: ['browser', 'title', 'suite'],
@@ -133,11 +192,17 @@ const SUITES = {
     ['Chrome', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
     ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
+
+    ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
+    ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
+    ['geckoview', 'Tp6 mobile: YouTube', 'raptor-tp6m-youtube-geckoview'],
+    ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
   ],
 };
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
+const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
 
-export { CONFIG, PLATFORMS, TP6_PAGES };
+export { CONFIG, PLATFORMS, TP6_PAGES, TP6M_PAGES, TP6_TESTS };
