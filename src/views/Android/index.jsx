@@ -79,8 +79,7 @@ class Android extends Component {
           </Grid>
         </div>
         <Section
-          title="Page Load tests (TP6)"
-          subtitle="loadtime"
+          title="Page Load tests (TP6m)"
           more="/android/tp6m?test=loadtime">
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
