@@ -17,7 +17,7 @@ const styles = {
 
 class TelemetryContainer extends React.Component {
   state = {
-    showErrorMsg: false,
+    error: false,
   };
 
   async componentDidMount() {
@@ -45,7 +45,7 @@ class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (error) {
-      this.setState({ showErrorMsg: true });
+      this.setState({ error: true });
       // eslint-disable-next-line no-console
       console.error(error.message);
     }
@@ -80,7 +80,7 @@ class TelemetryContainer extends React.Component {
 
   render() {
     const { id, title, classes } = this.props;
-    const { showErrorMsg } = this.state;
+    const { error } = this.state;
 
     if (title) {
       return (
@@ -94,7 +94,7 @@ class TelemetryContainer extends React.Component {
               </a>
             </h3>
           </header>
-          {showErrorMsg ? (
+          {error ? (
             <DefaultErrorMessage style={classes.errorPanel} />
           ) : (
             <div>
