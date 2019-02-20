@@ -16,6 +16,7 @@ export const CriticalErrorMessage = () => (
     </a>
   </p>
 );
+
 export const DefaultErrorMessage = props => (
   <ErrorPanel
     className={props.style}
@@ -28,4 +29,10 @@ export const MissingDataErrorMessage = props => (
     className={props.style}
     error="This item has been missing data for at least 3 days."
   />
+);
+
+export const IvalidUrlMessage = () => (
+  <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
+    <span>You have entered an invalid URL.</span>
+  </p>
 );
