@@ -1,6 +1,7 @@
 import { queryPerformanceData } from '../../../vendor/perf-goggles';
 import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
+import { missing } from '../../queryOps';
 
 const getPerfherderData = async series => {
   const newData = new Array(series.length);
@@ -18,7 +19,7 @@ const getPerfherderData = async series => {
       Object.values(seriesData).forEach(seriesInfo => {
         let actualLabel = label;
 
-        if (options.includeSubtests) {
+        if (!seriesConfig.test && options.includeSubtests) {
           const { suite, test } = seriesInfo.meta;
 
           actualLabel = test
@@ -34,6 +35,11 @@ const getPerfherderData = async series => {
       });
     })
   );
+
+  if (missing(newData[0]))
+    throw new Error(
+      `can not data for ${JSON.stringify(series[0].seriesConfig)}`
+    );
 
   return perfherderFormatter(newData);
 };

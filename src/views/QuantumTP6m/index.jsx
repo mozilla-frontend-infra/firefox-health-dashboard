@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../utils/queryOps';
-import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
+import { TP6M_PAGES, TP6_TESTS } from '../../quantum/config';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-class TP6 extends React.Component {
+class TP6M extends React.Component {
   constructor(props) {
     super(props);
     const { location } = this.props;
@@ -26,31 +26,29 @@ class TP6 extends React.Component {
 
     this.state = {
       test: params.get('test') || 'loadtime',
-      bits: params.get('bits') || '64',
+      platform: 'android-hw-g5-7-0-arm7-api-16',
     };
   }
 
   render() {
     const { classes } = this.props;
-    const { test, bits } = this.state;
-    const subtitle = `${
-      frum(TP6_TESTS)
-        .where({ id: test })
-        .first().label
-    } on ${bits} bits`;
+    const { test, platform } = this.state;
+    const subtitle = frum(TP6_TESTS)
+      .where({ id: test })
+      .first().label;
 
     return (
       <div className={classes.body}>
-        <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
+        <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
           <Grid container spacing={24}>
-            {frum(TP6_PAGES)
-              .where({ bits })
+            {frum(TP6M_PAGES)
+              .where({ platform })
               .groupBy('title')
               .map((series, title) => (
                 <Grid
                   item
                   xs={6}
-                  key={`page_${title}_${test}_${bits}`}
+                  key={`page_${title}_${test}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     title={title}
@@ -73,11 +71,11 @@ class TP6 extends React.Component {
   }
 }
 
-TP6.propTypes = {
+TP6M.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default withStyles(styles)(TP6);
+export default withStyles(styles)(TP6M);

@@ -12,7 +12,7 @@ const subtests = async signatureHash => {
   return (await fetch(url)).json();
 };
 
-const parentInfo = async (suite, platform, option = 'pgo') => {
+const parentInfo = async (suite, platform, option) => {
   const [options, signatures] = await Promise.all([
     await (await fetch(`${TREEHERDER}/api/optioncollectionhash/`)).json(),
     await (await fetch(
