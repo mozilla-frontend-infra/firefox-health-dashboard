@@ -410,7 +410,7 @@ extendWrapper({
       .fromPairs();
 
     return internalFrum(listA)
-      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
+      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
   },
 

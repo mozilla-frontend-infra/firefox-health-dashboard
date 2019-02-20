@@ -9,23 +9,24 @@ const styles = () => ({
     margin: '0 20px',
   },
 });
+
 const Picker = ({
   classes,
-  identifier,
-  topLabel,
-  onSelection,
+  id,
+  label,
+  onChange,
   options,
-  selectedValue,
+  value,
 }) => (
   <form className={classes.root} autoComplete="off">
     <TextField
-      name={identifier}
+      name={id}
       select
-      label={topLabel}
-      value={selectedValue}
-      onChange={onSelection}>
-      {options.map(({ label, value }) => (
-        <MenuItem key={value} value={value}>
+      label={label}
+      value={value}
+      onChange={onChange}>
+      {options.map(({ label, id }) => (
+        <MenuItem key={id} value={id}>
           {label}
         </MenuItem>
       ))}
@@ -35,16 +36,16 @@ const Picker = ({
 
 Picker.propTypes = {
   classes: PropTypes.shape().isRequired,
-  identifier: PropTypes.string.isRequired,
-  onSelection: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
     })
   ).isRequired,
-  selectedValue: PropTypes.string.isRequired,
-  topLabel: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(Picker);

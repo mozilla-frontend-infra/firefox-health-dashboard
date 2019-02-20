@@ -1,9 +1,10 @@
+// eslint-disable react/prop-types
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Loadable from 'react-loadable';
-import { generateLastDaysLabel } from '../../timeRangeUtils';
+import { frum, toPairs, zipObject } from '../../queryOps';
+import Picker from "./picker";
 
 const styles = () => ({
   root: {
@@ -13,75 +14,93 @@ const styles = () => ({
     padding: '15px',
   },
 });
-const Pickers = Loadable({
-  loader: () => import(/* webpackChunkName: 'Pickers' */ 'pickers'),
-  loading: <div>Loading...</div>,
-});
-const Slider = Loadable({
-  loader: () => import(/* webpackChunkName: 'Slider' */ 'slider'),
-  loading: <div>Loading...</div>,
-});
+
 
 class Navigation extends Component {
-  static propTypes = {
-    classes: PropTypes.shape().isRequired,
-    benchmark: PropTypes.string.isRequired,
-    platform: PropTypes.string.isRequired,
-    timeRange: PropTypes.number.isRequired,
+  constructor(props) {
+    super(props);
+    const {config, location, history} = props;
+    const params = new URLSearchParams(location.search);
+
+    // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
+    this.state = frum(config)
+      .map(({id, defaultValue}) => ([params[id] || defaultValue, id]))
+      .args()
+      .fromPairs();
+
+    this.updateHistory()
+  }
+
+
+  onPathChange = event => {
+    const {name, value} = event.target;
+    this.setState(zipObject([name], [value]));
+    this.updateHistory();
   };
 
-  handlePathChange = event => {
-    const { name, value } = event.target;
-    const {
-      // eslint-disable-next-line react/prop-types
-      history,
-      platform,
-      benchmark,
-      timeRange,
-    } = this.props;
-    let newPlatform = platform;
-    let newBenchmark = benchmark;
+  updateHistory(){
+    const {history, location} = this.props;
 
-    if (name === 'platform') {
-      newPlatform = value;
-      newBenchmark = 'overview';
-    } else {
-      newBenchmark = value;
-    }
+    const query = toPairs(this.getState())
+      .map((v,k)=>k+"="+encodeURIComponent(v))
+      .concatenate("&");
 
-    history.push(`/${newPlatform}/${newBenchmark}?numDays=${timeRange}`);
-  };
-
-  handleSearchParamChange = (searchParam, value) => {
-    // eslint-disable-next-line react/prop-types
-    const { history } = this.props;
-
-    history.push(`?${searchParam}=${value}`);
+    const path = location;
+    history.push(path + "?" + query)
   };
 
   render() {
-    const { classes, platform, benchmark, timeRange } = this.props;
+    const params = this.getState();
 
-    return (
-      <div className={classes.root}>
-        <Pickers
-          onChange={this.handlePathChange}
-          platform={platform}
-          benchmark={benchmark}
-        />
-        <Slider
-          identifier="timeRange"
-          label="Time range"
-          searchParam="numDays"
-          selectedValue={timeRange}
-          options={{ min: 1, max: 365, step: 1 }}
-          onChangeUpdateTooltipFunc={generateLastDaysLabel}
-          onSliderChange={this.handleSearchParamChange}
-        />
-      </div>
-    );
+    return frum(this.props.config)
+      .map(config => {
+        const {id, label, options} = config;
+        return (
+          <Picker
+            key={id}
+            identifier={id}
+            topLabel={label}
+            onSelection={this.onPathChange}
+            selectedValue={params[id]}
+            options={options}
+          />
+        )
+      });
   }
 }
 
-// withRouter() allow us to use this.props.history to push a new address
-export default withRouter(withStyles(styles)(Navigation));
+Navigation.propTypes = {
+  classes: PropTypes.shape().isRequired,
+  config: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string,
+      defaultValue:PropTypes.string,
+      onChange: PropTypes.func.isRequired,
+      options: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+        }))
+    })
+  ),
+};
+
+
+function withNavigation(config) {
+  // build navigation component
+  // withRouter() allow us to use this.props.history to push a new address
+  const nav = withRouter(withStyles(styles)(Navigation))({...config});
+
+  return (component) => {
+    class Output extends component {
+      constructor({...args}) {
+        super({navigation: nav, ...args})
+      }
+    }
+  };
+}
+
+
+export { withNavigation }
