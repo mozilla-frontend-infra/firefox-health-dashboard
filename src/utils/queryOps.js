@@ -439,4 +439,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last, missing, length, exists };
+export { frum, zipObject, toPairs, first, last, missing, exists, length };
