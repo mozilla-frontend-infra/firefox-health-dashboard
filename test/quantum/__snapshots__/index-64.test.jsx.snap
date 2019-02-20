@@ -428,19 +428,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -523,19 +510,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -583,19 +557,6 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
             <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
@@ -645,19 +606,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -705,19 +653,6 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
             <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
@@ -767,19 +702,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -827,19 +749,6 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
             <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
@@ -889,19 +798,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -949,19 +845,6 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
             <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
@@ -1011,19 +894,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -1072,19 +942,6 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
-            <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
               style={
@@ -1132,19 +989,6 @@ exports[`renders correctly 1`] = `
               }
             }
           >
-            <div
-              className="MuiPaper-root-116 MuiPaper-elevation2-120 MuiPaper-rounded-117 t-panel-106 t-paper-107 t-error-110 ChartJsWrapper-errorPanel-105"
-            >
-              <span
-                className="t-root-143 t-markdownContent-108 t-errorText-112 t-pad-109"
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "<p>Something went wrong, please try again later.</p>
-",
-                  }
-                }
-              />
-            </div>
             <div
               className="MuiCircularProgress-root-144 MuiCircularProgress-colorPrimary-147 MuiCircularProgress-indeterminate-146"
               role="progressbar"
