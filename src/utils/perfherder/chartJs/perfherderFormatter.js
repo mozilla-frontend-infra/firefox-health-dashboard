@@ -17,24 +17,22 @@ const generateInitialOptions = series => {
     tooltips: {
       callbacks: {
         footer: (tooltipItems, data) => {
+          const tooltipData = []; // footer's text lines will be stored here
           // get data from all points of selected series
           const dataset = data.datasets[tooltipItems[0].datasetIndex].data;
           // get data from selected point
           const currentData = dataset[tooltipItems[0].index].y;
-          const tooltipData = []; // footer's text lines will be stored here
-          let delta = 0;
-          let deltaPercentage = 0;
 
           tooltipData.push(`${currentData} (${higherOrLower})`);
 
           if (tooltipItems[0].index > 0) {
             const previousData = dataset[tooltipItems[0].index - 1].y;
-
-            delta = (currentData - previousData).toFixed(2);
+            const delta = (currentData - previousData).toFixed(2);
             // [(c - p) / p] * 100 is equivalent to (c / p - 1) * 100
-            deltaPercentage = ((currentData / previousData - 1) * 100).toFixed(
-              2
-            );
+            const deltaPercentage = (
+              (currentData / previousData - 1) *
+              100
+            ).toFixed(2);
 
             tooltipData.push(`Δ ${delta} (${deltaPercentage}%)`);
           }
