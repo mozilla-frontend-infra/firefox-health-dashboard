@@ -1,6 +1,7 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
+import { exists } from '../../queryOps';
 
 const dataToChartJSformat = data =>
   data.map(({ datetime, value }) => ({
@@ -10,7 +11,7 @@ const dataToChartJSformat = data =>
 const generateInitialOptions = series => {
   // TODO: map tests and suite scores to measurement units and
   // add some label for scale
-  const isTest = !!series.meta.test;
+  const isTest = exists(series.meta.test);
   // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
   const higherIsBetter = isTest ? false : !series.meta.lower_is_better;
   const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
