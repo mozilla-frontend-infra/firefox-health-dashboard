@@ -33,8 +33,9 @@ class TP6 extends React.Component {
   render() {
     const { classes } = this.props;
     const { test, bits } = this.state;
+    const tests = TP6_TESTS;
     const subtitle = `${
-      frum(TP6_TESTS)
+      frum(tests)
         .where({ id: test })
         .first().label
     } on ${bits} bits`;

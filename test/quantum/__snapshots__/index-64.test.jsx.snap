@@ -71,7 +71,7 @@ exports[`renders correctly 1`] = `
             <div
               className="widget-target"
             >
-              Target: 
+              Target:
               <span
                 dangerouslySetInnerHTML={
                   Object {
@@ -181,7 +181,7 @@ exports[`renders correctly 1`] = `
             <div
               className="widget-target"
             >
-              Target: 
+              Target:
               <span
                 dangerouslySetInnerHTML={
                   Object {
@@ -243,7 +243,7 @@ exports[`renders correctly 1`] = `
             <div
               className="widget-target"
             >
-              Target: 
+              Target:
               <span
                 dangerouslySetInnerHTML={
                   Object {
@@ -305,7 +305,7 @@ exports[`renders correctly 1`] = `
             <div
               className="widget-target"
             >
-              Target: 
+              Target:
               <span
                 dangerouslySetInnerHTML={
                   Object {
@@ -367,7 +367,7 @@ exports[`renders correctly 1`] = `
             <div
               className="widget-target"
             >
-              Target: 
+              Target:
               <span
                 dangerouslySetInnerHTML={
                   Object {
@@ -438,7 +438,7 @@ exports[`renders correctly 1`] = `
         <span>
            (
           <a
-            href="/quantum/tp6?bits=64&test=pageload"
+            href="/quantum/tp6?bits=64&test=loadtime"
           >
             more
           </a>
