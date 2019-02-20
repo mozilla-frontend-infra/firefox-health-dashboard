@@ -4,12 +4,12 @@ import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
-import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { withStyles } from '@material-ui/core/styles';
 import SETTINGS from '../settings';
+import { DefaultErrorMessage } from '../components/criticalErrorMessage';
 
 const styles = {
-  errorPanelClass: {
+  errorPanel: {
     margin: '40px auto',
     width: '50%',
   },
@@ -17,7 +17,7 @@ const styles = {
 
 class TelemetryContainer extends React.Component {
   state = {
-    errorFlag: false,
+    showErrorMsg: false,
   };
 
   async componentDidMount() {
@@ -45,7 +45,7 @@ class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (error) {
-      this.setState({ errorFlag: true });
+      this.setState({ showErrorMsg: true });
       // eslint-disable-next-line no-console
       console.error(error.message);
     }
@@ -80,7 +80,7 @@ class TelemetryContainer extends React.Component {
 
   render() {
     const { id, title, classes } = this.props;
-    const { errorFlag } = this.state;
+    const { showErrorMsg } = this.state;
 
     if (title) {
       return (
@@ -94,11 +94,8 @@ class TelemetryContainer extends React.Component {
               </a>
             </h3>
           </header>
-          {errorFlag ? (
-            <ErrorPanel
-              className={classes.errorPanelClass}
-              error="Something went wrong, please try again later."
-            />
+          {showErrorMsg ? (
+            <DefaultErrorMessage style={classes.errorPanel} />
           ) : (
             <div>
               <div

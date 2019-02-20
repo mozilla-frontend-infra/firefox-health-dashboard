@@ -73,10 +73,6 @@ const ChartJsWrapper = ({
         textAlign: 'center',
         width: spinnerSize,
       }}>
-      <ErrorPanel
-        className={classes.errorPanel}
-        error="Something went wrong, please try again later."
-      />
       <CircularProgress />
     </div>
   );
