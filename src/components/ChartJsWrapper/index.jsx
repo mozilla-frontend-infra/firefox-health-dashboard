@@ -111,6 +111,7 @@ ChartJsWrapper.propTypes = {
   }),
   title: PropTypes.string,
   type: PropTypes.string,
+  isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
   missingDataError: PropTypes.bool,
@@ -124,6 +125,7 @@ ChartJsWrapper.defaultProps = {
   type: 'line',
   chartHeight: 80,
   spinnerSize: '100%',
+  isLoading: false,
 };
 
 export default withStyles(styles)(ChartJsWrapper);
