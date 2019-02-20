@@ -27,15 +27,17 @@ class Slider extends Component {
   constructor(props) {
     super(props);
     const { selectedValue } = props;
+
     this.state = {
       selectedValue,
     };
   }
 
   handleDragEnd = () => {
-    const { handleSliderChange, searchParam } = this.props;
+    const { onSliderChange, searchParam } = this.props;
     const { selectedValue } = this.state;
-    handleSliderChange(searchParam, selectedValue);
+
+    onSliderChange(searchParam, selectedValue);
   };
 
   handleChange = (event, value) => {
@@ -44,22 +46,23 @@ class Slider extends Component {
 
   render() {
     const {
-      classes, identifier, label, options, onChangeUpdateTooltipFunc,
+      classes,
+      identifier,
+      label,
+      options,
+      onChangeUpdateTooltipFunc,
     } = this.props;
     const { selectedValue } = this.state;
+
     return (
       <form className={classes.root} autoComplete="off">
-        <InputLabel
-          className={classes.label}
-          htmlFor={identifier}
-        >
+        <InputLabel className={classes.label} htmlFor={identifier}>
           {label}
         </InputLabel>
         <Tooltip
           disableFocusListener
           title={onChangeUpdateTooltipFunc(selectedValue)}
-          placement="right"
-        >
+          placement="right">
           <MuiSlider
             value={selectedValue}
             aria-labelledby={identifier}
@@ -87,7 +90,7 @@ Slider.propTypes = {
   searchParam: PropTypes.string.isRequired,
   selectedValue: PropTypes.number.isRequired,
   onChangeUpdateTooltipFunc: PropTypes.func.isRequired,
-  handleSliderChange: PropTypes.func.isRequired,
+  onSliderChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Slider);

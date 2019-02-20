@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
-import { frum, toPairs } from '../utils/queryOps';
+import { frum, toPairs } from '../vendor/queryOps';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,

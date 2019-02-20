@@ -34,10 +34,6 @@ function toArray(value) {
   return [value];
 }
 
-function* toArgs(list) {
-  for (const v of list) yield [v];
-}
-
 function zipObject(keys, values) {
   // accept list of keys and list of values to zip into a single object
   const output = {};
@@ -109,38 +105,18 @@ function exists(value) {
 
 class Wrapper {
   // Represent an iterable set of function arguments
-  constructor(argslist, isGenerator = false) {
-    if (
-      !isGenerator &&
-      (!Array.isArray(argslist) ||
-        (argslist.length > 0 && !Array.isArray(argslist[0])))
-    ) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
-      );
-      throw Error(
-        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
-      );
-    }
-
-    this.argslist = argslist;
+  constructor(argslist) {
+    this.argsGen = argslist;
   }
 
   *[Symbol.iterator]() {
-    for (const [a] of this.materialize().argslist) {
+    for (const [a] of this.argslist) {
       yield a;
     }
   }
 
-  materialize() {
-    // ensure this.argslist is an array, any generators are exhausted
-    if (!Array.isArray(this.argslist)) {
-      // materialize the array of arguments
-      this.argslist = Array.from(this.argslist);
-    }
-
-    return this;
+  get argslist() {
+    return this.argsGen();
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -158,7 +134,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   select(selectors) {
@@ -170,7 +146,7 @@ class Wrapper {
     // execute func for each element, do not change this
     let i = 0;
 
-    for (const args of this.materialize().argslist) {
+    for (const args of this.argslist) {
       func(...args, i);
       i += 1;
     }
@@ -189,7 +165,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   args() {
@@ -198,7 +174,7 @@ class Wrapper {
       for (const args of list) yield args[0];
     }
 
-    return new Wrapper(output(this.materialize().argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   filter(func) {
@@ -207,7 +183,7 @@ class Wrapper {
         if (func(value, ...args)) yield [value];
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   where(expression) {
@@ -251,7 +227,7 @@ class Wrapper {
         for (const value of values) yield [value];
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   groupBy(columns) {
@@ -294,7 +270,9 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(Object.values(output));
+    return new Wrapper(function* outputGen() {
+      for (const v of Object.values(output)) yield v;
+    });
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -373,7 +351,9 @@ function frum(list) {
     return list;
   }
 
-  return new Wrapper(toArgs(list), true);
+  return new Wrapper(function* outputGen() {
+    for (const v of list) yield [v];
+  });
 }
 
 internalFrum = frum;
@@ -382,10 +362,14 @@ function toPairs(obj) {
   // convert Object (or Map) into [value, key] pairs
   // notice the **value is first**
   if (obj instanceof Map) {
-    return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
+    return new Wrapper(function* outputGen() {
+      for (const [k, v] of obj.entries()) yield [v, k];
+    });
   }
 
-  return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
+  return new Wrapper(function* outputGen() {
+    for (const [k, v] of Object.entries(obj)) yield [v, k];
+  });
 }
 
 internalToPairs = toPairs;

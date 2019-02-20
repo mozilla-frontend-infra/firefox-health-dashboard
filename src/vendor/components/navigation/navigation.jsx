@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Loadable from 'react-loadable';
-import { generateLastDaysLabel } from '../../utils/timeRangeUtils';
-import Loading from '../Loading';
+import { generateLastDaysLabel } from '../../timeRangeUtils';
 
 const styles = () => ({
   root: {
@@ -14,15 +13,13 @@ const styles = () => ({
     padding: '15px',
   },
 });
-
 const Pickers = Loadable({
-  loader: () => import(/* webpackChunkName: 'Pickers' */ '../Pickers'),
-  loading: Loading,
+  loader: () => import(/* webpackChunkName: 'Pickers' */ 'pickers'),
+  loading: <div>Loading...</div>,
 });
-
 const Slider = Loadable({
-  loader: () => import(/* webpackChunkName: 'Slider' */ '../Slider'),
-  loading: Loading,
+  loader: () => import(/* webpackChunkName: 'Slider' */ 'slider'),
+  loading: <div>Loading...</div>,
 });
 
 class Navigation extends Component {
@@ -33,7 +30,7 @@ class Navigation extends Component {
     timeRange: PropTypes.number.isRequired,
   };
 
-  handlePathChange = (event) => {
+  handlePathChange = event => {
     const { name, value } = event.target;
     const {
       // eslint-disable-next-line react/prop-types
@@ -42,28 +39,29 @@ class Navigation extends Component {
       benchmark,
       timeRange,
     } = this.props;
-
     let newPlatform = platform;
     let newBenchmark = benchmark;
+
     if (name === 'platform') {
       newPlatform = value;
       newBenchmark = 'overview';
     } else {
       newBenchmark = value;
     }
+
     history.push(`/${newPlatform}/${newBenchmark}?numDays=${timeRange}`);
   };
 
   handleSearchParamChange = (searchParam, value) => {
     // eslint-disable-next-line react/prop-types
     const { history } = this.props;
+
     history.push(`?${searchParam}=${value}`);
   };
 
   render() {
-    const {
-      classes, platform, benchmark, timeRange,
-    } = this.props;
+    const { classes, platform, benchmark, timeRange } = this.props;
+
     return (
       <div className={classes.root}>
         <Pickers
@@ -78,7 +76,7 @@ class Navigation extends Component {
           selectedValue={timeRange}
           options={{ min: 1, max: 365, step: 1 }}
           onChangeUpdateTooltipFunc={generateLastDaysLabel}
-          handleSliderChange={this.handleSearchParamChange}
+          onSliderChange={this.handleSearchParamChange}
         />
       </div>
     );

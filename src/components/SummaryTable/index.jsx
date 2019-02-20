@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StatusWidget from '../StatusWidget';
 import CONFIG from '../../utils/nimbledroid/config';
-import { frum } from '../../utils/queryOps';
+import { frum } from '../../vendor/queryOps';
 
 const SummaryTable = ({ content = [], header }) => {
   const compareName = CONFIG.packageIdLabels[CONFIG.baseProduct];
