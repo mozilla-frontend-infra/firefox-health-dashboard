@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { frum, toPairs, zipObject } from '../../queryOps';
-import Picker from "./picker";
+import Picker from './picker';
 
 const styles = () => ({
   root: {
@@ -15,57 +15,55 @@ const styles = () => ({
   },
 });
 
-
 class Navigation extends Component {
   constructor(props) {
     super(props);
-    const {config, location, history} = props;
+    const { config, location } = props;
     const params = new URLSearchParams(location.search);
 
     // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
     this.state = frum(config)
-      .map(({id, defaultValue}) => ([params[id] || defaultValue, id]))
+      .map(({ id, defaultValue }) => [params[id] || defaultValue, id])
       .args()
       .fromPairs();
 
-    this.updateHistory()
+    this.updateHistory();
   }
 
-
   onPathChange = event => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
+
     this.setState(zipObject([name], [value]));
     this.updateHistory();
   };
 
-  updateHistory(){
-    const {history, location} = this.props;
-
+  updateHistory() {
+    const { history, location } = this.props;
     const query = toPairs(this.getState())
-      .map((v,k)=>k+"="+encodeURIComponent(v))
-      .concatenate("&");
-
+      .map((v, k) => `${k}=${encodeURIComponent(v)}`)
+      .concatenate('&');
     const path = location;
-    history.push(path + "?" + query)
-  };
+
+    history.push(`${path}?${query}`);
+  }
 
   render() {
     const params = this.getState();
 
-    return frum(this.props.config)
-      .map(config => {
-        const {id, label, options} = config;
-        return (
-          <Picker
-            key={id}
-            identifier={id}
-            topLabel={label}
-            onSelection={this.onPathChange}
-            selectedValue={params[id]}
-            options={options}
-          />
-        )
-      });
+    return frum(this.props.config).map(config => {
+      const { id, label, options } = config;
+
+      return (
+        <Picker
+          key={id}
+          identifier={id}
+          topLabel={label}
+          handleChange={this.onPathChange}
+          selectedValue={params[id]}
+          options={options}
+        />
+      );
+    });
   }
 }
 
@@ -76,31 +74,40 @@ Navigation.propTypes = {
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       value: PropTypes.string,
-      defaultValue:PropTypes.string,
+      defaultValue: PropTypes.string,
       onChange: PropTypes.func.isRequired,
       options: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
-        }))
+        })
+      ),
     })
   ),
 };
 
-
 function withNavigation(config) {
-  // build navigation component
-  // withRouter() allow us to use this.props.history to push a new address
-  const nav = withRouter(withStyles(styles)(Navigation))({...config});
+  // Deals with synchronizing url paramters with this.state, and
+  // selector widget states
+  //
+  // Expects a `config` that is a list of configurations for various
+  // selection widgets. Right now there is only Picker.
+  //
+  // Adds a `navigation` property to `props` that contains a Navigation
+  // component for component to include on `render()`
 
-  return (component) => {
+  // withRouter() allow us to use this.props.history to push a new address
+  const nav = withRouter(withStyles(styles)(Navigation))({ ...config });
+
+  return component => {
     class Output extends component {
-      constructor({...args}) {
-        super({navigation: nav, ...args})
+      constructor({ ...args }) {
+        super({ navigation: nav, ...args });
       }
     }
+
+    return Output;
   };
 }
 
-
-export { withNavigation }
+export { withNavigation }; // eslint-disable-line import/prefer-default-export

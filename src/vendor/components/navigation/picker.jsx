@@ -9,22 +9,14 @@ const styles = () => ({
     margin: '0 20px',
   },
 });
-
-const Picker = ({
-  classes,
-  id,
-  label,
-  onChange,
-  options,
-  value,
-}) => (
+const Picker = ({ classes, id, label, handleChange, options, value }) => (
   <form className={classes.root} autoComplete="off">
     <TextField
       name={id}
       select
       label={label}
       value={value}
-      onChange={onChange}>
+      onChange={handleChange}>
       {options.map(({ label, id }) => (
         <MenuItem key={id} value={id}>
           {label}
@@ -39,7 +31,7 @@ Picker.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

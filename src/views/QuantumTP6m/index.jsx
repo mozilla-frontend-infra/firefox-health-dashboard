@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
 import { TP6M_PAGES, TP6_TESTS } from '../../quantum/config';
+import { withNavigation } from '../../vendor/components/navigation';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
@@ -31,7 +32,7 @@ class TP6M extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, navigation } = this.props;
     const { test, platform } = this.state;
     const subtitle = frum(TP6_TESTS)
       .where({ id: test })
@@ -40,6 +41,7 @@ class TP6M extends React.Component {
     return (
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
+          {navigation}
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
               .where({ platform })
@@ -78,4 +80,13 @@ TP6M.propTypes = {
   }).isRequired,
 };
 
-export default withStyles(styles)(TP6M);
+const nav = [
+  {
+    id: 'test',
+    label: 'Test',
+    defaultValue: 'loadtime',
+    options: frum(TP6_TESTS),
+  },
+];
+
+export default withNavigation(nav)(withStyles(styles)(TP6M));
