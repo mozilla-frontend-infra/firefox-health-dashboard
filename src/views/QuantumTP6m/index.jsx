@@ -75,7 +75,7 @@ const nav = [
     id: 'test',
     label: 'Test',
     defaultValue: 'loadtime',
-    options: frum(TP6_TESTS).toArray(),
+    options: TP6_TESTS,
   },
 
   {

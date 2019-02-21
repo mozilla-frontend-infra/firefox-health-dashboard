@@ -104,8 +104,8 @@ function exists(value) {
 
 class Wrapper {
   // Represent an iterable set of function arguments
-  constructor(argslist) {
-    this.argsGen = argslist;
+  constructor(argsGen) {
+    this.argsGen = argsGen;
   }
 
   *[Symbol.iterator]() {

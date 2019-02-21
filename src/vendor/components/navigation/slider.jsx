@@ -12,13 +12,13 @@ const styles = () => ({
     alignItems: 'center',
     maxWidth: 305,
     margin: '0 20px',
-    padding: '15px',
+    padding: '1rem',
     textAlign: 'left',
   },
   label: {
     whiteSpace: 'nowrap',
     padding: '0 10px 3px 0',
-    fontSize: '12px',
+    fontSize: '1rem',
     color: '#757575',
   },
 });

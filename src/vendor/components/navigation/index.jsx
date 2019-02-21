@@ -100,7 +100,7 @@ function withNavigation(config) {
       classes: PropTypes.shape().isRequired,
       config: PropTypes.arrayOf(
         PropTypes.shape({
-          type: PropTypes.instanceOf(React.Component),
+          type: PropTypes.instanceOf(React.Component).isRequired,
           id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
           value: PropTypes.string,
@@ -120,7 +120,7 @@ function withNavigation(config) {
       root: {
         display: 'flex',
         textAlign: 'left',
-        padding: '15px',
+        padding: '1rem',
       },
     });
 
