@@ -39,14 +39,14 @@ function withNavigation(config) {
         this.updateHistory({});
       }
 
-      onPathChange(event) {
+      onPathChange = event => {
         const { name, value } = event.target;
         const change = zipObject([name], [value]);
 
         this.setState(change);
 
         this.updateHistory(change);
-      }
+      };
 
       updateHistory(change) {
         const { history, location } = this.props;
@@ -63,7 +63,6 @@ function withNavigation(config) {
       navComponents() {
         const { classes } = this.props;
         const params = this.state;
-        const self = this;
 
         return (
           <div className={classes.root}>
@@ -74,7 +73,7 @@ function withNavigation(config) {
                 key: id,
                 id,
                 label,
-                handleChange: (...args) => self.onPathChange(...args),
+                handleChange: this.onPathChange,
                 value: params[id],
                 options,
               });
