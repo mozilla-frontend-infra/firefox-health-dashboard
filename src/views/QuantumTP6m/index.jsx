@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
 import { TP6_TESTS, TP6M_PAGES, PLATFORMS } from '../../quantum/config';
-import { withNavigation } from '../../vendor/components/navigation';
-import Picker from '../../vendor/components/navigation/picker';
+import { withNavigation } from '../../vendor/utils/navigation';
+import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
