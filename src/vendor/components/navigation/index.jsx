@@ -29,6 +29,8 @@ function withNavigation(config) {
         const { location } = props;
         const params = URL2Object(location.search);
 
+        this.params = params;
+
         // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
         this.state = frum(config)
           .map(({ id, defaultValue }) => [params[id] || defaultValue, id])
@@ -43,6 +45,7 @@ function withNavigation(config) {
         const change = zipObject([name], [value]);
 
         this.setState(change);
+
         this.updateHistory(change);
       }
 
@@ -87,7 +90,11 @@ function withNavigation(config) {
         const { history, classes, ...props } = this.props;
 
         return (
-          <WrappedComponent navigation={this.navComponents()} {...props} />
+          <WrappedComponent
+            navigation={this.navComponents()}
+            {...props}
+            {...this.state}
+          />
         );
       }
     }
@@ -114,8 +121,7 @@ function withNavigation(config) {
     const styles = () => ({
       root: {
         display: 'flex',
-        flexDirection: 'column',
-        textAlign: 'center',
+        textAlign: 'left',
         padding: '15px',
       },
     });

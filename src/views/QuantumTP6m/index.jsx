@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
-import { TP6_TESTS, TP6M_PAGES } from '../../quantum/config';
+import { TP6_TESTS, TP6M_PAGES, PLATFORMS } from '../../quantum/config';
 import { withNavigation } from '../../vendor/components/navigation';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
@@ -20,16 +20,8 @@ const styles = {
 };
 
 class TP6M extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      platform: 'android-hw-g5-7-0-arm7-api-16',
-    };
-  }
-
   render() {
-    const { classes, navigation } = this.props;
-    const { test, platform } = this.state;
+    const { classes, navigation, test, platform } = this.props;
     const subtitle = frum(TP6_TESTS)
       .where({ id: test })
       .first().label;
@@ -46,7 +38,7 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${title}_${test}`}
+                  key={`page_${title}_${test}_${platform}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     title={title}
@@ -81,7 +73,17 @@ const nav = [
     id: 'test',
     label: 'Test',
     defaultValue: 'loadtime',
-    options: frum(TP6_TESTS),
+    options: frum(TP6_TESTS).toArray(),
+  },
+
+  {
+    id: 'platform',
+    label: 'Platform',
+    defaultValue: 'android-hw-g5-7-0-arm7-api-16',
+    options: frum(PLATFORMS)
+      .where({ browser: 'geckoview' })
+      .select({ id: 'platform', label: 'label' })
+      .toArray(),
   },
 ];
 

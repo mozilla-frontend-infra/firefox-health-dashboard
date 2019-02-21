@@ -55,13 +55,12 @@ function preSelector(columnName) {
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map((value, name) => [preSelector(value), name])
-      .flatten()
+      .map((value, name) => [row => row[value], name])
       .sortBy(([, b]) => b);
   }
 
   if (typeof columnName === 'string') {
-    return internalFrum([row => row[columnName], columnName]);
+    return [row => row[columnName], columnName];
   }
 }
 
