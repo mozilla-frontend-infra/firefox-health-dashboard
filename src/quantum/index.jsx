@@ -6,6 +6,7 @@ import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
 import Countdown from './countdown';
 import { frum, toPairs } from '../vendor/queryOps';
+import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,
@@ -31,8 +32,8 @@ export default class QuantumIndex extends React.Component {
       location,
       match: { params },
     } = this.props;
-    const urlParams = new URLSearchParams(location.search);
-    const bits = urlParams.get('bits') || params.bits;
+    const urlParams = URL2Object(location.search);
+    const bits = urlParams.bits || params.bits;
     const quantumQueryParams =
       bits === '32' ? quantum32QueryParams : quantum64QueryParams;
     const platform = bits === '32' ? 'windows7-32' : 'windows10-64';

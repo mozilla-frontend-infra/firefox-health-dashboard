@@ -12,8 +12,8 @@ const styles = () => ({
 const Picker = ({ classes, id, label, handleChange, options, value }) => (
   <form className={classes.root} autoComplete="off">
     <TextField
-      name={id}
       select
+      name={id}
       label={label}
       value={value}
       onChange={handleChange}>

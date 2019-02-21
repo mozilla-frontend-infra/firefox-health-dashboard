@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
+import { URL2Object } from '../../vendor/convert';
 import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
@@ -22,11 +23,11 @@ class TP6 extends React.Component {
   constructor(props) {
     super(props);
     const { location } = this.props;
-    const params = new URLSearchParams(location.search);
+    const params = URL2Object(location.search);
 
     this.state = {
-      test: params.get('test') || 'loadtime',
-      bits: params.get('bits') || '64',
+      test: params.test || 'loadtime',
+      bits: params.bits || '64',
     };
   }
 

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
-import { TP6M_PAGES, TP6_TESTS } from '../../quantum/config';
+import { TP6_TESTS, TP6M_PAGES } from '../../quantum/config';
 import { withNavigation } from '../../vendor/components/navigation';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
@@ -22,11 +22,7 @@ const styles = {
 class TP6M extends React.Component {
   constructor(props) {
     super(props);
-    const { location } = this.props;
-    const params = new URLSearchParams(location.search);
-
     this.state = {
-      test: params.get('test') || 'loadtime',
       platform: 'android-hw-g5-7-0-arm7-api-16',
     };
   }

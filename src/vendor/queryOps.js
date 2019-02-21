@@ -305,13 +305,11 @@ class Wrapper {
   }
 
   get length() {
-    return this.materialize().argslist.length;
+    return this.argslist.length;
   }
 
   concatenate(separator) {
-    return this.materialize()
-      .argslist.map(a => a[0])
-      .join(separator);
+    return Array.from(this).join(separator);
   }
 
   findIndex(func) {
