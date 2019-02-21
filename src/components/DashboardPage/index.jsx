@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import githubMark from '../../static/GitHub-Mark.png';
 
 const styles = {
   root: {
@@ -12,6 +13,7 @@ const styles = {
     backgroundColor: 'black',
     borderBottom: '1px solid #fff',
     fontWeight: 100,
+    height: '3rem',
     padding: '0.4rem 0 0 1rem',
   },
   subtitle: {
@@ -24,10 +26,19 @@ const styles = {
 const DashboardPage = ({ classes, children, title, subtitle }) => (
   <div className={classes.root}>
     <div className={classes.title}>
-      <h1>
+      <h1 style={{ display: 'inline' }}>
         {title}
         <small className={classes.subtitle}>{subtitle}</small>
       </h1>
+      <span style={{ float: 'right' }}>
+        <a href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/">
+          <img
+            src={githubMark}
+            alt="Go to Github Repo"
+            style={{ width: '2rem', padding: '0 0.5rem 0 0' }}
+          />
+        </a>
+      </span>
     </div>
     <Fragment>{children}</Fragment>
   </div>
