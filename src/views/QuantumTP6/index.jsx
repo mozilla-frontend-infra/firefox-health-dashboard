@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
 import { TP6_TESTS, TP6_PAGES } from '../../quantum/config';
 import { withNavigation } from '../../vendor/components/navigation';
+import Picker from '../../vendor/components/navigation/picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
@@ -72,6 +73,7 @@ TP6.propTypes = {
 
 const nav = [
   {
+    type: Picker,
     id: 'test',
     label: 'Test',
     defaultValue: 'loadtime',
@@ -79,6 +81,7 @@ const nav = [
   },
 
   {
+    type: Picker,
     id: 'bits',
     label: 'Bits',
     defaultValue: '64',

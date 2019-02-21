@@ -5,22 +5,21 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
 import { frum, zipObject } from '../../queryOps';
-import { URL2Object, Object2URL } from '../../convert';
-import Picker from './picker';
+import { Object2URL, URL2Object } from '../../convert';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
   //
-  // Deals with synchronizing url paramters with this.state, and
-  // selector widget states
+  // Deals with synchronizing url parameters with this.state, and
+  // selector widget states, and url history
   //
   // Expects a `config` that is a list of configurations for various
   // selection widgets. Right now there is only Picker.
   //
-  // Adds a `navigation` property to `props` that contains a Navigation
-  // component for component to include on `render()`
-
-  // withRouter() allow us to use this.props.history to push a new address
+  // Adds properties to `props`:
+  // * `navigation` - that contains a Navigation component
+  //   to include on `render()`
+  // * properties with names frum(config).select("id")
 
   return WrappedComponent => {
     class Output extends React.Component {
@@ -69,18 +68,16 @@ function withNavigation(config) {
         return (
           <div className={classes.root}>
             {config.map(c => {
-              const { id, label, options } = c;
+              const { type, id, label, options } = c;
 
-              return (
-                <Picker
-                  key={id}
-                  id={id}
-                  label={label}
-                  handleChange={(...args) => self.onPathChange(...args)}
-                  value={params[id]}
-                  options={options}
-                />
-              );
+              return React.createElement(type, {
+                key: id,
+                id,
+                label,
+                handleChange: (...args) => self.onPathChange(...args),
+                value: params[id],
+                options,
+              });
             })}
           </div>
         );
@@ -103,6 +100,7 @@ function withNavigation(config) {
       classes: PropTypes.shape().isRequired,
       config: PropTypes.arrayOf(
         PropTypes.shape({
+          type: PropTypes.instanceOf(React.Component),
           id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
           value: PropTypes.string,
@@ -126,6 +124,7 @@ function withNavigation(config) {
       },
     });
 
+    // withRouter() adds this.props.history
     return withRouter(withStyles(styles)(Output));
   };
 }
