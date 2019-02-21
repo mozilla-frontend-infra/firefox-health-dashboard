@@ -10,7 +10,7 @@ import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer'
 import RedashContainer from '../../containers/RedashContainer';
 import SETTINGS from '../../settings';
 import CONFIG from '../../utils/nimbledroid/config';
-import { frum } from '../../utils/queryOps';
+import { frum } from '../../vendor/queryOps';
 import { TP6M_PAGES } from '../../quantum/config';
 
 class Android extends Component {

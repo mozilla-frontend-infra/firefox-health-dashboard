@@ -3,8 +3,10 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { frum } from '../../utils/queryOps';
-import { TP6M_PAGES, TP6_TESTS } from '../../quantum/config';
+import { frum } from '../../vendor/queryOps';
+import { TP6_TESTS, TP6M_PAGES, PLATFORMS } from '../../quantum/config';
+import { withNavigation } from '../../vendor/utils/navigation';
+import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 
@@ -19,20 +21,8 @@ const styles = {
 };
 
 class TP6M extends React.Component {
-  constructor(props) {
-    super(props);
-    const { location } = this.props;
-    const params = new URLSearchParams(location.search);
-
-    this.state = {
-      test: params.get('test') || 'loadtime',
-      platform: 'android-hw-g5-7-0-arm7-api-16',
-    };
-  }
-
   render() {
-    const { classes } = this.props;
-    const { test, platform } = this.state;
+    const { classes, navigation, test, platform } = this.props;
     const subtitle = frum(TP6_TESTS)
       .where({ id: test })
       .first().label;
@@ -40,6 +30,7 @@ class TP6M extends React.Component {
     return (
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
+          {navigation}
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
               .where({ platform })
@@ -48,7 +39,7 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${title}_${test}`}
+                  key={`page_${title}_${test}_${platform}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     title={title}
@@ -78,4 +69,25 @@ TP6M.propTypes = {
   }).isRequired,
 };
 
-export default withStyles(styles)(TP6M);
+const nav = [
+  {
+    type: Picker,
+    id: 'test',
+    label: 'Test',
+    defaultValue: 'loadtime',
+    options: TP6_TESTS,
+  },
+
+  {
+    type: Picker,
+    id: 'platform',
+    label: 'Platform',
+    defaultValue: 'android-hw-g5-7-0-arm7-api-16',
+    options: frum(PLATFORMS)
+      .where({ browser: 'geckoview' })
+      .select({ id: 'platform', label: 'label' })
+      .toArray(),
+  },
+];
+
+export default withNavigation(nav)(withStyles(styles)(TP6M));

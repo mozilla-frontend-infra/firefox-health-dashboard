@@ -1,4 +1,4 @@
-import { frum, zipObject } from '../utils/queryOps';
+import { frum, zipObject } from '../vendor/queryOps';
 
 const CONFIG = {
   windows64Regression: [
@@ -105,35 +105,35 @@ const PLATFORMS = [
   },
   {
     browser: 'geckoview',
-    label: 'Geckoview',
+    label: 'Geckoview p2 aarch64',
     frameworkId: 10,
     platform: 'android-hw-p2-8-0-android-aarch64',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
-    label: 'Geckoview',
+    label: 'Geckoview p2',
     frameworkId: 10,
     platform: 'android-hw-p2-8-0-arm7-api-16',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
-    label: 'Geckoview',
+    label: 'Geckoview p2 Nightly',
     frameworkId: 10,
     platform: 'android-hw-p2-8-0-arm7-api-16-nightly',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
-    label: 'Geckoview',
+    label: 'Geckoview g5',
     frameworkId: 10,
     platform: 'android-hw-g5-7-0-arm7-api-16',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
-    label: 'Geckoview',
+    label: 'Geckoview g5 Nightly',
     frameworkId: 10,
     platform: 'android-hw-g5-7-0-arm7-api-16-nightly',
     project: 'mozilla-central',
@@ -152,11 +152,11 @@ const TP6_TESTS = [
   },
   {
     id: 'fcp',
-    label: 'First Content Paint',
+    label: 'First content paint',
   },
   {
     id: 'dcf',
-    label: 'dcf',
+    label: 'DOM content flushed',
   },
   {
     id: 'ttfi',
@@ -202,8 +202,7 @@ const SUITES = {
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
   .map(row => zipObject(SUITES.header, row))
-  .join('browser', PLATFORMS, 'browser')
-  .materialize();
-const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' }).materialize();
+  .join('browser', PLATFORMS, 'browser');
+const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
 
 export { CONFIG, PLATFORMS, TP6_PAGES, TP6M_PAGES, TP6_TESTS };
