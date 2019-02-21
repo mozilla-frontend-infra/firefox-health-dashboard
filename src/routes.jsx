@@ -6,8 +6,8 @@ import AndroidPage from './views/Android';
 import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum from './quantum/index';
-import TP6 from './views/QuantumTP6/index';
-import TP6M from './views/QuantumTP6m/index';
+import TP6 from './views/QuantumTP6';
+import TP6M from './views/QuantumTP6m';
 import Subbenchmark from './quantum/subbenchmarks';
 import FlowTable from './quantum/flow-table';
 
@@ -17,6 +17,7 @@ const Routes = () => (
     <Switch>
       <Route path="/quantum/tp6" component={TP6} />
       <Route path="/quantum/tp6m" component={TP6M} />
+      <Route path="/android/tp6m" component={TP6M} />
       <Route path="/android/graph" component={NimbledroidGraphPage} />
       <Route path="/android" component={AndroidPage} />
       <Route path="/quantum/:architecture/bugs" component={FlowTable} />
