@@ -7,7 +7,13 @@ exports[`renders correctly 1`] = `
   <div
     className="DashboardPage-title-2"
   >
-    <h1>
+    <h1
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
       Quantum
       <small
         className="DashboardPage-subtitle-3"
@@ -15,6 +21,28 @@ exports[`renders correctly 1`] = `
         Release Criteria Report
       </small>
     </h1>
+    <span
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      <a
+        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+      >
+        <img
+          alt="Go to Github Repo"
+          src="test-file-stub"
+          style={
+            Object {
+              "padding": "0 0.5rem 0 0",
+              "width": "2rem",
+            }
+          }
+        />
+      </a>
+    </span>
   </div>
   <div>
     <h2
