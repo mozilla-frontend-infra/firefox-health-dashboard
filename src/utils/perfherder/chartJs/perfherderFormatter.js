@@ -1,6 +1,8 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
+// import generateCustomTooltip from '../../chartJs/generateCustomTooltipTest';
+import generateCustomTooltip from '../../chartJs/generateCustomTooltip';
 
 const dataToChartJSformat = data =>
   data.map(({ datetime, value }) => ({
@@ -35,10 +37,29 @@ const generateInitialOptions = series => {
             ).toFixed(2);
 
             tooltipData.push(`Δ ${delta} (${deltaPercentage}%)`);
+
+            const currRevision = series.data[tooltipItems[0].index].revision;
+            const prevRevision =
+              series.data[tooltipItems[0].index - 1].revision;
+            const hgLink = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${prevRevision}&tochange=${currRevision}`;
+
+            tooltipData.push(
+              `<a href="${hgLink}" target="_blank">${currRevision.slice(
+                0,
+                12
+              )}</a>`
+            );
           }
 
           return tooltipData;
         },
+      },
+      enabled: false,
+      custom(tooltipModel) {
+        // eslint-disable-next-line no-underscore-dangle
+        const { canvas } = this._chart;
+
+        generateCustomTooltip(canvas, tooltipModel);
       },
     },
   };
