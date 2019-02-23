@@ -7,7 +7,13 @@ exports[`renders correctly 1`] = `
   <div
     className="DashboardPage-title-5"
   >
-    <h1>
+    <h1
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
       Firefox health
       <small
         className="DashboardPage-subtitle-6"
@@ -15,6 +21,28 @@ exports[`renders correctly 1`] = `
         Tracking metrics for Firefox products
       </small>
     </h1>
+    <span
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      <a
+        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+      >
+        <img
+          alt="Go to Github Repo"
+          src="test-file-stub"
+          style={
+            Object {
+              "padding": "0 0.5rem 0 0",
+              "width": "2rem",
+            }
+          }
+        />
+      </a>
+    </span>
   </div>
   <div
     className="Home-links-2"
