@@ -3,18 +3,20 @@ import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Grow';
 
 const styles = {
-  table: {
+  tooltip: {
     background: 'rgba(0, 0, 0, .8)',
     color: 'white',
     borderRadius: '4px',
     pointerEvents: 'none',
-    borderCollapse: 'collapse',
   },
   tooltipKey: {
     display: 'inline-block',
     width: '10px',
     height: '10px',
     marginRight: '10px',
+  },
+  table: {
+    borderCollapse: 'collapse',
   },
 };
 
@@ -27,44 +29,51 @@ function CustomTooltip({ classes, tooltipModel }) {
 
   return (
     <Fade in={tooltipModel.opacity === 1}>
-      <table className={classes.table}>
-        <thead>
-          {titleLines.map(title => (
-            <tr>
-              <th>{title}</th>
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {bodyLines.map((body, i) => {
-            const { backgroundColor, borderColor } = tooltipModel.labelColors[
-              i
-            ];
-
-            return (
+      <div
+        className={classes.tooltip}
+        style={{
+          padding: `${tooltipModel.yPadding}px ${tooltipModel.xPadding}px`,
+        }}
+      >
+        <table className={classes.table}>
+          <thead>
+            {titleLines.map(title => (
               <tr>
-                <td>
-                  <span
-                    style={{
-                      background: backgroundColor,
-                      borderColor,
-                    }}
-                    className={classes.tooltipKey}
-                  />
-                  {body}
-                </td>
+                <th>{title}</th>
               </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          {footerLines.map(footer => (
-            <tr>
-              <td dangerouslySetInnerHTML={{ __html: footer }} />
-            </tr>
-          ))}
-        </tfoot>
-      </table>
+            ))}
+          </thead>
+          <tbody>
+            {bodyLines.map((body, i) => {
+              const { backgroundColor, borderColor } = tooltipModel.labelColors[
+                i
+              ];
+
+              return (
+                <tr>
+                  <td>
+                    <span
+                      style={{
+                        background: backgroundColor,
+                        borderColor,
+                      }}
+                      className={classes.tooltipKey}
+                    />
+                    {body}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+          <tfoot>
+            {footerLines.map(footer => (
+              <tr>
+                <td dangerouslySetInnerHTML={{ __html: footer }} />
+              </tr>
+            ))}
+          </tfoot>
+        </table>
+      </div>
     </Fade>
   );
 }

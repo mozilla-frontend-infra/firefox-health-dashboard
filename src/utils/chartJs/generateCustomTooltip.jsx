@@ -38,9 +38,6 @@ const generateCustomTooltip = (canvas, tooltipModel) => {
   tooltipContainer.style.fontFamily = tooltipModel._bodyFontFamily;
   // eslint-disable-next-line no-underscore-dangle
   tooltipContainer.style.fontSize = `${tooltipModel._bodyFontSize}px`;
-  tooltipContainer.style.padding = `${tooltipModel.yPadding}px ${
-    tooltipModel.xPadding
-  }px`;
 };
 
 export default generateCustomTooltip;
