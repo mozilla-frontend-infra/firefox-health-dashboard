@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import generateOptions from '../../utils/chartJs/generateOptions';
+import CriticalErrorMessage from '../criticalErrorMessage';
 
 const styles = {
   // This div helps with canvas size changes
@@ -53,7 +53,7 @@ const ChartJsWrapper = ({
   return data ? (
     <div className={classes.chartContainer}>
       {showError && (
-        <ErrorPanel
+        <CriticalErrorMessage
           className={classes.errorPanel}
           error="This item has been missing data for at least 3 days."
         />
