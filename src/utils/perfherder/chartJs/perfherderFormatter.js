@@ -10,56 +10,19 @@ const dataToChartJSformat = data =>
     y: value,
   }));
 const generateInitialOptions = series => {
-  const higherIsBetter = !series.meta.lower_is_better;
-  const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
+  // The first series' metadata defines the whole set
+  const higherIsBetter = !series[0].meta.lower_is_better;
 
   return {
     reverse: higherIsBetter,
     scaleLabel: higherIsBetter ? 'Score' : 'Load time',
     tooltips: {
-      callbacks: {
-        footer: (tooltipItems, data) => {
-          const tooltipData = []; // footer's text lines will be stored here
-          // get data from all points of selected series
-          const dataset = data.datasets[tooltipItems[0].datasetIndex].data;
-          // get data from selected point
-          const currentData = dataset[tooltipItems[0].index].y;
-
-          tooltipData.push(`${currentData} (${higherOrLower})`);
-
-          if (tooltipItems[0].index > 0) {
-            const previousData = dataset[tooltipItems[0].index - 1].y;
-            const delta = (currentData - previousData).toFixed(2);
-            // [(c - p) / p] * 100 is equivalent to (c / p - 1) * 100
-            const deltaPercentage = (
-              (currentData / previousData - 1) *
-              100
-            ).toFixed(2);
-
-            tooltipData.push(`Δ ${delta} (${deltaPercentage}%)`);
-
-            const currRevision = series.data[tooltipItems[0].index].revision;
-            const prevRevision =
-              series.data[tooltipItems[0].index - 1].revision;
-            const hgLink = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${prevRevision}&tochange=${currRevision}`;
-
-            tooltipData.push(
-              `<a href="${hgLink}" target="_blank">${currRevision.slice(
-                0,
-                12
-              )}</a>`
-            );
-          }
-
-          return tooltipData;
-        },
-      },
       enabled: false,
       custom(tooltipModel) {
         // eslint-disable-next-line no-underscore-dangle
         const { canvas } = this._chart;
 
-        generateCustomTooltip(canvas, tooltipModel);
+        generateCustomTooltip(canvas, tooltipModel, series);
       },
     },
   };
@@ -68,10 +31,10 @@ const generateInitialOptions = series => {
 /* This function combines Perfherder series and transforms it 
 into ChartJS formatting */
 const perfherderFormatter = series => {
-  // The first series' metadata defines the whole set
   const newData = {
     data: { datasets: [] },
-    options: generateInitialOptions(series[0]),
+    // all the series beed to be send, in order to build a custom tooltip
+    options: generateInitialOptions(series),
   };
 
   series.forEach(({ color, data, label, perfherderUrl }, index) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CustomTooltip from './CustomTooltip';
 
-const generateCustomTooltip = (canvas, tooltipModel) => {
+const generateCustomTooltip = (canvas, tooltipModel, series) => {
   let tooltipContainer = document.getElementById('tooltip-container');
 
   if (!tooltipContainer) {
@@ -12,7 +12,7 @@ const generateCustomTooltip = (canvas, tooltipModel) => {
   }
 
   ReactDOM.render(
-    <CustomTooltip tooltipModel={tooltipModel} />,
+    <CustomTooltip tooltipModel={tooltipModel} series={series} />,
     tooltipContainer
   );
 
