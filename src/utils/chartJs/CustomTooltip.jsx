@@ -16,28 +16,21 @@ const styles = {
   },
   table: {
     borderCollapse: 'collapse',
+    '& p': {
+      margin: 0,
+    },
   },
 };
-const Header = ({ xLabel }) => (
-  <thead>
-    <tr>
-      <th>{xLabel}</th>
-    </tr>
-  </thead>
-);
+const Header = ({ xLabel }) => <p>{xLabel}</p>;
 const TopBodyLines = props => (
   <React.Fragment>
-    <tr>
-      <td>
-        <span style={props.labelColors} className={props.classes.tooltipKey} />
-        {props.seriesLabel}: {props.currData}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {props.currData} ({props.higherOrLower})
-      </td>
-    </tr>
+    <p>
+      <span style={props.labelColors} className={props.classes.tooltipKey} />
+      {props.seriesLabel}: {props.currData}
+    </p>
+    <p>
+      {props.currData} ({props.higherOrLower})
+    </p>
   </React.Fragment>
 );
 
@@ -73,12 +66,10 @@ function CustomTooltip({ classes, tooltipModel, series }) {
   if (index === 0) {
     return (
       <div className={classes.tooltip} style={paddingStyle}>
-        <table className={classes.table}>
+        <div className={classes.table}>
           <Header xLabel={xLabel} />
-          <tbody>
-            <TopBodyLines {...cmpProps} />
-          </tbody>
-        </table>
+          <TopBodyLines {...cmpProps} />
+        </div>
       </div>
     );
   }
@@ -92,22 +83,18 @@ function CustomTooltip({ classes, tooltipModel, series }) {
 
   return (
     <div className={classes.tooltip} style={paddingStyle}>
-      <table className={classes.table}>
+      <div className={classes.table}>
         <Header xLabel={xLabel} />
-        <tbody>
-          <TopBodyLines {...cmpProps} />
-          <tr>
-            <td>
-              Δ {delta} ({deltaPercentage} %)
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href={hgURL}>{currRevision.slice(0, 12)}</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <TopBodyLines {...cmpProps} />
+
+        <p>
+          Δ {delta} ({deltaPercentage} %)
+        </p>
+
+        <p>
+          <a href={hgURL}>{currRevision.slice(0, 12)}</a>
+        </p>
+      </div>
     </div>
   );
 }
