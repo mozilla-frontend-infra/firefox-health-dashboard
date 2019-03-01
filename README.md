@@ -35,7 +35,6 @@ First, fork this repository to another GitHub account. Then you can clone and in
 ```
 git clone https://github.com/<YOUR_ACCOUNT>/firefox-health-dashboard.git
 cd firefox-health-dashboard
-yarn cache clean # need to clean every time before installation, see https://github.com/yarnpkg/yarn/issues/480
 yarn install// This will install all dependencies
 yarn start
 ```
