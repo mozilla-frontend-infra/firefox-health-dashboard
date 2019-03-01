@@ -11,8 +11,22 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 
 ## Prerequisites
 
-- Node
+- [Node](https://nodejs.org/en/)
 - [Yarn](https://www.npmjs.com/package/yarn)
+
+### Install node:
+
+Binaries, installers, and source tarballs are available at
+<https://nodejs.org/en/download/>.
+
+#### Current and LTS Releases
+<https://nodejs.org/download/release/>
+
+# Install yarn:
+
+[yarn](https://yarnpkg.com/) is a fast, reliable, and secure dependency management tool. You can now use yarn to install reason and manage its dependencies.
+
+To install Yarn, it is best to [consult the official documentation](https://yarnpkg.com/en/docs/install) for your particular platform.
 
 ## Building
 
@@ -21,7 +35,8 @@ First, fork this repository to another GitHub account. Then you can clone and in
 ```
 git clone https://github.com/<YOUR_ACCOUNT>/firefox-health-dashboard.git
 cd firefox-health-dashboard
-yarn // This will install all dependencies
+yarn cache clean # need to clean every time before installation, see https://github.com/yarnpkg/yarn/issues/480
+yarn install// This will install all dependencies
 yarn start
 ```
 
