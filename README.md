@@ -14,7 +14,7 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 - [Node](https://nodejs.org/en/)
 - [Yarn](https://www.npmjs.com/package/yarn)
 
-# Install node:
+## Install node:
 
 Binaries, installers, and source tarballs are available at
 <https://nodejs.org/en/download/>.
@@ -22,7 +22,7 @@ Binaries, installers, and source tarballs are available at
 #### Current and LTS Releases
 <https://nodejs.org/download/release/>
 
-# Install yarn:
+## Install yarn:
 
 [yarn](https://yarnpkg.com/) is a fast, reliable, and secure dependency management tool. You can now use yarn to install reason and manage its dependencies.
 
