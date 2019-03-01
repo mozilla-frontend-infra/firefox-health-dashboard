@@ -21,26 +21,29 @@ const styles = {
     },
   },
 };
-const Header = ({ xLabel }) => <p>{xLabel}</p>;
-const TopBodyLines = props => (
-  <React.Fragment>
-    <p>
-      <span style={props.labelColors} className={props.classes.tooltipKey} />
-      {props.seriesLabel}: {props.currData}
-    </p>
-    <p>
-      {props.currData} ({props.higherOrLower})
-    </p>
-  </React.Fragment>
-);
+
+function Footer({ dataset, index, currData }) {
+  const prevData = dataset[index - 1].value;
+  const prevRevision = dataset[index - 1].revision;
+  const delta = (currData - prevData).toFixed(2);
+  const deltaPercentage = ((currData / prevData - 1) * 100).toFixed(2);
+  const currRevision = dataset[index].revision;
+  const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${prevRevision}&tochange=${currRevision}`;
+
+  return (
+    <React.Fragment>
+      <div>
+        Δ {delta} ({deltaPercentage} %)
+      </div>
+      <div>
+        <a href={hgURL}>{currRevision.slice(0, 12)}</a>
+      </div>
+    </React.Fragment>
+  );
+}
 
 function CustomTooltip({ classes, tooltipModel, series }) {
-  if (tooltipModel.opacity === 0) {
-    // Chartjs removes some properties in `tooltipModel` when datapoint
-    // is not active. Those propertiles includes `title`, `dataPoints`, etc.
-    // We can't go forward if that's the case
-    return null;
-  }
+  if (tooltipModel.opacity === 0) return null;
 
   const { xLabel, index, datasetIndex } = tooltipModel.dataPoints[0];
   const dataset = series[datasetIndex].data;
@@ -52,48 +55,19 @@ function CustomTooltip({ classes, tooltipModel, series }) {
   const paddingStyle = {
     padding: `${tooltipModel.yPadding}px ${tooltipModel.xPadding}px`,
   };
-  const cmpProps = {
-    classes,
-    labelColors,
-    seriesLabel,
-    currData,
-    higherOrLower,
-  };
-
-  // console.log('series', series);
-  // console.log('tooltipModel', tooltipModel);
-
-  if (index === 0) {
-    return (
-      <div className={classes.tooltip} style={paddingStyle}>
-        <div className={classes.table}>
-          <Header xLabel={xLabel} />
-          <TopBodyLines {...cmpProps} />
-        </div>
-      </div>
-    );
-  }
-
-  const prevData = dataset[index - 1].value;
-  const delta = (currData - prevData).toFixed(2);
-  const deltaPercentage = ((currData / prevData - 1) * 100).toFixed(2);
-  const currRevision = dataset[index].revision;
-  const prevRevision = dataset[index - 1].revision;
-  const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${prevRevision}&tochange=${currRevision}`;
 
   return (
     <div className={classes.tooltip} style={paddingStyle}>
       <div className={classes.table}>
-        <Header xLabel={xLabel} />
-        <TopBodyLines {...cmpProps} />
-
-        <p>
-          Δ {delta} ({deltaPercentage} %)
-        </p>
-
-        <p>
-          <a href={hgURL}>{currRevision.slice(0, 12)}</a>
-        </p>
+        <div>{xLabel}</div>
+        <div>
+          <span style={labelColors} className={classes.tooltipKey} />
+          {seriesLabel}: {currData}
+        </div>
+        <div>
+          {currData} ({higherOrLower})
+        </div>
+        {index > 0 && <Footer {...{ dataset, index, currData }} />}
       </div>
     </div>
   );
