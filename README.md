@@ -15,7 +15,7 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 - [Node](https://nodejs.org/en/)
 - [Yarn](https://www.npmjs.com/package/yarn)
 - A fork of the repo (for any contributions)
-- A clone of the [firefox-health-dashboard.git repo](https://github.com/a-deeb/firefox-health-dashboard.git) on your local machine
+- A clone of the [firefox-health-dashboard.git repo](https://github.com/mozilla-frontend-infra/firefox-health-dashboard.git) on your local machine
 
 
 ## Install node:
