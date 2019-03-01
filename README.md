@@ -12,7 +12,7 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 ## Prerequisites
 
 
-- [Node](https://nodejs.org/en/)
+# - [Node](https://nodejs.org/en/)
 
 ## Install node:
 
@@ -23,7 +23,7 @@ Binaries, installers, and source tarballs are available at
 
 <https://nodejs.org/download/release/>
 
-- [Yarn](https://www.npmjs.com/package/yarn)
+# - [Yarn](https://www.npmjs.com/package/yarn)
 
 
 ## Install yarn:
