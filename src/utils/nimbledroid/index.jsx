@@ -8,7 +8,7 @@ const statusColor = (ratio, targetRatio) => {
   let widgetColor = 'green';
 
   if (targetRatio <= 1) {
-    throw Error('Change the code to handle a ratio below 1.');
+    throw new Error('Change the code to handle a ratio below 1.');
   }
 
   if (ratio > targetRatio) {

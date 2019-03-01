@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/utils/errors';
 import NimbledroidGraph from '../../components/NimbledroidGraph';
 import StatusWidget from '../../components/StatusWidget';
 import { siteMetrics } from '../../utils/nimbledroid';
@@ -21,18 +21,11 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, handleError } = this.props;
+    const { configuration } = this.props;
+    const nimbledroidData = await fetchNimbledroidData(configuration.products);
+    const data = this.generateData(configuration, nimbledroidData);
 
-    try {
-      const nimbledroidData = await fetchNimbledroidData(
-        configuration.products
-      );
-      const data = this.generateData(configuration, nimbledroidData);
-
-      this.setState(data);
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState(data);
   }
 
   generateData(configuration, nimbledroidData) {

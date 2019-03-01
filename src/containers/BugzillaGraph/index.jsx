@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/utils/errors';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getBugsData from '../../utils/bugzilla/getBugsData';
 
@@ -13,12 +13,8 @@ class BugzillaGraph extends Component {
     this.fetchData(this.props);
   }
 
-  async fetchData({ handleError, queries, startDate }) {
-    try {
-      this.setState(await getBugsData(queries, startDate));
-    } catch (error) {
-      handleError(error);
-    }
+  async fetchData({ queries, startDate }) {
+    this.setState(await getBugsData(queries, startDate));
   }
 
   render() {
@@ -36,7 +32,6 @@ class BugzillaGraph extends Component {
 }
 
 BugzillaGraph.propTypes = {
-  handleError: PropTypes.func.isRequired,
   queries: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

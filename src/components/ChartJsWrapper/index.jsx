@@ -4,7 +4,7 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
-import CriticalErrorMessage from '../criticalErrorMessage';
+import { Except, withErrorBoundary } from '../../vendor/utils/errors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -20,10 +20,6 @@ const styles = {
     backgroundColor: 'black',
     padding: '.3rem .3rem .3rem .3rem',
   },
-  errorPanel: {
-    marginTop: '10px',
-    width: '97%',
-  },
 };
 const ChartJsWrapper = ({
   classes,
@@ -33,12 +29,9 @@ const ChartJsWrapper = ({
   type,
   chartHeight,
   spinnerSize,
-  missingDataError = false,
 }) => {
-  let showError;
-
-  if (data && missingDataError) {
-    showError = data.datasets.some(dataset => {
+  if (data) {
+    data.datasets.forEach(dataset => {
       const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
@@ -46,18 +39,17 @@ const ChartJsWrapper = ({
       );
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      return daysDifference > 3; // if days are more than 3 then show error
+      if (daysDifference > 3) {
+        // if days are more than 3 then show error
+        throw new Except(
+          'This item has been missing data for at least 3 days.'
+        );
+      }
     });
   }
 
   return data ? (
     <div className={classes.chartContainer}>
-      {showError && (
-        <CriticalErrorMessage
-          className={classes.errorPanel}
-          error="This item has been missing data for at least 3 days."
-        />
-      )}
       {title && <h2>{title}</h2>}
       <Chart
         type={type}
@@ -113,8 +105,6 @@ ChartJsWrapper.propTypes = {
   type: PropTypes.string,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
-  missingDataError: PropTypes.bool,
-  showError: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {
@@ -126,4 +116,4 @@ ChartJsWrapper.defaultProps = {
   spinnerSize: '8rem',
 };
 
-export default withStyles(styles)(ChartJsWrapper);
+export default withErrorBoundary(withStyles(styles)(ChartJsWrapper));

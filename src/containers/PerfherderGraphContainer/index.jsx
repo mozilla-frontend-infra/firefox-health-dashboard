@@ -25,10 +25,8 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetData(this.props);
-  }
+    const { series } = this.props;
 
-  async fetchSetData({ series }) {
     this.setState(await getPerferherderData(series));
   }
 
@@ -46,12 +44,7 @@ class PerfherderGraphContainer extends Component {
             </a>
           )}
         </h2>
-        <ChartJsWrapper
-          type="line"
-          data={data}
-          options={options}
-          missingDataError
-        />
+        <ChartJsWrapper type="line" data={data} options={options} />
       </div>
     );
   }

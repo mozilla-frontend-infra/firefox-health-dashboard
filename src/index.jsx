@@ -1,9 +1,8 @@
 import Raven from 'raven-js';
-import React from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import './index.css';
-import GenericErrorBoundary from './components/genericErrorBoundary';
 import Routes from './routes';
 import registerTooltip from './utils/registerTooltip';
 
@@ -18,13 +17,51 @@ if (process.env.NODE_ENV === 'production') {
 // handle sticky tooltip for all charts
 registerTooltip();
 
+class GlobalErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ error });
+
+    if (process.env.NODE_ENV === 'production') {
+      Raven.captureException(error);
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(error, info);
+    }
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <span>
+          There has been a critical error. We have reported it. If the issue is
+          not fixed within few hours please file an issue:
+          <br />
+          <a
+            href="https://github.com/mozilla/firefox-health-dashboard/issues/new"
+            target="_blank"
+            rel="noopener noreferrer">
+            {'https://github.com/mozilla/firefox-health-dashboard/issues/new'}
+          </a>
+        </span>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 const root = document.getElementById('root');
 const load = () =>
   render(
     <AppContainer>
-      <GenericErrorBoundary critical>
+      <GlobalErrorBoundary>
         <Routes />
-      </GenericErrorBoundary>
+      </GlobalErrorBoundary>
     </AppContainer>,
     root
   );

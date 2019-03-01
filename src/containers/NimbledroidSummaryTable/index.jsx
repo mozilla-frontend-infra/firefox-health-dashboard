@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { generateSitesTableContent } from '../../utils/nimbledroid';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/utils/errors';
 import SummaryTable from '../../components/SummaryTable';
 import StatusWidget from '../../components/StatusWidget';
 
@@ -34,17 +34,10 @@ class NimbledroidSummaryTable extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, handleError } = this.props;
+    const { configuration } = this.props;
+    const nimbledroidData = await fetchNimbledroidData(configuration.products);
 
-    try {
-      const nimbledroidData = await fetchNimbledroidData(
-        configuration.products
-      );
-
-      this.setState(generateSitesTableContent(nimbledroidData, configuration));
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState(generateSitesTableContent(nimbledroidData, configuration));
   }
 
   render() {

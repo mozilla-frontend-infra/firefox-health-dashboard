@@ -16,7 +16,7 @@ import {
 } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
-import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
+import { withErrorBoundary } from '../vendor/utils/errors';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {
@@ -41,7 +41,7 @@ export default class QuantumIndex extends React.Component {
       bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
       bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
-    const sections = wrapSectionComponentsWithErrorBoundaries([
+    const sections = [
       {
         title: 'Overview',
         cssRowExtraClasses: 'generic-metrics-graphics',
@@ -502,7 +502,7 @@ export default class QuantumIndex extends React.Component {
           />,
         ],
       },
-    ]);
+    ].map(withErrorBoundary);
     const reduced = sections.map(
       ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
         const statusList = toPairs(statusLabels)

@@ -51,7 +51,7 @@ const parentInfo = async (suite, platform, option) => {
   });
 
   if (result.length !== 1) {
-    throw Error('We should have an array of 1');
+    throw new Error('We should have an array of 1');
   }
 
   return result[0];

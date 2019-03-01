@@ -2,6 +2,7 @@ import { queryPerformanceData } from '../../../vendor/perf-goggles';
 import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
 import { missing } from '../../../vendor/queryOps';
+import { Except } from '../../../vendor/utils/errors';
 
 const getPerfherderData = async series => {
   const newData = new Array(series.length);
@@ -37,7 +38,7 @@ const getPerfherderData = async series => {
   );
 
   if (missing(newData[0]))
-    throw new Error(
+    throw new Except(
       `can not data for ${JSON.stringify(series[0].seriesConfig)}`
     );
 

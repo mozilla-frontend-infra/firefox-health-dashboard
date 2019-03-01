@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 import CONFIG from '../../utils/nimbledroid/config';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/utils/errors';
 
 const styles = {
   root: {},
@@ -18,16 +18,10 @@ class NimbledroidProductVersions extends Component {
   };
 
   async componentDidMount() {
-    const { handleError, nimbledroidData, products } = this.props;
+    const { nimbledroidData, products } = this.props;
+    const { meta } = nimbledroidData || (await fetchNimbledroidData(products));
 
-    try {
-      const { meta } =
-        nimbledroidData || (await fetchNimbledroidData(products));
-
-      this.setState({ meta });
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState({ meta });
   }
 
   render() {
@@ -50,7 +44,6 @@ class NimbledroidProductVersions extends Component {
 
 NimbledroidProductVersions.propTypes = {
   classes: PropTypes.shape({}),
-  handleError: PropTypes.func.isRequired,
   nimbledroidData: PropTypes.shape({}),
   products: PropTypes.arrayOf(PropTypes.string),
 };
