@@ -14,7 +14,7 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 - [Node](https://nodejs.org/en/)
 - [Yarn](https://www.npmjs.com/package/yarn)
 
-### Install node:
+# Install node:
 
 Binaries, installers, and source tarballs are available at
 <https://nodejs.org/en/download/>.
