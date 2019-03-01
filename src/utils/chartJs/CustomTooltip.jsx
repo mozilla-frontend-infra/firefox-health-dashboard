@@ -14,12 +14,6 @@ const styles = {
     height: '10px',
     marginRight: '10px',
   },
-  table: {
-    borderCollapse: 'collapse',
-    '& p': {
-      margin: 0,
-    },
-  },
 };
 
 function Footer({ dataset, index, currData }) {
@@ -58,17 +52,15 @@ function CustomTooltip({ classes, tooltipModel, series }) {
 
   return (
     <div className={classes.tooltip} style={paddingStyle}>
-      <div className={classes.table}>
-        <div>{xLabel}</div>
-        <div>
-          <span style={labelColors} className={classes.tooltipKey} />
-          {seriesLabel}: {currData}
-        </div>
-        <div>
-          {currData} ({higherOrLower})
-        </div>
-        {index > 0 && <Footer {...{ dataset, index, currData }} />}
+      <div>{xLabel}</div>
+      <div>
+        <span style={labelColors} className={classes.tooltipKey} />
+        {seriesLabel}: {currData}
       </div>
+      <div>
+        {currData} ({higherOrLower})
+      </div>
+      {index > 0 && <Footer {...{ dataset, index, currData }} />}
     </div>
   );
 }
