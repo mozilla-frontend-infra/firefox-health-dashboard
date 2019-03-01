@@ -23,7 +23,7 @@ Binaries, installers, and source tarballs are available at
 
 <https://nodejs.org/download/release/>
 
-# [Yarn](https://www.npmjs.com/package/yarn)
+## [Yarn](https://www.npmjs.com/package/yarn)
 
 
 * ## Install yarn:
