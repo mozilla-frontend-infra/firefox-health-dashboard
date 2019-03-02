@@ -502,9 +502,9 @@ export default class QuantumIndex extends React.Component {
           />,
         ],
       },
-    ].map(withErrorBoundary);
-    const reduced = sections.map(
-      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+    ];
+    const reduced = sections
+      .map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -572,8 +572,8 @@ export default class QuantumIndex extends React.Component {
             {section}
           </div>
         );
-      }
-    );
+      })
+      .map(withErrorBoundary);
 
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
