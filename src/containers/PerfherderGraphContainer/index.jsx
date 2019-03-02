@@ -25,14 +25,20 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    const { series } = this.props;
+    try {
+      const { series } = this.props;
 
-    this.setState(await getPerferherderData(series));
+      this.setState(await getPerferherderData(series));
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options } = this.state;
+    const { data, jointUrl, options, error } = this.state;
+
+    if (error) throw error;
 
     return (
       <div key={title}>

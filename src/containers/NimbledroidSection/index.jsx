@@ -4,7 +4,7 @@ import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 import NimbledroidGraphContainer from '../NimbledroidGraphContainer';
 import NimbledroidProductVersions from '../NimbledroidProductVersions';
 import NimbledroidSummaryTable from '../NimbledroidSummaryTable';
-import { withErrorBoundary } from '../../vendor/utils/errors';
+import { withErrorBoundary } from '../../vendor/errors';
 
 class NimbledroidSection extends Component {
   state = {

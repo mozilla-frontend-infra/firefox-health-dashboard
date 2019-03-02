@@ -9,7 +9,7 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import { ErrorMessage } from '../../vendor/utils/errors';
+import { ErrorMessage } from '../../vendor/errors';
 
 const styles = {
   body: {

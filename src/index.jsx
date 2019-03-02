@@ -32,6 +32,8 @@ class GlobalErrorBoundary extends Component {
       // eslint-disable-next-line no-console
       console.error(error, info);
     }
+
+    return true;
   }
 
   render() {

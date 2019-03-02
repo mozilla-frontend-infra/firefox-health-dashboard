@@ -3,6 +3,8 @@ import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
+import { isString, missing, exists } from './utils';
+import { Exception } from './errors';
 
 let internalFrum = null;
 let internalToPairs = null;
@@ -34,15 +36,6 @@ function toArray(value) {
   return [value];
 }
 
-function zipObject(keys, values) {
-  // accept list of keys and list of values to zip into a single object
-  const output = {};
-
-  for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
-
-  return output;
-}
-
 function preSelector(columnName) {
   // convert to an array of [selector(), name] pairs
   if (Array.isArray(columnName)) {
@@ -59,7 +52,7 @@ function preSelector(columnName) {
       .sortBy(([, b]) => b);
   }
 
-  if (typeof columnName === 'string') {
+  if (isString(columnName)) {
     return [row => row[columnName], columnName];
   }
 }
@@ -85,21 +78,11 @@ function selector(columnName) {
     return row => cs.map(func => func(row)).fromPairs();
   }
 
-  if (typeof columnName === 'string') {
+  if (isString(columnName)) {
     return row => row[columnName];
   }
 
   return columnName;
-}
-
-function missing(value) {
-  // return true if value is null, or undefined, or not a legit value
-  return value == null || Number.isNaN(value) || value === '';
-}
-
-function exists(value) {
-  // return false if value is null, or undefined, or not a legit value
-  return !missing(value);
 }
 
 class Wrapper {
@@ -335,7 +318,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw new Error('expecting index to be unique');
+        throw new Exception('expecting index to be unique');
       }
     }
 
@@ -420,4 +403,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last, missing, exists, length };
+export { frum, toPairs, first, last, length };

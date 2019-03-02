@@ -16,7 +16,7 @@ import {
 } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
-import { withErrorBoundary } from '../vendor/utils/errors';
+import { withErrorBoundary } from '../vendor/errors';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {

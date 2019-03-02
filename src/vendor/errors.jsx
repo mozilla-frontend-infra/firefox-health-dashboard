@@ -1,6 +1,8 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isString, missing } from './utils';
+import { Template } from './Template';
 
 const newIssue =
   'https://github.com/mozilla/firefox-health-dashboard/issues/new';
@@ -24,9 +26,9 @@ const BasicError = ({ error }) => (
     })()}
   </p>
 );
-const Except = class {
+const Exception = class {
   constructor(props) {
-    if (typeof props === 'string') {
+    if (isString(props)) {
       this.template = props;
       this.props = {};
       this.cause = null;
@@ -38,15 +40,36 @@ const Except = class {
       this.cause = cause; // chained reason
     }
   }
+
+  toString() {}
 };
 
-Except.wrap = err => {
-  if (err instanceof Except) {
+Exception.wrap = err => {
+  if (err instanceof Exception) {
     return err;
   }
 
-  return new Except({ cause: err });
+  return new Exception({ cause: err });
 };
+
+function warning(template, params, cause) {
+  let c = null;
+  let p = null;
+
+  if (
+    missing(cause) &&
+    (params instanceof Exception || params instanceof Error)
+  ) {
+    c = params;
+    p = {};
+  } else {
+    p = params;
+    c = cause ? cause.toString() : '';
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(Template(template).expand(p) + c.toString());
+}
 
 class ErrorMessage extends Component {
   constructor(props) {
@@ -55,12 +78,14 @@ class ErrorMessage extends Component {
   }
 
   componentDidCatch(error, info) {
-    const err = Except.wrap(error, info);
+    const err = Exception.wrap(error, info);
 
     this.setState({ error: err });
 
     // eslint-disable-next-line no-console
-    console.info(`found error ${error}`);
+    console.info(`found error ${error.toString()}`);
+
+    return true;
   }
 
   render() {
@@ -94,4 +119,4 @@ const withErrorBoundary = WrappedComponent => {
   return ErrorBoundary;
 };
 
-export { Except, withErrorBoundary, ErrorMessage };
+export { Exception, withErrorBoundary, ErrorMessage, warning };

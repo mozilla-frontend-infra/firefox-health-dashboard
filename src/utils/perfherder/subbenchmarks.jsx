@@ -1,5 +1,7 @@
-/* global fetch */
 import percentile from 'aggregatejs/percentile';
+import { Exception } from '../../vendor/errors';
+
+/* global fetch */
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -51,7 +53,7 @@ const parentInfo = async (suite, platform, option) => {
   });
 
   if (result.length !== 1) {
-    throw new Error('We should have an array of 1');
+    throw new Exception('We should have an array of 1');
   }
 
   return result[0];

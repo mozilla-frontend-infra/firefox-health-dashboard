@@ -1,5 +1,6 @@
 import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
+import { Exception } from '../../vendor/errors';
 
 const sortByDate = (a, b) =>
   new Date(b.submission_date) - new Date(a.submission_date);
@@ -17,7 +18,7 @@ const redashFormatter = (data, dataKeyIdentifier) => {
 
     if (!key) {
       // XXX: Make it a custom error, catch it and display a UI message
-      throw new Error(
+      throw new Exception(
         'Check the Redash data and determine what is the key used to categorize the data.'
       );
     }

@@ -15,9 +15,10 @@ import {
   timeMonth,
 } from 'd3';
 import { stringify } from 'query-string';
-import { withErrorBoundary } from '../vendor/utils/errors';
+import { withErrorBoundary } from '../vendor/errors';
 import Widget from './widget';
 import SETTINGS from '../settings';
+import { coalesce } from '../vendor/utils';
 
 const tickCount = 4;
 
@@ -248,9 +249,7 @@ class PerfherderWidget extends React.Component {
       <Widget
         {...this.props}
         link={link}
-        target={
-          this.props.target != null ? this.props.target : 'No regressions'
-        }
+        target={coalesce(this.props.target, 'No regressions')}
         className="graphic-widget graphic-timeline"
         content={svg}
         loading={!evolutions}
