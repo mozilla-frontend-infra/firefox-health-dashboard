@@ -9,14 +9,13 @@ import { frum, toPairs } from '../vendor/queryOps';
 import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
+  flowGraphProps,
   quantum32QueryParams,
   quantum64QueryParams,
-  flowGraphProps,
   statusLabels,
 } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
-import { withErrorBoundary } from '../vendor/errors';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {
@@ -503,8 +502,8 @@ export default class QuantumIndex extends React.Component {
         ],
       },
     ];
-    const reduced = sections
-      .map(({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+    const reduced = sections.map(
+      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -572,8 +571,8 @@ export default class QuantumIndex extends React.Component {
             {section}
           </div>
         );
-      })
-      .map(withErrorBoundary);
+      }
+    );
 
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');
 
