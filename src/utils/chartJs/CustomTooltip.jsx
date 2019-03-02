@@ -28,27 +28,6 @@ function CustomTooltip({ classes, tooltipModel, series }) {
   const paddingStyle = {
     padding: `${tooltipModel.yPadding}px ${tooltipModel.xPadding}px`,
   };
-  let footer = null;
-
-  if (index > 0) {
-    const [prev, curr] = currSeries.data.slice(index - 1);
-    const delta = curr.value - prev.value;
-    const deltaPercentage = (delta / prev.value) * 100;
-    const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${
-      prev.revision
-    }&tochange=${curr.revision}`;
-
-    footer = (
-      <React.Fragment>
-        <div>
-          Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
-        </div>
-        <div>
-          <a href={hgURL}>{curr.revision.slice(0, 12)}</a>
-        </div>
-      </React.Fragment>
-    );
-  }
 
   return (
     <div className={classes.tooltip} style={paddingStyle}>
@@ -60,7 +39,27 @@ function CustomTooltip({ classes, tooltipModel, series }) {
       <div>
         {currPoint.yLabel} ({higherOrLower})
       </div>
-      {footer}
+      {(() => {
+        if (index === 0) return null;
+
+        const [prev, curr] = currSeries.data.slice(index - 1);
+        const delta = curr.value - prev.value;
+        const deltaPercentage = (delta / prev.value) * 100;
+        const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${
+          prev.revision
+        }&tochange=${curr.revision}`;
+
+        return (
+          <React.Fragment>
+            <div>
+              Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
+            </div>
+            <div>
+              <a href={hgURL}>{curr.revision.slice(0, 12)}</a>
+            </div>
+          </React.Fragment>
+        );
+      })()}
     </div>
   );
 }
