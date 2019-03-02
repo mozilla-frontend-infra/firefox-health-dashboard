@@ -4,7 +4,7 @@ import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
 import lodashTake from 'lodash/take';
 import { isString, missing, exists } from './utils';
-import { Exception } from './errors';
+import { error } from './errors';
 
 let internalFrum = null;
 let internalToPairs = null;
@@ -318,7 +318,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw new Exception('expecting index to be unique');
+        throw error('expecting index to be unique');
       }
     }
 

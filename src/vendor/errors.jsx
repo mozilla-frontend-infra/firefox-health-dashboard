@@ -1,14 +1,16 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { isString, missing } from './utils';
-import { Template } from './Template';
+import { missing } from './utils';
+import { expand } from './Template';
 
 const newIssue =
   'https://github.com/mozilla/firefox-health-dashboard/issues/new';
 const BasicError = ({ error }) => (
   <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
     {(() => {
+      if (error.toString) return error.toString();
+
       if (error.template) return error.template;
 
       if (error.cause && error.cause.message) return error.cause.message;
@@ -27,21 +29,43 @@ const BasicError = ({ error }) => (
   </p>
 );
 const Exception = class {
-  constructor(props) {
-    if (isString(props)) {
-      this.template = props;
-      this.props = {};
-      this.cause = null;
-    } else {
-      const { template, kwargs, cause } = props;
+  constructor(template, params, cause) {
+    let t = null;
+    let c = null;
+    let p = null;
 
-      this.template = template; // string descripbing the problem
-      this.props = kwargs; // object with properties used by template
-      this.cause = cause; // chained reason
+    if (template instanceof Exception || template instanceof Exception) {
+      c = template;
+    } else if (
+      missing(cause) &&
+      (params instanceof Exception || params instanceof Error)
+    ) {
+      t = template;
+      c = params;
+    } else {
+      t = template;
+      p = params;
+      c = cause ? cause.toString() : '';
     }
+
+    this.template = t; // string descripbing the problem
+    this.props = p; // object with properties used by template
+    this.cause = c; // chained reason
   }
 
-  toString() {}
+  toString() {
+    if (missing(this.template)) {
+      return this.cause.toString();
+    }
+
+    let output = expand(this.template, this.props);
+
+    if (this.cause) {
+      output = `${output}\ncaused by\n${this.cause.toString()}`;
+    }
+
+    return output;
+  }
 };
 
 Exception.wrap = err => {
@@ -52,23 +76,15 @@ Exception.wrap = err => {
   return new Exception({ cause: err });
 };
 
-function warning(template, params, cause) {
-  let c = null;
-  let p = null;
+function error(template, params, cause) {
+  throw new Exception(template, params, cause);
+}
 
-  if (
-    missing(cause) &&
-    (params instanceof Exception || params instanceof Error)
-  ) {
-    c = params;
-    p = {};
-  } else {
-    p = params;
-    c = cause ? cause.toString() : '';
-  }
+function warning(template, params, cause) {
+  const e = new Exception(template, params, cause);
 
   // eslint-disable-next-line no-console
-  console.log(Template(template).expand(p) + c.toString());
+  console.log(e.toString());
 }
 
 class ErrorMessage extends Component {
@@ -82,10 +98,7 @@ class ErrorMessage extends Component {
 
     this.setState({ error: err });
 
-    // eslint-disable-next-line no-console
-    console.info(`found error ${error.toString()}`);
-
-    return true;
+    warning(error);
   }
 
   render() {
@@ -119,4 +132,4 @@ const withErrorBoundary = WrappedComponent => {
   return ErrorBoundary;
 };
 
-export { Exception, withErrorBoundary, ErrorMessage, warning };
+export { Exception, withErrorBoundary, ErrorMessage, warning, error };

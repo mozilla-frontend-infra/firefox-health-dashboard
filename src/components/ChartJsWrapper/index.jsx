@@ -4,7 +4,7 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
-import { Exception, withErrorBoundary } from '../../vendor/errors';
+import { error, withErrorBoundary } from '../../vendor/errors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -41,9 +41,7 @@ const ChartJsWrapper = ({
 
       if (daysDifference > 3) {
         // if days are more than 3 then show error
-        throw new Exception(
-          'This item has been missing data for at least 3 days.'
-        );
+        throw error('This item has been missing data for at least 3 days.');
       }
     });
   }

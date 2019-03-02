@@ -1,6 +1,7 @@
 import { frum, toPairs } from './queryOps';
-import { Exception, warning } from './errors';
+import { error, warning } from './errors';
 import { isFunction, isObject } from './utils';
+import strings from './strings';
 
 function URL2Object(url) {
   return frum(new URLSearchParams(url).entries())
@@ -19,13 +20,13 @@ function json2value(json) {
   try {
     return JSON.parse(json);
   } catch (e) {
-    throw new Exception(`Can not parse json:\n${json.indent(1)}`, e);
+    throw error(`Can not parse json:\n{{json|indent}}`, { json }, e);
   }
 }
 
 function prettyJSON(json, maxDepth) {
   if (maxDepth < 0) {
-    throw new Exception('json is too deep');
+    throw error('json is too deep');
   }
 
   try {
@@ -46,7 +47,7 @@ function prettyJSON(json, maxDepth) {
         .map(v => {
           if (v === undefined) return 'undefined';
 
-          return prettyJSON(v, maxDepth - 1).indent(1);
+          return strings.indent(prettyJSON(v, maxDepth - 1), 1);
         })
         .join(',\n')}\n]`;
     }
@@ -83,8 +84,8 @@ function prettyJSON(json, maxDepth) {
       toPairs(json).forEach((v, k) => {
         if (v !== undefined) {
           if (output.length > 3) output += ',\n\t';
-          output += `"${k}":${prettyJSON(v, maxDepth - 1)
-            .indent(1)
+          output += `"${k}":${strings
+            .indent(prettyJSON(v, maxDepth - 1), 1)
             .trim()}`;
         }
       });
@@ -94,7 +95,7 @@ function prettyJSON(json, maxDepth) {
 
     return JSON.stringify(json);
   } catch (e) {
-    throw new Exception('Problem with jsonification', e);
+    throw error('Problem with jsonification', e);
   }
 } // function
 

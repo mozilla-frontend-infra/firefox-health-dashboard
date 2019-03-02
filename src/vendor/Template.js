@@ -1,65 +1,10 @@
 import { coalesce, isString, missing } from './utils';
 import { toPairs } from './queryOps';
 import { value2json } from './convert';
-import { round, roundMetric } from './math';
-import { Exception, warning } from './errors';
+import { error, warning } from './errors';
+import Map from './Map';
+import strings from './strings';
 
-// /////////////////////////////////////////////////////////////////////////
-// DEFINE TEMPLATE FUNCTIONS HERE
-// /////////////////////////////////////////////////////////////////////////
-const FUNC = {
-  datetime(d, f) {
-    const ff = coalesce(f, 'yyyy-MM-dd HH:mm:ss');
-
-    return Date.newInstance(d).format(ff);
-  },
-  indent(value, amount) {
-    return toString(value).indent(amount);
-  },
-  left(value, amount) {
-    return toString(value).left(amount);
-  },
-
-  deformat(value) {
-    return toString(value).deformat();
-  },
-  json(value) {
-    return value2json(value);
-  },
-  comma(value) {
-    // SNAGGED FROM http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-    const parts = value.toString().split('.');
-
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-    return parts.join('.');
-  },
-  quote(value) {
-    return value2json(value);
-  },
-  format(value, format) {
-    // if (value instanceof Duration) {
-    //   return value.format(format);
-    // }
-
-    return Date.newInstance(value).format(format);
-  },
-  round(value, digits) {
-    return round(value, { digits });
-  },
-  metric: roundMetric,
-  upper(value) {
-    if (isString(value)) {
-      return value.toUpperCase();
-    }
-
-    return value2json();
-  },
-
-  unix(value) {
-    return Date.newInstance(value).unix();
-  },
-};
 let expandAny = null;
 
 function expandArray(arr, namespaces) {
@@ -70,8 +15,7 @@ function expandArray(arr, namespaces) {
 function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
-  if (!isString(from))
-    throw new Exception('expecting from clause to be string');
+  if (!isString(from)) throw error('expecting from clause to be string');
 
   return Map.get(namespaces[0], loop.from)
     .map(m => {
@@ -101,7 +45,7 @@ function expandItems(loop, namespaces) {
   Map.expecting(loop, ['from_items', 'template']);
 
   if (typeof loop.from_items !== 'string') {
-    throw new Exception('expecting `from_items` clause to be string');
+    throw error('expecting `from_items` clause to be string');
   }
 
   return Map.map(Map.get(namespaces[0], loop.from_items), (name, value) => {
@@ -143,20 +87,21 @@ function expandText(template, namespaces) {
       path.forEach(step => {
         const [func, rest] = step.split('(', 2);
 
-        if (FUNC[func] === undefined) {
-          throw new Exception(
-            `${func} is an unknown string function for template expansion`
+        if (strings[func] === undefined) {
+          throw error(
+            `{{func}} is an unknown string function for template expansion`,
+            { func }
           );
         }
 
-        if (rest.length === 0) {
-          val = FUNC[func](val);
+        if (missing(rest)) {
+          val = strings[func](val);
         } else {
           try {
             // eslint-disable-next-line no-eval
-            val = eval(`FUNC[func](val, ${rest}`);
+            val = eval(`strings[func](val, ${rest}`);
           } catch (f) {
-            warning(`Can not evaluate ${value2json(variable)}`, f);
+            warning(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
         }
       });
@@ -204,10 +149,38 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  throw new Exception('Not recognized {{template|json}}', { template });
+  throw error('Not recognized {{template|json}}', { template });
 };
 
-const expand = expandAny;
+function expand(template, values) {
+  if (values === undefined) {
+    return template;
+  }
+
+  function lower(v) {
+    if (v == null) {
+      return v;
+    }
+
+    if (
+      typeof v === 'object' &&
+      !(v instanceof Array) &&
+      !(v instanceof Date)
+      // !(v instanceof Duration)
+    ) {
+      return toPairs(v)
+        .map((v, k) => [lower(v), k.toLowerCase()])
+        .args()
+        .fromPairs();
+    }
+
+    return v;
+  } // function
+
+  const map = lower(values);
+
+  return expandAny(template, [map]);
+}
 
 class Template {
   constructor(template) {
@@ -215,33 +188,7 @@ class Template {
   }
 
   expand(values) {
-    if (values === undefined) {
-      return this.template;
-    }
-
-    function lower(v) {
-      if (v == null) {
-        return v;
-      }
-
-      if (
-        typeof v === 'object' &&
-        !(v instanceof Array) &&
-        !(v instanceof Date)
-        // !(v instanceof Duration)
-      ) {
-        return toPairs(v)
-          .map((v, k) => [lower(v), k.toLowerCase()])
-          .args()
-          .fromPairs();
-      }
-
-      return v;
-    } // function
-
-    const map = lower(values);
-
-    return expand(this.template, [map]);
+    expand(this.template, values);
   }
 
   toString(value) {
