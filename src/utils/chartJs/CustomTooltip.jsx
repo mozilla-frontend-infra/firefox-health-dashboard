@@ -16,51 +16,51 @@ const styles = {
   },
 };
 
-function Footer({ dataset, index, currData }) {
-  const prevData = dataset[index - 1].value;
-  const prevRevision = dataset[index - 1].revision;
-  const delta = (currData - prevData).toFixed(2);
-  const deltaPercentage = ((currData / prevData - 1) * 100).toFixed(2);
-  const currRevision = dataset[index].revision;
-  const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${prevRevision}&tochange=${currRevision}`;
-
-  return (
-    <React.Fragment>
-      <div>
-        Δ {delta} ({deltaPercentage} %)
-      </div>
-      <div>
-        <a href={hgURL}>{currRevision.slice(0, 12)}</a>
-      </div>
-    </React.Fragment>
-  );
-}
-
 function CustomTooltip({ classes, tooltipModel, series }) {
   if (tooltipModel.opacity === 0) return null;
 
-  const { xLabel, index, datasetIndex } = tooltipModel.dataPoints[0];
-  const dataset = series[datasetIndex].data;
-  const seriesLabel = series[datasetIndex].label;
+  const currPoint = tooltipModel.dataPoints[0];
   const labelColors = tooltipModel.labelColors[0];
-  const currData = tooltipModel.dataPoints[0].yLabel;
-  const higherIsBetter = !series[datasetIndex].meta.lower_is_better;
+  const { index } = currPoint;
+  const currSeries = series[currPoint.datasetIndex];
+  const higherIsBetter = !currSeries.meta.lower_is_better;
   const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
   const paddingStyle = {
     padding: `${tooltipModel.yPadding}px ${tooltipModel.xPadding}px`,
   };
+  let footer = null;
+
+  if (index > 0) {
+    const [prev, curr] = currSeries.data.slice(index - 1);
+    const delta = curr.value - prev.value;
+    const deltaPercentage = (delta / prev.value) * 100;
+    const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${
+      prev.revision
+    }&tochange=${curr.revision}`;
+
+    footer = (
+      <React.Fragment>
+        <div>
+          Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
+        </div>
+        <div>
+          <a href={hgURL}>{curr.revision.slice(0, 12)}</a>
+        </div>
+      </React.Fragment>
+    );
+  }
 
   return (
     <div className={classes.tooltip} style={paddingStyle}>
-      <div>{xLabel}</div>
+      <div>{currPoint.xLabel}</div>
       <div>
         <span style={labelColors} className={classes.tooltipKey} />
-        {seriesLabel}: {currData}
+        {currSeries.label}: {currPoint.yLabel}
       </div>
       <div>
-        {currData} ({higherOrLower})
+        {currPoint.yLabel} ({higherOrLower})
       </div>
-      {index > 0 && <Footer {...{ dataset, index, currData }} />}
+      {footer}
     </div>
   );
 }
