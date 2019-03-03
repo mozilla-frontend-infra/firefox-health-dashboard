@@ -30,7 +30,7 @@ class NimbledroidGraphContainer extends Component {
 
       this.setState(data);
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
@@ -40,9 +40,7 @@ class NimbledroidGraphContainer extends Component {
 
   render() {
     const { scenarioName } = this.props;
-    const { data, error } = this.state;
-
-    if (error) throw error;
+    const { data } = this.state;
 
     return (
       <ChartJsWrapper

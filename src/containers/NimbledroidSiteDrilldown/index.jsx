@@ -31,7 +31,7 @@ class NimbledroidSiteDrilldown extends Component {
 
       this.setState(data);
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
@@ -52,11 +52,9 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   render() {
-    const { color, profile, widgetLabel, error } = this.state;
+    const { color, profile, widgetLabel } = this.state;
     const { configuration } = this.props;
     const { site, targetRatio } = configuration;
-
-    if (error) throw error;
 
     if (!profile) {
       return null;

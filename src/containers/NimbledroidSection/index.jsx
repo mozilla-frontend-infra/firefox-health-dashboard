@@ -30,15 +30,13 @@ class NimbledroidSection extends Component {
 
       this.setState({ nimbledroidData });
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
   render() {
     const { configuration } = this.props;
-    const { nimbledroidData, error } = this.state;
-
-    if (error) throw error;
+    const { nimbledroidData } = this.state;
 
     return nimbledroidData ? (
       <div>

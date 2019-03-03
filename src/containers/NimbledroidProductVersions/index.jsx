@@ -26,15 +26,13 @@ class NimbledroidProductVersions extends Component {
 
       this.setState({ meta });
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
   render() {
     const { classes } = this.props;
-    const { meta, error } = this.state;
-
-    if (error) throw error;
+    const { meta } = this.state;
 
     return !meta ? null : (
       <div className={classes.root}>

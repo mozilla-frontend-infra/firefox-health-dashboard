@@ -57,15 +57,13 @@ class PerfherderWidget extends React.Component {
         signatureLabels,
       });
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
   render() {
     const { explainer, framework } = this.props;
-    const { evolutions, signatures, signatureLabels, error } = this.state;
-
-    if (error) throw error;
+    const { evolutions, signatures, signatureLabels } = this.state;
     let svg = null;
 
     if (evolutions) {

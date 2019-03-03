@@ -10,22 +10,20 @@ class BugzillaGraph extends Component {
   };
 
   async componentDidMount() {
-    this.fetchData(this.props);
+    await this.fetchData(this.props);
   }
 
   async fetchData({ queries, startDate }) {
     try {
       this.setState(await getBugsData(queries, startDate));
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
   render() {
     const { title } = this.props;
-    const { data, error } = this.state;
-
-    if (error) throw error;
+    const { data } = this.state;
 
     return (
       <ChartJsWrapper

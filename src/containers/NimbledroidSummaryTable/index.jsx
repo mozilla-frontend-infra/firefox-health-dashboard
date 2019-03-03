@@ -43,15 +43,13 @@ class NimbledroidSummaryTable extends Component {
 
       this.setState(generateSitesTableContent(nimbledroidData, configuration));
     } catch (error) {
-      this.setState({ error });
+      this.props.handleError(error);
     }
   }
 
   render() {
-    const { showSites, summary, tableContent, tableHeader, error } = this.state;
+    const { showSites, summary, tableContent, tableHeader } = this.state;
     const { classes } = this.props;
-
-    if (error) throw error;
 
     if (!tableContent) {
       return null;

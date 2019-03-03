@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { missing } from './utils';
 import { expand } from './Template';
@@ -91,16 +91,16 @@ Log.warning = (template, params, cause) => {
   console.log(e.toString());
 };
 
-class ErrorMessage extends Component {
+class ErrorMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  componentDidCatch(error, info) {
-    const err = Exception.wrap(error, info);
+  componentDidCatch(err, info) {
+    const error = Exception.wrap(err, info);
 
-    this.setState({ error: err });
+    this.setState({ error });
 
     Log.warning(err);
   }
@@ -110,8 +110,14 @@ class ErrorMessage extends Component {
 
     if (error) return this.props.template({ error });
 
+    const parent = this;
+
     try {
-      return this.props.children;
+      return React.Children.map(this.props.children, child =>
+        React.cloneElement(child, {
+          handleError: parent.componentDidCatch,
+        })
+      );
     } catch (error) {
       this.setState({ error });
     }
@@ -125,12 +131,18 @@ ErrorMessage.propTypes = {
 ErrorMessage.defaultProps = {
   template: BasicError,
 };
+
 const withErrorBoundary = WrappedComponent => {
-  class ErrorBoundary extends React.Component {
+  class ErrorBoundary extends ErrorMessage {
     render() {
+      const self = this;
+
       return (
         <ErrorMessage>
-          <WrappedComponent {...this.props} />
+          <WrappedComponent
+            handleError={self.componentDidCatch}
+            {...this.props}
+          />
         </ErrorMessage>
       );
     }

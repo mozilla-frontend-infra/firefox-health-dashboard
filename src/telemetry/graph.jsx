@@ -38,9 +38,9 @@ export default class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (cause) {
-      this.setState({
-        error: new Exception('Problem loading {{url}}', { url }, cause),
-      });
+      this.props.handleError(
+        new Exception('Problem loading {{url}}', { url }, cause)
+      );
     }
   }
 
@@ -73,9 +73,6 @@ export default class TelemetryContainer extends React.Component {
 
   render() {
     const { id, title } = this.props;
-    const { error } = this.state;
-
-    if (error) throw error;
 
     return (
       <div id={id} key={id} className="criteria-widget">
