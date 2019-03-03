@@ -28,7 +28,6 @@ To test Node. To see if Node is installed, open the Windows Command Prompt, Powe
 
 ```
 npm -v
-
 ```
 ### [Yarn](https://www.npmjs.com/package/yarn)
 
