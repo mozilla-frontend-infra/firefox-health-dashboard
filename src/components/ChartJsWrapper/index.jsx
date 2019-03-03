@@ -29,6 +29,7 @@ const ChartJsWrapper = ({
   type,
   chartHeight,
   spinnerSize,
+  handleError,
 }) => {
   if (data) {
     data.datasets.forEach(dataset => {
@@ -41,7 +42,7 @@ const ChartJsWrapper = ({
 
       if (daysDifference > 3) {
         // if days are more than 3 then show error
-        this.props.handleError(
+        handleError(
           new Error('This item has been missing data for at least 3 days.')
         );
       }
