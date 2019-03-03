@@ -12,27 +12,43 @@ The repository for the backend can be found [here](https://github.com/mozilla/fi
 ## Prerequisites
 
 
-## [Node](https://nodejs.org/en/)
+### [Node](https://nodejs.org/en/)
 
-* ## Install node:
-
+Install Latest LTS Version: 10.15.2 (includes npm 6.4.1)
 Binaries, installers, and source tarballs are available at
 <https://nodejs.org/en/download/>.
 
-#### Current and LTS Releases
+To update your npm and install globally, type this into your terminal
 
-<https://nodejs.org/download/release/>
+```
+npm install npm@latest -g
 
-## [Yarn](https://www.npmjs.com/package/yarn)
+```
+To test Node. To see if Node is installed, open the Windows Command Prompt, Powershell or a similar command line tool
 
+```
+npm -v
 
-* ## Install yarn:
+```
+
+### [Yarn](https://www.npmjs.com/package/yarn)
 
 [yarn](https://yarnpkg.com/) is a fast, reliable, and secure dependency management tool. You can now use yarn to install reason and manage its dependencies.
 
 To install Yarn, it is best to [consult the official documentation](https://yarnpkg.com/en/docs/install) for your particular platform.
 
+To install yarn globally, type this into your terminal
 
+```
+npm install -g yarn
+
+```
+## Testing 
+
+```
+yarn -v
+
+```
 ## Building
 
 First, fork this repository to another GitHub account. Then you can clone and install:
@@ -40,7 +56,7 @@ First, fork this repository to another GitHub account. Then you can clone and in
 ```
 git clone https://github.com/<YOUR_ACCOUNT>/firefox-health-dashboard.git
 cd firefox-health-dashboard
-yarn install// This will install all dependencies
+yarn install // This will install all dependencies
 yarn start
 ```
 
