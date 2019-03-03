@@ -6,29 +6,29 @@ import { expand } from './Template';
 
 const newIssue =
   'https://github.com/mozilla/firefox-health-dashboard/issues/new';
-const BasicError = ({ error }) => (
-  <p style={{ fontSize: '1.0rem' }}>
-    {(() => {
-      if (error.toString) return <pre>{error.toString()}</pre>;
+const BasicError = ({ error }) => {
+  if (error.toString)
+    return <pre style={{ fontSize: '1.0rem' }}>{error.toString()}</pre>;
 
-      if (error.template) return <pre>{error.template}</pre>;
+  if (error.template)
+    return <pre style={{ fontSize: '1.0rem' }}>{error.template}</pre>;
 
-      if (error.cause && error.cause.message)
-        return <pre>{error.cause.message}</pre>;
+  if (error.cause && error.cause.message)
+    return <pre style={{ fontSize: '1.0rem' }}>{error.cause.message}</pre>;
 
-      return (
-        <span>
-          There has been a critical error. We have reported it. If the issue is
-          not fixed within few hours please file an issue:
-          <br />
-          <a href={newIssue} target="_blank" rel="noopener noreferrer">
-            {newIssue}
-          </a>
-        </span>
-      );
-    })()}
-  </p>
-);
+  return (
+    <p style={{ fontSize: '1.0rem' }}>
+      <span>
+        There has been a critical error. We have reported it. If the issue is
+        not fixed within few hours please file an issue:
+        <br />
+        <a href={newIssue} target="_blank" rel="noopener noreferrer">
+          {newIssue}
+        </a>
+      </span>
+    </p>
+  );
+};
 
 class Exception {
   constructor(template, params, cause) {
