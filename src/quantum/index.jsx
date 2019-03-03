@@ -523,16 +523,15 @@ export default class QuantumIndex extends React.Component {
               const id = `${wi}${title}`; // make unique id for key
 
               return (
-                <ErrorMessage key={`grid_${id}`}>
-                  <Grid
-                    item
-                    xs={6}
-                    className={
-                      cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
-                    }>
-                    {widget}
-                  </Grid>
-                </ErrorMessage>
+                <Grid
+                  key={`grid_${id}`}
+                  item
+                  xs={6}
+                  className={
+                    cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
+                  }>
+                  <ErrorMessage>{widget}</ErrorMessage>
+                </Grid>
               );
             })}
           </Grid>

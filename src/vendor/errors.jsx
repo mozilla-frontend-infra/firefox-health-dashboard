@@ -111,12 +111,11 @@ class ErrorMessage extends React.Component {
     if (error) return this.props.template({ error });
 
     const parent = this;
+    const handleError = error => parent.componentDidCatch(error);
 
     try {
       return React.Children.map(this.props.children, child =>
-        React.cloneElement(child, {
-          handleError: parent.componentDidCatch,
-        })
+        React.cloneElement(child, { handleError })
       );
     } catch (error) {
       this.setState({ error });

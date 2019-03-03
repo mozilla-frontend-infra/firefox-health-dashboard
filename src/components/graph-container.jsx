@@ -20,8 +20,8 @@ export default class GraphContainer extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchData();
+  async componentDidMount() {
+    await this.fetchData();
   }
 
   fetchData() {
@@ -32,7 +32,7 @@ export default class GraphContainer extends React.Component {
       url += `/?${stringify(query)}`;
     }
 
-    fetch(url)
+    return fetch(url)
       .then(response => {
         if (response.ok) {
           return response.json();

@@ -14,7 +14,7 @@ export default class TelemetryContainer extends React.Component {
   }
 
   async componentDidMount() {
-    this.fetchPlotGraph(this.props.id, this.props.queryParams);
+    await this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
 
   async fetchPlotGraph(id, queryParams) {

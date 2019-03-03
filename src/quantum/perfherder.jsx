@@ -25,8 +25,8 @@ const tickCount = 4;
 class PerfherderWidget extends React.Component {
   state = {};
 
-  componentDidMount() {
-    this.fetch();
+  async componentDidMount() {
+    await this.fetch();
   }
 
   async fetch() {
