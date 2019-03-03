@@ -1,7 +1,7 @@
 import { coalesce, isString, missing } from './utils';
 import { toPairs } from './queryOps';
 import { value2json } from './convert';
-import { error, warning } from './errors';
+import { Log } from './errors';
 import Map from './Map';
 import strings from './strings';
 
@@ -15,7 +15,7 @@ function expandArray(arr, namespaces) {
 function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
-  if (!isString(from)) throw error('expecting from clause to be string');
+  if (!isString(from)) Log.error('expecting from clause to be string');
 
   return Map.get(namespaces[0], loop.from)
     .map(m => {
@@ -45,7 +45,7 @@ function expandItems(loop, namespaces) {
   Map.expecting(loop, ['from_items', 'template']);
 
   if (typeof loop.from_items !== 'string') {
-    throw error('expecting `from_items` clause to be string');
+    Log.error('expecting `from_items` clause to be string');
   }
 
   return Map.map(Map.get(namespaces[0], loop.from_items), (name, value) => {
@@ -81,14 +81,14 @@ function expandText(template, namespaces) {
     acc,
     ...varStringPairs.map(vsp => {
       const [variable, suffixString] = vsp.split('}}', 2);
-      const [key, ...path] = variable.split('|');
-      let val = Map.get(map, key.toLowerCase());
+      const [accessor, ...postProcessing] = variable.split('|');
+      let val = Map.get(map, accessor.toLowerCase());
 
-      path.forEach(step => {
+      postProcessing.forEach(step => {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
-          throw error(
+          Log.error(
             `{{func}} is an unknown string function for template expansion`,
             { func }
           );
@@ -101,7 +101,7 @@ function expandText(template, namespaces) {
             // eslint-disable-next-line no-eval
             val = eval(`strings[func](val, ${rest}`);
           } catch (f) {
-            warning(`Can not evaluate {{variable|json}}`, { variable }, f);
+            Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
         }
       });
@@ -149,7 +149,7 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  throw error('Not recognized {{template|json}}', { template });
+  Log.error('Not recognized {{template|json}}', { template });
 };
 
 function expand(template, values) {

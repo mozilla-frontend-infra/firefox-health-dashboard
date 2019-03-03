@@ -39,17 +39,19 @@ class GlobalErrorBoundary extends Component {
   render() {
     if (this.state.error) {
       return (
-        <span>
-          There has been a critical error. We have reported it. If the issue is
-          not fixed within few hours please file an issue:
-          <br />
-          <a
-            href="https://github.com/mozilla/firefox-health-dashboard/issues/new"
-            target="_blank"
-            rel="noopener noreferrer">
-            {'https://github.com/mozilla/firefox-health-dashboard/issues/new'}
-          </a>
-        </span>
+        <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
+          <span>
+            There has been a critical error. We have reported it. If the issue
+            is not fixed within few hours please file an issue:
+            <br />
+            <a
+              href="https://github.com/mozilla/firefox-health-dashboard/issues/new"
+              target="_blank"
+              rel="noopener noreferrer">
+              {'https://github.com/mozilla/firefox-health-dashboard/issues/new'}
+            </a>
+          </span>
+        </p>
       );
     }
 

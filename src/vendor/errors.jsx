@@ -7,13 +7,14 @@ import { expand } from './Template';
 const newIssue =
   'https://github.com/mozilla/firefox-health-dashboard/issues/new';
 const BasicError = ({ error }) => (
-  <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
+  <p style={{ fontSize: '1.0rem' }}>
     {(() => {
-      if (error.toString) return error.toString();
+      if (error.toString) return <pre>{error.toString()}</pre>;
 
-      if (error.template) return error.template;
+      if (error.template) return <pre>{error.template}</pre>;
 
-      if (error.cause && error.cause.message) return error.cause.message;
+      if (error.cause && error.cause.message)
+        return <pre>{error.cause.message}</pre>;
 
       return (
         <span>
@@ -28,13 +29,14 @@ const BasicError = ({ error }) => (
     })()}
   </p>
 );
-const Exception = class {
+
+class Exception {
   constructor(template, params, cause) {
     let t = null;
     let c = null;
     let p = null;
 
-    if (template instanceof Exception || template instanceof Exception) {
+    if (template instanceof Exception || template instanceof Error) {
       c = template;
     } else if (
       missing(cause) &&
@@ -66,26 +68,28 @@ const Exception = class {
 
     return output;
   }
-};
+}
 
 Exception.wrap = err => {
   if (err instanceof Exception) {
     return err;
   }
 
-  return new Exception({ cause: err });
+  return new Exception(err);
 };
 
-function error(template, params, cause) {
-  throw new Exception(template, params, cause);
-}
+class Log {}
 
-function warning(template, params, cause) {
+Log.error = (template, params, cause) => {
+  throw new Exception(template, params, cause);
+};
+
+Log.warning = (template, params, cause) => {
   const e = new Exception(template, params, cause);
 
   // eslint-disable-next-line no-console
   console.log(e.toString());
-}
+};
 
 class ErrorMessage extends Component {
   constructor(props) {
@@ -98,7 +102,7 @@ class ErrorMessage extends Component {
 
     this.setState({ error: err });
 
-    warning(error);
+    Log.warning(err);
   }
 
   render() {
@@ -106,7 +110,11 @@ class ErrorMessage extends Component {
 
     if (error) return this.props.template({ error });
 
-    return this.props.children;
+    try {
+      return this.props.children;
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 }
 
@@ -117,7 +125,6 @@ ErrorMessage.propTypes = {
 ErrorMessage.defaultProps = {
   template: BasicError,
 };
-
 const withErrorBoundary = WrappedComponent => {
   class ErrorBoundary extends React.Component {
     render() {
@@ -132,4 +139,4 @@ const withErrorBoundary = WrappedComponent => {
   return ErrorBoundary;
 };
 
-export { Exception, withErrorBoundary, ErrorMessage, warning, error };
+export { Exception, withErrorBoundary, ErrorMessage, Log };

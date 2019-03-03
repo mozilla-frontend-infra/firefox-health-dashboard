@@ -5,8 +5,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
 import SETTINGS from '../settings';
+import { Exception } from '../vendor/errors';
 
 export default class TelemetryContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   async componentDidMount() {
     this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
@@ -31,9 +37,10 @@ export default class TelemetryContainer extends React.Component {
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
+    } catch (cause) {
+      this.setState({
+        error: new Exception('Problem loading {{url}}', { url }, cause),
+      });
     }
   }
 
@@ -66,6 +73,9 @@ export default class TelemetryContainer extends React.Component {
 
   render() {
     const { id, title } = this.props;
+    const { error } = this.state;
+
+    if (error) throw error;
 
     return (
       <div id={id} key={id} className="criteria-widget">

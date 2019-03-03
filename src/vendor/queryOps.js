@@ -2,9 +2,8 @@
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
-import lodashTake from 'lodash/take';
-import { isString, missing, exists } from './utils';
-import { error } from './errors';
+import { exists, isString, missing } from './utils';
+import { Log } from './errors';
 
 let internalFrum = null;
 let internalToPairs = null;
@@ -168,6 +167,20 @@ class Wrapper {
     return new Wrapper(() => output(this.argslist));
   }
 
+  limit(max) {
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        if (i >= max) break;
+        yield args;
+        i += 1;
+      }
+    }
+
+    return new Wrapper(() => output(this.argslist));
+  }
+
   where(expression) {
     // Expecting a object of {columnName: value} form to use as a filter
     // return only matching rows
@@ -318,7 +331,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw error('expecting index to be unique');
+        Log.error('expecting index to be unique');
       }
     }
 
@@ -376,7 +389,6 @@ extendWrapper({
   chunk,
   unzip,
   zip: unzip,
-  limit: lodashTake,
   sort: sortBy,
   sortBy,
 

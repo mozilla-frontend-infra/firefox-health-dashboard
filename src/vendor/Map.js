@@ -13,13 +13,13 @@ import {
   splitField,
   coalesce,
 } from './utils';
-import { error, warning } from './errors';
+import { Log } from './errors';
 
 const Map = {};
 
 Map.newInstance = (key, value) => {
   if (key == null) {
-    throw error('expecting a string key');
+    Log.error('expecting a string key');
   }
 
   const output = {};
@@ -68,7 +68,7 @@ Map.setDefault = (dest, ...args) => {
       if (missing(value)) {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
-        warning('possible loop');
+        Log.warning('possible loop');
       } else if (isMap(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
@@ -119,7 +119,7 @@ Map.inverse = map => {
 Map.expecting = (obj, keyList) => {
   for (const k of keyList) {
     if (missing(obj[k]))
-      throw error(`expecting object to have {{k|quote}} attribute`, { k });
+      Log.error(`expecting object to have {{k|quote}} attribute`, { k });
   } // for
 };
 
@@ -153,7 +153,7 @@ Map.get = (obj, path) => {
 
 Map.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    throw error('must be given an object ad field');
+    Log.error('must be given an object ad field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);

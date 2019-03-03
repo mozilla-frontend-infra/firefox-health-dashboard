@@ -1,5 +1,5 @@
 import percentile from 'aggregatejs/percentile';
-import { error } from '../../vendor/errors';
+import { Log } from '../../vendor/errors';
 
 /* global fetch */
 
@@ -53,7 +53,7 @@ const parentInfo = async (suite, platform, option) => {
   });
 
   if (result.length !== 1) {
-    throw error('We should have an array of 1');
+    Log.error('We should have an array of 1');
   }
 
   return result[0];

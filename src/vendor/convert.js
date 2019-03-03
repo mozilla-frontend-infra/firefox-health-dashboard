@@ -1,5 +1,5 @@
 import { frum, toPairs } from './queryOps';
-import { error, warning } from './errors';
+import { Log } from './errors';
 import { isFunction, isObject } from './utils';
 import strings from './strings';
 
@@ -20,13 +20,13 @@ function json2value(json) {
   try {
     return JSON.parse(json);
   } catch (e) {
-    throw error(`Can not parse json:\n{{json|indent}}`, { json }, e);
+    Log.error(`Can not parse json:\n{{json|indent}}`, { json }, e);
   }
 }
 
 function prettyJSON(json, maxDepth) {
   if (maxDepth < 0) {
-    throw error('json is too deep');
+    Log.error('json is too deep');
   }
 
   try {
@@ -36,7 +36,7 @@ function prettyJSON(json, maxDepth) {
 
         if (singleLine.length < 60) return singleLine;
       } catch (e) {
-        warning('Problem turning array to json:', e);
+        Log.warning('Problem turning array to json:', e);
       }
 
       if (json.length === 0) return '[]';
@@ -66,7 +66,7 @@ function prettyJSON(json, maxDepth) {
 
         if (singleLine.length < 60) return singleLine;
       } catch (e) {
-        warning('Problem turning object to json:', e);
+        Log.warning('Problem turning object to json:', e);
       }
 
       const keys = Object.keys(json);
@@ -95,7 +95,7 @@ function prettyJSON(json, maxDepth) {
 
     return JSON.stringify(json);
   } catch (e) {
-    throw error('Problem with jsonification', e);
+    Log.error('Problem with jsonification', e);
   }
 } // function
 

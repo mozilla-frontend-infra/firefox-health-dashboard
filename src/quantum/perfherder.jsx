@@ -230,7 +230,7 @@ class PerfherderWidget extends React.Component {
       ) : null;
 
       svg = (
-        <svg height={height} width={width}>
+        <svg key="key" height={height} width={width}>
           {$yAxis}
           {$xAxis}
           {$evolutions}

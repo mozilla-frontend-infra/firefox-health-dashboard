@@ -17,6 +17,7 @@ import {
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { ErrorMessage } from '../vendor/errors';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -104,11 +105,13 @@ export default class QuantumIndex extends React.Component {
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
-              key="page-load-tests-(tp6)"
+              // eslint-disable-next-line react/no-array-index-key
+              key={`page_${title}_${bits}`}
               title={title}
               series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
           ))
+          .enumerate()
           .limit(4),
       },
       {
@@ -517,18 +520,19 @@ export default class QuantumIndex extends React.Component {
                 statusList.secondary += 1;
               }
 
-              const id = wi + title; // make unique id for key
+              const id = `${wi}${title}`; // make unique id for key
 
               return (
-                <Grid
-                  item
-                  xs={6}
-                  key={`page_${title}_${id}`}
-                  className={
-                    cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
-                  }>
-                  {widget}
-                </Grid>
+                <ErrorMessage key={`grid_${id}`}>
+                  <Grid
+                    item
+                    xs={6}
+                    className={
+                      cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
+                    }>
+                    {widget}
+                  </Grid>
+                </ErrorMessage>
               );
             })}
           </Grid>
