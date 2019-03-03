@@ -19,14 +19,22 @@ class NimbledroidProductVersions extends Component {
 
   async componentDidMount() {
     const { nimbledroidData, products } = this.props;
-    const { meta } = nimbledroidData || (await fetchNimbledroidData(products));
 
-    this.setState({ meta });
+    try {
+      const { meta } =
+        nimbledroidData || (await fetchNimbledroidData(products));
+
+      this.setState({ meta });
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   render() {
     const { classes } = this.props;
-    const { meta } = this.state;
+    const { meta, error } = this.state;
+
+    if (error) throw error;
 
     return !meta ? null : (
       <div className={classes.root}>

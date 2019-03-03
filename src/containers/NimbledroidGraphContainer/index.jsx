@@ -5,10 +5,6 @@ import ChartJsWrapper from '../../components/ChartJsWrapper';
 import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 
-const generateData = scenarioData => ({
-  data: nimbledroidFormatter(scenarioData),
-});
-
 class NimbledroidGraphContainer extends Component {
   state = {
     data: null,
@@ -19,21 +15,34 @@ class NimbledroidGraphContainer extends Component {
     const { scenarioData } = this.props;
 
     if (scenarioData) {
-      this.state = generateData(scenarioData);
+      this.state = this.generateData(scenarioData);
     }
   }
 
   async componentDidMount() {
     const { configuration, scenarioName } = this.props;
-    const nimbledroidData = await fetchNimbledroidData(configuration.products);
-    const data = generateData(nimbledroidData.scenarios[scenarioName]);
 
-    this.setState(data);
+    try {
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
+      const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
+
+      this.setState(data);
+    } catch (error) {
+      this.setState({ error });
+    }
+  }
+
+  generateData(scenarioData) {
+    return { data: nimbledroidFormatter(scenarioData) };
   }
 
   render() {
     const { scenarioName } = this.props;
-    const { data } = this.state;
+    const { data, error } = this.state;
+
+    if (error) throw error;
 
     return (
       <ChartJsWrapper

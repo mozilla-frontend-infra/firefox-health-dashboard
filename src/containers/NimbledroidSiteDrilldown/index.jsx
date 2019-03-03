@@ -22,10 +22,17 @@ class NimbledroidSiteDrilldown extends Component {
 
   async componentDidMount() {
     const { configuration } = this.props;
-    const nimbledroidData = await fetchNimbledroidData(configuration.products);
-    const data = this.generateData(configuration, nimbledroidData);
 
-    this.setState(data);
+    try {
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
+      const data = this.generateData(configuration, nimbledroidData);
+
+      this.setState(data);
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   generateData(configuration, nimbledroidData) {
@@ -45,9 +52,11 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   render() {
-    const { color, profile, widgetLabel } = this.state;
+    const { color, profile, widgetLabel, error } = this.state;
     const { configuration } = this.props;
     const { site, targetRatio } = configuration;
+
+    if (error) throw error;
 
     if (!profile) {
       return null;

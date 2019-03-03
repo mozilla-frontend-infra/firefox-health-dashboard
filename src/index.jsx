@@ -8,10 +8,16 @@ import registerTooltip from './utils/registerTooltip';
 
 require('typeface-roboto');
 
+let handleError = (error, info) => {
+  // eslint-disable-next-line no-console
+  console.error(error, info);
+};
+
 if (process.env.NODE_ENV === 'production') {
   Raven.config(
     'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
   ).install();
+  handleError = Raven.captureException;
 }
 
 // handle sticky tooltip for all charts
@@ -25,15 +31,7 @@ class GlobalErrorBoundary extends Component {
 
   componentDidCatch(error, info) {
     this.setState({ error });
-
-    if (process.env.NODE_ENV === 'production') {
-      Raven.captureException(error);
-    } else {
-      // eslint-disable-next-line no-console
-      console.error(error, info);
-    }
-
-    return true;
+    handleError(error, info);
   }
 
   render() {

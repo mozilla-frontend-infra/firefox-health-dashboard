@@ -22,14 +22,23 @@ class NimbledroidSection extends Component {
 
   async componentDidMount() {
     const { configuration } = this.props;
-    const nimbledroidData = await fetchNimbledroidData(configuration.products);
 
-    this.setState({ nimbledroidData });
+    try {
+      const nimbledroidData = await fetchNimbledroidData(
+        configuration.products
+      );
+
+      this.setState({ nimbledroidData });
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   render() {
     const { configuration } = this.props;
-    const { nimbledroidData } = this.state;
+    const { nimbledroidData, error } = this.state;
+
+    if (error) throw error;
 
     return nimbledroidData ? (
       <div>

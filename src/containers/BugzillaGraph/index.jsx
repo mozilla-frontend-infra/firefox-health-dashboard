@@ -14,12 +14,18 @@ class BugzillaGraph extends Component {
   }
 
   async fetchData({ queries, startDate }) {
-    this.setState(await getBugsData(queries, startDate));
+    try {
+      this.setState(await getBugsData(queries, startDate));
+    } catch (error) {
+      this.setState({ error });
+    }
   }
 
   render() {
-    const { data } = this.state;
     const { title } = this.props;
+    const { data, error } = this.state;
+
+    if (error) throw error;
 
     return (
       <ChartJsWrapper
