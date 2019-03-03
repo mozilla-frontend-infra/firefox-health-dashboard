@@ -97,7 +97,7 @@ function prettyJSON(json, maxDepth) {
   } catch (e) {
     Log.error('Problem with jsonification', e);
   }
-} // function
+}
 
 function value2json(json) {
   return prettyJSON(json, 30);

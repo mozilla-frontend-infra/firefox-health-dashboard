@@ -1,6 +1,5 @@
 import { coalesce, isString, missing } from './utils';
 import { toPairs } from './queryOps';
-import { value2json } from './convert';
 import { Log } from './errors';
 import Map from './Map';
 import strings from './strings';
@@ -42,13 +41,13 @@ function expandLoop(loop, namespaces) {
  LOOP THROUGH THEN key:value PAIRS OF THE OBJECT
  */
 function expandItems(loop, namespaces) {
-  Map.expecting(loop, ['from_items', 'template']);
+  const { items, template } = loop;
 
-  if (typeof loop.from_items !== 'string') {
+  if (typeof items !== 'string') {
     Log.error('expecting `from_items` clause to be string');
   }
 
-  return Map.map(Map.get(namespaces[0], loop.from_items), (name, value) => {
+  return Map.map(Map.get(namespaces[0], items), (name, value) => {
     const map = Map.copy(namespaces[0]);
 
     map.name = name;
@@ -64,7 +63,7 @@ function expandItems(loop, namespaces) {
       map[Array(i + 3).join('.')] = n;
     });
 
-    return expandAny(loop.template, namespaces.copy().prepend(map));
+    return expandAny(template, namespaces.copy().prepend(map));
   }).join(loop.separator === undefined ? '' : loop.separator);
 }
 
@@ -115,7 +114,7 @@ function expandText(template, namespaces) {
         return suffixString;
       }
 
-      if (typeof val === 'string') {
+      if (isString(val)) {
         return val + suffixString;
       }
 
@@ -141,7 +140,7 @@ expandAny = (template, namespaces) => {
     return expandText(template, namespaces);
   }
 
-  if (template.from_items) {
+  if (template.items) {
     return expandItems(template, namespaces);
   }
 
@@ -175,7 +174,7 @@ function expand(template, values) {
     }
 
     return v;
-  } // function
+  }
 
   const map = lower(values);
 
@@ -190,12 +189,6 @@ class Template {
   expand(values) {
     expand(this.template, values);
   }
-
-  toString(value) {
-    if (isString(value)) return value;
-
-    return value2json(value);
-  } // function
 }
 
 export { Template, expand };

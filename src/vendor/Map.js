@@ -2,22 +2,17 @@
 
 import { toPairs } from './queryOps';
 import {
+  coalesce,
   exists,
-  missing,
-  isMap,
   isArray,
   isInteger,
-  isObject,
-  literalField,
-  concatField,
+  isMap,
+  missing,
   splitField,
-  coalesce,
 } from './utils';
 import { Log } from './errors';
 
-const Map = {};
-
-Map.newInstance = (key, value) => {
+const Map = (key, value) => {
   if (key == null) {
     Log.error('expecting a string key');
   }
@@ -75,7 +70,7 @@ Map.setDefault = (dest, ...args) => {
     });
 
     return output;
-  } // function
+  }
 
   args.forEach(source => {
     if (missing(source)) return;
@@ -94,33 +89,6 @@ Map.setDefault = (dest, ...args) => {
   });
 
   return dest;
-};
-
-Map.jsonCopy = value => {
-  if (value === undefined) return undefined;
-
-  return JSON.parse(JSON.stringify(value));
-};
-
-Map.clone = Map.jsonCopy;
-
-// IF map IS NOT 1-1 THAT'S YOUR PROBLEM
-Map.inverse = map => {
-  const output = {};
-
-  toPairs(map).forEach((v, k) => {
-    output[v] = k;
-  });
-
-  return output;
-};
-
-// THROW AN ERROR IF WE DO NOT SEE THE GIVEN ATTRIBUTE IN THE LIST
-Map.expecting = (obj, keyList) => {
-  for (const k of keyList) {
-    if (missing(obj[k]))
-      Log.error(`expecting object to have {{k|quote}} attribute`, { k });
-  } // for
 };
 
 // ASSUME THE DOTS (.) IN fieldName ARE SEPARATORS
@@ -174,58 +142,6 @@ Map.set = (obj, path, value) => {
   o[last] = value;
 
   return obj;
-};
-
-// RETURN TRUE IF MAPS LOOK IDENTICAL
-Map.equals = (a, b) => {
-  for (const key of Object.keys(a)) {
-    if (b[key] !== a[key]) return false;
-  } // for
-
-  for (const key of Object.keys(b)) {
-    if (b[key] !== a[key]) return false;
-  } // for
-
-  return true;
-};
-
-// RETURN LEAVES
-Map.leafItems = map => {
-  const output = [];
-
-  function leaves(map, prefix) {
-    toPairs(map).forEach((val, key) => {
-      let fullname = literalField(key);
-
-      if (prefix) fullname = concatField(prefix, fullname);
-
-      if (missing(val)) {
-        // do nothing
-      } else if (isObject(val)) {
-        leaves(val, fullname);
-      } else {
-        output.push([fullname, val]);
-      }
-    });
-  }
-
-  leaves(map, '.');
-
-  return output;
-};
-
-// USE THE MAP FOR REVERSE LOOKUP ON codomain VALUES PROVIDED
-// SINCE THE MAP CODOMAIN IS A VALUE, === IS USED FOR COMPARISION
-Map.reverse = (map, codomain) => {
-  const output = [];
-
-  codomain.forEach(c => {
-    toPairs(map).forEach((v, k) => {
-      if (v === c) output.push(k);
-    });
-  });
-
-  return output;
 };
 
 export default Map;

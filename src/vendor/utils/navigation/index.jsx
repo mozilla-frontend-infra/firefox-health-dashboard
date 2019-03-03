@@ -42,7 +42,7 @@ function withNavigation(config) {
 
       onPathChange = event => {
         const { name, value } = event.target;
-        const change = Map.newInstance(name, value);
+        const change = Map(name, value);
 
         this.setState(change);
 

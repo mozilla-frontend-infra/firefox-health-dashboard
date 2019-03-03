@@ -2,7 +2,14 @@
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
-import { exists, isString, missing } from './utils';
+import {
+  exists,
+  isObject,
+  isString,
+  missing,
+  concatField,
+  literalField,
+} from './utils';
 import { Log } from './errors';
 
 let internalFrum = null;
@@ -367,6 +374,24 @@ function toPairs(obj) {
 
 internalToPairs = toPairs;
 
+function leaves(obj) {
+  // Convert Object into list of [value, path] pairs
+  // where path is dot delimited path deep into object
+  function* leafGen(map, prefix) {
+    for (const [val, key] of toPairs(map).argsGen) {
+      const path = concatField(prefix, literalField(key));
+
+      if (isObject(val)) {
+        for (const pair of leafGen(val, path)) yield pair;
+      } else {
+        yield [val, path];
+      }
+    }
+  }
+
+  return new Wrapper(() => leafGen(obj, '.'));
+}
+
 function length(list) {
   // return length of this list
   if (list instanceof Wrapper) return list.length;
@@ -415,4 +440,4 @@ extendWrapper({
   },
 });
 
-export { frum, toPairs, first, last, length };
+export { frum, toPairs, leaves, first, last, length };
