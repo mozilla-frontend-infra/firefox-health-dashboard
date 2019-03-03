@@ -21,7 +21,7 @@ class NimbledroidSection extends Component {
   }
 
   async componentDidMount() {
-    const { configuration } = this.props;
+    const { configuration, handleError } = this.props;
 
     try {
       const nimbledroidData = await fetchNimbledroidData(
@@ -30,7 +30,7 @@ class NimbledroidSection extends Component {
 
       this.setState({ nimbledroidData });
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 
@@ -61,6 +61,7 @@ class NimbledroidSection extends Component {
 }
 
 NimbledroidSection.propTypes = {
+  handleError: PropTypes.func.isRequired,
   nimbledroidData: PropTypes.shape({}),
   configuration: PropTypes.shape({
     baseProduct: PropTypes.string.isRequired,

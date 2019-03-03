@@ -20,7 +20,7 @@ class NimbledroidGraphContainer extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, scenarioName } = this.props;
+    const { configuration, handleError, scenarioName } = this.props;
 
     try {
       const nimbledroidData = await fetchNimbledroidData(
@@ -30,7 +30,7 @@ class NimbledroidGraphContainer extends Component {
 
       this.setState(data);
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 
@@ -56,6 +56,7 @@ NimbledroidGraphContainer.propTypes = {
   configuration: PropTypes.shape({
     products: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  handleError: PropTypes.func.isRequired,
   scenarioData: PropTypes.shape({}),
   scenarioName: PropTypes.string.isRequired,
 };

@@ -34,7 +34,7 @@ class NimbledroidSummaryTable extends Component {
   }
 
   async componentDidMount() {
-    const { configuration } = this.props;
+    const { configuration, handleError } = this.props;
 
     try {
       const nimbledroidData = await fetchNimbledroidData(
@@ -43,7 +43,7 @@ class NimbledroidSummaryTable extends Component {
 
       this.setState(generateSitesTableContent(nimbledroidData, configuration));
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 

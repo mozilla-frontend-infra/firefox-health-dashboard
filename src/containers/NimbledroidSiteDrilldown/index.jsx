@@ -21,7 +21,7 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   async componentDidMount() {
-    const { configuration } = this.props;
+    const { configuration, handleError } = this.props;
 
     try {
       const nimbledroidData = await fetchNimbledroidData(
@@ -31,7 +31,7 @@ class NimbledroidSiteDrilldown extends Component {
 
       this.setState(data);
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 

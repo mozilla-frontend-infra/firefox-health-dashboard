@@ -11,12 +11,12 @@ export default class Countdown extends React.Component {
     version: null,
   };
 
-  async componentDidMount() {
-    await this.fetchData();
+  componentDidMount() {
+    this.fetchData();
   }
 
   fetchData() {
-    return fetch(SETTINGS.firefoxReleases)
+    fetch(SETTINGS.firefoxReleases)
       .then(response => response.json())
       .then(data => {
         const releases = Object.entries(data);

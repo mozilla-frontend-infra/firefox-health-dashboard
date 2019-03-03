@@ -18,7 +18,7 @@ class NimbledroidProductVersions extends Component {
   };
 
   async componentDidMount() {
-    const { nimbledroidData, products } = this.props;
+    const { handleError, nimbledroidData, products } = this.props;
 
     try {
       const { meta } =
@@ -26,7 +26,7 @@ class NimbledroidProductVersions extends Component {
 
       this.setState({ meta });
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 
@@ -50,6 +50,7 @@ class NimbledroidProductVersions extends Component {
 
 NimbledroidProductVersions.propTypes = {
   classes: PropTypes.shape({}),
+  handleError: PropTypes.func.isRequired,
   nimbledroidData: PropTypes.shape({}),
   products: PropTypes.arrayOf(PropTypes.string),
 };

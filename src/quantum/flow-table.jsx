@@ -14,12 +14,12 @@ export default class FlowTable extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {
-    await this.fetchData();
+  componentDidMount() {
+    this.fetchData();
   }
 
   fetchData() {
-    return fetch(
+    fetch(
       `${SETTINGS.backend}/api/bz/burnup?${stringify(
         flowGraphProps.query
       )}&list=true`

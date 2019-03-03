@@ -1,5 +1,5 @@
 import Raven from 'raven-js';
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import './index.css';
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 // handle sticky tooltip for all charts
 registerTooltip();
 
-class GlobalErrorBoundary extends Component {
+class GlobalErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};

@@ -8,11 +8,6 @@ import SETTINGS from '../settings';
 import { Exception } from '../vendor/errors';
 
 export default class TelemetryContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   async componentDidMount() {
     await this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }

@@ -10,20 +10,20 @@ class BugzillaGraph extends Component {
   };
 
   async componentDidMount() {
-    await this.fetchData(this.props);
+    this.fetchData(this.props);
   }
 
-  async fetchData({ queries, startDate }) {
+  async fetchData({ handleError, queries, startDate }) {
     try {
       this.setState(await getBugsData(queries, startDate));
     } catch (error) {
-      this.props.handleError(error);
+      handleError(error);
     }
   }
 
   render() {
-    const { title } = this.props;
     const { data } = this.state;
+    const { title } = this.props;
 
     return (
       <ChartJsWrapper
@@ -36,6 +36,7 @@ class BugzillaGraph extends Component {
 }
 
 BugzillaGraph.propTypes = {
+  handleError: PropTypes.func.isRequired,
   queries: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
