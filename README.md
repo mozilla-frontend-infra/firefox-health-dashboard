@@ -30,7 +30,6 @@ To test Node. To see if Node is installed, open the Windows Command Prompt, Powe
 npm -v
 
 ```
-
 ### [Yarn](https://www.npmjs.com/package/yarn)
 
 [yarn](https://yarnpkg.com/) is a fast, reliable, and secure dependency management tool. You can now use yarn to install reason and manage its dependencies.
