@@ -37,7 +37,7 @@ npm -v
 
 To install Yarn, it is best to [consult the official documentation](https://yarnpkg.com/en/docs/install) for your particular platform.
 
-To install yarn globally, type this into your terminal
+To install yarn globally using node, type this into your terminal
 
 ```
 npm install -g yarn
