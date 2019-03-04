@@ -91,9 +91,7 @@ function round(value, rounding) {
 function roundMetric(value, rounding) {
   const order = floor(Math.log10(value) / 3);
   const prefix = round(value / 10 ** (order * 3), rounding);
-  const units = ['nano', 'micro', 'milli', '', 'kilo', 'mega', 'giga', 'tera'][
-    order + 3
-  ];
+  const units = ['n', 'µ', 'm', '', 'K', 'M', 'G', 'T'][order + 3];
 
   return prefix + units;
 }

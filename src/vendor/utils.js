@@ -1,19 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 
-function isNumeric(n) {
-  if (n == null) return null;
-
-  return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
-}
-
-const { isArray } = Array;
-
-function isInteger(n) {
-  if (n == null) return null;
-
-  return !Number.isNaN(parseInt(n, 10)) && Number.isFinite(n);
-}
-
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
   return value == null || Number.isNaN(value) || value === '';
@@ -30,6 +16,47 @@ function coalesce(...args) {
   }
 
   return null;
+}
+
+function first(list) {
+  for (const v of list) return v;
+
+  return null;
+}
+
+function last(list) {
+  let value = null;
+
+  for (const v of list) value = v;
+
+  return value;
+}
+
+function toArray(value) {
+  // return a list
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value == null) {
+    return [];
+  }
+
+  return [value];
+}
+
+function isNumeric(n) {
+  if (n == null) return null;
+
+  return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
+}
+
+const { isArray } = Array;
+
+function isInteger(n) {
+  if (n == null) return null;
+
+  return !Number.isNaN(parseInt(n, 10)) && Number.isFinite(n);
 }
 
 function isString(value) {
@@ -86,6 +113,9 @@ function concatField(...many) {
 }
 
 export {
+  first,
+  last,
+  toArray,
   isArray,
   isNumeric,
   isInteger,
