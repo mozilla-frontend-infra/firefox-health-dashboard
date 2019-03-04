@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* global describe, it */
 import assert from 'assert';
 import isEqual from 'lodash/isEqual';
@@ -9,8 +10,10 @@ import {
   min,
   round,
   roundMetric,
+  count,
   sum,
 } from '../../src/vendor/math';
+import { frum } from '../../src/vendor/queryOps';
 
 const data = [1, null, '', 2, 3];
 

@@ -96,6 +96,17 @@ function roundMetric(value, rounding) {
   return prefix + units;
 }
 
+function count(values) {
+  let output = null;
+
+  values.forEach(v => {
+    if (v == null) return;
+    output += 1;
+  });
+
+  return output;
+}
+
 function sum(values) {
   let sum = null;
 
@@ -174,6 +185,7 @@ export {
   max,
   min,
   mod,
+  count,
   sum,
   average,
   log10,
