@@ -69,6 +69,10 @@ function round(value, rounding) {
   let d = null;
 
   if (digits !== undefined) {
+    if (digits <= 0) {
+      return 10 ** Math.round(log10(value));
+    }
+
     d = 10 ** (digits - ceiling(log10(value)));
   } else {
     d = 10 ** rounding;

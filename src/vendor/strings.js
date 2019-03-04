@@ -1,13 +1,10 @@
+import dateFormat from 'dateformat';
 import { coalesce, isString } from './utils';
 import { value2json } from './convert';
-import { round, roundMetric } from './math';
+import { round as mathRound, roundMetric } from './math';
 
+const between = (v, min, max) => Math.max(min, Math.min(max, v));
 const strings = {
-  datetime(d, f) {
-    const ff = coalesce(f, 'yyyy-MM-dd HH:mm:ss');
-
-    return Date.newInstance(d).format(ff);
-  },
   indent(value, amount) {
     const numTabs = coalesce(amount, 1);
     const indent = strings.left('\t\t\t\t\t\t', numTabs);
@@ -18,33 +15,17 @@ const strings = {
     return indent + str.trimRight().replace(/\n/, `\n${indent}`) + white;
   },
 
-  deformat(value) {
-    const output = [];
-
-    for (let i = 0; i < value.length; i += 1) {
-      const c = value.charAt(i);
-
-      if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')) {
-        output.push(c);
-      } else if (c >= 'A' && c <= 'Z') {
-        output.push(String.fromCharCode(c.charCodeAt(0) + 32));
-      }
-    }
-
-    return output.join('');
-  },
-
   left(value, amount) {
-    return value.slice(0, Math.min(this.length, amount));
+    return value.slice(0, between(amount, 0, value.length));
   },
   right(value, amount) {
-    return value.slice(Math.max(0, this.length - amount));
+    return value.slice(between(value.length - amount, 0, value.length));
   },
   leftBut(value, amount) {
-    return value.slice(0, this.length - amount);
+    return value.slice(0, between(value.length - amount, 0, value.length));
   },
   rightBut(value, amount) {
-    return value.slice(amount, this.length);
+    return value.slice(between(amount, 0, value.length), value.length);
   },
 
   json(value) {
@@ -61,15 +42,11 @@ const strings = {
   quote(value) {
     return value2json(value);
   },
-  format(value, format) {
-    // if (value instanceof Duration) {
-    //   return value.format(format);
-    // }
-
-    return Date.newInstance(value).format(format);
-  },
   round(value, digits) {
-    return round(value, { digits });
+    const v = isString(value) ? Number.parseFloat(value) : value;
+    const r = mathRound(v, { digits });
+
+    return `${r}`;
   },
   metric: roundMetric,
   upper(value) {
@@ -80,8 +57,15 @@ const strings = {
     return value2json();
   },
 
+  format(value, format) {
+    // see https://www.npmjs.com/package/dateformat
+    const ff = coalesce(format, 'UTC:yyyy-mm-dd HH:MM:ss');
+
+    return dateFormat(new Date(value) * 1000, ff);
+  },
+
   unix(value) {
-    return Date.newInstance(value).unix();
+    return new Date(value).valueOf();
   },
 };
 

@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* global describe, it */
 import {
   average,
@@ -96,7 +95,7 @@ describe('math', () => {
     expect(round(Math.PI * 1000, { digits: 3 })).toBe(3140);
     expect(round(Math.PI * 1000, { digits: 2 })).toBe(3100);
     expect(round(Math.PI * 1000, { digits: 1 })).toBe(3000);
-    expect(round(Math.PI * 1000, { digits: 0 })).toBe(0);
+    expect(round(Math.PI * 1000, { digits: 0 })).toBe(1000);
 
     expect(round(Math.PI * 2000, { digits: 7 })).toBe(6283.185);
     expect(round(Math.PI * 2000, { digits: 6 })).toBe(6283.19);
@@ -130,6 +129,11 @@ describe('math', () => {
     expect(round(Math.PI * 2000, -2)).toBe(6300);
     expect(round(Math.PI * 2000, -3)).toBe(6000);
     expect(round(Math.PI * 2000, -4)).toBe(10000);
+
+    expect(round(42, -1)).toBe(40);
+    expect(round(42, { digits: 0 })).toBe(100);
+    expect(round(42, { digits: 1 })).toBe(40);
+    expect(round(42, { digits: 2 })).toBe(42);
   });
 
   it('roundMetric', () => {

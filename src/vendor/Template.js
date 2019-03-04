@@ -67,6 +67,11 @@ function expandItems(loop, namespaces) {
   }).join(loop.separator === undefined ? '' : loop.separator);
 }
 
+function run(method, val, rest) {
+  // eslint-disable-next-line no-eval
+  return eval(`method(val, ${rest}`);
+}
+
 function expandText(template, namespaces) {
   // namespaces IS AN ARRAY OBJECTS FOR VARIABLE NAME LOOKUP
   // CASE INSENSITIVE VARIABLE REPLACEMENT
@@ -93,12 +98,13 @@ function expandText(template, namespaces) {
           );
         }
 
+        const method = strings[func];
+
         if (missing(rest)) {
-          val = strings[func](val);
+          val = method(val);
         } else {
           try {
-            // eslint-disable-next-line no-eval
-            val = eval(`strings[func](val, ${rest}`);
+            val = run(method, val, rest);
           } catch (f) {
             Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
