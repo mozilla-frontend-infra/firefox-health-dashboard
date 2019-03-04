@@ -239,7 +239,7 @@ export default class QuantumIndex extends React.Component {
             title="Tab Switch (tps)"
             series={[
               {
-                label: 'Firefox',
+                label: 'Firefox (tps)',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   frameworkId: 1,
@@ -247,6 +247,17 @@ export default class QuantumIndex extends React.Component {
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tps',
+                },
+              },
+              {
+                label: 'Firefox (tabswitch)',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  frameworkId: 1,
+                  platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tabswitch',
                 },
               },
             ]}

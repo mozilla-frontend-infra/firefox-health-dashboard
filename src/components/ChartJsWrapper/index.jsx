@@ -38,7 +38,7 @@ const ChartJsWrapper = ({
   let showError;
 
   if (data && missingDataError) {
-    showError = data.datasets.some(dataset => {
+    showError = data.datasets.every(dataset => {
       const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
