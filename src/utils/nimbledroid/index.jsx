@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import CONFIG from './config';
 
 export const sortSitesByTargetRatio = (a, b) => b.ratio - a.ratio;
@@ -8,7 +7,7 @@ const statusColor = (ratio, targetRatio) => {
   let widgetColor = 'green';
 
   if (targetRatio <= 1) {
-    throw Error('Change the code to handle a ratio below 1.');
+    throw new Error('Change the code to handle a ratio below 1.');
   }
 
   if (ratio > targetRatio) {
@@ -107,9 +106,9 @@ export const generateSitesTableContent = (
     numSites > 0
       ? Object.values(filteredScenarios)
           .map(scenario => {
-            scenario.ratio = scenario[baseProduct] / scenario[compareProduct];
+            const ratio = scenario[baseProduct] / scenario[compareProduct];
 
-            return scenario;
+            return { ratio, ...scenario };
           })
           .sort(sortSitesByTargetRatio)
       : [];

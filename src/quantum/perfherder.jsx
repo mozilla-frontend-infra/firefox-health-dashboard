@@ -15,13 +15,13 @@ import {
   timeMonth,
 } from 'd3';
 import { stringify } from 'query-string';
-import CriticalErrorMessage from '../components/criticalErrorMessage';
+import { withErrorBoundary } from '../vendor/errors';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
 const tickCount = 4;
 
-export default class PerfherderWidget extends React.Component {
+class PerfherderWidget extends React.Component {
   state = {};
 
   componentDidMount() {
@@ -29,24 +29,23 @@ export default class PerfherderWidget extends React.Component {
   }
 
   async fetch() {
-    const { signatures, framework } = this.props;
-    const signatureLabels = Object.keys(signatures);
-    const splitSignatures = Object.values(signatures).reduce(
-      (split, signature, idx) => {
-        signature
-          .split(/\s*,\s*/)
-          .forEach(entry => split.set(entry, signatureLabels[idx]));
-
-        return split;
-      },
-      new Map()
-    );
-    const query = stringify({
-      signatures: [...splitSignatures.keys()],
-      framework,
-    });
-
     try {
+      const { signatures, framework } = this.props;
+      const signatureLabels = Object.keys(signatures);
+      const splitSignatures = Object.values(signatures).reduce(
+        (split, signature, idx) => {
+          signature
+            .split(/\s*,\s*/)
+            .forEach(entry => split.set(entry, signatureLabels[idx]));
+
+          return split;
+        },
+        new Map()
+      );
+      const query = stringify({
+        signatures: [...splitSignatures.keys()],
+        framework,
+      });
       const evolutions = await (await fetch(
         `${SETTINGS.backend}/api/perf/herder?${query}`
       )).json();
@@ -56,19 +55,15 @@ export default class PerfherderWidget extends React.Component {
         signatures: splitSignatures,
         signatureLabels,
       });
-    } catch (e) {
-      this.setState({ error: true });
+    } catch (error) {
+      this.props.handleError(error);
     }
   }
 
   render() {
     const { explainer, framework } = this.props;
-    const { evolutions, signatures, signatureLabels, error } = this.state;
+    const { evolutions, signatures, signatureLabels } = this.state;
     let svg = null;
-
-    if (error) {
-      return <CriticalErrorMessage />;
-    }
 
     if (evolutions) {
       const busy = signatures.size > 5;
@@ -282,3 +277,5 @@ PerfherderWidget.propTypes = {
   reference: PropTypes.string,
   target: PropTypes.string,
 };
+
+export default withErrorBoundary(PerfherderWidget);

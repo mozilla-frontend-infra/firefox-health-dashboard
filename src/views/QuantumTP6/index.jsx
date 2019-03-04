@@ -9,6 +9,7 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
+import { ErrorMessage } from '../../vendor/errors';
 
 const styles = {
   body: {
@@ -43,18 +44,20 @@ class TP6 extends React.Component {
                   xs={6}
                   key={`page_${title}_${test}_${bits}`}
                   className={classes.chart}>
-                  <PerfherderGraphContainer
-                    title={title}
-                    series={frum(series)
-                      .sortBy(['browser'])
-                      .reverse()
-                      .map(s => ({
-                        label: s.label,
-                        seriesConfig: { ...s, test },
-                        options: { includeSubtests: true },
-                      }))
-                      .toArray()}
-                  />
+                  <ErrorMessage>
+                    <PerfherderGraphContainer
+                      title={title}
+                      series={frum(series)
+                        .sortBy(['browser'])
+                        .reverse()
+                        .map(s => ({
+                          label: s.label,
+                          seriesConfig: { ...s, test },
+                          options: { includeSubtests: true },
+                        }))
+                        .toArray()}
+                    />
+                  </ErrorMessage>
                 </Grid>
               ))}
           </Grid>

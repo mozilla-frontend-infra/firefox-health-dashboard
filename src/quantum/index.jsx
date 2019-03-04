@@ -16,8 +16,8 @@ import {
 } from './constants';
 import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
-import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { ErrorMessage } from '../vendor/errors';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class QuantumIndex extends React.Component {
       bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
       bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
-    const sections = wrapSectionComponentsWithErrorBoundaries([
+    const sections = [
       {
         title: 'Overview',
         cssRowExtraClasses: 'generic-metrics-graphics',
@@ -105,11 +105,13 @@ export default class QuantumIndex extends React.Component {
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
-              key="page-load-tests-(tp6)"
+              // eslint-disable-next-line react/no-array-index-key
+              key={`page_${title}_${bits}`}
               title={title}
               series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
           ))
+          .enumerate()
           .limit(4),
       },
       {
@@ -502,7 +504,7 @@ export default class QuantumIndex extends React.Component {
           />,
         ],
       },
-    ]);
+    ];
     const reduced = sections.map(
       ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
         const statusList = toPairs(statusLabels)
@@ -518,17 +520,17 @@ export default class QuantumIndex extends React.Component {
                 statusList.secondary += 1;
               }
 
-              const id = wi + title; // make unique id for key
+              const id = `${wi}${title}`; // make unique id for key
 
               return (
                 <Grid
+                  key={`grid_${id}`}
                   item
                   xs={6}
-                  key={`page_${title}_${id}`}
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
                   }>
-                  {widget}
+                  <ErrorMessage>{widget}</ErrorMessage>
                 </Grid>
               );
             })}

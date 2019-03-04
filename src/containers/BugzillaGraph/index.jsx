@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/errors';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getBugsData from '../../utils/bugzilla/getBugsData';
 

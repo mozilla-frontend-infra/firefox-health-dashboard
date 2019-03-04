@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
 import SETTINGS from '../settings';
+import { Exception } from '../vendor/errors';
 
 export default class TelemetryContainer extends React.Component {
   async componentDidMount() {
@@ -31,9 +32,10 @@ export default class TelemetryContainer extends React.Component {
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
+    } catch (cause) {
+      this.props.handleError(
+        new Exception('Problem loading {{url}}', { url }, cause)
+      );
     }
   }
 

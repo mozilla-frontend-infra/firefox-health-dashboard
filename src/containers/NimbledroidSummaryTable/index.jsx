@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { generateSitesTableContent } from '../../utils/nimbledroid';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/errors';
 import SummaryTable from '../../components/SummaryTable';
 import StatusWidget from '../../components/StatusWidget';
 
