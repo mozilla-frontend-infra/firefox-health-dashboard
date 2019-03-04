@@ -7,7 +7,7 @@ import { stringify } from 'query-string';
 import SETTINGS from '../settings';
 import { Exception } from '../vendor/errors';
 
-export default class TelemetryContainer extends React.Component {
+class TelemetryContainer extends React.Component {
   async componentDidMount() {
     this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
@@ -69,27 +69,31 @@ export default class TelemetryContainer extends React.Component {
   render() {
     const { id, title } = this.props;
 
-    return (
-      <div id={id} key={id} className="criteria-widget">
-        <header>
-          <h3 className="graph-title">
-            <a
-              className="graph-title-link"
-              ref={a => (this.graphTitleLink = a)}>
-              {title}
-            </a>
-          </h3>
-        </header>
-        <div
-          className="graph-subtitle"
-          ref={div => (this.graphSubtitleEl = div)}>
-          {}
+    if (title) {
+      return (
+        <div id={id} key={id} className="criteria-widget">
+          <header>
+            <h3 className="graph-title">
+              <a
+                className="graph-title-link"
+                ref={a => (this.graphTitleLink = a)}>
+                {title}
+              </a>
+            </h3>
+          </header>
+          <div>
+            <div
+              className="graph-subtitle"
+              ref={div => (this.graphSubtitleEl = div)}>
+              {}
+            </div>
+            <div className="graph" ref={div => (this.graphEl = div)}>
+              <div className="graph-legend">{}</div>
+            </div>
+          </div>
         </div>
-        <div className="graph" ref={div => (this.graphEl = div)}>
-          <div className="graph-legend">{}</div>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -98,3 +102,5 @@ TelemetryContainer.propTypes = {
   title: PropTypes.string.isRequired,
   queryParams: PropTypes.shape({}),
 };
+
+export default TelemetryContainer;

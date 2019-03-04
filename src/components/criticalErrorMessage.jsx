@@ -2,7 +2,8 @@ import React from 'react';
 
 const newIssue =
   'https://github.com/mozilla/firefox-health-dashboard/issues/new';
-const CriticalErrorMessage = () => (
+
+export const CriticalErrorMessage = () => (
   <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
     <span>
       There has been a critical error. We have reported it. If the issue is not
@@ -15,4 +16,8 @@ const CriticalErrorMessage = () => (
   </p>
 );
 
-export default CriticalErrorMessage;
+export const IvalidUrlMessage = () => (
+  <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
+    <span>You have entered an invalid URL.</span>
+  </p>
+);

@@ -7,6 +7,7 @@ import getBugsData from '../../utils/bugzilla/getBugsData';
 class BugzillaGraph extends Component {
   state = {
     data: null,
+    isLoading: false,
   };
 
   async componentDidMount() {
@@ -15,19 +16,22 @@ class BugzillaGraph extends Component {
 
   async fetchData({ handleError, queries, startDate }) {
     try {
+      this.setState({ isLoading: true });
       this.setState(await getBugsData(queries, startDate));
+      this.setState({ isLoading: false });
     } catch (error) {
       handleError(error);
     }
   }
 
   render() {
-    const { data } = this.state;
+    const { data, isLoading } = this.state;
     const { title } = this.props;
 
     return (
       <ChartJsWrapper
         data={data}
+        isLoading={isLoading}
         options={{ scaleLabel: 'Number of bugs' }}
         title={title}
       />

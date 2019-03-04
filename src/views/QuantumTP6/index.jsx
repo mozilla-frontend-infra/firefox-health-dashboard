@@ -9,7 +9,7 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import { ErrorMessage } from '../../vendor/errors';
+import { ErrorMessage, Log } from '../../vendor/errors';
 
 const styles = {
   body: {
@@ -29,6 +29,8 @@ class TP6 extends React.Component {
         .where({ id: test })
         .first().label
     } on ${bits} bits`;
+
+    if (bits !== '32' && bits !== '64') Log.error('Invalid URL');
 
     return (
       <div className={classes.body}>

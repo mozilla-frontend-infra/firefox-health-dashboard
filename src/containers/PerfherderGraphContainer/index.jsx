@@ -22,21 +22,27 @@ const styles = () => ({
 class PerfherderGraphContainer extends Component {
   state = {
     data: null,
+    isLoading: false,
   };
 
   async componentDidMount() {
-    try {
-      const { series } = this.props;
+    this.setState(await this.fetchSetData(this.props));
+  }
 
+  async fetchSetData({ series }) {
+    try {
+      this.setState({ isLoading: true });
       this.setState(await getPerferherderData(series));
+      this.setState({ isLoading: false });
     } catch (error) {
+      this.setState({ isLoading: false });
       this.props.handleError(error);
     }
   }
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options } = this.state;
+    const { data, jointUrl, options, isLoading } = this.state;
 
     return (
       <div key={title}>
@@ -48,7 +54,12 @@ class PerfherderGraphContainer extends Component {
             </a>
           )}
         </h2>
-        <ChartJsWrapper type="line" data={data} options={options} />
+        <ChartJsWrapper
+          type="line"
+          data={data}
+          isLoading={isLoading}
+          options={options}
+        />
       </div>
     );
   }
