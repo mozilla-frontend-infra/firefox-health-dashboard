@@ -2,7 +2,15 @@
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
-import lodashTake from 'lodash/take';
+import {
+  exists,
+  isObject,
+  isString,
+  missing,
+  concatField,
+  literalField,
+} from './utils';
+import { Log } from './errors';
 
 let internalFrum = null;
 let internalToPairs = null;
@@ -34,15 +42,6 @@ function toArray(value) {
   return [value];
 }
 
-function zipObject(keys, values) {
-  // accept list of keys and list of values to zip into a single object
-  const output = {};
-
-  for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
-
-  return output;
-}
-
 function preSelector(columnName) {
   // convert to an array of [selector(), name] pairs
   if (Array.isArray(columnName)) {
@@ -59,7 +58,7 @@ function preSelector(columnName) {
       .sortBy(([, b]) => b);
   }
 
-  if (typeof columnName === 'string') {
+  if (isString(columnName)) {
     return [row => row[columnName], columnName];
   }
 }
@@ -85,21 +84,11 @@ function selector(columnName) {
     return row => cs.map(func => func(row)).fromPairs();
   }
 
-  if (typeof columnName === 'string') {
+  if (isString(columnName)) {
     return row => row[columnName];
   }
 
   return columnName;
-}
-
-function missing(value) {
-  // return true if value is null, or undefined, or not a legit value
-  return value == null || Number.isNaN(value) || value === '';
-}
-
-function exists(value) {
-  // return false if value is null, or undefined, or not a legit value
-  return !missing(value);
 }
 
 class Wrapper {
@@ -180,6 +169,20 @@ class Wrapper {
     function* output(argslist) {
       for (const [value, ...args] of argslist)
         if (func(value, ...args)) yield [value];
+    }
+
+    return new Wrapper(() => output(this.argslist));
+  }
+
+  limit(max) {
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        if (i >= max) break;
+        yield args;
+        i += 1;
+      }
     }
 
     return new Wrapper(() => output(this.argslist));
@@ -335,7 +338,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw new Error('expecting index to be unique');
+        Log.error('expecting index to be unique');
       }
     }
 
@@ -371,6 +374,24 @@ function toPairs(obj) {
 
 internalToPairs = toPairs;
 
+function leaves(obj) {
+  // Convert Object into list of [value, path] pairs
+  // where path is dot delimited path deep into object
+  function* leafGen(map, prefix) {
+    for (const [val, key] of toPairs(map).argsGen) {
+      const path = concatField(prefix, literalField(key));
+
+      if (isObject(val)) {
+        for (const pair of leafGen(val, path)) yield pair;
+      } else {
+        yield [val, path];
+      }
+    }
+  }
+
+  return new Wrapper(() => leafGen(obj, '.'));
+}
+
 function length(list) {
   // return length of this list
   if (list instanceof Wrapper) return list.length;
@@ -393,7 +414,6 @@ extendWrapper({
   chunk,
   unzip,
   zip: unzip,
-  limit: lodashTake,
   sort: sortBy,
   sortBy,
 
@@ -420,4 +440,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last, missing, exists, length };
+export { frum, toPairs, leaves, first, last, length };

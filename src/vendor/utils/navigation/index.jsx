@@ -4,7 +4,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
-import { frum, zipObject } from '../../queryOps';
+import { frum } from '../../queryOps';
+import Map from '../../Map';
 import { Object2URL, URL2Object } from '../../convert';
 
 function withNavigation(config) {
@@ -41,7 +42,7 @@ function withNavigation(config) {
 
       onPathChange = event => {
         const { name, value } = event.target;
-        const change = zipObject([name], [value]);
+        const change = Map(name, value);
 
         this.setState(change);
 

@@ -1,4 +1,5 @@
-import { frum, zipObject } from '../vendor/queryOps';
+import { frum } from '../vendor/queryOps';
+import Map from '../vendor/Map';
 
 const CONFIG = {
   windows64Regression: [
@@ -186,7 +187,7 @@ const SUITES = {
 };
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
-  .map(row => zipObject(SUITES.header, row))
+  .map(row => Map.zip(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
 const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
 
