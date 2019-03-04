@@ -84,7 +84,7 @@ export default class QuantumIndex extends React.Component {
                 },
               },
               {
-                label: 'Chrome',
+                label: 'Chromium',
                 seriesConfig: {
                   frameworkId: 10,
                   platform: nightlyPlatform,
