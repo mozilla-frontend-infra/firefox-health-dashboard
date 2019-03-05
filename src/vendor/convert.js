@@ -1,6 +1,6 @@
 import { frum, toPairs, length } from './queryOps';
 import { Log } from './errors';
-import { isFunction, isObject  } from './utils';
+import { isFunction, isObject } from './utils';
 import strings from './strings';
 
 function URL2Object(url) {
@@ -64,18 +64,19 @@ function prettyJSON(json, maxDepth) {
 
           return `"${k}":${prettyJSON(v, maxDepth - 1)}`;
         })
-        .exists()
-      ;
+        .exists();
+
       if (output.length === 0) return '{}';
+
       if (output.length === 1) return `{${output.first()}}`;
 
       const lengths = output.map(length);
+
       if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
         return `{\n${strings.indent(output.concatenate(',\n'), 1)}\n}`;
-      } else {
-        return `{${output.concatenate(',')}}`;
       }
 
+      return `{${output.concatenate(',')}}`;
     }
 
     return JSON.stringify(json);

@@ -304,17 +304,18 @@ class Wrapper {
     return last(this);
   }
 
-  sum(){
+  sum() {
     return sum(this);
   }
 
   get length() {
     let count = 0;
+
+    /* eslint-disable-next-line no-unused-vars */
     for (const _ of this.argslist) count += 1;
+
     return count;
   }
-
-
 
   concatenate(separator) {
     return Array.from(this).join(separator);

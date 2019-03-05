@@ -116,7 +116,6 @@ describe('vectors', () => {
     });
   });
 
-
   it('toPairs', () => {
     expect(toPairs({}).length).toEqual(0);
     expect(toPairs({}).exists().length).toEqual(0);
