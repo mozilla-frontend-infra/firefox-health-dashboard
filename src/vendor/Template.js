@@ -1,4 +1,4 @@
-import { coalesce, isString, missing } from './utils';
+import { coalesce, isObject, isString, missing } from './utils';
 import { toPairs } from './queryOps';
 import { Log } from './errors';
 import Data from './Data';
@@ -20,9 +20,7 @@ function expandLoop(loop, namespaces) {
     .map(m => {
       const ns = Data.copy(namespaces[0]);
 
-      ns['.'] = m;
-
-      if (m instanceof Object && !(m instanceof Array)) {
+      if (isObject(m)) {
         toPairs(m).forEach((v, k) => {
           ns[k.toLowerCase()] = v;
         });
@@ -32,39 +30,13 @@ function expandLoop(loop, namespaces) {
         ns[Array(i + 3).join('.')] = n;
       });
 
-      return expandAny(template, namespaces.copy().prepend(ns));
+      const nns = namespaces.slice();
+
+      nns.unshift(ns);
+
+      return expandAny(template, nns);
     })
     .join(coalesce(separator, ''));
-}
-
-/*
- LOOP THROUGH THEN key:value PAIRS OF THE OBJECT
- */
-function expandItems(loop, namespaces) {
-  const { items, template } = loop;
-
-  if (typeof items !== 'string') {
-    Log.error('expecting `from_items` clause to be string');
-  }
-
-  return Data.map(Data.get(namespaces[0], items), (name, value) => {
-    const map = Data.copy(namespaces[0]);
-
-    map.name = name;
-    map.value = value;
-
-    if (value instanceof Object && !(value instanceof Array)) {
-      toPairs(value).forEach((v, k) => {
-        map[k.toLowerCase()] = v;
-      });
-    }
-
-    namespaces.forEach((n, i) => {
-      map[Array(i + 3).join('.')] = n;
-    });
-
-    return expandAny(template, namespaces.copy().prepend(map));
-  }).join(loop.separator === undefined ? '' : loop.separator);
 }
 
 function run(method, val, rest) {
@@ -77,7 +49,7 @@ function expandText(template, namespaces) {
   // CASE INSENSITIVE VARIABLE REPLACEMENT
 
   // COPY VALUES, BUT WITH lowerCase KEYS
-  const map = namespaces[0];
+  const ns = namespaces[0];
   const [aString, ...varStringPairs] = template.split('{{');
   const acc = [aString];
 
@@ -86,7 +58,7 @@ function expandText(template, namespaces) {
     ...varStringPairs.map(vsp => {
       const [variable, suffixString] = vsp.split('}}', 2);
       const [accessor, ...postProcessing] = variable.split('|');
-      let val = Data.get(map, accessor.toLowerCase());
+      let val = Data.get(ns, accessor.toLowerCase());
 
       postProcessing.forEach(step => {
         const [func, rest] = step.split('(', 2);
@@ -144,10 +116,6 @@ expandAny = (template, namespaces) => {
 
   if (isString(template)) {
     return expandText(template, namespaces);
-  }
-
-  if (template.items) {
-    return expandItems(template, namespaces);
   }
 
   if (template.from) {

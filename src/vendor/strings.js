@@ -7,12 +7,13 @@ const between = (v, min, max) => Math.max(min, Math.min(max, v));
 const strings = {
   indent(value, amount) {
     const numTabs = coalesce(amount, 1);
-    const indent = strings.left('\t\t\t\t\t\t', numTabs);
+    const indent = '    '.repeat(numTabs);
     const str = value.toString();
     // REMAINING WHITE IS KEPT (CASE OF CR/LF ESPECIALLY)
-    const white = strings.rightBut(str, str.trimEnd().length);
+    const left = str.trimRight();
+    const white = strings.rightBut(str, left.length);
 
-    return indent + str.trimEnd().replace(/\n/, `\n${indent}`) + white;
+    return indent + left.split('\n').join(`\n${indent}`) + white;
   },
 
   left(value, amount) {
@@ -69,10 +70,22 @@ const strings = {
   },
 
   trimLeft(value, prefix) {
+    if (prefix === undefined) return value.trimLeft();
     let v = value;
 
     while (v.startsWith(prefix)) {
       v = v.slice(prefix.length);
+    }
+
+    return v;
+  },
+  trimRight(value, prefix) {
+    if (prefix === undefined) return value.trimRight();
+
+    let v = value;
+
+    while (v.endsWith(prefix)) {
+      v = strings.leftBut(prefix.length);
     }
 
     return v;

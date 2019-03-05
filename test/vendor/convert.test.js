@@ -15,7 +15,7 @@ describe('math', () => {
         e: 5,
       })
     ).toBe(
-      '{\n\t"thisisalongnametoensuremultiline":1,\n\t"b":2,\n\t"c":3,\n\t"d":4,\n\t"e":5\n}'
+      '{\n    "thisisalongnametoensuremultiline":1,\n    "b":2,\n    "c":3,\n    "d":4,\n    "e":5\n}'
     );
     expect(value2json([])).toBe('[]');
     expect(value2json([3])).toBe('[3]');

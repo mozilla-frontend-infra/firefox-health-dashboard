@@ -43,13 +43,18 @@ function prettyJSON(json, maxDepth) {
 
       if (json.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
 
-      return `[\n${json
-        .map(v => {
-          if (v === undefined) return 'undefined';
+      const output = strings.indent(
+        json
+          .map(v => {
+            if (v === undefined) return 'undefined';
 
-          return strings.indent(prettyJSON(v, maxDepth - 1), 1);
-        })
-        .join(',\n')}\n]`;
+            return prettyJSON(v, maxDepth - 1);
+          })
+          .join(',\n'),
+        1
+      );
+
+      return `[\n${output}\n]`;
     }
 
     if (isFunction(json)) {
@@ -79,18 +84,19 @@ function prettyJSON(json, maxDepth) {
           maxDepth - 1
         ).trim()}}`;
 
-      let output = '{\n\t';
+      const output = strings.indent(
+        toPairs(json)
+          .map((v, k) => {
+            if (v === undefined) return;
 
-      toPairs(json).forEach((v, k) => {
-        if (v !== undefined) {
-          if (output.length > 3) output += ',\n\t';
-          output += `"${k}":${strings
-            .indent(prettyJSON(v, maxDepth - 1), 1)
-            .trim()}`;
-        }
-      });
+            return `"${k}":${prettyJSON(v, maxDepth - 1).trim()}`;
+          })
+          .exists()
+          .concatenate(',\n'),
+        1
+      );
 
-      return `${output}\n}`;
+      return `{\n${output}\n}`;
     }
 
     return JSON.stringify(json);

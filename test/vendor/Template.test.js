@@ -22,7 +22,7 @@ describe('Template', () => {
     const value = 'test value\n';
     const result = expand('example:\n{{value|indent}}', { value });
 
-    expect(result).toBe('example:\n\ttest value\n');
+    expect(result).toBe('example:\n    test value\n');
   });
 
   it('quote', () => {
@@ -78,7 +78,7 @@ describe('Template', () => {
     const value = { a: 'v', b: 2 };
     const result = expand('example:\n{{value|json|indent}}', { value });
 
-    expect(result).toBe('example:\n\t{"a":"v","b":2}');
+    expect(result).toBe('example:\n    {"a":"v","b":2}');
   });
 
   it('round', () => {
@@ -107,6 +107,24 @@ describe('Template', () => {
     const result = expand('{{value|unix}}', { value });
 
     expect(result).toBe('1551730631');
+  });
+
+  it('loop', () => {
+    const data = [
+      { a: 10, b: 21 },
+      { a: 11, b: 22 },
+      { a: 12, b: 23 },
+      { a: 13, b: 24 },
+      { a: 14, b: 25 },
+    ];
+    const result = expand(
+      { from: 'data', template: 'test: {{a}}, {{b}}', separator: '\n' },
+      { data }
+    );
+
+    expect(result).toBe(
+      'test: 10, 21\ntest: 11, 22\ntest: 12, 23\ntest: 13, 24\ntest: 14, 25'
+    );
   });
 });
 
