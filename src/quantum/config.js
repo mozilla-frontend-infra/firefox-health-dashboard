@@ -1,5 +1,5 @@
 import { frum } from '../vendor/queryOps';
-import Map from '../vendor/Map';
+import Data from '../vendor/Data';
 
 const CONFIG = {
   windows64Regression: [
@@ -187,7 +187,7 @@ const SUITES = {
 };
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
-  .map(row => Map.zip(SUITES.header, row))
+  .map(row => Data.zip(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
 const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
 

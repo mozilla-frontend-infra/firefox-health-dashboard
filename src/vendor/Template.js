@@ -1,7 +1,7 @@
 import { coalesce, isString, missing } from './utils';
 import { toPairs } from './queryOps';
 import { Log } from './errors';
-import Map from './Map';
+import Data from './Data';
 import strings from './strings';
 
 let expandAny = null;
@@ -16,9 +16,9 @@ function expandLoop(loop, namespaces) {
 
   if (!isString(from)) Log.error('expecting from clause to be string');
 
-  return Map.get(namespaces[0], loop.from)
+  return Data.get(namespaces[0], loop.from)
     .map(m => {
-      const ns = Map.copy(namespaces[0]);
+      const ns = Data.copy(namespaces[0]);
 
       ns['.'] = m;
 
@@ -47,8 +47,8 @@ function expandItems(loop, namespaces) {
     Log.error('expecting `from_items` clause to be string');
   }
 
-  return Map.map(Map.get(namespaces[0], items), (name, value) => {
-    const map = Map.copy(namespaces[0]);
+  return Data.map(Data.get(namespaces[0], items), (name, value) => {
+    const map = Data.copy(namespaces[0]);
 
     map.name = name;
     map.value = value;
@@ -86,7 +86,7 @@ function expandText(template, namespaces) {
     ...varStringPairs.map(vsp => {
       const [variable, suffixString] = vsp.split('}}', 2);
       const [accessor, ...postProcessing] = variable.split('|');
-      let val = Map.get(map, accessor.toLowerCase());
+      let val = Data.get(map, accessor.toLowerCase());
 
       postProcessing.forEach(step => {
         const [func, rest] = step.split('(', 2);

@@ -3,24 +3,26 @@ import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
 import {
-  first,
-  last,
-  toArray,
+  concatField,
   exists,
+  first,
+  isArray,
   isObject,
   isString,
-  missing,
-  concatField,
+  last,
   literalField,
+  missing,
+  toArray,
 } from './utils';
 import { Log } from './errors';
+import Data from './Data';
 
 let internalFrum = null;
 let internalToPairs = null;
 
 function preSelector(columnName) {
   // convert to an array of [selector(), name] pairs
-  if (Array.isArray(columnName)) {
+  if (isArray(columnName)) {
     // select many columns
     return internalFrum(columnName)
       .map(preSelector)
@@ -30,12 +32,12 @@ function preSelector(columnName) {
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map((value, name) => [row => row[value], name])
+      .map((value, name) => [row => Data.get(row, value), name])
       .sortBy(([, b]) => b);
   }
 
   if (isString(columnName)) {
-    return [row => row[columnName], columnName];
+    return [[row => Data.get(row, columnName), columnName]];
   }
 }
 
@@ -53,7 +55,7 @@ function selector(columnName) {
          selector({x: 'a', y: 'b'})(row) === {x: 1, y: '2'}
 
    */
-  if (typeof columnName === 'object' || Array.isArray(columnName)) {
+  if (isObject(columnName) || isArray(columnName)) {
     // select many columns
     const cs = preSelector(columnName).args();
 
@@ -61,7 +63,7 @@ function selector(columnName) {
   }
 
   if (isString(columnName)) {
-    return row => row[columnName];
+    return row => Data.get(row, columnName);
   }
 
   return columnName;
@@ -169,7 +171,7 @@ class Wrapper {
     // return only matching rows
     const func = row => {
       for (const [name, value] of Object.entries(expression)) {
-        if (row[name] !== value) return false;
+        if (Data.get(row, name) !== value) return false;
       }
 
       return true;
@@ -197,9 +199,28 @@ class Wrapper {
     return this.filter(func);
   }
 
+  missing(columns = null) {
+    // Expect a list of column names that must be missing
+    let func = null;
+
+    if (missing(columns)) {
+      func = missing;
+    } else {
+      const selects = toArray(columns).map(selector);
+
+      func = row => {
+        for (const s of selects) if (exists(s(row))) return false;
+
+        return true;
+      };
+    }
+
+    return this.filter(func);
+  }
+
   flatten() {
     // assume this is an array of lists, return array of all elements
-    // append extra index paramter to args
+    // append extra index parameter to args
     function* output(argslist) {
       for (const [values] of argslist)
         for (const value of values) yield [value];
@@ -214,7 +235,7 @@ class Wrapper {
     const func = selector(columns);
     const output = {};
 
-    if (Array.isArray(columns)) {
+    if (isArray(columns)) {
       let g = 0;
 
       for (const args of this.argslist) {
@@ -309,7 +330,7 @@ class Wrapper {
     const output = {};
 
     for (const [row] of this.argslist) {
-      const key = row[column];
+      const key = Data.get(row, column);
 
       if (!(key in output)) {
         output[key] = row;
@@ -335,8 +356,10 @@ function frum(list) {
 internalFrum = frum;
 
 function toPairs(obj) {
-  // convert Object (or Map) into [value, key] pairs
+  // convert Object (or Data) into [value, key] pairs
   // notice the **value is first**
+  if (missing(obj)) return new Wrapper(() => []);
+
   if (obj instanceof Map) {
     return new Wrapper(function* outputGen() {
       for (const [k, v] of obj.entries()) yield [v, k];
@@ -354,7 +377,7 @@ function leaves(obj) {
   // Convert Object into list of [value, path] pairs
   // where path is dot delimited path deep into object
   function* leafGen(map, prefix) {
-    for (const [val, key] of toPairs(map).argsGen) {
+    for (const [val, key] of toPairs(map).argsGen()) {
       const path = concatField(prefix, literalField(key));
 
       if (isObject(val)) {
