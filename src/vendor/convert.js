@@ -31,22 +31,25 @@ function prettyJSON(json, maxDepth) {
 
   try {
     if (Array.isArray(json)) {
-      if (json.length === 0) return '[]';
+      const output = frum(json)
+        .map(v => {
+          if (v === undefined) return;
 
-      if (json.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+          return prettyJSON(v, maxDepth - 1);
+        })
+        .exists();
 
-      const output = strings.indent(
-        json
-          .map(v => {
-            if (v === undefined) return 'undefined';
+      if (output.length === 0) return '[]';
 
-            return prettyJSON(v, maxDepth - 1);
-          })
-          .join(',\n'),
-        1
-      );
+      if (output.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
 
-      return `[\n${output}\n]`;
+      const lengths = output.map(length);
+
+      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
+        return `[\n${strings.indent(output.concatenate(',\n'), 1)}\n]`;
+      }
+
+      return `[${output.concatenate(',')}]`;
     }
 
     if (isFunction(json)) {

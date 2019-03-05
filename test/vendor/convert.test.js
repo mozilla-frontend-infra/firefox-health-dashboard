@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { value2json } from '../../src/vendor/convert';
+import { value2json, json2value } from '../../src/vendor/convert';
 
 describe('math', () => {
   it('value2json', () => {
@@ -20,5 +20,22 @@ describe('math', () => {
     expect(value2json([])).toBe('[]');
     expect(value2json([3])).toBe('[3]');
     expect(value2json('v')).toBe('"v"');
+    expect(value2json([{ a: 2 }])).toBe('[{"a":2}]');
+    expect(
+      value2json([
+        null,
+        undefined,
+        { thisisalongnametoensuremultiline: 1 },
+        { b: 2 },
+      ])
+    ).toBe(
+      '[\n    null,\n    {"thisisalongnametoensuremultiline":1},\n    {"b":2}\n]'
+    );
+  });
+
+  it('json2value', () => {
+    expect(() => json2value("'''")).toThrow();
+    expect(json2value('"text"')).toEqual('text');
+    expect(json2value('{"b": 2}')).toEqual({ b: 2 });
   });
 });
