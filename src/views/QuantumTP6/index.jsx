@@ -9,6 +9,7 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
+import { InvalidUrlMessage } from '../../components/criticalErrorMessage';
 
 const styles = {
   body: {
@@ -29,38 +30,41 @@ class TP6 extends React.Component {
         .first().label
     } on ${bits} bits`;
 
-    return (
-      <div className={classes.body}>
-        <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
-          {navigation}
-          <Grid container spacing={24}>
-            {frum(TP6_PAGES)
-              .where({ bits })
-              .groupBy('title')
-              .map((series, title) => (
-                <Grid
-                  item
-                  xs={6}
-                  key={`page_${title}_${test}_${bits}`}
-                  className={classes.chart}>
-                  <PerfherderGraphContainer
-                    title={title}
-                    series={frum(series)
-                      .sortBy(['browser'])
-                      .reverse()
-                      .map(s => ({
-                        label: s.label,
-                        seriesConfig: { ...s, test },
-                        options: { includeSubtests: true },
-                      }))
-                      .toArray()}
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        </DashboardPage>
-      </div>
-    );
+    if (bits === '32' || bits === '64')
+      return (
+        <div className={classes.body}>
+          <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
+            {navigation}
+            <Grid container spacing={24}>
+              {frum(TP6_PAGES)
+                .where({ bits })
+                .groupBy('title')
+                .map((series, title) => (
+                  <Grid
+                    item
+                    xs={6}
+                    key={`page_${title}_${test}_${bits}`}
+                    className={classes.chart}>
+                    <PerfherderGraphContainer
+                      title={title}
+                      series={frum(series)
+                        .sortBy(['browser'])
+                        .reverse()
+                        .map(s => ({
+                          label: s.label,
+                          seriesConfig: { ...s, test },
+                          options: { includeSubtests: true },
+                        }))
+                        .toArray()}
+                    />
+                  </Grid>
+                ))}
+            </Grid>
+          </DashboardPage>
+        </div>
+      );
+
+    return <InvalidUrlMessage />;
   }
 }
 

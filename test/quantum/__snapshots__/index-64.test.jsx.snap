@@ -421,9 +421,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -503,9 +503,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -551,9 +551,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -599,9 +599,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -647,9 +647,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -695,9 +695,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -743,9 +743,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -791,9 +791,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -839,9 +839,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -887,9 +887,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -935,9 +935,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -983,9 +983,9 @@ exports[`renders correctly 1`] = `
           <div
             style={
               Object {
-                "lineHeight": "8rem",
+                "lineHeight": "100%",
                 "textAlign": "center",
-                "width": "8rem",
+                "width": "100%",
               }
             }
           >
@@ -1048,15 +1048,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1078,15 +1080,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1108,15 +1112,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1138,15 +1144,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1168,15 +1176,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1198,15 +1208,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1228,15 +1240,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1258,15 +1272,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1288,15 +1304,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1318,15 +1336,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1348,15 +1368,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1378,15 +1400,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1408,15 +1432,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1438,15 +1464,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1468,15 +1496,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1498,15 +1528,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1528,15 +1560,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1558,15 +1592,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1588,15 +1624,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1618,15 +1656,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1648,15 +1688,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1678,15 +1720,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1708,15 +1752,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1738,15 +1784,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1768,15 +1816,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1798,15 +1848,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1828,15 +1880,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1858,15 +1912,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1888,15 +1944,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1918,15 +1976,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1948,15 +2008,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -1978,15 +2040,17 @@ exports[`renders correctly 1`] = `
               </a>
             </h3>
           </header>
-          <div
-            className="graph-subtitle"
-          />
-          <div
-            className="graph"
-          >
+          <div>
             <div
-              className="graph-legend"
+              className="graph-subtitle"
             />
+            <div
+              className="graph"
+            >
+              <div
+                className="graph-legend"
+              />
+            </div>
           </div>
         </div>
       </div>

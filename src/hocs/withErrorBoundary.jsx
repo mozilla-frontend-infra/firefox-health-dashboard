@@ -1,7 +1,7 @@
 import Raven from 'raven-js';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CriticalErrorMessage from '../components/criticalErrorMessage';
+import { CriticalErrorMessage } from '../components/criticalErrorMessage';
 
 const reportOrLog = (error, info) => {
   if (process.env.NODE_ENV === 'production') {

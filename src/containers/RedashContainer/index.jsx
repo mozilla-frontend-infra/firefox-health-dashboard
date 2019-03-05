@@ -18,6 +18,7 @@ const styles = {
 class RedashContainer extends Component {
   state = {
     datasets: null,
+    isLoading: false,
   };
 
   static propTypes = {
@@ -59,16 +60,21 @@ class RedashContainer extends Component {
   }
 
   async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
-    const redashData = await fetchJson(redashDataUrl);
+    try {
+      this.setState({ isLoading: true });
+      const redashData = await fetchJson(redashDataUrl);
 
-    this.setState({
-      datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
-    });
+      this.setState({
+        datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
+      });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
     const { classes, options, redashQueryUrl, title } = this.props;
-    const { datasets } = this.state;
+    const { datasets, isLoading } = this.state;
 
     return (
       <div>
@@ -76,6 +82,7 @@ class RedashContainer extends Component {
           title={title}
           type="line"
           data={datasets}
+          isLoading={isLoading}
           options={options}
         />
         <div className={classes.linkContainer}>

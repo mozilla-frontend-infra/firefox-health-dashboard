@@ -21,8 +21,8 @@ const styles = {
     padding: '.3rem .3rem .3rem .3rem',
   },
   errorPanel: {
-    marginTop: '10px',
-    width: '97%',
+    margin: '26px auto 40px',
+    width: '70%',
   },
 };
 const ChartJsWrapper = ({
@@ -111,6 +111,7 @@ ChartJsWrapper.propTypes = {
   }),
   title: PropTypes.string,
   type: PropTypes.string,
+  isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
   missingDataError: PropTypes.bool,
@@ -123,7 +124,8 @@ ChartJsWrapper.defaultProps = {
   title: '',
   type: 'line',
   chartHeight: 80,
-  spinnerSize: '8rem',
+  spinnerSize: '100%',
+  isLoading: false,
 };
 
 export default withStyles(styles)(ChartJsWrapper);
