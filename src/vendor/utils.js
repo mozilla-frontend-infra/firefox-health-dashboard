@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-syntax */
-import strings from './strings';
 
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
@@ -54,16 +53,16 @@ function isNumeric(n) {
 
 const { isArray } = Array;
 
-function isInteger(n){
-  if (isString(n)) {
-    return (/[+-]?[0123456789]+\.?0*$/y).test(n);
-  }else{
-    return Number.isInteger(n);
-  }
-}
-
 function isString(value) {
   return typeof value === 'string';
+}
+
+function isInteger(n) {
+  if (isString(n)) {
+    return /[+-]?[0123456789]+\.?0*$/y.test(n);
+  }
+
+  return Number.isInteger(n);
 }
 
 function isObject(val) {

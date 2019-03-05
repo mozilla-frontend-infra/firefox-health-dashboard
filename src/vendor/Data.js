@@ -110,16 +110,13 @@ Data.get = (obj, path) => {
       } else if (isInteger(step)) {
         output = output[step];
       } else if (isArray(output)) {
-        output = output.map(o => isObject(o) ? o[step] : null);
+        output = output.map(o => (isObject(o) ? o[step] : null));
       }
-    }else if (isObject(output)){
+    } else if (isObject(output)) {
       output = output[step];
-    }else{
+    } else {
       return null;
     }
-
-
-
 
     if (missing(output)) return null;
   }

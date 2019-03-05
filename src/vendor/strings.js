@@ -67,14 +67,16 @@ const strings = {
   unix(value) {
     return new Date(value).valueOf();
   },
-  
-  trimLeft(value, prefix){
+
+  trimLeft(value, prefix) {
     let v = value;
-    while (v.startsWith(prefix)){
-      v=v.slice(prefix.length); 
+
+    while (v.startsWith(prefix)) {
+      v = v.slice(prefix.length);
     }
+
     return v;
-  }
+  },
 };
 
 export default strings;
