@@ -125,9 +125,10 @@ expandAny = (template, namespaces) => {
   Log.error('Not recognized {{template|json}}', { template });
 };
 
-function expand(template, values) {
-  if (values === undefined) {
-    return template;
+function expand(template, parameters) {
+  if (parameters === undefined) {
+    if (isString(template)) return template;
+    Log.error('Must have parameters');
   }
 
   function lower(v) {
@@ -150,7 +151,7 @@ function expand(template, values) {
     return v;
   }
 
-  const map = lower(values);
+  const map = lower(parameters);
 
   return expandAny(template, [map]);
 }

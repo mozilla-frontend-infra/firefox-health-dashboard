@@ -126,6 +126,33 @@ describe('Template', () => {
       'test: 10, 21\ntest: 11, 22\ntest: 12, 23\ntest: 13, 24\ntest: 14, 25'
     );
   });
+
+  it('item', () => {
+    expect(() => expand({ items: 'data', template: 'test' })).toThrow();
+  });
+
+  it('bad template', () => {
+    const value = 1551730631.234;
+
+    expect(() => expand('{{value|noExists}}', { value })).toThrow();
+    expect(() => expand('{{value|leftTrim(not!code)}}', { value })).toThrow();
+  });
+
+  it('no template', () => {
+    const value = 1551730631.234;
+
+    expect(expand('', { value })).toBe('');
+    expect(expand(null, { value })).toBe('');
+    expect(expand(undefined, { value })).toBe('');
+    expect(expand('test')).toBe('test');
+  });
+
+  it('array', () => {
+    const value = 1551730631.234;
+    const result = expand(['{{value}}', '{{value}}'], { value });
+
+    expect(result).toBe('1551730631.2341551730631.234');
+  });
 });
 
 describe('strings', () => {
