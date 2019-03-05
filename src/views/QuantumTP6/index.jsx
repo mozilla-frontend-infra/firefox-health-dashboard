@@ -9,7 +9,7 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import { IvalidUrlMessage } from '../../components/criticalErrorMessage';
+import { InvalidUrlMessage } from '../../components/criticalErrorMessage';
 
 const styles = {
   body: {
@@ -64,7 +64,7 @@ class TP6 extends React.Component {
         </div>
       );
 
-    return <IvalidUrlMessage />;
+    return <InvalidUrlMessage />;
   }
 }
 

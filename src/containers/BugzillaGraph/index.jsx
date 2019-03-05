@@ -18,9 +18,10 @@ class BugzillaGraph extends Component {
     try {
       this.setState({ isLoading: true });
       this.setState(await getBugsData(queries, startDate));
-      this.setState({ isLoading: false });
     } catch (error) {
       handleError(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 

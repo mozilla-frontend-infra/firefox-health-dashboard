@@ -31,7 +31,7 @@ export const MissingDataErrorMessage = props => (
   />
 );
 
-export const IvalidUrlMessage = () => (
+export const InvalidUrlMessage = () => (
   <p style={{ textAlign: 'center', fontSize: '1.5em' }}>
     <span>You have entered an invalid URL.</span>
   </p>
