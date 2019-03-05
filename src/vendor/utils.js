@@ -46,9 +46,11 @@ function toArray(value) {
 }
 
 function isNumeric(n) {
-  if (n == null) return false;
+  if (isString(n)) {
+    return /^[+-]?[0123456789]+\.?[0123456789]*([eE][+-]?[0123456789]+)?$/y.test(n);
+  }
 
-  return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
+  return !Number.isNaN(n) && Number.isFinite(n);
 }
 
 const { isArray } = Array;
@@ -59,7 +61,7 @@ function isString(value) {
 
 function isInteger(n) {
   if (isString(n)) {
-    return /[+-]?[0123456789]+\.?0*$/y.test(n);
+    return /^[+-]?[0123456789]+\.?0*([eE]\+?[0123456789]+)?$/y.test(n);
   }
 
   return Number.isInteger(n);
