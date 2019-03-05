@@ -45,19 +45,22 @@ function toArray(value) {
   return [value];
 }
 
+function isString(value) {
+  return typeof value === 'string';
+}
+
 function isNumeric(n) {
   if (isString(n)) {
-    return /^[+-]?[0123456789]+\.?[0123456789]*([eE][+-]?[0123456789]+)?$/y.test(n);
+    /* eslint-disable-next-line max-len */
+    return /^[+-]?[0123456789]+\.?[0123456789]*([eE][+-]?[0123456789]+)?$/y.test(
+      n
+    );
   }
 
   return !Number.isNaN(n) && Number.isFinite(n);
 }
 
 const { isArray } = Array;
-
-function isString(value) {
-  return typeof value === 'string';
-}
 
 function isInteger(n) {
   if (isString(n)) {

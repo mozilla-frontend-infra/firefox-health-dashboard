@@ -43,7 +43,6 @@ describe('utils', () => {
     expect(isNumeric('10.00e+10')).toBe(true);
     expect(isNumeric('10e100')).toBe(true);
     expect(isNumeric('10e-100')).toBe(true);
-
   });
 
   it('literalField', () => {
