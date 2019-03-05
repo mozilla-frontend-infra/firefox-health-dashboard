@@ -86,14 +86,14 @@ function isFunction(f) {
 }
 
 function literalField(fieldname) {
-  return fieldname.replace(/\./, '\\.');
+  return fieldname.replace(/\./g, '\\.');
 }
 
 function splitField(fieldname) {
   return fieldname
-    .replace(/\\\./, '\b')
+    .replace(/\\\./g, '\b')
     .split('.')
-    .map(v => v.replace(/[\b]/, '.'));
+    .map(v => v.replace(/[\b]/g, '.'));
 }
 
 function joinField(path) {

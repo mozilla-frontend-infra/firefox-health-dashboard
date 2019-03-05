@@ -1,5 +1,5 @@
 /* global describe, it */
-import { isInteger } from '../../src/vendor/utils';
+import { isInteger, literalField, splitField } from '../../src/vendor/utils';
 
 describe('utils', () => {
   it('isInteger', () => {
@@ -16,5 +16,13 @@ describe('utils', () => {
     expect(isInteger('3.14')).toBe(false);
     expect(isInteger('inf')).toBe(false);
     expect(isInteger('Nan')).toBe(false);
+  });
+
+  it('literalField', () => {
+    expect(literalField('a.b.c')).toEqual('a\\.b\\.c');
+  });
+
+  it('splitField', () => {
+    expect(splitField('a.b\\.c\\.html.d')).toEqual(['a', 'b.c.html', 'd']);
   });
 });
