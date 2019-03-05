@@ -14,6 +14,7 @@ import {
   missing,
   toArray,
 } from './utils';
+import { sum } from './math';
 import { Log } from './errors';
 import Data from './Data';
 
@@ -303,9 +304,17 @@ class Wrapper {
     return last(this);
   }
 
-  get length() {
-    return this.argslist.length;
+  sum(){
+    return sum(this);
   }
+
+  get length() {
+    let count = 0;
+    for (const _ of this.argslist) count += 1;
+    return count;
+  }
+
+
 
   concatenate(separator) {
     return Array.from(this).join(separator);

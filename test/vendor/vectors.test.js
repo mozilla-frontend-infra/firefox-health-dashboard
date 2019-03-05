@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { frum, leaves } from '../../src/vendor/queryOps';
+import { frum, leaves, toPairs } from '../../src/vendor/queryOps';
 
 const data = [
   { a: 1 },
@@ -114,5 +114,11 @@ describe('vectors', () => {
       'a.c': 1,
       d: 3,
     });
+  });
+
+
+  it('toPairs', () => {
+    expect(toPairs({}).length).toEqual(0);
+    expect(toPairs({}).exists().length).toEqual(0);
   });
 });
