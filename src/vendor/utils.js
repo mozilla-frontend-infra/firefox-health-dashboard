@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+import strings from './strings';
 
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
@@ -46,17 +47,19 @@ function toArray(value) {
 }
 
 function isNumeric(n) {
-  if (n == null) return null;
+  if (n == null) return false;
 
   return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
 }
 
 const { isArray } = Array;
 
-function isInteger(n) {
-  if (n == null) return null;
-
-  return !Number.isNaN(parseInt(n, 10)) && Number.isFinite(n);
+function isInteger(n){
+  if (isString(n)) {
+    return (/[+-]?[0123456789]+\.?0*$/y).test(n);
+  }else{
+    return Number.isInteger(n);
+  }
 }
 
 function isString(value) {
@@ -71,7 +74,7 @@ function isObject(val) {
   return typeof val === 'function' || typeof val === 'object';
 }
 
-function isMap(val) {
+function isData(val) {
   if (missing(val)) {
     return false;
   }
@@ -124,7 +127,7 @@ export {
   exists,
   coalesce,
   isString,
-  isMap,
+  isData,
   isObject,
   splitField,
   joinField,

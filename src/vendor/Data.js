@@ -5,8 +5,9 @@ import {
   coalesce,
   exists,
   isArray,
+  isObject,
   isInteger,
-  isMap,
+  isData,
   missing,
   splitField,
 } from './utils';
@@ -64,7 +65,7 @@ Data.setDefault = (dest, ...args) => {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
         Log.warning('possible loop');
-      } else if (isMap(value)) {
+      } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
     });
@@ -76,14 +77,14 @@ Data.setDefault = (dest, ...args) => {
     if (missing(source)) return;
 
     if (missing(dest)) {
-      if (isMap(source)) {
+      if (isData(source)) {
         return setDefault({}, source, []);
       }
 
       return source;
     }
 
-    if (isMap(dest)) {
+    if (isData(dest)) {
       return setDefault(dest, source, []);
     }
   });
@@ -103,15 +104,22 @@ Data.get = (obj, path) => {
   let output = obj;
 
   for (const step of pathArray) {
-    if (step === 'length') {
-      output = output.length;
-    } else if (isInteger(step)) {
+    if (isArray(output)) {
+      if (step === 'length') {
+        output = output.length;
+      } else if (isInteger(step)) {
+        output = output[step];
+      } else if (isArray(output)) {
+        output = output.map(o => isObject(o) ? o[step] : null);
+      }
+    }else if (isObject(output)){
       output = output[step];
-    } else if (isArray(output)) {
-      output = output.map(o => o[step]);
-    } else {
-      output = output[step];
+    }else{
+      return null;
     }
+
+
+
 
     if (missing(output)) return null;
   }

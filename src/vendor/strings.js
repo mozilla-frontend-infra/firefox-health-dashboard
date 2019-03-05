@@ -10,9 +10,9 @@ const strings = {
     const indent = strings.left('\t\t\t\t\t\t', numTabs);
     const str = value.toString();
     // REMAINING WHITE IS KEPT (CASE OF CR/LF ESPECIALLY)
-    const white = strings.rightBut(str, str.trimRight().length);
+    const white = strings.rightBut(str, str.trimEnd().length);
 
-    return indent + str.trimRight().replace(/\n/, `\n${indent}`) + white;
+    return indent + str.trimEnd().replace(/\n/, `\n${indent}`) + white;
   },
 
   left(value, amount) {
@@ -67,6 +67,14 @@ const strings = {
   unix(value) {
     return new Date(value).valueOf();
   },
+  
+  trimLeft(value, prefix){
+    let v = value;
+    while (v.startsWith(prefix)){
+      v=v.slice(prefix.length); 
+    }
+    return v;
+  }
 };
 
 export default strings;
