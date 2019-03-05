@@ -55,7 +55,15 @@ const strings = {
       return value.toUpperCase();
     }
 
-    return value2json();
+    return value2json(value).toUpperCase();
+  },
+
+  lower(value) {
+    if (isString(value)) {
+      return value.toLowerCase();
+    }
+
+    return value2json(value).toLowerCase();
   },
 
   format(value, format) {
@@ -85,7 +93,7 @@ const strings = {
     let v = value;
 
     while (v.endsWith(prefix)) {
-      v = strings.leftBut(prefix.length);
+      v = strings.leftBut(v, prefix.length);
     }
 
     return v;
