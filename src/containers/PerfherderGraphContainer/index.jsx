@@ -22,6 +22,7 @@ const styles = () => ({
 class PerfherderGraphContainer extends Component {
   state = {
     data: null,
+    isLoading: false,
   };
 
   async componentDidMount() {
@@ -29,12 +30,17 @@ class PerfherderGraphContainer extends Component {
   }
 
   async fetchSetData({ series }) {
-    this.setState(await getPerferherderData(series));
+    try {
+      this.setState({ isLoading: true });
+      this.setState(await getPerferherderData(series));
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options } = this.state;
+    const { data, jointUrl, options, isLoading } = this.state;
 
     return (
       <div key={title}>
@@ -49,6 +55,7 @@ class PerfherderGraphContainer extends Component {
         <ChartJsWrapper
           type="line"
           data={data}
+          isLoading={isLoading}
           options={options}
           missingDataError
         />
