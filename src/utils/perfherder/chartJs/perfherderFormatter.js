@@ -1,7 +1,7 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
-import { missing } from '../../../vendor/queryOps';
+import { missing } from '../../../vendor/utils';
 
 const dataToChartJSformat = data =>
   data.map(({ datetime, value }) => ({
