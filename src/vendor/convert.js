@@ -4,9 +4,8 @@ import { isFunction, isObject, isArray, isNumeric } from './utils';
 import strings from './strings';
 
 function URL2Object(url) {
-
   return frum(new URLSearchParams(url).entries())
-    .map(([k, v])=>[isNumeric(v)? Number.parseFloat(v) : v, k])
+    .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
     .args()
     .fromLeaves();
 }
@@ -14,11 +13,13 @@ function URL2Object(url) {
 function Object2URL(value) {
   return leaves(value)
     .map((v, k) => {
-      if (isArray(v)){
-        return frum(v).map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`).concatenate("&");
-      }else {
-        return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
+      if (isArray(v)) {
+        return frum(v)
+          .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
+          .concatenate('&');
       }
+
+      return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
     })
     .concatenate('&');
 }

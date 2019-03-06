@@ -170,16 +170,16 @@ Data.add = (obj, path, value) => {
   }
 
   const existing = o[last];
+
   if (missing(existing)) {
     o[last] = value;
-  }else if (isArray(existing)){
+  } else if (isArray(existing)) {
     o[last].push(value);
-  }else{
-    o[last]=[existing, value];
+  } else {
+    o[last] = [existing, value];
   }
 
   return obj;
 };
-
 
 export default Data;
