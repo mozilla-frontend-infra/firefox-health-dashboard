@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { value2json, json2value } from '../../src/vendor/convert';
+import { value2json, json2value, Object2URL, URL2Object } from '../../src/vendor/convert';
 
 describe('math', () => {
   it('value2json', () => {
@@ -38,4 +38,25 @@ describe('math', () => {
     expect(json2value('"text"')).toEqual('text');
     expect(json2value('{"b": 2}')).toEqual({ b: 2 });
   });
+
+
+  const URLS = [
+    [{a: '{}'}, 'a=%7B%7D'],
+    [{a: '='}, 'a=%3D'],
+    [{a: '+'}, 'a=%2B'],
+    [{a: ' '}, 'a=%20'],
+    [{a: '  '}, 'a=%20%20'],
+    [{a: '{"test":42}'}, 'a=%7B%22test%22%3A42%7D'],
+    [{a: [1, 2, 3]}, 'a=1&a=2&a=3'],
+    [{a: {b: {c: 42}}}, 'a.b.c=42']
+  ];
+
+  it('Object2URL', () => {
+    URLS.forEach(([obj, url]) => expect(Object2URL(obj)).toEqual(url));
+  });
+
+  it('URL2Object', () => {
+    URLS.forEach(([obj, url])=>expect(URL2Object(url)).toEqual(obj));
+  });
+
 });

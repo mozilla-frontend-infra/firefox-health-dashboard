@@ -1,18 +1,25 @@
-import { frum, toPairs, length } from './queryOps';
+import { frum, toPairs, leaves, length } from './queryOps';
 import { Log } from './errors';
-import { isFunction, isObject } from './utils';
+import { isFunction, isObject, isArray, isNumeric } from './utils';
 import strings from './strings';
 
 function URL2Object(url) {
+
   return frum(new URLSearchParams(url).entries())
-    .map(([k, v]) => [v, k])
+    .map(([k, v])=>[isNumeric(v)? Number.parseFloat(v) : v, k])
     .args()
-    .fromPairs();
+    .fromLeaves();
 }
 
 function Object2URL(value) {
-  return toPairs(value)
-    .map((v, k) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+  return leaves(value)
+    .map((v, k) => {
+      if (isArray(v)){
+        return frum(v).map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`).concatenate("&");
+      }else {
+        return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
+      }
+    })
     .concatenate('&');
 }
 

@@ -149,4 +149,37 @@ Data.set = (obj, path, value) => {
   return obj;
 };
 
+Data.add = (obj, path, value) => {
+  if (missing(obj) || path === '.')
+    Log.error('must be given an object ad field');
+
+  const split = splitField(path);
+  const [last] = split.slice(-1);
+  const pathArray = split.slice(0, split.length - 1);
+  let o = obj;
+
+  for (const step of pathArray) {
+    let val = o[step];
+
+    if (missing(val)) {
+      val = {};
+      o[step] = val;
+    }
+
+    o = val;
+  }
+
+  const existing = o[last];
+  if (missing(existing)) {
+    o[last] = value;
+  }else if (isArray(existing)){
+    o[last].push(value);
+  }else{
+    o[last]=[existing, value];
+  }
+
+  return obj;
+};
+
+
 export default Data;
