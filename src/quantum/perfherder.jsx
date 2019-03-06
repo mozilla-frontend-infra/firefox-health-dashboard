@@ -272,7 +272,7 @@ PerfherderWidget.defaultProps = {
   reference: '',
 };
 PerfherderWidget.propTypes = {
-  title: PropTypes.string.required,
+  title: PropTypes.string.isRequired,
   signatures: PropTypes.object,
   framework: PropTypes.number,
   explainer: PropTypes.string,

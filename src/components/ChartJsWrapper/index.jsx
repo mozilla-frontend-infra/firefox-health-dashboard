@@ -32,21 +32,25 @@ const ChartJsWrapper = ({
   handleError,
 }) => {
   if (data) {
-    data.datasets.forEach(dataset => {
-      const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
-      const currentDate = new Date(); // get current date
-      const timeDifference = Math.abs(
-        currentDate.getTime() - latestDataDate.getTime()
-      );
-      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-      if (daysDifference > 3) {
-        // if days are more than 3 then show error
-        handleError(
-          new Error('This item has been missing data for at least 3 days.')
+    if (
+      data.datasets.every(dataset => {
+        const latestDataDate = new Date(
+          dataset.data[dataset.data.length - 1].x
         );
-      }
-    });
+        const currentDate = new Date(); // get current date
+        const timeDifference = Math.abs(
+          currentDate.getTime() - latestDataDate.getTime()
+        );
+        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+        return daysDifference > 3;
+      })
+    ) {
+      // if days are more than 3 then show error
+      handleError(
+        new Error('This item has been missing data for at least 3 days.')
+      );
+    }
   }
 
   return data ? (

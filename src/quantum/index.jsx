@@ -517,7 +517,7 @@ export default class QuantumIndex extends React.Component {
       },
     ];
     const reduced = sections.map(
-      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+      ({ title, more, rows, cssRowExtraClasses }) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -565,10 +565,9 @@ export default class QuantumIndex extends React.Component {
             return null;
           })
           .exists();
-        const secId = sectionId + title; // make unique section id for key
 
         return (
-          <div key={secId}>
+          <div key={title}>
             <h2 className="section-header">
               <span>
                 {`${title}`}
