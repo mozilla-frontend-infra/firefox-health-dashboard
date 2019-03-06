@@ -15,7 +15,7 @@ import {
   timeMonth,
 } from 'd3';
 import { stringify } from 'query-string';
-import CriticalErrorMessage from '../components/criticalErrorMessage';
+import { CriticalErrorMessage } from '../components/criticalErrorMessage';
 import Widget from './widget';
 import SETTINGS from '../settings';
 

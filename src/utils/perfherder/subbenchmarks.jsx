@@ -12,7 +12,7 @@ const subtests = async signatureHash => {
   return (await fetch(url)).json();
 };
 
-const parentInfo = async (suite, platform, option = 'pgo') => {
+const parentInfo = async (suite, platform, option) => {
   const [options, signatures] = await Promise.all([
     await (await fetch(`${TREEHERDER}/api/optioncollectionhash/`)).json(),
     await (await fetch(
@@ -116,8 +116,14 @@ const benchmarkData = async ({
   // This is a link to a Perfherder graph with all subtests
   const perfherderUrl = perherderGraphUrl(signatureIds);
   // The data contains an object where each key represents a subtest
-  // Each data point of that subtest takes the form of: {job_id: 162620134,
-  // signature_id: 1659462, id: 414057864, push_id: 306862, value: 54.89 }
+  // Each data point of that subtest takes the form of:
+  // {
+  //     job_id: 162620134,
+  //     signature_id: 1659462,
+  //     id: 414057864,
+  //     push_id: 306862,
+  //     value: 54.89
+  // }
   const dataPoints = await (await fetch(dataUrl(info))).json();
   const data = {};
 

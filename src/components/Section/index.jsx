@@ -23,12 +23,21 @@ const styles = {
     paddingLeft: '.9em',
   },
 };
-const Section = ({ classes, children, subtitle, title }) => (
+const Section = ({ classes, children, subtitle, title, more }) => (
   <div>
     <div className={classes.header}>
       <h2 className={classes.title}>
-        {title}
-        {subtitle && <span className={classes.subtitle}>{subtitle}</span>}
+        <span>
+          {title}
+          {more && (
+            <span>
+              {' ('}
+              <a href={more}>more</a>
+              {')'}
+            </span>
+          )}
+          {subtitle && <span className={classes.subtitle}>{subtitle}</span>}
+        </span>
       </h2>
     </div>
     <div className={classes.content}>{children}</div>

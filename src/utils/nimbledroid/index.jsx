@@ -140,7 +140,7 @@ export const generateSitesTableContent = (
       summary: `${((1 - ratio) * 100).toFixed(2)}%`,
       title: {
         text: title,
-        hyperlink: `android/graph?site=${url}`,
+        hyperlink: `/android/graph?site=${url}`,
         tooltip: url,
       },
       uid: url,

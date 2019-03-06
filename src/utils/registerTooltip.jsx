@@ -10,6 +10,10 @@ const handleOnClick = (_, items) => {
     // the current tooltip in view has a reference to the last active tooltip
     // eslint-disable-next-line prefer-destructuring
     Chart.lastClickedDataPoint = items[0]._chart.tooltip._lastActive[0];
+  } else {
+    // we need default handlers outside of a data point
+    // e.g. to hide/show series when legends are clicked
+    return Chart.defaults.global.onClick;
   }
 
   Chart.helpers.each(Chart.instances, chartItem => {
