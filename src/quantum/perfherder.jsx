@@ -250,6 +250,7 @@ class PerfherderWidget extends React.Component {
 
     return (
       <Widget
+        key={this.props.title}
         {...this.props}
         link={link}
         target={
@@ -271,6 +272,7 @@ PerfherderWidget.defaultProps = {
   reference: '',
 };
 PerfherderWidget.propTypes = {
+  title: PropTypes.string.required,
   signatures: PropTypes.object,
   framework: PropTypes.number,
   explainer: PropTypes.string,

@@ -26,7 +26,7 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    this.setState(await this.fetchSetData(this.props));
+    this.fetchSetData(this.props);
   }
 
   async fetchSetData({ series }) {
