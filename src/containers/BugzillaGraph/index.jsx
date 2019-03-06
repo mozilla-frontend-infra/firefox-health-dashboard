@@ -21,6 +21,8 @@ class BugzillaGraph extends Component {
       this.setState({ isLoading: false });
     } catch (error) {
       handleError(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 

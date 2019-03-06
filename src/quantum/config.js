@@ -1,5 +1,5 @@
 import { frum } from '../vendor/queryOps';
-import Map from '../vendor/Map';
+import Data from '../vendor/Data';
 
 const CONFIG = {
   windows64Regression: [
@@ -85,20 +85,20 @@ const PLATFORMS = [
     project: 'mozilla-central',
   },
   {
-    browser: 'Chrome',
+    browser: 'Chromium',
     bits: '32',
     os: 'win',
-    label: 'Chrome',
+    label: 'Chromium',
     frameworkId: 10,
     platform: 'windows7-32-nightly',
     option: 'opt',
     project: 'mozilla-central',
   },
   {
-    browser: 'Chrome',
+    browser: 'Chromium',
     bits: '64',
     os: 'win',
-    label: 'Chrome',
+    label: 'Chromium',
     frameworkId: 10,
     platform: 'windows10-64-nightly',
     option: 'opt',
@@ -166,18 +166,18 @@ const SUITES = {
     ['Firefox', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
     ['Firefox', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
 
-    ['Chrome', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
-    ['Chrome', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
-    ['Chrome', 'Tp6: Google', 'raptor-tp6-google-chrome'],
-    ['Chrome', 'Tp6: YouTube', 'raptor-tp6-youtube-chrome'],
-    ['Chrome', 'Tp6: Imdb', 'raptor-tp6-imdb-chrome'],
-    ['Chrome', 'Tp6: Imgur', 'raptor-tp6-imgur-chrome'],
-    ['Chrome', 'Tp6: Wikia', 'raptor-tp6-wikia-chrome'],
-    ['Chrome', 'Tp6: Bing', 'raptor-tp6-bing-chrome'],
-    ['Chrome', 'Tp6: Yandex', 'raptor-tp6-yandex-chrome'],
-    ['Chrome', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
-    ['Chrome', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
-    ['Chrome', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
+    ['Chromium', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
+    ['Chromium', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
+    ['Chromium', 'Tp6: Google', 'raptor-tp6-google-chrome'],
+    ['Chromium', 'Tp6: YouTube', 'raptor-tp6-youtube-chrome'],
+    ['Chromium', 'Tp6: Imdb', 'raptor-tp6-imdb-chrome'],
+    ['Chromium', 'Tp6: Imgur', 'raptor-tp6-imgur-chrome'],
+    ['Chromium', 'Tp6: Wikia', 'raptor-tp6-wikia-chrome'],
+    ['Chromium', 'Tp6: Bing', 'raptor-tp6-bing-chrome'],
+    ['Chromium', 'Tp6: Yandex', 'raptor-tp6-yandex-chrome'],
+    ['Chromium', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
+    ['Chromium', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
+    ['Chromium', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
 
     ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
     ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
@@ -187,7 +187,7 @@ const SUITES = {
 };
 // ALL PAGE COMBINATIONS
 const TP6_PAGES = frum(SUITES.data)
-  .map(row => Map.zip(SUITES.header, row))
+  .map(row => Data.zip(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
 const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
 

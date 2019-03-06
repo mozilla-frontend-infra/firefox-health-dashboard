@@ -33,10 +33,10 @@ class PerfherderGraphContainer extends Component {
     try {
       this.setState({ isLoading: true });
       this.setState(await getPerferherderData(series));
-      this.setState({ isLoading: false });
     } catch (error) {
-      this.setState({ isLoading: false });
       this.props.handleError(error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 

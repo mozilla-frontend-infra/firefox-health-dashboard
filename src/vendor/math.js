@@ -1,7 +1,7 @@
-import { missing } from './utils';
+import { coalesce, missing } from './utils';
 
 function sign(n) {
-  if (n == null) return null;
+  if (missing(n)) return null;
 
   if (n > 0.0) return 1.0;
 
@@ -11,58 +11,47 @@ function sign(n) {
 }
 
 function abs(n) {
-  if (n == null) return null;
+  if (missing(n)) return null;
 
   return Math.abs(n);
 }
 
 function log10(v) {
+  if (missing(v) || v <= 0) return null;
+
   return Math.log(v) / Math.log(10);
 }
 
-function floor(value, mod) {
-  if (value == null) {
+function mod(value, mod) {
+  if (missing(value)) {
     return null;
   }
 
-  if (mod === undefined) {
-    return value - (value % 1);
+  const m = coalesce(mod, 1);
+
+  if (value < 0) {
+    return (m + (value % m)) % m;
   }
 
-  if (mod == null) {
-    return null;
-  }
-
-  return value - (value % mod);
+  return value % m;
 }
 
-function ceiling(value, rounding) {
-  if (value == null) {
+function floor(value, modulo) {
+  if (missing(value)) {
     return null;
   }
 
-  if (rounding === undefined) {
-    return Math.ceil(value);
-  }
+  return value - mod(value, modulo);
+}
 
-  if (rounding == null) {
+function ceiling(value, mod) {
+  if (missing(value)) {
     return null;
   }
 
-  if (value === 0) {
-    return 0.0;
-  }
+  const d = coalesce(mod, 1);
 
-  const { digits } = rounding;
-  let d = null;
-
-  if (digits !== undefined) {
-    d = 10 ** (rounding.digits - ceiling(log10(value)));
-  } else {
-    d = 10 ** rounding;
-  }
-
-  return Math.ceil(value * d) / d;
+  return Math.ceil(value / d) * d;
 }
 
 function round(value, rounding) {
@@ -80,6 +69,10 @@ function round(value, rounding) {
   let d = null;
 
   if (digits !== undefined) {
+    if (digits <= 0) {
+      return 10 ** Math.round(log10(value));
+    }
+
     d = 10 ** (digits - ceiling(log10(value)));
   } else {
     d = 10 ** rounding;
@@ -91,20 +84,29 @@ function round(value, rounding) {
 function roundMetric(value, rounding) {
   const order = floor(Math.log10(value) / 3);
   const prefix = round(value / 10 ** (order * 3), rounding);
-  const units = ['nano', 'micro', 'milli', '', 'kilo', 'mega', 'giga', 'tera'][
-    order + 3
-  ];
+  const units = ['n', 'µ', 'm', '', 'K', 'M', 'G', 'T'][order + 3];
 
   return prefix + units;
+}
+
+function count(values) {
+  let output = null;
+
+  values.forEach(v => {
+    if (missing(v)) return;
+    output += 1;
+  });
+
+  return output;
 }
 
 function sum(values) {
   let sum = null;
 
   values.forEach(v => {
-    if (v == null) return;
+    if (missing(v)) return;
 
-    if (sum == null) sum = v;
+    if (missing(sum)) sum = v;
     else sum += v;
   });
 
@@ -132,7 +134,7 @@ function max(values) {
   values.forEach(v => {
     if (missing(v)) return;
 
-    if (max == null || max < v) max = v;
+    if (missing(max) || max < v) max = v;
   });
 
   return max;
@@ -144,26 +146,10 @@ function min(values) {
   values.forEach(v => {
     if (missing(v)) return;
 
-    if (min == null || min > v) min = v;
+    if (missing(min) || min > v) min = v;
   });
 
   return min;
-}
-
-function mod(value, mod) {
-  if (value == null) {
-    return null;
-  }
-
-  if (mod === undefined) {
-    return value % 1;
-  }
-
-  if (mod == null) {
-    return null;
-  }
-
-  return value % mod;
 }
 
 export {
@@ -176,6 +162,7 @@ export {
   max,
   min,
   mod,
+  count,
   sum,
   average,
   log10,

@@ -1,19 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 
-function isNumeric(n) {
-  if (n == null) return null;
-
-  return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
-}
-
-const { isArray } = Array;
-
-function isInteger(n) {
-  if (n == null) return null;
-
-  return !Number.isNaN(parseInt(n, 10)) && Number.isFinite(n);
-}
-
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
   return value == null || Number.isNaN(value) || value === '';
@@ -32,8 +18,56 @@ function coalesce(...args) {
   return null;
 }
 
+function first(list) {
+  for (const v of list) return v;
+
+  return null;
+}
+
+function last(list) {
+  let value = null;
+
+  for (const v of list) value = v;
+
+  return value;
+}
+
+function toArray(value) {
+  // return a list
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value == null) {
+    return [];
+  }
+
+  return [value];
+}
+
 function isString(value) {
   return typeof value === 'string';
+}
+
+function isNumeric(n) {
+  if (isString(n)) {
+    /* eslint-disable-next-line max-len */
+    return /^[+-]?[0123456789]+\.?[0123456789]*([eE][+-]?[0123456789]+)?$/y.test(
+      n
+    );
+  }
+
+  return !Number.isNaN(n) && Number.isFinite(n);
+}
+
+const { isArray } = Array;
+
+function isInteger(n) {
+  if (isString(n)) {
+    return /^[+-]?[0123456789]+\.?0*([eE]\+?[0123456789]+)?$/y.test(n);
+  }
+
+  return Number.isInteger(n);
 }
 
 function isObject(val) {
@@ -44,7 +78,7 @@ function isObject(val) {
   return typeof val === 'function' || typeof val === 'object';
 }
 
-function isMap(val) {
+function isData(val) {
   if (missing(val)) {
     return false;
   }
@@ -57,14 +91,14 @@ function isFunction(f) {
 }
 
 function literalField(fieldname) {
-  return fieldname.replace(/\./, '\\.');
+  return fieldname.replace(/\./g, '\\.');
 }
 
 function splitField(fieldname) {
   return fieldname
-    .replace(/\\\./, '\b')
+    .replace(/\\\./g, '\b')
     .split('.')
-    .map(v => v.replace(/[\b]/, '.'));
+    .map(v => v.replace(/[\b]/g, '.'));
 }
 
 function joinField(path) {
@@ -86,6 +120,9 @@ function concatField(...many) {
 }
 
 export {
+  first,
+  last,
+  toArray,
   isArray,
   isNumeric,
   isInteger,
@@ -94,7 +131,7 @@ export {
   exists,
   coalesce,
   isString,
-  isMap,
+  isData,
   isObject,
   splitField,
   joinField,

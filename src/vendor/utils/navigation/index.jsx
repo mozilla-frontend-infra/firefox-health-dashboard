@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
 import { frum } from '../../queryOps';
-import Map from '../../Map';
+import Data from '../../Data';
 import { Object2URL, URL2Object } from '../../convert';
 
 function withNavigation(config) {
@@ -42,7 +42,7 @@ function withNavigation(config) {
 
       onPathChange = event => {
         const { name, value } = event.target;
-        const change = Map(name, value);
+        const change = Data(name, value);
 
         this.setState(change);
 

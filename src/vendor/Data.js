@@ -5,14 +5,15 @@ import {
   coalesce,
   exists,
   isArray,
+  isObject,
   isInteger,
-  isMap,
+  isData,
   missing,
   splitField,
 } from './utils';
 import { Log } from './errors';
 
-const Map = (key, value) => {
+const Data = (key, value) => {
   if (key == null) {
     Log.error('expecting a string key');
   }
@@ -24,7 +25,7 @@ const Map = (key, value) => {
   return output;
 };
 
-Map.zip = (keys, values) => {
+Data.zip = (keys, values) => {
   // LIST OF [k, v] TUPLES EXPECTED
   // OR LIST OF keys AND LIST OF values
   const output = {};
@@ -43,7 +44,7 @@ Map.zip = (keys, values) => {
   return output;
 };
 
-Map.copy = (from, to) => {
+Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
   toPairs(from).forEach((v, k) => {
@@ -53,7 +54,7 @@ Map.copy = (from, to) => {
   return output;
 };
 
-Map.setDefault = (dest, ...args) => {
+Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
 
@@ -64,7 +65,7 @@ Map.setDefault = (dest, ...args) => {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
         Log.warning('possible loop');
-      } else if (isMap(value)) {
+      } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
     });
@@ -76,14 +77,14 @@ Map.setDefault = (dest, ...args) => {
     if (missing(source)) return;
 
     if (missing(dest)) {
-      if (isMap(source)) {
+      if (isData(source)) {
         return setDefault({}, source, []);
       }
 
       return source;
     }
 
-    if (isMap(dest)) {
+    if (isData(dest)) {
       return setDefault(dest, source, []);
     }
   });
@@ -94,7 +95,7 @@ Map.setDefault = (dest, ...args) => {
 // ASSUME THE DOTS (.) IN fieldName ARE SEPARATORS
 // AND THE RESULTING LIST IS A PATH INTO THE STRUCTURE
 // (ESCAPE "." WITH "\\.", IF REQUIRED)
-Map.get = (obj, path) => {
+Data.get = (obj, path) => {
   if (missing(obj)) return obj;
 
   if (path === '.') return obj;
@@ -103,14 +104,18 @@ Map.get = (obj, path) => {
   let output = obj;
 
   for (const step of pathArray) {
-    if (step === 'length') {
-      output = output.length;
-    } else if (isInteger(step)) {
+    if (isArray(output)) {
+      if (step === 'length') {
+        output = output.length;
+      } else if (isInteger(step)) {
+        output = output[step];
+      } else if (isArray(output)) {
+        output = output.map(o => (isObject(o) ? o[step] : null));
+      }
+    } else if (isObject(output)) {
       output = output[step];
-    } else if (isArray(output)) {
-      output = output.map(o => o[step]);
     } else {
-      output = output[step];
+      return null;
     }
 
     if (missing(output)) return null;
@@ -119,7 +124,7 @@ Map.get = (obj, path) => {
   return output;
 };
 
-Map.set = (obj, path, value) => {
+Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
     Log.error('must be given an object ad field');
 
@@ -144,4 +149,4 @@ Map.set = (obj, path, value) => {
   return obj;
 };
 
-export default Map;
+export default Data;

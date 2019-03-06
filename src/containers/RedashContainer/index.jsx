@@ -67,8 +67,9 @@ class RedashContainer extends Component {
       this.setState({
         datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
       });
-      this.setState({ isLoading: false });
     } catch (error) {
+      this.props.handleError(error);
+    } finally {
       this.setState({ isLoading: false });
     }
   }

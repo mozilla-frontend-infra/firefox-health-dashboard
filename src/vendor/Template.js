@@ -1,7 +1,7 @@
-import { coalesce, isString, missing } from './utils';
+import { coalesce, isObject, isString, missing } from './utils';
 import { toPairs } from './queryOps';
 import { Log } from './errors';
-import Map from './Map';
+import Data from './Data';
 import strings from './strings';
 
 let expandAny = null;
@@ -16,13 +16,11 @@ function expandLoop(loop, namespaces) {
 
   if (!isString(from)) Log.error('expecting from clause to be string');
 
-  return Map.get(namespaces[0], loop.from)
+  return Data.get(namespaces[0], loop.from)
     .map(m => {
-      const ns = Map.copy(namespaces[0]);
+      const ns = Data.copy(namespaces[0]);
 
-      ns['.'] = m;
-
-      if (m instanceof Object && !(m instanceof Array)) {
+      if (isObject(m)) {
         toPairs(m).forEach((v, k) => {
           ns[k.toLowerCase()] = v;
         });
@@ -32,39 +30,18 @@ function expandLoop(loop, namespaces) {
         ns[Array(i + 3).join('.')] = n;
       });
 
-      return expandAny(template, namespaces.copy().prepend(ns));
+      const nns = namespaces.slice();
+
+      nns.unshift(ns);
+
+      return expandAny(template, nns);
     })
     .join(coalesce(separator, ''));
 }
 
-/*
- LOOP THROUGH THEN key:value PAIRS OF THE OBJECT
- */
-function expandItems(loop, namespaces) {
-  const { items, template } = loop;
-
-  if (typeof items !== 'string') {
-    Log.error('expecting `from_items` clause to be string');
-  }
-
-  return Map.map(Map.get(namespaces[0], items), (name, value) => {
-    const map = Map.copy(namespaces[0]);
-
-    map.name = name;
-    map.value = value;
-
-    if (value instanceof Object && !(value instanceof Array)) {
-      toPairs(value).forEach((v, k) => {
-        map[k.toLowerCase()] = v;
-      });
-    }
-
-    namespaces.forEach((n, i) => {
-      map[Array(i + 3).join('.')] = n;
-    });
-
-    return expandAny(template, namespaces.copy().prepend(map));
-  }).join(loop.separator === undefined ? '' : loop.separator);
+function run(method, val, rest) {
+  // eslint-disable-next-line no-eval
+  return eval(`method(val, ${rest}`);
 }
 
 function expandText(template, namespaces) {
@@ -72,7 +49,7 @@ function expandText(template, namespaces) {
   // CASE INSENSITIVE VARIABLE REPLACEMENT
 
   // COPY VALUES, BUT WITH lowerCase KEYS
-  const map = namespaces[0];
+  const ns = namespaces[0];
   const [aString, ...varStringPairs] = template.split('{{');
   const acc = [aString];
 
@@ -81,7 +58,7 @@ function expandText(template, namespaces) {
     ...varStringPairs.map(vsp => {
       const [variable, suffixString] = vsp.split('}}', 2);
       const [accessor, ...postProcessing] = variable.split('|');
-      let val = Map.get(map, accessor.toLowerCase());
+      let val = Data.get(ns, accessor.toLowerCase());
 
       postProcessing.forEach(step => {
         const [func, rest] = step.split('(', 2);
@@ -93,12 +70,13 @@ function expandText(template, namespaces) {
           );
         }
 
+        const method = strings[func];
+
         if (missing(rest)) {
-          val = strings[func](val);
+          val = method(val);
         } else {
           try {
-            // eslint-disable-next-line no-eval
-            val = eval(`strings[func](val, ${rest}`);
+            val = run(method, val, rest);
           } catch (f) {
             Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
@@ -140,10 +118,6 @@ expandAny = (template, namespaces) => {
     return expandText(template, namespaces);
   }
 
-  if (template.items) {
-    return expandItems(template, namespaces);
-  }
-
   if (template.from) {
     return expandLoop(template, namespaces);
   }
@@ -151,9 +125,10 @@ expandAny = (template, namespaces) => {
   Log.error('Not recognized {{template|json}}', { template });
 };
 
-function expand(template, values) {
-  if (values === undefined) {
-    return template;
+function expand(template, parameters) {
+  if (parameters === undefined) {
+    if (isString(template)) return template;
+    Log.error('Must have parameters');
   }
 
   function lower(v) {
@@ -176,7 +151,7 @@ function expand(template, values) {
     return v;
   }
 
-  const map = lower(values);
+  const map = lower(parameters);
 
   return expandAny(template, [map]);
 }

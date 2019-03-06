@@ -30,8 +30,9 @@ const BasicError = ({ error }) => {
   );
 };
 
-class Exception {
+class Exception extends Error {
   constructor(template, params, cause) {
+    super();
     let t = null;
     let c = null;
     let p = null;

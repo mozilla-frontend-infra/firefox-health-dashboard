@@ -1,4 +1,4 @@
-import { frum, toPairs } from './queryOps';
+import { frum, toPairs, length } from './queryOps';
 import { Log } from './errors';
 import { isFunction, isObject } from './utils';
 import strings from './strings';
@@ -31,25 +31,25 @@ function prettyJSON(json, maxDepth) {
 
   try {
     if (Array.isArray(json)) {
-      try {
-        const singleLine = JSON.stringify(json);
+      const output = frum(json)
+        .map(v => {
+          if (v === undefined) return;
 
-        if (singleLine.length < 60) return singleLine;
-      } catch (e) {
-        Log.warning('Problem turning array to json:', e);
+          return prettyJSON(v, maxDepth - 1);
+        })
+        .exists();
+
+      if (output.length === 0) return '[]';
+
+      if (output.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+
+      const lengths = output.map(length);
+
+      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
+        return `[\n${strings.indent(output.concatenate(',\n'), 1)}\n]`;
       }
 
-      if (json.length === 0) return '[]';
-
-      if (json.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
-
-      return `[\n${json
-        .map(v => {
-          if (v === undefined) return 'undefined';
-
-          return strings.indent(prettyJSON(v, maxDepth - 1), 1);
-        })
-        .join(',\n')}\n]`;
+      return `[${output.concatenate(',')}]`;
     }
 
     if (isFunction(json)) {
@@ -61,36 +61,25 @@ function prettyJSON(json, maxDepth) {
     }
 
     if (isObject(json)) {
-      try {
-        const singleLine = JSON.stringify(json);
+      const output = toPairs(json)
+        .map((v, k) => {
+          if (v === undefined) return;
 
-        if (singleLine.length < 60) return singleLine;
-      } catch (e) {
-        Log.warning('Problem turning object to json:', e);
+          return `"${k}":${prettyJSON(v, maxDepth - 1)}`;
+        })
+        .exists();
+
+      if (output.length === 0) return '{}';
+
+      if (output.length === 1) return `{${output.first()}}`;
+
+      const lengths = output.map(length);
+
+      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
+        return `{\n${strings.indent(output.concatenate(',\n'), 1)}\n}`;
       }
 
-      const keys = Object.keys(json);
-
-      if (keys.length === 0) return '{}';
-
-      if (keys.length === 1)
-        return `{"${keys[0]}":${prettyJSON(
-          json[keys[0]],
-          maxDepth - 1
-        ).trim()}}`;
-
-      let output = '{\n\t';
-
-      toPairs(json).forEach((v, k) => {
-        if (v !== undefined) {
-          if (output.length > 3) output += ',\n\t';
-          output += `"${k}":${strings
-            .indent(prettyJSON(v, maxDepth - 1), 1)
-            .trim()}`;
-        }
-      });
-
-      return `${output}\n}`;
+      return `{${output.concatenate(',')}}`;
     }
 
     return JSON.stringify(json);
