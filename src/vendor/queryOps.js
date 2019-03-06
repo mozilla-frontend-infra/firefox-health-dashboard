@@ -287,9 +287,16 @@ class Wrapper {
     // return an object from (value, key) pairs
     const output = {};
 
-    for (const [v, k] of this.argslist) {
-      output[k] = v;
-    }
+    for (const [v, k] of this.argslist) output[k] = v;
+
+    return output;
+  }
+
+  fromLeaves() {
+    // return an object from (value, path) pairs
+    const output = {};
+
+    for (const [v, k] of this.argslist) Data.add(output, k, v);
 
     return output;
   }

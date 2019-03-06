@@ -71,7 +71,7 @@ function isInteger(n) {
 }
 
 function isObject(val) {
-  if (missing(val)) {
+  if (missing(val) || isArray(val)) {
     return false;
   }
 
