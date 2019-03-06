@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   tooltip: {
+    padding: '6px',
     background: 'rgba(0, 0, 0, .8)',
     color: 'white',
     borderRadius: '4px',
@@ -25,12 +26,16 @@ function CustomTooltip({ classes, tooltipModel, series }) {
   const currSeries = series[currPoint.datasetIndex];
   const higherIsBetter = !currSeries.meta.lower_is_better;
   const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
-  const paddingStyle = {
-    padding: `${tooltipModel.yPadding}px ${tooltipModel.xPadding}px`,
-  };
+  const curr = currSeries.data[index];
+  const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${
+    curr.revision
+  }`;
+  const jobURL = `https://treeherder.mozilla.org/#/jobs?repo=mozilla-central&revision=${
+    curr.revision
+  }&selectedJob=${curr.job_id}&group_state=expanded`;
 
   return (
-    <div className={classes.tooltip} style={paddingStyle}>
+    <div className={classes.tooltip}>
       <div>{currPoint.xLabel}</div>
       <div>
         <span style={labelColors} className={classes.tooltipKey} />
@@ -42,24 +47,26 @@ function CustomTooltip({ classes, tooltipModel, series }) {
       {(() => {
         if (index === 0) return null;
 
-        const [prev, curr] = currSeries.data.slice(index - 1);
+        const prev = currSeries.data[index - 1];
         const delta = curr.value - prev.value;
         const deltaPercentage = (delta / prev.value) * 100;
-        const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?fromchange=${
-          prev.revision
-        }&tochange=${curr.revision}`;
 
         return (
-          <React.Fragment>
-            <div>
-              Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
-            </div>
-            <div>
-              <a href={hgURL}>{curr.revision.slice(0, 12)}</a>
-            </div>
-          </React.Fragment>
+          <div>
+            Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
+          </div>
         );
       })()}
+      <div>
+        <a href={hgURL} target="_blank" rel="noopener noreferrer">
+          {curr.revision.slice(0, 12)}
+        </a>
+        {` `}(
+        <a href={jobURL} target="_blank" rel="noopener noreferrer">
+          job
+        </a>
+        )
+      </div>
     </div>
   );
 }
