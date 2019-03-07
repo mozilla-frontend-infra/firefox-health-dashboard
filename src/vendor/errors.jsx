@@ -1,37 +1,27 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable max-len */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
 import { frum } from './queryOps';
 
-const newIssue =
-  'https://github.com/mozilla/firefox-health-dashboard/issues/new';
-const BasicError = ({ error }) => {
-  if (error.toString)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.toString()}</pre>;
-
-  if (error.template)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.template}</pre>;
-
-  if (error.cause && error.cause.message)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.cause.message}</pre>;
-
-  return (
-    <p style={{ fontSize: '1.0rem' }}>
-      <span>
-        There has been a critical error. We have reported it. If the issue is
-        not fixed within few hours please file an issue:
-        <br />
-        <a href={newIssue} target="_blank" rel="noopener noreferrer">
-          {newIssue}
-        </a>
-      </span>
-    </p>
-  );
+const styles = {
+  errorPanel: {
+    margin: '40px auto',
+    width: '50%',
+  },
 };
 
+class RawBasicError extends React.Component {
+  render() {
+    const { error, classes } = this.props;
+    const message = coalesce(error.message, 'Something went wrong');
+
+    return <div className={classes.errorPanel}>{message}</div>;
+  }
+}
+const BasicError = withStyles(styles)(RawBasicError);
 let stackPatterns = [];
 
 if (isNode) {
@@ -174,6 +164,17 @@ class Exception extends Error {
     return output.join('\n');
   }
 
+  get message() {
+    // RETURN THE SHORT MESSAGE
+    const { template, props, cause } = this;
+
+    if (cause) return cause.message;
+
+    if (template) return expand(template, props);
+
+    return 'unknown error';
+  }
+
   toData() {
     return {
       template: this.template,
@@ -235,7 +236,7 @@ class ErrorMessage extends React.Component {
   render() {
     const { error } = this.state;
 
-    if (error) return this.props.template({ error });
+    if (error) return <BasicError error={error} />;
 
     const parent = this;
     const handleError = error => parent.componentDidCatch(error);
@@ -249,14 +250,6 @@ class ErrorMessage extends React.Component {
     }
   }
 }
-
-ErrorMessage.propTypes = {
-  template: PropTypes.func.isRequired,
-};
-
-ErrorMessage.defaultProps = {
-  template: BasicError,
-};
 
 const withErrorBoundary = WrappedComponent => {
   class ErrorBoundary extends ErrorMessage {
