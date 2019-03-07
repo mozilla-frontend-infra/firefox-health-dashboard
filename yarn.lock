@@ -2427,13 +2427,6 @@ constants-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
   integrity sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
 
-contained-periodic-values@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/contained-periodic-values/-/contained-periodic-values-1.0.0.tgz#a81dd8e84e0a5513d590a1e6581bfe55c00f9c4d"
-  integrity sha1-qB3Y6E4KVRPVkKHmWBv+VcAPnE0=
-  dependencies:
-    nearest-periodic-value "^1.0.0"
-
 contains-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
@@ -6608,14 +6601,6 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
-moment-business@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/moment-business/-/moment-business-3.0.1.tgz#df0de1a8a074060652b5688d3cc99c9d8b76dcc4"
-  integrity sha1-3w3hqKB0BgZStWiNPMmcnYt23MQ=
-  dependencies:
-    contained-periodic-values "^1.0.0"
-    skipped-periodic-values "^1.0.0"
-
 moment@^2.10.2, moment@^2.19.3:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
@@ -6687,11 +6672,6 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
-
-nearest-periodic-value@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/nearest-periodic-value/-/nearest-periodic-value-1.2.0.tgz#a84fd52919a89692864d20a41468313d255905c6"
-  integrity sha1-qE/VKRmolpKGTSCkFGgxPSVZBcY=
 
 needle@^2.2.1:
   version "2.2.4"
@@ -7858,13 +7838,6 @@ react-router@^4.2.0, react-router@^4.3.1:
     prop-types "^15.6.1"
     warning "^4.0.1"
 
-react-table@^6.8.2:
-  version "6.8.6"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.8.6.tgz#a0ad8b4839319052d5befc012603fb161e52ede3"
-  integrity sha1-oK2LSDkxkFLVvvwBJgP7Fh5S7eM=
-  dependencies:
-    classnames "^2.2.5"
-
 react-test-renderer@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.5.2.tgz#92e9d2c6f763b9821b2e0b22f994ee675068b5ae"
@@ -8523,13 +8496,6 @@ sisteransi@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-0.1.1.tgz#5431447d5f7d1675aac667ccd0b865a4994cb3ce"
   integrity sha512-PmGOd02bM9YO5ifxpw36nrNMBTptEtfRl4qUYl9SndkolplkrZZOW7PGHjrZL53QvMVj9nQ+TKqUnRsw4tJa4g==
-
-skipped-periodic-values@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/skipped-periodic-values/-/skipped-periodic-values-1.0.1.tgz#d3a0a4d93ac134c4550db2a8823ed9d9739ceca2"
-  integrity sha1-06Ck2TrBNMRVDbKogj7Z2XOc7KI=
-  dependencies:
-    nearest-periodic-value "^1.0.0"
 
 slash@^1.0.0:
   version "1.0.0"

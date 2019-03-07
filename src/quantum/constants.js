@@ -24,17 +24,3 @@ export const statusLabels = new Map([
   ['blue', 'signed off'],
   ['secondary', 'regression criteria at risk'],
 ]);
-
-// [qf:f61] whiteboard tags to be replaced with [qf:f64] with
-// firefox 61's release
-export const flowGraphProps = {
-  api: 'bz/burnup',
-  customClass: 'wide-content',
-  title: 'Quantum Flow P1 Bugs Data',
-  legend: ['Total', 'Closed', 'Needs-analysis', 'Analyzed'],
-  target: 'Fix P1 Bugs',
-  width: 950,
-  height: 300,
-  query: { whiteboard: '[qf:f61],[qf:p1]' },
-  keys: ['total', 'closed', 'needsAnalysis', 'analyzed'],
-};
