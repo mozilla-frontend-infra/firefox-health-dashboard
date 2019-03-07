@@ -83,7 +83,15 @@ class Android extends Component {
           more="/android/tp6m?test=loadtime">
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
-              .where({ platform: 'android-hw-g5-7-0-arm7-api-16' })
+              .where({
+                platform: 'android-hw-g5-7-0-arm7-api-16',
+                title: [
+                  'Tp6 mobile: Google',
+                  'Tp6 mobile: YouTube',
+                  'Tp6 mobile: Facebook',
+                  'Tp6 mobile: Wikipedia',
+                ],
+              })
               .groupBy('title')
               .map((series, title) => (
                 <Grid item xs={6} key={`page_${title}_loadtime`}>

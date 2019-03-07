@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable */
 
 import { frum } from '../vendor/queryOps';
 import Data from '../vendor/Data';
@@ -189,10 +189,45 @@ const SUITES = {
     ['Chromium', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chromium', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
 
-    ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
+
     ['geckoview', 'Tp6 mobile: Amazon', 'raptor-tp6m-amazon-geckoview'],
-    ['geckoview', 'Tp6 mobile: YouTube', 'raptor-tp6m-youtube-geckoview'],
+    ['geckoview', 'Tp6 mobile: Amazon Search', "raptor-tp6m-amazon-search-geckoview"],
+    ['geckoview', 'Tp6 mobile: All Recipes', "raptor-tp6m-allrecipes-geckoview"],
+    ['geckoview', 'Tp6 mobile: Bing', "raptor-tp6m-bing-geckoview"],
+    ['geckoview', 'Tp6 mobile: Bing Restaurants', "raptor-tp6m-bing-restaurants-geckoview"],
+    ['geckoview', 'Tp6 mobile: Booking', "raptor-tp6m-booking-geckoview"],
+    ['geckoview', 'Tp6 mobile: CNN', "raptor-tp6m-cnn-geckoview"],
+    ['geckoview', 'Tp6 mobile: Kleinanzeigen', "raptor-tp6m-ebay-kleinanzeigen-geckoview"],
+    ['geckoview', 'Tp6 mobile: Kleinanzeigen Search', "raptor-tp6m-ebay-kleinanzeigen-search-geckoview"],
+    ['geckoview', 'Tp6 mobile: ESPN', "raptor-tp6m-espn-geckoview"],
+    ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
     ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
+    ['geckoview', 'Tp6 mobile: Instagram', "raptor-tp6m-instagram-geckoview"],
+    ['geckoview', 'Tp6 mobile: Imdb', "raptor-tp6m-imdb-geckoview"],
+    ['geckoview', 'Tp6 mobile: Web de', "raptor-tp6m-web-de-geckoview"],
+    ['geckoview', 'Tp6 mobile: Wikipedia', "raptor-tp6m-wikipedia-geckoview"],
+    ['geckoview', 'Tp6 mobile: YouTube', 'raptor-tp6m-youtube-geckoview'],
+    ['geckoview', 'Tp6 mobile: YouTube Watch', "raptor-tp6m-youtube-watch-geckoview"],
+
+    // ['geckoview', '', "raptor-tp6m-amazon-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-facebook-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-google-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-youtube-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-cnn-ampstories-geckoview"],
+    // ['geckoview', '', "raptor-tp6m-web-de-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-amazon-search-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-bing-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-ebay-kleinanzeigen-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-ebay-kleinanzeigen-search-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-instagram-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-reddit-geckoview"],
+    // ['geckoview', '', "raptor-tp6m-stackoverflow-geckoview"],
+    // ['geckoview', '', "raptor-tp6m-wikipedia-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-jianshu-geckoview"],
+    // ['geckoview', '', "raptor-tp6m-allrecipes-geckoview-live"],
+    // ['geckoview', '', "raptor-tp6m-google-maps-geckoview"],
+
+
   ],
 };
 // ALL PAGE COMBINATIONS
