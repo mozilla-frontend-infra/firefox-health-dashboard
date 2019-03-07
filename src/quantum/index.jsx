@@ -4,17 +4,14 @@ import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import Perfherder from './perfherder';
-import Countdown from './countdown';
 import { frum, toPairs } from '../vendor/queryOps';
 import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
-  flowGraphProps,
   quantum32QueryParams,
   quantum64QueryParams,
   statusLabels,
 } from './constants';
-import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { ErrorMessage } from '../vendor/errors';
@@ -42,27 +39,6 @@ export default class QuantumIndex extends React.Component {
     const regressionConfig =
       bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = [
-      {
-        title: 'Overview',
-        cssRowExtraClasses: 'generic-metrics-graphics',
-        rows: [
-          <GraphContainer
-            key="overview"
-            query={flowGraphProps.query}
-            customClass={flowGraphProps.customClass}
-            title={flowGraphProps.title}
-            legend={flowGraphProps.legend}
-            target={flowGraphProps.target}
-            api={flowGraphProps.api}
-            keys={flowGraphProps.keys}
-            width={flowGraphProps.width}
-            height={flowGraphProps.height}
-            link={`/quantum/${bits}/bugs`}
-          />,
-          // eslint-disable-next-line react/jsx-key
-          <Countdown />,
-        ],
-      },
       {
         title: 'Benchmarks',
         rows: [

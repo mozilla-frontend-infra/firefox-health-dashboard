@@ -45,7 +45,6 @@
     "lodash": "^4.17.2",
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
-    "moment-business": "^3.0.1",
     "numeral": "^2.0.4",
     "prop-types": "^15.6.2",
     "query-string": "^5.0.1",
@@ -57,7 +56,6 @@
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-table": "^6.8.2",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
