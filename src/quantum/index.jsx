@@ -9,9 +9,9 @@ import { frum, toPairs } from '../vendor/queryOps';
 import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
+  flowGraphProps,
   quantum32QueryParams,
   quantum64QueryParams,
-  flowGraphProps,
   statusLabels,
 } from './constants';
 import GraphContainer from '../components/graph-container';
@@ -33,7 +33,7 @@ export default class QuantumIndex extends React.Component {
       match: { params },
     } = this.props;
     const urlParams = URL2Object(location.search);
-    const bits = urlParams.bits || params.bits;
+    const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
       bits === 32 ? quantum32QueryParams : quantum64QueryParams;
     const platform = bits === 32 ? 'windows7-32' : 'windows10-64';
