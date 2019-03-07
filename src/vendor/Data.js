@@ -126,7 +126,7 @@ Data.get = (obj, path) => {
 
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    Log.error('must be given an object ad field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);
@@ -151,7 +151,7 @@ Data.set = (obj, path, value) => {
 
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    Log.error('must be given an object ad field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);
