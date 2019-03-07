@@ -1,5 +1,7 @@
 /* global fetch */
 import percentile from 'aggregatejs/percentile';
+import { frum, toPairs } from '../../vendor/queryOps';
+import { Object2URL } from '../../vendor/convert';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -12,70 +14,65 @@ const subtests = async signatureHash => {
   return (await fetch(url)).json();
 };
 
-const parentInfo = async (suite, platform, option) => {
+const parentInfo = async ({ suite, platform, framework, option }) => {
   const [options, signatures] = await Promise.all([
     await (await fetch(`${TREEHERDER}/api/optioncollectionhash/`)).json(),
     await (await fetch(
-      `${signaturesUrl()}/?framework=1&platform=${platform}&subtests=0`
+      `${signaturesUrl()}/?framework=${framework}&platform=${platform}&subtests=0`
     )).json(),
   ]);
   // Create a structure with only jobs matching the suite, make
   // option_collection_hash be the key and track the signatureHash as a property
-  const suites = Object.keys(signatures).reduce((res, signatureHash) => {
-    const value = signatures[signatureHash];
-
-    if (value.suite === suite) {
-      res[value.option_collection_hash] = {
-        parentSignatureHash: signatureHash,
-        test: suite, // All subtests have this entry as a uid
-        ...value,
-      };
-
-      return res;
-    }
-
-    return res;
-  }, {});
-  const result = [];
-
-  // Remove from suites any suite that does not match the wanted 'option'
-  options.forEach(elem => {
-    if (elem.option_collection_hash in suites) {
-      // XXX: As far as I'm concerned I've always seen 1 element in this array
-      if (elem.options[0].name === option) {
-        result.push(suites[elem.option_collection_hash]);
-      } else {
-        delete suites[elem.option_collection_hash];
-      }
-    }
-  });
+  const optionHashes = frum(options)
+    .where({ 'options.0.name': option })
+    .select('option_collection_hash')
+    .toArray();
+  const temp = toPairs(signatures);
+  const result = temp
+    .map((v, hash) => ({ ...v, framework: v.framework_id, hash }))
+    .where({ suite })
+    // eslint-disable-next-line camelcase
+    .filter(({ option_collection_hash }) =>
+      optionHashes.includes(option_collection_hash)
+    )
+    .toArray();
 
   if (result.length !== 1) {
-    throw Error('We should have an array of 1');
+    throw Error(`We should have an array of 1 not ${result.length}`);
   }
 
   return result[0];
 };
 
-const dataUrl = (tests, project = PROJECT, interval = NINENTY_DAYS) => {
-  const signatureIds = Object.values(tests).map(v => v.id);
-  let baseDataUrl = `${TREEHERDER}/api/project/${project}/performance/data/?framework=1&interval=${interval}`;
+const dataUrl = ({
+  tests,
+  framework,
+  project = PROJECT,
+  interval = NINENTY_DAYS,
+}) => {
+  const param = {
+    framework,
+    interval,
+    signature_id: toPairs(tests)
+      .select('id')
+      .toArray(),
+  };
 
-  baseDataUrl += `&${signatureIds.map(id => `signature_id=${id}`).join('&')}`;
-
-  return baseDataUrl;
+  return `${TREEHERDER}/api/project/${project}/performance/data/?${Object2URL(
+    param
+  )}`;
 };
 
-const perherderGraphUrl = (
+const perherderGraphUrl = ({
   signatureIds,
-  platform,
+  framework,
   project = PROJECT,
-  timerange = NINENTY_DAYS
-) => {
+  timerange = NINENTY_DAYS,
+}) => {
   let baseDataUrl = `${TREEHERDER}/perf.html#/graphs?timerange=${timerange}`;
 
   baseDataUrl += `&${signatureIds
-    .map(id => `series=${project},${id},1,1`)
+    .map(id => `series=${project},${id},1,${framework}`)
     .join('&')}`;
 
   return baseDataUrl;
@@ -102,19 +99,26 @@ export const adjustedData = (data, percentileThreshold, measure = 'value') => {
 const benchmarkData = async ({
   suite,
   platform,
+  framework,
+  option,
   percentileThreshold = 100,
   includeParentData = true,
 }) => {
-  const parent = await parentInfo(suite, platform);
-  const info = await subtests(parent.parentSignatureHash);
+  const parent = await parentInfo({ suite, platform, framework, option });
+  const rawTests = await subtests(parent.hash);
+  const tests = toPairs(rawTests)
+    .map((v, h) => ({ ...v, hash: h, framework: v.framework_id }))
+    .fromPairs();
 
   if (includeParentData) {
-    info[parent.parentSignatureHash] = parent;
+    tests[parent.hash] = parent;
   }
 
-  const signatureIds = Object.values(info).map(v => v.id);
+  const signatureIds = toPairs(tests)
+    .select('id')
+    .toArray();
   // This is a link to a Perfherder graph with all subtests
-  const perfherderUrl = perherderGraphUrl(signatureIds);
+  const perfherderUrl = perherderGraphUrl({ signatureIds, ...parent });
   // The data contains an object where each key represents a subtest
   // Each data point of that subtest takes the form of:
   // {
@@ -124,18 +128,19 @@ const benchmarkData = async ({
   //     push_id: 306862,
   //     value: 54.89
   // }
-  const dataPoints = await (await fetch(dataUrl(info))).json();
-  const data = {};
-
-  Object.keys(dataPoints).forEach(subtestHash => {
-    data[subtestHash] = {
+  const dataPoints = await (await fetch(dataUrl({ tests, framework }))).json();
+  const data = toPairs(dataPoints)
+    .map((dp, subtestHash) => ({
       meta: {
-        url: perherderGraphUrl([subtestHash]),
-        ...info[subtestHash], // Original object from Perfherder
+        url: perherderGraphUrl({
+          signatureIds: [subtestHash],
+          ...tests[subtestHash],
+        }),
+        ...tests[subtestHash], // Original object from Perfherder
       },
-      data: adjustedData(dataPoints[subtestHash], percentileThreshold),
-    };
-  });
+      data: adjustedData(dp, percentileThreshold),
+    }))
+    .fromPairs();
 
   return { perfherderUrl, data, parentSignature: parent.parentSignatureHash };
 };

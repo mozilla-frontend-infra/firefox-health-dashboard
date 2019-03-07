@@ -188,7 +188,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows10-64/motionmark_htmlsuite"
+                  href="/quantum/10/windows10-64/raptor-motionmark-htmlsuite-firefox/pgo"
                   onClick={[Function]}
                 >
                   Breakdown
@@ -250,7 +250,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows10-64/motionmark_animometer"
+                  href="/quantum/10/windows10-64/raptor-motionmark_animometer-firefox/pgo"
                   onClick={[Function]}
                 >
                   Breakdown
