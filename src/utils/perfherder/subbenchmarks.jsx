@@ -27,8 +27,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
     .where({ 'options.0.name': option })
     .select('option_collection_hash')
     .toArray();
-  const temp = toPairs(signatures);
-  const result = temp
+  const result = toPairs(signatures)
     .map((v, hash) => ({ ...v, framework: v.framework_id, hash }))
     .where({ suite })
     // eslint-disable-next-line camelcase
