@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable max-len */
 import React from 'react';
-import {ErrorPanel} from "import ErrorPanel from '../components/ErrorPanel';"
+import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
 import { frum } from './queryOps';
