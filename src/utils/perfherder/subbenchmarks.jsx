@@ -2,6 +2,7 @@
 import percentile from 'aggregatejs/percentile';
 import { frum, toPairs } from '../../vendor/queryOps';
 import { Object2URL } from '../../vendor/convert';
+import { Log } from '../../vendor/errors';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -37,7 +38,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
     .toArray();
 
   if (result.length !== 1) {
-    throw new Error('We should have an array of 1 not {{length}}', {
+    Log.error('We should have an array of 1 not {{length}}', {
       length: result.length,
     });
   }
