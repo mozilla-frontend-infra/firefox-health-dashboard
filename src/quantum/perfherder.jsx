@@ -25,7 +25,11 @@ class PerfherderWidget extends React.Component {
   state = {};
 
   componentDidMount() {
-    this.fetch();
+    try {
+      this.fetch();
+    }catch (error) {
+      this.props.handleError(error);
+    }
   }
 
   async fetch() {

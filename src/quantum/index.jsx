@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
-import Perfherder from './perfherder';
+import PerfherderWidget from './perfherder';
 import { frum, toPairs } from '../vendor/queryOps';
 import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
@@ -43,7 +43,7 @@ export default class QuantumIndex extends React.Component {
         title: 'Benchmarks',
         rows: [
           ...regressionConfig.map(config => (
-            <Perfherder {...config} key={config.title} />
+            <PerfherderWidget {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
             key="speedometer"

@@ -4,7 +4,7 @@ import React from 'react';
 import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
-import { frum } from './queryOps';
+import {frum} from './queryOps';
 
 let stackPatterns = [];
 
