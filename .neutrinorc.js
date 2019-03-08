@@ -28,8 +28,8 @@ module.exports = {
         eslint: {
           env: {
             browser: true,
-          }
-        }
+          },
+        },
       },
     ],
     '@neutrinojs/jest',
