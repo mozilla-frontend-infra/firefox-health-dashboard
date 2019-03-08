@@ -8,3 +8,4 @@ dist
 build
 // Coverage (nyc)
 coverage
+/src/vendor/components
