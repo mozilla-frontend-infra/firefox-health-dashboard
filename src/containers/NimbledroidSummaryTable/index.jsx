@@ -34,17 +34,10 @@ class NimbledroidSummaryTable extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, handleError } = this.props;
+    const { configuration } = this.props;
+    const nimbledroidData = await fetchNimbledroidData(configuration.products);
 
-    try {
-      const nimbledroidData = await fetchNimbledroidData(
-        configuration.products
-      );
-
-      this.setState(generateSitesTableContent(nimbledroidData, configuration));
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState(generateSitesTableContent(nimbledroidData, configuration));
   }
 
   render() {

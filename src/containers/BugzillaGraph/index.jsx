@@ -14,12 +14,10 @@ class BugzillaGraph extends Component {
     this.fetchData(this.props);
   }
 
-  async fetchData({ handleError, queries, startDate }) {
+  async fetchData({ queries, startDate }) {
     try {
       this.setState({ isLoading: true });
       this.setState(await getBugsData(queries, startDate));
-    } catch (error) {
-      handleError(error);
     } finally {
       this.setState({ isLoading: false });
     }
@@ -41,7 +39,6 @@ class BugzillaGraph extends Component {
 }
 
 BugzillaGraph.propTypes = {
-  handleError: PropTypes.func.isRequired,
   queries: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,

@@ -21,18 +21,11 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, handleError } = this.props;
+    const { configuration } = this.props;
+    const nimbledroidData = await fetchNimbledroidData(configuration.products);
+    const data = this.generateData(configuration, nimbledroidData);
 
-    try {
-      const nimbledroidData = await fetchNimbledroidData(
-        configuration.products
-      );
-      const data = this.generateData(configuration, nimbledroidData);
-
-      this.setState(data);
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState(data);
   }
 
   generateData(configuration, nimbledroidData) {

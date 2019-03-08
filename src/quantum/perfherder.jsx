@@ -25,43 +25,35 @@ class PerfherderWidget extends React.Component {
   state = {};
 
   componentDidMount() {
-    try {
-      this.fetch();
-    }catch (error) {
-      this.props.handleError(error);
-    }
+    this.fetch();
   }
 
   async fetch() {
-    try {
-      const { signatures, framework } = this.props;
-      const signatureLabels = Object.keys(signatures);
-      const splitSignatures = Object.values(signatures).reduce(
-        (split, signature, idx) => {
-          signature
-            .split(/\s*,\s*/)
-            .forEach(entry => split.set(entry, signatureLabels[idx]));
+    const { signatures, framework } = this.props;
+    const signatureLabels = Object.keys(signatures);
+    const splitSignatures = Object.values(signatures).reduce(
+      (split, signature, idx) => {
+        signature
+          .split(/\s*,\s*/)
+          .forEach(entry => split.set(entry, signatureLabels[idx]));
 
-          return split;
-        },
-        new Map()
-      );
-      const query = stringify({
-        signatures: [...splitSignatures.keys()],
-        framework,
-      });
-      const evolutions = await (await fetch(
-        `${SETTINGS.backend}/api/perf/herder?${query}`
-      )).json();
+        return split;
+      },
+      new Map()
+    );
+    const query = stringify({
+      signatures: [...splitSignatures.keys()],
+      framework,
+    });
+    const evolutions = await (await fetch(
+      `${SETTINGS.backend}/api/perf/herder?${query}`
+    )).json();
 
-      this.setState({
-        evolutions,
-        signatures: splitSignatures,
-        signatureLabels,
-      });
-    } catch (error) {
-      this.props.handleError(error);
-    }
+    this.setState({
+      evolutions,
+      signatures: splitSignatures,
+      signatureLabels,
+    });
   }
 
   render() {

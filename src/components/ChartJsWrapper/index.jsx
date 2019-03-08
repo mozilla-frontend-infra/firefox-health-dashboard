@@ -29,7 +29,6 @@ const ChartJsWrapper = ({
   type,
   chartHeight,
   spinnerSize,
-  handleError,
 }) => {
   if (data) {
     if (
@@ -43,13 +42,11 @@ const ChartJsWrapper = ({
         );
         const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
+        // if days are more than 3 then show error
         return daysDifference > 3;
       })
     ) {
-      // if days are more than 3 then show error
-      handleError(
-        new Error('This item has been missing data for at least 3 days.')
-      );
+      throw new Error('This item has been missing data for at least 3 days.');
     }
   }
 

@@ -4,7 +4,7 @@ import React from 'react';
 import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
-import {frum} from './queryOps';
+import { frum } from './queryOps';
 
 let stackPatterns = [];
 
@@ -226,12 +226,21 @@ class ErrorMessage extends React.Component {
       );
 
     const parent = this;
-    const handleError = error => parent.componentDidCatch(error);
 
     try {
-      return React.Children.map(this.props.children, child =>
-        React.cloneElement(child, { handleError })
-      );
+      return React.Children.map(this.props.children, child => {
+        const newChild = React.cloneElement(child);
+
+        newChild.componentDidMount = async () => {
+          try {
+            await child.componentDidMount();
+          } catch (error) {
+            parent.componentDidCatch(error);
+          }
+        };
+
+        return newChild;
+      });
     } catch (error) {
       this.setState({ error });
     }

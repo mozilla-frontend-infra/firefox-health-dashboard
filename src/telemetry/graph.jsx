@@ -33,9 +33,7 @@ class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (cause) {
-      this.props.handleError(
-        new Exception('Problem loading {{url}}', { url }, cause)
-      );
+      throw new Exception('Problem loading {{url}}', { url }, cause);
     }
   }
 

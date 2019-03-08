@@ -18,16 +18,10 @@ class NimbledroidProductVersions extends Component {
   };
 
   async componentDidMount() {
-    const { handleError, nimbledroidData, products } = this.props;
+    const { nimbledroidData, products } = this.props;
+    const { meta } = nimbledroidData || (await fetchNimbledroidData(products));
 
-    try {
-      const { meta } =
-        nimbledroidData || (await fetchNimbledroidData(products));
-
-      this.setState({ meta });
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState({ meta });
   }
 
   render() {

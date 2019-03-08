@@ -2,7 +2,7 @@ module.exports = {
   eslintrc: {
     env: {
       browser: false,
-    }
+    },
   },
   options: {
     root: __dirname,
