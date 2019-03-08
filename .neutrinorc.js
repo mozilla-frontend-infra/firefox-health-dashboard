@@ -23,15 +23,6 @@ module.exports = {
         publicPath: '/',
       },
     ],
-    [
-      {
-        eslint: {
-          env: {
-            browser: true,
-          },
-        },
-      },
-    ],
     '@neutrinojs/jest',
     [
       '@neutrinojs/copy',
