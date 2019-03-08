@@ -25,22 +25,6 @@ const CONFIG = {
       },
       framework: 10,
     },
-    // {
-    //   title: 'ARES6',
-    //   secondLink: '/quantum/windows10-64/ARES6',
-    //   secondTitle: 'Breakdown',
-    //   signatures: {
-    //     'windows10-64': '22a0985bd873492d70d49c335a21fd49a73c87cf',
-    //   },
-    // },
-    // {
-    //   title: 'JetStream',  //RUN ON JS BENCH
-    //   secondLink: '/quantum/windows10-64/JetStream',
-    //   secondTitle: 'Breakdown',
-    //   signatures: {
-    //     'windows10-64': '799db0d801c7248924e93ca5a0b770020498da69',
-    //   },
-    // },
   ],
   windows32Regression: [
     {
@@ -59,18 +43,6 @@ const CONFIG = {
       signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
       framework: 10,
     },
-    // {
-    //   title: 'ARES6',
-    //   secondLink: '/quantum/windows7-32/ARES6',
-    //   secondTitle: 'Breakdown',
-    //   signatures: { 'windows7-32': '9585321f110f16414e272956c8892a38d03e7797' },
-    // },
-    // {
-    //   title: 'JetStream',  //RUN ON JS BENCH
-    //   secondLink: '/quantum/windows7-32/JetStream',
-    //   secondTitle: 'Breakdown',
-    //   signatures: { 'windows7-32': '95535e0278558bd59ae324920ca0469278faadb4' },
-    // },
   ],
 };
 const PLATFORMS = [
@@ -203,7 +175,7 @@ const SUITES = {
     ['geckoview', 'Tp6 mobile: ESPN', "raptor-tp6m-espn-geckoview"],
     ['geckoview', 'Tp6 mobile: Facebook', 'raptor-tp6m-facebook-geckoview'],
     ['geckoview', 'Tp6 mobile: Google', 'raptor-tp6m-google-geckoview'],
-    ['geckoview', 'Tp6 mobile: Google Mpas', "raptor-tp6m-google-maps-geckoview"],
+    ['geckoview', 'Tp6 mobile: Google Maps', "raptor-tp6m-google-maps-geckoview"],
     ['geckoview', 'Tp6 mobile: Instagram', "raptor-tp6m-instagram-geckoview"],
     ['geckoview', 'Tp6 mobile: Imdb', "raptor-tp6m-imdb-geckoview"],
     ['geckoview', 'Tp6 mobile: Jianshu', "raptor-tp6m-jianshu-geckoview"],
