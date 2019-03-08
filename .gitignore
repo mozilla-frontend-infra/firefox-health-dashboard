@@ -9,3 +9,5 @@ build
 // Coverage (nyc)
 coverage
 /src/vendor/components
+/src/vendor/theme.js
+/src/vendor/styleguide
