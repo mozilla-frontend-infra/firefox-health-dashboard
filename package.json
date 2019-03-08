@@ -8,7 +8,7 @@
     "start:local": "BACKEND=http://localhost:3000 webpack-dev-server --mode development",
     "test": "jest",
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
-    "precommit": "lint-staged",
+    "precommit": "yarn lint --fix && lint-staged",
     "prepush": "yarn lint --fix && yarn test",
     "coverage": "nyc --all jest --collectCoverage",
     "coveralls": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov | coveralls",
