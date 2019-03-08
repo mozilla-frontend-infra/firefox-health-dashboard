@@ -1,27 +1,11 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable max-len */
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {ErrorPanel} from "import ErrorPanel from '../components/ErrorPanel';"
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
 import { frum } from './queryOps';
 
-const styles = {
-  errorPanel: {
-    margin: '40px auto',
-    width: '50%',
-  },
-};
-
-class RawBasicError extends React.Component {
-  render() {
-    const { error, classes } = this.props;
-    const message = coalesce(error.message, 'Something went wrong');
-
-    return <div className={classes.errorPanel}>{message}</div>;
-  }
-}
-const BasicError = withStyles(styles)(RawBasicError);
 let stackPatterns = [];
 
 if (isNode) {
@@ -236,7 +220,10 @@ class ErrorMessage extends React.Component {
   render() {
     const { error } = this.state;
 
-    if (error) return <BasicError error={error} />;
+    if (error)
+      return (
+        <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
+      );
 
     const parent = this;
     const handleError = error => parent.componentDidCatch(error);
