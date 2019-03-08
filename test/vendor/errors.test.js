@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { Log } from '../../src/vendor/errors';
+import { Log } from '../../src/vendor/logs';
 
 describe('errors', () => {
   it('error', () => {

@@ -4,7 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
-import { withErrorBoundary } from '../../vendor/errors';
+import withErrorBoundary from '../../vendor/errors';
 
 const styles = () => ({
   title: {

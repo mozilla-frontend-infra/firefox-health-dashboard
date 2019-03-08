@@ -2,7 +2,7 @@
 import percentile from 'aggregatejs/percentile';
 import { frum, toPairs } from '../../vendor/queryOps';
 import { Object2URL } from '../../vendor/convert';
-import { Log } from '../../vendor/errors';
+import { Log } from '../../vendor/logs';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';

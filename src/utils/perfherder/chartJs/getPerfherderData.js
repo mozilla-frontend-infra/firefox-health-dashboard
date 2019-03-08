@@ -2,7 +2,7 @@ import { queryPerformanceData } from '../../../vendor/perf-goggles';
 import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
 import { missing } from '../../../vendor/utils';
-import { Log } from '../../../vendor/errors';
+import { Log } from '../../../vendor/logs';
 
 const getPerfherderData = async series => {
   const newData = new Array(series.length);

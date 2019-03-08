@@ -15,7 +15,7 @@ import {
   toArray,
 } from './utils';
 import { sum } from './math';
-import { Log } from './errors';
+import { Log } from './logs';
 import Data from './Data';
 
 let internalFrum = null;

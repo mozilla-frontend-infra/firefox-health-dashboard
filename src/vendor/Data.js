@@ -11,7 +11,7 @@ import {
   missing,
   splitField,
 } from './utils';
-import { Log } from './errors';
+import { Log } from './logs';
 
 const Data = (key, value) => {
   if (key == null) {

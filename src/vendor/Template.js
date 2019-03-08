@@ -1,6 +1,6 @@
 import { coalesce, isObject, isString, missing } from './utils';
 import { toPairs } from './queryOps';
-import { Log } from './errors';
+import { Log } from './logs';
 import Data from './Data';
 import strings from './strings';
 

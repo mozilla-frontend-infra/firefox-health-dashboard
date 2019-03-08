@@ -56,7 +56,7 @@ class RedashContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetState(this.props);
+    await this.fetchSetState(this.props);
   }
 
   async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {

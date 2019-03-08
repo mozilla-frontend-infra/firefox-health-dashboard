@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withErrorBoundary } from '../../vendor/errors';
+import withErrorBoundary from '../../vendor/errors';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getBugsData from '../../utils/bugzilla/getBugsData';
 
@@ -11,7 +11,7 @@ class BugzillaGraph extends Component {
   };
 
   async componentDidMount() {
-    this.fetchData(this.props);
+    await this.fetchData(this.props);
   }
 
   async fetchData({ queries, startDate }) {

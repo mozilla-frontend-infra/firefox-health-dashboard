@@ -60,7 +60,7 @@ class PerfherderContainer extends Component {
   };
 
   async componentDidMount() {
-    this.data(this.props);
+    await this.data(this.props);
   }
 
   async componentDidUpdate(prevProps) {

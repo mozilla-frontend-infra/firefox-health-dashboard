@@ -1,5 +1,5 @@
 import { frum, leaves, length, toPairs } from './queryOps';
-import { Log } from './errors';
+import { Log } from './logs';
 import { isArray, isFunction, isNumeric, isObject } from './utils';
 import strings from './strings';
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withErrorBoundary } from '../../vendor/errors';
+import withErrorBoundary from '../../vendor/errors';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';

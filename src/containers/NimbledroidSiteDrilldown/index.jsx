@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withErrorBoundary } from '../../vendor/errors';
+import withErrorBoundary from '../../vendor/errors';
 import NimbledroidGraph from '../../components/NimbledroidGraph';
 import StatusWidget from '../../components/StatusWidget';
 import { siteMetrics } from '../../utils/nimbledroid';
