@@ -1,17 +1,16 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { Log } from '../../src/vendor/logs';
 
 describe('errors', () => {
   it('error', () => {
-    expect(() => Log.error('problem')).toThrow();
+    expect(() => throw new Error('problem')).toThrow();
   });
 
   it('warning', () => {
     let result = null;
 
     try {
-      Log.error('problem');
+      throw new Error('problem');
     } catch (e) {
       result = e.toData();
     }

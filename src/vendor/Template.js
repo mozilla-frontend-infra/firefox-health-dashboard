@@ -1,6 +1,5 @@
 import { coalesce, isObject, isString, missing } from './utils';
 import { toPairs } from './queryOps';
-import { Log } from './logs';
 import Data from './Data';
 import strings from './strings';
 
@@ -14,7 +13,7 @@ function expandArray(arr, namespaces) {
 function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
-  if (!isString(from)) Log.error('expecting from clause to be string');
+  if (!isString(from)) throw new Error('expecting from clause to be string');
 
   return Data.get(namespaces[0], loop.from)
     .map(m => {
@@ -64,7 +63,7 @@ function expandText(template, namespaces) {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
-          Log.error(
+          throw new Error(
             `{{func}} is an unknown string function for template expansion`,
             { func }
           );
@@ -78,7 +77,8 @@ function expandText(template, namespaces) {
           try {
             val = run(method, val, rest);
           } catch (f) {
-            Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
+            // eslint-disable-next-line no-console
+            console.warn(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
         }
       });
@@ -122,13 +122,13 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  Log.error('Not recognized {{template|json}}', { template });
+  throw new Error('Not recognized {{template|json}}', { template });
 };
 
 function expand(template, parameters) {
   if (parameters === undefined) {
     if (isString(template)) return template;
-    Log.error('Must have parameters');
+    throw new Error('Must have parameters');
   }
 
   function lower(v) {

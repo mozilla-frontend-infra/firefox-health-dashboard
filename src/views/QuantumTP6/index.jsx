@@ -4,12 +4,11 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
-import { TP6_TESTS, TP6_PAGES } from '../../quantum/config';
+import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
 import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import { Log } from '../../vendor/logs';
 
 const styles = {
   body: {
@@ -30,7 +29,7 @@ class TP6 extends React.Component {
         .first().label
     } on ${bits} bits`;
 
-    if (bits !== 32 && bits !== 64) Log.error('Invalid URL');
+    if (bits !== 32 && bits !== 64) throw new Error('Invalid URL');
 
     return (
       <div className={classes.body}>
