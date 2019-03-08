@@ -1,10 +1,10 @@
-import { frum, leaves, length, toPairs } from './queryOps';
+import { vector, leaves, length, toPairs } from './vectors';
 import { Log } from './errors';
 import { isArray, isFunction, isNumeric, isObject } from './utils';
 import strings from './strings';
 
 function URL2Object(url) {
-  return frum(new URLSearchParams(url).entries())
+  return vector(new URLSearchParams(url).entries())
     .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
     .args()
     .fromLeaves();
@@ -14,7 +14,7 @@ function Object2URL(value) {
   return leaves(value)
     .map((v, k) => {
       if (isArray(v)) {
-        return frum(v)
+        return vector(v)
           .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
           .concatenate('&');
       }
@@ -39,7 +39,7 @@ function prettyJSON(json, maxDepth) {
 
   try {
     if (Array.isArray(json)) {
-      const output = frum(json)
+      const output = vector(json)
         .map(v => {
           if (v === undefined) return;
 

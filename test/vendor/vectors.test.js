@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* global describe, it */
-import { frum, leaves, toPairs } from '../../src/vendor/queryOps';
+import { vector, leaves, toPairs } from '../../src/vendor/vectors';
 
 const data = [
   { a: 1 },
@@ -13,7 +13,7 @@ const data = [
 describe('vectors', () => {
   it('select Array', () => {
     expect(
-      frum(data)
+      vector(data)
         .select(['a', 'd'])
         .toArray()
     ).toEqual([
@@ -27,7 +27,7 @@ describe('vectors', () => {
 
   it('select rename', () => {
     expect(
-      frum(data)
+      vector(data)
         .select({ x: 'a', y: 'd' })
         .toArray()
     ).toEqual([
@@ -41,7 +41,7 @@ describe('vectors', () => {
 
   it('select value', () => {
     expect(
-      frum(data)
+      vector(data)
         .select('a')
         .toArray()
     ).toEqual([1, { b: 0, c: 1 }, null, null, null]);
@@ -49,7 +49,7 @@ describe('vectors', () => {
 
   it('enumerate', () => {
     expect(
-      frum(data)
+      vector(data)
         .enumerate()
         .map((v, i) => i)
         .toArray()
@@ -58,7 +58,7 @@ describe('vectors', () => {
 
   it('limit', () => {
     expect(
-      frum(data)
+      vector(data)
         .limit(2)
         .toArray()
     ).toEqual([{ a: 1 }, { a: { b: 0, c: 1 }, d: 3 }]);
@@ -66,7 +66,7 @@ describe('vectors', () => {
 
   it('where', () => {
     expect(
-      frum(data)
+      vector(data)
         .where({ d: 3 })
         .toArray()
     ).toEqual([{ a: { b: 0, c: 1 }, d: 3 }, { d: 3 }]);
@@ -74,7 +74,7 @@ describe('vectors', () => {
 
   it('missing', () => {
     expect(
-      frum(data)
+      vector(data)
         .missing('d')
         .toArray()
     ).toEqual([{ a: 1 }, { a: null, e: 3 }, null]);
@@ -82,7 +82,7 @@ describe('vectors', () => {
 
   it('groupBy 2', () => {
     expect(
-      frum(data)
+      vector(data)
         .groupBy(['d', 'e'])
         .map((v, g) => [v, g])
         .toArray()
@@ -95,7 +95,7 @@ describe('vectors', () => {
 
   it('index ok', () => {
     expect(
-      frum(data)
+      vector(data)
         .exists('a')
         .index('d')
     ).toEqual({
@@ -105,7 +105,7 @@ describe('vectors', () => {
   });
 
   it('index error', () => {
-    expect(() => frum(data).index('d')).toThrow();
+    expect(() => vector(data).index('d')).toThrow();
   });
 
   it('leaves', () => {

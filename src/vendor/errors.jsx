@@ -4,7 +4,7 @@ import React from 'react';
 import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { coalesce, exists, isChrome, isNode, isString, missing } from './utils';
 import { expand } from './Template';
-import { frum } from './queryOps';
+import { vector } from './vectors';
 
 let stackPatterns = [];
 
@@ -57,7 +57,7 @@ function parseStack(stackString) {
   if (missing(stackString)) return [];
 
   return stackString.split('\n').map(line =>
-    frum(stackPatterns)
+    vector(stackPatterns)
       .map(stackPattern => {
         const parts = stackPattern.exec(line);
 

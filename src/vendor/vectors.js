@@ -364,7 +364,7 @@ class Wrapper {
   }
 }
 
-function frum(list) {
+function vector(list) {
   if (list instanceof Wrapper) {
     return list;
   }
@@ -374,7 +374,7 @@ function frum(list) {
   });
 }
 
-internalFrum = frum;
+internalFrum = vector;
 
 function toPairs(obj) {
   // convert Object (or Data) into [value, key] pairs
@@ -460,4 +460,4 @@ extendWrapper({
   },
 });
 
-export { frum, toPairs, leaves, first, last, length };
+export { vector, toPairs, leaves, first, last, length };
