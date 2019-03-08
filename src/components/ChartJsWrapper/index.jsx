@@ -4,7 +4,6 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
-import withErrorBoundary from '../../vendor/errors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -120,4 +119,4 @@ ChartJsWrapper.defaultProps = {
   isLoading: false,
 };
 
-export default withErrorBoundary(withStyles(styles)(ChartJsWrapper));
+export default withStyles(styles)(ChartJsWrapper);

@@ -6,6 +6,15 @@ import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import { coalesce, missing } from './utils';
 
 const withErrorBoundary = WrappedComponent => {
+  if (
+    WrappedComponent.displayName &&
+    WrappedComponent.displayName.startsWith('WithStyles')
+  ) {
+    throw new Error(
+      'Can not wrap WithStyles because componentDidMount() returns undefined'
+    );
+  }
+
   class ErrorBoundary extends WrappedComponent {
     constructor(...props) {
       super(...props);

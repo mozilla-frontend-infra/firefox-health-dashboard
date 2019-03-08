@@ -48,6 +48,6 @@ NimbledroidProductVersions.propTypes = {
   products: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default withErrorBoundary(
-  withStyles(styles)(NimbledroidProductVersions)
+export default withStyles(styles)(
+  withErrorBoundary(NimbledroidProductVersions)
 );

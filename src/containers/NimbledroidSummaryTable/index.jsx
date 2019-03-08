@@ -86,4 +86,4 @@ NimbledroidSummaryTable.propTypes = {
   }).isRequired,
 };
 
-export default withErrorBoundary(withStyles(styles)(NimbledroidSummaryTable));
+export default withStyles(styles)(withErrorBoundary(NimbledroidSummaryTable));
