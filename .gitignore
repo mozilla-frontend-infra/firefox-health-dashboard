@@ -11,3 +11,4 @@ coverage
 /src/vendor/components
 /src/vendor/theme.js
 /src/vendor/styleguide
+/src/vendor/utils/palette.js
