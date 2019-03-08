@@ -203,67 +203,53 @@ Log.warning = (template, params, cause) => {
   console.log(e.toString());
 };
 
-class ErrorMessage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidCatch(err, info) {
-    const error = Exception.wrap(err, info);
-
-    this.setState({ error });
-
-    Log.warning(error);
-  }
-
-  render() {
-    const { error } = this.state;
-
-    if (error)
-      return (
-        <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
-      );
-
-    const parent = this;
-
-    try {
-      return React.Children.map(this.props.children, child => {
-        const newChild = React.cloneElement(child);
-
-        newChild.componentDidMount = async () => {
-          try {
-            await child.componentDidMount();
-          } catch (error) {
-            parent.componentDidCatch(error);
-          }
-        };
-
-        return newChild;
-      });
-    } catch (error) {
-      this.setState({ error });
-    }
-  }
-}
-
 const withErrorBoundary = WrappedComponent => {
-  class ErrorBoundary extends ErrorMessage {
-    render() {
-      const self = this;
+  class ErrorBoundary extends WrappedComponent {
+    constructor(...props) {
+      super(...props);
 
-      return (
-        <ErrorMessage>
-          <WrappedComponent
-            handleError={self.componentDidCatch}
-            {...this.props}
-          />
-        </ErrorMessage>
-      );
+      if (missing(this.state)) {
+        this.state = {};
+      }
+    }
+
+    componentDidCatch(err, info) {
+      const error = Exception.wrap(err, info);
+
+      this.setState({ error });
+
+      Log.warning(error);
+    }
+
+    async componentDidMount() {
+      try {
+        await super.componentDidMount();
+      } catch (error) {
+        this.componentDidCatch(error);
+      }
+    }
+
+    render() {
+      const { error } = this.state;
+
+      if (error)
+        return (
+          <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
+        );
+
+      try {
+        return super.render();
+      } catch (error) {
+        this.componentDidCatch(error);
+
+        return (
+          <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
+        );
+      }
     }
   }
 
   return ErrorBoundary;
 };
 
-export { Exception, withErrorBoundary, ErrorMessage, Log };
+export { Exception, withErrorBoundary, Log };

@@ -14,7 +14,6 @@ import {
 } from './constants';
 import { CONFIG, TP6_PAGES } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import { ErrorMessage } from '../vendor/errors';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -517,7 +516,7 @@ export default class QuantumIndex extends React.Component {
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
                   }>
-                  <ErrorMessage>{widget}</ErrorMessage>
+                  {widget}
                 </Grid>
               );
             })}

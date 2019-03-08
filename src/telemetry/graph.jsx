@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
 import SETTINGS from '../settings';
-import { Exception } from '../vendor/errors';
+import { Exception, withErrorBoundary } from '../vendor/errors';
 
 class TelemetryContainer extends React.Component {
   async componentDidMount() {
-    this.fetchPlotGraph(this.props.id, this.props.queryParams);
+    await this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
 
   async fetchPlotGraph(id, queryParams) {
@@ -101,4 +101,4 @@ TelemetryContainer.propTypes = {
   queryParams: PropTypes.shape({}),
 };
 
-export default TelemetryContainer;
+export default withErrorBoundary(TelemetryContainer);

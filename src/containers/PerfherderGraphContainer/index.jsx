@@ -4,6 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = () => ({
   title: {
@@ -84,4 +85,4 @@ PerfherderGraphContainer.propTypes = {
   timeRange: PropTypes.string,
 };
 
-export default withStyles(styles)(PerfherderGraphContainer);
+export default withErrorBoundary(withStyles(styles)(PerfherderGraphContainer));
