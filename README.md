@@ -184,7 +184,7 @@ Use [Perfherder](https://treeherder.mozilla.org/perf.html#/graphs) directly to d
 Pass a `series` array with each element describing one of your data series. To define a series you need these parameters:
 
 * label - It will be the legend value
-* frameworkId - 1 for Talos, 10 for Raptor and 11 for js-bench.
+* framework - 1 for Talos, 10 for Raptor and 11 for js-bench.
 * platform - Use Perfherder to determine value
 * option - Normally 'opt', 'debug' or 'pgo'
 * extraOption - **OPTIONAL** - Normally set it to `['e10s', 'stylo']`
@@ -209,7 +209,7 @@ Sample code:
   series={[
     {
       label: 'Moto G5 (arm7)',
-      frameworkId: 10,
+      framework: 10,
       platform: 'android-hw-g5-7-0-arm7-api-16',
       option: 'opt',
       project: 'mozilla-central',
@@ -217,7 +217,7 @@ Sample code:
     },
     {
       label: 'Pixel 2 (arm7)',
-      frameworkId: 10,
+      framework: 10,
       option: 'opt',
       platform: 'android-hw-p2-8-0-arm7-api-16',
       project: 'mozilla-central',
@@ -225,7 +225,7 @@ Sample code:
     },
     {
       label: 'Pixel 2 (ARM64)',
-      frameworkId: 10,
+      framework: 10,
       option: 'opt',
       platform: 'android-hw-p2-8-0-android-aarch64',
       project: 'mozilla-central',

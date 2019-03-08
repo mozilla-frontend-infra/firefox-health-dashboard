@@ -11,19 +11,19 @@ export const signaturesUrl = (project = PROJECT) =>
 
 const dataPointsEndpointUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/data/`;
-const platformSuitesUrl = ({ frameworkId, platform, project }) =>
+const platformSuitesUrl = ({ framework, platform, project }) =>
   `${signaturesUrl(
     project
-  )}?framework=${frameworkId}&platform=${platform}&subtests=0`;
+  )}?framework=${framework}&platform=${platform}&subtests=0`;
 
 export const perfDataUrls = (
-  { frameworkId, project },
+  { framework, project },
   signatureIds,
   timeRange
 ) => {
   const url = dataPointsEndpointUrl(project);
   const baseParams = stringify({
-    framework: frameworkId,
+    framework,
     interval: timeRange,
   });
 
@@ -77,7 +77,7 @@ const fetchPerfData = async (seriesConfig, signatureIds, timeRange) => {
 };
 
 const perfherderGraphUrl = (
-  { project = PROJECT, frameworkId },
+  { project = PROJECT, framework },
   signatureIds,
   timeRange = DEFAULT_TIMERANGE
 ) => {
@@ -85,7 +85,7 @@ const perfherderGraphUrl = (
 
   baseDataUrl += `&${signatureIds
     .sort()
-    .map(id => `series=${project},${id},1,${frameworkId}`)
+    .map(id => `series=${project},${id},1,${framework}`)
     .join('&')}`;
 
   return baseDataUrl;
