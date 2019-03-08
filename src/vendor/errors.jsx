@@ -3,6 +3,7 @@
 import Raven from 'raven-js';
 import React from 'react';
 import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
+import { Log, Exception } from './logs';
 import { coalesce, missing } from './utils';
 
 const withErrorBoundary = WrappedComponent => {
@@ -15,14 +16,15 @@ const withErrorBoundary = WrappedComponent => {
       }
     }
 
-    componentDidCatch(error, info) {
+    componentDidCatch(err, info) {
+      const error = Exception.wrap(err, info);
+
       this.setState({ error });
 
       Raven.captureException(error);
       Raven.captureMessage(info);
 
-      // eslint-disable-next-line no-console
-      console.warn(error);
+      Log.warning(error);
     }
 
     async componentDidMount() {

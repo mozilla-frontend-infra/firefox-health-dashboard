@@ -15,6 +15,7 @@ import {
   toArray,
 } from './utils';
 import { sum } from './math';
+import { Log } from './logs';
 import Data from './Data';
 
 let internalFrum = null;
@@ -355,7 +356,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw new Error('expecting index to be unique');
+        Log.error('expecting index to be unique');
       }
     }
 

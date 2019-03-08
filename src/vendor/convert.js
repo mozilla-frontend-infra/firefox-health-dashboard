@@ -1,4 +1,5 @@
 import { frum, leaves, length, toPairs } from './queryOps';
+import { Log } from './logs';
 import { isArray, isFunction, isNumeric, isObject } from './utils';
 import strings from './strings';
 
@@ -27,13 +28,13 @@ function json2value(json) {
   try {
     return JSON.parse(json);
   } catch (e) {
-    throw new Error(`Can not parse json:\n{{json|indent}}`, { json }, e);
+    Log.error(`Can not parse json:\n{{json|indent}}`, { json }, e);
   }
 }
 
 function prettyJSON(json, maxDepth) {
   if (maxDepth < 0) {
-    throw new Error('json is too deep');
+    Log.error('json is too deep');
   }
 
   try {
@@ -91,7 +92,7 @@ function prettyJSON(json, maxDepth) {
 
     return JSON.stringify(json);
   } catch (e) {
-    throw new Error('Problem with jsonification', e);
+    Log.error('Problem with jsonification', e);
   }
 }
 

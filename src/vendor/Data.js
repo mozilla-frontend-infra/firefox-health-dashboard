@@ -11,10 +11,11 @@ import {
   missing,
   splitField,
 } from './utils';
+import { Log } from './logs';
 
 const Data = (key, value) => {
   if (key == null) {
-    throw new Error('expecting a string key');
+    Log.error('expecting a string key');
   }
 
   const output = {};
@@ -63,8 +64,7 @@ Data.setDefault = (dest, ...args) => {
       if (missing(value)) {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
-        // eslint-disable-next-line no-console
-        console.warn('possible loop');
+        Log.warning('possible loop');
       } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
@@ -126,7 +126,7 @@ Data.get = (obj, path) => {
 
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    throw new Error('must be given an object and field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);
@@ -151,7 +151,7 @@ Data.set = (obj, path, value) => {
 
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    throw new Error('must be given an object and field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);

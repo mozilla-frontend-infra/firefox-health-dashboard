@@ -6,6 +6,7 @@ import React from 'react';
 import { stringify } from 'query-string';
 import SETTINGS from '../settings';
 import withErrorBoundary from '../vendor/errors';
+import { Exception } from '../vendor/logs';
 
 class TelemetryContainer extends React.Component {
   async componentDidMount() {
@@ -33,9 +34,7 @@ class TelemetryContainer extends React.Component {
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (cause) {
-      // eslint-disable-next-line no-console
-      console.warn(`Problem loading ${url}`);
-      throw cause;
+      throw new Exception('Problem loading {{url}}', { url }, cause);
     }
   }
 
