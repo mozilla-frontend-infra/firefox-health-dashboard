@@ -6,15 +6,22 @@ import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
 
 const RED = 'red';
-const borderWidth = '1rem';
 const styles = {
+  container: {
+    position: 'relative',
+    height: '100%',
+    width: '100%',
+  },
   frame: {
+    boxSizing: 'border-box',
     position: 'absolute',
-    top: borderWidth,
-    bottom: borderWidth,
-    left: borderWidth,
-    right: borderWidth,
-    borderWidth,
+    top: 5,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    margin: 5,
+    backgroundColor: RED,
+    borderWidth: 5,
     borderColor: RED,
   },
   message: {
@@ -32,12 +39,12 @@ class RawErrorMessage extends React.Component {
   render() {
     const {
       error,
-      classes: { frame, message },
+      classes: { container, frame, message },
       children,
     } = this.props;
 
     return (
-      <div style={{ position: 'relative' }}>
+      <div className={container}>
         {children}
         <div className={frame}>
           <div className={message}>{error.message}</div>
@@ -103,4 +110,4 @@ const withErrorBoundary = WrappedComponent => {
   return ErrorBoundary;
 };
 
-export default withErrorBoundary;
+export { withErrorBoundary, ErrorMessage };

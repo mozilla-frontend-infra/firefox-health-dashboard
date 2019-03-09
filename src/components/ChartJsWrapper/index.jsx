@@ -4,6 +4,7 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
+import { ErrorMessage } from '../../vendor/errors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -19,6 +20,10 @@ const styles = {
     backgroundColor: 'black',
     padding: '.3rem .3rem .3rem .3rem',
   },
+  errorPanel: {
+    margin: '26px auto 40px',
+    width: '70%',
+  },
 };
 const ChartJsWrapper = ({
   classes,
@@ -28,48 +33,66 @@ const ChartJsWrapper = ({
   type,
   chartHeight,
   spinnerSize,
-}) => {
-  if (data) {
-    if (
-      data.datasets.every(dataset => {
-        const latestDataDate = new Date(
-          dataset.data[dataset.data.length - 1].x
-        );
-        const currentDate = new Date(); // get current date
-        const timeDifference = Math.abs(
-          currentDate.getTime() - latestDataDate.getTime()
-        );
-        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-        // if days are more than 3 then show error
-        return daysDifference > 3;
-      })
-    ) {
-      throw new Error('This item has been missing data for at least 3 days.');
+}) =>
+  (() => {
+    if (!data) {
+      return (
+        <div
+          style={{
+            lineHeight: spinnerSize,
+            textAlign: 'center',
+            width: spinnerSize,
+          }}>
+          <CircularProgress />
+        </div>
+      );
     }
-  }
 
-  return data ? (
-    <div className={classes.chartContainer}>
-      {title && <h2>{title}</h2>}
-      <Chart
-        type={type}
-        data={data}
-        height={chartHeight}
-        options={generateOptions(options)}
-      />
-    </div>
-  ) : (
-    <div
-      style={{
-        lineHeight: spinnerSize,
-        textAlign: 'center',
-        width: spinnerSize,
-      }}>
-      <CircularProgress />
-    </div>
-  );
-};
+    let error = null;
+
+    data.datasets.forEach(dataset => {
+      const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
+      const currentDate = new Date(); // get current date
+      const timeDifference = Math.abs(
+        currentDate.getTime() - latestDataDate.getTime()
+      );
+      const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+      if (daysDifference > 3) {
+        error = new Error(
+          'This item has been missing data for at least 3 days.'
+        );
+      }
+    });
+
+    if (error) {
+      return (
+        <div className={classes.chartContainer}>
+          <ErrorMessage error={error}>
+            {title && <h2>{title}</h2>}
+            <Chart
+              type={type}
+              data={data}
+              height={chartHeight}
+              options={generateOptions(options)}
+            />
+          </ErrorMessage>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.chartContainer}>
+        {title && <h2>{title}</h2>}
+        <Chart
+          type={type}
+          data={data}
+          height={chartHeight}
+          options={generateOptions(options)}
+        />
+      </div>
+    );
+  })();
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
@@ -107,6 +130,7 @@ ChartJsWrapper.propTypes = {
   isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
+  error: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {

@@ -5,7 +5,7 @@ import { Lock } from '@material-ui/icons';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import telemetryDataToDatasets from '../../utils/chartJs/redashFormatter';
 import fetchJson from '../../utils/fetchJson';
-import withErrorBoundary from '../../vendor/errors';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = {
   linkContainer: {

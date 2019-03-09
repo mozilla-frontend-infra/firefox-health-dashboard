@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
 import CONFIG from '../../utils/nimbledroid/config';
-import withErrorBoundary from '../../vendor/errors';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = {
   root: {},

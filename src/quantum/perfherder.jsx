@@ -15,7 +15,7 @@ import {
   timeMonth,
 } from 'd3';
 import { stringify } from 'query-string';
-import withErrorBoundary from '../vendor/errors';
+import { withErrorBoundary } from '../vendor/errors';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
