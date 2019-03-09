@@ -67,7 +67,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2Cb7794dcfc9a7522e7c1615e4a59b13ee86c0d7a6%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C8f014459793e2e94c3244d5edeaada0452b0c627%2C1%2C10%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -84,7 +84,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows10-64/motionmark_htmlsuite"
+                  href="/quantum/10/windows10-64/raptor-motionmark-htmlsuite-firefox/pgo"
                   onClick={[Function]}
                 >
                   Breakdown
@@ -129,7 +129,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2Cb34709c79b6de3d4e1a260a60da9717f20163d66%2C1%2C1%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C9ad671fb568a5b3027af35b5d42fc6dd385f25ed%2C1%2C10%5D&timerange=7776000"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -146,131 +146,7 @@ exports[`renders correctly 1`] = `
                 className="sides-padding"
               >
                 <a
-                  href="/quantum/windows10-64/motionmark_animometer"
-                  onClick={[Function]}
-                >
-                  Breakdown
-                </a>
-              </span>
-            </div>
-          </header>
-          <div
-            className="widget-content state-loading"
-          >
-            <span
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Loading Perfherder …",
-                }
-              }
-            />
-            <div
-              className="widget-target"
-            >
-              Target: 
-              <span
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "No regressions",
-                  }
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-      >
-        <div
-          className="criteria-widget status-unknown graphic-widget graphic-timeline"
-        >
-          <header
-            className="sides-padding"
-          >
-            <div>
-              <h3>
-                <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C22a0985bd873492d70d49c335a21fd49a73c87cf%2C1%2C1%5D&timerange=7776000"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "ARES6",
-                      }
-                    }
-                  />
-                </a>
-              </h3>
-              <span
-                className="sides-padding"
-              >
-                <a
-                  href="/quantum/windows10-64/ARES6"
-                  onClick={[Function]}
-                >
-                  Breakdown
-                </a>
-              </span>
-            </div>
-          </header>
-          <div
-            className="widget-content state-loading"
-          >
-            <span
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Loading Perfherder …",
-                }
-              }
-            />
-            <div
-              className="widget-target"
-            >
-              Target: 
-              <span
-                dangerouslySetInnerHTML={
-                  Object {
-                    "__html": "No regressions",
-                  }
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-      >
-        <div
-          className="criteria-widget status-unknown graphic-widget graphic-timeline"
-        >
-          <header
-            className="sides-padding"
-          >
-            <div>
-              <h3>
-                <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C799db0d801c7248924e93ca5a0b770020498da69%2C1%2C1%5D&timerange=7776000"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "JetStream",
-                      }
-                    }
-                  />
-                </a>
-              </h3>
-              <span
-                className="sides-padding"
-              >
-                <a
-                  href="/quantum/windows10-64/JetStream"
+                  href="/quantum/10/windows10-64/raptor-motionmark_animometer-firefox/pgo"
                   onClick={[Function]}
                 >
                   Breakdown

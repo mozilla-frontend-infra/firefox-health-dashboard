@@ -172,7 +172,7 @@ class Wrapper {
     // return only matching rows
     const func = row => {
       for (const [name, value] of Object.entries(expression)) {
-        if (Data.get(row, name) !== value) return false;
+        if (exists(value) && Data.get(row, name) !== value) return false;
       }
 
       return true;

@@ -19,7 +19,10 @@ const Routes = () => (
       <Route path="/android/tp6m" component={TP6M} />
       <Route path="/android/graph" component={NimbledroidGraphPage} />
       <Route path="/android" component={AndroidPage} />
-      <Route path="/quantum/:platform/:suite" component={Subbenchmark} />
+      <Route
+        path="/quantum/:framework/:platform/:suite/:option"
+        component={Subbenchmark}
+      />
       <Route path="/quantum/:bits" component={Quantum} />
       <Route path="/js-team" component={JsTeam} />
       <Route path="/" component={Home} />

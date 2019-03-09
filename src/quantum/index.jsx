@@ -52,7 +52,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  frameworkId: 10,
+                  framework: 10,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -62,7 +62,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Chromium',
                 seriesConfig: {
-                  frameworkId: 10,
+                  framework: 10,
                   platform: nightlyPlatform,
                   option: 'opt',
                   project: 'mozilla-central',
@@ -99,7 +99,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -116,7 +116,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -133,7 +133,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -150,7 +150,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -167,7 +167,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -184,7 +184,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -201,7 +201,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -218,7 +218,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox (tps)',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -229,7 +229,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox (tabswitch)',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -246,7 +246,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -263,7 +263,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -280,7 +280,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',

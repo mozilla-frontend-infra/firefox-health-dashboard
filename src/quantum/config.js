@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import { frum } from '../vendor/queryOps';
 import Data from '../vendor/Data';
 
@@ -5,61 +7,41 @@ const CONFIG = {
   windows64Regression: [
     {
       title: 'MotionMark HTML suite',
-      secondLink: '/quantum/windows10-64/motionmark_htmlsuite',
+      secondLink:
+        '/quantum/10/windows10-64/raptor-motionmark-htmlsuite-firefox/pgo',
       secondTitle: 'Breakdown',
       signatures: {
-        'windows10-64': 'b7794dcfc9a7522e7c1615e4a59b13ee86c0d7a6',
+        'windows10-64': '8f014459793e2e94c3244d5edeaada0452b0c627',
       },
+      framework: 10,
     },
     {
       title: 'MotionMark Animometer',
-      secondLink: '/quantum/windows10-64/motionmark_animometer',
+      secondLink:
+        '/quantum/10/windows10-64/raptor-motionmark_animometer-firefox/pgo',
       secondTitle: 'Breakdown',
       signatures: {
-        'windows10-64': 'b34709c79b6de3d4e1a260a60da9717f20163d66',
+        'windows10-64': '9ad671fb568a5b3027af35b5d42fc6dd385f25ed',
       },
-    },
-    {
-      title: 'ARES6',
-      secondLink: '/quantum/windows10-64/ARES6',
-      secondTitle: 'Breakdown',
-      signatures: {
-        'windows10-64': '22a0985bd873492d70d49c335a21fd49a73c87cf',
-      },
-    },
-    {
-      title: 'JetStream',
-      secondLink: '/quantum/windows10-64/JetStream',
-      secondTitle: 'Breakdown',
-      signatures: {
-        'windows10-64': '799db0d801c7248924e93ca5a0b770020498da69',
-      },
+      framework: 10,
     },
   ],
   windows32Regression: [
     {
       title: 'MotionMark HTML suite',
-      secondLink: '/quantum/windows7-32/motionmark_htmlsuite',
+      secondLink:
+        '/quantum/10/windows7-32/raptor-motionmark_htmlsuite-firefox/pgo',
       secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': 'f90f8f88d6397a66fb9a586ddf19064f41ee3ce3' },
+      signatures: { 'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23' },
+      framework: 10,
     },
     {
       title: 'MotionMark Animometer',
-      secondLink: '/quantum/windows7-32/motionmark_animometer',
+      secondLink:
+        '/quantum/10/windows7-32/raptor-motionmark_animometer-firefox/pgo',
       secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': '4bbe842bb4e492b5f546291db455660287d10d84' },
-    },
-    {
-      title: 'ARES6',
-      secondLink: '/quantum/windows7-32/ARES6',
-      secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': '9585321f110f16414e272956c8892a38d03e7797' },
-    },
-    {
-      title: 'JetStream',
-      secondLink: '/quantum/windows7-32/JetStream',
-      secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': '95535e0278558bd59ae324920ca0469278faadb4' },
+      signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
+      framework: 10,
     },
   ],
 };
@@ -69,7 +51,7 @@ const PLATFORMS = [
     bits: '32',
     os: 'win',
     label: 'Firefox',
-    frameworkId: 10,
+    framework: 10,
     platform: 'windows7-32',
     option: 'pgo',
     project: 'mozilla-central',
@@ -79,7 +61,7 @@ const PLATFORMS = [
     bits: '64',
     os: 'win',
     label: 'Firefox',
-    frameworkId: 10,
+    framework: 10,
     platform: 'windows10-64',
     option: 'pgo',
     project: 'mozilla-central',
@@ -89,7 +71,7 @@ const PLATFORMS = [
     bits: '32',
     os: 'win',
     label: 'Chromium',
-    frameworkId: 10,
+    framework: 10,
     platform: 'windows7-32-nightly',
     option: 'opt',
     project: 'mozilla-central',
@@ -99,7 +81,7 @@ const PLATFORMS = [
     bits: '64',
     os: 'win',
     label: 'Chromium',
-    frameworkId: 10,
+    framework: 10,
     platform: 'windows10-64-nightly',
     option: 'opt',
     project: 'mozilla-central',
@@ -107,21 +89,21 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview p2 aarch64',
-    frameworkId: 10,
+    framework: 10,
     platform: 'android-hw-p2-8-0-android-aarch64',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
     label: 'Geckoview p2',
-    frameworkId: 10,
+    framework: 10,
     platform: 'android-hw-p2-8-0-arm7-api-16',
     project: 'mozilla-central',
   },
   {
     browser: 'geckoview',
     label: 'Geckoview g5',
-    frameworkId: 10,
+    framework: 10,
     platform: 'android-hw-g5-7-0-arm7-api-16',
     project: 'mozilla-central',
   },

@@ -128,7 +128,7 @@ class Android extends Component {
                 {
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-g5-7-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',
@@ -138,7 +138,7 @@ class Android extends Component {
                 {
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     project: 'mozilla-central',
@@ -148,7 +148,7 @@ class Android extends Component {
                 {
                   label: 'Pixel 2 (ARM64)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-android-aarch64',
                     project: 'mozilla-central',
@@ -164,7 +164,7 @@ class Android extends Component {
                   color: SETTINGS.colors[0],
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-g5-7-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',
@@ -175,7 +175,7 @@ class Android extends Component {
                   color: SETTINGS.colors[1],
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',
