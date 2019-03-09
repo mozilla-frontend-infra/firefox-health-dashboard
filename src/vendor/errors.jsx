@@ -2,9 +2,52 @@
 /* eslint-disable max-len */
 import Raven from 'raven-js';
 import React from 'react';
-import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
-import { coalesce, missing } from './utils';
+import { withStyles } from '@material-ui/core/styles';
+import { missing } from './utils';
 
+const RED = 'red';
+const borderWidth = '1rem';
+const styles = {
+  frame: {
+    position: 'absolute',
+    top: borderWidth,
+    bottom: borderWidth,
+    left: borderWidth,
+    right: borderWidth,
+    borderWidth,
+    borderColor: RED,
+  },
+  message: {
+    backgroundColor: RED,
+    color: 'white',
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    height: '1rem',
+    textAlign: 'center',
+  },
+};
+
+class RawErrorMessage extends React.Component {
+  render() {
+    const {
+      error,
+      classes: { frame, message },
+      children,
+    } = this.props;
+
+    return (
+      <div style={{ position: 'relative' }}>
+        {children}
+        <div className={frame}>
+          <div className={message}>{error.message}</div>
+        </div>
+      </div>
+    );
+  }
+}
+
+const ErrorMessage = withStyles(styles)(RawErrorMessage);
 const withErrorBoundary = WrappedComponent => {
   if (
     WrappedComponent.displayName &&
@@ -45,19 +88,14 @@ const withErrorBoundary = WrappedComponent => {
     render() {
       const { error } = this.state;
 
-      if (error)
-        return (
-          <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
-        );
-
       try {
+        if (error) {
+          return <ErrorMessage error={error}>{super.render()}</ErrorMessage>;
+        }
+
         return super.render();
       } catch (error) {
-        this.componentDidCatch(error);
-
-        return (
-          <ErrorPanel error={coalesce(error.message, 'something went wrong')} />
-        );
+        return <ErrorMessage error={error} />;
       }
     }
   }
