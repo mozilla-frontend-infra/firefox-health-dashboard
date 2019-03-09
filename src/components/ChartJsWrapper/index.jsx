@@ -130,7 +130,6 @@ ChartJsWrapper.propTypes = {
   isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
-  error: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {

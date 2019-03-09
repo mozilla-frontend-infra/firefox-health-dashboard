@@ -120,20 +120,7 @@ function concatField(...many) {
   return output;
 }
 
-const isNode =
-  typeof window === 'undefined' ||
-  typeof window.document === 'undefined' ||
-  (navigator.userAgent && navigator.userAgent.indexOf(' jsdom/') !== -1);
-const isBrowser = !isNode;
-const isChrome =
-  isBrowser && navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-const isFirefox = isBrowser && !isChrome;
-
 export {
-  isNode,
-  isBrowser,
-  isChrome,
-  isFirefox,
   first,
   last,
   toArray,
