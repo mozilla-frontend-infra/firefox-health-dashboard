@@ -4,8 +4,9 @@ import Raven from 'raven-js';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
+import SETTINGS from './settings';
 
-const RED = 'red';
+const RED = SETTINGS.colors.error;
 const styles = {
   container: {
     position: 'relative',
@@ -15,22 +16,24 @@ const styles = {
   frame: {
     boxSizing: 'border-box',
     position: 'absolute',
-    top: 5,
+    top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    margin: 5,
-    backgroundColor: RED,
-    borderWidth: 5,
+    borderStyle: 'solid',
+    borderWidth: '0.2rem',
     borderColor: RED,
   },
   message: {
+    boxSizing: 'border-box',
     backgroundColor: RED,
     color: 'white',
     width: '100%',
     position: 'absolute',
+    margin: 0,
+    padding: 0,
     bottom: 0,
-    height: '1rem',
+    height: '1.0rem',
     textAlign: 'center',
   },
 };
@@ -46,9 +49,8 @@ class RawErrorMessage extends React.Component {
     return (
       <div className={container}>
         {children}
-        <div className={frame}>
-          <div className={message}>{error.message}</div>
-        </div>
+        <div className={frame} />
+        <div className={message}>{error.message}</div>
       </div>
     );
   }
