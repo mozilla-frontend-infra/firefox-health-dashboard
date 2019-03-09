@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="NimbledroidSummaryTable-root-1"
+  className="ErrorBoundary-root-1"
 >
   <div>
     <button
@@ -33,7 +33,7 @@ exports[`renders correctly 1`] = `
       />
     </button>
     <div
-      className="NimbledroidSummaryTable-summary-2"
+      className="ErrorBoundary-summary-2"
     >
       <div>
         <div

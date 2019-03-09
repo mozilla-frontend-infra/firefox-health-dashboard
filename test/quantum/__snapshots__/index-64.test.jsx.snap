@@ -184,7 +184,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Speedometer
@@ -200,7 +200,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -210,11 +210,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -254,7 +254,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Facebook
@@ -270,7 +270,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -280,11 +280,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -302,7 +302,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Amazon
@@ -318,7 +318,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -328,11 +328,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -350,7 +350,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: YouTube
@@ -366,7 +366,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -376,11 +376,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -398,7 +398,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Google
@@ -414,7 +414,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -424,11 +424,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -459,7 +459,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Page load (tp5)
@@ -475,7 +475,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -485,11 +485,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -507,7 +507,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Window Opening (tpaint e10s)
@@ -523,7 +523,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -533,11 +533,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -555,7 +555,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-up (sessionrestore)
@@ -571,7 +571,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -581,11 +581,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -603,7 +603,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-up (sessionrestore_no_auto_restore)
@@ -619,7 +619,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -629,11 +629,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -651,7 +651,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-Up (ts_paint)
@@ -667,7 +667,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -677,11 +677,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -699,7 +699,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Opening (tabpaint)
@@ -715,7 +715,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -725,11 +725,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -747,7 +747,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Animation (TART)
@@ -763,7 +763,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -773,11 +773,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -795,7 +795,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Switch (tps)
@@ -811,7 +811,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -821,11 +821,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -843,7 +843,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvg_static)
@@ -859,7 +859,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -869,11 +869,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -891,7 +891,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvgr_opacity)
@@ -907,7 +907,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -917,11 +917,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
@@ -939,7 +939,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvgx)
@@ -955,7 +955,7 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="MuiCircularProgress-root-105 MuiCircularProgress-colorPrimary-108 MuiCircularProgress-indeterminate-107"
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
               role="progressbar"
               style={
                 Object {
@@ -965,11 +965,11 @@ exports[`renders correctly 1`] = `
               }
             >
               <svg
-                className="MuiCircularProgress-svg-110"
+                className="MuiCircularProgress-svg-111"
                 viewBox="22 22 44 44"
               >
                 <circle
-                  className="MuiCircularProgress-circle-111 MuiCircularProgress-circleIndeterminate-113"
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
                   cx={44}
                   cy={44}
                   fill="none"
