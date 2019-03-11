@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import Home from "../../src/views/Home";
+import QuantumTP6 from "../../src/views/QuantumTP6";
 
 it("renders correctly", () => {
   const tree = renderer
     .create(
       <BrowserRouter>
-        <Home />
+        <QuantumTP6 />
       </BrowserRouter>
     )
     .toJSON();
