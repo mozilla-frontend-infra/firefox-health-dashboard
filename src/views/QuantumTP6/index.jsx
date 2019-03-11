@@ -30,7 +30,7 @@ class TP6 extends React.Component {
         .first().label
     } on ${bits} bits`;
 
-    if (bits === '32' || bits === '64')
+    if (`${bits}` === '32' || `${bits}` === '64')
       return (
         <div className={classes.body}>
           <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
