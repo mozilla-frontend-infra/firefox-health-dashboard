@@ -29,19 +29,10 @@ class Android extends Component {
                   includeBugCount
                   queries={[
                     {
-                      text: 'Open fenix:p1 bugs',
+                      text: 'All GV Fenix MVP bugs',
                       parameters: {
-                        product: 'GeckoView',
                         resolution: '---',
-                        whiteboard: '[geckoview:fenix:p1]',
-                      },
-                    },
-                    {
-                      text: 'Open fenix:p2 bugs',
-                      parameters: {
-                        product: 'GeckoView',
-                        resolution: '---',
-                        whiteboard: '[geckoview:fenix:p2]',
+                        whiteboard: '[geckoview:fenix:m',
                       },
                     },
                   ]}
@@ -49,23 +40,42 @@ class Android extends Component {
                 <BugzillaGraph
                   queries={[
                     {
-                      label: 'fenix:p1 bugs',
+                      label: 'GV M2 bugs',
                       parameters: {
-                        product: 'GeckoView',
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:p1]',
+                        whiteboard: '[geckoview:fenix:m2]',
                       },
                     },
                     {
-                      label: 'fenix:p2 bugs',
+                      label: 'GV M3 bugs',
                       parameters: {
-                        product: 'GeckoView',
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:p2]',
+                        whiteboard: '[geckoview:fenix:m3]',
+                      },
+                    },
+                    {
+                      label: 'GV M4 bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m4]',
+                      },
+                    },
+                    {
+                      label: 'GV M5 bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m5]',
+                      },
+                    },
+                    {
+                      label: 'All GV Fenix MVP bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m',
                       },
                     },
                   ]}
-                  startDate="2018-03-01"
+                  startDate="2019-02-01"
                   title="GeckoView Fenix bugs"
                 />
               </Section>
