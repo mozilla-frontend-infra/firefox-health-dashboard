@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="criteria-widget status-unknown widget-status-all narrow-content"
+>
+  <header
+    className="sides-padding"
+  >
+    <div>
+      <h3>
+        <span
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Risk/Target Status Summary",
+            }
+          }
+        />
+      </h3>
+      <span
+        className="sides-padding"
+      />
+    </div>
+  </header>
+  <div
+    className="widget-content"
+  >
+    <div
+      className="widget-entry"
+    />
+    <div
+      className="widget-target"
+    >
+      Target: 
+      <span
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Be <em>on track</em> to be <em>within target</em>",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
