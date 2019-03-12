@@ -30,14 +30,14 @@ export default class QuantumIndex extends React.Component {
       match: { params },
     } = this.props;
     const urlParams = URL2Object(location.search);
-    const bits = urlParams.bits || params.bits;
+    const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
-      bits === '32' ? quantum32QueryParams : quantum64QueryParams;
-    const platform = bits === '32' ? 'windows7-32' : 'windows10-64';
+      bits === 32 ? quantum32QueryParams : quantum64QueryParams;
+    const platform = bits === 32 ? 'windows7-32' : 'windows10-64';
     const nightlyPlatform =
-      bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
+      bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
-      bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
+      bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = wrapSectionComponentsWithErrorBoundaries([
       {
         title: 'Benchmarks',

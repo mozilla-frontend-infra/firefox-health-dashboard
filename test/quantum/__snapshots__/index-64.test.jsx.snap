@@ -248,7 +248,200 @@ exports[`renders correctly 1`] = `
     </h2>
     <div
       className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
-    />
+    >
+      <div
+        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+      >
+        <div>
+          <h2
+            className="PerfherderGraphContainer-title-101"
+          >
+            <span>
+              Tp6: Facebook
+            </span>
+          </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "100%",
+                "textAlign": "center",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-111"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+      >
+        <div>
+          <h2
+            className="PerfherderGraphContainer-title-101"
+          >
+            <span>
+              Tp6: Amazon
+            </span>
+          </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "100%",
+                "textAlign": "center",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-111"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+      >
+        <div>
+          <h2
+            className="PerfherderGraphContainer-title-101"
+          >
+            <span>
+              Tp6: YouTube
+            </span>
+          </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "100%",
+                "textAlign": "center",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-111"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+      >
+        <div>
+          <h2
+            className="PerfherderGraphContainer-title-101"
+          >
+            <span>
+              Tp6: Google
+            </span>
+          </h2>
+          <div
+            style={
+              Object {
+                "lineHeight": "100%",
+                "textAlign": "center",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-111"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div>
     <h2
