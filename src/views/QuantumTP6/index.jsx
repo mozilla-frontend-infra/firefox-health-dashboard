@@ -30,7 +30,7 @@ class TP6 extends React.Component {
         .first().label
     } on ${bits} bits`;
 
-    if (`${bits}` === '32' || `${bits}` === '64')
+    if (bits === 32 || bits === 64)
       return (
         <div className={classes.body}>
           <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
@@ -88,8 +88,8 @@ const nav = [
     type: Picker,
     id: 'bits',
     label: 'Bits',
-    defaultValue: '64',
-    options: [{ id: '32', label: '32 bits' }, { id: '64', label: '64 bits' }],
+    defaultValue: 64,
+    options: [{ id: 32, label: '32 bits' }, { id: 64, label: '64 bits' }],
   },
 ];
 
