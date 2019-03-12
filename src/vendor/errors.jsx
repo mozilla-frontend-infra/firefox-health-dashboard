@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp */
 /* eslint-disable max-len */
-import Raven from 'raven-js';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
 import SETTINGS from './settings';
+import reportOrLog from "./reports";
 
 const RED = SETTINGS.colors.error;
 const styles = {
@@ -23,6 +23,7 @@ const styles = {
     borderStyle: 'solid',
     borderWidth: '0.2rem',
     borderColor: RED,
+    pointerEvents: "none",
   },
   message: {
     boxSizing: 'border-box',
@@ -35,6 +36,7 @@ const styles = {
     bottom: 0,
     height: '1.0rem',
     textAlign: 'center',
+    opacity: 0.77,
   },
 };
 
@@ -79,8 +81,7 @@ const withErrorBoundary = WrappedComponent => {
     componentDidCatch(error, info) {
       this.setState({ error });
 
-      Raven.captureException(error);
-      Raven.captureMessage(info);
+      reportOrLog(error, info);
 
       // eslint-disable-next-line no-console
       console.warn(error);

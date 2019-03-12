@@ -1,24 +1,12 @@
-import Raven from 'raven-js';
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import './index.css';
 import Routes from './routes';
 import registerTooltip from './utils/registerTooltip';
+import reportOrLog from './vendor/reports'
 
 require('typeface-roboto');
-
-let handleError = (error, info) => {
-  // eslint-disable-next-line no-console
-  console.error(error, info);
-};
-
-if (process.env.NODE_ENV === 'production') {
-  Raven.config(
-    'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
-  ).install();
-  handleError = Raven.captureException;
-}
 
 // handle sticky tooltip for all charts
 registerTooltip();
@@ -31,7 +19,7 @@ class GlobalErrorBoundary extends React.Component {
 
   componentDidCatch(error, info) {
     this.setState({ error });
-    handleError(error, info);
+    reportOrLog(error, info);
   }
 
   render() {
