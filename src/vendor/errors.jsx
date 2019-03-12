@@ -1,10 +1,26 @@
-/* eslint-disable react/no-multi-comp */
-/* eslint-disable max-len */
+import Raven from 'raven-js';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
 import SETTINGS from './settings';
-import reportOrLog from "./reports";
+
+if (process.env.NODE_ENV === 'production') {
+  Raven.config(
+    'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
+  ).install();
+}
+
+const reportOrLog = (error, info) => {
+  if (process.env.NODE_ENV === 'production') {
+    Raven.captureException(error);
+  }
+
+  if (info) {
+    if (process.env.NODE_ENV === 'production') {
+      Raven.captureMessage(info);
+    }
+  }
+};
 
 const RED = SETTINGS.colors.error;
 const styles = {
@@ -23,7 +39,7 @@ const styles = {
     borderStyle: 'solid',
     borderWidth: '0.2rem',
     borderColor: RED,
-    pointerEvents: "none",
+    pointerEvents: 'none',
   },
   message: {
     boxSizing: 'border-box',
@@ -113,4 +129,4 @@ const withErrorBoundary = WrappedComponent => {
   return ErrorBoundary;
 };
 
-export { withErrorBoundary, ErrorMessage };
+export { withErrorBoundary, ErrorMessage, reportOrLog };

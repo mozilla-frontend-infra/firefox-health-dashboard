@@ -52,7 +52,11 @@ const ChartJsWrapper = ({
     let error = null;
 
     data.datasets.forEach(dataset => {
-      const latestDataDate = new Date(frum(dataset.data).sort("x").last().x);
+      const latestDataDate = new Date(
+        frum(dataset.data)
+          .sort('x')
+          .last().x
+      );
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
         currentDate.getTime() - latestDataDate.getTime()

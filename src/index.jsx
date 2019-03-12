@@ -4,7 +4,7 @@ import { AppContainer } from 'react-hot-loader';
 import './index.css';
 import Routes from './routes';
 import registerTooltip from './utils/registerTooltip';
-import reportOrLog from './vendor/reports'
+import reportOrLog from './vendor/errors';
 
 require('typeface-roboto');
 
