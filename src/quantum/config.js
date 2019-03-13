@@ -120,7 +120,7 @@ const TP6_TESTS = [
   },
   {
     id: 'fcp',
-    label: 'First content paint',
+    label: 'First contentful paint',
   },
   {
     id: 'dcf',
