@@ -460,7 +460,7 @@ export default class QuantumIndex extends React.Component {
           <TelemetryContainer
             key="contentPaintTime"
             id="contentPaintTime"
-            title="Content Paint Time ms"
+            title="contentful paint Time ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
