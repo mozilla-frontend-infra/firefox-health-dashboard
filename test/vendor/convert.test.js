@@ -44,12 +44,12 @@ describe('convert', () => {
     expect(json2value('{"b": 2}')).toEqual({ b: 2 });
   });
 
-  const URLS = [
+  const reversable = [
     [{ a: '{}' }, 'a=%7B%7D'],
     [{ a: '=' }, 'a=%3D'],
     [{ a: '+' }, 'a=%2B'],
     [{ a: false }, 'a=false'],
-
+    [{ a: true }, 'a'],
     // https://www.w3.org/Addressing/URL/uri-spec.html#z5
     // https://tools.ietf.org/html/rfc3986#section-3.4
     // https://www.google.com/search?q=query+string+with+spaces
@@ -63,31 +63,32 @@ describe('convert', () => {
   ];
 
   it('ToQueryString1', () => {
-    URLS.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
+    reversable.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
-  const toQuery = [[{ a: true }, 'a'], [{ a: null }, '']];
+  const toQuery = [[{ a: null }, '']];
 
   it('ToQueryString2', () => {
     toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
   it('FromQueryString1', () => {
-    URLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
+    reversable.forEach(([obj, url]) =>
+      expect(FromQueryString(url)).toEqual(obj)
+    );
   });
 
-  const fromQuery = [
+  const nonStandardQueryStrings = [
     [{ a: ' ' }, 'a=%20'],
     [{ a: '  ' }, 'a=%20%20'],
     [{ a: 'blue+light blue' }, 'a=blue%2Blight%20blue'],
     [{}, ''],
-    [{ a: true }, 'a'],
     [{ a: true }, 'a=true'],
     [{ a: null }, 'a=null'],
   ];
 
-  it('FromQueryString2', () => {
-    fromQuery.forEach(([obj, url]) =>
+  it('AcceptNonStandardQueryStrings', () => {
+    nonStandardQueryStrings.forEach(([obj, url]) =>
       expect(FromQueryString(url)).toEqual(obj)
     );
   });
