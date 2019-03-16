@@ -7,7 +7,7 @@ import {
   FromQueryString,
 } from '../../src/vendor/convert';
 
-describe('math', () => {
+describe('convert', () => {
   it('value2json', () => {
     expect(value2json({})).toBe('{}');
     expect(value2json({ a: 2 })).toBe('{"a":2}');
@@ -48,6 +48,8 @@ describe('math', () => {
     [{ a: '{}' }, 'a=%7B%7D'],
     [{ a: '=' }, 'a=%3D'],
     [{ a: '+' }, 'a=%2B'],
+    [{ a: false }, 'a=false'],
+
     // https://www.w3.org/Addressing/URL/uri-spec.html#z5
     // https://tools.ietf.org/html/rfc3986#section-3.4
     // https://www.google.com/search?q=query+string+with+spaces
@@ -55,25 +57,40 @@ describe('math', () => {
     [{ a: '  ' }, 'a=++'],
     [{ a: 'blue+light blue' }, 'a=blue%2Blight+blue'],
     [{ a: '{"test":42}' }, 'a=%7B%22test%22%3A42%7D'],
+    [{ a: {"test":42} }, 'a.test=42'],
     [{ a: [1, 2, 3] }, 'a=1&a=2&a=3'],
     [{ a: { b: { c: 42 } } }, 'a.b.c=42'],
   ];
 
-  it('ToQueryString', () => {
+  it('ToQueryString1', () => {
     URLS.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
-  it('FromQueryString', () => {
+  const  toQuery = [
+    [{ a: true }, 'a'],
+    [{ a: null}, ''],
+  ];
+
+  it('ToQueryString2', () => {
+    toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
+  });
+
+
+  it('FromQueryString1', () => {
     URLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
   });
 
-  const moreURLS = [
+  const fromQuery = [
     [{ a: ' ' }, 'a=%20'],
     [{ a: '  ' }, 'a=%20%20'],
     [{ a: 'blue+light blue' }, 'a=blue%2Blight%20blue'],
+    [{}, ''],
+    [{ a: true }, 'a'],
+    [{ a: true }, 'a=true'],
+    [{ a: null}, 'a=null'],
   ];
 
-  it('FromQueryStringWithSpaces', () => {
-    moreURLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
+  it('FromQueryString2', () => {
+    fromQuery.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
   });
 });
