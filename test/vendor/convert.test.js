@@ -57,7 +57,7 @@ describe('convert', () => {
     [{ a: '  ' }, 'a=++'],
     [{ a: 'blue+light blue' }, 'a=blue%2Blight+blue'],
     [{ a: '{"test":42}' }, 'a=%7B%22test%22%3A42%7D'],
-    [{ a: {"test":42} }, 'a.test=42'],
+    [{ a: { test: 42 } }, 'a.test=42'],
     [{ a: [1, 2, 3] }, 'a=1&a=2&a=3'],
     [{ a: { b: { c: 42 } } }, 'a.b.c=42'],
   ];
@@ -66,15 +66,11 @@ describe('convert', () => {
     URLS.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
-  const  toQuery = [
-    [{ a: true }, 'a'],
-    [{ a: null}, ''],
-  ];
+  const toQuery = [[{ a: true }, 'a'], [{ a: null }, '']];
 
   it('ToQueryString2', () => {
     toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
-
 
   it('FromQueryString1', () => {
     URLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
@@ -87,10 +83,16 @@ describe('convert', () => {
     [{}, ''],
     [{ a: true }, 'a'],
     [{ a: true }, 'a=true'],
-    [{ a: null}, 'a=null'],
+    [{ a: null }, 'a=null'],
   ];
 
   it('FromQueryString2', () => {
-    fromQuery.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
+    fromQuery.forEach(([obj, url]) =>
+      expect(FromQueryString(url)).toEqual(obj)
+    );
+  });
+
+  it('FromQueryString3', () => {
+    expect(FromQueryString('a').a).toBeTruthy();
   });
 });

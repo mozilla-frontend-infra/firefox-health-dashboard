@@ -3,13 +3,14 @@ import { Log } from './errors';
 import { isFunction, isNumeric, isObject, toArray } from './utils';
 import strings from './strings';
 
-
-
 function FromQueryString(url) {
   const decode = v => {
-    const output = {'null': null, "true": true, "false": false, "": true}[v];
-    if (output!==undefined) return output;
+    const output = { null: null, true: true, false: false, '': true }[v];
+
+    if (output !== undefined) return output;
+
     if (isNumeric(v)) return Number.parseFloat(v);
+
     return v;
   };
 
@@ -21,15 +22,18 @@ function FromQueryString(url) {
 
 function ToQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
+  const encode = (v, k) =>
+    toArray(v)
+      .map(vv => {
+        if (vv === true) return e(k);
 
-  const encode = (v, k) => toArray(v)
-    .map(vv => {
-      if (vv === true) return e(k);
-      return `${e(k)}=${e(vv)}`;
-    })
-    .join('&');
+        return `${e(k)}=${e(vv)}`;
+      })
+      .join('&');
+  const output = leaves(value)
+    .map(encode)
+    .concatenate('&');
 
-  const output = leaves(value).map(encode).concatenate('&');
   return output;
 }
 
