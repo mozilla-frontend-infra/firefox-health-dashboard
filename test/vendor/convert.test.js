@@ -92,7 +92,7 @@ describe('convert', () => {
     );
   });
 
-  it('FromQueryString3', () => {
+  it('KeyWithoutValueIsTruthy', () => {
     expect(FromQueryString('a').a).toBeTruthy();
   });
 });
