@@ -3,23 +3,25 @@ import { Log } from './errors';
 import { isFunction, isObject, isArray, isNumeric } from './utils';
 import strings from './strings';
 
-function URL2Object(url) {
+const encode = v => encodeURIComponent(v).replace(/[%]20/g, '+');
+
+function FromQueryString(url) {
   return frum(new URLSearchParams(url).entries())
     .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
     .args()
     .fromLeaves();
 }
 
-function Object2URL(value) {
+function ToQueryString(value) {
   return leaves(value)
     .map((v, k) => {
       if (isArray(v)) {
         return frum(v)
-          .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
+          .map(vv => `${encode(k)}=${encode(vv)}`)
           .concatenate('&');
       }
 
-      return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
+      return `${encode(k)}=${encode(v)}`;
     })
     .concatenate('&');
 }
@@ -100,4 +102,4 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
-export { URL2Object, Object2URL, value2json, json2value };
+export { FromQueryString, ToQueryString, value2json, json2value };

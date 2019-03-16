@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
 import { frum } from '../../queryOps';
 import Data from '../../Data';
-import { Object2URL, URL2Object } from '../../convert';
+import { ToQueryString, FromQueryString } from '../../convert';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
@@ -27,7 +27,7 @@ function withNavigation(config) {
       constructor(props) {
         super(props);
         const { location } = props;
-        const params = URL2Object(location.search);
+        const params = FromQueryString(location.search);
 
         this.params = params;
 
@@ -52,11 +52,11 @@ function withNavigation(config) {
       updateHistory(change) {
         const { history, location } = this.props;
         const newState = { ...this.state, ...change };
-        const oldState = URL2Object(location.search);
+        const oldState = FromQueryString(location.search);
 
         if (isEqual(newState, oldState)) return;
 
-        const query = Object2URL(newState);
+        const query = ToQueryString(newState);
 
         history.push(`${location.pathname}?${query}`);
       }

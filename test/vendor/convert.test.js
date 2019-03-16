@@ -3,8 +3,8 @@
 import {
   value2json,
   json2value,
-  Object2URL,
-  URL2Object,
+  ToQueryString,
+  FromQueryString,
 } from '../../src/vendor/convert';
 
 describe('math', () => {
@@ -48,18 +48,32 @@ describe('math', () => {
     [{ a: '{}' }, 'a=%7B%7D'],
     [{ a: '=' }, 'a=%3D'],
     [{ a: '+' }, 'a=%2B'],
-    [{ a: ' ' }, 'a=%20'],
-    [{ a: '  ' }, 'a=%20%20'],
+    // https://www.w3.org/Addressing/URL/uri-spec.html#z5
+    // https://tools.ietf.org/html/rfc3986#section-3.4
+    // https://www.google.com/search?q=query+string+with+spaces
+    [{ a: ' ' }, 'a=+'],
+    [{ a: '  ' }, 'a=++'],
+    [{ a: 'blue+light blue' }, 'a=blue%2Blight+blue'],
     [{ a: '{"test":42}' }, 'a=%7B%22test%22%3A42%7D'],
     [{ a: [1, 2, 3] }, 'a=1&a=2&a=3'],
     [{ a: { b: { c: 42 } } }, 'a.b.c=42'],
   ];
 
-  it('Object2URL', () => {
-    URLS.forEach(([obj, url]) => expect(Object2URL(obj)).toEqual(url));
+  it('ToQueryString', () => {
+    URLS.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
-  it('URL2Object', () => {
-    URLS.forEach(([obj, url]) => expect(URL2Object(url)).toEqual(obj));
+  it('FromQueryString', () => {
+    URLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
+  });
+
+  const moreURLS = [
+    [{ a: ' ' }, 'a=%20'],
+    [{ a: '  ' }, 'a=%20%20'],
+    [{ a: 'blue+light blue' }, 'a=blue%2Blight%20blue'],
+  ];
+
+  it('FromQueryStringWithSpaces', () => {
+    moreURLS.forEach(([obj, url]) => expect(FromQueryString(url)).toEqual(obj));
   });
 });
