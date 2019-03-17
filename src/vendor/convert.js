@@ -1,22 +1,26 @@
+import { parse } from 'query-string';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import { isFunction, isNumeric, isObject, toArray } from './utils';
+import { isFunction, isNumeric, isObject, toArray, isArray } from './utils';
 import strings from './strings';
 
-function FromQueryString(url) {
+function FromQueryString(query) {
   const decode = v => {
-    const output = { null: null, true: true, false: false, '': true }[v];
+    if (isArray(v)) return v.map(decode);
 
-    if (output !== undefined) return output;
+    if (v === null || v === 'true' || v === '') return true;
+
+    if (v === 'false') return false;
+
+    if (v === 'null') return null;
 
     if (isNumeric(v)) return Number.parseFloat(v);
 
     return v;
   };
 
-  return frum(new URLSearchParams(url).entries())
-    .map(([k, v]) => [decode(v), k])
-    .args()
+  return toPairs(parse(query))
+    .map(decode)
     .fromLeaves();
 }
 
@@ -24,6 +28,7 @@ function ToQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) =>
     toArray(v)
+      .exists()
       .map(vv => {
         if (vv === true) return e(k);
 
