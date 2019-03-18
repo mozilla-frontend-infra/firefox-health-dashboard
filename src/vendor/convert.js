@@ -1,26 +1,44 @@
 import { frum, leaves, length, toPairs } from './queryOps';
-import { isArray, isFunction, isNumeric, isObject } from './utils';
+import { isArray, isFunction, isNumeric, isObject, toArray } from './utils';
+import { parse } from 'query-string';
 import strings from './strings';
 
-function URL2Object(url) {
-  return frum(new URLSearchParams(url).entries())
-    .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
-    .args()
+function FromQueryString(query) {
+  const decode = v => {
+    if (isArray(v)) return v.map(decode);
+
+    if (v === null || v === 'true' || v === '') return true;
+
+    if (v === 'false') return false;
+
+    if (v === 'null') return null;
+
+    if (isNumeric(v)) return Number.parseFloat(v);
+
+    return v;
+  };
+
+  return toPairs(parse(query))
+    .map(decode)
     .fromLeaves();
 }
 
-function Object2URL(value) {
-  return leaves(value)
-    .map((v, k) => {
-      if (isArray(v)) {
-        return frum(v)
-          .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
-          .concatenate('&');
-      }
+function ToQueryString(value) {
+  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
+  const encode = (v, k) =>
+    toArray(v)
+      .exists()
+      .map(vv => {
+        if (vv === true) return e(k);
 
-      return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
-    })
+        return `${e(k)}=${e(vv)}`;
+      })
+      .join('&');
+  const output = leaves(value)
+    .map(encode)
     .concatenate('&');
+
+  return output;
 }
 
 function json2value(json) {
@@ -99,4 +117,4 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
-export { URL2Object, Object2URL, value2json, json2value };
+export { FromQueryString, ToQueryString, value2json, json2value };

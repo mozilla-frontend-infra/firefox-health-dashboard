@@ -1873,7 +1873,7 @@ exports[`renders correctly 1`] = `
               <a
                 className="graph-title-link"
               >
-                Content Paint Time ms
+                contentful paint Time ms
               </a>
             </h3>
           </header>
