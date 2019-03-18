@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 import isEqual from 'lodash/isEqual';
 import { stringify } from 'query-string';
+import { cache } from './promises';
 
 export const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -91,12 +92,11 @@ const perfherderGraphUrl = (
   return baseDataUrl;
 };
 
-const queryAllTreeherderOptions = async () => {
+const queryAllTreeherderOptions = cache(async () => {
   const response = await fetch(`${TREEHERDER}/api/optioncollectionhash/`);
 
   return response.json();
-};
-
+});
 const transformOptionCollectionHash = optionCollectionHash => {
   const options = {};
 

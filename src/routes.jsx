@@ -7,6 +7,7 @@ import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum from './quantum/index';
 import TP6 from './views/QuantumTP6';
+import TP6mAggregate from './views/TP6mAggregate';
 import TP6M from './views/QuantumTP6m';
 import Subbenchmark from './quantum/subbenchmarks';
 
@@ -19,6 +20,7 @@ const Routes = () => (
       <Route path="/android/tp6m" component={TP6M} />
       <Route path="/android/graph" component={NimbledroidGraphPage} />
       <Route path="/android" component={AndroidPage} />
+      <Route path="/aggs" component={TP6mAggregate} />
       <Route
         path="/quantum/:framework/:platform/:suite/:option"
         component={Subbenchmark}
