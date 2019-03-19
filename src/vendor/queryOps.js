@@ -283,16 +283,18 @@ class ArrayWrapper {
     const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
         return ([arg]) => arg;
-      } else if (isFunction(selector)) {
-        return args => selector(...args);
-      } else {
-        const temp = jx(selector);
-        return ([arg]) => temp(arg);
       }
+
+      if (isFunction(selector)) {
+        return args => selector(...args);
+      }
+
+      const temp = jx(selector);
+
+      return ([arg]) => temp(arg);
     });
-
-
     const sorted = lodashSortBy(Array.from(this.argsGen()), func);
+
     return new ArrayWrapper(function* outputGen() {
       for (const args of sorted) yield args;
     });
