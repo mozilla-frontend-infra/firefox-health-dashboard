@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
-import sortBy from 'lodash/sortBy';
+import lodashSortBy from 'lodash/sortBy';
 import {
   concatField,
   exists,
@@ -16,12 +16,14 @@ import {
 } from './utils';
 import { sum } from './math';
 import Data from './Data';
+import { jx } from './expressions';
 
 let internalFrum = null;
 let internalToPairs = null;
 
 function preSelector(columnName) {
-  // convert to an array of [selector(), name] pairs
+  // Return an array of [selector(), name] pairs
+
   if (isArray(columnName)) {
     // select many columns
     return internalFrum(columnName)
@@ -32,8 +34,12 @@ function preSelector(columnName) {
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map((value, name) => [row => Data.get(row, value), name])
-      .sortBy(([, b]) => b);
+      .map(preSelector)
+      .sortBy((selectors, n) => n)
+      .map((selectors, name) => [
+        row => Data.zip(selectors.map(([f, n]) => [n, f(row)])),
+        name,
+      ]);
   }
 
   if (isString(columnName)) {
@@ -69,7 +75,10 @@ function selector(columnName) {
   return columnName;
 }
 
-class Wrapper {
+class ArrayWrapper {
+  // Provide a fluent interface to Array, with some extra functions
+  // https://en.wikipedia.org/wiki/Fluent_interface
+
   // Represent an iterable set of function arguments
   constructor(argsGen) {
     this.argsGen = argsGen;
@@ -100,7 +109,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   select(selectors) {
@@ -131,7 +140,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   args() {
@@ -140,7 +149,7 @@ class Wrapper {
       for (const args of list) yield args[0];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   filter(func) {
@@ -149,7 +158,7 @@ class Wrapper {
         if (func(value, ...args)) yield [value];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   limit(max) {
@@ -163,25 +172,13 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   where(expression) {
     // Expecting a object of {columnName: value} form to use as a filter
     // return only matching rows
-    const func = row => {
-      for (const [name, value] of Object.entries(expression)) {
-        if (isArray(value)) {
-          if (!value.includes(Data.get(row, name))) return false;
-        } else if (exists(value)) {
-          if (Data.get(row, name) !== value) return false;
-        }
-      }
-
-      return true;
-    };
-
-    return this.filter(func);
+    return this.filter(jx({ eq: expression }));
   }
 
   exists(columns = null) {
@@ -230,7 +227,7 @@ class Wrapper {
         for (const value of values) yield [value];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   groupBy(columns) {
@@ -273,8 +270,18 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(function* outputGen() {
+    return new ArrayWrapper(function* outputGen() {
       for (const v of Object.values(output)) yield v;
+    });
+  }
+
+  sortBy(selector) {
+    const sorted = lodashSortBy(Array.from(this.argsGen()), ([...args]) =>
+      selector(...args)
+    );
+
+    return new ArrayWrapper(function* outputGen() {
+      for (const args of sorted) yield args;
     });
   }
 
@@ -284,6 +291,11 @@ class Wrapper {
 
   toArray() {
     return Array.from(this);
+  }
+
+  raw() {
+    // return args list (fro debugging)
+    return Array.from(this.argslist);
   }
 
   fromPairs() {
@@ -316,6 +328,24 @@ class Wrapper {
 
   sum() {
     return sum(this);
+  }
+
+  some(func) {
+    // return true if func(...args) returns true for some args
+    for (const args of this.argslist) {
+      if (func(...args)) return true;
+    }
+
+    return false;
+  }
+
+  every(func) {
+    // return true if func(...args) returns true for every args
+    for (const args of this.argslist) {
+      if (!func(...args)) return false;
+    }
+
+    return true;
   }
 
   get length() {
@@ -364,11 +394,11 @@ class Wrapper {
 }
 
 function frum(list) {
-  if (list instanceof Wrapper) {
+  if (list instanceof ArrayWrapper) {
     return list;
   }
 
-  return new Wrapper(function* outputGen() {
+  return new ArrayWrapper(function* outputGen() {
     for (const v of list) yield [v];
   });
 }
@@ -378,18 +408,21 @@ internalFrum = frum;
 function toPairs(obj) {
   // convert Object (or Data) into [value, key] pairs
   // notice the **value is first**
-  if (missing(obj)) return new Wrapper(() => []);
+  if (missing(obj)) return new ArrayWrapper(() => []);
 
   if (obj instanceof Map) {
-    return new Wrapper(function* outputGen() {
+    return new ArrayWrapper(function* outputGen() {
       for (const [k, v] of obj.entries()) yield [v, k];
     });
   }
 
-  return new Wrapper(function* outputGen() {
+  return new ArrayWrapper(function* outputGen() {
     for (const [k, v] of Object.entries(obj)) yield [v, k];
   });
 }
+
+ArrayWrapper.prototype.all = ArrayWrapper.prototype.every;
+ArrayWrapper.prototype.any = ArrayWrapper.prototype.some;
 
 internalToPairs = toPairs;
 
@@ -408,12 +441,12 @@ function leaves(obj) {
     }
   }
 
-  return new Wrapper(() => leafGen(obj, '.'));
+  return new ArrayWrapper(() => leafGen(obj, '.'));
 }
 
 function length(list) {
   // return length of this list
-  if (list instanceof Wrapper) return list.length;
+  if (list instanceof ArrayWrapper) return list.length;
 
   return list.length;
 }
@@ -422,7 +455,7 @@ function extendWrapper(methods) {
   // Add a chainable method to Wrapper
   internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
-    Wrapper.prototype[name] = function anonymous(...args) {
+    ArrayWrapper.prototype[name] = function anonymous(...args) {
       return internalFrum(method(this.toArray(), ...args));
     };
   });
@@ -433,8 +466,6 @@ extendWrapper({
   chunk,
   unzip,
   zip: unzip,
-  sort: sortBy,
-  sortBy,
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   // Return Cartesian product of listA and listB,
@@ -459,4 +490,4 @@ extendWrapper({
   },
 });
 
-export { frum, toPairs, leaves, first, last, length };
+export { frum, toPairs, leaves, first, last, length, ArrayWrapper };

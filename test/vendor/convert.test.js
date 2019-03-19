@@ -2,7 +2,7 @@
 import {
   value2json,
   json2value,
-  ToQueryString,
+  toQueryString,
   FromQueryString,
 } from '../../src/vendor/convert';
 
@@ -67,14 +67,14 @@ describe('convert', () => {
     [{ a: 'ståle' }, 'a=st%C3%A5le'],
   ];
 
-  it('ToQueryString1', () => {
-    reversable.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
+  it('toQueryString1', () => {
+    reversable.forEach(([obj, url]) => expect(toQueryString(obj)).toEqual(url));
   });
 
-  const toQuery = [[{ a: null }, ''][({ a: [1, null, ''] }, 'a=1')]];
+  const toQuery = [[{ a: null }, ''], [{ a: [1, null, ''] }, 'a=1']];
 
-  it('ToQueryString2', () => {
-    toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
+  it('toQueryString2', () => {
+    toQuery.forEach(([obj, url]) => expect(toQueryString(obj)).toEqual(url));
   });
 
   it('FromQueryString1', () => {

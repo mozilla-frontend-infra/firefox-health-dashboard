@@ -7,6 +7,7 @@ import { withNavigation } from '../vendor/utils/navigation';
 import { TP6_TESTS, TP6M_PAGES } from '../quantum/config';
 import { getData } from '../vendor/perfherder';
 import generateOptions from '../utils/chartJs/generateOptions';
+import { withErrorBoundary } from '../vendor/errors';
 
 class TP6mAggregate extends Component {
   constructor(props) {
@@ -16,13 +17,14 @@ class TP6mAggregate extends Component {
 
   async componentDidMount() {
     // ALL LOADTIME FOR ALL SUITES IN SET
-
+    const pages = frum(TP6M_PAGES);
     // WHAT ARE THE SIGNATURES OF THE loadtime?
-    const data = await getData(frum(TP6M_PAGES).select('framework'), {
+    const data = await getData(pages.select('framework'), {
       and: [
+        { prefix: { suite: 'raptor-tp6m-' } },
         { in: { test: frum(TP6_TESTS).select('id') } },
         {
-          or: frum(TP6M_PAGES).select({
+          or: pages.select({
             eq: ['suite', 'framework', 'platform'],
           }),
         },
@@ -46,4 +48,4 @@ class TP6mAggregate extends Component {
   }
 }
 
-export default withNavigation()(TP6mAggregate);
+export default withNavigation([])(withErrorBoundary(TP6mAggregate));

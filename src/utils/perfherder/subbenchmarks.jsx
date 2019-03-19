@@ -1,7 +1,7 @@
 /* global fetch */
 import percentile from 'aggregatejs/percentile';
 import { frum, toPairs } from '../../vendor/queryOps';
-import { ToQueryString } from '../../vendor/convert';
+import { toQueryString } from '../../vendor/convert';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -59,7 +59,7 @@ const dataUrl = ({
       .toArray(),
   };
 
-  return `${TREEHERDER}/api/project/${project}/performance/data/?${ToQueryString(
+  return `${TREEHERDER}/api/project/${project}/performance/data/?${toQueryString(
     param
   )}`;
 };

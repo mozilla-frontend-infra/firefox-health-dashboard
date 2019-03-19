@@ -6,11 +6,14 @@ const jsonHeaders = {
 const fetchJson = async url => {
   const response = await fetch(url, jsonHeaders);
 
-  if (!response) {
-    return null;
-  }
+  if (!response) return null;
 
-  return response.json();
+  try {
+    return response.json();
+  } catch (error) {
+    throw new Error(`Problem parsing ${response.text()}`);
+    // throw new Error("Problem parsing {{text}}", {text: response.text()});
+  }
 };
 
 export default fetchJson;

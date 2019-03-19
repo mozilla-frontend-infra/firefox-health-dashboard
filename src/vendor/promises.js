@@ -13,4 +13,4 @@ const cache = asyncFunction =>
     })();
   });
 
-export { cache };
+export { cache }; // eslint-disable-line import/prefer-default-export

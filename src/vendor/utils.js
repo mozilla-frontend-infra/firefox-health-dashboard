@@ -1,5 +1,8 @@
 /* global window */
 /* eslint-disable no-restricted-syntax */
+import { ArrayWrapper } from './queryOps';
+
+const { isArray } = Array;
 
 function missing(value) {
   // return true if value is null, or undefined, or not a legit value
@@ -35,8 +38,12 @@ function last(list) {
 
 function toArray(value) {
   // return a list
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     return value;
+  }
+
+  if (value instanceof ArrayWrapper) {
+    return value.toArray();
   }
 
   if (value == null) {
@@ -60,8 +67,6 @@ function isNumeric(n) {
 
   return !Number.isNaN(n) && Number.isFinite(n);
 }
-
-const { isArray } = Array;
 
 function isInteger(n) {
   if (isString(n)) {

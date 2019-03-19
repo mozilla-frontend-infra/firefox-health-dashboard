@@ -38,6 +38,20 @@ describe('vectors', () => {
     ]);
   });
 
+  it('select deep array', () => {
+    expect(
+      frum(data)
+        .select({ x: ['a', 'd'] })
+        .toArray()
+    ).toEqual([
+      { x: { a: 1, d: null } },
+      { x: { a: { b: 0, c: 1 }, d: 3 } },
+      { x: { a: null, d: null } },
+      { x: { a: null, d: 3 } },
+      { x: { a: null, d: null } },
+    ]);
+  });
+
   it('select value', () => {
     expect(
       frum(data)

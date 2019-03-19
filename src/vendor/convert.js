@@ -1,6 +1,13 @@
-import { frum, leaves, length, toPairs } from './queryOps';
-import { isArray, isFunction, isNumeric, isObject, toArray } from './utils';
 import { parse } from 'query-string';
+import { frum, leaves, length, toPairs } from './queryOps';
+import {
+  isArray,
+  isFunction,
+  isNumeric,
+  isObject,
+  toArray,
+  exists,
+} from './utils';
 import strings from './strings';
 
 function FromQueryString(query) {
@@ -23,11 +30,11 @@ function FromQueryString(query) {
     .fromLeaves();
 }
 
-function ToQueryString(value) {
+function toQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) =>
     toArray(v)
-      .exists()
+      .filter(exists)
       .map(vv => {
         if (vv === true) return e(k);
 
@@ -117,4 +124,4 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
-export { FromQueryString, ToQueryString, value2json, json2value };
+export { FromQueryString, toQueryString, value2json, json2value };
