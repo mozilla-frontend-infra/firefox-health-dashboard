@@ -1,7 +1,14 @@
 import { parse } from 'query-string';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import { isArray, isFunction, isNumeric, isObject, toArray, exists } from './utils';
+import {
+  isArray,
+  isFunction,
+  isNumeric,
+  isObject,
+  toArray,
+  exists,
+} from './utils';
 import strings from './strings';
 
 function FromQueryString(query) {
