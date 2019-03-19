@@ -13,6 +13,7 @@ import {
   literalField,
   missing,
   toArray,
+  isFunction,
 } from './utils';
 import { sum } from './math';
 import Data from './Data';
@@ -28,8 +29,9 @@ function preSelector(columnName) {
     // select many columns
     return internalFrum(columnName)
       .sortBy()
-      .map(name=>{
+      .map(name => {
         if (isString(name)) return [[row => Data.get(row, name), name]];
+
         return preSelector(name).map(([s, n]) => [s, concatField(name, n)]);
       })
       .flatten();
@@ -277,22 +279,20 @@ class ArrayWrapper {
     });
   }
 
-  sortBy(selector) {
-    let sorted = null;
-    if (missing(selector)){
+  sortBy(selectors) {
+    const func = toArray(selectors).map(selector => {
+      if (missing(selector)) {
+        return ([arg]) => arg;
+      } else if (isFunction(selector)) {
+        return args => selector(...args);
+      } else {
+        const temp = jx(selector);
+        return ([arg]) => temp(arg);
+      }
+    });
 
-      sorted = lodashSortBy(Array.from(this.argsGen()), ([arg]) =>
-        arg
-      );
 
-    } else{
-      sorted = lodashSortBy(Array.from(this.argsGen()), ([...args]) =>
-        selector(...args)
-      );
-
-
-    }
-
+    const sorted = lodashSortBy(Array.from(this.argsGen()), func);
     return new ArrayWrapper(function* outputGen() {
       for (const args of sorted) yield args;
     });

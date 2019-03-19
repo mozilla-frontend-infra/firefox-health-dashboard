@@ -1,16 +1,18 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-use-before-define */
 
-import { exists, first, missing, toArray } from './utils';
+import { exists, first, isString, missing, toArray } from './utils';
 import Data from './Data';
 
 const jx = expr => {
+  if (isString(expr)) return row => Data.get(row, expr);
+
   const output = first(
     Object.entries(expr).map(([op, term]) => {
       const func = expressions[op];
 
       if (func === undefined) {
-        throw new Error(`expecting a known operator,  not {{oop}}${op}`);
+        throw new Error(`expecting a known operator,  not {{op}}${op}`);
       }
 
       return func(term);
