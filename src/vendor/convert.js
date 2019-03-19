@@ -1,7 +1,7 @@
 import { parse } from 'query-string';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import { isFunction, isNumeric, isObject, toArray, isArray } from './utils';
+import { isArray, isFunction, isNumeric, isObject, toArray, exists } from './utils';
 import strings from './strings';
 
 function FromQueryString(query) {
@@ -28,7 +28,7 @@ function ToQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) =>
     toArray(v)
-      .exists()
+      .filter(exists)
       .map(vv => {
         if (vv === true) return e(k);
 

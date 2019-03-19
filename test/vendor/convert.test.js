@@ -72,7 +72,10 @@ describe('convert', () => {
     reversable.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
   });
 
-  const toQuery = [[{ a: null }, ''][({ a: [1, null, ''] }, 'a=1')]];
+  const toQuery = [
+    [{a: null}, ''],
+    [{a: [1, null, '']}, 'a=1'],
+  ];
 
   it('ToQueryString2', () => {
     toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
