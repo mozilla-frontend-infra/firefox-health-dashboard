@@ -27,23 +27,25 @@ function preSelector(columnName) {
   if (isArray(columnName)) {
     // select many columns
     return internalFrum(columnName)
-      .map(preSelector)
-      .flatten()
-      .sortBy(([, b]) => b);
+      .sortBy()
+      .map(name=>{
+        if (isString(name)) return [[row => Data.get(row, name), name]];
+        return preSelector(name).map(([s, n]) => [s, concatField(name, n)]);
+      })
+      .flatten();
   }
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map(preSelector)
-      .sortBy((selectors, n) => n)
-      .map((selectors, name) => [
-        row => Data.zip(selectors.map(([f, n]) => [n, f(row)])),
-        name,
-      ]);
+      .sortBy((selectors, name) => name)
+      .map((selector, name) =>
+        preSelector(selector).map(([s, n]) => [s, concatField(name, n)])
+      )
+      .flatten();
   }
 
   if (isString(columnName)) {
-    return [[row => Data.get(row, columnName), columnName]];
+    return [[row => Data.get(row, columnName), '.']];
   }
 }
 
@@ -65,7 +67,7 @@ function selector(columnName) {
     // select many columns
     const cs = preSelector(columnName).args();
 
-    return row => cs.map(func => func(row)).fromPairs();
+    return row => cs.map(func => func(row)).fromLeaves();
   }
 
   if (isString(columnName)) {
@@ -276,9 +278,20 @@ class ArrayWrapper {
   }
 
   sortBy(selector) {
-    const sorted = lodashSortBy(Array.from(this.argsGen()), ([...args]) =>
-      selector(...args)
-    );
+    let sorted = null;
+    if (missing(selector)){
+
+      sorted = lodashSortBy(Array.from(this.argsGen()), ([arg]) =>
+        arg
+      );
+
+    } else{
+      sorted = lodashSortBy(Array.from(this.argsGen()), ([...args]) =>
+        selector(...args)
+      );
+
+
+    }
 
     return new ArrayWrapper(function* outputGen() {
       for (const args of sorted) yield args;
