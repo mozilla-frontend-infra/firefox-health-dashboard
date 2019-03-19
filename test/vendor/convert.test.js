@@ -48,6 +48,8 @@ describe('convert', () => {
     [{ a: '{}' }, 'a=%7B%7D'],
     [{ a: '=' }, 'a=%3D'],
     [{ a: '+' }, 'a=%2B'],
+    [{ a: 42 }, 'a=42'],
+    // [{ a: '' }, 'a='],
     [{ a: false }, 'a=false'],
     [{ a: true }, 'a'],
     // https://www.w3.org/Addressing/URL/uri-spec.html#z5
