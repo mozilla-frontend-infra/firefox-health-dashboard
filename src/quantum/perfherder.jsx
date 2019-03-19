@@ -15,17 +15,17 @@ import {
   timeMonth,
 } from 'd3';
 import { stringify } from 'query-string';
-import { CriticalErrorMessage } from '../components/criticalErrorMessage';
+import { withErrorBoundary } from '../vendor/errors';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
 const tickCount = 4;
 
-export default class PerfherderWidget extends React.Component {
+class PerfherderWidget extends React.Component {
   state = {};
 
-  componentDidMount() {
-    this.fetch();
+  async componentDidMount() {
+    await this.fetch();
   }
 
   async fetch() {
@@ -45,30 +45,21 @@ export default class PerfherderWidget extends React.Component {
       signatures: [...splitSignatures.keys()],
       framework,
     });
+    const evolutions = await (await fetch(
+      `${SETTINGS.backend}/api/perf/herder?${query}`
+    )).json();
 
-    try {
-      const evolutions = await (await fetch(
-        `${SETTINGS.backend}/api/perf/herder?${query}`
-      )).json();
-
-      this.setState({
-        evolutions,
-        signatures: splitSignatures,
-        signatureLabels,
-      });
-    } catch (e) {
-      this.setState({ error: true });
-    }
+    this.setState({
+      evolutions,
+      signatures: splitSignatures,
+      signatureLabels,
+    });
   }
 
   render() {
     const { explainer, framework } = this.props;
-    const { evolutions, signatures, signatureLabels, error } = this.state;
+    const { evolutions, signatures, signatureLabels } = this.state;
     let svg = null;
-
-    if (error) {
-      return <CriticalErrorMessage />;
-    }
 
     if (evolutions) {
       const busy = signatures.size > 5;
@@ -255,6 +246,7 @@ export default class PerfherderWidget extends React.Component {
 
     return (
       <Widget
+        key={this.props.title}
         {...this.props}
         link={link}
         target={
@@ -276,9 +268,12 @@ PerfherderWidget.defaultProps = {
   reference: '',
 };
 PerfherderWidget.propTypes = {
+  title: PropTypes.string.isRequired,
   signatures: PropTypes.object,
   framework: PropTypes.number,
   explainer: PropTypes.string,
   reference: PropTypes.string,
   target: PropTypes.string,
 };
+
+export default withErrorBoundary(PerfherderWidget);

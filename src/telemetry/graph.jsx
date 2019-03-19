@@ -4,24 +4,12 @@ import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
-import { withStyles } from '@material-ui/core/styles';
 import SETTINGS from '../settings';
-import { DefaultErrorMessage } from '../components/criticalErrorMessage';
-
-const styles = {
-  errorPanel: {
-    margin: '40px auto',
-    width: '50%',
-  },
-};
+import { withErrorBoundary } from '../vendor/errors';
 
 class TelemetryContainer extends React.Component {
-  state = {
-    error: false,
-  };
-
   async componentDidMount() {
-    this.fetchPlotGraph(this.props.id, this.props.queryParams);
+    await this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
 
   async fetchPlotGraph(id, queryParams) {
@@ -44,10 +32,10 @@ class TelemetryContainer extends React.Component {
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
-    } catch (error) {
-      this.setState({ error: true });
+    } catch (cause) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      console.warn(`Problem loading ${url}`);
+      throw cause;
     }
   }
 
@@ -79,8 +67,7 @@ class TelemetryContainer extends React.Component {
   }
 
   render() {
-    const { id, title, classes } = this.props;
-    const { error } = this.state;
+    const { id, title } = this.props;
 
     if (title) {
       return (
@@ -94,20 +81,16 @@ class TelemetryContainer extends React.Component {
               </a>
             </h3>
           </header>
-          {error ? (
-            <DefaultErrorMessage style={classes.errorPanel} />
-          ) : (
-            <div>
-              <div
-                className="graph-subtitle"
-                ref={div => (this.graphSubtitleEl = div)}>
-                {}
-              </div>
-              <div className="graph" ref={div => (this.graphEl = div)}>
-                <div className="graph-legend">{}</div>
-              </div>
+          <div>
+            <div
+              className="graph-subtitle"
+              ref={div => (this.graphSubtitleEl = div)}>
+              {}
             </div>
-          )}
+            <div className="graph" ref={div => (this.graphEl = div)}>
+              <div className="graph-legend">{}</div>
+            </div>
+          </div>
         </div>
       );
     }
@@ -120,4 +103,4 @@ TelemetryContainer.propTypes = {
   queryParams: PropTypes.shape({}),
 };
 
-export default withStyles(styles)(TelemetryContainer);
+export default withErrorBoundary(TelemetryContainer);

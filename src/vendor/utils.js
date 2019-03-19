@@ -1,3 +1,4 @@
+/* global window */
 /* eslint-disable no-restricted-syntax */
 
 function missing(value) {

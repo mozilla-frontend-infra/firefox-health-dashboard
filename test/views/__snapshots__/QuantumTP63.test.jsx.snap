@@ -167,7 +167,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Facebook
@@ -215,7 +215,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Amazon
@@ -263,7 +263,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: YouTube
@@ -311,7 +311,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Google
@@ -359,7 +359,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Imdb
@@ -407,7 +407,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Imgur
@@ -455,7 +455,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Wikia
@@ -503,7 +503,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Bing
@@ -551,7 +551,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Yandex
@@ -599,7 +599,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Apple
@@ -647,7 +647,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Microsoft
@@ -695,7 +695,7 @@ exports[`renders correctly integer 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6: Reddit

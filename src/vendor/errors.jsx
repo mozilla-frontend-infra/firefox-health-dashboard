@@ -1,154 +1,132 @@
-/* eslint-disable react/no-multi-comp */
+import Raven from 'raven-js';
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
-import { expand } from './Template';
+import SETTINGS from './settings';
 
-const newIssue =
-  'https://github.com/mozilla/firefox-health-dashboard/issues/new';
-const BasicError = ({ error }) => {
-  if (error.toString)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.toString()}</pre>;
-
-  if (error.template)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.template}</pre>;
-
-  if (error.cause && error.cause.message)
-    return <pre style={{ fontSize: '1.0rem' }}>{error.cause.message}</pre>;
-
-  return (
-    <p style={{ fontSize: '1.0rem' }}>
-      <span>
-        There has been a critical error. We have reported it. If the issue is
-        not fixed within few hours please file an issue:
-        <br />
-        <a href={newIssue} target="_blank" rel="noopener noreferrer">
-          {newIssue}
-        </a>
-      </span>
-    </p>
-  );
-};
-
-class Exception extends Error {
-  constructor(template, params, cause) {
-    super();
-    let t = null;
-    let c = null;
-    let p = null;
-
-    if (template instanceof Exception || template instanceof Error) {
-      c = template;
-    } else if (
-      missing(cause) &&
-      (params instanceof Exception || params instanceof Error)
-    ) {
-      t = template;
-      c = params;
-    } else {
-      t = template;
-      p = params;
-      c = cause ? cause.toString() : '';
-    }
-
-    this.template = t; // string descripbing the problem
-    this.props = p; // object with properties used by template
-    this.cause = c; // chained reason
-  }
-
-  toString() {
-    if (missing(this.template)) {
-      return this.cause.toString();
-    }
-
-    let output = expand(this.template, this.props);
-
-    if (this.cause) {
-      output = `${output}\ncaused by\n${this.cause.toString()}`;
-    }
-
-    return output;
-  }
+if (process.env.NODE_ENV === 'production') {
+  Raven.config(
+    'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
+  ).install();
 }
 
-Exception.wrap = err => {
-  if (err instanceof Exception) {
-    return err;
+const reportOrLog = (error, info) => {
+  if (process.env.NODE_ENV === 'production') {
+    Raven.captureException(error);
   }
 
-  return new Exception(err);
-};
-
-class Log {}
-
-Log.error = (template, params, cause) => {
-  throw new Exception(template, params, cause);
-};
-
-Log.warning = (template, params, cause) => {
-  const e = new Exception(template, params, cause);
-
-  // eslint-disable-next-line no-console
-  console.log(e.toString());
-};
-
-class ErrorMessage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  if (info) {
+    if (process.env.NODE_ENV === 'production') {
+      Raven.captureMessage(info);
+    }
   }
+};
 
-  componentDidCatch(err, info) {
-    const error = Exception.wrap(err, info);
+const RED = SETTINGS.colors.error;
+const styles = {
+  container: {
+    position: 'relative',
+    height: '100%',
+    width: '100%',
+  },
+  frame: {
+    boxSizing: 'border-box',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    borderStyle: 'solid',
+    borderWidth: '0.2rem',
+    borderColor: RED,
+    pointerEvents: 'none',
+  },
+  message: {
+    boxSizing: 'border-box',
+    backgroundColor: RED,
+    color: 'white',
+    width: '100%',
+    position: 'absolute',
+    margin: 0,
+    padding: 0,
+    bottom: 0,
+    height: '1.0rem',
+    textAlign: 'center',
+    opacity: 0.77,
+  },
+};
 
-    this.setState({ error });
-
-    Log.warning(err);
-  }
-
+class RawErrorMessage extends React.Component {
   render() {
-    const { error } = this.state;
+    const {
+      error,
+      classes: { container, frame, message },
+      children,
+    } = this.props;
 
-    if (error) return this.props.template({ error });
-
-    const parent = this;
-    const handleError = error => parent.componentDidCatch(error);
-
-    try {
-      return React.Children.map(this.props.children, child =>
-        React.cloneElement(child, { handleError })
-      );
-    } catch (error) {
-      this.setState({ error });
-    }
+    return (
+      <div className={container}>
+        {children}
+        <div className={frame} />
+        <div className={message}>{error.message}</div>
+      </div>
+    );
   }
 }
 
-ErrorMessage.propTypes = {
-  template: PropTypes.func.isRequired,
-};
-
-ErrorMessage.defaultProps = {
-  template: BasicError,
-};
-
+const ErrorMessage = withStyles(styles)(RawErrorMessage);
 const withErrorBoundary = WrappedComponent => {
-  class ErrorBoundary extends ErrorMessage {
-    render() {
-      const self = this;
+  if (
+    WrappedComponent.displayName &&
+    WrappedComponent.displayName.startsWith('WithStyles')
+  ) {
+    throw new Error(
+      'Can not wrap WithStyles because componentDidMount() returns undefined'
+    );
+  }
 
-      return (
-        <ErrorMessage>
-          <WrappedComponent
-            handleError={self.componentDidCatch}
-            {...this.props}
-          />
-        </ErrorMessage>
-      );
+  class ErrorBoundary extends WrappedComponent {
+    constructor(...props) {
+      super(...props);
+
+      if (missing(this.state)) {
+        this.state = {};
+      }
+    }
+
+    componentDidCatch(error, info) {
+      this.setState({ error });
+
+      reportOrLog(error, info);
+
+      // eslint-disable-next-line no-console
+      console.warn(error);
+    }
+
+    async componentDidMount() {
+      try {
+        await super.componentDidMount();
+      } catch (error) {
+        this.componentDidCatch(error);
+      }
+    }
+
+    render() {
+      const { error } = this.state;
+
+      try {
+        if (error) {
+          return <ErrorMessage error={error}>{super.render()}</ErrorMessage>;
+        }
+
+        return super.render();
+      } catch (error) {
+        return <ErrorMessage error={error} />;
+      }
     }
   }
 
   return ErrorBoundary;
 };
 
-export { Exception, withErrorBoundary, ErrorMessage, Log };
+export { withErrorBoundary, ErrorMessage, reportOrLog };

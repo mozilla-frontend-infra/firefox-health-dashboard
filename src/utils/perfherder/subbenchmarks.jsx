@@ -37,7 +37,9 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
     .toArray();
 
   if (result.length !== 1) {
-    throw Error(`We should have an array of 1 not ${result.length}`);
+    throw new Error('We should have an array of 1 not {{length}}', {
+      length: result.length,
+    });
   }
 
   return result[0];

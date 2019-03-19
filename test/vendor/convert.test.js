@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* global describe, it */
 import {
   value2json,

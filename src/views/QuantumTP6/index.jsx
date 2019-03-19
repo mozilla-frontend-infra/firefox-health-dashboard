@@ -4,12 +4,11 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { frum } from '../../vendor/queryOps';
-import { TP6_TESTS, TP6_PAGES } from '../../quantum/config';
+import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
 import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import { InvalidUrlMessage } from '../../components/criticalErrorMessage';
 
 const styles = {
   body: {
@@ -30,41 +29,40 @@ class TP6 extends React.Component {
         .first().label
     } on ${bits} bits`;
 
-    if (bits === 32 || bits === 64)
-      return (
-        <div className={classes.body}>
-          <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
-            {navigation}
-            <Grid container spacing={24}>
-              {frum(TP6_PAGES)
-                .where({ bits })
-                .groupBy('title')
-                .map((series, title) => (
-                  <Grid
-                    item
-                    xs={6}
-                    key={`page_${title}_${test}_${bits}`}
-                    className={classes.chart}>
-                    <PerfherderGraphContainer
-                      title={title}
-                      series={frum(series)
-                        .sortBy(['browser'])
-                        .reverse()
-                        .map(s => ({
-                          label: s.label,
-                          seriesConfig: { ...s, test },
-                          options: { includeSubtests: true },
-                        }))
-                        .toArray()}
-                    />
-                  </Grid>
-                ))}
-            </Grid>
-          </DashboardPage>
-        </div>
-      );
+    if (bits !== 32 && bits !== 64) throw new Error('Invalid URL');
 
-    return <InvalidUrlMessage />;
+    return (
+      <div className={classes.body}>
+        <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
+          {navigation}
+          <Grid container spacing={24}>
+            {frum(TP6_PAGES)
+              .where({ bits })
+              .groupBy('title')
+              .map((series, title) => (
+                <Grid
+                  item
+                  xs={6}
+                  key={`page_${title}_${test}_${bits}`}
+                  className={classes.chart}>
+                  <PerfherderGraphContainer
+                    title={title}
+                    series={frum(series)
+                      .sortBy(['browser'])
+                      .reverse()
+                      .map(s => ({
+                        label: s.label,
+                        seriesConfig: { ...s, test },
+                        options: { includeSubtests: true },
+                      }))
+                      .toArray()}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </DashboardPage>
+      </div>
+    );
   }
 }
 

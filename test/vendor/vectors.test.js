@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* global describe, it */
 import { frum, leaves, toPairs } from '../../src/vendor/queryOps';
 

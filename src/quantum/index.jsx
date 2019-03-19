@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
-import Perfherder from './perfherder';
+import PerfherderWidget from './perfherder';
 import { frum, toPairs } from '../vendor/queryOps';
 import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
@@ -13,7 +13,6 @@ import {
   statusLabels,
 } from './constants';
 import { CONFIG, TP6_PAGES } from './config';
-import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {
@@ -38,12 +37,12 @@ export default class QuantumIndex extends React.Component {
       bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
       bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
-    const sections = wrapSectionComponentsWithErrorBoundaries([
+    const sections = [
       {
         title: 'Benchmarks',
         rows: [
           ...regressionConfig.map(config => (
-            <Perfherder {...config} key={config.title} />
+            <PerfherderWidget {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
             key="speedometer"
@@ -81,11 +80,13 @@ export default class QuantumIndex extends React.Component {
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
-              key="page-load-tests-(tp6)"
+              // eslint-disable-next-line react/no-array-index-key
+              key={`page_${title}_${bits}`}
               title={title}
               series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
           ))
+          .enumerate()
           .limit(4),
       },
       {
@@ -489,9 +490,9 @@ export default class QuantumIndex extends React.Component {
           />,
         ],
       },
-    ]);
+    ];
     const reduced = sections.map(
-      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+      ({ title, more, rows, cssRowExtraClasses }) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -505,13 +506,13 @@ export default class QuantumIndex extends React.Component {
                 statusList.secondary += 1;
               }
 
-              const id = wi + title; // make unique id for key
+              const id = `${wi}${title}`; // make unique id for key
 
               return (
                 <Grid
+                  key={`grid_${id}`}
                   item
                   xs={6}
-                  key={`page_${title}_${id}`}
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
                   }>
@@ -539,10 +540,9 @@ export default class QuantumIndex extends React.Component {
             return null;
           })
           .exists();
-        const secId = sectionId + title; // make unique section id for key
 
         return (
-          <div key={secId}>
+          <div key={title}>
             <h2 className="section-header">
               <span>
                 {`${title}`}

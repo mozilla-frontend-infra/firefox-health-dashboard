@@ -18,7 +18,7 @@ class BugzillaUrlContainer extends Component {
   };
 
   async componentDidMount() {
-    this.generateUrls(this.props);
+    await this.generateUrls(this.props);
   }
 
   async generateUrls({ includeBugCount, queries }) {

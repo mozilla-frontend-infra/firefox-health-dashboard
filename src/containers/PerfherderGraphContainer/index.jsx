@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import getPerfherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = () => ({
   title: {
@@ -26,13 +27,13 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetData(this.props);
+    await this.fetchSetData(this.props);
   }
 
   async fetchSetData({ series }) {
     try {
       this.setState({ isLoading: true });
-      this.setState(await getPerferherderData(series));
+      this.setState(await getPerfherderData(series));
     } finally {
       this.setState({ isLoading: false });
     }
@@ -57,7 +58,6 @@ class PerfherderGraphContainer extends Component {
           data={data}
           isLoading={isLoading}
           options={options}
-          missingDataError
         />
       </div>
     );
@@ -85,4 +85,4 @@ PerfherderGraphContainer.propTypes = {
   timeRange: PropTypes.string,
 };
 
-export default withStyles(styles)(PerfherderGraphContainer);
+export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));

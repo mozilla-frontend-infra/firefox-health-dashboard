@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* global describe, it */
 import strings from '../../src/vendor/strings';
 

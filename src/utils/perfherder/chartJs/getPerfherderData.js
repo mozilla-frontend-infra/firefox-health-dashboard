@@ -38,7 +38,7 @@ const getPerfherderData = async series => {
 
   if (missing(newData[0]))
     throw new Error(
-      `can not data for ${JSON.stringify(series[0].seriesConfig)}`
+      `can not get data for ${JSON.stringify(series[0].seriesConfig)}`
     );
 
   return perfherderFormatter(newData);

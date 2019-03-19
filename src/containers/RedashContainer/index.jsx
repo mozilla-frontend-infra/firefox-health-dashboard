@@ -5,6 +5,7 @@ import { Lock } from '@material-ui/icons';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import telemetryDataToDatasets from '../../utils/chartJs/redashFormatter';
 import fetchJson from '../../utils/fetchJson';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = {
   linkContainer: {
@@ -56,7 +57,7 @@ class RedashContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetState(this.props);
+    await this.fetchSetState(this.props);
   }
 
   async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
@@ -101,4 +102,4 @@ class RedashContainer extends Component {
   }
 }
 
-export default withStyles(styles)(RedashContainer);
+export default withStyles(styles)(withErrorBoundary(RedashContainer));

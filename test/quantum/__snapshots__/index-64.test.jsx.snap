@@ -184,7 +184,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Speedometer
@@ -254,7 +254,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Facebook
@@ -302,7 +302,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Amazon
@@ -350,7 +350,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: YouTube
@@ -398,7 +398,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tp6: Google
@@ -459,7 +459,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Page load (tp5)
@@ -507,7 +507,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Window Opening (tpaint e10s)
@@ -555,7 +555,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-up (sessionrestore)
@@ -603,7 +603,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-up (sessionrestore_no_auto_restore)
@@ -651,7 +651,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Start-Up (ts_paint)
@@ -699,7 +699,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Opening (tabpaint)
@@ -747,7 +747,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Animation (TART)
@@ -795,7 +795,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               Tab Switch (tps)
@@ -843,7 +843,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvg_static)
@@ -891,7 +891,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvgr_opacity)
@@ -939,7 +939,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-101"
+            className="ErrorBoundary-title-101"
           >
             <span>
               SVG (tsvgx)
