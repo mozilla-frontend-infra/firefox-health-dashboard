@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="DashboardPage-root-2"
+>
+  <div
+    className="DashboardPage-title-3"
+  >
+    <h1
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
+      JavaScript Performance dashboard
+      <small
+        className="DashboardPage-subtitle-4"
+      />
+    </h1>
+    <span
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      <a
+        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+      >
+        <img
+          alt="Go to Github Repo"
+          src="test-file-stub"
+          style={
+            Object {
+              "padding": "0 0.5rem 0 0",
+              "width": "2rem",
+            }
+          }
+        />
+      </a>
+    </span>
+  </div>
+  <div
+    className="JsTeam-content-1"
+  >
+    Under construction. Welcome to the future home of arewefastyet.com!
+  </div>
+</div>
+`;

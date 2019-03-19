@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="DashboardPage-root-1"
+>
+  <div
+    className="DashboardPage-title-2"
+  >
+    <h1
+      style={
+        Object {
+          "display": "inline",
+        }
+      }
+    >
+      Android
+      <small
+        className="DashboardPage-subtitle-3"
+      >
+        Release criteria
+      </small>
+    </h1>
+    <span
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      <a
+        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+      >
+        <img
+          alt="Go to Github Repo"
+          src="test-file-stub"
+          style={
+            Object {
+              "padding": "0 0.5rem 0 0",
+              "width": "2rem",
+            }
+          }
+        />
+      </a>
+    </span>
+  </div>
+  <div>
+    <div
+      className="Section-header-5"
+    >
+      <h2
+        className="Section-title-6"
+      >
+        <span>
+          Nimbledroid
+          <span
+            className="Section-subtitle-7"
+          >
+            GeckoView Example vs Chrome Beta
+          </span>
+        </span>
+      </h2>
+    </div>
+    <div
+      className="Section-content-4"
+    />
+  </div>
+</div>
+`;
