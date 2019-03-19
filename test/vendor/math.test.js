@@ -11,7 +11,7 @@ import {
   roundMetric,
   sum,
 } from '../../src/vendor/math';
-import { frum } from '../../src/vendor/queryOps';
+import { fluent } from '../../src/vendor/fluent';
 
 const data = [1, null, '', 2, 3];
 
@@ -37,7 +37,7 @@ describe('math', () => {
   });
 
   it('ceiling', () => {
-    const result = frum(data)
+    const result = fluent(data)
       .map(v => ceiling(v, 2))
       .toArray();
 
@@ -79,7 +79,7 @@ describe('math', () => {
   });
 
   it('floor', () => {
-    const result = frum(data)
+    const result = fluent(data)
       .map(v => floor(v, 2))
       .toArray();
 

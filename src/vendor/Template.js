@@ -1,5 +1,5 @@
 import { coalesce, isObject, isString, missing } from './utils';
-import { toPairs } from './queryOps';
+import { toPairs } from './fluent';
 import Data from './Data';
 import strings from './strings';
 

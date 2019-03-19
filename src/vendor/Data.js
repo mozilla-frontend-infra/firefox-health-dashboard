@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs } from './queryOps';
+import { toPairs } from './fluent';
 import {
   coalesce,
   exists,

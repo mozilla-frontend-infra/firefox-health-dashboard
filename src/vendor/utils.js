@@ -1,6 +1,6 @@
 /* global window */
 /* eslint-disable no-restricted-syntax */
-import { ArrayWrapper } from './queryOps';
+import { ArrayWrapper } from './fluent';
 
 const { isArray } = Array;
 

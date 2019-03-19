@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import React, { Component } from 'react';
 import Chart from 'react-chartjs-2';
-import { frum } from '../vendor/queryOps';
+import { fluent } from '../vendor/fluent';
 import { missing } from '../vendor/utils';
 import { withNavigation } from '../vendor/utils/navigation';
 import { TP6_TESTS, TP6M_PAGES } from '../quantum/config';
@@ -17,12 +17,12 @@ class TP6mAggregate extends Component {
 
   async componentDidMount() {
     // ALL LOADTIME FOR ALL SUITES IN SET
-    const pages = frum(TP6M_PAGES);
+    const pages = fluent(TP6M_PAGES);
     // WHAT ARE THE SIGNATURES OF THE loadtime?
     const data = await getData(pages.select('framework'), {
       and: [
         { prefix: { suite: 'raptor-tp6m-' } },
-        { in: { test: frum(TP6_TESTS).select('id') } },
+        { in: { test: fluent(TP6_TESTS).select('id') } },
         {
           or: pages.select({
             eq: ['suite', 'framework', 'platform'],

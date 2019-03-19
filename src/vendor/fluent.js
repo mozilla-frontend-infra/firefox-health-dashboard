@@ -19,7 +19,7 @@ import { sum } from './math';
 import Data from './Data';
 import { jx } from './expressions';
 
-let internalFrum = null;
+let internalfluent = null;
 let internalToPairs = null;
 
 function preSelector(columnName) {
@@ -27,7 +27,7 @@ function preSelector(columnName) {
 
   if (isArray(columnName)) {
     // select many columns
-    return internalFrum(columnName)
+    return internalfluent(columnName)
       .sortBy()
       .map(name => {
         if (isString(name)) return [[row => Data.get(row, name), name]];
@@ -408,7 +408,7 @@ class ArrayWrapper {
   }
 }
 
-function frum(list) {
+function fluent(list) {
   if (list instanceof ArrayWrapper) {
     return list;
   }
@@ -418,7 +418,7 @@ function frum(list) {
   });
 }
 
-internalFrum = frum;
+internalfluent = fluent;
 
 function toPairs(obj) {
   // convert Object (or Data) into [value, key] pairs
@@ -471,7 +471,7 @@ function extendWrapper(methods) {
   internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     ArrayWrapper.prototype[name] = function anonymous(...args) {
-      return internalFrum(method(this.toArray(), ...args));
+      return internalfluent(method(this.toArray(), ...args));
     };
   });
 }
@@ -487,11 +487,11 @@ extendWrapper({
   // where each element has properties; from one of each list: { ...a, ...b }
   // but only include elements where b[propB]==a[propA] (b ∈ listB, a ∈ listA)
   join: function join(listA, propA, listB, propB) {
-    const lookup = internalFrum(listB)
+    const lookup = internalfluent(listB)
       .groupBy(propB)
       .fromPairs();
 
-    return internalFrum(listA)
+    return internalfluent(listA)
       .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
   },
@@ -505,4 +505,4 @@ extendWrapper({
   },
 });
 
-export { frum, toPairs, leaves, first, last, length, ArrayWrapper };
+export { fluent, toPairs, leaves, first, last, length, ArrayWrapper };

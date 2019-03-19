@@ -10,7 +10,7 @@ import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer'
 import RedashContainer from '../../containers/RedashContainer';
 import SETTINGS from '../../settings';
 import CONFIG from '../../utils/nimbledroid/config';
-import { frum } from '../../vendor/queryOps';
+import { fluent } from '../../vendor/fluent';
 import { TP6M_PAGES } from '../../quantum/config';
 
 class Android extends Component {
@@ -82,7 +82,7 @@ class Android extends Component {
           title="Page Load tests (TP6m)"
           more="/android/tp6m?test=loadtime">
           <Grid container spacing={24}>
-            {frum(TP6M_PAGES)
+            {fluent(TP6M_PAGES)
               .where({
                 platform: 'android-hw-g5-7-0-arm7-api-16',
                 title: [
@@ -97,7 +97,7 @@ class Android extends Component {
                 <Grid item xs={6} key={`page_${title}_loadtime`}>
                   <PerfherderGraphContainer
                     title={title}
-                    series={frum(series)
+                    series={fluent(series)
                       .sortBy(['browser'])
                       .reverse()
                       .map(s => ({

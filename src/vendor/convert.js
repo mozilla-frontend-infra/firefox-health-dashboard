@@ -1,5 +1,5 @@
 import { parse } from 'query-string';
-import { frum, leaves, length, toPairs } from './queryOps';
+import { fluent, leaves, length, toPairs } from './fluent';
 import {
   isArray,
   isFunction,
@@ -63,7 +63,7 @@ function prettyJSON(json, maxDepth) {
 
   try {
     if (Array.isArray(json)) {
-      const output = frum(json)
+      const output = fluent(json)
         .map(v => {
           if (v === undefined) return;
 

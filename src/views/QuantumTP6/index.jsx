@@ -3,7 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { frum } from '../../vendor/queryOps';
+import { fluent } from '../../vendor/fluent';
 import { TP6_PAGES, TP6_TESTS } from '../../quantum/config';
 import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
@@ -24,7 +24,7 @@ class TP6 extends React.Component {
   render() {
     const { classes, navigation, test, bits } = this.props;
     const subtitle = `${
-      frum(TP6_TESTS)
+      fluent(TP6_TESTS)
         .where({ id: test })
         .first().label
     } on ${bits} bits`;
@@ -36,7 +36,7 @@ class TP6 extends React.Component {
         <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
           {navigation}
           <Grid container spacing={24}>
-            {frum(TP6_PAGES)
+            {fluent(TP6_PAGES)
               .where({ bits })
               .groupBy('title')
               .map((series, title) => (
@@ -47,7 +47,7 @@ class TP6 extends React.Component {
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     title={title}
-                    series={frum(series)
+                    series={fluent(series)
                       .sortBy(['browser'])
                       .reverse()
                       .map(s => ({

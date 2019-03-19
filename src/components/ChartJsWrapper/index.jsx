@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
 import { ErrorMessage } from '../../vendor/errors';
-import { frum } from '../../vendor/queryOps';
+import { fluent } from '../../vendor/fluent';
 
 const styles = {
   // This div helps with canvas size changes
@@ -53,7 +53,7 @@ const ChartJsWrapper = ({
 
     data.datasets.forEach(dataset => {
       const latestDataDate = new Date(
-        frum(dataset.data)
+        fluent(dataset.data)
           .sort('x')
           .last().x
       );

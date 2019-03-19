@@ -4,7 +4,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
-import { frum } from '../../queryOps';
+import { fluent } from '../../fluent';
 import Data from '../../Data';
 import { toQueryString, FromQueryString } from '../../convert';
 
@@ -20,7 +20,7 @@ function withNavigation(config) {
   // Adds properties to `props`:
   // * `navigation` - that contains a Navigation component
   //   to include on `render()`
-  // * properties with names frum(config).select("id")
+  // * properties with names fluent(config).select("id")
 
   return WrappedComponent => {
     class Output extends React.Component {
@@ -32,7 +32,7 @@ function withNavigation(config) {
         this.params = params;
 
         // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
-        this.state = frum(config)
+        this.state = fluent(config)
           .map(({ id, defaultValue }) => [params[id] || defaultValue, id])
           .args()
           .fromPairs();

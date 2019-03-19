@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import { toQueryString } from './convert';
 import { missing, toArray, first } from './utils';
-import { frum, toPairs } from './queryOps';
+import { fluent, toPairs } from './fluent';
 import { TREEHERDER } from './perf-goggles';
 import fetchJson from '../utils/fetchJson';
 import { jx } from './expressions';
@@ -28,7 +28,7 @@ const getAllOptions = (async () => {
   const response = await fetch(`${TREEHERDER}/api/optioncollectionhash/`);
   const output = await response.json();
 
-  return frum(output)
+  return fluent(output)
     .map(({ option_collection_hash, options }) => [
       first(options).name,
       option_collection_hash,
@@ -72,13 +72,13 @@ const getFramework = async framework => {
 const getSignatures = async (framework, condition) => {
   await Promise.all(toArray(framework).map(getFramework));
 
-  return frum(PERFHERDER.signatures).filter(jx(condition));
+  return fluent(PERFHERDER.signatures).filter(jx(condition));
 };
 
 const dataCache = {};
 const getDataBySignature = async signatures => {
   // SCHEDULE ANY MISSING SIGNATURES
-  frum(signatures)
+  fluent(signatures)
     .filter(s => missing(dataCache[s]))
     .chunk(20)
     .forEach(sigs => {
@@ -94,7 +94,7 @@ const getDataBySignature = async signatures => {
       })();
 
       // EACH dataCache IS A PROMISE TO THE SPECIFIC DATA
-      frum(sigs).forEach(signature => {
+      fluent(sigs).forEach(signature => {
         dataCache[signature] = (async () => ({
           signature,
           data: (await getData)[signature],
@@ -108,7 +108,7 @@ const getDataBySignature = async signatures => {
 const getData = async (framework, condition) => {
   const signatures = await getSignatures(framework, condition);
 
-  return getDataBySignature(frum(signatures).select('signature'));
+  return getDataBySignature(fluent(signatures).select('signature'));
 };
 
 export { getSignatures, getData };
