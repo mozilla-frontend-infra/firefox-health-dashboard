@@ -165,7 +165,7 @@ exports[`renders correctly 1`] = `
         >
           <div>
             <h2
-              className="PerfherderGraphContainer-title-119"
+              className="ErrorBoundary-title-119"
             >
               <span>
                 Tp6 mobile: Facebook
@@ -213,7 +213,7 @@ exports[`renders correctly 1`] = `
         >
           <div>
             <h2
-              className="PerfherderGraphContainer-title-119"
+              className="ErrorBoundary-title-119"
             >
               <span>
                 Tp6 mobile: Google
@@ -261,7 +261,7 @@ exports[`renders correctly 1`] = `
         >
           <div>
             <h2
-              className="PerfherderGraphContainer-title-119"
+              className="ErrorBoundary-title-119"
             >
               <span>
                 Tp6 mobile: Wikipedia
@@ -309,7 +309,7 @@ exports[`renders correctly 1`] = `
         >
           <div>
             <h2
-              className="PerfherderGraphContainer-title-119"
+              className="ErrorBoundary-title-119"
             >
               <span>
                 Tp6 mobile: YouTube
@@ -415,7 +415,7 @@ exports[`renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="RedashContainer-linkContainer-121"
+            className="ErrorBoundary-linkContainer-121"
           >
             <a
               href="https://sql.telemetry.mozilla.org/queries/59395"
@@ -423,13 +423,13 @@ exports[`renders correctly 1`] = `
               target="_blank"
             >
               <span
-                className="RedashContainer-middleVerticalAlignment-122"
+                className="ErrorBoundary-middleVerticalAlignment-122"
               >
                 Redash query
               </span>
               <svg
                 aria-hidden="true"
-                className="MuiSvgIcon-root-123 RedashContainer-middleVerticalAlignment-122"
+                className="MuiSvgIcon-root-123 ErrorBoundary-middleVerticalAlignment-122"
                 focusable="false"
                 role="presentation"
                 style={
@@ -487,7 +487,7 @@ exports[`renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="RedashContainer-linkContainer-121"
+            className="ErrorBoundary-linkContainer-121"
           >
             <a
               href="https://sql.telemetry.mozilla.org/queries/59397"
@@ -495,13 +495,13 @@ exports[`renders correctly 1`] = `
               target="_blank"
             >
               <span
-                className="RedashContainer-middleVerticalAlignment-122"
+                className="ErrorBoundary-middleVerticalAlignment-122"
               >
                 Redash query
               </span>
               <svg
                 aria-hidden="true"
-                className="MuiSvgIcon-root-123 RedashContainer-middleVerticalAlignment-122"
+                className="MuiSvgIcon-root-123 ErrorBoundary-middleVerticalAlignment-122"
                 focusable="false"
                 role="presentation"
                 style={
@@ -555,7 +555,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-119"
+            className="ErrorBoundary-title-119"
           >
             <span>
               Speedometer
@@ -599,7 +599,7 @@ exports[`renders correctly 1`] = `
         </div>
         <div>
           <h2
-            className="PerfherderGraphContainer-title-119"
+            className="ErrorBoundary-title-119"
           >
             <span>
               Unity WebGl

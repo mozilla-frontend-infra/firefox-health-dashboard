@@ -167,7 +167,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Amazon
@@ -215,7 +215,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Amazon Search
@@ -263,7 +263,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: All Recipes
@@ -311,7 +311,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Bing
@@ -359,7 +359,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Bing Restaurants
@@ -407,7 +407,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Booking
@@ -455,7 +455,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: CNN
@@ -503,7 +503,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: CNN AmpStories
@@ -551,7 +551,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Kleinanzeigen
@@ -599,7 +599,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Kleinanzeigen Search
@@ -647,7 +647,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: ESPN
@@ -695,7 +695,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Facebook
@@ -743,7 +743,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Google
@@ -791,7 +791,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Google Maps
@@ -839,7 +839,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Instagram
@@ -887,7 +887,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Imdb
@@ -935,7 +935,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Jianshu
@@ -983,7 +983,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Reddit
@@ -1031,7 +1031,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Stackoverflow
@@ -1079,7 +1079,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Web de
@@ -1127,7 +1127,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: Wikipedia
@@ -1175,7 +1175,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: YouTube
@@ -1223,7 +1223,7 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <h2
-            className="PerfherderGraphContainer-title-177"
+            className="ErrorBoundary-title-177"
           >
             <span>
               Tp6 mobile: YouTube Watch
