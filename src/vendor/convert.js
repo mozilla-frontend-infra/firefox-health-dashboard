@@ -1,51 +1,15 @@
-import { parse } from 'query-string';
+import qs from 'qs';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import { exists, isArray, isFunction, isObject, isString, toArray, } from './utils';
+import {
+  exists,
+  isArray,
+  isFunction,
+  isObject,
+  isString,
+  toArray,
+} from './utils';
 import strings from './strings';
-
-function FromQueryString(query) {
-  const decode = v => {
-    if (isArray(v)) return v.map(decode);
-
-    if (v === null || v === '') return true;
-
-    try {
-      return JSON.parse(v);
-    } catch (e) {
-      return v;
-    }
-  };
-
-  return toPairs(parse(query))
-    .map(decode)
-    .fromLeaves();
-}
-
-function ToQueryString(value) {
-  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
-  const encode = (v, k) =>
-    toArray(v)
-      .filter(exists)
-      .map(vv => {
-        if (vv === true) return e(k);
-
-        if (
-          isObject ||
-          (isString(vv) && (['"', '{', '['].some(p => vv.startsWith(p))))
-        ) {
-          return `${e(k)}=${e(JSON.stringify(vv))}`;
-        }
-
-        return `${e(k)}=${e(vv)}`;
-      })
-      .join('&');
-  const output = leaves(value)
-    .map(encode)
-    .concatenate('&');
-
-  return output;
-}
 
 function json2value(json) {
   try {
@@ -123,4 +87,4 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
-export { FromQueryString, ToQueryString, value2json, json2value };
+export { value2json, json2value };

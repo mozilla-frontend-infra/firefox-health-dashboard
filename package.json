@@ -47,6 +47,7 @@
     "moment": "^2.19.3",
     "numeral": "^2.0.4",
     "prop-types": "^15.6.2",
+    "qs": "^6.6.0",
     "query-string": "^5.0.1",
     "raven-js": "^3.26.2",
     "react": "^16.5.0",
