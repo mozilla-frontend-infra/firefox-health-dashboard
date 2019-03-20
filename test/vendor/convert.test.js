@@ -45,45 +45,42 @@ describe('convert', () => {
   });
 
   const reversable = [
-    [{ a: '{}' }, 'a=%7B%7D'],
-    [{ a: '=' }, 'a=%3D'],
-    [{ a: '+' }, 'a=%2B'],
-    [{ a: 42 }, 'a=42'],
-    // [{ a: '' }, 'a='],
-    [{ a: false }, 'a=false'],
-    [{ a: true }, 'a'],
-    // https://www.w3.org/Addressing/URL/uri-spec.html#z5
-    // https://tools.ietf.org/html/rfc3986#section-3.4
-    // https://www.google.com/search?q=query+string+with+spaces
-    [{ a: ' ' }, 'a=+'],
-    [{ a: '  ' }, 'a=++'],
-    [{ a: 'blue+light blue' }, 'a=blue%2Blight+blue'],
-    [{ a: '{"test":42}' }, 'a=%7B%22test%22%3A42%7D'],
-    [{ a: { test: 42 } }, 'a.test=42'],
-    [{ a: [1, 2, 3] }, 'a=1&a=2&a=3'],
-    [{ a: { b: { c: 42 } } }, 'a.b.c=42'],
-    [{ a: 'test' }, 'a=test'],
-    [{ a: 'a b' }, 'a=a+b'],
-    [{ a: 'a b c d' }, 'a=a+b+c+d'],
-    [{ a: '=a' }, 'a=%3Da'],
-    [{ a: '%' }, 'a=%25'],
-    [{ a: 'ståle' }, 'a=st%C3%A5le'],
+    { a: '{}' },
+    { a: '[]' },
+    { a: '\\' },
+    { a: '"' },
+    { a: '%' },
+    { a: '=' },
+    { a: '=a' },
+    { a: '+' },
+    { a: 42 },
+    { a: false },
+    { a: true },
+    { a: ' ' },
+    { a: '  ' },
+    { a: 'blue+light blue' },
+    { a: '{"test":42}' },
+    { a: { test: 42 } },
+    { a: [1, 2, 3] },
+    { a: { b: { c: 42 } } },
+    { a: 'test' },
+    { a: 'a b' },
+    { a: 'a b c d' },
+    { a: 'ståle' },
   ];
 
-  it('ToQueryString1', () => {
-    reversable.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
+  it('reversable', () => {
+    reversable.forEach(obj => expect((()=>{
+      const qs = ToQueryString(obj);
+      console.log(JSON.stringify(obj)+"  <=>  "+JSON.stringify(qs));
+      return FromQueryString(qs);
+    })()).toEqual(obj));
   });
 
   const toQuery = [[{ a: null }, ''], [{ a: [1, null, ''] }, 'a=1']];
 
-  it('ToQueryString2', () => {
+  it('ToQueryString', () => {
     toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));
-  });
-
-  it('FromQueryString1', () => {
-    reversable.forEach(([obj, url]) =>
-      expect(FromQueryString(url)).toEqual(obj)
-    );
   });
 
   const nonStandardQueryStrings = [

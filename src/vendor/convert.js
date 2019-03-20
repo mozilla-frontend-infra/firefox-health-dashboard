@@ -1,29 +1,20 @@
 import { parse } from 'query-string';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import {
-  isArray,
-  isFunction,
-  isNumeric,
-  isObject,
-  toArray,
-  exists,
-} from './utils';
+import { exists, isArray, isFunction, isObject, isString, toArray, } from './utils';
 import strings from './strings';
 
 function FromQueryString(query) {
   const decode = v => {
     if (isArray(v)) return v.map(decode);
 
-    if (v === null || v === 'true' || v === '') return true;
+    if (v === null || v === '') return true;
 
-    if (v === 'false') return false;
-
-    if (v === 'null') return null;
-
-    if (isNumeric(v)) return Number.parseFloat(v);
-
-    return v;
+    try {
+      return JSON.parse(v);
+    } catch (e) {
+      return v;
+    }
   };
 
   return toPairs(parse(query))
@@ -38,6 +29,13 @@ function ToQueryString(value) {
       .filter(exists)
       .map(vv => {
         if (vv === true) return e(k);
+
+        if (
+          isObject ||
+          (isString(vv) && (['"', '{', '['].some(p => vv.startsWith(p))))
+        ) {
+          return `${e(k)}=${e(JSON.stringify(vv))}`;
+        }
 
         return `${e(k)}=${e(vv)}`;
       })
