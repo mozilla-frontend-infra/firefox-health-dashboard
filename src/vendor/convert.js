@@ -1,7 +1,14 @@
 import { parse } from 'query-string';
 import { frum, leaves, length, toPairs } from './queryOps';
 import { Log } from './errors';
-import { exists, isArray, isFunction, isObject, isString, toArray, } from './utils';
+import {
+  exists,
+  isArray,
+  isFunction,
+  isObject,
+  isString,
+  toArray,
+} from './utils';
 import strings from './strings';
 
 function FromQueryString(query) {
@@ -32,7 +39,7 @@ function ToQueryString(value) {
 
         if (
           isObject ||
-          (isString(vv) && (['"', '{', '['].some(p => vv.startsWith(p))))
+          (isString(vv) && ['"', '{', '['].some(p => vv.startsWith(p)))
         ) {
           return `${e(k)}=${e(JSON.stringify(vv))}`;
         }

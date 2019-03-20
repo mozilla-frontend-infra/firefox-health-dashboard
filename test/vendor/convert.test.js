@@ -52,6 +52,7 @@ describe('convert', () => {
     { a: '%' },
     { a: '=' },
     { a: '=a' },
+    { a: 'null' },
     { a: '+' },
     { a: 42 },
     { a: false },
@@ -70,11 +71,18 @@ describe('convert', () => {
   ];
 
   it('reversable', () => {
-    reversable.forEach(obj => expect((()=>{
-      const qs = ToQueryString(obj);
-      console.log(JSON.stringify(obj)+"  <=>  "+JSON.stringify(qs));
-      return FromQueryString(qs);
-    })()).toEqual(obj));
+    reversable.forEach(obj =>
+      expect(
+        (() => {
+          const qs = ToQueryString(obj);
+
+          // eslint-disable-next-line no-console
+          console.log(`${JSON.stringify(obj)}  <=>  ${JSON.stringify(qs)}`);
+
+          return FromQueryString(qs);
+        })()
+      ).toEqual(obj)
+    );
   });
 
   const toQuery = [[{ a: null }, ''], [{ a: [1, null, ''] }, 'a=1']];
