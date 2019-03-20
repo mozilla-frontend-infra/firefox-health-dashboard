@@ -50,13 +50,16 @@ describe('convert', () => {
     { a: '\\' },
     { a: '"' },
     { a: '%' },
+    { a: '+' },
     { a: '=' },
     { a: '=a' },
     { a: 'null' },
-    { a: '+' },
-    { a: 42 },
     { a: false },
+    { a: "false"},
     { a: true },
+    { a: "true" },
+    { a: 42 },
+    { a: "42" },
     { a: ' ' },
     { a: '  ' },
     { a: 'blue+light blue' },
@@ -85,7 +88,12 @@ describe('convert', () => {
     );
   });
 
-  const toQuery = [[{ a: null }, ''], [{ a: [1, null, ''] }, 'a=1']];
+  const toQuery = [
+    [{ a: null }, ''],
+    [{ a: [1, null, ''] }, 'a=1'],
+    [{ a: ' ' }, 'a=+'],
+    [{ a: '  ' }, 'a=++'],
+  ];
 
   it('ToQueryString', () => {
     toQuery.forEach(([obj, url]) => expect(ToQueryString(obj)).toEqual(url));

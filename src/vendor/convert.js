@@ -37,11 +37,13 @@ function ToQueryString(value) {
       .map(vv => {
         if (vv === true) return e(k);
 
-        if (
-          isObject ||
-          (isString(vv) && ['"', '{', '['].some(p => vv.startsWith(p)))
-        ) {
-          return `${e(k)}=${e(JSON.stringify(vv))}`;
+        if (isString(vv)){
+          try {
+            JSON.parse(vv);
+            return `${e(k)}=${e(JSON.stringify(vv))}`;
+          }catch (e) {
+            //USE STANDARD ENCODING
+          }
         }
 
         return `${e(k)}=${e(vv)}`;
