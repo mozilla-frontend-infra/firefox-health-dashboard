@@ -4,6 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 
 const styles = () => ({
   title: {
@@ -22,19 +23,38 @@ const styles = () => ({
 class PerfherderGraphContainer extends Component {
   state = {
     data: null,
+    tooltipModel: null,
+    canvas: null,
   };
 
   async componentDidMount() {
-    this.fetchSetData(this.props);
+    this.fetchSetData(this.props).then(() => {
+      const { handleTooltip } = this;
+
+      this.setState(prevState => {
+        const { options } = prevState;
+
+        options.tooltips.custom = function custom(tooltipModel) {
+          // eslint-disable-next-line no-underscore-dangle
+          handleTooltip(tooltipModel, this._chart.canvas);
+        };
+
+        return { ...prevState, options };
+      });
+    });
   }
 
   async fetchSetData({ series }) {
     this.setState(await getPerferherderData(series));
   }
 
+  handleTooltip = (tooltipModel, canvas) => {
+    this.setState({ tooltipModel, canvas });
+  };
+
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options } = this.state;
+    const { data, jointUrl, options, canvas, tooltipModel } = this.state;
 
     return (
       <div key={title}>
@@ -52,6 +72,13 @@ class PerfherderGraphContainer extends Component {
           options={options}
           missingDataError
         />
+        {tooltipModel && (
+          <CustomTooltip
+            tooltipModel={tooltipModel}
+            series={options.series}
+            canvas={canvas}
+          />
+        )}
       </div>
     );
   }

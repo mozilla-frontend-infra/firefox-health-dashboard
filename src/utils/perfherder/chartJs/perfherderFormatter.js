@@ -1,8 +1,6 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
-// import generateCustomTooltip from '../../chartJs/generateCustomTooltipTest';
-import generateCustomTooltip from '../../chartJs/generateCustomTooltip';
 
 const dataToChartJSformat = data =>
   data.map(({ datetime, value }) => ({
@@ -18,13 +16,8 @@ const generateInitialOptions = series => {
     scaleLabel: higherIsBetter ? 'Score' : 'Load time',
     tooltips: {
       enabled: false,
-      custom(tooltipModel) {
-        // eslint-disable-next-line no-underscore-dangle
-        const { canvas } = this._chart;
-
-        generateCustomTooltip(canvas, tooltipModel, series);
-      },
     },
+    series,
   };
 };
 
