@@ -64,10 +64,9 @@ class CustomTooltip extends React.Component {
     const labelColors = tooltipModel.labelColors[0];
     const { index } = currPoint;
     const currSeries = series[currPoint.datasetIndex];
-    const higherIsBetter = !currSeries.meta.lower_is_better;
-    const higherOrLower = higherIsBetter
-      ? 'higher is better'
-      : 'lower is better';
+    const higherOrLower = currSeries.meta.lower_is_better
+      ? 'lower is better'
+      : 'higher is better';
     const curr = currSeries.data[index];
     const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${
       curr.revision
