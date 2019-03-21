@@ -28,29 +28,25 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetData(this.props).then(() => {
-      const { handleTooltip } = this;
+    await this.fetchSetData(this.props);
 
-      this.setState(prevState => {
-        const { options } = prevState;
+    const self = this;
 
-        options.tooltips.custom = function custom(tooltipModel) {
-          // eslint-disable-next-line no-underscore-dangle
-          handleTooltip(tooltipModel, this._chart.canvas);
-        };
+    this.setState(prevState => {
+      const { options } = prevState;
 
-        return { ...prevState, options };
-      });
+      options.tooltips.custom = function custom(tooltipModel) {
+        // eslint-disable-next-line no-underscore-dangle
+        self.setState({ tooltipModel, canvas: this._chart.canvas });
+      };
+
+      return { ...prevState, options };
     });
   }
 
   async fetchSetData({ series }) {
     this.setState(await getPerferherderData(series));
   }
-
-  handleTooltip = (tooltipModel, canvas) => {
-    this.setState({ tooltipModel, canvas });
-  };
 
   render() {
     const { classes, title } = this.props;
