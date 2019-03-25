@@ -11,10 +11,9 @@ const dataToChartJSformat = data =>
 const generateInitialOptions = series => {
   // TODO: map tests and suite scores to measurement units and
   // add some label for scale
-  const isTest = !missing(series.meta.test);
+  const isTest = !missing(series[0].meta.test);
   // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
   const higherIsBetter = isTest ? false : !series[0].meta.lower_is_better;
-  const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
 
   return {
     reverse: higherIsBetter,

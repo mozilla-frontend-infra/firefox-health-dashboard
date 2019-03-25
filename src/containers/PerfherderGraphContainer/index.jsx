@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import getPerfherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
 
@@ -57,8 +57,15 @@ class PerfherderGraphContainer extends Component {
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options, canvas, tooltipModel, isLoading } = this.state;
-    
+    const {
+      data,
+      jointUrl,
+      options,
+      canvas,
+      tooltipModel,
+      isLoading,
+    } = this.state;
+
     return (
       <div key={title}>
         <h2 className={classes.title}>
