@@ -30,20 +30,7 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    await this.fetchSetData(this.props);
-
-    const self = this;
-
-    this.setState(prevState => {
-      const { options } = prevState;
-
-      options.tooltips.custom = function custom(tooltipModel) {
-        // eslint-disable-next-line no-underscore-dangle
-        self.setState({ tooltipModel, canvas: this._chart.canvas });
-      };
-
-      return { ...prevState, options };
-    });
+    this.fetchSetData(this.props);
   }
 
   async fetchSetData({ series }) {
@@ -51,7 +38,18 @@ class PerfherderGraphContainer extends Component {
       this.setState({ isLoading: true });
       this.setState(await getPerfherderData(series));
     } finally {
-      this.setState({ isLoading: false });
+      const self = this;
+
+      this.setState(prevState => {
+        const { options } = prevState;
+
+        options.tooltips.custom = function custom(tooltipModel) {
+          // eslint-disable-next-line no-underscore-dangle
+          self.setState({ tooltipModel, canvas: this._chart.canvas });
+        };
+
+        return { ...prevState, options, isLoading: false };
+      });
     }
   }
 
