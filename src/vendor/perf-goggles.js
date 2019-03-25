@@ -11,19 +11,19 @@ export const signaturesUrl = (project = PROJECT) =>
 
 const dataPointsEndpointUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/data/`;
-const platformSuitesUrl = ({ frameworkId, platform, project }) =>
+const platformSuitesUrl = ({ framework, platform, project }) =>
   `${signaturesUrl(
     project
-  )}?framework=${frameworkId}&platform=${platform}&subtests=0`;
+  )}?framework=${framework}&platform=${platform}&subtests=0`;
 
 export const perfDataUrls = (
-  { frameworkId, project },
+  { framework, project },
   signatureIds,
   timeRange
 ) => {
   const url = dataPointsEndpointUrl(project);
   const baseParams = stringify({
-    framework: frameworkId,
+    framework,
     interval: timeRange,
   });
 
@@ -77,7 +77,7 @@ const fetchPerfData = async (seriesConfig, signatureIds, timeRange) => {
 };
 
 const perfherderGraphUrl = (
-  { project = PROJECT, frameworkId },
+  { project = PROJECT, framework },
   signatureIds,
   timeRange = DEFAULT_TIMERANGE
 ) => {
@@ -85,7 +85,7 @@ const perfherderGraphUrl = (
 
   baseDataUrl += `&${signatureIds
     .sort()
-    .map(id => `series=${project},${id},1,${frameworkId}`)
+    .map(id => `series=${project},${id},1,${framework}`)
     .join('&')}`;
 
   return baseDataUrl;
@@ -140,11 +140,13 @@ const signaturesForPlatformSuite = async seriesConfig => {
     (res, signatureHash) => {
       const jobSignature = allPlatformSignatures[signatureHash];
 
+      if (jobSignature.suite === jobSignature.test) {
+        jobSignature.test = null;
+      }
+
       if (
         jobSignature.suite === seriesConfig.suite &&
-        ((jobSignature.suite !== jobSignature.test &&
-          jobSignature.test === seriesConfig.test) ||
-          jobSignature.suite === jobSignature.test)
+        jobSignature.test == seriesConfig.test // eslint-disable-line eqeqeq
       ) {
         res[signatureHash] = {
           parentSignatureHash: signatureHash,
@@ -161,7 +163,7 @@ const signaturesForPlatformSuite = async seriesConfig => {
 };
 
 const findParentSignatureInfo = (
-  { option = 'pgo', extraOptions },
+  { option, extraOptions },
   signatures,
   options
 ) => {
@@ -171,7 +173,7 @@ const findParentSignatureInfo = (
     const signature = signatures[hash];
     const optionCollection = options[signature.option_collection_hash];
 
-    if (optionCollection && optionCollection.includes(option)) {
+    if (!option || (optionCollection && optionCollection.includes(option))) {
       if (extraOptions && extraOptions.length > 0) {
         if (isEqual(signature.extra_options, extraOptions)) {
           result.push(signature);
@@ -199,7 +201,9 @@ const parentSignatureInfo = async seriesConfig => {
 };
 
 const fetchSubtestsData = async (seriesConfig, subtestsInfo, timeRange) => {
-  const signatureIds = Object.values(subtestsInfo).map(v => v.id);
+  const signatureIds = Object.values(subtestsInfo)
+    .filter(v => !seriesConfig.test || v.test === seriesConfig.test)
+    .map(v => v.id);
   const subtestsData = {};
   const dataPoints = await fetchPerfData(seriesConfig, signatureIds, timeRange);
 
@@ -216,7 +220,7 @@ const fetchSubtestsData = async (seriesConfig, subtestsInfo, timeRange) => {
 
 const queryPerformanceData = async (seriesConfig, options) => {
   const { includeSubtests = false, timeRange = DEFAULT_TIMERANGE } = options;
-  const parentInfo = await parentSignatureInfo(seriesConfig);
+  const parentInfo = await parentSignatureInfo({ ...seriesConfig, test: null });
 
   // XXX: Throw error instead
   if (!parentInfo) {

@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
-import Perfherder from './perfherder';
-import Countdown from './countdown';
-import { frum, toPairs } from '../utils/queryOps';
+import PerfherderWidget from './perfherder';
+import { frum, toPairs } from '../vendor/queryOps';
+import { URL2Object } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,
   quantum64QueryParams,
-  flowGraphProps,
   statusLabels,
 } from './constants';
-import GraphContainer from '../components/graph-container';
 import { CONFIG, TP6_PAGES } from './config';
-import wrapSectionComponentsWithErrorBoundaries from '../utils/componentEnhancers';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {
@@ -31,42 +28,21 @@ export default class QuantumIndex extends React.Component {
       location,
       match: { params },
     } = this.props;
-    const urlParams = new URLSearchParams(location.search);
-    const bits = urlParams.get('bits') || params.bits;
+    const urlParams = URL2Object(location.search);
+    const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
-      bits === '32' ? quantum32QueryParams : quantum64QueryParams;
-    const platform = bits === '32' ? 'windows7-32' : 'windows10-64';
+      bits === 32 ? quantum32QueryParams : quantum64QueryParams;
+    const platform = bits === 32 ? 'windows7-32' : 'windows10-64';
     const nightlyPlatform =
-      bits === '32' ? 'windows7-32-nightly' : 'windows10-64-nightly';
+      bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
-      bits === '32' ? CONFIG.windows32Regression : CONFIG.windows64Regression;
-    const sections = wrapSectionComponentsWithErrorBoundaries([
-      {
-        title: 'Overview',
-        cssRowExtraClasses: 'generic-metrics-graphics',
-        rows: [
-          <GraphContainer
-            key="overview"
-            query={flowGraphProps.query}
-            customClass={flowGraphProps.customClass}
-            title={flowGraphProps.title}
-            legend={flowGraphProps.legend}
-            target={flowGraphProps.target}
-            api={flowGraphProps.api}
-            keys={flowGraphProps.keys}
-            width={flowGraphProps.width}
-            height={flowGraphProps.height}
-            link={`/quantum/${bits}/bugs`}
-          />,
-          // eslint-disable-next-line react/jsx-key
-          <Countdown />,
-        ],
-      },
+      bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
+    const sections = [
       {
         title: 'Benchmarks',
         rows: [
           ...regressionConfig.map(config => (
-            <Perfherder {...config} key={config.title} />
+            <PerfherderWidget {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
             key="speedometer"
@@ -75,7 +51,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  frameworkId: 10,
+                  framework: 10,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -83,9 +59,9 @@ export default class QuantumIndex extends React.Component {
                 },
               },
               {
-                label: 'Chrome',
+                label: 'Chromium',
                 seriesConfig: {
-                  frameworkId: 10,
+                  framework: 10,
                   platform: nightlyPlatform,
                   option: 'opt',
                   project: 'mozilla-central',
@@ -98,17 +74,19 @@ export default class QuantumIndex extends React.Component {
       },
       {
         title: 'Page Load tests (TP6)',
-        more: `/quantum/tp6?bits=${bits}`,
+        more: `/quantum/tp6?bits=${bits}&test=loadtime`,
         rows: frum(TP6_PAGES)
           .where({ bits })
           .groupBy('title')
           .map((series, title) => (
             <PerfherderGraphContainer
-              key="page-load-tests-(tp6)"
+              // eslint-disable-next-line react/no-array-index-key
+              key={`page_${title}_${bits}`}
               title={title}
               series={series.map(s => ({ label: s.label, seriesConfig: s }))}
             />
           ))
+          .enumerate()
           .limit(4),
       },
       {
@@ -122,7 +100,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -139,7 +117,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -156,7 +134,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -173,7 +151,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -190,7 +168,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -207,7 +185,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -224,7 +202,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -238,14 +216,25 @@ export default class QuantumIndex extends React.Component {
             title="Tab Switch (tps)"
             series={[
               {
-                label: 'Firefox',
+                label: 'Firefox (tps)',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
                   suite: 'tps',
+                },
+              },
+              {
+                label: 'Firefox (tabswitch)',
+                seriesConfig: {
+                  extraOptions: ['e10s', 'stylo'],
+                  framework: 1,
+                  platform,
+                  option: 'pgo',
+                  project: 'mozilla-central',
+                  suite: 'tabswitch',
                 },
               },
             ]}
@@ -258,7 +247,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -275,7 +264,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -292,7 +281,7 @@ export default class QuantumIndex extends React.Component {
                 label: 'Firefox',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
-                  frameworkId: 1,
+                  framework: 1,
                   platform,
                   option: 'pgo',
                   project: 'mozilla-central',
@@ -472,7 +461,7 @@ export default class QuantumIndex extends React.Component {
           <TelemetryContainer
             key="contentPaintTime"
             id="contentPaintTime"
-            title="Content Paint Time ms"
+            title="contentful paint Time ms"
             queryParams={quantumQueryParams}
           />,
           <TelemetryContainer
@@ -501,9 +490,9 @@ export default class QuantumIndex extends React.Component {
           />,
         ],
       },
-    ]);
+    ];
     const reduced = sections.map(
-      ({ title, more, rows, cssRowExtraClasses }, sectionId) => {
+      ({ title, more, rows, cssRowExtraClasses }) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -517,13 +506,13 @@ export default class QuantumIndex extends React.Component {
                 statusList.secondary += 1;
               }
 
-              const id = wi + title; // make unique id for key
+              const id = `${wi}${title}`; // make unique id for key
 
               return (
                 <Grid
+                  key={`grid_${id}`}
                   item
                   xs={6}
-                  key={`page_${title}_${id}`}
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
                   }>
@@ -551,10 +540,9 @@ export default class QuantumIndex extends React.Component {
             return null;
           })
           .exists();
-        const secId = sectionId + title; // make unique section id for key
 
         return (
-          <div key={secId}>
+          <div key={title}>
             <h2 className="section-header">
               <span>
                 {`${title}`}

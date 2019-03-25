@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
 import SETTINGS from '../settings';
+import { withErrorBoundary } from '../vendor/errors';
 
-export default class TelemetryContainer extends React.Component {
+class TelemetryContainer extends React.Component {
   async componentDidMount() {
-    this.fetchPlotGraph(this.props.id, this.props.queryParams);
+    await this.fetchPlotGraph(this.props.id, this.props.queryParams);
   }
 
   async fetchPlotGraph(id, queryParams) {
@@ -31,9 +32,10 @@ export default class TelemetryContainer extends React.Component {
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;
       this.graphEvolutionsTimeline(graphData, this.graphEl);
-    } catch (error) {
+    } catch (cause) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      console.warn(`Problem loading ${url}`);
+      throw cause;
     }
   }
 
@@ -67,27 +69,31 @@ export default class TelemetryContainer extends React.Component {
   render() {
     const { id, title } = this.props;
 
-    return (
-      <div id={id} key={id} className="criteria-widget">
-        <header>
-          <h3 className="graph-title">
-            <a
-              className="graph-title-link"
-              ref={a => (this.graphTitleLink = a)}>
-              {title}
-            </a>
-          </h3>
-        </header>
-        <div
-          className="graph-subtitle"
-          ref={div => (this.graphSubtitleEl = div)}>
-          {}
+    if (title) {
+      return (
+        <div id={id} key={id} className="criteria-widget">
+          <header>
+            <h3 className="graph-title">
+              <a
+                className="graph-title-link"
+                ref={a => (this.graphTitleLink = a)}>
+                {title}
+              </a>
+            </h3>
+          </header>
+          <div>
+            <div
+              className="graph-subtitle"
+              ref={div => (this.graphSubtitleEl = div)}>
+              {}
+            </div>
+            <div className="graph" ref={div => (this.graphEl = div)}>
+              <div className="graph-legend">{}</div>
+            </div>
+          </div>
         </div>
-        <div className="graph" ref={div => (this.graphEl = div)}>
-          <div className="graph-legend">{}</div>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -96,3 +102,5 @@ TelemetryContainer.propTypes = {
   title: PropTypes.string.isRequired,
   queryParams: PropTypes.shape({}),
 };
+
+export default withErrorBoundary(TelemetryContainer);

@@ -2,20 +2,20 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="NimbledroidProductVersions-root-1"
+  className="ErrorBoundary-root-1"
 >
   <span
-    className="NimbledroidProductVersions-spacing-2"
+    className="ErrorBoundary-spacing-2"
   >
     Firefox Klar (8.0)
   </span>
   <span
-    className="NimbledroidProductVersions-spacing-2"
+    className="ErrorBoundary-spacing-2"
   >
     undefined (8.0)
   </span>
   <span
-    className="NimbledroidProductVersions-spacing-2"
+    className="ErrorBoundary-spacing-2"
   >
     Chrome Beta (70.0.3538.17)
   </span>

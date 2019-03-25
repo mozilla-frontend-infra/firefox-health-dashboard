@@ -756,6 +756,17 @@
     "@babel/runtime" "^7.2.0"
     recompose "0.28.0 - 0.30.0"
 
+"@material-ui/lab@^3.0.0-alpha.30":
+  version "3.0.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-3.0.0-alpha.30.tgz#c6c64d0ff2b28410a09e4009f3677499461f3df8"
+  integrity sha512-d8IXbkQO92Ln7f/Tzy8Q5cLi/sMWH/Uz1xrOO5NKUgg42whwyCuoT9ErddDPFNQmPi9d1C7A5AG8ONjEAbAIyQ==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    "@material-ui/utils" "^3.0.0-alpha.2"
+    classnames "^2.2.5"
+    keycode "^2.1.9"
+    prop-types "^15.6.0"
+
 "@material-ui/system@^3.0.0-alpha.0":
   version "3.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-3.0.0-alpha.2.tgz#096e80c8bb0f70aea435b9e38ea7749ee77b4e46"
@@ -807,15 +818,6 @@
     eslint-config-prettier "^3.3.0"
     eslint-plugin-prettier "^3.0.0"
     prettier "^1.15.2"
-
-"@mozilla-frontend-infra/perf-goggles@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@mozilla-frontend-infra/perf-goggles/-/perf-goggles-3.0.0.tgz#b8c6d4f2dc83f22f8bec153b0afe5bec52ba1438"
-  integrity sha512-DcUZXc/zRF5CN3QWL72hBjojhnKwzsDvprja1HMeZTwhi1wl5fDS7/OJr+ztumt0k9Pi+Z2BQngsgaTLudMUtA==
-  dependencies:
-    isomorphic-fetch "^2.2.1"
-    lodash.isequal "^4.5.0"
-    query-string "^6.1.0"
 
 "@mozilla-frontend-infra/react-lint@^1.1.1":
   version "1.1.1"
@@ -2425,13 +2427,6 @@ constants-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/constants-browserify/-/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
   integrity sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
 
-contained-periodic-values@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/contained-periodic-values/-/contained-periodic-values-1.0.0.tgz#a81dd8e84e0a5513d590a1e6581bfe55c00f9c4d"
-  integrity sha1-qB3Y6E4KVRPVkKHmWBv+VcAPnE0=
-  dependencies:
-    nearest-periodic-value "^1.0.0"
-
 contains-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
@@ -3052,6 +3047,11 @@ date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+
+dateformat@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
+  integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
 debounce@^1.1.0:
   version "1.2.0"
@@ -5355,7 +5355,7 @@ isobject@^3.0.0, isobject@^3.0.1:
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
 
-isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
+isomorphic-fetch@^2.1.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   integrity sha1-YRrhrPFPXoH3KVB0coGf6XM1WKk=
@@ -5960,6 +5960,11 @@ jsx-ast-utils@^2.0.1:
   dependencies:
     array-includes "^3.0.3"
 
+keycode@^2.1.9:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
+  integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
+
 killable@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -6188,11 +6193,6 @@ lodash.flow@^3.1.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/lodash.flow/-/lodash.flow-3.5.0.tgz#87bf40292b8cf83e4e8ce1a3ae4209e20071675a"
   integrity sha1-h79AKSuM+D5OjOGjrkIJ4gBxZ1o=
-
-lodash.isequal@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
 lodash.pick@^4.4.0:
   version "4.4.0"
@@ -6601,14 +6601,6 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
-moment-business@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/moment-business/-/moment-business-3.0.1.tgz#df0de1a8a074060652b5688d3cc99c9d8b76dcc4"
-  integrity sha1-3w3hqKB0BgZStWiNPMmcnYt23MQ=
-  dependencies:
-    contained-periodic-values "^1.0.0"
-    skipped-periodic-values "^1.0.0"
-
 moment@^2.10.2, moment@^2.19.3:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
@@ -6680,11 +6672,6 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
-
-nearest-periodic-value@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/nearest-periodic-value/-/nearest-periodic-value-1.2.0.tgz#a84fd52919a89692864d20a41468313d255905c6"
-  integrity sha1-qE/VKRmolpKGTSCkFGgxPSVZBcY=
 
 needle@^2.2.1:
   version "2.2.4"
@@ -7685,14 +7672,6 @@ query-string@^5.0.1:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.1.0.tgz#01e7d69f6a0940dac67a937d6c6325647aa4532a"
-  integrity sha512-pNB/Gr8SA8ff8KpUFM36o/WFAlthgaThka5bV19AD9PNTH20Pwq5Zxodif2YyHwrctp6SkL4GqlOot0qR/wGaw==
-  dependencies:
-    decode-uri-component "^0.2.0"
-    strict-uri-encode "^2.0.0"
-
 querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -7858,13 +7837,6 @@ react-router@^4.2.0, react-router@^4.3.1:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
-
-react-table@^6.8.2:
-  version "6.8.6"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.8.6.tgz#a0ad8b4839319052d5befc012603fb161e52ede3"
-  integrity sha1-oK2LSDkxkFLVvvwBJgP7Fh5S7eM=
-  dependencies:
-    classnames "^2.2.5"
 
 react-test-renderer@^16.5.2:
   version "16.5.2"
@@ -8525,13 +8497,6 @@ sisteransi@^0.1.1:
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-0.1.1.tgz#5431447d5f7d1675aac667ccd0b865a4994cb3ce"
   integrity sha512-PmGOd02bM9YO5ifxpw36nrNMBTptEtfRl4qUYl9SndkolplkrZZOW7PGHjrZL53QvMVj9nQ+TKqUnRsw4tJa4g==
 
-skipped-periodic-values@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/skipped-periodic-values/-/skipped-periodic-values-1.0.1.tgz#d3a0a4d93ac134c4550db2a8823ed9d9739ceca2"
-  integrity sha1-06Ck2TrBNMRVDbKogj7Z2XOc7KI=
-  dependencies:
-    nearest-periodic-value "^1.0.0"
-
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -8846,11 +8811,6 @@ strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
   integrity sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM=
-
-strict-uri-encode@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
-  integrity sha1-ucczDHBChi9rFC3CdLvMWGbONUY=
 
 string-argv@^0.0.2:
   version "0.0.2"

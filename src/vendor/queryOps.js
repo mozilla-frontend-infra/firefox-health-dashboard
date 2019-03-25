@@ -2,54 +2,27 @@
 import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
 import sortBy from 'lodash/sortBy';
-import lodashTake from 'lodash/take';
+import {
+  concatField,
+  exists,
+  first,
+  isArray,
+  isObject,
+  isString,
+  last,
+  literalField,
+  missing,
+  toArray,
+} from './utils';
+import { sum } from './math';
+import Data from './Data';
 
 let internalFrum = null;
 let internalToPairs = null;
 
-function first(list) {
-  for (const v of list) return v;
-
-  return null;
-}
-
-function last(list) {
-  let value = null;
-
-  for (const v of list) value = v;
-
-  return value;
-}
-
-function toArray(value) {
-  // return a list
-  if (Array.isArray(value)) {
-    return value;
-  }
-
-  if (value == null) {
-    return [];
-  }
-
-  return [value];
-}
-
-function* toArgs(list) {
-  for (const v of list) yield [v];
-}
-
-function zipObject(keys, values) {
-  // accept list of keys and list of values to zip into a single object
-  const output = {};
-
-  for (let i = 0; i < keys.length; i += 1) output[keys[i]] = values[i];
-
-  return output;
-}
-
 function preSelector(columnName) {
   // convert to an array of [selector(), name] pairs
-  if (Array.isArray(columnName)) {
+  if (isArray(columnName)) {
     // select many columns
     return internalFrum(columnName)
       .map(preSelector)
@@ -59,13 +32,12 @@ function preSelector(columnName) {
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map((value, name) => [preSelector(value), name])
-      .flatten()
+      .map((value, name) => [row => Data.get(row, value), name])
       .sortBy(([, b]) => b);
   }
 
-  if (typeof columnName === 'string') {
-    return internalFrum([row => row[columnName], columnName]);
+  if (isString(columnName)) {
+    return [[row => Data.get(row, columnName), columnName]];
   }
 }
 
@@ -83,64 +55,34 @@ function selector(columnName) {
          selector({x: 'a', y: 'b'})(row) === {x: 1, y: '2'}
 
    */
-  if (typeof columnName === 'object' || Array.isArray(columnName)) {
+  if (isObject(columnName) || isArray(columnName)) {
     // select many columns
     const cs = preSelector(columnName).args();
 
     return row => cs.map(func => func(row)).fromPairs();
   }
 
-  if (typeof columnName === 'string') {
-    return row => row[columnName];
+  if (isString(columnName)) {
+    return row => Data.get(row, columnName);
   }
 
   return columnName;
 }
 
-function missing(value) {
-  // return true if value is null, or undefined, or not a legit value
-  return value == null || Number.isNaN(value) || value === '';
-}
-
-function exists(value) {
-  // return false if value is null, or undefined, or not a legit value
-  return !missing(value);
-}
-
 class Wrapper {
   // Represent an iterable set of function arguments
-  constructor(argslist, isGenerator = false) {
-    if (
-      !isGenerator &&
-      (!Array.isArray(argslist) ||
-        (argslist.length > 0 && !Array.isArray(argslist[0])))
-    ) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
-      );
-      throw Error(
-        `expecting Array of tuples, not: ${JSON.stringify(argslist)}`
-      );
-    }
-
-    this.argslist = argslist;
+  constructor(argsGen) {
+    this.argsGen = argsGen;
   }
 
   *[Symbol.iterator]() {
-    for (const [a] of this.materialize().argslist) {
+    for (const [a] of this.argslist) {
       yield a;
     }
   }
 
-  materialize() {
-    // ensure this.argslist is an array, any generators are exhausted
-    if (!Array.isArray(this.argslist)) {
-      // materialize the array of arguments
-      this.argslist = Array.from(this.argslist);
-    }
-
-    return this;
+  get argslist() {
+    return this.argsGen();
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -158,7 +100,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   select(selectors) {
@@ -170,7 +112,7 @@ class Wrapper {
     // execute func for each element, do not change this
     let i = 0;
 
-    for (const args of this.materialize().argslist) {
+    for (const args of this.argslist) {
       func(...args, i);
       i += 1;
     }
@@ -189,7 +131,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   args() {
@@ -198,7 +140,7 @@ class Wrapper {
       for (const args of list) yield args[0];
     }
 
-    return new Wrapper(output(this.materialize().argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   filter(func) {
@@ -207,7 +149,21 @@ class Wrapper {
         if (func(value, ...args)) yield [value];
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
+  }
+
+  limit(max) {
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        if (i >= max) break;
+        yield args;
+        i += 1;
+      }
+    }
+
+    return new Wrapper(() => output(this.argslist));
   }
 
   where(expression) {
@@ -215,7 +171,11 @@ class Wrapper {
     // return only matching rows
     const func = row => {
       for (const [name, value] of Object.entries(expression)) {
-        if (row[name] !== value) return false;
+        if (isArray(value)) {
+          if (!value.includes(Data.get(row, name))) return false;
+        } else if (exists(value)) {
+          if (Data.get(row, name) !== value) return false;
+        }
       }
 
       return true;
@@ -243,15 +203,34 @@ class Wrapper {
     return this.filter(func);
   }
 
+  missing(columns = null) {
+    // Expect a list of column names that must be missing
+    let func = null;
+
+    if (missing(columns)) {
+      func = missing;
+    } else {
+      const selects = toArray(columns).map(selector);
+
+      func = row => {
+        for (const s of selects) if (exists(s(row))) return false;
+
+        return true;
+      };
+    }
+
+    return this.filter(func);
+  }
+
   flatten() {
     // assume this is an array of lists, return array of all elements
-    // append extra index paramter to args
+    // append extra index parameter to args
     function* output(argslist) {
       for (const [values] of argslist)
         for (const value of values) yield [value];
     }
 
-    return new Wrapper(output(this.argslist), true);
+    return new Wrapper(() => output(this.argslist));
   }
 
   groupBy(columns) {
@@ -260,7 +239,7 @@ class Wrapper {
     const func = selector(columns);
     const output = {};
 
-    if (Array.isArray(columns)) {
+    if (isArray(columns)) {
       let g = 0;
 
       for (const args of this.argslist) {
@@ -294,7 +273,9 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(Object.values(output));
+    return new Wrapper(function* outputGen() {
+      for (const v of Object.values(output)) yield v;
+    });
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -309,9 +290,16 @@ class Wrapper {
     // return an object from (value, key) pairs
     const output = {};
 
-    for (const [v, k] of this.argslist) {
-      output[k] = v;
-    }
+    for (const [v, k] of this.argslist) output[k] = v;
+
+    return output;
+  }
+
+  fromLeaves() {
+    // return an object from (value, path) pairs
+    const output = {};
+
+    for (const [v, k] of this.argslist) Data.add(output, k, v);
 
     return output;
   }
@@ -326,8 +314,21 @@ class Wrapper {
     return last(this);
   }
 
+  sum() {
+    return sum(this);
+  }
+
   get length() {
-    return this.materialize().argslist.length;
+    let count = 0;
+
+    /* eslint-disable-next-line no-unused-vars */
+    for (const _ of this.argslist) count += 1;
+
+    return count;
+  }
+
+  concatenate(separator) {
+    return Array.from(this).join(separator);
   }
 
   findIndex(func) {
@@ -349,7 +350,7 @@ class Wrapper {
     const output = {};
 
     for (const [row] of this.argslist) {
-      const key = row[column];
+      const key = Data.get(row, column);
 
       if (!(key in output)) {
         output[key] = row;
@@ -367,22 +368,48 @@ function frum(list) {
     return list;
   }
 
-  return new Wrapper(toArgs(list), true);
+  return new Wrapper(function* outputGen() {
+    for (const v of list) yield [v];
+  });
 }
 
 internalFrum = frum;
 
 function toPairs(obj) {
-  // convert Object (or Map) into [value, key] pairs
+  // convert Object (or Data) into [value, key] pairs
   // notice the **value is first**
+  if (missing(obj)) return new Wrapper(() => []);
+
   if (obj instanceof Map) {
-    return new Wrapper(Array.from(obj.entries()).map(([k, v]) => [v, k]));
+    return new Wrapper(function* outputGen() {
+      for (const [k, v] of obj.entries()) yield [v, k];
+    });
   }
 
-  return new Wrapper(Object.entries(obj).map(([k, v]) => [v, k]));
+  return new Wrapper(function* outputGen() {
+    for (const [k, v] of Object.entries(obj)) yield [v, k];
+  });
 }
 
 internalToPairs = toPairs;
+
+function leaves(obj) {
+  // Convert Object into list of [value, path] pairs
+  // where path is dot delimited path deep into object
+  function* leafGen(map, prefix) {
+    for (const [val, key] of toPairs(map).argsGen()) {
+      const path = concatField(prefix, literalField(key));
+
+      if (isObject(val)) {
+        for (const pair of leafGen(val, path)) yield pair;
+      } else {
+        yield [val, path];
+      }
+    }
+  }
+
+  return new Wrapper(() => leafGen(obj, '.'));
+}
 
 function length(list) {
   // return length of this list
@@ -406,7 +433,6 @@ extendWrapper({
   chunk,
   unzip,
   zip: unzip,
-  limit: lodashTake,
   sort: sortBy,
   sortBy,
 
@@ -420,7 +446,7 @@ extendWrapper({
       .fromPairs();
 
     return internalFrum(listA)
-      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowB, ...rowA })))
+      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
   },
 
@@ -433,4 +459,4 @@ extendWrapper({
   },
 });
 
-export { frum, zipObject, toPairs, first, last, missing, length };
+export { frum, toPairs, leaves, first, last, length };

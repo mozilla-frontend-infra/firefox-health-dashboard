@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import withErrorBoundary from '../../hocs/withErrorBoundary';
+import { withErrorBoundary } from '../../vendor/errors';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
 import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
@@ -20,18 +20,11 @@ class NimbledroidGraphContainer extends Component {
   }
 
   async componentDidMount() {
-    const { configuration, handleError, scenarioName } = this.props;
+    const { configuration, scenarioName } = this.props;
+    const nimbledroidData = await fetchNimbledroidData(configuration.products);
+    const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
 
-    try {
-      const nimbledroidData = await fetchNimbledroidData(
-        configuration.products
-      );
-      const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
-
-      this.setState(data);
-    } catch (error) {
-      handleError(error);
-    }
+    this.setState(data);
   }
 
   generateData(scenarioData) {
@@ -56,7 +49,6 @@ NimbledroidGraphContainer.propTypes = {
   configuration: PropTypes.shape({
     products: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  handleError: PropTypes.func.isRequired,
   scenarioData: PropTypes.shape({}),
   scenarioName: PropTypes.string.isRequired,
 };

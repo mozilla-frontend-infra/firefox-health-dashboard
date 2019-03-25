@@ -1,4 +1,6 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
 import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
@@ -8,6 +10,8 @@ import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer'
 import RedashContainer from '../../containers/RedashContainer';
 import SETTINGS from '../../settings';
 import CONFIG from '../../utils/nimbledroid/config';
+import { frum } from '../../vendor/queryOps';
+import { TP6M_PAGES } from '../../quantum/config';
 
 class Android extends Component {
   render() {
@@ -17,53 +21,96 @@ class Android extends Component {
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
-        <Section title="Bugzilla">
-          <BugzillaUrlContainer
-            includeBugCount
-            queries={[
-              {
-                text: 'Open fenix:p1 bugs',
-                parameters: {
-                  product: 'GeckoView',
-                  resolution: '---',
-                  whiteboard: '[geckoview:fenix:p1]',
-                },
-              },
-              {
-                text: 'Open fenix:p2 bugs',
-                parameters: {
-                  product: 'GeckoView',
-                  resolution: '---',
-                  whiteboard: '[geckoview:fenix:p2]',
-                },
-              },
-            ]}
-          />
-          <BugzillaGraph
-            queries={[
-              {
-                label: 'fenix:p1 bugs',
-                parameters: {
-                  product: 'GeckoView',
-                  resolution: ['---', 'FIXED'],
-                  whiteboard: '[geckoview:fenix:p1]',
-                },
-              },
-              {
-                label: 'fenix:p2 bugs',
-                parameters: {
-                  product: 'GeckoView',
-                  resolution: ['---', 'FIXED'],
-                  whiteboard: '[geckoview:fenix:p2]',
-                },
-              },
-            ]}
-            startDate="2018-03-01"
-            title="GeckoView Fenix bugs"
-          />
-        </Section>
-        <Section title="Nimbledroid" subtitle={nimbledroidSubTitle}>
-          <NimbledroidSection configuration={{ ...CONFIG }} />
+        <div>
+          <Grid container spacing={24}>
+            <Grid item xs={6} key="bugzilla">
+              <Section title="Bugzilla">
+                <BugzillaUrlContainer
+                  includeBugCount
+                  queries={[
+                    {
+                      text: 'Open fenix:p1 bugs',
+                      parameters: {
+                        product: 'GeckoView',
+                        resolution: '---',
+                        whiteboard: '[geckoview:fenix:p1]',
+                      },
+                    },
+                    {
+                      text: 'Open fenix:p2 bugs',
+                      parameters: {
+                        product: 'GeckoView',
+                        resolution: '---',
+                        whiteboard: '[geckoview:fenix:p2]',
+                      },
+                    },
+                  ]}
+                />
+                <BugzillaGraph
+                  queries={[
+                    {
+                      label: 'fenix:p1 bugs',
+                      parameters: {
+                        product: 'GeckoView',
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:p1]',
+                      },
+                    },
+                    {
+                      label: 'fenix:p2 bugs',
+                      parameters: {
+                        product: 'GeckoView',
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:p2]',
+                      },
+                    },
+                  ]}
+                  startDate="2018-03-01"
+                  title="GeckoView Fenix bugs"
+                />
+              </Section>
+            </Grid>
+
+            <Grid item xs={6} key="nimbledroid">
+              <Section title="Nimbledroid" subtitle={nimbledroidSubTitle}>
+                <NimbledroidSection configuration={{ ...CONFIG }} />
+              </Section>
+            </Grid>
+          </Grid>
+        </div>
+        <Section
+          title="Page Load tests (TP6m)"
+          more="/android/tp6m?test=loadtime">
+          <Grid container spacing={24}>
+            {frum(TP6M_PAGES)
+              .where({
+                platform: 'android-hw-g5-7-0-arm7-api-16',
+                title: [
+                  'Tp6 mobile: Google',
+                  'Tp6 mobile: YouTube',
+                  'Tp6 mobile: Facebook',
+                  'Tp6 mobile: Wikipedia',
+                ],
+              })
+              .groupBy('title')
+              .map((series, title) => (
+                <Grid item xs={6} key={`page_${title}_loadtime`}>
+                  <PerfherderGraphContainer
+                    title={title}
+                    series={frum(series)
+                      .sortBy(['browser'])
+                      .reverse()
+                      .map(s => ({
+                        label: s.label,
+                        seriesConfig: { ...s, test: 'loadtime' },
+                        options: { includeSubtests: true },
+                      }))
+                      .toArray()}
+                  />
+                </Grid>
+              ))
+              .limit(4)}
+          </Grid>
         </Section>
         <Section title="Telemetry">
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -89,7 +136,7 @@ class Android extends Component {
                 {
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-g5-7-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',
@@ -99,7 +146,7 @@ class Android extends Component {
                 {
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     project: 'mozilla-central',
@@ -109,7 +156,7 @@ class Android extends Component {
                 {
                   label: 'Pixel 2 (ARM64)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-android-aarch64',
                     project: 'mozilla-central',
@@ -125,7 +172,7 @@ class Android extends Component {
                   color: SETTINGS.colors[0],
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-g5-7-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',
@@ -136,7 +183,7 @@ class Android extends Component {
                   color: SETTINGS.colors[1],
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
-                    frameworkId: 10,
+                    framework: 10,
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     option: 'opt',
                     project: 'mozilla-central',

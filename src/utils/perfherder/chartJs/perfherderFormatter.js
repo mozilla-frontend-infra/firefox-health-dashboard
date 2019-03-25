@@ -1,6 +1,7 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
 import SETTINGS from '../../../settings';
+import { missing } from '../../../vendor/utils';
 
 const dataToChartJSformat = data =>
   data.map(({ datetime, value }) => ({
@@ -8,12 +9,16 @@ const dataToChartJSformat = data =>
     y: value,
   }));
 const generateInitialOptions = series => {
-  // The first series' metadata defines the whole set
-  const higherIsBetter = !series[0].meta.lower_is_better;
+  // TODO: map tests and suite scores to measurement units and
+  // add some label for scale
+  const isTest = !missing(series.meta.test);
+  // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
+  const higherIsBetter = isTest ? false : !series[0].meta.lower_is_better;
+  const higherOrLower = higherIsBetter ? 'higher is better' : 'lower is better';
 
   return {
     reverse: higherIsBetter,
-    scaleLabel: higherIsBetter ? 'Score' : 'Load time',
+    scaleLabel: higherIsBetter ? 'Score' : 'Duration',
     tooltips: {
       enabled: false,
     },
@@ -21,7 +26,7 @@ const generateInitialOptions = series => {
   };
 };
 
-/* This function combines Perfherder series and transforms it 
+/* This function combines Perfherder series and transforms it
 into ChartJS formatting */
 const perfherderFormatter = series => {
   const newData = {

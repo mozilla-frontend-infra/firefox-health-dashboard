@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerferherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
+import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = () => ({
   title: {
@@ -25,6 +26,7 @@ class PerfherderGraphContainer extends Component {
     data: null,
     tooltipModel: null,
     canvas: null,
+    isLoading: false,
   };
 
   async componentDidMount() {
@@ -45,13 +47,18 @@ class PerfherderGraphContainer extends Component {
   }
 
   async fetchSetData({ series }) {
-    this.setState(await getPerferherderData(series));
+    try {
+      this.setState({ isLoading: true });
+      this.setState(await getPerfherderData(series));
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options, canvas, tooltipModel } = this.state;
-
+    const { data, jointUrl, options, canvas, tooltipModel, isLoading } = this.state;
+    
     return (
       <div key={title}>
         <h2 className={classes.title}>
@@ -65,8 +72,8 @@ class PerfherderGraphContainer extends Component {
         <ChartJsWrapper
           type="line"
           data={data}
+          isLoading={isLoading}
           options={options}
-          missingDataError
         />
         {tooltipModel && (
           <CustomTooltip
@@ -87,8 +94,8 @@ PerfherderGraphContainer.propTypes = {
       label: PropTypes.string.isRequired,
       seriesConfig: PropTypes.shape({
         extraOptions: PropTypes.arrayOf(PropTypes.string),
-        frameworkId: PropTypes.number.isRequired,
-        option: PropTypes.string.isRequired,
+        framework: PropTypes.number.isRequired,
+        option: PropTypes.string,
         project: PropTypes.string.isRequired,
         suite: PropTypes.string.isRequired,
       }),
@@ -101,4 +108,4 @@ PerfherderGraphContainer.propTypes = {
   timeRange: PropTypes.string,
 };
 
-export default withStyles(styles)(PerfherderGraphContainer);
+export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));

@@ -1,3 +1,5 @@
+/* global fetch */
+
 const jsonHeaders = {
   Accept: 'application/json',
 };

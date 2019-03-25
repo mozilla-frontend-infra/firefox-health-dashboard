@@ -9,10 +9,7 @@ import getData from '../utils/perfherder/subbenchmarks';
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
 const Subbenchmarks = ({ match }) => (
   <div>
-    <PerfherderContainer
-      suite={match.params.suite}
-      platform={match.params.platform}
-    />
+    <PerfherderContainer {...match.params} />
   </div>
 );
 
@@ -63,7 +60,7 @@ class PerfherderContainer extends Component {
   };
 
   async componentDidMount() {
-    this.data(this.props);
+    await this.data(this.props);
   }
 
   async componentDidUpdate(prevProps) {
@@ -75,12 +72,14 @@ class PerfherderContainer extends Component {
   }
 
   async data(
-    { platform, suite },
+    { platform, suite, framework, option },
     percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD
   ) {
     const { perfherderUrl, data, parentSignature } = await getData({
       suite,
       platform,
+      framework,
+      option,
       percentileThreshold,
     });
 
@@ -152,6 +151,7 @@ class PerfherderContainer extends Component {
 }
 
 PerfherderContainer.propTypes = {
+  framework: propTypes.string.isRequired,
   platform: propTypes.string.isRequired,
   suite: propTypes.string.isRequired,
   percentileThreshold: propTypes.number,

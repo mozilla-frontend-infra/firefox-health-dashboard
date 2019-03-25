@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import ErrorPanel from '@mozilla-frontend-infra/components/ErrorPanel';
 import generateOptions from '../../utils/chartJs/generateOptions';
+import { ErrorMessage } from '../../vendor/errors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -21,8 +21,8 @@ const styles = {
     padding: '.3rem .3rem .3rem .3rem',
   },
   errorPanel: {
-    marginTop: '10px',
-    width: '97%',
+    margin: '26px auto 40px',
+    width: '70%',
   },
 };
 const ChartJsWrapper = ({
@@ -33,50 +33,66 @@ const ChartJsWrapper = ({
   type,
   chartHeight,
   spinnerSize,
-  missingDataError = false,
-}) => {
-  let showError;
+}) =>
+  (() => {
+    if (!data) {
+      return (
+        <div
+          style={{
+            lineHeight: spinnerSize,
+            textAlign: 'center',
+            width: spinnerSize,
+          }}>
+          <CircularProgress />
+        </div>
+      );
+    }
 
-  if (data && missingDataError) {
-    showError = data.datasets.some(dataset => {
-      const latestDataDate = new Date(dataset.data[dataset.data.length - 1].x);
+    let error = null;
+
+    data.datasets.forEach(dataset => {
+      const latestDataDate = new Date(Math.max(dataset.data.map(({ x }) => x)));
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
         currentDate.getTime() - latestDataDate.getTime()
       );
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      return daysDifference > 3; // if days are more than 3 then show error
+      if (daysDifference > 3) {
+        error = new Error(
+          'This item has been missing data for at least 3 days.'
+        );
+      }
     });
-  }
 
-  return data ? (
-    <div className={classes.chartContainer}>
-      {showError && (
-        <ErrorPanel
-          className={classes.errorPanel}
-          error="This item has been missing data for at least 3 days."
+    if (error) {
+      return (
+        <div className={classes.chartContainer}>
+          <ErrorMessage error={error}>
+            {title && <h2>{title}</h2>}
+            <Chart
+              type={type}
+              data={data}
+              height={chartHeight}
+              options={generateOptions(options)}
+            />
+          </ErrorMessage>
+        </div>
+      );
+    }
+
+    return (
+      <div className={classes.chartContainer}>
+        {title && <h2>{title}</h2>}
+        <Chart
+          type={type}
+          data={data}
+          height={chartHeight}
+          options={generateOptions(options)}
         />
-      )}
-      {title && <h2>{title}</h2>}
-      <Chart
-        type={type}
-        data={data}
-        height={chartHeight}
-        options={generateOptions(options)}
-      />
-    </div>
-  ) : (
-    <div
-      style={{
-        lineHeight: spinnerSize,
-        textAlign: 'center',
-        width: spinnerSize,
-      }}>
-      <CircularProgress />
-    </div>
-  );
-};
+      </div>
+    );
+  })();
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
@@ -111,10 +127,9 @@ ChartJsWrapper.propTypes = {
   }),
   title: PropTypes.string,
   type: PropTypes.string,
+  isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
-  missingDataError: PropTypes.bool,
-  showError: PropTypes.bool,
 };
 
 ChartJsWrapper.defaultProps = {
@@ -123,7 +138,8 @@ ChartJsWrapper.defaultProps = {
   title: '',
   type: 'line',
   chartHeight: 80,
-  spinnerSize: '8rem',
+  spinnerSize: '100%',
+  isLoading: false,
 };
 
 export default withStyles(styles)(ChartJsWrapper);
