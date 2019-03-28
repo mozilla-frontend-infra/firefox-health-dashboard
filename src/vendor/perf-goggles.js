@@ -4,7 +4,7 @@ import { stringify } from 'query-string';
 
 export const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
-const DEFAULT_TIMERANGE = 14 * 24 * 3600;
+const DEFAULT_TIMERANGE = 6 * 7 * 24 * 3600;
 
 export const signaturesUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/signatures/`;

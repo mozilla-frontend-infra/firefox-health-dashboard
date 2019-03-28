@@ -107,6 +107,20 @@ const PLATFORMS = [
     platform: 'android-hw-g5-7-0-arm7-api-16',
     project: 'mozilla-central',
   },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview p2 (pgo)',
+    framework: 10,
+    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview g5 (pgo)',
+    framework: 10,
+    platform: "android-hw-g5-7-0-arm7-api-16-pgo",
+    project: 'mozilla-central',
+  },
 ];
 const TP6_TESTS = [
   {
@@ -168,8 +182,8 @@ const SUITES = {
     ['geckoview', 'Tp6 mobile: Bing', "raptor-tp6m-bing-geckoview"],
     ['geckoview', 'Tp6 mobile: Bing Restaurants', "raptor-tp6m-bing-restaurants-geckoview"],
     ['geckoview', 'Tp6 mobile: Booking', "raptor-tp6m-booking-geckoview"],
-    ['geckoview', 'Tp6 mobile: CNN', "raptor-tp6m-cnn-geckoview"],
-    ['geckoview', 'Tp6 mobile: CNN AmpStories', "raptor-tp6m-cnn-ampstories-geckoview"],
+    // ['geckoview', 'Tp6 mobile: CNN', "raptor-tp6m-cnn-geckoview"],
+    // ['geckoview', 'Tp6 mobile: CNN AmpStories', "raptor-tp6m-cnn-ampstories-geckoview"],
     ['geckoview', 'Tp6 mobile: Kleinanzeigen', "raptor-tp6m-ebay-kleinanzeigen-geckoview"],
     ['geckoview', 'Tp6 mobile: Kleinanzeigen Search', "raptor-tp6m-ebay-kleinanzeigen-search-geckoview"],
     ['geckoview', 'Tp6 mobile: ESPN', "raptor-tp6m-espn-geckoview"],

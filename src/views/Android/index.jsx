@@ -29,19 +29,9 @@ class Android extends Component {
                   includeBugCount
                   queries={[
                     {
-                      text: 'Open fenix:p1 bugs',
+                      text: 'All GV Fenix MVP bugs',
                       parameters: {
-                        product: 'GeckoView',
-                        resolution: '---',
-                        whiteboard: '[geckoview:fenix:p1]',
-                      },
-                    },
-                    {
-                      text: 'Open fenix:p2 bugs',
-                      parameters: {
-                        product: 'GeckoView',
-                        resolution: '---',
-                        whiteboard: '[geckoview:fenix:p2]',
+                        whiteboard: '[geckoview:fenix:p',
                       },
                     },
                   ]}
@@ -49,23 +39,42 @@ class Android extends Component {
                 <BugzillaGraph
                   queries={[
                     {
-                      label: 'fenix:p1 bugs',
+                      label: 'GV M2 bugs',
                       parameters: {
-                        product: 'GeckoView',
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:p1]',
+                        whiteboard: '[geckoview:fenix:m2]',
                       },
                     },
                     {
-                      label: 'fenix:p2 bugs',
+                      label: 'GV M3 bugs',
                       parameters: {
-                        product: 'GeckoView',
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:p2]',
+                        whiteboard: '[geckoview:fenix:m3]',
+                      },
+                    },
+                    {
+                      label: 'GV M4 bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m4]',
+                      },
+                    },
+                    {
+                      label: 'GV M5 bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m5]',
+                      },
+                    },
+                    {
+                      label: 'All GV Fenix MVP bugs',
+                      parameters: {
+                        resolution: ['---', 'FIXED'],
+                        whiteboard: '[geckoview:fenix:m',
                       },
                     },
                   ]}
-                  startDate="2018-03-01"
+                  startDate="2019-02-01"
                   title="GeckoView Fenix bugs"
                 />
               </Section>
@@ -84,7 +93,10 @@ class Android extends Component {
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
               .where({
-                platform: 'android-hw-g5-7-0-arm7-api-16',
+                platform: [
+                  'android-hw-g5-7-0-arm7-api-16',
+                  'android-hw-g5-7-0-arm7-api-16-pgo',
+                ],
                 title: [
                   'Tp6 mobile: Google',
                   'Tp6 mobile: YouTube',
@@ -159,6 +171,24 @@ class Android extends Component {
                     framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-android-aarch64',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
+                  label: 'Pixel 2 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-speedometer-geckoview',
                   },
