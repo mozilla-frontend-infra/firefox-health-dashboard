@@ -61,7 +61,9 @@ class CustomTooltip extends React.Component {
       fontSize: `${tooltipModel._bodyFontSize}px`,
     };
     const currPoint = tooltipModel.dataPoints[0];
-    const labelColors = tooltipModel.labelColors[0];
+    const labelColor = {
+      backgroundColor: tooltipModel.labelColors[0].borderColor,
+    };
     const { index } = currPoint;
     const currSeries = series[currPoint.datasetIndex];
     const higherOrLower = currSeries.meta.lower_is_better
@@ -79,7 +81,7 @@ class CustomTooltip extends React.Component {
       <div className={classes.tooltip} style={inlineStyle} ref={this.tooltip}>
         <div>{currPoint.xLabel}</div>
         <div>
-          <span style={labelColors} className={classes.tooltipKey} />
+          <span style={labelColor} className={classes.tooltipKey} />
           {currSeries.label}: {currPoint.yLabel}
         </div>
         <div>

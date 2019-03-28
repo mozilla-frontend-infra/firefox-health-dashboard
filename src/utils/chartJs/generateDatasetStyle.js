@@ -3,6 +3,7 @@ const generateLineChartStyle = color => ({
   borderColor: color,
   fill: false,
   pointRadius: '0',
+  pointHoverBackgroundColor: 'white',
   lineTension: 0.1,
 });
 const generateScatterChartStyle = color => ({
