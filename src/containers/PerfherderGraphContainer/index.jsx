@@ -4,6 +4,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerfherderData from '../../utils/perfherder/chartJs/getPerfherderData';
+import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = () => ({
@@ -23,17 +24,32 @@ const styles = () => ({
 class PerfherderGraphContainer extends Component {
   state = {
     data: null,
+    tooltipModel: null,
+    canvas: null,
     isLoading: false,
   };
 
   async componentDidMount() {
-    await this.fetchSetData(this.props);
+    this.fetchSetData(this.props);
   }
 
   async fetchSetData({ series }) {
     try {
       this.setState({ isLoading: true });
       this.setState(await getPerfherderData(series));
+
+      const self = this;
+
+      this.setState(prevState => {
+        const { options } = prevState;
+
+        options.tooltips.custom = function custom(tooltipModel) {
+          // eslint-disable-next-line no-underscore-dangle
+          self.setState({ tooltipModel, canvas: this._chart.canvas });
+        };
+
+        return { ...prevState, options };
+      });
     } finally {
       this.setState({ isLoading: false });
     }
@@ -41,7 +57,14 @@ class PerfherderGraphContainer extends Component {
 
   render() {
     const { classes, title } = this.props;
-    const { data, jointUrl, options, isLoading } = this.state;
+    const {
+      data,
+      jointUrl,
+      options,
+      canvas,
+      tooltipModel,
+      isLoading,
+    } = this.state;
 
     return (
       <div key={title}>
@@ -59,6 +82,13 @@ class PerfherderGraphContainer extends Component {
           isLoading={isLoading}
           options={options}
         />
+        {tooltipModel && (
+          <CustomTooltip
+            tooltipModel={tooltipModel}
+            series={options.series}
+            canvas={canvas}
+          />
+        )}
       </div>
     );
   }
