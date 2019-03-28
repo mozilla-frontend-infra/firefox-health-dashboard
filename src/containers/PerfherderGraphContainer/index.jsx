@@ -37,7 +37,7 @@ class PerfherderGraphContainer extends Component {
     try {
       this.setState({ isLoading: true });
       this.setState(await getPerfherderData(series));
-    } finally {
+
       const self = this;
 
       this.setState(prevState => {
@@ -48,8 +48,10 @@ class PerfherderGraphContainer extends Component {
           self.setState({ tooltipModel, canvas: this._chart.canvas });
         };
 
-        return { ...prevState, options, isLoading: false };
+        return { ...prevState, options };
       });
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
 
