@@ -93,7 +93,10 @@ class Android extends Component {
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
               .where({
-                platform: 'android-hw-g5-7-0-arm7-api-16',
+                platform: [
+                  'android-hw-g5-7-0-arm7-api-16',
+                  'android-hw-g5-7-0-arm7-api-16-pgo',
+                ],
                 title: [
                   'Tp6 mobile: Google',
                   'Tp6 mobile: YouTube',
@@ -168,6 +171,24 @@ class Android extends Component {
                     framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-android-aarch64',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
+                  label: 'Pixel 2 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-speedometer-geckoview',
                   },

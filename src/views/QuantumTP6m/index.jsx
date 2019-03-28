@@ -33,7 +33,7 @@ class TP6M extends React.Component {
           {navigation}
           <Grid container spacing={24}>
             {frum(TP6M_PAGES)
-              .where({ platform })
+              .filter(d => d.platform.startsWith(platform))
               .groupBy('title')
               .map((series, title) => (
                 <Grid

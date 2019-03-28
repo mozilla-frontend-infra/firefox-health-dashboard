@@ -107,6 +107,20 @@ const PLATFORMS = [
     platform: 'android-hw-g5-7-0-arm7-api-16',
     project: 'mozilla-central',
   },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview p2 (pgo)',
+    framework: 10,
+    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
+    project: 'mozilla-central',
+  },
+  {
+    browser: 'geckoview',
+    label: 'Geckoview g5 (pgo)',
+    framework: 10,
+    platform: "android-hw-g5-7-0-arm7-api-16-pgo",
+    project: 'mozilla-central',
+  },
 ];
 const TP6_TESTS = [
   {
