@@ -12,6 +12,9 @@ const styles = {
     borderRadius: '4px',
     pointerEvents: 'none',
     transform: 'translate(var(--trans-x), var(--trans-y))',
+    '& a': {
+      pointerEvents: 'auto',
+    },
     '&::before': {
       position: 'absolute',
       content: '""',
@@ -70,11 +73,14 @@ const styles = {
     height: '10px',
     marginRight: '10px',
   },
+  lockMessage: {
+    color: '#ccc',
+  },
 };
 
 class CustomTooltip extends React.Component {
   render() {
-    const { classes, tooltipModel, series, canvas } = this.props;
+    const { classes, tooltipModel, series, canvas, isLocked } = this.props;
 
     if (tooltipModel.opacity === 0) return null;
 
@@ -141,6 +147,9 @@ class CustomTooltip extends React.Component {
             job
           </a>
           )
+        </div>
+        <div className={classes.lockMessage}>
+          {isLocked ? 'Click to unlock' : 'Click to lock'}
         </div>
       </div>
     );

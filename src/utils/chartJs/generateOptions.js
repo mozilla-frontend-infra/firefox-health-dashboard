@@ -6,6 +6,7 @@ const generateOptions = (options = {}) => {
     tooltipFormat,
     tooltips,
     ticksCallback,
+    onClick,
   } = options;
   const chartJsOptions = {
     legend: {
@@ -58,6 +59,10 @@ const generateOptions = (options = {}) => {
       display: true,
       labelString: scaleLabel,
     };
+  }
+
+  if (onClick) {
+    chartJsOptions.onClick = onClick;
   }
 
   return chartJsOptions;

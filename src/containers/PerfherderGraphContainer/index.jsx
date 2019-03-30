@@ -25,6 +25,7 @@ class PerfherderGraphContainer extends Component {
   state = {
     data: null,
     tooltipModel: null,
+    tooltipIsLocked: false,
     canvas: null,
     isLoading: false,
   };
@@ -43,9 +44,12 @@ class PerfherderGraphContainer extends Component {
       this.setState(prevState => {
         const { options } = prevState;
 
+        options.onClick = this.handleChartClick;
         options.tooltips.custom = function custom(tooltipModel) {
-          // eslint-disable-next-line no-underscore-dangle
-          self.setState({ tooltipModel, canvas: this._chart.canvas });
+          if (!self.state.tooltipIsLocked) {
+            // eslint-disable-next-line no-underscore-dangle
+            self.setState({ tooltipModel, canvas: this._chart.canvas });
+          }
         };
 
         return { ...prevState, options };
@@ -54,6 +58,12 @@ class PerfherderGraphContainer extends Component {
       this.setState({ isLoading: false });
     }
   }
+
+  handleChartClick = () => {
+    this.setState(prevState => ({
+      tooltipIsLocked: !prevState.tooltipIsLocked,
+    }));
+  };
 
   render() {
     const { classes, title } = this.props;
@@ -64,6 +74,7 @@ class PerfherderGraphContainer extends Component {
       canvas,
       tooltipModel,
       isLoading,
+      tooltipIsLocked,
     } = this.state;
 
     return (
@@ -87,6 +98,7 @@ class PerfherderGraphContainer extends Component {
             tooltipModel={tooltipModel}
             series={options.series}
             canvas={canvas}
+            isLocked={tooltipIsLocked}
           />
         )}
       </div>
