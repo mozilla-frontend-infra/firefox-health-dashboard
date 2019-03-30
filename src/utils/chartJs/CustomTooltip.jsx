@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   tooltip: {
-    '--bg-color': 'rgba(100, 0, 0, .8)',
+    '--bg-color': 'rgba(0, 0, 0, .8)',
     '--tip-size': '6px',
     position: 'absolute',
     padding: '6px',
@@ -19,9 +19,7 @@ const styles = {
       borderStyle: 'solid',
       borderColor: 'transparent',
     },
-
     '&.ytop': {
-      color: 'blue',
       '--trans-y': 'var(--tip-size)',
       '&::before': { bottom: '100%', borderBottomColor: 'var(--bg-color)' },
       '&.xright': {
@@ -82,7 +80,8 @@ class CustomTooltip extends React.Component {
 
     const top = canvas.offsetTop + tooltipModel.caretY;
     const left = canvas.offsetLeft + tooltipModel.caretX;
-    const alignments = [`x ${tooltipModel.xAlign}`, `y ${tooltipModel.yAlign}`];
+    const alignments = [`x${tooltipModel.xAlign}`, `y${tooltipModel.yAlign}`];
+    // console.log(alignments);
     const inlineStyle = {
       top,
       left,
