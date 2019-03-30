@@ -41,17 +41,14 @@ class Android extends Component {
                 <BugzillaGraph
                   queries={[
                     {
-                      label: 'GV M2 bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m2]',
-                      },
-                    },
-                    {
                       label: 'GV M3 bugs',
                       parameters: {
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m3]',
+                        whiteboard: [
+                          '[geckoview:fenix:m2]',
+                          '[geckoview:fenix:m3]',
+                        ],
+                        status_whiteboard_type: 'anywordssubstr',
                       },
                     },
                     {
