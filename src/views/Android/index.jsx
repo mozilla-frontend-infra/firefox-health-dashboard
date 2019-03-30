@@ -31,7 +31,9 @@ class Android extends Component {
                     {
                       text: 'All GV Fenix MVP bugs',
                       parameters: {
-                        whiteboard: '[geckoview:fenix:p',
+                        resolution: '---',
+                        status_whiteboard: '[geckoview:fenix:m',
+                        status_whiteboard_type: 'substring',
                       },
                     },
                   ]}
