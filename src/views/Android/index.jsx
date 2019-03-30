@@ -65,13 +65,6 @@ class Android extends Component {
                         whiteboard: '[geckoview:fenix:m5]',
                       },
                     },
-                    {
-                      label: 'All GV Fenix MVP bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m',
-                      },
-                    },
                   ]}
                   startDate="2019-02-01"
                   title="GeckoView Fenix bugs"
