@@ -1,6 +1,22 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+const topAligned = {
+  '--trans-y': 'var(--tip-size)',
+  '&::before': { bottom: '100%', borderBottomColor: 'var(--bg-color)' },
+  '&.xright': {
+    '--trans-x': 'calc(-100% + 2 * var(--tip-size))',
+    '&::before': { right: 'var(--tip-size)' },
+  },
+  '&.xcenter': {
+    '--trans-x': '-50%',
+    '&::before': { left: 'calc(50% - var(--tip-size))' },
+  },
+  '&.xleft': {
+    '--trans-x': 'calc(-2 * var(--tip-size))',
+    '&::before': { left: 'var(--tip-size)' },
+  },
+};
 const styles = {
   tooltip: {
     '--bg-color': 'rgba(0, 0, 0, .8)',
@@ -23,20 +39,7 @@ const styles = {
       borderColor: 'transparent',
     },
     '&.ytop': {
-      '--trans-y': 'var(--tip-size)',
-      '&::before': { bottom: '100%', borderBottomColor: 'var(--bg-color)' },
-      '&.xright': {
-        '--trans-x': 'calc(-100% + 2 * var(--tip-size))',
-        '&::before': { right: 'var(--tip-size)' },
-      },
-      '&.xcenter': {
-        '--trans-x': '-50%',
-        '&::before': { left: 'calc(50% - var(--tip-size))' },
-      },
-      '&.xleft': {
-        '--trans-x': 'calc(-2 * var(--tip-size))',
-        '&::before': { left: 'var(--tip-size)' },
-      },
+      ...topAligned,
     },
     '&.ycenter': {
       '--trans-y': '-50%',
@@ -51,20 +54,9 @@ const styles = {
       },
     },
     '&.ybottom': {
+      ...topAligned,
       '--trans-y': 'calc(-100% - var(--tip-size))',
       '&::before': { top: '100%', borderTopColor: 'var(--bg-color)' },
-      '&.xright': {
-        '--trans-x': 'calc(-100% + 2 * var(--tip-size))',
-        '&::before': { right: 'var(--tip-size)' },
-      },
-      '&.xcenter': {
-        '--trans-x': '-50%',
-        '&::before': { left: 'calc(50% - var(--tip-size))' },
-      },
-      '&.xleft': {
-        '--trans-x': 'calc(-2 * var(--tip-size))',
-        '&::before': { left: 'var(--tip-size)' },
-      },
     },
   },
   tooltipKey: {
