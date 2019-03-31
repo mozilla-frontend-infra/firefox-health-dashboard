@@ -31,7 +31,9 @@ class Android extends Component {
                     {
                       text: 'All GV Fenix MVP bugs',
                       parameters: {
-                        whiteboard: '[geckoview:fenix:p',
+                        resolution: '---',
+                        status_whiteboard: '[geckoview:fenix:m',
+                        status_whiteboard_type: 'substring',
                       },
                     },
                   ]}
@@ -39,17 +41,14 @@ class Android extends Component {
                 <BugzillaGraph
                   queries={[
                     {
-                      label: 'GV M2 bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m2]',
-                      },
-                    },
-                    {
                       label: 'GV M3 bugs',
                       parameters: {
                         resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m3]',
+                        whiteboard: [
+                          '[geckoview:fenix:m2]',
+                          '[geckoview:fenix:m3]',
+                        ],
+                        status_whiteboard_type: 'anywordssubstr',
                       },
                     },
                     {
@@ -64,13 +63,6 @@ class Android extends Component {
                       parameters: {
                         resolution: ['---', 'FIXED'],
                         whiteboard: '[geckoview:fenix:m5]',
-                      },
-                    },
-                    {
-                      label: 'All GV Fenix MVP bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m',
                       },
                     },
                   ]}
