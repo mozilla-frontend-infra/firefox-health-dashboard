@@ -5,6 +5,9 @@ import { stringify } from 'query-string';
 export const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
 const DEFAULT_TIMERANGE = 6 * 7 * 24 * 3600;
+// treeherder can only accept particular time ranges
+const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(x => x * 24 * 60 * 60);
+const TREEHERDER_TIMERANGE = ALLOWED_TREEHERDER_TIMERANGES[5];  //60day
 
 export const signaturesUrl = (project = PROJECT) =>
   `${TREEHERDER}/api/project/${project}/performance/signatures/`;
@@ -81,7 +84,8 @@ const perfherderGraphUrl = (
   signatureIds,
   timeRange = DEFAULT_TIMERANGE
 ) => {
-  let baseDataUrl = `${TREEHERDER}/perf.html#/graphs?timerange=${timeRange}`;
+  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t=>t>=timeRange);
+  let baseDataUrl = `${TREEHERDER}/perf.html#/graphs?timerange=${bestRange}`;
 
   baseDataUrl += `&${signatureIds
     .sort()
