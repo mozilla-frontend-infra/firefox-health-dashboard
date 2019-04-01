@@ -8,7 +8,6 @@ import BugzillaGraph from '../../containers/BugzillaGraph';
 import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
-import SETTINGS from '../../settings';
 import CONFIG from '../../utils/nimbledroid/config';
 import { frum } from '../../vendor/queryOps';
 import { TP6M_PAGES } from '../../quantum/config';
@@ -148,6 +147,15 @@ class Android extends Component {
                   },
                 },
                 {
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
                     framework: 10,
@@ -168,15 +176,6 @@ class Android extends Component {
                   },
                 },
                 {
-                  label: 'Moto G5 (pgo)',
-                  seriesConfig: {
-                    framework: 10,
-                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-geckoview',
-                  },
-                },
-                {
                   label: 'Pixel 2 (pgo)',
                   seriesConfig: {
                     framework: 10,
@@ -191,7 +190,6 @@ class Android extends Component {
               title="Unity WebGl"
               series={[
                 {
-                  color: SETTINGS.colors[0],
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
                     framework: 10,
@@ -202,12 +200,39 @@ class Android extends Component {
                   },
                 },
                 {
-                  color: SETTINGS.colors[1],
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
                     framework: 10,
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
+                  label: 'Pixel 2 (ARM64)',
+                  seriesConfig: {
+                    framework: 10,
+                    option: 'opt',
+                    platform: 'android-hw-p2-8-0-android-aarch64',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
+                  label: 'Pixel 2 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-unity-webgl-geckoview',
                   },
