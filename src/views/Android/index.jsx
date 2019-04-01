@@ -148,6 +148,15 @@ class Android extends Component {
                   },
                 },
                 {
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-speedometer-geckoview',
+                  },
+                },
+                {
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
                     framework: 10,
@@ -163,15 +172,6 @@ class Android extends Component {
                     framework: 10,
                     option: 'opt',
                     platform: 'android-hw-p2-8-0-android-aarch64',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-geckoview',
-                  },
-                },
-                {
-                  label: 'Moto G5 (pgo)',
-                  seriesConfig: {
-                    framework: 10,
-                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-speedometer-geckoview',
                   },
@@ -202,12 +202,42 @@ class Android extends Component {
                   },
                 },
                 {
+                  color: SETTINGS.colors[0],
+                  label: 'Moto G5 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
                   color: SETTINGS.colors[1],
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
                     framework: 10,
                     platform: 'android-hw-p2-8-0-arm7-api-16',
                     option: 'opt',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
+                  label: 'Pixel 2 (ARM64)',
+                  seriesConfig: {
+                    framework: 10,
+                    option: 'opt',
+                    platform: 'android-hw-p2-8-0-android-aarch64',
+                    project: 'mozilla-central',
+                    suite: 'raptor-unity-webgl-geckoview',
+                  },
+                },
+                {
+                  color: SETTINGS.colors[1],
+                  label: 'Pixel 2 (pgo)',
+                  seriesConfig: {
+                    framework: 10,
+                    platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
                     project: 'mozilla-central',
                     suite: 'raptor-unity-webgl-geckoview',
                   },
