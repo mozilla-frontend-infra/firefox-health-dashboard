@@ -8,7 +8,6 @@ import BugzillaGraph from '../../containers/BugzillaGraph';
 import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
-import SETTINGS from '../../settings';
 import CONFIG from '../../utils/nimbledroid/config';
 import { frum } from '../../vendor/queryOps';
 import { TP6M_PAGES } from '../../quantum/config';
@@ -191,7 +190,6 @@ class Android extends Component {
               title="Unity WebGl"
               series={[
                 {
-                  color: SETTINGS.colors[0],
                   label: 'Moto G5 (arm7)',
                   seriesConfig: {
                     framework: 10,
@@ -202,7 +200,6 @@ class Android extends Component {
                   },
                 },
                 {
-                  color: SETTINGS.colors[0],
                   label: 'Moto G5 (pgo)',
                   seriesConfig: {
                     framework: 10,
@@ -212,7 +209,6 @@ class Android extends Component {
                   },
                 },
                 {
-                  color: SETTINGS.colors[1],
                   label: 'Pixel 2 (arm7)',
                   seriesConfig: {
                     framework: 10,
@@ -233,7 +229,6 @@ class Android extends Component {
                   },
                 },
                 {
-                  color: SETTINGS.colors[1],
                   label: 'Pixel 2 (pgo)',
                   seriesConfig: {
                     framework: 10,
