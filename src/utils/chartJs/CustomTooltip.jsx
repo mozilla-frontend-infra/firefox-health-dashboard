@@ -1,14 +1,63 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+const topAligned = {
+  '--trans-y': 'var(--tip-size)',
+  '&::before': { bottom: '100%', borderBottomColor: 'var(--bg-color)' },
+  '&.xright': {
+    '--trans-x': 'calc(-100% + 2 * var(--tip-size))',
+    '&::before': { right: 'var(--tip-size)' },
+  },
+  '&.xcenter': {
+    '--trans-x': '-50%',
+    '&::before': { left: 'calc(50% - var(--tip-size))' },
+  },
+  '&.xleft': {
+    '--trans-x': 'calc(-2 * var(--tip-size))',
+    '&::before': { left: 'var(--tip-size)' },
+  },
+};
 const styles = {
   tooltip: {
+    '--bg-color': 'rgba(0, 0, 0, .8)',
+    '--tip-size': '6px',
     position: 'absolute',
     padding: '6px',
-    background: 'rgba(0, 0, 0, .8)',
+    background: 'var(--bg-color)',
     color: 'white',
     borderRadius: '4px',
     pointerEvents: 'none',
+    transform: 'translate(var(--trans-x), var(--trans-y))',
+    '& a': {
+      pointerEvents: 'auto',
+    },
+    '&::before': {
+      position: 'absolute',
+      content: '""',
+      borderWidth: 'var(--tip-size)',
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+    },
+    '&.ytop': {
+      ...topAligned,
+    },
+    '&.ycenter': {
+      '--trans-y': '-50%',
+      '&::before': { top: 'calc(50% - var(--tip-size))' },
+      '&.xright': {
+        '--trans-x': 'calc(-1 * (100% + var(--tip-size)))',
+        '&::before': { left: '100%', borderLeftColor: 'var(--bg-color)' },
+      },
+      '&.xleft': {
+        '--trans-x': 'var(--tip-size)',
+        '&::before': { right: '100%', borderRightColor: 'var(--bg-color)' },
+      },
+    },
+    '&.ybottom': {
+      ...topAligned,
+      '--trans-y': 'calc(-100% - var(--tip-size))',
+      '&::before': { top: '100%', borderTopColor: 'var(--bg-color)' },
+    },
   },
   tooltipKey: {
     display: 'inline-block',
@@ -16,42 +65,21 @@ const styles = {
     height: '10px',
     marginRight: '10px',
   },
+  lockMessage: {
+    color: '#ccc',
+  },
 };
 
 class CustomTooltip extends React.Component {
-  constructor(props) {
-    super(props);
-    this.tooltip = React.createRef();
-    this.state = { width: 0, height: 0 };
-  }
-
-  componentDidMount() {
-    this.setState({
-      width: this.tooltip.current.clientWidth,
-      height: this.tooltip.current.clientHeight,
-    });
-  }
-
   render() {
-    const { classes, tooltipModel, series, canvas } = this.props;
+    const { classes, tooltipModel, series, canvas, isLocked } = this.props;
 
     if (tooltipModel.opacity === 0) return null;
 
-    let top = canvas.offsetTop + tooltipModel.caretY;
-    let left = canvas.offsetLeft + tooltipModel.caretX;
-
-    if (tooltipModel.yAlign === 'bottom') {
-      top -= this.state.height;
-    } else if (tooltipModel.yAlign === 'center') {
-      top -= 0.5 * this.state.height;
-    }
-
-    if (tooltipModel.xAlign === 'right') {
-      left -= this.state.width;
-    } else if (tooltipModel.xAlign === 'center') {
-      left -= 0.5 * this.state.width;
-    }
-
+    const top = canvas.offsetTop + tooltipModel.caretY;
+    const left = canvas.offsetLeft + tooltipModel.caretX;
+    const alignments = [`x${tooltipModel.xAlign}`, `y${tooltipModel.yAlign}`];
+    // console.log(alignments);
     const inlineStyle = {
       top,
       left,
@@ -78,8 +106,10 @@ class CustomTooltip extends React.Component {
     }&selectedJob=${curr.job_id}&group_state=expanded`;
 
     return (
-      <div className={classes.tooltip} style={inlineStyle} ref={this.tooltip}>
-        <div>{currPoint.xLabel}</div>
+      <div
+        className={[classes.tooltip, ...alignments].join(' ')}
+        style={inlineStyle}>
+        <div className={classes.test}>{currPoint.xLabel}</div>
         <div>
           <span style={labelColor} className={classes.tooltipKey} />
           {currSeries.label}: {currPoint.yLabel}
@@ -109,6 +139,9 @@ class CustomTooltip extends React.Component {
             job
           </a>
           )
+        </div>
+        <div className={classes.lockMessage}>
+          {isLocked ? 'Click to unlock' : 'Click to lock'}
         </div>
       </div>
     );
