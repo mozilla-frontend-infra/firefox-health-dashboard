@@ -6,6 +6,7 @@ import ChartJsWrapper from '../../components/ChartJsWrapper';
 import getPerfherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
+import perfherderFormatter from '../../utils/perfherder/chartJs/perfherderFormatter';
 
 const styles = () => ({
   title: {
@@ -31,14 +32,15 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    this.fetchSetData(this.props);
+    await this.fetchSetData(this.props);
   }
 
   async fetchSetData({ series }) {
     try {
       this.setState({ isLoading: true });
-      this.setState(await getPerfherderData(series));
+      const rawData = await getPerfherderData(series);
 
+      this.setState(perfherderFormatter(rawData));
       const self = this;
 
       this.setState(prevState => {

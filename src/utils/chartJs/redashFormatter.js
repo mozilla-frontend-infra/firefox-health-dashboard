@@ -1,5 +1,4 @@
 import generateDatasetStyle from './generateDatasetStyle';
-import SETTINGS from '../../settings';
 
 const sortByDate = (a, b) =>
   new Date(b.submission_date) - new Date(a.submission_date);
@@ -36,7 +35,7 @@ const redashFormatter = (data, dataKeyIdentifier) => {
 
     return {
       label: key,
-      ...generateDatasetStyle(SETTINGS.colors[index]),
+      ...generateDatasetStyle({ index }),
       data: dataToChartJSformat(datum.sort(sortByDate)),
     };
   });

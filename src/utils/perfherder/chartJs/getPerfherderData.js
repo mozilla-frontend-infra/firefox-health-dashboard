@@ -1,5 +1,4 @@
 import { queryPerformanceData } from '../../../vendor/perf-goggles';
-import perfherderFormatter from './perfherderFormatter';
 import SETTINGS from '../../../settings';
 import { missing } from '../../../vendor/utils';
 
@@ -36,12 +35,13 @@ const getPerfherderData = async series => {
     })
   );
 
-  if (missing(newData[0]))
+  if (newData.every(missing)) {
     throw new Error(
       `can not get data for ${JSON.stringify(series[0].seriesConfig)}`
     );
+  }
 
-  return perfherderFormatter(newData);
+  return newData;
 };
 
 export default getPerfherderData;

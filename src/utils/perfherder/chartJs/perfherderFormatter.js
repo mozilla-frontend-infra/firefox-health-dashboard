@@ -1,6 +1,5 @@
 import { parse } from 'query-string';
 import generateDatasetStyle from '../../chartJs/generateDatasetStyle';
-import SETTINGS from '../../../settings';
 import { missing } from '../../../vendor/utils';
 
 const dataToChartJSformat = data =>
@@ -34,13 +33,15 @@ const perfherderFormatter = series => {
     options: generateInitialOptions(series),
   };
 
-  series.forEach(({ color, data, label, perfherderUrl }, index) => {
+  series.forEach(({ color, data, label, perfherderUrl, style = {} }, index) => {
     if (data) {
-      newData.data.datasets.push({
-        ...generateDatasetStyle(color || SETTINGS.colors[index]),
+      const temp = {
+        ...generateDatasetStyle({ index, color, type: 'scatter', ...style }),
         label,
         data: dataToChartJSformat(data),
-      });
+      };
+
+      newData.data.datasets.push(temp);
     }
 
     if (!newData.jointUrl) {

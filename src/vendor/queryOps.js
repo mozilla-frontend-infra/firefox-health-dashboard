@@ -152,6 +152,19 @@ class Wrapper {
     return new Wrapper(() => output(this.argslist));
   }
 
+  slice(start) {
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        if (i >= start) yield args;
+        i += 1;
+      }
+    }
+
+    return new Wrapper(() => output(this.argslist));
+  }
+
   limit(max) {
     function* output(argslist) {
       let i = 0;
