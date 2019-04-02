@@ -31,7 +31,7 @@ const perfherderFormatter = series => {
   const newData = {
     data: { datasets: [] },
     // all the series beed to be send, in order to build a custom tooltip
-    options: generateInitialOptions(series),
+    options: generateInitialOptions(series.filter(Boolean)),
   };
 
   series.forEach(({ color, data, label, perfherderUrl }, index) => {
