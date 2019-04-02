@@ -41,7 +41,7 @@ const getPerfherderData = async series => {
       `can not get data for ${JSON.stringify(series[0].seriesConfig)}`
     );
 
-  return perfherderFormatter(newData);
+  return perfherderFormatter(newData.filter(Boolean));
 };
 
 export default getPerfherderData;
