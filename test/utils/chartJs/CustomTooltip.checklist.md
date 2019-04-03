@@ -9,4 +9,8 @@
 * When tooltip is locked: Links in tooltip work
 * higherIsBetter correct
 * run along datapoints, back and fourth quickly, to see if there are other problems
+* Tooltip is positioned properly relative to point
+* When withErrorBoundary covers the chart, Tooltip is still positioned properly
+
+**TODO** - Make a page with some charts to make this debugging faster
 
