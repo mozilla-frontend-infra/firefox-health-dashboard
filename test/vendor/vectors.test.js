@@ -38,6 +38,19 @@ describe('vectors', () => {
     ]);
   });
 
+  it('select deep array', () => {
+    expect(
+      selectFrom(data)
+        .select({ x: ['a', 'd'] })
+        .toArray()
+    ).toEqual([
+      { x: { a: 1, d: null } },
+      { x: { a: { b: 0, c: 1 }, d: 3 } },
+      { x: { a: null, d: null } },
+      { x: { a: null, d: 3 } },
+      { x: { a: null, d: null } },
+    ]);
+  });
   it('select value', () => {
     expect(
       selectFrom(data)
@@ -118,5 +131,11 @@ describe('vectors', () => {
   it('toPairs', () => {
     expect(toPairs({}).length).toEqual(0);
     expect(toPairs({}).exists().length).toEqual(0);
+  });
+  it('reverse', () => {
+    const a = selectFrom([1, 2, 3]);
+
+    expect(a.reverse().toArray()).toEqual([3, 2, 1]);
+    expect(a.toArray()).toEqual([1, 2, 3]);
   });
 });

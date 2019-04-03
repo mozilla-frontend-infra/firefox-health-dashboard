@@ -1,28 +1,32 @@
 /* eslint-disable no-restricted-syntax */
 
 import { toPairs } from './vectors';
+import { Log } from './logs';
 import {
   coalesce,
   exists,
   isArray,
-  isObject,
   isInteger,
-  isData,
   missing,
   splitField,
 } from './utils';
 
-const Data = (key, value) => {
-  if (key == null) {
-    throw new Error('expecting a string key');
-  }
+/*
+Represent JSON object: map from string keys to values
+ */
+class Data {}
 
-  const output = {};
+const OBJECT_CONSTRUCTOR = {}.constructor;
 
-  output[key] = value;
+/*
+ * Check if the `val` is Data
+ * Direct instances of Object are also considered data
+ */
+function isData(val) {
+  if (missing(val)) return false;
 
-  return output;
-};
+  return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
+}
 
 Data.zip = (keys, values) => {
   // LIST OF [k, v] TUPLES EXPECTED
@@ -63,8 +67,7 @@ Data.setDefault = (dest, ...args) => {
       if (missing(value)) {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
-        // eslint-disable-next-line no-console
-        console.warn('possible loop');
+        Log.warning('possible loop');
       } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
@@ -110,9 +113,9 @@ Data.get = (obj, path) => {
       } else if (isInteger(step)) {
         output = output[step];
       } else if (isArray(output)) {
-        output = output.map(o => (isObject(o) ? o[step] : null));
+        output = output.map(o => (isData(o) ? o[step] : null));
       }
-    } else if (isObject(output)) {
+    } else if (isData(output)) {
       output = output[step];
     } else {
       return null;
@@ -126,7 +129,7 @@ Data.get = (obj, path) => {
 
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    throw new Error('must be given an object and field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);
@@ -151,7 +154,7 @@ Data.set = (obj, path, value) => {
 
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.')
-    throw new Error('must be given an object and field');
+    Log.error('must be given an object and field');
 
   const split = splitField(path);
   const [last] = split.slice(-1);
@@ -182,4 +185,4 @@ Data.add = (obj, path, value) => {
   return obj;
 };
 
-export default Data;
+export { Data, isData };

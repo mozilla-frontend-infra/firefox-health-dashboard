@@ -128,6 +128,16 @@ function average(values) {
   return total / count;
 }
 
+function exp(value) {
+  if (missing(value)) return null;
+
+  return Math.exp(value);
+}
+
+function geomean(values) {
+  return exp(average(values.map(Math.log)));
+}
+
 function max(values) {
   let max = null;
 
@@ -152,7 +162,28 @@ function min(values) {
   return min;
 }
 
+function div(a, b) {
+  if (missing(a) || missing(b) || b === 0) return null;
+
+  return a / b;
+}
+
+function add(a, b) {
+  if (missing(a) || missing(b)) return null;
+
+  return a + b;
+}
+
+function mul(a, b) {
+  if (missing(a) || missing(b)) return null;
+
+  return a * b;
+}
+
 export {
+  div,
+  add,
+  mul,
   ceiling,
   floor,
   round,
@@ -165,5 +196,7 @@ export {
   count,
   sum,
   average,
+  geomean,
   log10,
+  exp,
 };

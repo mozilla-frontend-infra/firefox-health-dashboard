@@ -1,43 +1,71 @@
+import { parse } from 'query-string';
 import { selectFrom, leaves, length, toPairs } from './vectors';
-import { isArray, isFunction, isNumeric, isObject } from './utils';
+import { Log } from './logs';
+import { isData } from './Data';
+import { exists, isArray, isFunction, isString, toArray } from './utils';
 import strings from './strings';
 
-function fromQueryString(url) {
-  return selectFrom(new URLSearchParams(url).entries())
-    .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
-    .args()
+function fromQueryString(query) {
+  const decode = v => {
+    if (isArray(v)) return v.map(decode);
+
+    if (v === null || v === '') return true;
+
+    try {
+      return JSON.parse(v);
+    } catch (e) {
+      return v;
+    }
+  };
+
+  return toPairs(parse(query))
+    .map(decode)
     .fromLeaves();
 }
 
 function toQueryString(value) {
-  return leaves(value)
-    .map((v, k) => {
-      if (isArray(v)) {
-        return selectFrom(v)
-          .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
-          .concatenate('&');
-      }
+  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
+  const encode = (v, k) =>
+    toArray(v)
+      .filter(exists)
+      .map(vv => {
+        if (vv === true) return e(k);
 
-      return `${encodeURIComponent(k)}=${encodeURIComponent(v)}`;
-    })
+        if (isString(vv)) {
+          try {
+            JSON.parse(vv);
+
+            return `${e(k)}=${e(JSON.stringify(vv))}`;
+          } catch (e) {
+            // USE STANDARD ENCODING
+          }
+        }
+
+        return `${e(k)}=${e(vv)}`;
+      })
+      .join('&');
+  const output = leaves(value)
+    .map(encode)
     .concatenate('&');
+
+  return output;
 }
 
 function json2value(json) {
   try {
     return JSON.parse(json);
   } catch (e) {
-    throw new Error(`Can not parse json:\n{{json|indent}}`, { json }, e);
+    Log.error(`Can not parse json:\n{{json|indent}}`, { json }, e);
   }
 }
 
 function prettyJSON(json, maxDepth) {
   if (maxDepth < 0) {
-    throw new Error('json is too deep');
+    Log.error('json is too deep');
   }
 
   try {
-    if (Array.isArray(json)) {
+    if (isArray(json)) {
       const output = selectFrom(json)
         .map(v => {
           if (v === undefined) return;
@@ -67,7 +95,7 @@ function prettyJSON(json, maxDepth) {
       //   return convert.String2Quote(json.format("dd-NNN-yyyy HH:mm:ss"));
     }
 
-    if (isObject(json)) {
+    if (isData(json)) {
       const output = toPairs(json)
         .map((v, k) => {
           if (v === undefined) return;
@@ -91,12 +119,14 @@ function prettyJSON(json, maxDepth) {
 
     return JSON.stringify(json);
   } catch (e) {
-    throw new Error('Problem with jsonification', e);
+    Log.error('Problem with jsonification', e);
   }
 }
 
 function value2json(json) {
   return prettyJSON(json, 30);
 }
+
+strings.json = value2json;
 
 export { fromQueryString, toQueryString, value2json, json2value };

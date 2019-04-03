@@ -5,8 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
 import { selectFrom } from '../../vectors';
-import Data from '../../Data';
-import { toQueryString, fromQueryString } from '../../convert';
+import { fromQueryString, toQueryString } from '../../convert';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
@@ -42,7 +41,7 @@ function withNavigation(config) {
 
       onPathChange = event => {
         const { name, value } = event.target;
-        const change = Data(name, value);
+        const change = { [name]: value };
 
         this.setState(change);
 
