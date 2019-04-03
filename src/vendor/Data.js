@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
+import { toPairs } from './vectors';
 import {
   coalesce,
   exists,
@@ -45,7 +46,7 @@ Data.zip = (keys, values) => {
 Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
-  Object.entries(from).forEach((k, v) => {
+  toPairs(from).forEach((v, k) => {
     if (exists(v)) output[k] = v;
   });
 
@@ -56,7 +57,7 @@ Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
 
-    Object.entries(source).forEach((key, sourceValue) => {
+    toPairs(source).forEach((sourceValue, key) => {
       const value = output[key];
 
       if (missing(value)) {
