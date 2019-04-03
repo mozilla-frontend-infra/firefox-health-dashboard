@@ -1,19 +1,19 @@
-import { frum, leaves, length, toPairs } from './queryOps';
+import { selectFrom, leaves, length, toPairs } from './vectors';
 import { isArray, isFunction, isNumeric, isObject } from './utils';
 import strings from './strings';
 
-function URL2Object(url) {
-  return frum(new URLSearchParams(url).entries())
+function fromQueryString(url) {
+  return selectFrom(new URLSearchParams(url).entries())
     .map(([k, v]) => [isNumeric(v) ? Number.parseFloat(v) : v, k])
     .args()
     .fromLeaves();
 }
 
-function Object2URL(value) {
+function toQueryString(value) {
   return leaves(value)
     .map((v, k) => {
       if (isArray(v)) {
-        return frum(v)
+        return selectFrom(v)
           .map(vv => `${encodeURIComponent(k)}=${encodeURIComponent(vv)}`)
           .concatenate('&');
       }
@@ -38,7 +38,7 @@ function prettyJSON(json, maxDepth) {
 
   try {
     if (Array.isArray(json)) {
-      const output = frum(json)
+      const output = selectFrom(json)
         .map(v => {
           if (v === undefined) return;
 
@@ -99,4 +99,4 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
-export { URL2Object, Object2URL, value2json, json2value };
+export { fromQueryString, toQueryString, value2json, json2value };

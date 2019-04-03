@@ -4,8 +4,8 @@ import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderWidget from './perfherder';
-import { frum, toPairs } from '../vendor/queryOps';
-import { URL2Object } from '../vendor/convert';
+import { selectFrom, toPairs } from '../vendor/vectors';
+import { fromQueryString } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,
@@ -28,7 +28,7 @@ export default class QuantumIndex extends React.Component {
       location,
       match: { params },
     } = this.props;
-    const urlParams = URL2Object(location.search);
+    const urlParams = fromQueryString(location.search);
     const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
       bits === 32 ? quantum32QueryParams : quantum64QueryParams;
@@ -75,7 +75,7 @@ export default class QuantumIndex extends React.Component {
       {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}&test=loadtime`,
-        rows: frum(TP6_PAGES)
+        rows: selectFrom(TP6_PAGES)
           .where({ bits })
           .groupBy('title')
           .map((series, title) => (
@@ -567,7 +567,7 @@ export default class QuantumIndex extends React.Component {
     if (full) {
       return (
         <DashboardPage title="Quantum" subtitle="Release Criteria Report">
-          {frum(reduced).limit(2)}
+          {selectFrom(reduced).limit(2)}
           <h2 key="moreData">
             {'More data on'}
             <strong>https://health.graphics/quantum</strong>

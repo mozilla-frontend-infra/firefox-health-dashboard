@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { frum } from '../vendor/queryOps';
+import { selectFrom } from '../vendor/vectors';
 import Data from '../vendor/Data';
 
 const CONFIG = {
@@ -203,7 +203,7 @@ const SUITES = {
   ],
 };
 // ALL PAGE COMBINATIONS
-const TP6_PAGES = frum(SUITES.data)
+const TP6_PAGES = selectFrom(SUITES.data)
   .map(row => Data.zip(SUITES.header, row))
   .join('browser', PLATFORMS, 'browser');
 const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });

@@ -2,8 +2,8 @@
 import {
   value2json,
   json2value,
-  Object2URL,
-  URL2Object,
+  toQueryString,
+  fromQueryString,
 } from '../../src/vendor/convert';
 
 describe('math', () => {
@@ -54,11 +54,11 @@ describe('math', () => {
     [{ a: { b: { c: 42 } } }, 'a.b.c=42'],
   ];
 
-  it('Object2URL', () => {
-    URLS.forEach(([obj, url]) => expect(Object2URL(obj)).toEqual(url));
+  it('toQueryString', () => {
+    URLS.forEach(([obj, url]) => expect(toQueryString(obj)).toEqual(url));
   });
 
-  it('URL2Object', () => {
-    URLS.forEach(([obj, url]) => expect(URL2Object(url)).toEqual(obj));
+  it('fromQueryString', () => {
+    URLS.forEach(([obj, url]) => expect(fromQueryString(url)).toEqual(obj));
   });
 });

@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs } from './queryOps';
 import {
   coalesce,
   exists,
@@ -46,7 +45,7 @@ Data.zip = (keys, values) => {
 Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
-  toPairs(from).forEach((v, k) => {
+  Object.entries(from).forEach((k, v) => {
     if (exists(v)) output[k] = v;
   });
 
@@ -57,7 +56,7 @@ Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
 
-    toPairs(source).forEach((sourceValue, key) => {
+    Object.entries(source).forEach((key, sourceValue) => {
       const value = output[key];
 
       if (missing(value)) {

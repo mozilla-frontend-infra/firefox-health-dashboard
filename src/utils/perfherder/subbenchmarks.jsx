@@ -1,7 +1,7 @@
 /* global fetch */
 import percentile from 'aggregatejs/percentile';
-import { frum, toPairs } from '../../vendor/queryOps';
-import { Object2URL } from '../../vendor/convert';
+import { selectFrom, toPairs } from '../../vendor/vectors';
+import { toQueryString } from '../../vendor/convert';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const PROJECT = 'mozilla-central';
@@ -23,7 +23,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
   ]);
   // Create a structure with only jobs matching the suite, make
   // option_collection_hash be the key and track the signatureHash as a property
-  const optionHashes = frum(options)
+  const optionHashes = selectFrom(options)
     .where({ 'options.0.name': option })
     .select('option_collection_hash')
     .toArray();
@@ -59,7 +59,7 @@ const dataUrl = ({
       .toArray(),
   };
 
-  return `${TREEHERDER}/api/project/${project}/performance/data/?${Object2URL(
+  return `${TREEHERDER}/api/project/${project}/performance/data/?${toQueryString(
     param
   )}`;
 };
