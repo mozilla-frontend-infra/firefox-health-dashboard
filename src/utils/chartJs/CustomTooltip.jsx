@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { missing } from '../../vendor/utils';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -95,12 +94,6 @@ class CustomTooltip extends React.Component {
     };
     const { index } = currPoint;
     const currSeries = series[currPoint.datasetIndex];
-
-    if (missing(currSeries)) {
-      // TODO: Add a warning here
-      return null;
-    }
-
     const higherOrLower = currSeries.meta.lower_is_better
       ? 'lower is better'
       : 'higher is better';
