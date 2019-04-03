@@ -8,6 +8,13 @@ import fetchJson from '../../utils/fetchJson';
 import { withErrorBoundary } from '../../vendor/errors';
 
 const styles = {
+  title: {
+    color: '#56565a',
+    fontSize: '1rem',
+    backgroundColor: '#d1d2d3',
+    padding: '.4rem .3rem .3rem .3rem',
+    margin: '0 1rem 0 0',
+  },
   linkContainer: {
     fontSize: '0.8rem',
   },
@@ -79,8 +86,10 @@ class RedashContainer extends Component {
 
     return (
       <div>
+        <h2 className={classes.title}>
+          <span>{title}</span>
+        </h2>
         <ChartJsWrapper
-          title={title}
           type="line"
           data={datasets}
           isLoading={isLoading}

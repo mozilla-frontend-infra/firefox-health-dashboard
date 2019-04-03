@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import generateOptions from '../../utils/chartJs/generateOptions';
 import { ErrorMessage } from '../../vendor/errors';
+import { frum } from '../../vendor/queryOps';
 
 const styles = {
   // This div helps with canvas size changes
@@ -48,24 +49,26 @@ const ChartJsWrapper = ({
       );
     }
 
-    let error = null;
-
-    data.datasets.forEach(dataset => {
-      const latestDataDate = new Date(Math.max(dataset.data.map(({ x }) => x)));
+    const allOldData = data.datasets.every(dataset => {
+      const latestDataDate = new Date(
+        frum(dataset.data)
+          .select('x')
+          .max()
+      );
       const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
         currentDate.getTime() - latestDataDate.getTime()
       );
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      if (daysDifference > 3) {
-        error = new Error(
-          'This item has been missing data for at least 3 days.'
-        );
-      }
+      return daysDifference > 3;
     });
 
-    if (error) {
+    if (allOldData) {
+      const error = new Error(
+        'This item has been missing data for at least 3 days.'
+      );
+
       return (
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>

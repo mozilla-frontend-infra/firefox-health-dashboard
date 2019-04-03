@@ -14,7 +14,7 @@ import {
   missing,
   toArray,
 } from './utils';
-import { sum } from './math';
+import { sum, max } from './math';
 import Data from './Data';
 
 let internalFrum = null;
@@ -316,6 +316,10 @@ class Wrapper {
 
   sum() {
     return sum(this);
+  }
+
+  max() {
+    return max(this);
   }
 
   get length() {
