@@ -32,7 +32,8 @@ export default class QuantumIndex extends React.Component {
     const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
       bits === 32 ? quantum32QueryParams : quantum64QueryParams;
-    const platform = bits === 32 ? 'windows7-32' : 'windows10-64';
+    const platform =
+      bits === 32 ? 'windows7-32-shippable' : 'windows10-64-shippable';
     const nightlyPlatform =
       bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
@@ -53,7 +54,7 @@ export default class QuantumIndex extends React.Component {
                 seriesConfig: {
                   framework: 10,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'raptor-speedometer-firefox',
                 },
@@ -102,7 +103,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tp5o',
                 },
@@ -119,7 +120,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tpaint',
                 },
@@ -136,7 +137,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'sessionrestore',
                 },
@@ -153,7 +154,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'sessionrestore_no_auto_restore',
                 },
@@ -170,7 +171,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'ts_paint',
                 },
@@ -187,7 +188,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tabpaint',
                 },
@@ -204,7 +205,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tart',
                 },
@@ -212,27 +213,16 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
-            key="tab-switch-(tps)"
-            title="Tab Switch (tps)"
+            key="tab-switch-(tabswitch)"
+            title="Tab Switch (tabswitch)"
             series={[
-              {
-                label: 'Firefox (tps)',
-                seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'pgo',
-                  project: 'mozilla-central',
-                  suite: 'tps',
-                },
-              },
               {
                 label: 'Firefox (tabswitch)',
                 seriesConfig: {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tabswitch',
                 },
@@ -249,7 +239,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tsvg_static',
                 },
@@ -266,7 +256,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tsvgr_opacity',
                 },
@@ -283,7 +273,7 @@ export default class QuantumIndex extends React.Component {
                   extraOptions: ['e10s', 'stylo'],
                   framework: 1,
                   platform,
-                  option: 'pgo',
+                  option: 'opt',
                   project: 'mozilla-central',
                   suite: 'tsvgx',
                 },
