@@ -798,7 +798,7 @@ exports[`renders correctly 1`] = `
             className="ErrorBoundary-title-101"
           >
             <span>
-              Tab Switch (tps)
+              Tab Switch (tabswitch)
             </span>
           </h2>
           <div
