@@ -48,8 +48,7 @@ class TP6 extends React.Component {
                   <PerfherderGraphContainer
                     title={title}
                     series={selectFrom(series)
-                      .sortBy(['browser'])
-                      .reverse()
+                      .sortBy(['ordering'])
                       .map(s => ({
                         label: s.label,
                         seriesConfig: {

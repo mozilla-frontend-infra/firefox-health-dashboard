@@ -49,6 +49,7 @@ const CONFIG = {
 const PLATFORMS = [
   {
     browser: 'Firefox',
+    ordering: 1,
     bits: 32,
     os: 'win',
     label: 'Firefox',
@@ -85,6 +86,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Firefox',
+    ordering: 1,
     bits: 64,
     os: 'win',
     label: 'Firefox',
@@ -120,6 +122,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Chromium',
+    ordering: 2,
     bits: 32,
     os: 'win',
     label: 'Chromium',
@@ -135,6 +138,7 @@ const PLATFORMS = [
   },
   {
     browser: 'Chromium',
+    ordering: 2,
     bits: 64,
     os: 'win',
     label: 'Chromium',
@@ -146,6 +150,30 @@ const PLATFORMS = [
         platform: 'windows10-64-nightly',
         repo: 'mozilla-central',
       }
+    }
+  },
+  {
+    browser: 'Firefox (aarch64)',
+    ordering: 3,
+    bits: 64,
+    os: 'win',
+    label: 'Firefox (aarch64)',
+    platform: "win64-aarch",
+    seriesConfig: {
+      and: [
+          {
+            eq: {
+              platform: 'windows10-aarch64',
+              options: "opt"
+            }
+          },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+      ]
     }
   },
   {
@@ -246,7 +274,20 @@ const SUITES = {
     ['Firefox', 'Tp6: Apple', 'raptor-tp6-apple-firefox'],
     // ['Firefox', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
     ['Firefox', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
-    // //
+
+    ['Firefox (aarch64)', 'Tp6: Facebook', 'raptor-tp6-facebook-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Amazon', 'raptor-tp6-amazon-firefox'],
+    ['Firefox (aarch64)', 'Tp6: YouTube', 'raptor-tp6-youtube-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Google', 'raptor-tp6-google-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Imdb', 'raptor-tp6-imdb-firefox'],
+    // ['Firefox (aarch64)', 'Tp6: Imgur', 'raptor-tp6-imgur-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Wikia', 'raptor-tp6-wikia-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Bing', 'raptor-tp6-bing-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Yandex', 'raptor-tp6-yandex-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Apple', 'raptor-tp6-apple-firefox'],
+    // ['Firefox (aarch64)', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
+
     ['Chromium', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
     ['Chromium', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
     ['Chromium', 'Tp6: Google', 'raptor-tp6-google-chrome'],
