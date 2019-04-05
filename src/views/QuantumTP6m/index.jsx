@@ -33,7 +33,7 @@ class TP6M extends React.Component {
           {navigation}
           <Grid container spacing={24}>
             {selectFrom(TP6M_PAGES)
-              .filter(d => d.platform.startsWith(platform))
+              .where({ platform })
               .groupBy('title')
               .map((series, title) => (
                 <Grid
@@ -48,8 +48,9 @@ class TP6M extends React.Component {
                       .reverse()
                       .map(s => ({
                         label: s.label,
-                        seriesConfig: { ...s, test },
-                        options: { includeSubtests: true },
+                        seriesConfig: {
+                          and: [{ eq: { test } }, s.seriesConfig],
+                        },
                       }))
                       .toArray()}
                   />
@@ -82,7 +83,7 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'android-hw-g5-7-0-arm7-api-16',
+    defaultValue: 'android-g5',
     options: selectFrom(PLATFORMS)
       .where({ browser: 'geckoview' })
       .select({ id: 'platform', label: 'label' })

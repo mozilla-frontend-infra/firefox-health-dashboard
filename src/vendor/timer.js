@@ -2,13 +2,14 @@ import Date from './dates';
 import { Log } from './logs';
 
 class Timer {
-  constructor(name) {
+  constructor(name, param = {}) {
     this.name = name;
+    this.param = param;
     this.start = Date.now();
     this.end = null;
-    Log.note('Timer {{name}} start at {{start|format("HH:mm:ss.ffffff")}}', {
-      name,
+    Log.note(`Timer ${name} start at {{start|format("HH:mm:ss.ffffff")}}`, {
       start: this.start,
+      ...param,
     });
   }
 
@@ -17,16 +18,18 @@ class Timer {
     const duration = this.end.subtract(this.start);
 
     Log.note(
-      'Timer {{name}} ends at {{end|format("HH:mm:ss.ffffff")}} ({{duration}})',
+      `Timer ${
+        this.name
+      } ends at {{end|format("HH:mm:ss.ffffff")}} ({{duration}})`,
       {
-        name: this.name,
         end: this.end,
         duration,
+        ...this.param,
       }
     );
   }
 }
 
-const timer = name => new Timer(name);
+const timer = (name, param) => new Timer(name, param);
 
 export default timer;

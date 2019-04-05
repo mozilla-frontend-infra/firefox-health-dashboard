@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
+
 import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
 
 const sortByDate = (a, b) =>
   new Date(b.submission_date) - new Date(a.submission_date);
 const dataToChartJSformat = data =>
-  // eslint-disable-next-line camelcase
   data.map(({ submission_date, value }) => ({
     x: submission_date,
     y: value,

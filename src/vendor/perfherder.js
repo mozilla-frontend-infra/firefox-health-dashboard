@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { toQueryString } from './convert';
-import { missing, toArray, first } from './utils';
+import { first, missing, toArray } from './utils';
 import { selectFrom, toPairs } from './vectors';
-import { TREEHERDER } from './perf-goggles';
 import fetchJson from '../utils/fetchJson';
 import { jx } from './jx/expressions';
+import { Log } from './logs';
 
 // WHAT ARE THE SIGNATURES OF THE loadtime?
 // GET ALL SIGNATURES FOR framework=10
@@ -22,7 +22,8 @@ import { jx } from './jx/expressions';
 const PERFHERDER = {
   signatures: [],
 };
-const repository = 'mozilla-central';
+const TREEHERDER = 'https://treeherder.mozilla.org';
+const REPO = 'mozilla-central';
 const getAllOptions = (async () => {
   const response = await fetch(`${TREEHERDER}/api/optioncollectionhash/`);
   const output = await response.json();
@@ -39,7 +40,7 @@ const frameworkCache = {};
 const getFramework = async framework => {
   if (frameworkCache[framework] === undefined) {
     frameworkCache[framework] = (async () => {
-      const url = `${TREEHERDER}/api/project/${repository}/performance/signatures/?${toQueryString(
+      const url = `${TREEHERDER}/api/project/${REPO}/performance/signatures/?${toQueryString(
         {
           framework,
           subtests: 1,
@@ -52,12 +53,14 @@ const getFramework = async framework => {
         .map((meta, signature) => ({
           signature,
           suite: meta.suite,
-          test: meta.test,
+          test: meta.test === meta.suite ? null : meta.test,
           options: lookup[meta.option_collection_hash],
+          extraOptions: toArray(meta.extra_options).sort(),
           platform: meta.machine_platform,
           parent: meta.parent_signature,
           id: meta.id,
           framework: meta.framework_id,
+          repo: REPO,
         }))
         .toArray();
 
@@ -68,10 +71,41 @@ const getFramework = async framework => {
   await frameworkCache[framework];
 };
 
-const getSignatures = async (framework, condition) => {
-  await Promise.all(toArray(framework).map(getFramework));
+/*
+return an array of frameworks
+ */
+const findFramework = expression =>
+  toPairs(expression)
+    .map((v, k) => {
+      if (k === 'and' || k === 'or')
+        return selectFrom(v)
+          .map(findFramework)
+          .flatten()
+          .groupBy('.')
+          .map(first);
 
-  return selectFrom(PERFHERDER.signatures).filter(jx(condition));
+      if (v.framework) return [v.framework];
+
+      return [];
+    })
+    .flatten()
+    .groupBy('.')
+    .map(first)
+    .toArray();
+const getSignatures = async condition => {
+  // find out what frameworks to extract
+  const frameworks = findFramework(condition);
+
+  if (frameworks.length === 0)
+    Log.error('expecting to find a framework in the condtion: {{condition}}', {
+      condition,
+    });
+
+  await Promise.all(frameworks.map(getFramework));
+
+  Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
+
+  return PERFHERDER.signatures.filter(jx(condition));
 };
 
 const dataCache = {};
@@ -83,7 +117,7 @@ const getDataBySignature = async metadatas => {
     .forEach(chunkOfMetas => {
       // GET ALL SIGNATURES IN THE CHUNK
       const getData = (async () => {
-        const url = `${TREEHERDER}/api/project/${repository}/performance/data/?${toQueryString(
+        const url = `${TREEHERDER}/api/project/${REPO}/performance/data/?${toQueryString(
           {
             signatures: chunkOfMetas.select('signature'),
           }
@@ -94,23 +128,25 @@ const getDataBySignature = async metadatas => {
 
       // EACH dataCache IS A PROMISE TO THE SPECIFIC DATA
       selectFrom(chunkOfMetas).forEach(meta => {
-        dataCache[meta.signature] = (async () =>
-          (await getData)[meta.signature].map(({ value, push_timestamp }) => ({
-            value,
-            push_timestamp,
-            ...meta,
-          })))();
+        dataCache[meta.signature] = (async () => {
+          const data = (await getData)[meta.signature].map(row => ({
+            ...row,
+            meta,
+          }));
+
+          return { meta, data };
+        })();
       });
     });
 
   return Promise.all(toArray(metadatas).map(m => dataCache[m.signature]));
 };
 
-const getData = async (framework, condition) => {
-  const signatures = await getSignatures(framework, condition);
+const getData = async condition => {
+  const signatures = await getSignatures(condition);
   const output = await getDataBySignature(signatures);
 
-  return selectFrom(output).flatten();
+  return output;
 };
 
-export { getSignatures, getData };
+export { getSignatures, getData, TREEHERDER, REPO };

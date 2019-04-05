@@ -1,11 +1,138 @@
+/* eslint-disable camelcase */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
-import getPerfherderData from '../../utils/perfherder/chartJs/getPerfherderData';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
+import { missing } from '../../vendor/utils';
+import { toQueryString } from '../../vendor/convert';
+import Date from '../../vendor/dates';
+import { getData, TREEHERDER } from '../../vendor/perfherder';
+import { selectFrom } from '../../vendor/vectors';
+import { Log } from '../../vendor/logs';
+import generateDatasetStyle from '../../utils/chartJs/generateDatasetStyle';
+import SETTINGS from '../../settings';
+
+const DEFAULT_TIMERANGE = Date.newInstance('today-6week').unix();
+// treeherder can only accept particular time ranges
+const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
+  x => x * 24 * 60 * 60
+);
+const generateInitialOptions = series => {
+  // TODO: map tests and suite scores to measurement units and
+  // add some label for scale
+  const isTest = !missing(series[0].sources[0].meta.test);
+  // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
+  const higherIsBetter = isTest
+    ? false
+    : !series[0].sources[0].meta.lower_is_better;
+
+  return {
+    reverse: higherIsBetter,
+    scaleLabel: higherIsBetter ? 'Score' : 'Duration',
+    tooltips: {
+      enabled: false,
+    },
+    series,
+  };
+};
+
+/* This function combines Perfherder series and transforms it
+into ChartJS formatting */
+const perfherderFormatter = series => {
+  const firstTime = selectFrom(series)
+    .select('sources')
+    .flatten()
+    .select('data')
+    .flatten()
+    .select('push_timestamp')
+    .min();
+  const timeRange = Date.today().unix() - firstTime;
+  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t => t >= timeRange);
+  const jointParam = {
+    timerange: bestRange,
+    series: selectFrom(series)
+      .select('sources')
+      // each series has multiple sources, merge them
+      .flatten()
+      .select('meta')
+      .map(({ repo, id, framework }) => [repo, id, 1, framework])
+      .toArray(),
+  };
+  const combinedSeries = selectFrom(series)
+    .enumerate()
+    .map(({ sources, ...row }) => ({
+      ...row,
+      // choose meta from the source with most recent data
+      meta: selectFrom(sources)
+        .sortBy(s =>
+          selectFrom(s.data)
+            .select('push_timestamp')
+            .max()
+        )
+        .last({}).meta,
+      // multiple sources make up a single series, merge them here
+      data: selectFrom(sources)
+        .select('data')
+        .flatten()
+        .sortBy('push_timestamp')
+        .toArray(),
+    }))
+    .toArray();
+  const data = {
+    datasets: selectFrom(combinedSeries)
+      .enumerate()
+      .map(({ data, ...row }, index) => ({
+        ...row,
+        ...generateDatasetStyle(SETTINGS.colors[index]),
+        data: data.map(({ push_timestamp, value }) => ({
+          x: new Date(push_timestamp * 1000),
+          y: value,
+        })),
+      }))
+      .toArray(),
+  };
+
+  return {
+    options: generateInitialOptions(series.filter(Boolean)),
+    jointUrl: `${TREEHERDER}/perf.html#/graphs?${toQueryString(jointParam)}`,
+    data,
+    series: combinedSeries,
+  };
+};
+
+const getPerfherderData = async series => {
+  const newData = await Promise.all(
+    series.map(async row => {
+      const sources = await getData(row.seriesConfig);
+
+      // filter out old data
+      return {
+        ...row,
+        sources: sources.map(({ data, ...row }) => ({
+          ...row,
+          data: data.filter(
+            ({ push_timestamp }) => push_timestamp > DEFAULT_TIMERANGE
+          ),
+        })),
+      };
+    })
+  );
+
+  if (
+    selectFrom(newData)
+      .select('sources')
+      .filter(s => s.length > 0).length === 0
+  )
+    Log.error('can not get data for {{query|json}}', {
+      query: series[0].seriesConfig,
+    });
+
+  return perfherderFormatter(newData);
+};
 
 const styles = () => ({
   title: {
@@ -31,10 +158,8 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    await this.fetchSetData(this.props);
-  }
+    const { series } = this.props;
 
-  async fetchSetData({ series }) {
     try {
       this.setState({ isLoading: true });
       this.setState(await getPerfherderData(series));
@@ -69,6 +194,7 @@ class PerfherderGraphContainer extends Component {
     const { classes, title } = this.props;
     const {
       data,
+      series,
       jointUrl,
       options,
       canvas,
@@ -96,7 +222,7 @@ class PerfherderGraphContainer extends Component {
         {tooltipModel && (
           <CustomTooltip
             tooltipModel={tooltipModel}
-            series={options.series}
+            series={series}
             canvas={canvas}
             isLocked={tooltipIsLocked}
           />
@@ -111,13 +237,7 @@ PerfherderGraphContainer.propTypes = {
   series: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      seriesConfig: PropTypes.shape({
-        extraOptions: PropTypes.arrayOf(PropTypes.string),
-        framework: PropTypes.number.isRequired,
-        option: PropTypes.string,
-        project: PropTypes.string.isRequired,
-        suite: PropTypes.string.isRequired,
-      }),
+      seriesConfig: PropTypes.shape({}).isRequired,
       options: PropTypes.shape({
         includeSubtests: PropTypes.bool,
       }),

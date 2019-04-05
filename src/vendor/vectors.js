@@ -13,12 +13,13 @@ import {
   literalField,
   missing,
   toArray,
+  coalesce,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';
 import { jx } from './jx/expressions';
 
-let internalselectFrom = null;
+let internalFrom = null;
 let internalToPairs = null;
 const getI = i => m => m[i];
 
@@ -27,7 +28,7 @@ function preSelector(columnName) {
 
   if (isArray(columnName)) {
     // select many columns
-    return internalselectFrom(columnName)
+    return internalFrom(columnName)
       .sortBy()
       .map(name => {
         if (isString(name)) return [[row => Data.get(row, name), name]];
@@ -247,7 +248,7 @@ class ArrayWrapper {
 
       for (const [value] of argslist) {
         if (acc.length === size) {
-          yield [internalselectFrom(acc), count];
+          yield [internalFrom(acc), count];
           count += 1;
           acc = [];
         }
@@ -255,7 +256,7 @@ class ArrayWrapper {
         acc.push(value);
       }
 
-      if (acc.length > 0) yield [internalselectFrom(acc), count];
+      if (acc.length > 0) yield [internalFrom(acc), count];
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -374,9 +375,9 @@ class ArrayWrapper {
     return first(this);
   }
 
-  last() {
-    // return last element
-    return last(this);
+  last(defaultValue = null) {
+    // return last element, or defaultValue
+    return coalesce(last(this), defaultValue);
   }
 
   sum() {
@@ -483,7 +484,7 @@ function selectFrom(list, ...more) {
   });
 }
 
-internalselectFrom = selectFrom;
+internalFrom = selectFrom;
 
 /*
  * convert Object (or Data) into [value, key] pairs
@@ -540,7 +541,7 @@ function extendWrapper(methods) {
   internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
     ArrayWrapper.prototype[name] = function anonymous(...args) {
-      return internalselectFrom(method(this.toArray(), ...args));
+      return internalFrom(method(this.toArray(), ...args));
     };
   });
 }
@@ -555,12 +556,12 @@ extendWrapper({
   // where each element has properties; from one of each list: { ...a, ...b }
   // but only include elements where b[propB]==a[propA] (b ∈ listB, a ∈ listA)
   leftJoin: function leftJoin(listA, propA, listB, propB) {
-    const lookup = internalselectFrom(listB)
+    const lookup = internalFrom(listB)
       .groupBy(propB)
       .fromPairs();
     const getterA = jx(propA);
 
-    return internalselectFrom(listA)
+    return internalFrom(listA)
       .map(rowA => lookup[getterA(rowA)].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
   },

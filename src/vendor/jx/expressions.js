@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
-import { exists, first, isString, missing, toArray } from '../utils';
-import { Data } from '../Data';
+import { exists, first, isString, missing, toArray, isArray } from '../utils';
+import { Data, isData } from '../Data';
 import Date from '../dates';
 import { Log } from '../logs';
 
@@ -9,20 +9,24 @@ const expressions = {};
 const jx = expr => {
   if (isString(expr)) return row => Data.get(row, expr);
 
-  const output = first(
-    Object.entries(expr).map(([op, term]) => {
-      const func = expressions[op];
+  if (isData(expr)) {
+    const output = first(
+      Object.entries(expr).map(([op, term]) => {
+        const func = expressions[op];
 
-      if (func === undefined) {
-        Log.error('expecting a known operator, not {{op}}', { op });
-      }
+        if (func === undefined) {
+          Log.error('expecting a known operator, not {{op}}', { op });
+        }
 
-      return func(term);
-    })
-  );
+        return func(term);
+      })
+    );
 
-  if (exists(output)) return output;
-  Log.error('does not look like an expression: {{expr}}', { expr });
+    if (exists(output)) return output;
+  }
+
+  if (exists(expr)) return () => expr; // some constant
+  Log.error('does not look like an expression: {{expr|json}}', { expr });
 };
 
 expressions.and = terms => {
@@ -37,14 +41,24 @@ expressions.or = terms => {
   return row => filters.some(f => f(row));
 };
 
-expressions.eq = obj => {
-  const filters = Object.entries(obj).map(([k, v]) => {
-    if (missing(v)) return () => true;
+expressions.eq = term => {
+  if (isData(term)) {
+    const filters = Object.entries(term).map(([k, v]) => {
+      if (missing(v)) return () => true;
 
-    return row => toArray(v).includes(Data.get(row, k));
-  });
+      return row => toArray(v).includes(Data.get(row, k));
+    });
 
-  return row => filters.every(f => f(row));
+    return row => filters.every(f => f(row));
+  }
+
+  if (isArray(term)) {
+    const [a, b] = term.map(jx);
+
+    return row => a(row) === b(row);
+  }
+
+  Log.error('eq Expecting object, or array');
 };
 
 expressions.prefix = term => row =>
@@ -55,6 +69,12 @@ expressions.prefix = term => row =>
 
     return value.startsWith(prefix);
   });
+
+expressions.missing = expression => {
+  const func = jx(expression);
+
+  return row => missing(func(row));
+};
 
 expressions.gte = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [

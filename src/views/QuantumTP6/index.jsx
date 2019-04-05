@@ -52,8 +52,9 @@ class TP6 extends React.Component {
                       .reverse()
                       .map(s => ({
                         label: s.label,
-                        seriesConfig: { ...s, test },
-                        options: { includeSubtests: true },
+                        seriesConfig: {
+                          and: [{ eq: { test } }, s.seriesConfig],
+                        },
                       }))
                       .toArray()}
                   />

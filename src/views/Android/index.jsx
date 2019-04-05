@@ -84,10 +84,6 @@ class Android extends Component {
           <Grid container spacing={24}>
             {selectFrom(TP6M_PAGES)
               .where({
-                platform: [
-                  'android-hw-g5-7-0-arm7-api-16',
-                  'android-hw-g5-7-0-arm7-api-16-pgo',
-                ],
                 title: [
                   'Tp6 mobile: Google',
                   'Tp6 mobile: YouTube',
@@ -105,8 +101,9 @@ class Android extends Component {
                       .reverse()
                       .map(s => ({
                         label: s.label,
-                        seriesConfig: { ...s, test: 'loadtime' },
-                        options: { includeSubtests: true },
+                        seriesConfig: {
+                          and: [s.seriesConfig, { eq: { test: 'loadtime' } }],
+                        },
                       }))
                       .toArray()}
                   />
@@ -144,49 +141,54 @@ class Android extends Component {
                   {
                     label: 'Moto G5 (arm7)',
                     seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-g5-7-0-arm7-api-16',
-                      option: 'opt',
-                      project: 'mozilla-central',
-                      suite: 'raptor-speedometer-geckoview',
-                    },
-                  },
-                  {
-                    label: 'Moto G5 (pgo)',
-                    seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
-                      project: 'mozilla-central',
-                      suite: 'raptor-speedometer-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
                     },
                   },
                   {
                     label: 'Pixel 2 (arm7)',
                     seriesConfig: {
-                      framework: 10,
-                      option: 'opt',
-                      platform: 'android-hw-p2-8-0-arm7-api-16',
-                      project: 'mozilla-central',
-                      suite: 'raptor-speedometer-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
                     },
                   },
                   {
                     label: 'Pixel 2 (ARM64)',
                     seriesConfig: {
-                      framework: 10,
-                      option: 'opt',
-                      platform: 'android-hw-p2-8-0-android-aarch64',
-                      project: 'mozilla-central',
-                      suite: 'raptor-speedometer-geckoview',
-                    },
-                  },
-                  {
-                    label: 'Pixel 2 (pgo)',
-                    seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
-                      project: 'mozilla-central',
-                      suite: 'raptor-speedometer-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            options: 'opt',
+                            platform: 'android-hw-p2-8-0-android-aarch64',
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
                     },
                   },
                 ]}
@@ -199,49 +201,54 @@ class Android extends Component {
                   {
                     label: 'Moto G5 (arm7)',
                     seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-g5-7-0-arm7-api-16',
-                      option: 'opt',
-                      project: 'mozilla-central',
-                      suite: 'raptor-unity-webgl-geckoview',
-                    },
-                  },
-                  {
-                    label: 'Moto G5 (pgo)',
-                    seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-g5-7-0-arm7-api-16-pgo',
-                      project: 'mozilla-central',
-                      suite: 'raptor-unity-webgl-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                      ],
                     },
                   },
                   {
                     label: 'Pixel 2 (arm7)',
                     seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-p2-8-0-arm7-api-16',
-                      option: 'opt',
-                      project: 'mozilla-central',
-                      suite: 'raptor-unity-webgl-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                        {
+                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                        },
+                      ],
                     },
                   },
                   {
                     label: 'Pixel 2 (ARM64)',
                     seriesConfig: {
-                      framework: 10,
-                      option: 'opt',
-                      platform: 'android-hw-p2-8-0-android-aarch64',
-                      project: 'mozilla-central',
-                      suite: 'raptor-unity-webgl-geckoview',
-                    },
-                  },
-                  {
-                    label: 'Pixel 2 (pgo)',
-                    seriesConfig: {
-                      framework: 10,
-                      platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
-                      project: 'mozilla-central',
-                      suite: 'raptor-unity-webgl-geckoview',
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            options: 'opt',
+                            platform: 'android-hw-p2-8-0-android-aarch64',
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                      ],
                     },
                   },
                 ]}
