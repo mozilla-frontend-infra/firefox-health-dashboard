@@ -49,6 +49,20 @@ function withNavigation(config) {
         this.updateHistory(change);
       };
 
+      componentDidUpdate(prevProps) {
+        const { search: thisSearch } = this.props.location;
+        const { search: prevSearch } = prevProps.location;
+
+        if (thisSearch !== prevSearch) {
+          // Update state based on current props
+          // eslint-disable-next-line react/no-did-update-set-state
+          this.setState(state => ({
+            ...state,
+            ...URL2Object(thisSearch),
+          }));
+        }
+      }
+
       updateHistory(change) {
         const { history, location } = this.props;
         const newState = { ...this.state, ...change };
