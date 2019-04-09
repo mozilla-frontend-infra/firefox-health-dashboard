@@ -4,9 +4,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import isEqual from 'lodash/isEqual';
-import { frum } from '../../queryOps';
-import Data from '../../Data';
-import { Object2URL, URL2Object } from '../../convert';
+import { selectFrom } from '../../vectors';
+import { fromQueryString, toQueryString } from '../../convert';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
@@ -20,19 +19,19 @@ function withNavigation(config) {
   // Adds properties to `props`:
   // * `navigation` - that contains a Navigation component
   //   to include on `render()`
-  // * properties with names frum(config).select("id")
+  // * properties with names selectFrom(config).select("id")
 
   return WrappedComponent => {
     class Output extends React.Component {
       constructor(props) {
         super(props);
         const { location } = props;
-        const params = URL2Object(location.search);
+        const params = fromQueryString(location.search);
 
         this.params = params;
 
         // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
-        this.state = frum(config)
+        this.state = selectFrom(config)
           .map(({ id, defaultValue }) => [params[id] || defaultValue, id])
           .args()
           .fromPairs();
@@ -42,7 +41,7 @@ function withNavigation(config) {
 
       onPathChange = event => {
         const { name, value } = event.target;
-        const change = Data(name, value);
+        const change = { [name]: value };
 
         this.setState(change);
 
@@ -58,7 +57,7 @@ function withNavigation(config) {
           // eslint-disable-next-line react/no-did-update-set-state
           this.setState(state => ({
             ...state,
-            ...URL2Object(thisSearch),
+            ...fromQueryString(thisSearch),
           }));
         }
       }
@@ -66,11 +65,11 @@ function withNavigation(config) {
       updateHistory(change) {
         const { history, location } = this.props;
         const newState = { ...this.state, ...change };
-        const oldState = URL2Object(location.search);
+        const oldState = fromQueryString(location.search);
 
         if (isEqual(newState, oldState)) return;
 
-        const query = Object2URL(newState);
+        const query = toQueryString(newState);
 
         history.push(`${location.pathname}?${query}`);
       }

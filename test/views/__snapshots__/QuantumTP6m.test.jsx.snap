@@ -141,7 +141,7 @@ exports[`renders correctly 1`] = `
               <input
                 name="platform"
                 type="hidden"
-                value="android-hw-g5-7-0-arm7-api-16"
+                value="android-g5"
               />
               <svg
                 aria-hidden="true"

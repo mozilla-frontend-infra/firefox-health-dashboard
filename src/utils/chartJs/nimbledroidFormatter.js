@@ -1,7 +1,7 @@
 import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
 import CONFIG from '../nimbledroid/config';
-import { frum, toPairs } from '../../vendor/queryOps';
+import { selectFrom, toPairs } from '../../vendor/vectors';
 
 // Show past 13weeks of minbledroid
 const SINCE = new Date(
@@ -12,7 +12,7 @@ const nimbledroidFormatter = ({ data }) => ({
   datasets: toPairs(data)
     .enumerate()
     .map((details, packageId, index) => ({
-      data: frum(details)
+      data: selectFrom(details)
         .filter(({ date }) => date > SINCE)
         .select({ x: 'date', y: 'value' })
         .toArray(),

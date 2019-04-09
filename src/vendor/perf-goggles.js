@@ -96,12 +96,11 @@ const perfherderGraphUrl = (
   return baseDataUrl;
 };
 
-const queryAllTreeherderOptions = async () => {
+const queryAllTreeherderOptions = (async () => {
   const response = await fetch(`${TREEHERDER}/api/optioncollectionhash/`);
 
   return response.json();
-};
-
+})();
 const transformOptionCollectionHash = optionCollectionHash => {
   const options = {};
 
@@ -120,7 +119,7 @@ const transformOptionCollectionHash = optionCollectionHash => {
 };
 
 const treeherderOptions = async () => {
-  const optionCollectionHash = await queryAllTreeherderOptions();
+  const optionCollectionHash = await queryAllTreeherderOptions;
 
   return transformOptionCollectionHash(optionCollectionHash);
 };

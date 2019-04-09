@@ -9,7 +9,7 @@ import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
 import CONFIG from '../../utils/nimbledroid/config';
-import { frum } from '../../vendor/queryOps';
+import { selectFrom } from '../../vendor/vectors';
 import { TP6M_PAGES } from '../../quantum/config';
 
 class Android extends Component {
@@ -82,12 +82,8 @@ class Android extends Component {
           title="Page Load tests (TP6m)"
           more="/android/tp6m?test=loadtime">
           <Grid container spacing={24}>
-            {frum(TP6M_PAGES)
+            {selectFrom(TP6M_PAGES)
               .where({
-                platform: [
-                  'android-hw-g5-7-0-arm7-api-16',
-                  'android-hw-g5-7-0-arm7-api-16-pgo',
-                ],
                 title: [
                   'Tp6 mobile: Google',
                   'Tp6 mobile: YouTube',
@@ -100,13 +96,14 @@ class Android extends Component {
                 <Grid item xs={6} key={`page_${title}_loadtime`}>
                   <PerfherderGraphContainer
                     title={title}
-                    series={frum(series)
+                    series={selectFrom(series)
                       .sortBy(['browser'])
                       .reverse()
                       .map(s => ({
                         label: s.label,
-                        seriesConfig: { ...s, test: 'loadtime' },
-                        options: { includeSubtests: true },
+                        seriesConfig: {
+                          and: [s.seriesConfig, { eq: { test: 'loadtime' } }],
+                        },
                       }))
                       .toArray()}
                   />
@@ -116,94 +113,148 @@ class Android extends Component {
           </Grid>
         </Section>
         <Section title="Telemetry">
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <RedashContainer
-              title="Total content page load time (no 95th)"
-              redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
-              redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
-            />
-            <RedashContainer
-              title="Total content page load time"
-              redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
-              redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
-            />
-          </div>
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <RedashContainer
+                title="Total content page load time (no 95th)"
+                redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
+                redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <RedashContainer
+                title="Total content page load time"
+                redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
+                redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
+              />
+            </Grid>
+          </Grid>
         </Section>
         <Section
           title="Perfherder"
           subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)">
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <PerfherderGraphContainer
-              title="Speedometer"
-              series={[
-                {
-                  label: 'Moto G5 (arm7)',
-                  seriesConfig: {
-                    framework: 10,
-                    platform: 'android-hw-g5-7-0-arm7-api-16',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-geckoview',
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <PerfherderGraphContainer
+                title="Speedometer"
+                series={[
+                  {
+                    label: 'Moto G5 (arm7)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
+                    },
                   },
-                },
-                {
-                  label: 'Pixel 2 (arm7)',
-                  seriesConfig: {
-                    framework: 10,
-                    option: 'pgo',
-                    platform: 'android-hw-p2-8-0-arm7-api-16',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-geckoview',
+                  {
+                    label: 'Pixel 2 (arm7)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
+                    },
                   },
-                },
-                {
-                  label: 'Pixel 2 (ARM64)',
-                  seriesConfig: {
-                    framework: 10,
-                    option: 'opt',
-                    platform: 'android-hw-p2-8-0-android-aarch64',
-                    project: 'mozilla-central',
-                    suite: 'raptor-speedometer-geckoview',
+                  {
+                    label: 'Pixel 2 (ARM64)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            options: 'opt',
+                            platform: 'android-hw-p2-8-0-android-aarch64',
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-geckoview',
+                          },
+                        },
+                      ],
+                    },
                   },
-                },
-              ]}
-            />
-            <PerfherderGraphContainer
-              title="Unity WebGl"
-              series={[
-                {
-                  label: 'Moto G5 (arm7)',
-                  seriesConfig: {
-                    framework: 10,
-                    platform: 'android-hw-g5-7-0-arm7-api-16',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-unity-webgl-geckoview',
+                ]}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <PerfherderGraphContainer
+                title="Unity WebGl"
+                series={[
+                  {
+                    label: 'Moto G5 (arm7)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                      ],
+                    },
                   },
-                },
-                {
-                  label: 'Pixel 2 (arm7)',
-                  seriesConfig: {
-                    framework: 10,
-                    platform: 'android-hw-p2-8-0-arm7-api-16',
-                    option: 'pgo',
-                    project: 'mozilla-central',
-                    suite: 'raptor-unity-webgl-geckoview',
+                  {
+                    label: 'Pixel 2 (arm7)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                        {
+                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                        },
+                      ],
+                    },
                   },
-                },
-                {
-                  label: 'Pixel 2 (ARM64)',
-                  seriesConfig: {
-                    framework: 10,
-                    option: 'opt',
-                    platform: 'android-hw-p2-8-0-android-aarch64',
-                    project: 'mozilla-central',
-                    suite: 'raptor-unity-webgl-geckoview',
+                  {
+                    label: 'Pixel 2 (ARM64)',
+                    seriesConfig: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          eq: {
+                            framework: 10,
+                            options: 'opt',
+                            platform: 'android-hw-p2-8-0-android-aarch64',
+                            repo: 'mozilla-central',
+                            suite: 'raptor-unity-webgl-geckoview',
+                          },
+                        },
+                      ],
+                    },
                   },
-                },
-              ]}
-            />
-          </div>
+                ]}
+              />
+            </Grid>
+          </Grid>
         </Section>
       </DashboardPage>
     );

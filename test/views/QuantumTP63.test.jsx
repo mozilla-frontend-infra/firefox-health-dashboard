@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 import renderer from 'react-test-renderer';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';

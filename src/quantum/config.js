@@ -1,7 +1,8 @@
 /* eslint-disable */
 
-import { frum } from '../vendor/queryOps';
-import Data from '../vendor/Data';
+import { selectFrom } from '../vendor/vectors';
+import { Data } from '../vendor/Data';
+import { Log } from '../vendor/logs';
 
 const CONFIG = {
   windows64Regression: [
@@ -32,7 +33,7 @@ const CONFIG = {
       secondLink:
         '/quantum/10/windows7-32/raptor-motionmark_htmlsuite-firefox/pgo',
       secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23' },
+      signatures: {'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23'},
       framework: 10,
     },
     {
@@ -40,7 +41,7 @@ const CONFIG = {
       secondLink:
         '/quantum/10/windows7-32/raptor-motionmark_animometer-firefox/pgo',
       secondTitle: 'Breakdown',
-      signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
+      signatures: {'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f'},
       framework: 10,
     },
   ],
@@ -48,66 +49,197 @@ const CONFIG = {
 const PLATFORMS = [
   {
     browser: 'Firefox',
+    ordering: 1,
     bits: 32,
     os: 'win',
     label: 'Firefox',
-    framework: 10,
-    option: 'opt',
-    platform: 'windows7-32-shippable',
-    project: 'mozilla-central',
+    platform: "win32",
+    seriesConfig: {
+      and: [
+        {
+          or: [
+            {
+              eq: {
+                platform: 'windows7-32',
+                options: "pgo"
+              }
+            },
+            {
+              eq: {
+                platform: 'windows7-32-shippable',
+                options: "opt"
+
+              }
+            }
+
+          ]
+        },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+
+      ]
+    }
   },
   {
     browser: 'Firefox',
+    ordering: 1,
     bits: 64,
     os: 'win',
     label: 'Firefox',
-    framework: 10,
-    option: 'opt',
-    platform: 'windows10-64-shippable',
-    project: 'mozilla-central',
+    platform: "win64",
+    seriesConfig: {
+      and: [
+        {
+          or: [
+            {
+              eq: {
+                platform: 'windows10-64',
+                options: "pgo"
+              }
+            },
+            {
+              eq: {
+                platform: 'windows10-64-shippable',
+                options: "opt"
+
+              }
+            }
+
+          ]
+        },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+      ]
+    }
   },
   {
     browser: 'Chromium',
+    ordering: 2,
     bits: 32,
     os: 'win',
     label: 'Chromium',
-    framework: 10,
-    platform: 'windows7-32-shippable',
-    option: 'opt',
-    project: 'mozilla-central',
+    platform: "chromium32",
+    seriesConfig: {
+      and: [
+        {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
+        {
+          eq: {
+
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        }
+      ]
+    }
   },
   {
     browser: 'Chromium',
+    ordering: 2,
     bits: 64,
     os: 'win',
     label: 'Chromium',
-    framework: 10,
-    platform: 'windows10-64-shippable',
-    option: 'opt',
-    project: 'mozilla-central',
+    platform: "chromium64",
+    seriesConfig: {
+      and: [
+        {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
+        {
+          eq: {
+
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        }]
+    }
+  },
+  {
+    browser: 'Firefox (aarch64)',
+    ordering: 3,
+    bits: 64,
+    os: 'win',
+    label: 'Firefox (aarch64)',
+    platform: "win64-aarch",
+    seriesConfig: {
+      and: [
+          {
+            eq: {
+              platform: 'windows10-aarch64',
+              options: "opt"
+            }
+          },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+      ]
+    }
   },
   {
     browser: 'geckoview',
     label: 'Geckoview p2 aarch64',
-    framework: 10,
-    platform: 'android-hw-p2-8-0-android-aarch64',
-    project: 'mozilla-central',
+    platform: "android-p2-aarch64",
+    seriesConfig: {
+      eq: {
+        framework: 10,
+        platform: 'android-hw-p2-8-0-android-aarch64',
+        repo: 'mozilla-central',
+      }
+    }
   },
   {
     browser: 'geckoview',
     label: 'Geckoview p2',
-    framework: 10,
-    platform: 'android-hw-p2-8-0-arm7-api-16',
-    option: 'pgo',
-    project: 'mozilla-central',
+    platform: "android-p2",
+    seriesConfig: {
+      and: [
+        {
+          or: [
+            {
+              eq: {
+                platform: 'android-hw-p2-8-0-arm7-api-16',
+                options: ["pgo", "opt"]
+              }
+            },
+            {
+              eq: {
+                platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
+              }
+            },
+          ]
+        },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+      ]
+    }
   },
   {
     browser: 'geckoview',
     label: 'Geckoview g5',
-    framework: 10,
-    platform: 'android-hw-g5-7-0-arm7-api-16',
-    option: 'pgo',
-    project: 'mozilla-central',
+    platform: "android-g5",
+    seriesConfig: {
+      and: [
+        {"prefix": {platform: 'android-hw-g5-7-0-arm7-api-16'}},
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        },
+      ]
+    }
   },
 ];
 const TP6_TESTS = [
@@ -142,25 +274,38 @@ const SUITES = {
     ['Firefox', 'Tp6: YouTube', 'raptor-tp6-youtube-firefox'],
     ['Firefox', 'Tp6: Google', 'raptor-tp6-google-firefox'],
     ['Firefox', 'Tp6: Imdb', 'raptor-tp6-imdb-firefox'],
-    ['Firefox', 'Tp6: Imgur', 'raptor-tp6-imgur-firefox'],
+    // ['Firefox', 'Tp6: Imgur', 'raptor-tp6-imgur-firefox'],
     ['Firefox', 'Tp6: Wikia', 'raptor-tp6-wikia-firefox'],
     ['Firefox', 'Tp6: Bing', 'raptor-tp6-bing-firefox'],
     ['Firefox', 'Tp6: Yandex', 'raptor-tp6-yandex-firefox'],
     ['Firefox', 'Tp6: Apple', 'raptor-tp6-apple-firefox'],
-    ['Firefox', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
+    // ['Firefox', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
     ['Firefox', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
+
+    ['Firefox (aarch64)', 'Tp6: Facebook', 'raptor-tp6-facebook-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Amazon', 'raptor-tp6-amazon-firefox'],
+    ['Firefox (aarch64)', 'Tp6: YouTube', 'raptor-tp6-youtube-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Google', 'raptor-tp6-google-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Imdb', 'raptor-tp6-imdb-firefox'],
+    // ['Firefox (aarch64)', 'Tp6: Imgur', 'raptor-tp6-imgur-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Wikia', 'raptor-tp6-wikia-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Bing', 'raptor-tp6-bing-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Yandex', 'raptor-tp6-yandex-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Apple', 'raptor-tp6-apple-firefox'],
+    // ['Firefox (aarch64)', 'Tp6: Microsoft', 'raptor-tp6-microsoft-firefox'],
+    ['Firefox (aarch64)', 'Tp6: Reddit', 'raptor-tp6-reddit-firefox'],
 
     ['Chromium', 'Tp6: Facebook', 'raptor-tp6-facebook-chrome'],
     ['Chromium', 'Tp6: Amazon', 'raptor-tp6-amazon-chrome'],
     ['Chromium', 'Tp6: Google', 'raptor-tp6-google-chrome'],
     ['Chromium', 'Tp6: YouTube', 'raptor-tp6-youtube-chrome'],
     ['Chromium', 'Tp6: Imdb', 'raptor-tp6-imdb-chrome'],
-    ['Chromium', 'Tp6: Imgur', 'raptor-tp6-imgur-chrome'],
+    // ['Chromium', 'Tp6: Imgur', 'raptor-tp6-imgur-chrome'],
     ['Chromium', 'Tp6: Wikia', 'raptor-tp6-wikia-chrome'],
     ['Chromium', 'Tp6: Bing', 'raptor-tp6-bing-chrome'],
     ['Chromium', 'Tp6: Yandex', 'raptor-tp6-yandex-chrome'],
     ['Chromium', 'Tp6: Apple', 'raptor-tp6-apple-chrome'],
-    ['Chromium', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
+    // ['Chromium', 'Tp6: Microsoft', 'raptor-tp6-microsoft-chrome'],
     ['Chromium', 'Tp6: Reddit', 'raptor-tp6-reddit-chrome'],
 
 
@@ -191,9 +336,18 @@ const SUITES = {
   ],
 };
 // ALL PAGE COMBINATIONS
-const TP6_PAGES = frum(SUITES.data)
+const temp = selectFrom(SUITES.data)
   .map(row => Data.zip(SUITES.header, row))
-  .join('browser', PLATFORMS, 'browser');
-const TP6M_PAGES = TP6_PAGES.where({ browser: 'geckoview' });
+  .toArray();
+
+Log.note("tesmp");
+
+const TP6_PAGES = selectFrom(temp).leftJoin('browser', PLATFORMS, 'browser')
+  .map(row => {
+    row.seriesConfig = {"and": [{"eq": {suite: row.suite}}, row.seriesConfig]};
+    return row;
+  })
+  .toArray();
+const TP6M_PAGES = selectFrom(TP6_PAGES).where({browser: 'geckoview'});
 
 export { CONFIG, PLATFORMS, TP6_PAGES, TP6M_PAGES, TP6_TESTS };

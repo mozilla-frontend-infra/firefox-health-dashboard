@@ -202,7 +202,7 @@ You can also pass an optional `timerange` value, however, this is not necessary 
 NOTE: If you want to add Chrome jobs, you have to notice that they're not running on the same platform as the Firefox jobs.
 This means that you need to append `-nightly` to it (e.g. `linux64` -> `linux64-nightly`).
 
-Sample code:
+Sample code (INVALID):
 ```javascript
 <PerfherderGraphContainer
   title='Speedometer'
@@ -212,7 +212,7 @@ Sample code:
       framework: 10,
       platform: 'android-hw-g5-7-0-arm7-api-16',
       option: 'opt',
-      project: 'mozilla-central',
+      repo: 'mozilla-central',
       suite: 'raptor-speedometer-geckoview',
     },
     {
@@ -220,7 +220,7 @@ Sample code:
       framework: 10,
       option: 'opt',
       platform: 'android-hw-p2-8-0-arm7-api-16',
-      project: 'mozilla-central',
+      repo: 'mozilla-central',
       suite: 'raptor-speedometer-geckoview',
     },
     {
@@ -228,7 +228,7 @@ Sample code:
       framework: 10,
       option: 'opt',
       platform: 'android-hw-p2-8-0-android-aarch64',
-      project: 'mozilla-central',
+      repo: 'mozilla-central',
       suite: 'raptor-speedometer-geckoview',
     },
   ]}

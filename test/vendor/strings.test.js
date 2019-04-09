@@ -1,7 +1,12 @@
 /* global describe, it */
 import strings from '../../src/vendor/strings';
+import { value2json } from '../../src/vendor/convert';
 
 describe('strings', () => {
+  it('verify import', () => {
+    expect(strings.json).toBe(value2json);
+  });
+
   it('left', () => {
     expect(strings.left('string', 3)).toBe('str');
   });
