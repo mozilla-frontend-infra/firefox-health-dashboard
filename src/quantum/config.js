@@ -128,12 +128,16 @@ const PLATFORMS = [
     label: 'Chromium',
     platform: "chromium32",
     seriesConfig: {
-      eq: {
+      and: [
+        {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
+        {
+          eq: {
 
-        framework: 10,
-        platform: 'windows7-32-nightly',
-        repo: 'mozilla-central',
-      }
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        }
+      ]
     }
   },
   {
@@ -144,12 +148,15 @@ const PLATFORMS = [
     label: 'Chromium',
     platform: "chromium64",
     seriesConfig: {
-      eq: {
+      and: [
+        {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
+        {
+          eq: {
 
-        framework: 10,
-        platform: 'windows10-64-nightly',
-        repo: 'mozilla-central',
-      }
+            framework: 10,
+            repo: 'mozilla-central',
+          }
+        }]
     }
   },
   {

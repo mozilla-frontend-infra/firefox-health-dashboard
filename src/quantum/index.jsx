@@ -142,12 +142,14 @@ export default class QuantumIndex extends React.Component {
               // eslint-disable-next-line react/no-array-index-key
               key={`page_${title}_${bits}`}
               title={title}
-              series={series.map(({ seriesConfig, ...row }) => ({
-                ...row,
-                seriesConfig: {
-                  and: [seriesConfig, { eq: { test: 'loadtime' } }],
-                },
-              }))}
+              series={selectFrom(series)
+                .sortBy(['ordering'])
+                .map(({ seriesConfig, ...row }) => ({
+                  ...row,
+                  seriesConfig: {
+                    and: [seriesConfig, { eq: { test: 'loadtime' } }],
+                  },
+                }))}
             />
           ))
           .enumerate()
