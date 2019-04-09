@@ -1,13 +1,13 @@
 /* global fetch */
 import percentile from 'aggregatejs/percentile';
-import { frum, toPairs } from '../../vendor/queryOps';
-import { Object2URL } from '../../vendor/convert';
+import { selectFrom, toPairs } from '../../vendor/vectors';
+import { toQueryString } from '../../vendor/convert';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
-const PROJECT = 'mozilla-central';
+const REPO = 'mozilla-central';
 const NINENTY_DAYS = 90 * 24 * 60 * 60;
-const signaturesUrl = (project = PROJECT) =>
-  `${TREEHERDER}/api/project/${project}/performance/signatures`;
+const signaturesUrl = repo =>
+  `${TREEHERDER}/api/project/${repo}/performance/signatures`;
 const subtests = async signatureHash => {
   const url = `${signaturesUrl()}/?parent_signature=${signatureHash}`;
 
@@ -23,7 +23,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
   ]);
   // Create a structure with only jobs matching the suite, make
   // option_collection_hash be the key and track the signatureHash as a property
-  const optionHashes = frum(options)
+  const optionHashes = selectFrom(options)
     .where({ 'options.0.name': option })
     .select('option_collection_hash')
     .toArray();
@@ -48,7 +48,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
 const dataUrl = ({
   tests,
   framework,
-  project = PROJECT,
+  repo = REPO,
   interval = NINENTY_DAYS,
 }) => {
   const param = {
@@ -59,7 +59,7 @@ const dataUrl = ({
       .toArray(),
   };
 
-  return `${TREEHERDER}/api/project/${project}/performance/data/?${Object2URL(
+  return `${TREEHERDER}/api/project/${repo}/performance/data/?${toQueryString(
     param
   )}`;
 };
@@ -67,13 +67,13 @@ const dataUrl = ({
 const perherderGraphUrl = ({
   signatureIds,
   framework,
-  project = PROJECT,
+  repo = REPO,
   timerange = NINENTY_DAYS,
 }) => {
   let baseDataUrl = `${TREEHERDER}/perf.html#/graphs?timerange=${timerange}`;
 
   baseDataUrl += `&${signatureIds
-    .map(id => `series=${project},${id},1,${framework}`)
+    .map(id => `series=${repo},${id},1,${framework}`)
     .join('&')}`;
 
   return baseDataUrl;

@@ -10,8 +10,11 @@ import {
   round,
   roundMetric,
   sum,
+  geomean,
+  exp,
+  div,
 } from '../../src/vendor/math';
-import { frum } from '../../src/vendor/queryOps';
+import { selectFrom } from '../../src/vendor/vectors';
 
 const data = [1, null, '', 2, 3];
 
@@ -37,7 +40,7 @@ describe('math', () => {
   });
 
   it('ceiling', () => {
-    const result = frum(data)
+    const result = selectFrom(data)
       .map(v => ceiling(v, 2))
       .toArray();
 
@@ -79,7 +82,7 @@ describe('math', () => {
   });
 
   it('floor', () => {
-    const result = frum(data)
+    const result = selectFrom(data)
       .map(v => floor(v, 2))
       .toArray();
 
@@ -155,5 +158,36 @@ describe('math', () => {
     expect(roundMetric(Math.PI * 0.000001, { digits: 3 })).toBe('3.14µ');
     expect(roundMetric(Math.PI * 0.0000001, { digits: 3 })).toBe('314n');
     expect(roundMetric(Math.PI * 0.00000001, { digits: 3 })).toBe('31.4n');
+  });
+
+  it('broken js: division', () => {
+    // WE EXPECT THIS CALCUALTION TO FAIL, OR RETURN NOTHING
+    // WE DO NOT EXPECT A LEGITIMATE VALUE
+    expect(null / 1).toBe(0);
+  });
+
+  it('broken js: exp', () => {
+    // WE EXPECT THIS CALCULATION TO FAIL, OR RETURN NOTHING
+    // WE DO NOT EXPECT A LEGITIMATE VALUE
+    expect(Math.exp(null)).toBe(1);
+  });
+
+  it('exp', () => {
+    expect(exp(null)).toBe(null);
+  });
+
+  it('division', () => {
+    expect(div(null, 1)).toBe(null);
+    expect(div(0, 0)).toBe(null);
+    expect(div(1, 0)).toBe(null);
+    expect(div(null, 0)).toBe(null);
+  });
+
+  it('geomean', () => {
+    expect(geomean([null])).toBe(null);
+    expect(geomean([])).toBe(null);
+    expect(geomean([undefined])).toBe(null);
+    expect(geomean([0])).toBe(null);
+    expect(geomean([0, 10])).toBeCloseTo(10);
   });
 });

@@ -1,6 +1,7 @@
-import { coalesce, isObject, isString, missing } from './utils';
-import { toPairs } from './queryOps';
-import Data from './Data';
+import { array, coalesce, isArray, isString, missing } from './utils';
+import { toPairs } from './vectors';
+import { Log } from './logs';
+import { Data, isData } from './Data';
 import strings from './strings';
 
 let expandAny = null;
@@ -13,20 +14,20 @@ function expandArray(arr, namespaces) {
 function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
-  if (!isString(from)) throw new Error('expecting from clause to be string');
+  if (!isString(from)) Log.error('expecting from clause to be string');
 
   return Data.get(namespaces[0], loop.from)
     .map(m => {
       const ns = Data.copy(namespaces[0]);
 
-      if (isObject(m)) {
+      if (isData(m)) {
         toPairs(m).forEach((v, k) => {
           ns[k.toLowerCase()] = v;
         });
       }
 
       namespaces.forEach((n, i) => {
-        ns[Array(i + 3).join('.')] = n;
+        ns[array(i + 3).join('.')] = n;
       });
 
       const nns = namespaces.slice();
@@ -63,7 +64,7 @@ function expandText(template, namespaces) {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
-          throw new Error(
+          Log.error(
             `{{func}} is an unknown string function for template expansion`,
             { func }
           );
@@ -77,8 +78,7 @@ function expandText(template, namespaces) {
           try {
             val = run(method, val, rest);
           } catch (f) {
-            // eslint-disable-next-line no-console
-            console.warn(`Can not evaluate {{variable|json}}`, { variable }, f);
+            Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
           }
         }
       });
@@ -110,7 +110,7 @@ expandAny = (template, namespaces) => {
     return '';
   }
 
-  if (Array.isArray(template)) {
+  if (isArray(template)) {
     return expandArray(template, namespaces);
   }
 
@@ -122,13 +122,13 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  throw new Error('Not recognized {{template|json}}', { template });
+  Log.error('Not recognized {{template|json}}', { template });
 };
 
 function expand(template, parameters) {
   if (parameters === undefined) {
     if (isString(template)) return template;
-    throw new Error('Must have parameters');
+    Log.error('Must have parameters');
   }
 
   function lower(v) {
@@ -136,12 +136,7 @@ function expand(template, parameters) {
       return v;
     }
 
-    if (
-      typeof v === 'object' &&
-      !(v instanceof Array) &&
-      !(v instanceof Date)
-      // !(v instanceof Duration)
-    ) {
+    if (isData(v)) {
       return toPairs(v)
         .map((v, k) => [lower(v), k.toLowerCase()])
         .args()
@@ -166,4 +161,6 @@ class Template {
   }
 }
 
-export { Template, expand };
+Template.expand = expand;
+
+export default Template;

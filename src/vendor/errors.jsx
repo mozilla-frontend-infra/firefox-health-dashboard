@@ -2,6 +2,7 @@ import Raven from 'raven-js';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from './utils';
+import { Log, Exception } from './logs';
 import SETTINGS from './settings';
 
 if (process.env.NODE_ENV === 'production') {
@@ -80,7 +81,7 @@ const withErrorBoundary = WrappedComponent => {
     WrappedComponent.displayName &&
     WrappedComponent.displayName.startsWith('WithStyles')
   ) {
-    throw new Error(
+    Log.error(
       'Can not wrap WithStyles because componentDidMount() returns undefined'
     );
   }
@@ -94,13 +95,12 @@ const withErrorBoundary = WrappedComponent => {
       }
     }
 
-    componentDidCatch(error, info) {
+    componentDidCatch(err, info) {
+      const error = Exception.wrap(err, info);
+
       this.setState({ error });
-
+      Log.warning(error);
       reportOrLog(error, info);
-
-      // eslint-disable-next-line no-console
-      console.warn(error);
     }
 
     async componentDidMount() {

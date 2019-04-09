@@ -1,5 +1,5 @@
 /* global describe, it */
-import Data from '../../src/vendor/Data';
+import { Data } from '../../src/vendor/Data';
 
 const data = { a: { b: { c: { d: 42 } } } };
 const dataArray = {
@@ -7,14 +7,6 @@ const dataArray = {
 };
 
 describe('Data', () => {
-  it('new error', () => {
-    expect(() => Data(null, 3)).toThrow();
-  });
-
-  it('new ok', () => {
-    expect(Data('a', 3)).toEqual({ a: 3 });
-  });
-
   it('zip', () => {
     expect(Data.zip([['a', 3], ['b', 4]])).toEqual({ a: 3, b: 4 });
   });

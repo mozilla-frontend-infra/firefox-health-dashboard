@@ -23,7 +23,12 @@ module.exports = {
         publicPath: '/',
       },
     ],
-    '@neutrinojs/jest',
+    [
+      '@neutrinojs/jest',
+      {
+        setupTestFrameworkScriptFile: 'jest-extended',
+      },
+    ],
     [
       '@neutrinojs/copy',
       {

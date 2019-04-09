@@ -4,8 +4,8 @@ import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderWidget from './perfherder';
-import { frum, toPairs } from '../vendor/queryOps';
-import { URL2Object } from '../vendor/convert';
+import { selectFrom, toPairs } from '../vendor/vectors';
+import { fromQueryString } from '../vendor/convert';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,
@@ -28,12 +28,58 @@ export default class QuantumIndex extends React.Component {
       location,
       match: { params },
     } = this.props;
-    const urlParams = URL2Object(location.search);
+    const urlParams = fromQueryString(location.search);
     const bits = urlParams.bits || Number.parseInt(params.bits, 10);
     const quantumQueryParams =
       bits === 32 ? quantum32QueryParams : quantum64QueryParams;
     const platform =
-      bits === 32 ? 'windows7-32-shippable' : 'windows10-64-shippable';
+      bits === 32
+        ? {
+            or: [
+              {
+                eq: {
+                  options: 'pgo',
+                  platform: 'windows7-32',
+                },
+              },
+              {
+                eq: {
+                  options: 'opt',
+                  platform: 'windows7-32-shippable',
+                },
+              },
+            ],
+          }
+        : {
+            or: [
+              {
+                eq: {
+                  options: 'pgo',
+                  platform: 'windows10-64',
+                },
+              },
+              {
+                eq: {
+                  options: 'opt',
+                  platform: 'windows10-64-shippable',
+                },
+              },
+            ],
+          };
+    const performanceFilter = {
+      and: [
+        {
+          or: [{ missing: 'test' }, { eq: ['test', 'suite'] }],
+        },
+        platform,
+        {
+          eq: {
+            framework: 1,
+            repo: 'mozilla-central',
+          },
+        },
+      ],
+    };
     const nightlyPlatform =
       bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
     const regressionConfig =
@@ -52,21 +98,33 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  framework: 10,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-firefox',
+                  and: [
+                    { missing: 'test' },
+                    platform,
+                    {
+                      eq: {
+                        framework: 10,
+                        repo: 'mozilla-central',
+                        suite: 'raptor-speedometer-firefox',
+                      },
+                    },
+                  ],
                 },
               },
               {
                 label: 'Chromium',
                 seriesConfig: {
-                  framework: 10,
-                  platform: nightlyPlatform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'raptor-speedometer-chrome',
+                  and: [
+                    { missing: 'test' },
+                    {
+                      eq: {
+                        framework: 10,
+                        platform: nightlyPlatform,
+                        repo: 'mozilla-central',
+                        suite: 'raptor-speedometer-chrome',
+                      },
+                    },
+                  ],
                 },
               },
             ]}
@@ -76,7 +134,7 @@ export default class QuantumIndex extends React.Component {
       {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}&test=loadtime`,
-        rows: frum(TP6_PAGES)
+        rows: selectFrom(TP6_PAGES)
           .where({ bits })
           .groupBy('title')
           .map((series, title) => (
@@ -84,7 +142,12 @@ export default class QuantumIndex extends React.Component {
               // eslint-disable-next-line react/no-array-index-key
               key={`page_${title}_${bits}`}
               title={title}
-              series={series.map(s => ({ label: s.label, seriesConfig: s }))}
+              series={series.map(({ seriesConfig, ...row }) => ({
+                ...row,
+                seriesConfig: {
+                  and: [seriesConfig, { eq: { test: 'loadtime' } }],
+                },
+              }))}
             />
           ))
           .enumerate()
@@ -100,12 +163,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tp5o',
+                  and: [performanceFilter, { eq: { suite: 'tp5o' } }],
                 },
               },
             ]}
@@ -117,12 +175,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tpaint',
+                  and: [performanceFilter, { eq: { suite: 'tpaint' } }],
                 },
               },
             ]}
@@ -134,12 +187,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'sessionrestore',
+                  and: [performanceFilter, { eq: { suite: 'sessionrestore' } }],
                 },
               },
             ]}
@@ -151,12 +199,10 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'sessionrestore_no_auto_restore',
+                  and: [
+                    performanceFilter,
+                    { eq: { suite: 'sessionrestore_no_auto_restore' } },
+                  ],
                 },
               },
             ]}
@@ -168,12 +214,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'ts_paint',
+                  and: [performanceFilter, { eq: { suite: 'ts_paint' } }],
                 },
               },
             ]}
@@ -185,12 +226,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tabpaint',
+                  and: [performanceFilter, { eq: { suite: 'tabpaint' } }],
                 },
               },
             ]}
@@ -202,12 +238,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tart',
+                  and: [performanceFilter, { eq: { suite: 'tart' } }],
                 },
               },
             ]}
@@ -219,12 +250,10 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox (tabswitch)',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tabswitch',
+                  and: [
+                    performanceFilter,
+                    { eq: { suite: ['tps', 'tabswitch'] } },
+                  ],
                 },
               },
             ]}
@@ -236,12 +265,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tsvg_static',
+                  and: [performanceFilter, { eq: { suite: 'tsvg_static' } }],
                 },
               },
             ]}
@@ -253,12 +277,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tsvgr_opacity',
+                  and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
                 },
               },
             ]}
@@ -270,12 +289,7 @@ export default class QuantumIndex extends React.Component {
               {
                 label: 'Firefox',
                 seriesConfig: {
-                  extraOptions: ['e10s', 'stylo'],
-                  framework: 1,
-                  platform,
-                  option: 'opt',
-                  project: 'mozilla-central',
-                  suite: 'tsvgx',
+                  and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
                 },
               },
             ]}
@@ -557,7 +571,7 @@ export default class QuantumIndex extends React.Component {
     if (full) {
       return (
         <DashboardPage title="Quantum" subtitle="Release Criteria Report">
-          {frum(reduced).limit(2)}
+          {selectFrom(reduced).limit(2)}
           <h2 key="moreData">
             {'More data on'}
             <strong>https://health.graphics/quantum</strong>

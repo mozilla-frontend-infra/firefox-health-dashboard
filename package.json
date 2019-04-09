@@ -42,6 +42,7 @@
     "classnames": "^2.2.5",
     "d3": "^4.10.0",
     "dateformat": "^3.0.3",
+    "jest-extended": "^0.11.1",
     "lodash": "^4.17.2",
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",

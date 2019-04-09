@@ -1,51 +1,62 @@
 /* eslint-disable no-restricted-syntax */
-import chunk from 'lodash/chunk';
 import unzip from 'lodash/unzip';
-import sortBy from 'lodash/sortBy';
+import lodashSortBy from 'lodash/sortBy';
+import { Data, isData } from './Data';
 import {
   concatField,
   exists,
   first,
   isArray,
-  isObject,
+  isFunction,
   isString,
   last,
   literalField,
   missing,
   toArray,
+  coalesce,
 } from './utils';
-import { sum } from './math';
-import Data from './Data';
+import { average, geomean, max, min, sum } from './math';
+import { Log } from './logs';
+import { jx } from './jx/expressions';
 
-let internalFrum = null;
+let internalFrom = null;
 let internalToPairs = null;
+const getI = i => m => m[i];
 
 function preSelector(columnName) {
-  // convert to an array of [selector(), name] pairs
+  // Return an array of [selector(), name] pairs
+
   if (isArray(columnName)) {
     // select many columns
-    return internalFrum(columnName)
-      .map(preSelector)
-      .flatten()
-      .sortBy(([, b]) => b);
+    return internalFrom(columnName)
+      .sortBy()
+      .map(name => {
+        if (isString(name)) return [[row => Data.get(row, name), name]];
+
+        return preSelector(name).map(([s, n]) => [s, concatField(name, n)]);
+      })
+      .flatten();
   }
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .map((value, name) => [row => Data.get(row, value), name])
-      .sortBy(([, b]) => b);
+      .sortBy((selectors, name) => name)
+      .map((selector, name) =>
+        preSelector(selector).map(([s, n]) => [s, concatField(name, n)])
+      )
+      .flatten();
   }
 
   if (isString(columnName)) {
-    return [[row => Data.get(row, columnName), columnName]];
+    return [[row => Data.get(row, columnName), '.']];
   }
 }
 
 function selector(columnName) {
   /*
-     var row = { a: 1, b: '2', c: 3 };
+     const row = { a: 1, b: '2', c: 3 };
 
-     convert string into function that selects property from row
+     convert string into function that extracts property from row
          selector('b')(row) === '2'
 
      convert array of strings into function that extracts properties from a row
@@ -55,11 +66,11 @@ function selector(columnName) {
          selector({x: 'a', y: 'b'})(row) === {x: 1, y: '2'}
 
    */
-  if (isObject(columnName) || isArray(columnName)) {
+  if (isData(columnName) || isArray(columnName)) {
     // select many columns
     const cs = preSelector(columnName).args();
 
-    return row => cs.map(func => func(row)).fromPairs();
+    return row => cs.map(func => func(row)).fromLeaves();
   }
 
   if (isString(columnName)) {
@@ -69,7 +80,10 @@ function selector(columnName) {
   return columnName;
 }
 
-class Wrapper {
+class ArrayWrapper {
+  // Provide a fluent interface to Array, with some extra functions
+  // https://en.wikipedia.org/wiki/Fluent_interface
+
   // Represent an iterable set of function arguments
   constructor(argsGen) {
     this.argsGen = argsGen;
@@ -100,7 +114,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   select(selectors) {
@@ -131,7 +145,7 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   args() {
@@ -140,19 +154,35 @@ class Wrapper {
       for (const args of list) yield args[0];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
+  }
+
+  slice(start) {
+    // restrict to just rows with index >= start
+    function* output(argslist) {
+      let i = 0;
+
+      for (const args of argslist) {
+        if (i >= start) yield args;
+        i += 1;
+      }
+    }
+
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   filter(func) {
+    // restrict to rows where `func()` is truthy
     function* output(argslist) {
       for (const [value, ...args] of argslist)
         if (func(value, ...args)) yield [value];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   limit(max) {
+    // restrict to rows with index < max
     function* output(argslist) {
       let i = 0;
 
@@ -163,25 +193,13 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   where(expression) {
     // Expecting a object of {columnName: value} form to use as a filter
     // return only matching rows
-    const func = row => {
-      for (const [name, value] of Object.entries(expression)) {
-        if (isArray(value)) {
-          if (!value.includes(Data.get(row, name))) return false;
-        } else if (exists(value)) {
-          if (Data.get(row, name) !== value) return false;
-        }
-      }
-
-      return true;
-    };
-
-    return this.filter(func);
+    return this.filter(jx({ eq: expression }));
   }
 
   exists(columns = null) {
@@ -222,6 +240,28 @@ class Wrapper {
     return this.filter(func);
   }
 
+  chunk(size) {
+    // return rows containing arrays of length `size`
+    function* output(argslist) {
+      let count = 0;
+      let acc = [];
+
+      for (const [value] of argslist) {
+        if (acc.length === size) {
+          yield [internalFrom(acc), count];
+          count += 1;
+          acc = [];
+        }
+
+        acc.push(value);
+      }
+
+      if (acc.length > 0) yield [internalFrom(acc), count];
+    }
+
+    return new ArrayWrapper(() => output(this.argslist));
+  }
+
   flatten() {
     // assume this is an array of lists, return array of all elements
     // append extra index parameter to args
@@ -230,7 +270,7 @@ class Wrapper {
         for (const value of values) yield [value];
     }
 
-    return new Wrapper(() => output(this.argslist));
+    return new ArrayWrapper(() => output(this.argslist));
   }
 
   groupBy(columns) {
@@ -273,8 +313,29 @@ class Wrapper {
       }
     }
 
-    return new Wrapper(function* outputGen() {
+    return new ArrayWrapper(function* outputGen() {
       for (const v of Object.values(output)) yield v;
+    });
+  }
+
+  sortBy(selectors) {
+    const func = toArray(selectors).map(selector => {
+      if (missing(selector)) {
+        return ([arg]) => arg;
+      }
+
+      if (isFunction(selector)) {
+        return args => selector(...args);
+      }
+
+      const func = jx(selector);
+
+      return ([arg]) => func(arg);
+    });
+    const sorted = lodashSortBy(Array.from(this.argsGen()), func);
+
+    return new ArrayWrapper(function* outputGen() {
+      for (const args of sorted) yield args;
     });
   }
 
@@ -284,6 +345,11 @@ class Wrapper {
 
   toArray() {
     return Array.from(this);
+  }
+
+  raw() {
+    // return args list (fro debugging)
+    return Array.from(this.argslist);
   }
 
   fromPairs() {
@@ -309,13 +375,47 @@ class Wrapper {
     return first(this);
   }
 
-  last() {
-    // return last element
-    return last(this);
+  last(defaultValue = null) {
+    // return last element, or defaultValue
+    return coalesce(last(this), defaultValue);
   }
 
   sum() {
     return sum(this);
+  }
+
+  average() {
+    return average(this);
+  }
+
+  geomean() {
+    return geomean(this);
+  }
+
+  max() {
+    return max(this);
+  }
+
+  min() {
+    return min(this);
+  }
+
+  some(func) {
+    // return true if func(...args) returns true for some args
+    for (const args of this.argslist) {
+      if (func(...args)) return true;
+    }
+
+    return false;
+  }
+
+  every(func) {
+    // return true if func(...args) returns true for every args
+    for (const args of this.argslist) {
+      if (!func(...args)) return false;
+    }
+
+    return true;
   }
 
   get length() {
@@ -355,7 +455,7 @@ class Wrapper {
       if (!(key in output)) {
         output[key] = row;
       } else {
-        throw new Error('expecting index to be unique');
+        Log.error('expecting index to be unique');
       }
     }
 
@@ -363,44 +463,62 @@ class Wrapper {
   }
 }
 
-function frum(list) {
-  if (list instanceof Wrapper) {
+function selectFrom(list, ...more) {
+  if (list instanceof ArrayWrapper) {
     return list;
   }
 
-  return new Wrapper(function* outputGen() {
+  if (more.length) {
+    return new ArrayWrapper(function* outputGen() {
+      let i = 0;
+
+      for (const v of list) {
+        yield [v, ...more.map(getI(i))];
+        i += 1;
+      }
+    });
+  }
+
+  return new ArrayWrapper(function* outputGen() {
     for (const v of list) yield [v];
   });
 }
 
-internalFrum = frum;
+internalFrom = selectFrom;
 
+/*
+ * convert Object (or Data) into [value, key] pairs
+ * notice the **value is first**
+ */
 function toPairs(obj) {
-  // convert Object (or Data) into [value, key] pairs
-  // notice the **value is first**
-  if (missing(obj)) return new Wrapper(() => []);
+  if (missing(obj)) return new ArrayWrapper(() => []);
 
   if (obj instanceof Map) {
-    return new Wrapper(function* outputGen() {
+    return new ArrayWrapper(function* outputGen() {
       for (const [k, v] of obj.entries()) yield [v, k];
     });
   }
 
-  return new Wrapper(function* outputGen() {
+  return new ArrayWrapper(function* outputGen() {
     for (const [k, v] of Object.entries(obj)) yield [v, k];
   });
 }
 
+ArrayWrapper.prototype.all = ArrayWrapper.prototype.every;
+ArrayWrapper.prototype.any = ArrayWrapper.prototype.some;
+
 internalToPairs = toPairs;
 
+/*
+ * Convert Object into list of [value, path] pairs
+ * where path is dot delimited path deep into object
+ */
 function leaves(obj) {
-  // Convert Object into list of [value, path] pairs
-  // where path is dot delimited path deep into object
   function* leafGen(map, prefix) {
     for (const [val, key] of toPairs(map).argsGen()) {
       const path = concatField(prefix, literalField(key));
 
-      if (isObject(val)) {
+      if (isData(val)) {
         for (const pair of leafGen(val, path)) yield pair;
       } else {
         yield [val, path];
@@ -408,12 +526,12 @@ function leaves(obj) {
     }
   }
 
-  return new Wrapper(() => leafGen(obj, '.'));
+  return new ArrayWrapper(() => leafGen(obj, '.'));
 }
 
 function length(list) {
   // return length of this list
-  if (list instanceof Wrapper) return list.length;
+  if (list instanceof ArrayWrapper) return list.length;
 
   return list.length;
 }
@@ -422,31 +540,29 @@ function extendWrapper(methods) {
   // Add a chainable method to Wrapper
   internalToPairs(methods).forEach((method, name) => {
     // USE function(){} DECLARATION TO BIND this AT CALL TIME
-    Wrapper.prototype[name] = function anonymous(...args) {
-      return internalFrum(method(this.toArray(), ...args));
+    ArrayWrapper.prototype[name] = function anonymous(...args) {
+      return internalFrom(method(this.toArray(), ...args));
     };
   });
 }
 
 // Add Lodash functions
 extendWrapper({
-  chunk,
   unzip,
   zip: unzip,
-  sort: sortBy,
-  sortBy,
 
   // SELECT a.*, b.* FROM listA a LEFT JOIN listB b on b[propB]=a[propA]
   // Return Cartesian product of listA and listB,
   // where each element has properties; from one of each list: { ...a, ...b }
   // but only include elements where b[propB]==a[propA] (b ∈ listB, a ∈ listA)
-  join: function join(listA, propA, listB, propB) {
-    const lookup = internalFrum(listB)
+  leftJoin: function leftJoin(listA, propA, listB, propB) {
+    const lookup = internalFrom(listB)
       .groupBy(propB)
       .fromPairs();
+    const getterA = jx(propA);
 
-    return internalFrum(listA)
-      .map(rowA => lookup[rowA[propA]].map(rowB => ({ ...rowA, ...rowB })))
+    return internalFrom(listA)
+      .map(rowA => lookup[getterA(rowA)].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
   },
 
@@ -455,8 +571,8 @@ extendWrapper({
   },
 
   reverse: function reverse(list) {
-    return list.reverse();
+    return list.slice().reverse();
   },
 });
 
-export { frum, toPairs, leaves, first, last, length };
+export { selectFrom, toPairs, leaves, first, last, length, ArrayWrapper };
