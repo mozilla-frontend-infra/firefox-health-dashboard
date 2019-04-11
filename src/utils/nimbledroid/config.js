@@ -10,7 +10,7 @@ const CONFIG = {
     'org.mozilla.klar',
     'com.chrome.beta',
     'org.mozilla.geckoview_example',
-    'org.mozilla.reference.browser.debug',
+    'org.mozilla.reference.browser',
     'org.mozilla.fenix',
   ],
   summaryTable: [
