@@ -3,7 +3,7 @@ const CONFIG = {
     'org.mozilla.klar': 'Firefox Klar',
     'com.chrome.beta': 'Chrome Beta',
     'org.mozilla.geckoview_example': 'GeckoView Example',
-    'org.mozilla.reference.browser.debug': 'Reference Browser',
+    'org.mozilla.reference.browser': 'Reference Browser',
     'org.mozilla.fenix': 'Fenix',
   },
   products: [
