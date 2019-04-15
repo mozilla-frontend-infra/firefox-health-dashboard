@@ -80,8 +80,17 @@ export default class QuantumIndex extends React.Component {
         },
       ],
     };
-    const nightlyPlatform =
-      bits === 32 ? 'windows7-32-nightly' : 'windows10-64-nightly';
+    const nightlyPlatform = (() => {
+      if (bits === 32) {
+        return {
+          eq: { platform: ['windows7-32-nightly', 'windows7-32-shippable'] },
+        };
+      }
+
+      return {
+        eq: { platform: ['windows10-64-nightly', 'windows10-64-shippable'] },
+      };
+    })();
     const regressionConfig =
       bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = [
@@ -116,12 +125,19 @@ export default class QuantumIndex extends React.Component {
                 seriesConfig: {
                   and: [
                     { missing: 'test' },
+                    nightlyPlatform,
+                    {
+                      eq: {
+                        suite: [
+                          'raptor-speedometer-chrome',
+                          'raptor-speedometer-chromium',
+                        ],
+                      },
+                    },
                     {
                       eq: {
                         framework: 10,
-                        platform: nightlyPlatform,
                         repo: 'mozilla-central',
-                        suite: 'raptor-speedometer-chrome',
                       },
                     },
                   ],
