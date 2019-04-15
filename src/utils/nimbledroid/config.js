@@ -3,14 +3,14 @@ const CONFIG = {
     'org.mozilla.klar': 'Firefox Klar',
     'com.chrome.beta': 'Chrome Beta',
     'org.mozilla.geckoview_example': 'GeckoView Example',
-    'org.mozilla.reference.browser.debug': 'Reference Browser',
+    'org.mozilla.reference.browser': 'Reference Browser',
     'org.mozilla.fenix': 'Fenix',
   },
   products: [
     'org.mozilla.klar',
     'com.chrome.beta',
     'org.mozilla.geckoview_example',
-    'org.mozilla.reference.browser.debug',
+    'org.mozilla.reference.browser',
     'org.mozilla.fenix',
   ],
   summaryTable: [
