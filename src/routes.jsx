@@ -7,7 +7,7 @@ import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
 import Quantum from './quantum/Quantum';
 import TP6 from './quantum/TP6';
-import TP6M from './quantum/TP6m';
+import TP6M from './views/Android/TP6m';
 import Subbenchmark from './quantum/subbenchmarks';
 
 const NoMatch = () => <div>404</div>;

@@ -3,21 +3,26 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { round } from '../vendor/math';
-import { exists, missing } from '../vendor/utils';
-import { selectFrom } from '../vendor/vectors';
-import { PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
-import DashboardPage from '../components/DashboardPage';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import ChartJSWrapper from '../components/ChartJsWrapper';
-import generateOptions from '../utils/chartJs/generateOptions';
-import { g5Reference, TARGET_NAME } from '../config/mobileG5';
-import { pullAggregate } from '../components/TP6mAggregate';
-import generateDatasetStyle from '../utils/chartJs/generateDatasetStyle';
-import SETTINGS from '../settings';
-import Section from '../components/Section';
+import { round } from '../../vendor/math';
+import { exists, missing } from '../../vendor/utils';
+import { selectFrom } from '../../vendor/vectors';
+import {
+  PLATFORMS,
+  TP6_COMBOS,
+  TP6_TESTS,
+  TP6M_SITES,
+} from '../../quantum/config';
+import { withNavigation } from '../../vendor/utils/navigation';
+import Picker from '../../vendor/utils/navigation/Picker';
+import DashboardPage from '../../components/DashboardPage';
+import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
+import ChartJSWrapper from '../../components/ChartJsWrapper';
+import generateOptions from '../../utils/chartJs/generateOptions';
+import { g5Reference, TARGET_NAME } from '../../config/mobileG5';
+import { pullAggregate } from '../../components/TP6mAggregate';
+import generateDatasetStyle from '../../utils/chartJs/generateDatasetStyle';
+import SETTINGS from '../../settings';
+import Section from '../../components/Section';
 
 const styles = {
   body: {
