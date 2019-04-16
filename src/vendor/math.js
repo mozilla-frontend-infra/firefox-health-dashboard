@@ -1,4 +1,4 @@
-import { coalesce, missing } from './utils';
+import { coalesce, missing, exists } from './utils';
 
 function sign(n) {
   if (missing(n)) return null;
@@ -65,15 +65,16 @@ function round(value, rounding) {
     return 0.0;
   }
 
-  const { digits } = rounding;
+  const { digits, places } = rounding;
+  const dig = coalesce(digits, places);
   let d = null;
 
-  if (digits !== undefined) {
-    if (digits <= 0) {
+  if (exists(dig)) {
+    if (dig <= 0) {
       return 10 ** Math.round(log10(value));
     }
 
-    d = 10 ** (digits - ceiling(log10(value)));
+    d = 10 ** (dig - ceiling(log10(value)));
   } else {
     d = 10 ** rounding;
   }

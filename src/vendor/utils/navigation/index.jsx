@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from '../../Data';
 import { selectFrom } from '../../vectors';
+import { missing } from '../../utils';
 import { fromQueryString, toQueryString } from '../../convert';
 
 function withNavigation(config) {
@@ -28,11 +29,23 @@ function withNavigation(config) {
         const { location } = props;
         const params = fromQueryString(location.search);
 
-        this.params = params;
-
         // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
         this.state = selectFrom(config)
-          .map(({ id, defaultValue }) => [params[id] || defaultValue, id])
+          .map(({ id, defaultValue, options }) => {
+            const selected = params[id];
+
+            if (missing(selected)) return [defaultValue, id];
+
+            if (
+              selectFrom(options)
+                .select('id')
+                .includes(selected)
+            ) {
+              return [selected, id];
+            }
+
+            return [defaultValue, id];
+          })
           .args()
           .fromPairs();
 

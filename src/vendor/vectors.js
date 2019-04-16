@@ -1,8 +1,12 @@
 /* eslint-disable no-restricted-syntax */
+/* eslint-disable no-param-reassign */
+
 import unzip from 'lodash/unzip';
 import lodashSortBy from 'lodash/sortBy';
 import { Data, isData } from './Data';
 import {
+  array,
+  coalesce,
   concatField,
   exists,
   first,
@@ -11,14 +15,19 @@ import {
   isString,
   last,
   literalField,
+  MANY_TYPES,
   missing,
   toArray,
-  coalesce,
+  zip,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';
-import { jx } from './jx/expressions';
+import jx from './jx/expressions';
+import { Cube } from './jx/cubes';
+import Matrix from './jx/Matrix';
+import Edge from './jx/Edge';
 
+const DEBUG = true;
 let internalFrom = null;
 let internalToPairs = null;
 const getI = i => m => m[i];
@@ -80,13 +89,34 @@ function selector(columnName) {
   return columnName;
 }
 
+function* runCounter(self, argsGen) {
+  if (self.emitted > 10000) {
+    Log.warning('Too many reruns {{emitted}} emitted over {{runs}} runs', {
+      ...self,
+    });
+  }
+
+  self.runs += 1;
+
+  for (const args of argsGen()) {
+    yield args;
+    self.emitted += 1;
+  }
+}
+
 class ArrayWrapper {
   // Provide a fluent interface to Array, with some extra functions
   // https://en.wikipedia.org/wiki/Fluent_interface
 
   // Represent an iterable set of function arguments
-  constructor(argsGen) {
-    this.argsGen = argsGen;
+  constructor(argsGen, ops = { debug: DEBUG }) {
+    if (ops.debug) {
+      this.runs = 0;
+      this.emitted = 0;
+      this.argsGen = () => runCounter(this, argsGen);
+    } else {
+      this.argsGen = argsGen;
+    }
   }
 
   *[Symbol.iterator]() {
@@ -106,12 +136,8 @@ class ArrayWrapper {
   map(func) {
     // map the value, do not touch the other args
     function* output(argslist) {
-      let i = 0;
-
-      for (const [value, ...args] of argslist) {
-        yield [func(value, ...args), ...args, i];
-        i += 1;
-      }
+      for (const [value, ...args] of argslist)
+        yield [func(value, ...args), ...args];
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -134,8 +160,10 @@ class ArrayWrapper {
     return this;
   }
 
+  /*
+  append index to args
+   */
   enumerate() {
-    // append extra index parameter to args
     function* output(argslist) {
       let i = 0;
 
@@ -174,8 +202,7 @@ class ArrayWrapper {
   filter(func) {
     // restrict to rows where `func()` is truthy
     function* output(argslist) {
-      for (const [value, ...args] of argslist)
-        if (func(value, ...args)) yield [value];
+      for (const args of argslist) if (func(...args)) yield args;
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -267,7 +294,7 @@ class ArrayWrapper {
     // append extra index parameter to args
     function* output(argslist) {
       for (const [values] of argslist)
-        for (const value of values) yield [value];
+        if (exists(values)) for (const value of values) yield [value];
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -318,6 +345,37 @@ class ArrayWrapper {
     });
   }
 
+  /*
+  Groupby, but with all combinations of all columns grouped.
+  For 2 dimensions this is a pivot table, for more dimensions it is a "cube".
+  Google "sql group by cube" for more information
+   */
+  edges(edges, zero = array) {
+    const normalizedEdges = edges.map(Edge.newInstance);
+    const dims = normalizedEdges.map(e => e.domain.partitions.length);
+    const matrix = new Matrix({ dims, zero });
+
+    this.forEach(row => {
+      const coord = normalizedEdges.map(e =>
+        e.domain.valueToIndex(e.value(row))
+      );
+
+      zip(dims, normalizedEdges).forEach(([d, e], i) => {
+        if (e.domain.type === 'value' && d < e.domain.partitions.length) {
+          // last element of value domain is NULL, ensure it is still last
+          matrix.insertPart(i, d - 1);
+          dims[i] = d + 1;
+        }
+      });
+
+      matrix.add(coord, row);
+    });
+
+    normalizedEdges.forEach(e => e.domain.lock());
+
+    return new Cube(normalizedEdges, matrix);
+  }
+
   sortBy(selectors) {
     const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
@@ -334,9 +392,23 @@ class ArrayWrapper {
     });
     const sorted = lodashSortBy(Array.from(this.argsGen()), func);
 
-    return new ArrayWrapper(function* outputGen() {
-      for (const args of sorted) yield args;
-    });
+    return new ArrayWrapper(
+      function* outputGen() {
+        for (const args of sorted) yield args;
+      },
+      { debug: false }
+    );
+  }
+
+  union() {
+    const result = new Set([...this]);
+
+    return new ArrayWrapper(
+      function* outputGen() {
+        for (const arg of result) yield [arg];
+      },
+      { debug: false }
+    );
   }
 
   // ///////////////////////////////////////////////////////////////////////////
@@ -347,13 +419,31 @@ class ArrayWrapper {
     return Array.from(this);
   }
 
+  /*
+  execute eagerly
+   */
+  materialize() {
+    const list = this.raw();
+
+    return new ArrayWrapper(
+      function* outputGen() {
+        for (const args of list) yield args;
+      },
+      { debug: false }
+    );
+  }
+
+  /*
+  return args list (for debugging)
+   */
   raw() {
-    // return args list (fro debugging)
     return Array.from(this.argslist);
   }
 
+  /*
+  return an object from (value, key) pairs
+   */
   fromPairs() {
-    // return an object from (value, key) pairs
     const output = {};
 
     for (const [v, k] of this.argslist) output[k] = v;
@@ -400,8 +490,10 @@ class ArrayWrapper {
     return min(this);
   }
 
+  /*
+  return true if func(...args) returns true for some args
+   */
   some(func) {
-    // return true if func(...args) returns true for some args
     for (const args of this.argslist) {
       if (func(...args)) return true;
     }
@@ -409,8 +501,10 @@ class ArrayWrapper {
     return false;
   }
 
+  /*
+   return true if func(...args) returns true for every args
+    */
   every(func) {
-    // return true if func(...args) returns true for every args
     for (const args of this.argslist) {
       if (!func(...args)) return false;
     }
@@ -418,6 +512,18 @@ class ArrayWrapper {
     return true;
   }
 
+  /*
+  return true if value can be found in this list
+   */
+  includes(value) {
+    for (const [arg] of this.argslist) if (arg === value) return true;
+
+    return false;
+  }
+
+  /*
+  return number of slots in this list
+   */
   get length() {
     let count = 0;
 
@@ -425,6 +531,16 @@ class ArrayWrapper {
     for (const _ of this.argslist) count += 1;
 
     return count;
+  }
+
+  /*
+  return true if this list is empty
+   */
+  isEmpty() {
+    /* eslint-disable-next-line no-unused-vars */
+    for (const _ of this.argslist) return false;
+
+    return true;
   }
 
   concatenate(separator) {
@@ -463,25 +579,33 @@ class ArrayWrapper {
   }
 }
 
+MANY_TYPES.push(ArrayWrapper);
+
 function selectFrom(list, ...more) {
   if (list instanceof ArrayWrapper) {
     return list;
   }
 
   if (more.length) {
-    return new ArrayWrapper(function* outputGen() {
-      let i = 0;
+    return new ArrayWrapper(
+      function* outputGen() {
+        let i = 0;
 
-      for (const v of list) {
-        yield [v, ...more.map(getI(i))];
-        i += 1;
-      }
-    });
+        for (const v of list) {
+          yield [v, ...more.map(getI(i))];
+          i += 1;
+        }
+      },
+      { debug: false }
+    );
   }
 
-  return new ArrayWrapper(function* outputGen() {
-    for (const v of list) yield [v];
-  });
+  return new ArrayWrapper(
+    function* outputGen() {
+      for (const v of list) yield [v];
+    },
+    { debug: false }
+  );
 }
 
 internalFrom = selectFrom;
@@ -494,14 +618,20 @@ function toPairs(obj) {
   if (missing(obj)) return new ArrayWrapper(() => []);
 
   if (obj instanceof Map) {
-    return new ArrayWrapper(function* outputGen() {
-      for (const [k, v] of obj.entries()) yield [v, k];
-    });
+    return new ArrayWrapper(
+      function* outputGen() {
+        for (const [k, v] of obj.entries()) yield [v, k];
+      },
+      { debug: false }
+    );
   }
 
-  return new ArrayWrapper(function* outputGen() {
-    for (const [k, v] of Object.entries(obj)) yield [v, k];
-  });
+  return new ArrayWrapper(
+    function* outputGen() {
+      for (const [k, v] of Object.entries(obj)) yield [v, k];
+    },
+    { debug: false }
+  );
 }
 
 ArrayWrapper.prototype.all = ArrayWrapper.prototype.every;

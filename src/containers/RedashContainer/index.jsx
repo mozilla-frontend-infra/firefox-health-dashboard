@@ -86,10 +86,8 @@ class RedashContainer extends Component {
 
     return (
       <div>
-        <h2 className={classes.title}>
-          <span>{title}</span>
-        </h2>
         <ChartJsWrapper
+          title={title}
           type="line"
           data={datasets}
           isLoading={isLoading}

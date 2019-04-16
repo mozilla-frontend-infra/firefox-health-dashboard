@@ -137,6 +137,12 @@ describe('utils', () => {
     expect(missing(null)).toBe(true);
     expect(missing(undefined)).toBe(true);
     expect(missing('')).toBe(true);
+    expect(missing([])).toBe(true);
+    expect(missing(selectFrom([]))).toBe(true);
+    expect(missing(toArray(null))).toBe(true);
+    expect(missing(false)).toBe(false);
+    expect(missing(true)).toBe(false);
     expect(missing(0)).toBe(false);
+    expect(missing({})).toBe(false);
   });
 });

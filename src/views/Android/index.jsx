@@ -9,8 +9,7 @@ import NimbledroidSection from '../../containers/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
 import CONFIG from '../../utils/nimbledroid/config';
-import { selectFrom } from '../../vendor/vectors';
-import { TP6M_PAGES } from '../../quantum/config';
+import { TP6mAggregate } from '../../components/TP6mAggregate';
 
 class Android extends Component {
   render() {
@@ -79,38 +78,9 @@ class Android extends Component {
           </Grid>
         </div>
         <Section
-          title="Page Load tests (TP6m)"
-          more="/android/tp6m?test=loadtime">
-          <Grid container spacing={24}>
-            {selectFrom(TP6M_PAGES)
-              .where({
-                title: [
-                  'Tp6 mobile: Google',
-                  'Tp6 mobile: YouTube',
-                  'Tp6 mobile: Facebook',
-                  'Tp6 mobile: Wikipedia',
-                ],
-              })
-              .groupBy('title')
-              .map((series, title) => (
-                <Grid item xs={6} key={`page_${title}_loadtime`}>
-                  <PerfherderGraphContainer
-                    title={title}
-                    series={selectFrom(series)
-                      .sortBy(['browser'])
-                      .reverse()
-                      .map(s => ({
-                        label: s.label,
-                        seriesConfig: {
-                          and: [s.seriesConfig, { eq: { test: 'loadtime' } }],
-                        },
-                      }))
-                      .toArray()}
-                  />
-                </Grid>
-              ))
-              .limit(4)}
-          </Grid>
+          title="Raptor (TP6m)"
+          more="/android/tp6m?test=cold-loadtime&platform=android-p2-aarch64">
+          <TP6mAggregate />
         </Section>
         <Section title="Telemetry">
           <Grid container spacing={24}>

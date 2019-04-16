@@ -67,38 +67,48 @@ exports[`renders correctly 1`] = `
             className="Section-content-101"
           >
             <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
+              className="ChartJsWrapper-chartContainer-106"
             >
+              <h2
+                className="ChartJsWrapper-title-107"
+              >
+                GeckoView Fenix bugs
+              </h2>
               <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
                 style={
                   Object {
-                    "height": 40,
-                    "width": 40,
+                    "height": 80,
+                    "lineHeight": "100%",
+                    "textAlign": "center",
+                    "width": "100%",
                   }
                 }
               >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
+                <div
+                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
                 >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
+                  <svg
+                    className="MuiCircularProgress-svg-114"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -141,11 +151,11 @@ exports[`renders correctly 1`] = `
         className="Section-title-103"
       >
         <span>
-          Page Load tests (TP6m)
+          Raptor (TP6m)
           <span>
              (
             <a
-              href="/android/tp6m?test=loadtime"
+              href="/android/tp6m?test=cold-loadtime&platform=android-p2-aarch64"
             >
               more
             </a>
@@ -158,199 +168,38 @@ exports[`renders correctly 1`] = `
       className="Section-content-101"
     >
       <div
-        className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
+        style={
+          Object {
+            "lineHeight": "100%",
+            "textAlign": "center",
+            "width": "100%",
+          }
+        }
       >
         <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+          className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+          role="progressbar"
+          style={
+            Object {
+              "height": 40,
+              "width": 40,
+            }
+          }
         >
-          <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Tp6 mobile: Facebook
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
-            >
-              <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
-                style={
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-              >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-        >
-          <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Tp6 mobile: Google
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
-            >
-              <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
-                style={
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-              >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-        >
-          <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Tp6 mobile: Wikipedia
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
-            >
-              <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
-                style={
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-              >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-        >
-          <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Tp6 mobile: YouTube
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
-            >
-              <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
-                style={
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-              >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+          <svg
+            className="MuiCircularProgress-svg-114"
+            viewBox="22 22 44 44"
+          >
+            <circle
+              className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+              cx={44}
+              cy={44}
+              fill="none"
+              r={20.2}
+              strokeWidth={3.6}
+              style={Object {}}
+            />
+          </svg>
         </div>
       </div>
     </div>
@@ -377,50 +226,53 @@ exports[`renders correctly 1`] = `
           className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
         >
           <div>
-            <h2
-              className="ErrorBoundary-title-121"
-            >
-              <span>
-                Total content page load time (no 95th)
-              </span>
-            </h2>
             <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
+              className="ChartJsWrapper-chartContainer-106"
             >
+              <h2
+                className="ChartJsWrapper-title-107"
+              >
+                Total content page load time (no 95th)
+              </h2>
               <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
                 style={
                   Object {
-                    "height": 40,
-                    "width": 40,
+                    "height": 80,
+                    "lineHeight": "100%",
+                    "textAlign": "center",
+                    "width": "100%",
                   }
                 }
               >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
+                <div
+                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
                 >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
+                  <svg
+                    className="MuiCircularProgress-svg-114"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div
-              className="ErrorBoundary-linkContainer-122"
+              className="ErrorBoundary-linkContainer-120"
             >
               <a
                 href="https://sql.telemetry.mozilla.org/queries/59395"
@@ -428,13 +280,13 @@ exports[`renders correctly 1`] = `
                 target="_blank"
               >
                 <span
-                  className="ErrorBoundary-middleVerticalAlignment-123"
+                  className="ErrorBoundary-middleVerticalAlignment-121"
                 >
                   Redash query
                 </span>
                 <svg
                   aria-hidden="true"
-                  className="MuiSvgIcon-root-124 ErrorBoundary-middleVerticalAlignment-123"
+                  className="MuiSvgIcon-root-122 ErrorBoundary-middleVerticalAlignment-121"
                   focusable="false"
                   role="presentation"
                   style={
@@ -460,50 +312,53 @@ exports[`renders correctly 1`] = `
           className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
         >
           <div>
-            <h2
-              className="ErrorBoundary-title-121"
-            >
-              <span>
-                Total content page load time
-              </span>
-            </h2>
             <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
+              className="ChartJsWrapper-chartContainer-106"
             >
+              <h2
+                className="ChartJsWrapper-title-107"
+              >
+                Total content page load time
+              </h2>
               <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
                 style={
                   Object {
-                    "height": 40,
-                    "width": 40,
+                    "height": 80,
+                    "lineHeight": "100%",
+                    "textAlign": "center",
+                    "width": "100%",
                   }
                 }
               >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
+                <div
+                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
                 >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
+                  <svg
+                    className="MuiCircularProgress-svg-114"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div
-              className="ErrorBoundary-linkContainer-122"
+              className="ErrorBoundary-linkContainer-120"
             >
               <a
                 href="https://sql.telemetry.mozilla.org/queries/59397"
@@ -511,13 +366,13 @@ exports[`renders correctly 1`] = `
                 target="_blank"
               >
                 <span
-                  className="ErrorBoundary-middleVerticalAlignment-123"
+                  className="ErrorBoundary-middleVerticalAlignment-121"
                 >
                   Redash query
                 </span>
                 <svg
                   aria-hidden="true"
-                  className="MuiSvgIcon-root-124 ErrorBoundary-middleVerticalAlignment-123"
+                  className="MuiSvgIcon-root-122 ErrorBoundary-middleVerticalAlignment-121"
                   focusable="false"
                   role="presentation"
                   style={
@@ -569,46 +424,51 @@ exports[`renders correctly 1`] = `
           className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
         >
           <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Speedometer
-              </span>
-            </h2>
             <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
+              className="ChartJsWrapper-chartContainer-106"
             >
+              <h2
+                className="ChartJsWrapper-title-107"
+              >
+                <span>
+                  Speedometer
+                </span>
+              </h2>
               <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
                 style={
                   Object {
-                    "height": 40,
-                    "width": 40,
+                    "height": 80,
+                    "lineHeight": "100%",
+                    "textAlign": "center",
+                    "width": "100%",
                   }
                 }
               >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
+                <div
+                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
                 >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
+                  <svg
+                    className="MuiCircularProgress-svg-114"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -617,46 +477,51 @@ exports[`renders correctly 1`] = `
           className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
         >
           <div>
-            <h2
-              className="ErrorBoundary-title-119"
-            >
-              <span>
-                Unity WebGl
-              </span>
-            </h2>
             <div
-              style={
-                Object {
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
+              className="ChartJsWrapper-chartContainer-106"
             >
+              <h2
+                className="ChartJsWrapper-title-107"
+              >
+                <span>
+                  Unity WebGl
+                </span>
+              </h2>
               <div
-                className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
-                role="progressbar"
                 style={
                   Object {
-                    "height": 40,
-                    "width": 40,
+                    "height": 80,
+                    "lineHeight": "100%",
+                    "textAlign": "center",
+                    "width": "100%",
                   }
                 }
               >
-                <svg
-                  className="MuiCircularProgress-svg-114"
-                  viewBox="22 22 44 44"
+                <div
+                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
                 >
-                  <circle
-                    className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
+                  <svg
+                    className="MuiCircularProgress-svg-114"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>

@@ -3,9 +3,10 @@
 import queryBugzilla from './queryBugzilla';
 import generateDatasetStyle from '../chartJs/generateDatasetStyle';
 import SETTINGS from '../../settings';
+import Date from '../../vendor/dates';
 
 const newDate = (datetime, startDate) => {
-  const onlyDate = datetime.substring(0, 10);
+  const onlyDate = datetime.slice(0, 10);
 
   return startDate && onlyDate < startDate ? startDate : onlyDate;
 };
@@ -50,8 +51,7 @@ const bugsByCreationDate = (bugs, startDate) => {
     }, []);
   // This guarantees that the line goes all the way to the end of the graph
   const today = new Date();
-  const todaysDate = `${today.getUTCFullYear()}-${today.getMonth() +
-    1}-${today.getDate()}`;
+  const todaysDate = today.format('yyyy-MM-dd');
 
   if (lastDataPoint && lastDataPoint.x !== todaysDate) {
     accumulatedCount.push({ x: new Date(todaysDate), y: count });

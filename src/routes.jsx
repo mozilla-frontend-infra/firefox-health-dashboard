@@ -5,9 +5,9 @@ import Home from './views/Home';
 import AndroidPage from './views/Android';
 import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './views/NimbledroidGraph';
-import Quantum from './quantum/index';
-import TP6 from './views/QuantumTP6';
-import TP6M from './views/QuantumTP6m';
+import Quantum from './quantum/Quantum';
+import TP6 from './quantum/TP6';
+import TP6M from './quantum/TP6m';
 import Subbenchmark from './quantum/subbenchmarks';
 
 const NoMatch = () => <div>404</div>;

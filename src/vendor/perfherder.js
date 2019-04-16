@@ -3,21 +3,8 @@ import { toQueryString } from './convert';
 import { first, missing, toArray } from './utils';
 import { selectFrom, toPairs } from './vectors';
 import fetchJson from '../utils/fetchJson';
-import { jx } from './jx/expressions';
+import jx from './jx/expressions';
 import { Log } from './logs';
-
-// WHAT ARE THE SIGNATURES OF THE loadtime?
-// GET ALL SIGNATURES FOR framework=10
-// JOIN SIGNATURES WITH OPTIONS HASH
-// GET ALL SIGNATURES FROM framework=X, AS PROMISES,
-//     ADD TO TABLE,
-//     HOW TO KNOW WHAT IS MISSING framework?
-// PULL DATA FOR WANTED SIGNATURES; ADD TO TABLE
-// HOW DO WE KNOW WHAT IS MISSING?
-//    (signature, timerange) PAIRS?
-//     week, 2week, month, 3months, 6months, year?
-// DAILY AGGREGATE
-// SET NORMALIZATION CONSTANTS
 
 const PERFHERDER = {
   signatures: [],
@@ -96,7 +83,7 @@ const getSignatures = async condition => {
   // find out what frameworks to extract
   const frameworks = findFramework(condition);
 
-  if (frameworks.length === 0)
+  if (missing(frameworks))
     Log.error('expecting to find a framework in the condtion: {{condition}}', {
       condition,
     });
@@ -108,12 +95,12 @@ const getSignatures = async condition => {
   return PERFHERDER.signatures.filter(jx(condition));
 };
 
-const dataCache = {};
+const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE TFO DATA
 const getDataBySignature = async metadatas => {
   // SCHEDULE ANY MISSING SIGNATURES
   selectFrom(metadatas)
     .filter(({ signature }) => missing(dataCache[signature]))
-    .chunk(20)
+    .chunk(40)
     .forEach(chunkOfMetas => {
       // GET ALL SIGNATURES IN THE CHUNK
       const getData = (async () => {
@@ -144,9 +131,8 @@ const getDataBySignature = async metadatas => {
 
 const getData = async condition => {
   const signatures = await getSignatures(condition);
-  const output = await getDataBySignature(signatures);
 
-  return output;
+  return getDataBySignature(signatures);
 };
 
 export { getSignatures, getData, TREEHERDER, REPO };
