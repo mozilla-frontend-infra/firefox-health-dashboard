@@ -120,7 +120,7 @@ const g5Reference = window({raw}, {
     }
 
     if (missing(raw) || missing(first(raw).value)) return null;
-    return round(first(raw).value * 0.80, {places: 2}); // "onload event is >20% faster than Fennec 64"
+    return round(first(raw).value * 0.80, {places: 3}); // "onload event is >20% faster than Fennec 64"
   },
 });
 

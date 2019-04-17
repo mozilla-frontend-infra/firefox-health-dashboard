@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { toQueryString } from '../vendor/convert';
 import { selectFrom } from '../vendor/vectors';
-import { last, missing, notLast } from '../vendor/utils';
+import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
 import {
   PLATFORMS,
@@ -138,17 +138,25 @@ async function pullAggregate({
       },
     }
   );
+  const mask = window(
+    { daily },
+    {
+      edges: ['test', 'platform', 'site'],
+      value: ({ daily }) =>
+        // if anything in the past week, then we will use the reference
+        !selectFrom(daily)
+          .reverse()
+          .limit(8) // 7+1 for the null entry
+          .exists()
+          .isEmpty(),
+    }
+  );
   const ref = window(
-    { result, g5Reference },
+    { mask, g5Reference },
     {
       edges: ['test', 'platform'],
-      value: ({ result, g5Reference }) => {
-        const lastMeasure = last(notLast(result));
-
-        if (missing(lastMeasure)) return null;
-
-        return geomean(g5Reference);
-      },
+      value: ({ mask, g5Reference }) =>
+        geomean(selectFrom(mask, g5Reference).map((m, r) => (m ? r : null))),
     }
   );
 
