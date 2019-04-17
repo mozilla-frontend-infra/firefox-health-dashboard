@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import { toQueryString } from '../vendor/convert';
 import { selectFrom } from '../vendor/vectors';
 import { last, missing, notLast } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
@@ -214,10 +215,11 @@ class TP6mAggregate_ extends Component {
               .along('platform')
               .enumerate()
               .map((row, i) => {
+                const platform = row.platform.getValue();
                 const chartData = {
                   datasets: [
                     {
-                      label: row.platform.getValue(),
+                      label: platform,
                       type: 'line',
                       data: row
                         .along('pushDate')
@@ -251,7 +253,23 @@ class TP6mAggregate_ extends Component {
                 return (
                   <Grid item xs={6} key={label}>
                     <ChartJSWrapper
-                      title={label}
+                      title={
+                        <span>
+                          {label}
+                          {' ('}
+                          <a
+                            href={`/android/tp6m?${toQueryString({
+                              test,
+                              platform,
+                            })}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ fontSize: '0.9em' }}>
+                            {'details'}
+                          </a>
+                          {')'}
+                        </span>
+                      }
                       type="line"
                       data={chartData}
                       height={200}

@@ -244,6 +244,11 @@ exports[`renders correctly 1`] = `
            (
           <a
             href="/quantum/tp6?bits=64&test=warm-loadtime"
+            style={
+              Object {
+                "fontSize": "0.8em",
+              }
+            }
           >
             more
           </a>

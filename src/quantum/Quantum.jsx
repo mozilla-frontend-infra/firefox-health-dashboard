@@ -564,7 +564,9 @@ export default class QuantumIndex extends React.Component {
                 {more && (
                   <span>
                     {' ('}
-                    <a href={more}>more</a>
+                    <a href={more} style={{ fontSize: '0.8em' }}>
+                      more
+                    </a>
                     {')'}
                   </span>
                 )}
