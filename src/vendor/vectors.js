@@ -411,6 +411,17 @@ class ArrayWrapper {
     );
   }
 
+  append(...values) {
+    // restrict to rows where `func()` is truthy
+    function* output(argslist) {
+      for (const args of argslist) yield args;
+
+      for (const arg of values) yield [arg];
+    }
+
+    return new ArrayWrapper(() => output(this.argslist));
+  }
+
   // ///////////////////////////////////////////////////////////////////////////
   // TERMINAL METHODS
   // ///////////////////////////////////////////////////////////////////////////
@@ -513,7 +524,7 @@ class ArrayWrapper {
   }
 
   /*
-  return true if value can be found in this list
+  return true if value is in this list
    */
   includes(value) {
     for (const [arg] of this.argslist) if (arg === value) return true;
@@ -694,10 +705,6 @@ extendWrapper({
     return internalFrom(listA)
       .map(rowA => lookup[getterA(rowA)].map(rowB => ({ ...rowA, ...rowB })))
       .flatten();
-  },
-
-  append: function append(list, value) {
-    return [...list, value];
   },
 
   reverse: function reverse(list) {

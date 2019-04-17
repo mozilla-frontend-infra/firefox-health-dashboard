@@ -157,8 +157,8 @@ async function pullAggregate({
   return new HyperCube({ result, ref });
 }
 
-const DESIRED_TESTS = ['warm-loadtime', 'warm-fnbpaint'];
-const DESIRED_PLATFORMS = ['android-g5'];
+const DESIRED_TESTS = ['cold-loadtime', 'warm-loadtime'];
+const DESIRED_PLATFORMS = ['android-g5', 'android-p2-aarch64'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -172,11 +172,21 @@ class TP6mAggregate_ extends Component {
       platform: DESIRED_PLATFORMS,
     });
     const condition = {
-      or: TP6_COMBOS.where({
-        browser: 'geckoview',
-        test: DESIRED_TESTS,
-        platform: DESIRED_PLATFORMS,
-      }).select('seriesConfig'),
+      or: TP6_COMBOS.filter(
+        jx({
+          and: [
+            { eq: { browser: 'geckoview' } },
+            {
+              or: [
+                { eq: { platform: 'android-g5', test: 'warm-loadtime' } },
+                {
+                  eq: { platform: 'android-p2-aarch64', test: 'cold-loadtime' },
+                },
+              ],
+            },
+          ],
+        })
+      ).select('seriesConfig'),
     };
     const data = await pullAggregate({
       condition,
@@ -250,11 +260,16 @@ class TP6mAggregate_ extends Component {
                   ],
                 };
 
+                // do not show charts with no data
+                if (!chartData.datasets.some(ds => ds.data.some(({ y }) => y)))
+                  return null;
+
                 return (
                   <Grid item xs={6} key={label}>
                     <ChartJSWrapper
                       title={
                         <span>
+                          Geomean of&nbsp;
                           {label}
                           {' ('}
                           <a
