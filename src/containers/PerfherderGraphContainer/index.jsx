@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
-import { missing, exists } from '../../vendor/utils';
+import { exists, missing } from '../../vendor/utils';
 import { toQueryString } from '../../vendor/convert';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
@@ -231,7 +231,11 @@ class PerfherderGraphContainer extends Component {
             <span>
               {title}
               {jointUrl && (
-                <a href={jointUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={jointUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="show Perfherder">
                   <LinkIcon className={classes.linkIcon} />
                 </a>
               )}

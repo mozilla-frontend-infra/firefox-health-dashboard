@@ -278,32 +278,17 @@ exports[`renders correctly 1`] = `
                 href="https://sql.telemetry.mozilla.org/queries/59395"
                 rel="noopener noreferrer"
                 target="_blank"
+                title="go to Redash query"
               >
                 <span
-                  className="ErrorBoundary-middleVerticalAlignment-121"
-                >
-                  Redash query
-                </span>
-                <svg
-                  aria-hidden="true"
-                  className="MuiSvgIcon-root-122 ErrorBoundary-middleVerticalAlignment-121"
-                  focusable="false"
-                  role="presentation"
                   style={
                     Object {
-                      "height": "1rem",
+                      "verticalAlign": "middle",
                     }
                   }
-                  viewBox="0 0 24 24"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
-                  />
-                </svg>
+                  Show Redash query
+                </span>
               </a>
             </div>
           </div>
@@ -364,32 +349,17 @@ exports[`renders correctly 1`] = `
                 href="https://sql.telemetry.mozilla.org/queries/59397"
                 rel="noopener noreferrer"
                 target="_blank"
+                title="go to Redash query"
               >
                 <span
-                  className="ErrorBoundary-middleVerticalAlignment-121"
-                >
-                  Redash query
-                </span>
-                <svg
-                  aria-hidden="true"
-                  className="MuiSvgIcon-root-122 ErrorBoundary-middleVerticalAlignment-121"
-                  focusable="false"
-                  role="presentation"
                   style={
                     Object {
-                      "height": "1rem",
+                      "verticalAlign": "middle",
                     }
                   }
-                  viewBox="0 0 24 24"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
-                  />
-                </svg>
+                  Show Redash query
+                </span>
               </a>
             </div>
           </div>
