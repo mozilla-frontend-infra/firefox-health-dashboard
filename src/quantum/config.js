@@ -308,7 +308,7 @@ const TP6_SITES_DATA = {
     ['Firefox', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox'}}],
     ['Firefox', 'warm', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Paypal', {eq: {suite: 'raptor-tp6-paypal-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: PayPal', {eq: {suite: 'raptor-tp6-paypal-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox'}}],
 
     ['Firefox', 'warm', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox'} }],
