@@ -151,18 +151,31 @@ export default class QuantumIndex extends React.Component {
         title: 'Page Load tests (TP6)',
         more: `/quantum/tp6?bits=${bits}&test=warm-loadtime`,
         rows: selectFrom(TP6_COMBOS)
-          .where({ bits, test: 'warm-loadtime' })
+          .where({
+            bits,
+            test: 'warm-loadtime',
+            site: [
+              'Tp6: Facebook',
+              'Tp6: Amazon',
+              'Tp6: YouTube',
+              'Tp6: Google',
+            ],
+          })
           .groupBy('site')
           .map((series, site) => (
             <PerfherderGraphContainer
               // eslint-disable-next-line react/no-array-index-key
               key={`page_${site}_${bits}`}
               title={site}
-              series={selectFrom(series).sortBy(['ordering'])}
+              series={selectFrom(series)
+                .sortBy(['ordering'])
+                .map(s => ({
+                  label: s.browser,
+                  seriesConfig: s.seriesConfig,
+                }))}
             />
           ))
-          .enumerate()
-          .limit(4),
+          .enumerate(),
       },
       {
         title: 'Performance Tests',
