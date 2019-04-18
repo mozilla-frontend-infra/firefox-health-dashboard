@@ -4,7 +4,7 @@ const CONFIG = {
     'com.chrome.beta': 'Chrome Beta',
     'org.mozilla.geckoview_example': 'GeckoView Example',
     'org.mozilla.reference.browser': 'Reference Browser',
-    'org.mozilla.fenix': 'Fenix',
+    'org.mozilla.fenix': 'Firefox Preview',
   },
   products: [
     'org.mozilla.klar',

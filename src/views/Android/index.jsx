@@ -27,7 +27,7 @@ class Android extends Component {
                   includeBugCount
                   queries={[
                     {
-                      text: 'All GV Fenix MVP bugs',
+                      text: 'All GV Firefox Preview MVP bugs',
                       parameters: {
                         resolution: '---',
                         status_whiteboard: '[geckoview:fenix:m',
@@ -65,7 +65,7 @@ class Android extends Component {
                     },
                   ]}
                   startDate="2019-02-01"
-                  title="GeckoView Fenix bugs"
+                  title="Firefox Preview Bugs"
                 />
               </Section>
             </Grid>
