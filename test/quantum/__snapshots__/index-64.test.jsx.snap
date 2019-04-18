@@ -270,59 +270,6 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: Facebook
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "height": 80,
-                  "lineHeight": "100%",
-                  "textAlign": "center",
-                  "width": "100%",
-                }
-              }
-            >
-              <div
-                className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
-                role="progressbar"
-                style={
-                  Object {
-                    "height": 40,
-                    "width": 40,
-                  }
-                }
-              >
-                <svg
-                  className="MuiCircularProgress-svg-111"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
-                    cx={44}
-                    cy={44}
-                    fill="none"
-                    r={20.2}
-                    strokeWidth={3.6}
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
-      >
-        <div>
-          <div
-            className="ChartJsWrapper-chartContainer-103"
-          >
-            <h2
-              className="ChartJsWrapper-title-104"
-            >
-              <span>
                 Tp6: Amazon
               </span>
             </h2>
@@ -376,7 +323,7 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: YouTube
+                Tp6: Apple
               </span>
             </h2>
             <div
@@ -429,7 +376,60 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: Google
+                Tp6: Bing
+              </span>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-106 MuiCircularProgress-colorPrimary-109 MuiCircularProgress-indeterminate-108"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-111"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-112 MuiCircularProgress-circleIndeterminate-114"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-103"
+          >
+            <h2
+              className="ChartJsWrapper-title-104"
+            >
+              <span>
+                Tp6: Docs
               </span>
             </h2>
             <div
