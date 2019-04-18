@@ -1,7 +1,11 @@
 /* eslint-disable */
 import { selectFrom } from '../vendor/vectors';
 import { Data } from '../vendor/Data';
-import { first } from '../vendor/utils';
+import { first, toArray } from '../vendor/utils';
+import { Log } from '../vendor/logs';
+import {getSignatures} from "../vendor/perfherder";
+
+const DEBUG = false;
 
 const CONFIG = {
   windows64Regression: [
@@ -290,44 +294,100 @@ const TP6_SITES_DATA = {
   header: ['browser', 'mode', 'site', 'siteFilter'],
 
   data: [
-    ['Firefox',           'warm', 'Tp6: Facebook',                    { eq: { suite: 'raptor-tp6-facebook-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Amazon',                      { eq: { suite: 'raptor-tp6-amazon-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: YouTube',                     { eq: { suite: 'raptor-tp6-youtube-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Google',                      { eq: { suite: 'raptor-tp6-google-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Imdb',                        { eq: { suite: 'raptor-tp6-imdb-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Imgur',                       { eq: { suite: 'raptor-tp6-imgur-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Wikia',                       { eq: { suite: 'raptor-tp6-wikia-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Bing',                        { eq: { suite: 'raptor-tp6-bing-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Yandex',                      { eq: { suite: 'raptor-tp6-yandex-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Apple',                       { eq: { suite: 'raptor-tp6-apple-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Microsoft',                   { eq: { suite: 'raptor-tp6-microsoft-firefox'}}],
-    ['Firefox',           'warm', 'Tp6: Reddit',                      { eq: { suite: 'raptor-tp6-reddit-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Wikia', {eq: {suite: 'raptor-tp6-wikia-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Paypal', {eq: {suite: 'raptor-tp6-paypal-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox'}}],
 
-    ['Firefox (aarch64)', 'warm', 'Tp6: Facebook',                    { eq: { suite: 'raptor-tp6-facebook-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Amazon',                      { eq: { suite: 'raptor-tp6-amazon-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: YouTube',                     { eq: { suite: 'raptor-tp6-youtube-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Google',                      { eq: { suite: 'raptor-tp6-google-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Imdb',                        { eq: { suite: 'raptor-tp6-imdb-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Imgur',                       { eq: { suite: 'raptor-tp6-imgur-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Wikia',                       { eq: { suite: 'raptor-tp6-wikia-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Bing',                        { eq: { suite: 'raptor-tp6-bing-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Yandex',                      { eq: { suite: 'raptor-tp6-yandex-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Apple',                       { eq: { suite: 'raptor-tp6-apple-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Microsoft',                   { eq: { suite: 'raptor-tp6-microsoft-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Reddit',                      { eq: { suite: 'raptor-tp6-reddit-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Docs', {eq:{suite:'raptor-tp6-docs-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: eBay 404-202', {eq:{suite:'raptor-tp6-ebay-mitm-404-recordings-202-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: eBay 404-404', {eq:{suite:'raptor-tp6-ebay-mitm-404-recordings-404-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Google Mail', {eq:{suite:'raptor-tp6-google-mail-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Outlook', {eq:{suite:'raptor-tp6-outlook-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Sheets', {eq:{suite:'raptor-tp6-sheets-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Twiter', {eq:{suite:'raptor-tp6-twitter-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Wikipedia 404-202', {eq:{suite:'raptor-tp6-wikipedia-mitm-404-recordings-202-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Wikipedia 404-404', {eq:{suite:'raptor-tp6-wikipedia-mitm-404-recordings-404-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox'} }],
 
-    ['Chromium',          'warm', 'Tp6: Facebook',                    { eq: { suite: ['raptor-tp6-facebook-chrome',  'raptor-tp6-facebook-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Amazon',                      { eq: { suite: ['raptor-tp6-amazon-chrome',    'raptor-tp6-amazon-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Google',                      { eq: { suite: ['raptor-tp6-google-chrome',    'raptor-tp6-google-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: YouTube',                     { eq: { suite: ['raptor-tp6-youtube-chrome',   'raptor-tp6-youtube-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Imdb',                        { eq: { suite: ['raptor-tp6-imdb-chrome',      'raptor-tp6-imdb-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Imgur',                       { eq: { suite: ['raptor-tp6-imgur-chrome',     'raptor-tp6-imgur-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Wikia',                       { eq: { suite: ['raptor-tp6-wikia-chrome',     'raptor-tp6-wikia-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Bing',                        { eq: { suite: ['raptor-tp6-bing-chrome',      'raptor-tp6-bing-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Yandex',                      { eq: { suite: ['raptor-tp6-yandex-chrome',    'raptor-tp6-yandex-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Apple',                       { eq: { suite: ['raptor-tp6-apple-chrome',     'raptor-tp6-apple-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Microsoft',                   { eq: { suite: ['raptor-tp6-microsoft-chrome', 'raptor-tp6-microsoft-chromium']}}],
-    ['Chromium',          'warm', 'Tp6: Reddit',                      { eq: { suite: ['raptor-tp6-reddit-chrome',    'raptor-tp6-reddit-chromium']}}],
+
+    ['Firefox (aarch64)', 'warm', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Wikia', {eq: {suite: 'raptor-tp6-wikia-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Instagram (binast)', {eq: {suite: 'raptor-tp6-binast-instagram-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Docs', {eq: {suite: 'raptor-tp6-docs-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: eBay 404-202', {eq: {suite: 'raptor-tp6-ebay-mitm-404-recordings-202-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: eBay 404-404', {eq: {suite: 'raptor-tp6-ebay-mitm-404-recordings-404-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Google Mail', {eq: {suite: 'raptor-tp6-google-mail-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: LinkedIn', {eq: {suite: 'raptor-tp6-linkedin-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Outlook', {eq: {suite: 'raptor-tp6-outlook-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Sheets', {eq: {suite: 'raptor-tp6-sheets-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Slides', {eq: {suite: 'raptor-tp6-slides-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Tumblr', {eq: {suite: 'raptor-tp6-tumblr-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Twiter', {eq: {suite: 'raptor-tp6-twitter-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Wikipedia', {eq: {suite: 'raptor-tp6-wikipedia-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Wikipedia 404-202', {eq: {suite: 'raptor-tp6-wikipedia-mitm-404-recordings-202-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Wikipedia 404-404', {eq: {suite: 'raptor-tp6-wikipedia-mitm-404-recordings-404-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Yahoo Mail', {eq: {suite: 'raptor-tp6-yahoo-mail-firefox'}}],
+    ['Firefox (aarch64)', 'warm', 'Tp6: Yahoo News', {eq: {suite: 'raptor-tp6-yahoo-news-firefox'}}],
+
+    ['Chromium', 'warm', 'Tp6: Facebook', {eq: {suite: ['raptor-tp6-facebook-chrome', 'raptor-tp6-facebook-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Amazon', {eq: {suite: ['raptor-tp6-amazon-chrome', 'raptor-tp6-amazon-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Google', {eq: {suite: ['raptor-tp6-google-chrome', 'raptor-tp6-google-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: YouTube', {eq: {suite: ['raptor-tp6-youtube-chrome', 'raptor-tp6-youtube-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Imdb', {eq: {suite: ['raptor-tp6-imdb-chrome', 'raptor-tp6-imdb-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Imgur', {eq: {suite: ['raptor-tp6-imgur-chrome', 'raptor-tp6-imgur-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Wikia', {eq: {suite: ['raptor-tp6-wikia-chrome', 'raptor-tp6-wikia-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Bing', {eq: {suite: ['raptor-tp6-bing-chrome', 'raptor-tp6-bing-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Yandex', {eq: {suite: ['raptor-tp6-yandex-chrome', 'raptor-tp6-yandex-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Apple', {eq: {suite: ['raptor-tp6-apple-chrome', 'raptor-tp6-apple-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Microsoft', {eq: {suite: ['raptor-tp6-microsoft-chrome', 'raptor-tp6-microsoft-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Reddit', {eq: {suite: ['raptor-tp6-reddit-chrome', 'raptor-tp6-reddit-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Docs', {eq: {suite: ['raptor-tp6-docs-chrome', 'raptor-tp6-docs-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: eBay', {eq: {suite: ['raptor-tp6-ebay-chrome', 'raptor-tp6-ebay-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: eBay 404-202', {eq: {suite: ['raptor-tp6-ebay-mitm-404-recordings-202-chrome', 'raptor-tp6-ebay-mitm-404-recordings-202-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: eBay 404-404', {eq: {suite: ['raptor-tp6-ebay-mitm-404-recordings-404-chrome', 'raptor-tp6-ebay-mitm-404-recordings-404-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Google Mail', {eq: {suite: ['raptor-tp6-google-mail-chrome', 'raptor-tp6-google-mail-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Instagram', {eq: {suite: ['raptor-tp6-instagram-chrome', 'raptor-tp6-instagram-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: PayPal', {eq: {suite: ['raptor-tp6-paypal-chrome']}}],
+    ['Chromium', 'warm', 'Tp6: Pinterest', {eq: {suite: ['raptor-tp6-pinterest-chrome', 'raptor-tp6-pinterest-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Sheets', {eq: {suite: ['raptor-tp6-sheets-chrome', 'raptor-tp6-sheets-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Slides', {eq: {suite: ['raptor-tp6-slides-chrome', 'raptor-tp6-slides-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Tumblr', {eq: {suite: ['raptor-tp6-tumblr-chrome', 'raptor-tp6-tumblr-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Twitter', {eq: {suite: ['raptor-tp6-twitter-chrome', 'raptor-tp6-twitter-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Wikipedia', {eq: {suite: ['raptor-tp6-wikipedia-chrome', 'raptor-tp6-wikipedia-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Wikipedia 404-202', {eq: {suite: ['raptor-tp6-wikipedia-mitm-404-recordings-202-chrome', 'raptor-tp6-wikipedia-mitm-404-recordings-202-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Wikipedia 404-404', {eq: {suite: ['raptor-tp6-wikipedia-mitm-404-recordings-404-chrome', 'raptor-tp6-wikipedia-mitm-404-recordings-404-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Yahoo Mail', {eq: {suite: ['raptor-tp6-yahoo-mail-chrome', 'raptor-tp6-yahoo-mail-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Yahoo News', {eq: {suite: ['raptor-tp6-yahoo-news-chrome', 'raptor-tp6-yahoo-news-chromium']}}],
+
 
     ['geckoview',         'cold', 'Tp6 mobile: Amazon',               { eq: { suite: 'raptor-tp6m-cold-amazon-geckoview'}}],
     ['geckoview',         'cold', 'Tp6 mobile: Facebook',             { eq: { suite: 'raptor-tp6m-cold-facebook-geckoview'}}],
@@ -358,6 +418,7 @@ const TP6_SITES_DATA = {
     ['geckoview',         'warm', 'Tp6 mobile: Wikipedia',            { eq: { suite: 'raptor-tp6m-wikipedia-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: YouTube',              { eq: { suite: 'raptor-tp6m-youtube-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: YouTube Watch',        { eq: { suite: 'raptor-tp6m-youtube-watch-geckoview'}}],
+
   ],
 };
 
@@ -399,6 +460,7 @@ const TP6_TESTS = selectFrom(TP6_SITES_DATA.data)
 // ALL PAGE COMBINATIONS
 const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
   .map(row => Data.zip(TP6_SITES_DATA.header, row))
+  .sortBy("site")
   .leftJoin('browser', PLATFORMS, 'browser')
   .leftJoin('mode', TP6_TESTS_DATA, 'mode')
   .map(row => {
@@ -409,5 +471,72 @@ const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
     return row;
   })
   .materialize();
+
+/*
+run this to find the missing sites
+ */
+if (DEBUG){
+
+  const dummy = (async () => {
+    // FIND MISSING TP6 SITES
+    const raptor = await getSignatures({
+      and: [
+        {prefix: {suite: "raptor-tp6-"}},
+        {eq: {framework: 10}}
+      ]
+    });
+    let foundSites = selectFrom(raptor)
+      .select("suite")
+      .union()
+      .sortBy()
+      .toArray();
+
+
+    [
+      ['Firefox', ['-firefox']],
+      ['Firefox (aarch64)', ['-firefox']],
+      ['Chromium', ["-chrome", "-chromium"]]
+    ].forEach(([browser, suffix]) => {
+      foundSites.forEach(suite => {
+        const found = TP6_SITES_DATA.data.some(([b, mode, name, filter]) => {
+          return !suffix.some(s => suite.endsWith(s)) || toArray(filter.eq.suite).includes(suite)
+        });
+        if (!found) {
+          Log.note("['{{browser}}', 'warm', 'Tp6: ', {eq:{suite:'{{suite}}'} }],", {browser, suite})
+        }
+      })
+    });
+
+    // FIND MISSING MOBILE SITES
+    const mobile = await getSignatures({
+      and: [
+        {prefix: {suite: "raptor-tp6m-"}},
+        {eq: {framework: 10}}
+      ]
+    });
+    foundSites = selectFrom(raptor)
+      .select("suite")
+      .union()
+      .sortBy()
+      .toArray();
+
+
+    [
+      ['gecoview', ['-gecoview']],
+    ].forEach(([browser, suffix]) => {
+      foundSites.forEach(suite => {
+        const found = TP6_SITES_DATA.data.some(([b, mode, name, filter]) => {
+          return !suffix.some(s => suite.endsWith(s)) || toArray(filter.eq.suite).includes(suite)
+        });
+        if (!found) {
+          Log.note("['{{browser}}', 'warm', 'Tp6: ', {eq:{suite:'{{suite}}'} }],", {browser, suite})
+        }
+      })
+    });
+
+
+  })();
+}
+
 
 export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS };

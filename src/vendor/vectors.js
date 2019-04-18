@@ -400,6 +400,9 @@ class ArrayWrapper {
     );
   }
 
+  /*
+  return just the unique values
+   */
   union() {
     const result = new Set([...this]);
 
