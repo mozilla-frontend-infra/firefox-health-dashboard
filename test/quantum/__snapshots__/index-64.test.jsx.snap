@@ -323,7 +323,7 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: Apple
+                Tp6: Facebook
               </span>
             </h2>
             <div
@@ -376,7 +376,7 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: Bing
+                Tp6: Google
               </span>
             </h2>
             <div
@@ -429,7 +429,7 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-104"
             >
               <span>
-                Tp6: Docs
+                Tp6: YouTube
               </span>
             </h2>
             <div
