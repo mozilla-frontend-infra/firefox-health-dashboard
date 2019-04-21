@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Lock } from '@material-ui/icons';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import telemetryDataToDatasets from '../../utils/chartJs/redashFormatter';
 import fetchJson from '../../utils/fetchJson';
@@ -17,9 +16,6 @@ const styles = {
   },
   linkContainer: {
     fontSize: '0.8rem',
-  },
-  middleVerticalAlignment: {
-    verticalAlign: 'middle',
   },
 };
 
@@ -86,24 +82,25 @@ class RedashContainer extends Component {
 
     return (
       <div>
-        <h2 className={classes.title}>
-          <span>{title}</span>
-        </h2>
         <ChartJsWrapper
+          title={title}
           type="line"
           data={datasets}
           isLoading={isLoading}
           options={options}
         />
         <div className={classes.linkContainer}>
-          <a href={redashQueryUrl} target="_blank" rel="noopener noreferrer">
-            <span className={classes.middleVerticalAlignment}>
-              Redash query
+          <a
+            href={redashQueryUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="go to Redash query">
+            <span
+              style={{
+                verticalAlign: 'middle',
+              }}>
+              Show Redash query
             </span>
-            <Lock
-              className={classes.middleVerticalAlignment}
-              style={{ height: '1rem' }}
-            />
           </a>
         </div>
       </div>

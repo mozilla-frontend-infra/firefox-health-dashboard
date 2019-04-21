@@ -54,7 +54,7 @@ export default class Widget extends React.Component {
     const { reading } = this.props;
     let $targetStatus = null;
 
-    if (this.props.targetStatus && this.props.targetStatus !== 'n/a') {
+    if (this.props.targetStatus && this.props.targetStatus !== 'null,') {
       const { targetStatus } = this.props;
 
       $targetStatus = (

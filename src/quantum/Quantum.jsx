@@ -12,7 +12,7 @@ import {
   quantum64QueryParams,
   statusLabels,
 } from './constants';
-import { CONFIG, TP6_PAGES } from './config';
+import { CONFIG, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
 export default class QuantumIndex extends React.Component {
@@ -149,27 +149,33 @@ export default class QuantumIndex extends React.Component {
       },
       {
         title: 'Page Load tests (TP6)',
-        more: `/quantum/tp6?bits=${bits}&test=loadtime`,
-        rows: selectFrom(TP6_PAGES)
-          .where({ bits })
-          .groupBy('title')
-          .map((series, title) => (
+        more: `/quantum/tp6?bits=${bits}&test=warm-loadtime`,
+        rows: selectFrom(TP6_COMBOS)
+          .where({
+            bits,
+            test: 'warm-loadtime',
+            site: [
+              'Tp6: Facebook',
+              'Tp6: Amazon',
+              'Tp6: YouTube',
+              'Tp6: Google',
+            ],
+          })
+          .groupBy('site')
+          .map((series, site) => (
             <PerfherderGraphContainer
               // eslint-disable-next-line react/no-array-index-key
-              key={`page_${title}_${bits}`}
-              title={title}
+              key={`page_${site}_${bits}`}
+              title={site}
               series={selectFrom(series)
                 .sortBy(['ordering'])
-                .map(({ seriesConfig, ...row }) => ({
-                  ...row,
-                  seriesConfig: {
-                    and: [seriesConfig, { eq: { test: 'loadtime' } }],
-                  },
+                .map(s => ({
+                  label: s.browser,
+                  seriesConfig: s.seriesConfig,
                 }))}
             />
           ))
-          .enumerate()
-          .limit(4),
+          .enumerate(),
       },
       {
         title: 'Performance Tests',
@@ -571,7 +577,9 @@ export default class QuantumIndex extends React.Component {
                 {more && (
                   <span>
                     {' ('}
-                    <a href={more}>more</a>
+                    <a href={more} style={{ fontSize: '0.8em' }}>
+                      more
+                    </a>
                     {')'}
                   </span>
                 )}

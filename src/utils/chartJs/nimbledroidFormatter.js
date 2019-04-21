@@ -2,12 +2,9 @@ import generateDatasetStyle from './generateDatasetStyle';
 import SETTINGS from '../../settings';
 import CONFIG from '../nimbledroid/config';
 import { selectFrom, toPairs } from '../../vendor/vectors';
+import Date from '../../vendor/dates';
 
-// Show past 13weeks of minbledroid
-const SINCE = new Date(
-  (Math.floor(new Date().getTime() / (24 * 60 * 60 * 1000)) - 13 * 7) *
-    (24 * 60 * 60 * 1000)
-);
+const SINCE = Date.newInstance('today-13week').milli();
 const nimbledroidFormatter = ({ data }) => ({
   datasets: toPairs(data)
     .enumerate()

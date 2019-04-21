@@ -11,15 +11,18 @@ const styles = {
   // This div helps with canvas size changes
   // https://www.chartjs.org/docs/latest/general/responsive.html#important-note
   chartContainer: {
-    width: '600px',
+    width: '100%',
     // Do not let it squeeze too much and deform
     minWidth: '400px',
     background: 'white',
   },
   title: {
-    color: 'white',
-    backgroundColor: 'black',
-    padding: '.3rem .3rem .3rem .3rem',
+    width: '100%',
+    color: '#56565a',
+    fontSize: '1rem',
+    backgroundColor: '#d1d2d3',
+    padding: '.2rem .3rem .3rem .3rem',
+    margin: '0 1rem 0 0',
   },
   errorPanel: {
     margin: '26px auto 40px',
@@ -29,6 +32,7 @@ const styles = {
 const ChartJsWrapper = ({
   classes,
   data,
+  isLoading,
   options,
   title,
   type,
@@ -36,18 +40,30 @@ const ChartJsWrapper = ({
   spinnerSize,
 }) =>
   (() => {
-    if (!data) {
+    if (isLoading) {
       return (
-        <div
-          style={{
-            lineHeight: spinnerSize,
-            textAlign: 'center',
-            width: spinnerSize,
-          }}>
-          <CircularProgress />
+        <div className={classes.chartContainer}>
+          {title && <h2 className={classes.title}>{title}</h2>}
+          <div
+            style={{
+              height: chartHeight,
+              lineHeight: spinnerSize,
+              textAlign: 'center',
+              width: spinnerSize,
+            }}>
+            <CircularProgress />
+          </div>
         </div>
       );
     }
+
+    if (!data)
+      return (
+        <div className={classes.chartContainer}>
+          {title && <h2 className={classes.title}>{title}</h2>}
+          <div style={{ height: chartHeight }} />
+        </div>
+      );
 
     const allOldData = data.datasets.every(dataset => {
       const latestDataDate = new Date(
@@ -86,7 +102,7 @@ const ChartJsWrapper = ({
 
     return (
       <div className={classes.chartContainer}>
-        {title && <h2>{title}</h2>}
+        {title && <h2 className={classes.title}>{title}</h2>}
         <Chart
           type={type}
           data={data}
@@ -120,15 +136,15 @@ ChartJsWrapper.propTypes = {
             x: PropTypes.oneOfType([
               PropTypes.string,
               PropTypes.instanceOf(Date),
-            ]).isRequired,
-            y: PropTypes.number.isRequired,
+            ]),
+            y: PropTypes.number,
           })
         ),
         label: PropTypes.string.isRequired,
       })
     ).isRequired,
   }),
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   type: PropTypes.string,
   isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,

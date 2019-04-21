@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LinkIcon from '@material-ui/icons/Link';
@@ -7,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../components/ChartJsWrapper';
 import CustomTooltip from '../../utils/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
-import { missing } from '../../vendor/utils';
+import { exists, missing } from '../../vendor/utils';
 import { toQueryString } from '../../vendor/convert';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
@@ -28,7 +26,8 @@ const generateInitialOptions = series => {
   // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
   const higherIsBetter = isTest
     ? false
-    : !series[0].sources[0].meta.lower_is_better;
+    : /* eslint-disable-next-line camelcase */
+      !series[0].sources[0].meta.lower_is_better;
 
   return {
     reverse: higherIsBetter,
@@ -88,7 +87,9 @@ const perfherderFormatter = series => {
       .map(({ data, ...row }, index) => ({
         ...row,
         ...generateDatasetStyle(SETTINGS.colors[index]),
+        /* eslint-disable-next-line camelcase */
         data: data.map(({ push_timestamp, value }) => ({
+          /* eslint-disable-next-line camelcase */
           x: new Date(push_timestamp * 1000),
           y: value,
         })),
@@ -115,6 +116,7 @@ const getPerfherderData = async series => {
         sources: sources.map(({ data, ...row }) => ({
           ...row,
           data: data.filter(
+            /* eslint-disable-next-line camelcase */
             ({ push_timestamp }) => push_timestamp > DEFAULT_TIMERANGE
           ),
         })),
@@ -122,11 +124,7 @@ const getPerfherderData = async series => {
     })
   );
 
-  if (
-    selectFrom(newData)
-      .select('sources')
-      .filter(s => s.length > 0).length === 0
-  )
+  if (missing(selectFrom(newData).exists('sources')))
     Log.error('can not get data for {{query|json}}', {
       query: series[0].seriesConfig,
     });
@@ -158,11 +156,34 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    const { series } = this.props;
+    const { series, reference } = this.props;
 
     try {
       this.setState({ isLoading: true });
-      this.setState(await getPerfherderData(series));
+      const config = await getPerfherderData(series);
+
+      if (exists(reference) && exists(reference.value)) {
+        const { label, value } = reference;
+        const x = selectFrom(config.data.datasets)
+          .select('data')
+          .flatten()
+          .select('x');
+
+        config.data.datasets.push({
+          label,
+          type: 'line',
+          backgroundColor: 'gray',
+          borderColor: 'gray',
+          fill: false,
+          pointRadius: '0',
+          pointHoverRadius: '0',
+          pointHoverBackgroundColor: 'gray',
+          lineTension: 0,
+          data: [{ x: x.min(), y: value }, { x: x.max(), y: value }],
+        });
+      }
+
+      this.setState(config);
 
       const self = this;
 
@@ -205,15 +226,21 @@ class PerfherderGraphContainer extends Component {
 
     return (
       <div key={title}>
-        <h2 className={classes.title}>
-          <span>{title}</span>
-          {jointUrl && (
-            <a href={jointUrl} target="_blank" rel="noopener noreferrer">
-              <LinkIcon className={classes.linkIcon} />
-            </a>
-          )}
-        </h2>
         <ChartJsWrapper
+          title={
+            <span>
+              {title}
+              {jointUrl && (
+                <a
+                  href={jointUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="show Perfherder">
+                  <LinkIcon className={classes.linkIcon} />
+                </a>
+              )}
+            </span>
+          }
           type="line"
           data={data}
           isLoading={isLoading}
@@ -243,7 +270,7 @@ PerfherderGraphContainer.propTypes = {
       }),
     })
   ),
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   timeRange: PropTypes.string,
 };
 

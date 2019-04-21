@@ -81,6 +81,45 @@ describe('math', () => {
     expect(mod(-7 / 6, 1)).toBeCloseTo(5 / 6);
   });
 
+  it('broken js: % (modulo)', () => {
+    // Javascript modulo arithmetic is broken: It can return
+    // negative numbers, which causes arithmetic problems
+    const m = 6; // OUR MODULO FOR TESTING
+    const someValues = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
+    const negZero = (v => -1 * v)(0);
+
+    // WE EXPECT mod(k, m) TO HAVE A CODOMAIN OF m DIFFERENT VALUES
+    // WRONG
+    expect([...new Set(someValues.map(v => v % m))].length).toBe(11);
+    // CORRECT
+    expect([...new Set(someValues.map(v => mod(v, m)))].length).toBe(6);
+
+    // WE EXPECT ZERO TO BE ZERO
+    expect(-6 % m).toBe(negZero); //  WRONG
+    expect(mod(-6, m)).toBe(0); // CORRECT
+
+    // WE EXPECT mod(a+b, m) == mod(a, m) + mod(b, m) (modulo m)
+    // EXPECT 3, NOT SOME OTHER VALUE
+    expect((2 + -5) % m).toBe(-3); // WRONG
+    expect(mod(2 + -5, m)).toBe(3); // CORRECT
+    // WE EXPECT THE SAME AS BEFORE
+    expect((2 % m) + (-5 % m)).toBe(-3); // WRONG
+    expect(mod(2, m) + mod(-5, m)).toBe(3); // CORRECT
+
+    // WE EXPECT FERMAT'S THEOREM TO WORK
+    // mod(a**(p-1), p) == 1, where p is prime
+    const prime = 2;
+
+    expect((-5) ** (prime - 1) % prime).toBe(-1); // WRONG
+    expect(mod((-5) ** (prime - 1), prime)).toBe(1); // CORRECT
+
+    // WE EXPECT mod(a, m) == mod(a-k*m, m)  for any k
+    const k = 20;
+
+    expect((4 - k * m) % m).toBe(-2); // WRONG
+    expect(mod(4 - k * m, m)).toBe(4); // CORRECT
+  });
+
   it('floor', () => {
     const result = selectFrom(data)
       .map(v => floor(v, 2))
@@ -189,5 +228,6 @@ describe('math', () => {
     expect(geomean([undefined])).toBe(null);
     expect(geomean([0])).toBe(null);
     expect(geomean([0, 10])).toBeCloseTo(10);
+    expect(geomean([5 * 5, 3 * 3])).toBeCloseTo(5 * 3);
   });
 });

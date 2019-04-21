@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import TP6 from '../../src/views/QuantumTP6';
+import TP6 from '../../src/quantum/TP6';
 
 it('renders correctly default', () => {
   const tree = renderer

@@ -1,12 +1,22 @@
 /* eslint-disable no-underscore-dangle */
 
-import { exists, first, isString, missing, toArray, isArray } from '../utils';
+import {
+  exists,
+  first,
+  isString,
+  missing,
+  toArray,
+  isArray,
+  isFunction,
+} from '../utils';
 import { Data, isData } from '../Data';
 import Date from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
-const jx = expr => {
+const defineFunction = expr => {
+  if (isFunction(expr)) return expr;
+
   if (isString(expr)) return row => Data.get(row, expr);
 
   if (isData(expr)) {
@@ -29,31 +39,60 @@ const jx = expr => {
   Log.error('does not look like an expression: {{expr|json}}', { expr });
 };
 
+/*
+example {and: [a, b, c, ...]}
+
+return true if all `terms` return true
+ */
 expressions.and = terms => {
-  const filters = terms.map(jx);
+  const filters = toArray(terms).map(defineFunction);
+
+  if (filters.length === 0) return () => true;
+
+  if (filters.length === 1) return row => filters[0](row);
 
   return row => filters.every(f => f(row));
 };
 
+/*
+example {or: [a, b, c, ...]}
+
+return true if any `terms` return true
+ */
 expressions.or = terms => {
-  const filters = terms.map(jx);
+  const filters = toArray(terms).map(defineFunction);
+
+  if (filters.length === 0) return () => false;
+
+  if (filters.length === 1) return row => filters[0](row);
 
   return row => filters.some(f => f(row));
 };
 
+/*
+example {eq: {name: value}}
+
+Return true if variable name equals literal value
+ */
 expressions.eq = term => {
   if (isData(term)) {
     const filters = Object.entries(term).map(([k, v]) => {
       if (missing(v)) return () => true;
+      const allowed = toArray(v);
+      const s = defineFunction(k);
 
-      return row => toArray(v).includes(Data.get(row, k));
+      return row => {
+        const value = s(row);
+
+        return allowed.includes(value);
+      };
     });
 
     return row => filters.every(f => f(row));
   }
 
   if (isArray(term)) {
-    const [a, b] = term.map(jx);
+    const [a, b] = term.map(defineFunction);
 
     return row => a(row) === b(row);
   }
@@ -61,6 +100,13 @@ expressions.eq = term => {
   Log.error('eq Expecting object, or array');
 };
 
+expressions.in = expressions.eq;
+
+/*
+example {prefix: {name: prefix}}
+
+Return true if `name` starts with literal `prefix`
+ */
 expressions.prefix = term => row =>
   Object.entries(term).every(([name, prefix]) => {
     const value = Data.get(row, name);
@@ -70,16 +116,24 @@ expressions.prefix = term => row =>
     return value.startsWith(prefix);
   });
 
+/*
+return true if `expression` is missing
+ */
 expressions.missing = expression => {
-  const func = jx(expression);
+  const func = defineFunction(expression);
 
   return row => missing(func(row));
 };
 
+/*
+example {gte: {name: reference}
+
+return true if `name` >= `reference`
+ */
 expressions.gte = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
-    jx(name),
-    jx(reference),
+    defineFunction(name),
+    defineFunction(reference),
   ]);
 
   return row =>
@@ -93,6 +147,9 @@ expressions.gte = obj => {
     });
 };
 
+/*
+convert a date-like value into unix timestamp
+ */
 expressions.date = value => {
   const date = Date.tryParse(value);
 
@@ -102,9 +159,9 @@ expressions.date = value => {
     return () => val;
   }
 
-  return row => Date.newInstance(Data.get(row, value)).unix();
+  const v = defineFunction(value);
+
+  return row => Date.newInstance(v(row)).unix();
 };
 
-expressions.in = expressions.eq;
-
-export { jx }; // eslint-disable-line import/prefer-default-export
+export default defineFunction;

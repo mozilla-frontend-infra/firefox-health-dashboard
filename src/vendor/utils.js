@@ -1,8 +1,22 @@
 /* global window */
 /* eslint-disable no-restricted-syntax */
 
+/*
+Container classes
+ */
 const { isArray } = Array;
 const zero = () => 0;
+const MANY_TYPES = [];
+
+/*
+return true if the container is empty
+ */
+function isEmpty(value) {
+  return (
+    (isArray(value) && value.length === 0) ||
+    (MANY_TYPES.some(t => value instanceof t) && value.isEmpty())
+  );
+}
 
 /*
 return new array of given length
@@ -20,8 +34,13 @@ function missing(value) {
     value === '' ||
     Number.isNaN(value) ||
     value === Number.POSITIVE_INFINITY ||
-    value === Number.NEGATIVE_INFINITY
+    value === Number.NEGATIVE_INFINITY ||
+    isEmpty(value)
   );
+}
+
+function isMany(value) {
+  return isArray(value) || MANY_TYPES.some(t => value instanceof t);
 }
 
 /*
@@ -189,4 +208,6 @@ export {
   array,
   zero,
   notLast,
+  MANY_TYPES,
+  isMany,
 };

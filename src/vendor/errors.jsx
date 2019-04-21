@@ -111,6 +111,16 @@ const withErrorBoundary = WrappedComponent => {
       }
     }
 
+    async componentDidUpdate(...args) {
+      if (!super.componentDidUpdate) return;
+
+      try {
+        await super.componentDidUpdate(...args);
+      } catch (error) {
+        this.componentDidCatch(error);
+      }
+    }
+
     render() {
       const { error } = this.state;
 

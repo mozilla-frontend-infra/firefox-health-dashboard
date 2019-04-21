@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs } from './vectors';
+import { toPairs, selectFrom } from './vectors';
 import { Log } from './logs';
 import {
   coalesce,
@@ -9,6 +9,7 @@ import {
   isInteger,
   missing,
   splitField,
+  isMany,
 } from './utils';
 
 /*
@@ -28,9 +29,37 @@ function isData(val) {
   return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
 }
 
+/*
+return true if a and b are structurally similar
+ */
+function isEqual(a, b, done = []) {
+  if (a === b) return true;
+
+  if (missing(a) && missing(b)) return true;
+
+  if (isData(a) && isData(b)) {
+    if (done.includes(a) || done.includes(b)) Log.error('recursive structure');
+    const moreDone = [a, b, ...done];
+
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k =>
+      isEqual(a[k], b[k], moreDone)
+    );
+  }
+
+  if (isMany(a) && isMany(b)) {
+    if (done.includes(a) || done.includes(b)) Log.error('recursive structure');
+
+    return selectFrom(a, b).every((aa, bb) => isEqual(aa, bb, [a, b, ...done]));
+  }
+
+  return false;
+}
+
+/*
+LIST OF [k, v] TUPLES EXPECTED
+OR LIST OF keys AND LIST OF values
+*/
 Data.zip = (keys, values) => {
-  // LIST OF [k, v] TUPLES EXPECTED
-  // OR LIST OF keys AND LIST OF values
   const output = {};
 
   if (values === undefined) {
@@ -57,6 +86,11 @@ Data.copy = (from, to) => {
   return output;
 };
 
+/*
+Coalesce leaf values
+Recursive version of {...argN, ... , ...arg2, ...arg1, ...dest}
+notice the reverse-ordering
+ */
 Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
@@ -95,9 +129,11 @@ Data.setDefault = (dest, ...args) => {
   return dest;
 };
 
-// ASSUME THE DOTS (.) IN fieldName ARE SEPARATORS
-// AND THE RESULTING LIST IS A PATH INTO THE STRUCTURE
-// (ESCAPE "." WITH "\\.", IF REQUIRED)
+/*
+ASSUME THE DOTS (.) IN path ARE SEPARATORS
+AND THE RESULTING LIST IS A PATH INTO THE STRUCTURE
+(ESCAPE "." WITH "\\.", IF REQUIRED)
+*/
 Data.get = (obj, path) => {
   if (missing(obj)) return obj;
 
@@ -127,6 +163,10 @@ Data.get = (obj, path) => {
   return output;
 };
 
+/*
+Set `obj[path]=value`
+where path is dot-delimited path into structure
+ */
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.')
     Log.error('must be given an object and field');
@@ -152,6 +192,9 @@ Data.set = (obj, path, value) => {
   return obj;
 };
 
+/*
+Append `value` to the multivalue at `obj[path]`
+ */
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.')
     Log.error('must be given an object and field');
@@ -185,4 +228,4 @@ Data.add = (obj, path, value) => {
   return obj;
 };
 
-export { Data, isData };
+export { Data, isData, isEqual };

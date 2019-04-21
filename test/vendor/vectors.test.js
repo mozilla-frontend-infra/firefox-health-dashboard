@@ -51,6 +51,7 @@ describe('vectors', () => {
       { x: { a: null, d: null } },
     ]);
   });
+
   it('select value', () => {
     expect(
       selectFrom(data)
@@ -132,10 +133,28 @@ describe('vectors', () => {
     expect(toPairs({}).length).toEqual(0);
     expect(toPairs({}).exists().length).toEqual(0);
   });
+
   it('reverse', () => {
     const a = selectFrom([1, 2, 3]);
 
     expect(a.reverse().toArray()).toEqual([3, 2, 1]);
     expect(a.toArray()).toEqual([1, 2, 3]);
+  });
+
+  it('select flatten', () => {
+    const a = selectFrom([
+      { a: [] },
+      { a: [1] },
+      { a: [2, 3] },
+      { a: null },
+      {},
+    ]);
+
+    expect(
+      a
+        .select('a')
+        .flatten()
+        .toArray()
+    ).toEqual([1, 2, 3]);
   });
 });
