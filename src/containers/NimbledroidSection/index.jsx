@@ -44,7 +44,7 @@ class NimbledroidSection extends Component {
         <NimbledroidGraphContainer
           configuration={configuration}
           scenarioData={nimbledroidData.scenarios['Cold Startup']}
-          scenarioName="Cold Startup on Nexus 5"
+          scenarioName="Cold Startup"
         />
       </div>
     ) : (

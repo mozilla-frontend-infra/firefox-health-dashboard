@@ -10,7 +10,7 @@ import { NULL } from './domains';
 import Matrix from './Matrix';
 import Edge from './Edge';
 
-const DEBUG = true;
+const DEBUG = false;
 const UNLIKELY_PROPERTY_NAME = '*';
 const subtractEdges = (a, b) => a.filter(v => b.every(w => w.name !== v.name));
 
