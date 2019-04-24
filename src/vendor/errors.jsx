@@ -7,7 +7,7 @@ import SETTINGS from './settings';
 
 if (process.env.NODE_ENV === 'production') {
   Raven.config(
-    'https://77916a47017347528d25824beb0a077e@sentry.io/1225660'
+    'https://c7561fc1f4df441c9aa8cd203a3aeeed@sentry.prod.mozaws.net/433'
   ).install();
 }
 
