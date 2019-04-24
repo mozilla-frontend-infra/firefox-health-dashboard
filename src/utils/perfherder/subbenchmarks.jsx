@@ -3,11 +3,12 @@ import percentile from 'aggregatejs/percentile';
 import { Log } from '../../vendor/logs';
 import { selectFrom, toPairs } from '../../vendor/vectors';
 import { toQueryString } from '../../vendor/convert';
+import fetchJson from '../fetchJson';
+import { REPO } from '../../vendor/perfherder';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
-const REPO = 'mozilla-central';
 const NINENTY_DAYS = 90 * 24 * 60 * 60;
-const signaturesUrl = repo =>
+const signaturesUrl = (repo = REPO) =>
   `${TREEHERDER}/api/project/${repo}/performance/signatures`;
 const subtests = async signatureHash => {
   const url = `${signaturesUrl()}/?parent_signature=${signatureHash}`;
@@ -130,7 +131,7 @@ const benchmarkData = async ({
   //     push_id: 306862,
   //     value: 54.89
   // }
-  const dataPoints = await (await fetch(dataUrl({ tests, framework }))).json();
+  const dataPoints = await fetchJson(dataUrl({ tests, framework }));
   const data = toPairs(dataPoints)
     .map((dp, subtestHash) => ({
       meta: {

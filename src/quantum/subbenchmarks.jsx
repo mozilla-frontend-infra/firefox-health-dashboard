@@ -5,6 +5,7 @@ import MetricsGraphics from 'react-metrics-graphics';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import getData from '../utils/perfherder/subbenchmarks';
+import { withErrorBoundary } from '../vendor/errors';
 
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
 const Subbenchmarks = ({ match }) => (
@@ -54,7 +55,7 @@ Graph.propTypes = {
   url: propTypes.string.isRequired,
 };
 
-class PerfherderContainer extends Component {
+class PerfherderContainerPre extends Component {
   state = {
     data: undefined,
   };
@@ -78,7 +79,7 @@ class PerfherderContainer extends Component {
     const { perfherderUrl, data, parentSignature } = await getData({
       suite,
       platform,
-      framework,
+      framework: Number.parseInt(framework, 10),
       option,
       percentileThreshold,
     });
@@ -150,11 +151,13 @@ class PerfherderContainer extends Component {
   }
 }
 
-PerfherderContainer.propTypes = {
+PerfherderContainerPre.propTypes = {
   framework: propTypes.string.isRequired,
   platform: propTypes.string.isRequired,
   suite: propTypes.string.isRequired,
   percentileThreshold: propTypes.number,
 };
+
+const PerfherderContainer = withErrorBoundary(PerfherderContainerPre);
 
 export default Subbenchmarks;
