@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
-import NimbledroidGraphContainer from '../NimbledroidGraphContainer';
-import NimbledroidProductVersions from '../NimbledroidProductVersions';
-import NimbledroidSummaryTable from '../NimbledroidSummaryTable';
-import { withErrorBoundary } from '../../vendor/errors';
+import fetchNimbledroidData from './fetchNimbledroidData';
+import NimbledroidGraphContainer from './NimbledroidGraphContainer';
+import NimbledroidProductVersions from './NimbledroidProductVersions';
+import NimbledroidSummaryTable from './NimbledroidSummaryTable';
+import { withErrorBoundary } from '../vendor/errors';
 
 class NimbledroidSection extends Component {
   state = {

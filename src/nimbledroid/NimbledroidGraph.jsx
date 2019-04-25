@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { curveLinear } from 'd3';
 import PropTypes from 'prop-types';
 import MetricsGraphics from 'react-metrics-graphics';
-import CONFIG from '../../utils/nimbledroid/config';
+import { CONFIG } from './config';
 
 class NimbledroidGraph extends Component {
   render() {

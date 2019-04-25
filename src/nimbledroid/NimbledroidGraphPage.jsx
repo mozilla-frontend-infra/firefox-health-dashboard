@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import DashboardPage from '../../components/DashboardPage';
-import Section from '../../components/Section';
-import NimbledroidProductVersions from '../../containers/NimbledroidProductVersions';
-import NimbledroidSiteDrilldown from '../../containers/NimbledroidSiteDrilldown';
-import CONFIG from '../../utils/nimbledroid/config';
+import DashboardPage from '../components/DashboardPage';
+import Section from '../components/Section';
+import NimbledroidProductVersions from './NimbledroidProductVersions';
+import NimbledroidSiteDrilldown from './NimbledroidSiteDrilldown';
+import { CONFIG } from './config';
 
-class NimbledroidGraph extends Component {
+class NimbledroidGraphPage extends Component {
   static propTypes = {
     site: propTypes.string,
     location: propTypes.shape({
@@ -37,4 +37,4 @@ class NimbledroidGraph extends Component {
   }
 }
 
-export default NimbledroidGraph;
+export default NimbledroidGraphPage;

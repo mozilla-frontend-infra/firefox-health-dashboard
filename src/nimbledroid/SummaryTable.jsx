@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
-import StatusWidget from '../StatusWidget';
-import CONFIG from '../../utils/nimbledroid/config';
-import { selectFrom } from '../../vendor/vectors';
+import StatusWidget from '../components/StatusWidget';
+import { CONFIG } from './config';
+import { selectFrom } from '../vendor/vectors';
 
 const SummaryTable = ({ content = [], header }) => {
   const compareName = CONFIG.packageIdLabels[CONFIG.baseProduct];

@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withErrorBoundary } from '../../vendor/errors';
-import ChartJsWrapper from '../../components/ChartJsWrapper';
-import nimbledroidFormatter from '../../utils/chartJs/nimbledroidFormatter';
-import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
+import { CONFIG } from './config';
+import { withErrorBoundary } from '../vendor/errors';
+import ChartJsWrapper from '../components/ChartJsWrapper';
+import fetchNimbledroidData from './fetchNimbledroidData';
+import generateDatasetStyle from '../utils/chartJs/generateDatasetStyle';
+import SETTINGS from '../settings';
+import { selectFrom, toPairs } from '../vendor/vectors';
+import Date from '../vendor/dates';
+
+const SINCE = Date.newInstance('today-13week').milli();
+const nimbledroidFormatter = ({ data }) => ({
+  datasets: toPairs(data)
+    .enumerate()
+    .map((details, packageId, index) => ({
+      data: selectFrom(details)
+        .filter(({ date }) => date > SINCE)
+        .select({ x: 'date', y: 'value' })
+        .toArray(),
+      label: CONFIG.packageIdLabels[packageId],
+      ...generateDatasetStyle(SETTINGS.colors[index]),
+    }))
+    .toArray(),
+});
 
 class NimbledroidGraphContainer extends Component {
   state = {

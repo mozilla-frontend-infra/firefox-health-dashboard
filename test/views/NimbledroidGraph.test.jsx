@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import NimbledroidGraph from '../../src/views/NimbledroidGraph';
+import NimbledroidGraphPage from '../../src/nimbledroid/NimbledroidGraphPage';
 
 it('renders correctly', () => {
   const props = {
@@ -10,7 +10,7 @@ it('renders correctly', () => {
     },
   };
   const tree = renderer
-    .create(<NimbledroidGraph location={props.location} />)
+    .create(<NimbledroidGraphPage location={props.location} />)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

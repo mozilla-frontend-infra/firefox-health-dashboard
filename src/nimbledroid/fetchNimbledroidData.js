@@ -1,4 +1,4 @@
-import BackendClient from '../BackendClient';
+import BackendClient from './BackendClient';
 
 const CLIENT = new BackendClient();
 const fetchNimbledroidData = products =>

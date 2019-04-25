@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import NimbledroidSiteDrilldown from '../../src/containers/NimbledroidSummaryTable';
+import NimbledroidSiteDrilldown from '../../src/nimbledroid/NimbledroidSummaryTable';
 
 const nimbledroidData = require('../mocks/nimbledroidData.json');
 

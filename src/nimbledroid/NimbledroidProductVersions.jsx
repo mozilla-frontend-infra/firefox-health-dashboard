@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import fetchNimbledroidData from '../../utils/nimbledroid/fetchNimbledroidData';
-import CONFIG from '../../utils/nimbledroid/config';
-import { withErrorBoundary } from '../../vendor/errors';
+import fetchNimbledroidData from './fetchNimbledroidData';
+import { CONFIG } from './config';
+import { withErrorBoundary } from '../vendor/errors';
 
 const styles = {
   root: {},

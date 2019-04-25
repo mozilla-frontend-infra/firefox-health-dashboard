@@ -5,10 +5,10 @@ import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import BugzillaGraph from '../../containers/BugzillaGraph';
-import NimbledroidSection from '../../containers/NimbledroidSection';
+import NimbledroidSection from '../../nimbledroid/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
-import CONFIG from '../../utils/nimbledroid/config';
+import { CONFIG } from '../../nimbledroid/config';
 import { TP6mAggregate } from '../../components/TP6mAggregate';
 
 class Android extends Component {

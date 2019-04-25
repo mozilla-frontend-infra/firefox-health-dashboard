@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './views/Home';
 import AndroidPage from './views/Android';
 import JsTeam from './views/JsTeam';
-import NimbledroidGraphPage from './views/NimbledroidGraph';
+import NimbledroidGraphPage from './nimbledroid/NimbledroidGraphPage';
 import Quantum from './quantum/Quantum';
 import TP6 from './quantum/TP6';
 import TP6M from './views/Android/TP6m';
