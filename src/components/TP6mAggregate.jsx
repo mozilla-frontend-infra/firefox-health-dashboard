@@ -5,21 +5,16 @@ import { toQueryString } from '../vendor/convert';
 import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
-import {
-  PLATFORMS,
-  TP6_COMBOS,
-  TP6_TESTS,
-  TP6M_SITES,
-} from '../quantum/config';
+import { PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES, } from '../quantum/config';
 import { getData } from '../vendor/perfherder';
-import generateOptions from '../utils/chartJs/generateOptions';
+import generateOptions from '../vendor/chartJs/generateOptions';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { HyperCube, window } from '../vendor/jx/cubes';
 import { g5Reference, TARGET_NAME } from '../config/mobileG5';
-import ChartJSWrapper from './ChartJsWrapper';
+import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
-import generateDatasetStyle from '../utils/chartJs/generateDatasetStyle';
+import generateDatasetStyle from '../vendor/chartJs/generateDatasetStyle';
 import SETTINGS from '../settings';
 
 /*

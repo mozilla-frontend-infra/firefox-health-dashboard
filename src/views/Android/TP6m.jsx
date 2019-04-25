@@ -16,11 +16,11 @@ import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import ChartJSWrapper from '../../components/ChartJsWrapper';
-import generateOptions from '../../utils/chartJs/generateOptions';
+import ChartJSWrapper from '../../vendor/chartJs/ChartJsWrapper';
+import generateOptions from '../../vendor/chartJs/generateOptions';
 import { g5Reference, TARGET_NAME } from '../../config/mobileG5';
 import { pullAggregate } from '../../components/TP6mAggregate';
-import generateDatasetStyle from '../../utils/chartJs/generateDatasetStyle';
+import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
 import SETTINGS from '../../settings';
 import Section from '../../components/Section';
 

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import generateOptions from '../../utils/chartJs/generateOptions';
-import { ErrorMessage } from '../../vendor/errors';
-import { selectFrom } from '../../vendor/vectors';
+import generateOptions from './generateOptions';
+import { ErrorMessage } from '../errors';
+import { selectFrom } from '../vectors';
 
 const styles = {
   // This div helps with canvas size changes

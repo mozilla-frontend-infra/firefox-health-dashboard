@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { missing } from '../../vendor/utils';
-import { round } from '../../vendor/math';
+import { missing } from '../utils';
+import { round } from '../math';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',

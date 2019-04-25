@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import queryBugzilla from './queryBugzilla';
-import generateDatasetStyle from '../chartJs/generateDatasetStyle';
+import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
 import SETTINGS from '../../settings';
 import Date from '../../vendor/dates';
 

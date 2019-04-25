@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ChartJsWrapper from '../../components/ChartJsWrapper';
+import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import fetchJson from '../../utils/fetchJson';
 import { withErrorBoundary } from '../../vendor/errors';
-import generateDatasetStyle from '../../utils/chartJs/generateDatasetStyle';
+import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
 import SETTINGS from '../../settings';
 import { Log } from '../../vendor/logs';
 
