@@ -1,3 +1,5 @@
+import SETTINGS from '../../settings';
+
 const generateOptions = (options = {}) => {
   const {
     title,
@@ -58,4 +60,27 @@ const generateOptions = (options = {}) => {
   return chartJsOptions;
 };
 
-export default generateOptions;
+const generateLineChartStyle = color => ({
+  type: 'line',
+  backgroundColor: color,
+  borderColor: color,
+  fill: false,
+  pointRadius: '0',
+  pointHoverBackgroundColor: 'white',
+  lineTension: 0.1,
+});
+const generateScatterChartStyle = color => ({
+  type: 'scatter',
+  backgroundColor: color,
+});
+const generateDatasetStyle = (index, color, type = 'line') => {
+  const colour = color || SETTINGS.colors[index];
+
+  if (type === 'scatter') {
+    return generateScatterChartStyle(colour);
+  }
+
+  return generateLineChartStyle(colour);
+};
+
+export { generateOptions, generateDatasetStyle };

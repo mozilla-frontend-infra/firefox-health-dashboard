@@ -4,8 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import fetchJson from '../../utils/fetchJson';
 import { withErrorBoundary } from '../../vendor/errors';
-import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
-import SETTINGS from '../../settings';
 import { Log } from '../../vendor/logs';
 
 /* eslint-disable camelcase */
@@ -39,12 +37,11 @@ const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
 
     return result;
   }, {});
-  const datasets = Object.keys(buckets).map((key, index) => {
+  const datasets = Object.keys(buckets).map(key => {
     const datum = buckets[key];
 
     return {
       label: key,
-      ...generateDatasetStyle(SETTINGS.colors[index]),
       data: dataToChartJSformat(datum.sort(sortByDate)),
     };
   });

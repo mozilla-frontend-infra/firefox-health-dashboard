@@ -18,8 +18,6 @@ import { HyperCube, window } from '../vendor/jx/cubes';
 import { g5Reference, TARGET_NAME } from '../config/mobileG5';
 import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
-import generateDatasetStyle from '../vendor/chartJs/generateDatasetStyle';
-import SETTINGS from '../settings';
 
 /*
 condition - json expression to pull perfherder data
@@ -231,13 +229,12 @@ class TP6mAggregate_ extends Component {
               .where({ test })
               .along('platform')
               .enumerate()
-              .map((row, i) => {
+              .map(row => {
                 const platform = row.platform.getValue();
                 const chartData = {
                   datasets: [
                     {
                       label: platform,
-                      type: 'line',
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, result }) => ({
@@ -245,17 +242,18 @@ class TP6mAggregate_ extends Component {
                           y: result.getValue(),
                         }))
                         .toArray(),
-                      ...generateDatasetStyle(SETTINGS.colors[i]),
                     },
                     {
                       label: TARGET_NAME,
-                      type: 'line',
-                      backgroundColor: 'gray',
-                      borderColor: 'gray',
-                      fill: false,
-                      pointRadius: '0',
-                      pointHoverBackgroundColor: 'gray',
-                      lineTension: 0,
+                      style: {
+                        type: 'line',
+                        backgroundColor: 'gray',
+                        borderColor: 'gray',
+                        fill: false,
+                        pointRadius: '0',
+                        pointHoverBackgroundColor: 'gray',
+                        lineTension: 0,
+                      },
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, ref }) => ({

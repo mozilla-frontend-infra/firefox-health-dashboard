@@ -11,8 +11,6 @@ import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
-import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
-import SETTINGS from '../../settings';
 
 const DEFAULT_TIMERANGE = Date.newInstance('today-6week').unix();
 // treeherder can only accept particular time ranges
@@ -84,9 +82,8 @@ const perfherderFormatter = series => {
   const data = {
     datasets: selectFrom(combinedSeries)
       .enumerate()
-      .map(({ data, ...row }, index) => ({
+      .map(({ data, ...row }) => ({
         ...row,
-        ...generateDatasetStyle(SETTINGS.colors[index]),
         /* eslint-disable-next-line camelcase */
         data: data.map(({ push_timestamp, value }) => ({
           /* eslint-disable-next-line camelcase */
@@ -171,15 +168,17 @@ class PerfherderGraphContainer extends Component {
 
         config.data.datasets.push({
           label,
-          type: 'line',
-          backgroundColor: 'gray',
-          borderColor: 'gray',
-          fill: false,
-          pointRadius: '0',
-          pointHoverRadius: '0',
-          pointHoverBackgroundColor: 'gray',
-          lineTension: 0,
           data: [{ x: x.min(), y: value }, { x: x.max(), y: value }],
+          style: {
+            type: 'line',
+            backgroundColor: 'gray',
+            borderColor: 'gray',
+            fill: false,
+            pointRadius: '0',
+            pointHoverRadius: '0',
+            pointHoverBackgroundColor: 'gray',
+            lineTension: 0,
+          },
         });
       }
 

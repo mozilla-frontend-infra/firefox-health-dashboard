@@ -4,22 +4,18 @@ import { CONFIG } from './config';
 import { withErrorBoundary } from '../vendor/errors';
 import ChartJsWrapper from '../vendor/chartJs/ChartJsWrapper';
 import fetchNimbledroidData from './fetchNimbledroidData';
-import generateDatasetStyle from '../vendor/chartJs/generateDatasetStyle';
-import SETTINGS from '../settings';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import Date from '../vendor/dates';
 
 const SINCE = Date.newInstance('today-13week').milli();
 const nimbledroidFormatter = ({ data }) => ({
   datasets: toPairs(data)
-    .enumerate()
-    .map((details, packageId, index) => ({
+    .map((details, packageId) => ({
       data: selectFrom(details)
         .filter(({ date }) => date > SINCE)
         .select({ x: 'date', y: 'value' })
         .toArray(),
       label: CONFIG.packageIdLabels[packageId],
-      ...generateDatasetStyle(SETTINGS.colors[index]),
     }))
     .toArray(),
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import generateOptions from './generateOptions';
+import { generateDatasetStyle, generateOptions } from './utils';
 import { ErrorMessage } from '../errors';
 import { selectFrom } from '../vectors';
 
@@ -80,6 +80,13 @@ const ChartJsWrapper = ({
       return daysDifference > 3;
     });
     const cOptions = generateOptions(options);
+    const cData = {
+      datasets: data.datasets.map((ds, i) => {
+        const { style, data, label } = ds;
+
+        return { ...generateDatasetStyle(i), ...style, data, label };
+      }),
+    };
 
     if (allOldData) {
       const error = new Error(
@@ -92,7 +99,7 @@ const ChartJsWrapper = ({
             {title && <h2 className={classes.title}>{title}</h2>}
             <Chart
               type={type}
-              data={data}
+              data={cData}
               height={chartHeight}
               options={cOptions}
             />
@@ -106,7 +113,7 @@ const ChartJsWrapper = ({
         {title && <h2 className={classes.title}>{title}</h2>}
         <Chart
           type={type}
-          data={data}
+          data={cData}
           height={chartHeight}
           options={cOptions}
         />
