@@ -17,7 +17,6 @@ import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import ChartJSWrapper from '../../vendor/chartJs/ChartJsWrapper';
-import generateOptions from '../../vendor/chartJs/generateOptions';
 import { g5Reference, TARGET_NAME } from '../../config/mobileG5';
 import { pullAggregate } from '../../components/TP6mAggregate';
 import generateDatasetStyle from '../../vendor/chartJs/generateDatasetStyle';
@@ -145,7 +144,6 @@ class TP6M extends React.Component {
                     type="line"
                     data={summaryData}
                     height={200}
-                    options={generateOptions()}
                   />
                 )}
               </Grid>

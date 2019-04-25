@@ -75,10 +75,6 @@ class RedashContainer extends Component {
     options: PropTypes.shape({
       title: PropTypes.string,
       scaleLabel: PropTypes.string,
-      tooltipFormat: PropTypes.bool,
-      tooltips: PropTypes.shape({
-        callbacks: PropTypes.object,
-      }),
       ticksCallback: PropTypes.func,
     }),
     classes: PropTypes.shape().isRequired,
@@ -91,15 +87,6 @@ class RedashContainer extends Component {
   static defaultProps = {
     options: {
       scaleLabel: 'Miliseconds',
-      tooltipFormat: true,
-      tooltips: {
-        callbacks: {
-          label: (tooltipItems, data) =>
-            `${data.datasets[tooltipItems.datasetIndex].label}: ${
-              tooltipItems.yLabel
-            } ms`,
-        },
-      },
       ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
     },
     dataKeyIdentifier: 'label',

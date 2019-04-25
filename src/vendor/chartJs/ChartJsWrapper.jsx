@@ -79,6 +79,7 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
+    const cOptions = generateOptions(options);
 
     if (allOldData) {
       const error = new Error(
@@ -88,12 +89,12 @@ const ChartJsWrapper = ({
       return (
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
-            {title && <h2>{title}</h2>}
+            {title && <h2 className={classes.title}>{title}</h2>}
             <Chart
               type={type}
               data={data}
               height={chartHeight}
-              options={generateOptions(options)}
+              options={cOptions}
             />
           </ErrorMessage>
         </div>
@@ -107,7 +108,7 @@ const ChartJsWrapper = ({
           type={type}
           data={data}
           height={chartHeight}
-          options={generateOptions(options)}
+          options={cOptions}
         />
       </div>
     );
@@ -120,10 +121,6 @@ ChartJsWrapper.propTypes = {
     reverse: PropTypes.bool,
     scaleLabel: PropTypes.string,
     title: PropTypes.string,
-    tooltipFormat: PropTypes.bool,
-    tooltips: PropTypes.shape({
-      callbacks: PropTypes.object,
-    }),
     ticksCallback: PropTypes.func,
   }),
   data: PropTypes.shape({

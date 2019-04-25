@@ -3,8 +3,6 @@ const generateOptions = (options = {}) => {
     title,
     scaleLabel,
     reverse = false,
-    tooltipFormat,
-    tooltips,
     ticksCallback,
     onClick,
   } = options;
@@ -44,14 +42,6 @@ const generateOptions = (options = {}) => {
       display: true,
       text: title,
     };
-  }
-
-  if (tooltipFormat) {
-    chartJsOptions.scales.xAxes[0].time.tooltipFormat = 'll';
-  }
-
-  if (tooltips) {
-    chartJsOptions.tooltips = tooltips;
   }
 
   if (scaleLabel) {

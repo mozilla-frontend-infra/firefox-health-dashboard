@@ -5,9 +5,13 @@ import { toQueryString } from '../vendor/convert';
 import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
-import { PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES, } from '../quantum/config';
+import {
+  PLATFORMS,
+  TP6_COMBOS,
+  TP6_TESTS,
+  TP6M_SITES,
+} from '../quantum/config';
 import { getData } from '../vendor/perfherder';
-import generateOptions from '../vendor/chartJs/generateOptions';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { HyperCube, window } from '../vendor/jx/cubes';
@@ -291,7 +295,6 @@ class TP6mAggregate_ extends Component {
                       type="line"
                       data={chartData}
                       height={200}
-                      options={generateOptions()}
                     />
                   </Grid>
                 );
