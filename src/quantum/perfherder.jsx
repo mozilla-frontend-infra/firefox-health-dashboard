@@ -47,7 +47,7 @@ class PerfherderWidget extends React.Component {
       framework,
     });
     const evolutions = await fetchJson(
-      `${SETTINGS.backend}/api/perfherder?${query}`
+      `${SETTINGS.backend}/api/perf/herder?${query}`
     );
 
     this.setState({
