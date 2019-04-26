@@ -80,7 +80,7 @@ const generateOptions = (options = {}, data) => {
     chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
   }
 
-  if (tooltips){
+  if (tooltips) {
     chartJsOptions.tooltips = tooltips;
   }
 
