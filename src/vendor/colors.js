@@ -23,10 +23,8 @@ RGBAColor.prototype.toString = RGBAColor.prototype.toRGBA;
 
 Color.parseHTML = html => {
   if (html.startsWith('#')) {
-    const temp = selectFrom;
-
     return new RGBAColor(
-      ...temp(html)
+      ...selectFrom(html)
         .slice(1)
         .chunk(2)
         .map(vv => Number.parseInt(vv.join(''), 16))

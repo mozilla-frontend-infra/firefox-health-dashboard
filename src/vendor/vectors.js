@@ -381,6 +381,19 @@ class ArrayWrapper {
   }
 
   sortBy(selectors) {
+    if (missing(selectors)) {
+      const simpleSorted = lodashSortBy(Array.from(this.argsGen()), [
+        ([arg]) => arg,
+      ]);
+
+      return new ArrayWrapper(
+        function* outputGen() {
+          for (const args of simpleSorted) yield args;
+        },
+        { debug: false }
+      );
+    }
+
     const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
         return ([arg]) => arg;

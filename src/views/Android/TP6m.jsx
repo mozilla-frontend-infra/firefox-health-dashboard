@@ -139,7 +139,6 @@ class TP6M extends React.Component {
                 {summaryData && (
                   <ChartJSWrapper
                     title={`Geomean of ${subtitle}`}
-                    type="line"
                     data={summaryData}
                     height={200}
                   />

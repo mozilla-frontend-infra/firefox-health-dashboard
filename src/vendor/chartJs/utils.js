@@ -1,9 +1,35 @@
 import SETTINGS from '../../settings';
 import { missing } from '../utils';
+import { selectFrom } from '../vectors';
 import Color from '../colors';
 
 const invisible = 'rgba(0,0,0,0)';
-const generateOptions = (options = {}) => {
+/*
+return maximum for most of the values
+ */
+const mostlyMax = values => {
+  const sorted = selectFrom(values)
+    .exists()
+    .sortBy()
+    .toArray();
+  const num = sorted.length - 1;
+  const p50 = sorted[Math.ceil(num * 0.5)];
+  const p90 = sorted[Math.ceil(num * 0.9)];
+  const max = sorted[num];
+
+  return Math.min(max, Math.max(p50 * 2.0, p90 * 1.1));
+};
+
+/*
+return nice, round, upper bound
+ */
+const niceCeiling = value => {
+  const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
+
+  return Math.ceil(value / d) * d;
+};
+
+const generateOptions = (options = {}, data) => {
   const {
     title,
     scaleLabel,
@@ -11,6 +37,15 @@ const generateOptions = (options = {}) => {
     ticksCallback,
     onClick,
   } = options;
+  const temp = selectFrom;
+  const yMax = niceCeiling(
+    mostlyMax(
+      temp(data.datasets)
+        .select('data')
+        .flatten()
+        .select('y')
+    )
+  );
   const chartJsOptions = {
     legend: {
       labels: {
@@ -32,6 +67,8 @@ const generateOptions = (options = {}) => {
           ticks: {
             beginAtZero: true,
             reverse,
+            min: 0,
+            max: yMax,
           },
         },
       ],

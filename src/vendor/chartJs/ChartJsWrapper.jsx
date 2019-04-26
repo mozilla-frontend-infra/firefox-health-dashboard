@@ -79,18 +79,19 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
-    const cOptions = generateOptions(options);
+    const cOptions = generateOptions(options, data);
     const defaultStyle = style;
     const cData = {
       datasets: data.datasets.map((ds, i) => {
-        const { style = {} } = ds;
+        const { style = {}, data, label } = ds;
         const type = style.type || defaultStyle.type;
 
         return {
           ...generateDatasetStyle(i, type),
           ...defaultStyle,
           ...style,
-          ...ds,
+          data,
+          label,
         };
       }),
     };
@@ -104,7 +105,12 @@ const ChartJsWrapper = ({
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
             {title && <h2 className={classes.title}>{title}</h2>}
-            <Chart data={cData} height={chartHeight} options={cOptions} />
+            <Chart
+              type="line"
+              data={cData}
+              height={chartHeight}
+              options={cOptions}
+            />
           </ErrorMessage>
         </div>
       );
@@ -113,7 +119,12 @@ const ChartJsWrapper = ({
     return (
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
-        <Chart data={cData} height={chartHeight} options={cOptions} />
+        <Chart
+          type="line"
+          data={cData}
+          height={chartHeight}
+          options={cOptions}
+        />
       </div>
     );
   })();
