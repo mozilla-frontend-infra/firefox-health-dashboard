@@ -3,6 +3,7 @@ const generateOptions = (options = {}) => {
     title,
     scaleLabel,
     reverse = false,
+    tooltips,
     ticksCallback,
     onClick,
   } = options;
@@ -44,6 +45,8 @@ const generateOptions = (options = {}) => {
     };
   }
 
+  chartJsOptions.tooltips = tooltips || {};
+
   if (scaleLabel) {
     chartJsOptions.scales.yAxes[0].scaleLabel = {
       display: true,
@@ -54,7 +57,6 @@ const generateOptions = (options = {}) => {
   if (onClick) {
     chartJsOptions.onClick = onClick;
   }
-
   return chartJsOptions;
 };
 
