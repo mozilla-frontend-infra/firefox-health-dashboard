@@ -240,7 +240,7 @@ class PerfherderGraphContainer extends Component {
               )}
             </span>
           }
-          type="line"
+          style={{ type: 'scatter' }}
           data={data}
           isLoading={isLoading}
           options={options}

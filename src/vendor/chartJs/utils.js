@@ -1,5 +1,8 @@
 import SETTINGS from '../../settings';
+import { missing } from '../utils';
+import Color from '../colors';
 
+const invisible = 'rgba(0,0,0,0)';
 const generateOptions = (options = {}) => {
   const {
     title,
@@ -69,12 +72,36 @@ const generateLineChartStyle = color => ({
   pointHoverBackgroundColor: 'white',
   lineTension: 0.1,
 });
-const generateScatterChartStyle = color => ({
-  type: 'scatter',
-  backgroundColor: color,
-});
-const generateDatasetStyle = (index, color, type = 'line') => {
-  const colour = color || SETTINGS.colors[index];
+const generateScatterChartStyle = color => {
+  const gentleColor = missing(color)
+    ? color
+    : Color.parseHTML(color)
+        .setOpacity(0.7)
+        .toRGBA();
+
+  return {
+    type: 'scatter',
+    backgroundColor: gentleColor,
+    borderWidth: 0,
+    borderColor: invisible,
+    fill: false,
+    lineTension: 0,
+
+    pointRadius: 3,
+    pointBackgroundColor: invisible,
+    pointBorderColor: gentleColor,
+    pointBorderWidth: 2,
+    pointHitRadius: 10,
+
+    pointHoverRadius: 3,
+    pointHoverBackgroundColor: color,
+    pointHoverBorderColor: gentleColor,
+    pointHoverBorderWidth: 6,
+  };
+};
+
+const generateDatasetStyle = (index, type = 'line') => {
+  const colour = SETTINGS.colors[index];
 
   if (type === 'scatter') {
     return generateScatterChartStyle(colour);

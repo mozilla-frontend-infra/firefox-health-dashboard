@@ -35,7 +35,7 @@ const ChartJsWrapper = ({
   isLoading,
   options,
   title,
-  type,
+  style = {},
   chartHeight,
   spinnerSize,
 }) =>
@@ -80,11 +80,18 @@ const ChartJsWrapper = ({
       return daysDifference > 3;
     });
     const cOptions = generateOptions(options);
+    const defaultStyle = style;
     const cData = {
       datasets: data.datasets.map((ds, i) => {
-        const { style, data, label } = ds;
+        const { style = {} } = ds;
+        const type = style.type || defaultStyle.type;
 
-        return { ...generateDatasetStyle(i), ...style, data, label };
+        return {
+          ...generateDatasetStyle(i, type),
+          ...defaultStyle,
+          ...style,
+          ...ds,
+        };
       }),
     };
 
@@ -97,12 +104,7 @@ const ChartJsWrapper = ({
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
             {title && <h2 className={classes.title}>{title}</h2>}
-            <Chart
-              type={type}
-              data={cData}
-              height={chartHeight}
-              options={cOptions}
-            />
+            <Chart data={cData} height={chartHeight} options={cOptions} />
           </ErrorMessage>
         </div>
       );
@@ -111,12 +113,7 @@ const ChartJsWrapper = ({
     return (
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
-        <Chart
-          type={type}
-          data={cData}
-          height={chartHeight}
-          options={cOptions}
-        />
+        <Chart data={cData} height={chartHeight} options={cOptions} />
       </div>
     );
   })();
@@ -149,7 +146,6 @@ ChartJsWrapper.propTypes = {
     ).isRequired,
   }),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  type: PropTypes.string,
   isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
@@ -159,7 +155,6 @@ ChartJsWrapper.defaultProps = {
   data: undefined,
   options: undefined,
   title: '',
-  type: 'line',
   chartHeight: 80,
   spinnerSize: '100%',
   isLoading: false,

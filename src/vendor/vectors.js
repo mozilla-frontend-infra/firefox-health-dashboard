@@ -185,8 +185,19 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
+  filter(func) {
+    // restrict to rows where `func()` is truthy
+    function* output(argslist) {
+      for (const args of argslist) if (func(...args)) yield args;
+    }
+
+    return new ArrayWrapper(() => output(this.argslist));
+  }
+
+  /*
+  restrict to just rows with index >= start
+   */
   slice(start) {
-    // restrict to just rows with index >= start
     function* output(argslist) {
       let i = 0;
 
@@ -199,17 +210,10 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
-  filter(func) {
-    // restrict to rows where `func()` is truthy
-    function* output(argslist) {
-      for (const args of argslist) if (func(...args)) yield args;
-    }
-
-    return new ArrayWrapper(() => output(this.argslist));
-  }
-
+  /*
+  restrict to rows with index < max
+  */
   limit(max) {
-    // restrict to rows with index < max
     function* output(argslist) {
       let i = 0;
 
@@ -557,7 +561,7 @@ class ArrayWrapper {
     return true;
   }
 
-  concatenate(separator) {
+  join(separator) {
     return Array.from(this).join(separator);
   }
 
