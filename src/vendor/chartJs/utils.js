@@ -113,7 +113,7 @@ const generateScatterChartStyle = color => {
   const gentleColor = missing(color)
     ? color
     : Color.parseHTML(color)
-        .setOpacity(0.7)
+        .setOpacity(0.9)
         .toRGBA();
 
   return {
