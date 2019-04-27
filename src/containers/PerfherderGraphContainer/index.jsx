@@ -11,42 +11,33 @@ import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
+import { DEFAULT_TIME_DOMAIN } from '../../quantum/config';
 
-const DEFAULT_TIMERANGE = Date.newInstance('today-6week').unix();
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
   x => x * 24 * 60 * 60
 );
-const generateInitialOptions = series => {
+const generateInitialOptions = (series, timeDomain) => {
   // TODO: map tests and suite scores to measurement units and
   // add some label for scale
-  const isTest = !missing(series[0].sources[0].meta.test);
-  // CRAZY ASSUMPTION THAT TESTS ARE A MEASURE OF DURATION
-  const higherIsBetter = isTest
-    ? false
-    : /* eslint-disable-next-line camelcase */
-      !series[0].sources[0].meta.lower_is_better;
+  const { lowerIsBetter } = series[0].sources[0].meta;
 
   return {
-    reverse: higherIsBetter,
-    scaleLabel: higherIsBetter ? 'Score' : 'Duration',
+    reverse: !lowerIsBetter,
     tooltips: {
       enabled: false,
     },
-    series,
+    // Start using: chartSchema.md
+    'axis.y.label': lowerIsBetter ? 'Duration' : 'Score',
+    'axis.x.min': timeDomain.min,
+    'axis.x.max': timeDomain.max,
   };
 };
 
 /* This function combines Perfherder series and transforms it
 into ChartJS formatting */
-const perfherderFormatter = series => {
-  const firstTime = selectFrom(series)
-    .select('sources')
-    .flatten()
-    .select('data')
-    .flatten()
-    .select('push_timestamp')
-    .min();
+const perfherderFormatter = (series, timeDomain) => {
+  const firstTime = timeDomain.min.unix();
   const timeRange = Date.today().unix() - firstTime;
   const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t => t >= timeRange);
   const jointParam = {
@@ -95,14 +86,14 @@ const perfherderFormatter = series => {
   };
 
   return {
-    options: generateInitialOptions(series.filter(Boolean)),
+    options: generateInitialOptions(series.filter(Boolean), timeDomain),
     jointUrl: `${TREEHERDER}/perf.html#/graphs?${toQueryString(jointParam)}`,
     data,
     series: combinedSeries,
   };
 };
 
-const getPerfherderData = async series => {
+const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
     series.map(async row => {
       const sources = await getData(row.seriesConfig);
@@ -114,7 +105,7 @@ const getPerfherderData = async series => {
           ...row,
           data: data.filter(
             /* eslint-disable-next-line camelcase */
-            ({ push_timestamp }) => push_timestamp > DEFAULT_TIMERANGE
+            ({ push_timestamp }) => timeDomain.includes(push_timestamp)
           ),
         })),
       };
@@ -126,7 +117,7 @@ const getPerfherderData = async series => {
       query: series[0].seriesConfig,
     });
 
-  return perfherderFormatter(newData);
+  return perfherderFormatter(newData, timeDomain);
 };
 
 const styles = () => ({
@@ -157,7 +148,8 @@ class PerfherderGraphContainer extends Component {
 
     try {
       this.setState({ isLoading: true });
-      const config = await getPerfherderData(series);
+
+      const config = await getPerfherderData(series, DEFAULT_TIME_DOMAIN);
 
       if (exists(reference) && exists(reference.value)) {
         const { label, value } = reference;

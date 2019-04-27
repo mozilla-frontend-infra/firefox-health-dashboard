@@ -4,6 +4,7 @@ import { Data } from '../vendor/Data';
 import { first, toArray } from '../vendor/utils';
 import { Log } from '../vendor/logs';
 import {getSignatures} from "../vendor/perfherder";
+import { Domain } from "../vendor/jx/domains";
 
 const DEBUG = false;
 
@@ -539,4 +540,14 @@ if (DEBUG){
 }
 
 
-export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS };
+const DEFAULT_TIME_DOMAIN = Domain.newInstance({
+  type: "time",
+  min: 'today-6week',
+  max: 'eod',
+  interval: 'day'
+});
+
+
+
+
+export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS, DEFAULT_TIME_DOMAIN };

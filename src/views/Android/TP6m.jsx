@@ -11,6 +11,7 @@ import {
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
+  DEFAULT_TIME_DOMAIN,
 } from '../../quantum/config';
 import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
@@ -39,7 +40,6 @@ class TP6M extends React.Component {
 
   async componentDidMount() {
     const { test, platform } = this.props;
-    const timeRange = 'today-6week';
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -52,7 +52,7 @@ class TP6M extends React.Component {
       sites,
       tests,
       platforms: selectFrom(PLATFORMS).where({ platform }),
-      timeRange,
+      timeDomain: DEFAULT_TIME_DOMAIN,
     });
     const referenceValue = aggregate.where({ test, platform }).ref.getValue();
 
@@ -141,6 +141,10 @@ class TP6M extends React.Component {
                     title={`Geomean of ${subtitle}`}
                     data={summaryData}
                     height={200}
+                    options={{
+                      'axis.y.label': 'Geomean',
+                      'axis.x': DEFAULT_TIME_DOMAIN,
+                    }}
                   />
                 )}
               </Grid>

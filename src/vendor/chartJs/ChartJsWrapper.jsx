@@ -134,7 +134,7 @@ ChartJsWrapper.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   options: PropTypes.shape({
     reverse: PropTypes.bool,
-    scaleLabel: PropTypes.string,
+    'axis.y.label': PropTypes.string,
     title: PropTypes.string,
     ticksCallback: PropTypes.func,
   }),

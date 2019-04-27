@@ -98,7 +98,7 @@ class CustomTooltip extends React.Component {
     const currSeries = series[currPoint.datasetIndex];
 
     if (missing(currSeries)) return null;
-    const higherOrLower = currSeries.meta.lower_is_better
+    const higherOrLower = currSeries.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
     const curr = currSeries.data[index];

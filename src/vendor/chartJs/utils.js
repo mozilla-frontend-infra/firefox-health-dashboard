@@ -1,7 +1,9 @@
 import SETTINGS from '../../settings';
-import { missing } from '../utils';
-import { selectFrom } from '../vectors';
+import { missing, toArray } from '../utils';
+import { Data } from '../Data';
+import { selectFrom, first } from '../vectors';
 import Color from '../colors';
+import Date from '../dates';
 
 const invisible = 'rgba(0,0,0,0)';
 /*
@@ -29,24 +31,62 @@ const niceCeiling = value => {
   return Math.ceil(value / d) * d;
 };
 
-const generateOptions = (options = {}, data) => {
-  const {
-    title,
-    scaleLabel,
-    reverse = false,
-    tooltips,
-    ticksCallback,
-    onClick,
-  } = options;
-  const temp = selectFrom;
+const generateOptions = (rawOptions = {}, data) => {
+  // ORGANIZE THE OPTIONS INTO STRUCTURE
+  const options = Data.fromConfig(rawOptions);
+  const { title, reverse = false, tooltips, ticksCallback, onClick } = options;
+  const xAxes = (() => {
+    if (Data.get(options, 'axis.x')) {
+      return toArray(options.axis.x).map(x => {
+        const { min, max } = x;
+
+        return {
+          type: 'time',
+          time: {
+            displayFormats: { hour: 'MMM D' },
+            min: Date.newInstance(min),
+            max: Date.newInstance(max),
+          },
+        };
+      });
+    }
+
+    return [
+      {
+        type: 'time',
+        time: {
+          displayFormats: { hour: 'MMM D' },
+        },
+      },
+    ];
+  })();
   const yMax = niceCeiling(
     mostlyMax(
-      temp(data.datasets)
+      selectFrom(data.datasets)
         .select('data')
         .flatten()
         .select('y')
     )
   );
+  const yAxes = [
+    {
+      ticks: {
+        beginAtZero: true,
+        reverse,
+        min: 0,
+        max: yMax,
+      },
+    },
+  ];
+  const yLabel = first(toArray(Data.get(options, 'axis.y.label')));
+
+  if (yLabel) {
+    yAxes[0].scaleLabel = {
+      display: true,
+      labelString: yLabel,
+    };
+  }
+
   const chartJsOptions = {
     legend: {
       labels: {
@@ -55,24 +95,8 @@ const generateOptions = (options = {}, data) => {
       },
     },
     scales: {
-      xAxes: [
-        {
-          type: 'time',
-          time: {
-            displayFormats: { hour: 'MMM D' },
-          },
-        },
-      ],
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            reverse,
-            min: 0,
-            max: yMax,
-          },
-        },
-      ],
+      xAxes,
+      yAxes,
     },
   };
 
@@ -88,13 +112,6 @@ const generateOptions = (options = {}, data) => {
     chartJsOptions.title = {
       display: true,
       text: title,
-    };
-  }
-
-  if (scaleLabel) {
-    chartJsOptions.scales.yAxes[0].scaleLabel = {
-      display: true,
-      labelString: scaleLabel,
     };
   }
 

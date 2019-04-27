@@ -37,18 +37,52 @@ const getFramework = async framework => {
       // ADD OPTION SIGNATURES
       const lookup = await getAllOptions;
       const clean = toPairs(rawData)
-        .map((meta, signature) => ({
-          signature,
-          suite: meta.suite,
-          test: meta.test === meta.suite ? null : meta.test,
-          options: lookup[meta.option_collection_hash],
-          extraOptions: toArray(meta.extra_options).sort(),
-          platform: meta.machine_platform,
-          parent: meta.parent_signature,
-          id: meta.id,
-          framework: meta.framework_id,
-          repo: REPO,
-        }))
+        .map((meta, signature) => {
+          const { suite, test, lower_is_better } = meta;
+          let lowerIsBetter = true;
+
+          if (lower_is_better === undefined) {
+            if (
+              [
+                'raptor-speedometer',
+                'raptor-stylebench',
+                'raptor-wasm',
+                'raptor-motionmark',
+                'raptor-sunspider',
+                'raptor-webaudio',
+                'raptor-unity',
+              ].some(prefix => suite.startsWith(prefix))
+            ) {
+              lowerIsBetter = false;
+            } else if (
+              [
+                'raptor-tp6',
+                'raptor-firefox',
+                'raptor-chrome',
+                'raptor-google',
+                'raptor-assorted-dom',
+              ].some(prefix => suite.startsWith(prefix))
+            ) {
+              lowerIsBetter = true;
+            } else {
+              Log.warning('Do not have direction for {{suite}}', { suite });
+            }
+          }
+
+          return {
+            signature,
+            suite,
+            test: test === suite ? null : test,
+            lowerIsBetter,
+            options: lookup[meta.option_collection_hash],
+            extraOptions: toArray(meta.extra_options).sort(),
+            platform: meta.machine_platform,
+            parent: meta.parent_signature,
+            id: meta.id,
+            framework: meta.framework_id,
+            repo: REPO,
+          };
+        })
         .toArray();
 
       PERFHERDER.signatures.push(...clean);

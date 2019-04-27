@@ -6,6 +6,7 @@ import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
 import {
+  DEFAULT_TIME_DOMAIN,
   PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
@@ -21,14 +22,13 @@ import timer from '../vendor/timer';
 
 /*
 condition - json expression to pull perfherder data
-timeRange - any valid Duration
  */
 async function pullAggregate({
   condition,
   tests,
   sites,
   platforms,
-  timeRange,
+  timeDomain,
 }) {
   const readData = timer('read data');
   const sources = await getData(condition);
@@ -39,7 +39,8 @@ async function pullAggregate({
   const measured = selectFrom(sources)
     .select('data')
     .flatten()
-    .filter(jx({ gte: { push_timestamp: { date: timeRange } } }))
+    /* eslint-disable-next-line camelcase */
+    .filter(({ push_timestamp }) => timeDomain.includes(push_timestamp))
     .map(row => ({ ...row, ...row.meta }))
     .edges([
       {
@@ -78,12 +79,7 @@ async function pullAggregate({
       {
         name: 'pushDate',
         value: 'push_timestamp',
-        domain: {
-          type: 'time',
-          min: timeRange,
-          max: 'today',
-          interval: 'day',
-        },
+        domain: timeDomain,
       },
     ]);
   const afterLastGoodDate = window(
@@ -172,7 +168,6 @@ class TP6mAggregate_ extends Component {
   }
 
   async componentDidMount() {
-    const timeRange = 'today-6week';
     const platforms = selectFrom(PLATFORMS).where({
       platform: DESIRED_PLATFORMS,
     });
@@ -198,7 +193,7 @@ class TP6mAggregate_ extends Component {
       sites: TP6M_SITES,
       tests: TP6_TESTS.where({ test: DESIRED_TESTS }),
       platforms,
-      timeRange,
+      timeDomain: DEFAULT_TIME_DOMAIN,
     });
 
     this.setState({ data });

@@ -58,10 +58,6 @@ class ValueDomain extends Domain {
 
     return output;
   }
-
-  *[Symbol.iterator]() {
-    for (const v of this.values) yield v;
-  }
 }
 
 class TimeDomain extends Domain {
@@ -110,8 +106,13 @@ class TimeDomain extends Domain {
     );
   }
 
-  *[Symbol.iterator]() {
-    for (const v of this.partitions) yield v;
+  /*
+  Return true if `value` is in the domain
+   */
+  includes(value) {
+    const dateValue = Date.newInstance(value).milli();
+
+    return this.min.milli() <= dateValue && dateValue < this.max.milli();
   }
 }
 
@@ -161,6 +162,8 @@ class SetDomain extends Domain {
 }
 
 Domain.newInstance = desc => {
+  if (desc instanceof Domain) return desc;
+
   if (isString(desc)) {
     return ValueDomain(desc);
   }

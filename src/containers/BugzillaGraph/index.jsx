@@ -31,7 +31,7 @@ class BugzillaGraph extends Component {
       <ChartJsWrapper
         data={data}
         isLoading={isLoading}
-        options={{ scaleLabel: 'Number of bugs' }}
+        options={{ 'axis.y.label': 'Number of bugs' }}
         title={title}
       />
     );

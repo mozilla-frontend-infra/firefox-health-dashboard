@@ -1040,7 +1040,7 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
 const RELATIVE = {
   today: 'floorDay',
   tomorrow: 'ceilingDay',
-  eod: 'ceilingday',
+  eod: 'ceilingDay',
 };
 
 GMTDate.parseRelative = val => {

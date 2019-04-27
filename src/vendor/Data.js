@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs, selectFrom } from './vectors';
+import { toPairs, selectFrom, leaves } from './vectors';
 import { Log } from './logs';
 import {
   coalesce,
@@ -227,5 +227,10 @@ Data.add = (obj, path, value) => {
 
   return obj;
 };
+
+/*
+We assume dots in property names refer to paths
+ */
+Data.fromConfig = obj => leaves(obj, false).fromLeaves();
 
 export { Data, isData, isEqual };

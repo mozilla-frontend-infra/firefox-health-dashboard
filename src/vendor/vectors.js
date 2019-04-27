@@ -673,11 +673,15 @@ internalToPairs = toPairs;
 /*
  * Convert Object into list of [value, path] pairs
  * where path is dot delimited path deep into object
+ * formal===false will allow dots in property names to refer to path
+ * formal===true will escape the dots, making them literal
  */
-function leaves(obj) {
+function leaves(obj, formal = true) {
+  const field = formal ? literalField : k => k;
+
   function* leafGen(map, prefix) {
     for (const [val, key] of toPairs(map).argsGen()) {
-      const path = concatField(prefix, literalField(key));
+      const path = concatField(prefix, field(key));
 
       if (isData(val)) {
         for (const pair of leafGen(val, path)) yield pair;

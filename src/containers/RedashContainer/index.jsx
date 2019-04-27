@@ -71,7 +71,7 @@ class RedashContainer extends Component {
   static propTypes = {
     options: PropTypes.shape({
       title: PropTypes.string,
-      scaleLabel: PropTypes.string,
+      'axis.y.label': PropTypes.string,
       ticksCallback: PropTypes.func,
     }),
     classes: PropTypes.shape().isRequired,
@@ -83,7 +83,7 @@ class RedashContainer extends Component {
 
   static defaultProps = {
     options: {
-      scaleLabel: 'Miliseconds',
+      'axis.y.label': 'Miliseconds',
       ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
     },
     dataKeyIdentifier: 'label',
