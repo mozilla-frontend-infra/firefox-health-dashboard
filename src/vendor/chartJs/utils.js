@@ -19,7 +19,7 @@ const mostlyMax = values => {
   const p90 = sorted[Math.ceil(num * 0.9)];
   const max = sorted[num];
 
-  return Math.min(max, Math.max(p50 * 2.0, p90 * 1.1));
+  return Math.min(max * 1.1, Math.max(p50 * 2.0, p90 * 1.1));
 };
 
 /*
@@ -27,8 +27,10 @@ return nice, round, upper bound
  */
 const niceCeiling = value => {
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
+  const norm = value/d;
+  const nice = [1.5, 2, 3, 5, 7.5, 10].find(v => norm <= v);
 
-  return Math.ceil(value / d) * d;
+  return nice * d;
 };
 
 const generateOptions = (rawOptions = {}, data) => {
