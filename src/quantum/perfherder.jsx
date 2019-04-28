@@ -46,7 +46,7 @@ class PerfherderWidget extends React.Component {
       signatures: [...splitSignatures.keys()],
       framework,
     });
-    const evolutions = fetchJson(
+    const evolutions = await fetchJson(
       `${SETTINGS.backend}/api/perf/herder?${query}`
     );
 

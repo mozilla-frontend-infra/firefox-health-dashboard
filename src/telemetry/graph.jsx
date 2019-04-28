@@ -23,7 +23,7 @@ class TelemetryContainer extends React.Component {
     });
 
     try {
-      const { graphData, telemetryUrl } = fetchJson(url);
+      const { graphData, telemetryUrl } = await fetchJson(url);
 
       if (!this.graphTitleLink) {
         return;
