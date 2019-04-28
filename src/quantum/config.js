@@ -18,6 +18,7 @@ const CONFIG = {
       signatures: {
         'windows10-64': '8f014459793e2e94c3244d5edeaada0452b0c627',
       },
+      repo: 'mozilla-central',
       framework: 10,
     },
     {
@@ -28,6 +29,7 @@ const CONFIG = {
       signatures: {
         'windows10-64': '9ad671fb568a5b3027af35b5d42fc6dd385f25ed',
       },
+      repo: 'mozilla-central',
       framework: 10,
     },
   ],
@@ -38,6 +40,7 @@ const CONFIG = {
         '/quantum/10/windows7-32/raptor-motionmark_htmlsuite-firefox/pgo',
       secondTitle: 'Breakdown',
       signatures: { 'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23' },
+      repo: 'mozilla-central',
       framework: 10,
     },
     {
@@ -46,6 +49,7 @@ const CONFIG = {
         '/quantum/10/windows7-32/raptor-motionmark_animometer-firefox/pgo',
       secondTitle: 'Breakdown',
       signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
+      repo: 'mozilla-central',
       framework: 10,
     },
   ],
@@ -60,28 +64,20 @@ const PLATFORMS = [
     platform: 'win32',
     platformFilter: {
       and: [
-        {
-          or: [
-            {
-              eq: {
+        {or: [
+            {eq: {
                 platform: 'windows7-32',
                 options: 'pgo',
-              },
-            },
-            {
-              eq: {
+              }},
+            {eq: {
                 platform: 'windows7-32-shippable',
                 options: 'opt',
-              },
-            },
-          ],
-        },
-        {
-          eq: {
+              }},
+          ]},
+        {eq: {
             framework: 10,
             repo: 'mozilla-central',
-          },
-        },
+          }},
       ],
     },
   },
@@ -92,17 +88,13 @@ const PLATFORMS = [
     os: 'win',
     label: 'Firefox',
     platform: 'win64',
-    platformFilter: {
-      and: [
-        {
-          or: [
+    platformFilter: {and: [
+        {or: [
             { eq: { platform: 'windows10-64', options: 'pgo' } },
             { eq: { platform: 'windows10-64-shippable', options: 'opt' } },
-          ],
-        },
+        ]},
         { eq: { framework: 10, repo: 'mozilla-central' } },
-      ],
-    },
+      ]},
   },
   {
     browser: 'Chromium',
@@ -116,7 +108,6 @@ const PLATFORMS = [
         {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
         {
           eq: {
-
             framework: 10,
             repo: 'mozilla-central',
           }
@@ -131,17 +122,13 @@ const PLATFORMS = [
     os: 'win',
     label: 'Chromium',
     platform: 'chromium64',
-    platformFilter: {
-      and: [
-        {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
-        {
-          eq: {
-
-            framework: 10,
-            repo: 'mozilla-central',
-          }
-        }]
-    }
+    platformFilter: {and: [
+      {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
+      {eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+      }}
+    ]}
   },
   {
     browser: 'Firefox (aarch64)',
@@ -170,7 +157,7 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview p2 aarch64',
-    platform: 'android-p2-aarch64',
+    platform: 'geckoview-p2-aarch64',
     platformFilter: {
       eq: {
         framework: 10,
@@ -182,46 +169,52 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview p2',
-    platform: 'android-p2',
+    platform: 'geckoview-p2',
     platformFilter: {
       and: [
         {
           or: [
-            {
-              eq: {
-                platform: 'android-hw-p2-8-0-arm7-api-16',
+            {eq: {
+              platform: 'android-hw-p2-8-0-arm7-api-16',
                 options: ['pgo', 'opt'],
-              },
-            },
-            {
-              eq: {
-                platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
-              },
-            },
+              }},
+            {eq: {
+              platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
+              }},
           ],
         },
-        {
-          eq: {
+        {eq: {
             framework: 10,
             repo: 'mozilla-central',
-          },
-        },
+          }},
       ],
     },
   },
   {
     browser: 'geckoview',
     label: 'Geckoview g5',
-    platform: 'android-g5',
+    platform: 'geckoview-g5',
     platformFilter: {
       and: [
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
-        {
-          eq: {
+        {eq: {
             framework: 10,
             repo: 'mozilla-central',
-          },
-        },
+          }},
+      ],
+    },
+  },
+  {
+    browser: 'fenix',
+    label: 'Firefox Preview g5',
+    platform: 'fenix-g5',
+    platformFilter: {
+      and: [
+        { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
+        {eq: {
+            framework: 10,
+            repo: 'fenix',
+          }},
       ],
     },
   },
@@ -393,6 +386,7 @@ const TP6_SITES_DATA = {
     ['geckoview',         'cold', 'Tp6 mobile: Amazon',               { eq: { suite: 'raptor-tp6m-cold-amazon-geckoview'}}],
     ['geckoview',         'cold', 'Tp6 mobile: Facebook',             { eq: { suite: 'raptor-tp6m-cold-facebook-geckoview'}}],
     ['geckoview',         'cold', 'Tp6 mobile: Google',               { eq: { suite: 'raptor-tp6m-cold-google-geckoview'}}],
+
 
     ['geckoview',         'warm', 'Tp6 mobile: Amazon',               { eq: { suite: 'raptor-tp6m-amazon-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Amazon Search',        { eq: { suite: 'raptor-tp6m-amazon-search-geckoview'}}],

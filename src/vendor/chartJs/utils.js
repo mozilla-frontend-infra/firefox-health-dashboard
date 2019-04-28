@@ -27,7 +27,7 @@ return nice, round, upper bound
  */
 const niceCeiling = value => {
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
-  const norm = value/d;
+  const norm = value / d;
   const nice = [1.5, 2, 3, 5, 7.5, 10].find(v => norm <= v);
 
   return nice * d;

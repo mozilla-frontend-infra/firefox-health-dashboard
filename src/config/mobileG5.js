@@ -48,7 +48,7 @@ const fennec64onP2 = {
   ]
 };
 fennec64onP2.header.push("platform");
-fennec64onP2.data.forEach(d=>d.push('android-p2-aarch64'));
+fennec64onP2.data.forEach(d=>d.push('geckoview-p2-aarch64'));
 const flatP2 = fennec64onP2.data.map(row => Data.zip(fennec64onP2.header, row));
 
 
@@ -93,7 +93,7 @@ const fennec64onG5 =
   };
 
 fennec64onG5.header.push("platform");
-fennec64onG5.data.forEach(d=>d.push('android-g5'));
+fennec64onG5.data.forEach(d=>d.push('geckoview-g5'));
 const flatG5 = fennec64onG5.data.map(row => Data.zip(fennec64onG5.header, row));
 
 const tests = selectFrom(TP6_TESTS).select('test').toArray();

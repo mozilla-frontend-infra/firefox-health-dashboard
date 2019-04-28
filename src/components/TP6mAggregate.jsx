@@ -159,7 +159,7 @@ async function pullAggregate({
 }
 
 const DESIRED_TESTS = ['cold-loadtime', 'warm-loadtime'];
-const DESIRED_PLATFORMS = ['android-g5', 'android-p2-aarch64'];
+const DESIRED_PLATFORMS = ['geckoview-g5', 'geckoview-p2-aarch64'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -178,9 +178,12 @@ class TP6mAggregate_ extends Component {
             { eq: { browser: 'geckoview' } },
             {
               or: [
-                { eq: { platform: 'android-g5', test: 'warm-loadtime' } },
+                { eq: { platform: 'geckoview-g5', test: 'warm-loadtime' } },
                 {
-                  eq: { platform: 'android-p2-aarch64', test: 'cold-loadtime' },
+                  eq: {
+                    platform: 'geckoview-p2-aarch64',
+                    test: 'cold-loadtime',
+                  },
                 },
               ],
             },

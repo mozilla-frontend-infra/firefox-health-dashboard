@@ -16,6 +16,7 @@ import {
 } from 'd3';
 import { stringify } from 'query-string';
 import { withErrorBoundary } from '../vendor/errors';
+import fetchJson from '../utils/fetchJson';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
@@ -45,9 +46,9 @@ class PerfherderWidget extends React.Component {
       signatures: [...splitSignatures.keys()],
       framework,
     });
-    const evolutions = await (await fetch(
+    const evolutions = fetchJson(
       `${SETTINGS.backend}/api/perf/herder?${query}`
-    )).json();
+    );
 
     this.setState({
       evolutions,

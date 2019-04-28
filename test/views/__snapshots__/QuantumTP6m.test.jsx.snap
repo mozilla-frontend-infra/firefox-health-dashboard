@@ -162,7 +162,7 @@ exports[`renders correctly 1`] = `
                       <input
                         name="platform"
                         type="hidden"
-                        value="android-g5"
+                        value="geckoview-g5"
                       />
                       <svg
                         aria-hidden="true"

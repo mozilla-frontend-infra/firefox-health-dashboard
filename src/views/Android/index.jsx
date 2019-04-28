@@ -79,7 +79,7 @@ class Android extends Component {
         </div>
         <Section
           title="Raptor (TP6m)"
-          more="/android/tp6m?test=cold-loadtime&platform=android-p2-aarch64">
+          more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64">
           <TP6mAggregate />
         </Section>
         <Section title="Telemetry">

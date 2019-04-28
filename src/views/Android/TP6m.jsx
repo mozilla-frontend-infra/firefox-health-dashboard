@@ -219,7 +219,7 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'android-g5',
+    defaultValue: 'geckoview-g5',
     options: selectFrom(PLATFORMS)
       .where({ browser: 'geckoview' })
       .select({ id: 'platform', label: 'label' })
