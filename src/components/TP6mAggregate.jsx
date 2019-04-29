@@ -158,8 +158,8 @@ async function pullAggregate({
   return new HyperCube({ result, ref });
 }
 
-const DESIRED_TESTS = ['cold-loadtime', 'warm-loadtime'];
-const DESIRED_PLATFORMS = ['geckoview-g5', 'geckoview-p2-aarch64'];
+const DESIRED_TESTS = ['cold-loadtime'];
+const DESIRED_PLATFORMS = ['geckoview-p2-aarch64', 'fenix-g5'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -175,17 +175,12 @@ class TP6mAggregate_ extends Component {
       or: TP6_COMBOS.filter(
         jx({
           and: [
-            { eq: { browser: 'geckoview' } },
+            { eq: { browser: ['geckoview', 'fenix'] } },
             {
-              or: [
-                { eq: { platform: 'geckoview-g5', test: 'warm-loadtime' } },
-                {
-                  eq: {
-                    platform: 'geckoview-p2-aarch64',
-                    test: 'cold-loadtime',
-                  },
-                },
-              ],
+              eq: {
+                platform: ['geckoview-p2-aarch64', 'fenix-g5'],
+                test: 'cold-loadtime',
+              },
             },
           ],
         })
@@ -232,7 +227,9 @@ class TP6mAggregate_ extends Component {
                 const chartData = {
                   datasets: [
                     {
-                      label: platform,
+                      label: selectFrom(PLATFORMS)
+                        .where({ platform })
+                        .first().label,
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, result }) => ({

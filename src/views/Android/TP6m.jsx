@@ -68,7 +68,9 @@ class TP6M extends React.Component {
         .where({ test, platform })
         .along('platform') // dummy (only one)
         .map(({ result }) => ({
-          label: platform,
+          label: selectFrom(PLATFORMS)
+            .where({ platform })
+            .first().label,
           data: result
             .along('pushDate')
             .map(point => ({
@@ -151,7 +153,7 @@ class TP6M extends React.Component {
 
               {selectFrom(TP6_COMBOS)
                 .where({
-                  browser: 'geckoview',
+                  browser: ['geckoview', 'fenix'],
                   platform,
                   test,
                 })
@@ -221,7 +223,7 @@ const nav = [
     label: 'Platform',
     defaultValue: 'geckoview-g5',
     options: selectFrom(PLATFORMS)
-      .where({ browser: 'geckoview' })
+      .where({ browser: ['geckoview', 'fenix'] })
       .select({ id: 'platform', label: 'label' })
       .toArray(),
   },
