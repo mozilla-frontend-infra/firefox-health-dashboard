@@ -72,13 +72,14 @@ class PerfherderContainer extends Component {
   }
 
   async data(
-    { platform, suite, framework, option },
+    { platform, suite, framework, repo = 'mozilla-central', option },
     percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD
   ) {
     const { perfherderUrl, data, parentSignature } = await getData({
       suite,
       platform,
-      framework,
+      framework: Number.parseInt(framework, 10),
+      repo,
       option,
       percentileThreshold,
     });

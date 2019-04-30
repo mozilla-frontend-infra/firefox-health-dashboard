@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withErrorBoundary } from '../../vendor/errors';
-import ChartJsWrapper from '../../components/ChartJsWrapper';
+import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import getBugsData from '../../utils/bugzilla/getBugsData';
 
 class BugzillaGraph extends Component {
@@ -31,7 +31,7 @@ class BugzillaGraph extends Component {
       <ChartJsWrapper
         data={data}
         isLoading={isLoading}
-        options={{ scaleLabel: 'Number of bugs' }}
+        options={{ 'axis.y.label': 'Number of bugs' }}
         title={title}
       />
     );

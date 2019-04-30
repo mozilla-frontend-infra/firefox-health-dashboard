@@ -6,32 +6,29 @@ import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
 import {
+  DEFAULT_TIME_DOMAIN,
   PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
 } from '../quantum/config';
 import { getData } from '../vendor/perfherder';
-import generateOptions from '../utils/chartJs/generateOptions';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { HyperCube, window } from '../vendor/jx/cubes';
 import { g5Reference, TARGET_NAME } from '../config/mobileG5';
-import ChartJSWrapper from './ChartJsWrapper';
+import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
-import generateDatasetStyle from '../utils/chartJs/generateDatasetStyle';
-import SETTINGS from '../settings';
 
 /*
 condition - json expression to pull perfherder data
-timeRange - any valid Duration
  */
 async function pullAggregate({
   condition,
   tests,
   sites,
   platforms,
-  timeRange,
+  timeDomain,
 }) {
   const readData = timer('read data');
   const sources = await getData(condition);
@@ -42,7 +39,8 @@ async function pullAggregate({
   const measured = selectFrom(sources)
     .select('data')
     .flatten()
-    .filter(jx({ gte: { push_timestamp: { date: timeRange } } }))
+    /* eslint-disable-next-line camelcase */
+    .filter(({ push_timestamp }) => timeDomain.includes(push_timestamp))
     .map(row => ({ ...row, ...row.meta }))
     .edges([
       {
@@ -81,12 +79,7 @@ async function pullAggregate({
       {
         name: 'pushDate',
         value: 'push_timestamp',
-        domain: {
-          type: 'time',
-          min: timeRange,
-          max: 'today',
-          interval: 'day',
-        },
+        domain: timeDomain,
       },
     ]);
   const afterLastGoodDate = window(
@@ -165,8 +158,8 @@ async function pullAggregate({
   return new HyperCube({ result, ref });
 }
 
-const DESIRED_TESTS = ['cold-loadtime', 'warm-loadtime'];
-const DESIRED_PLATFORMS = ['android-g5', 'android-p2-aarch64'];
+const DESIRED_TESTS = ['cold-loadtime'];
+const DESIRED_PLATFORMS = ['geckoview-p2-aarch64', 'fenix-g5'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -175,7 +168,6 @@ class TP6mAggregate_ extends Component {
   }
 
   async componentDidMount() {
-    const timeRange = 'today-6week';
     const platforms = selectFrom(PLATFORMS).where({
       platform: DESIRED_PLATFORMS,
     });
@@ -183,14 +175,12 @@ class TP6mAggregate_ extends Component {
       or: TP6_COMBOS.filter(
         jx({
           and: [
-            { eq: { browser: 'geckoview' } },
+            { eq: { browser: ['geckoview', 'fenix'] } },
             {
-              or: [
-                { eq: { platform: 'android-g5', test: 'warm-loadtime' } },
-                {
-                  eq: { platform: 'android-p2-aarch64', test: 'cold-loadtime' },
-                },
-              ],
+              eq: {
+                platform: ['geckoview-p2-aarch64', 'fenix-g5'],
+                test: 'cold-loadtime',
+              },
             },
           ],
         })
@@ -201,7 +191,7 @@ class TP6mAggregate_ extends Component {
       sites: TP6M_SITES,
       tests: TP6_TESTS.where({ test: DESIRED_TESTS }),
       platforms,
-      timeRange,
+      timeDomain: DEFAULT_TIME_DOMAIN,
     });
 
     this.setState({ data });
@@ -232,13 +222,14 @@ class TP6mAggregate_ extends Component {
               .where({ test })
               .along('platform')
               .enumerate()
-              .map((row, i) => {
+              .map(row => {
                 const platform = row.platform.getValue();
                 const chartData = {
                   datasets: [
                     {
-                      label: platform,
-                      type: 'line',
+                      label: selectFrom(PLATFORMS)
+                        .where({ platform })
+                        .first().label,
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, result }) => ({
@@ -246,17 +237,18 @@ class TP6mAggregate_ extends Component {
                           y: result.getValue(),
                         }))
                         .toArray(),
-                      ...generateDatasetStyle(SETTINGS.colors[i]),
                     },
                     {
                       label: TARGET_NAME,
-                      type: 'line',
-                      backgroundColor: 'gray',
-                      borderColor: 'gray',
-                      fill: false,
-                      pointRadius: '0',
-                      pointHoverBackgroundColor: 'gray',
-                      lineTension: 0,
+                      style: {
+                        type: 'line',
+                        backgroundColor: 'gray',
+                        borderColor: 'gray',
+                        fill: false,
+                        pointRadius: '0',
+                        pointHoverBackgroundColor: 'gray',
+                        lineTension: 0,
+                      },
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, ref }) => ({
@@ -296,7 +288,6 @@ class TP6mAggregate_ extends Component {
                       type="line"
                       data={chartData}
                       height={200}
-                      options={generateOptions()}
                     />
                   </Grid>
                 );

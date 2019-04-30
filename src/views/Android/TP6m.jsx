@@ -11,17 +11,15 @@ import {
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
+  DEFAULT_TIME_DOMAIN,
 } from '../../quantum/config';
 import { withNavigation } from '../../vendor/utils/navigation';
 import Picker from '../../vendor/utils/navigation/Picker';
 import DashboardPage from '../../components/DashboardPage';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import ChartJSWrapper from '../../components/ChartJsWrapper';
-import generateOptions from '../../utils/chartJs/generateOptions';
+import ChartJSWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import { g5Reference, TARGET_NAME } from '../../config/mobileG5';
 import { pullAggregate } from '../../components/TP6mAggregate';
-import generateDatasetStyle from '../../utils/chartJs/generateDatasetStyle';
-import SETTINGS from '../../settings';
 import Section from '../../components/Section';
 
 const styles = {
@@ -42,7 +40,6 @@ class TP6M extends React.Component {
 
   async componentDidMount() {
     const { test, platform } = this.props;
-    const timeRange = 'today-6week';
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -55,7 +52,7 @@ class TP6M extends React.Component {
       sites,
       tests,
       platforms: selectFrom(PLATFORMS).where({ platform }),
-      timeRange,
+      timeDomain: DEFAULT_TIME_DOMAIN,
     });
     const referenceValue = aggregate.where({ test, platform }).ref.getValue();
 
@@ -71,8 +68,9 @@ class TP6M extends React.Component {
         .where({ test, platform })
         .along('platform') // dummy (only one)
         .map(({ result }) => ({
-          label: platform,
-          type: 'line',
+          label: selectFrom(PLATFORMS)
+            .where({ platform })
+            .first().label,
           data: result
             .along('pushDate')
             .map(point => ({
@@ -80,18 +78,19 @@ class TP6M extends React.Component {
               y: point.getValue(),
             }))
             .toArray(),
-          ...generateDatasetStyle(SETTINGS.colors[0]),
         }))
         .append(
           exists(referenceValue) && {
             label: TARGET_NAME,
-            type: 'line',
-            backgroundColor: 'gray',
-            borderColor: 'gray',
-            fill: false,
-            pointRadius: '0',
-            pointHoverBackgroundColor: 'gray',
-            lineTension: 0,
+            style: {
+              type: 'line',
+              backgroundColor: 'gray',
+              borderColor: 'gray',
+              fill: false,
+              pointRadius: '0',
+              pointHoverBackgroundColor: 'gray',
+              lineTension: 0,
+            },
             data: aggregate
               .where({ test, platform })
               .along('pushDate')
@@ -142,17 +141,19 @@ class TP6M extends React.Component {
                 {summaryData && (
                   <ChartJSWrapper
                     title={`Geomean of ${subtitle}`}
-                    type="line"
                     data={summaryData}
                     height={200}
-                    options={generateOptions()}
+                    options={{
+                      'axis.y.label': 'Geomean',
+                      'axis.x': DEFAULT_TIME_DOMAIN,
+                    }}
                   />
                 )}
               </Grid>
 
               {selectFrom(TP6_COMBOS)
                 .where({
-                  browser: 'geckoview',
+                  browser: ['geckoview', 'fenix'],
                   platform,
                   test,
                 })
@@ -220,9 +221,9 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'android-g5',
+    defaultValue: 'geckoview-g5',
     options: selectFrom(PLATFORMS)
-      .where({ browser: 'geckoview' })
+      .where({ browser: ['geckoview', 'fenix'] })
       .select({ id: 'platform', label: 'label' })
       .toArray(),
   },

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import fetchJson from '../fetchJson';
+import fetchJson from '../utils/fetchJson';
 
 const matchUrl = profileName =>
   profileName.replace(
@@ -25,8 +25,8 @@ const transformedDataForMetrisGraphics = scenarios => {
         }
 
         if (ms > 0) {
-          /* this appends contents of scenarios[scenarioName] 
-          to result[url].data **AND** concatenates data when 
+          /* this appends contents of scenarios[scenarioName]
+          to result[url].data **AND** concatenates data when
           matchUrl(scenarioName1) == matchUrl(scenarioName2) */
           result[url].data.push({
             date: new Date(date),

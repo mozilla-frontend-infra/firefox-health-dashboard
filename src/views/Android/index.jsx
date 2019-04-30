@@ -5,10 +5,10 @@ import DashboardPage from '../../components/DashboardPage';
 import Section from '../../components/Section';
 import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
 import BugzillaGraph from '../../containers/BugzillaGraph';
-import NimbledroidSection from '../../containers/NimbledroidSection';
+import NimbledroidSection from '../../nimbledroid/NimbledroidSection';
 import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
 import RedashContainer from '../../containers/RedashContainer';
-import CONFIG from '../../utils/nimbledroid/config';
+import { CONFIG } from '../../nimbledroid/config';
 import { TP6mAggregate } from '../../components/TP6mAggregate';
 
 class Android extends Component {
@@ -79,7 +79,7 @@ class Android extends Component {
         </div>
         <Section
           title="Raptor (TP6m)"
-          more="/android/tp6m?test=cold-loadtime&platform=android-p2-aarch64">
+          more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64">
           <TP6mAggregate />
         </Section>
         <Section title="Telemetry">

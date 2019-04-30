@@ -1,8 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import queryBugzilla from './queryBugzilla';
-import generateDatasetStyle from '../chartJs/generateDatasetStyle';
-import SETTINGS from '../../settings';
 import Date from '../../vendor/dates';
 
 const newDate = (datetime, startDate) => {
@@ -63,11 +61,10 @@ const bugsByCreationDate = (bugs, startDate) => {
 const chartJsFormatter = (bugSeries, startDate) => {
   const newData = { data: { datasets: [] } };
 
-  bugSeries.forEach(({ bugs, label }, index) => {
+  bugSeries.forEach(({ bugs, label }) => {
     const bugCountPerDay = bugsByCreationDate(bugs, startDate);
 
     newData.data.datasets.push({
-      ...generateDatasetStyle(SETTINGS.colors[index]),
       data: bugCountPerDay,
       label,
     });

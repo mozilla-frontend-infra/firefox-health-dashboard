@@ -46,7 +46,7 @@ function toQueryString(value) {
       .join('&');
   const output = leaves(value)
     .map(encode)
-    .concatenate('&');
+    .join('&');
 
   return output;
 }
@@ -81,10 +81,10 @@ function prettyJSON(json, maxDepth) {
       const lengths = output.map(length);
 
       if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
-        return `[\n${strings.indent(output.concatenate(',\n'), 1)}\n]`;
+        return `[\n${strings.indent(output.join(',\n'), 1)}\n]`;
       }
 
-      return `[${output.concatenate(',')}]`;
+      return `[${output.join(',')}]`;
     }
 
     if (isFunction(json)) {
@@ -111,10 +111,10 @@ function prettyJSON(json, maxDepth) {
       const lengths = output.map(length);
 
       if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
-        return `{\n${strings.indent(output.concatenate(',\n'), 1)}\n}`;
+        return `{\n${strings.indent(output.join(',\n'), 1)}\n}`;
       }
 
-      return `{${output.concatenate(',')}}`;
+      return `{${output.join(',')}}`;
     }
 
     return JSON.stringify(json);

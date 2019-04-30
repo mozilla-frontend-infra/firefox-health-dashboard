@@ -1,5 +1,5 @@
 /* global fetch */
-import SETTINGS from '../../settings';
+import SETTINGS from '../settings';
 import NimbledroidApiHandler from './NimbledroidApiHandler';
 
 class BackendClient {

@@ -862,6 +862,59 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-180"
             >
               <span>
+                Tp6: Office
+              </span>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-182 MuiCircularProgress-colorPrimary-185 MuiCircularProgress-indeterminate-184"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-187"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-188 MuiCircularProgress-circleIndeterminate-190"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-81 MuiGrid-grid-xs-6-114 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-179"
+          >
+            <h2
+              className="ChartJsWrapper-title-180"
+            >
+              <span>
                 Tp6: Outlook
               </span>
             </h2>

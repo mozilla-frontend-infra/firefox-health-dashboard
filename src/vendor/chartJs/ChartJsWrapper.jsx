@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import generateOptions from '../../utils/chartJs/generateOptions';
-import { ErrorMessage } from '../../vendor/errors';
-import { selectFrom } from '../../vendor/vectors';
+import { generateDatasetStyle, generateOptions } from './utils';
+import { ErrorMessage } from '../errors';
+import { selectFrom } from '../vectors';
 
 const styles = {
   // This div helps with canvas size changes
@@ -35,7 +35,7 @@ const ChartJsWrapper = ({
   isLoading,
   options,
   title,
-  type,
+  style = {},
   chartHeight,
   spinnerSize,
 }) =>
@@ -79,6 +79,22 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
+    const cOptions = generateOptions(options, data);
+    const defaultStyle = style;
+    const cData = {
+      datasets: data.datasets.map((ds, i) => {
+        const { style = {}, data, label } = ds;
+        const type = style.type || defaultStyle.type;
+
+        return {
+          ...generateDatasetStyle(i, type),
+          ...defaultStyle,
+          ...style,
+          data,
+          label,
+        };
+      }),
+    };
 
     if (allOldData) {
       const error = new Error(
@@ -88,12 +104,12 @@ const ChartJsWrapper = ({
       return (
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
-            {title && <h2>{title}</h2>}
+            {title && <h2 className={classes.title}>{title}</h2>}
             <Chart
-              type={type}
-              data={data}
+              type="line"
+              data={cData}
               height={chartHeight}
-              options={generateOptions(options)}
+              options={cOptions}
             />
           </ErrorMessage>
         </div>
@@ -104,10 +120,10 @@ const ChartJsWrapper = ({
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
         <Chart
-          type={type}
-          data={data}
+          type="line"
+          data={cData}
           height={chartHeight}
-          options={generateOptions(options)}
+          options={cOptions}
         />
       </div>
     );
@@ -118,12 +134,8 @@ ChartJsWrapper.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   options: PropTypes.shape({
     reverse: PropTypes.bool,
-    scaleLabel: PropTypes.string,
+    'axis.y.label': PropTypes.string,
     title: PropTypes.string,
-    tooltipFormat: PropTypes.bool,
-    tooltips: PropTypes.shape({
-      callbacks: PropTypes.object,
-    }),
     ticksCallback: PropTypes.func,
   }),
   data: PropTypes.shape({
@@ -145,7 +157,6 @@ ChartJsWrapper.propTypes = {
     ).isRequired,
   }),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  type: PropTypes.string,
   isLoading: PropTypes.bool,
   chartHeight: PropTypes.number,
   spinnerSize: PropTypes.string,
@@ -155,7 +166,6 @@ ChartJsWrapper.defaultProps = {
   data: undefined,
   options: undefined,
   title: '',
-  type: 'line',
   chartHeight: 80,
   spinnerSize: '100%',
   isLoading: false,

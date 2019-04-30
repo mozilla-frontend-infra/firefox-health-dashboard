@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { missing } from '../../vendor/utils';
-import { round } from '../../vendor/math';
+import { missing } from '../utils';
+import { round } from '../math';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -98,7 +98,7 @@ class CustomTooltip extends React.Component {
     const currSeries = series[currPoint.datasetIndex];
 
     if (missing(currSeries)) return null;
-    const higherOrLower = currSeries.meta.lower_is_better
+    const higherOrLower = currSeries.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
     const curr = currSeries.data[index];

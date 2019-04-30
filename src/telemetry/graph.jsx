@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { stringify } from 'query-string';
 import { Log } from '../vendor/logs';
+import fetchJson from '../utils/fetchJson';
 import SETTINGS from '../settings';
 import { withErrorBoundary } from '../vendor/errors';
 
@@ -22,7 +23,7 @@ class TelemetryContainer extends React.Component {
     });
 
     try {
-      const { graphData, telemetryUrl } = await (await fetch(url)).json();
+      const { graphData, telemetryUrl } = await fetchJson(url);
 
       if (!this.graphTitleLink) {
         return;

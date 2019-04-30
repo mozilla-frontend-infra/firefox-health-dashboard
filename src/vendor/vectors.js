@@ -185,8 +185,19 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
+  filter(func) {
+    // restrict to rows where `func()` is truthy
+    function* output(argslist) {
+      for (const args of argslist) if (func(...args)) yield args;
+    }
+
+    return new ArrayWrapper(() => output(this.argslist));
+  }
+
+  /*
+  restrict to just rows with index >= start
+   */
   slice(start) {
-    // restrict to just rows with index >= start
     function* output(argslist) {
       let i = 0;
 
@@ -199,17 +210,10 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
-  filter(func) {
-    // restrict to rows where `func()` is truthy
-    function* output(argslist) {
-      for (const args of argslist) if (func(...args)) yield args;
-    }
-
-    return new ArrayWrapper(() => output(this.argslist));
-  }
-
+  /*
+  restrict to rows with index < max
+  */
   limit(max) {
-    // restrict to rows with index < max
     function* output(argslist) {
       let i = 0;
 
@@ -377,6 +381,19 @@ class ArrayWrapper {
   }
 
   sortBy(selectors) {
+    if (missing(selectors)) {
+      const simpleSorted = lodashSortBy(Array.from(this.argsGen()), [
+        ([arg]) => arg,
+      ]);
+
+      return new ArrayWrapper(
+        function* outputGen() {
+          for (const args of simpleSorted) yield args;
+        },
+        { debug: false }
+      );
+    }
+
     const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
         return ([arg]) => arg;
@@ -557,7 +574,7 @@ class ArrayWrapper {
     return true;
   }
 
-  concatenate(separator) {
+  join(separator) {
     return Array.from(this).join(separator);
   }
 
@@ -656,11 +673,15 @@ internalToPairs = toPairs;
 /*
  * Convert Object into list of [value, path] pairs
  * where path is dot delimited path deep into object
+ * formal===false will allow dots in property names to refer to path
+ * formal===true will escape the dots, making them literal
  */
-function leaves(obj) {
+function leaves(obj, formal = true) {
+  const field = formal ? literalField : k => k;
+
   function* leafGen(map, prefix) {
     for (const [val, key] of toPairs(map).argsGen()) {
-      const path = concatField(prefix, literalField(key));
+      const path = concatField(prefix, field(key));
 
       if (isData(val)) {
         for (const pair of leafGen(val, path)) yield pair;

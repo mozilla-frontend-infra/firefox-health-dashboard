@@ -1,10 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ChartJsWrapper from '../../components/ChartJsWrapper';
-import telemetryDataToDatasets from '../../utils/chartJs/redashFormatter';
+import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import fetchJson from '../../utils/fetchJson';
 import { withErrorBoundary } from '../../vendor/errors';
+import { Log } from '../../vendor/logs';
+
+/* eslint-disable camelcase */
+
+const sortByDate = (a, b) =>
+  new Date(b.submission_date) - new Date(a.submission_date);
+const dataToChartJSformat = data =>
+  data.map(({ submission_date, value }) => ({
+    x: submission_date,
+    y: value,
+  }));
+const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
+  const queryResulset = data.query_result;
+  // Separate data points into buckets
+  const buckets = queryResulset.data.rows.reduce((result, datum) => {
+    const key = datum[dataKeyIdentifier];
+
+    if (!key) {
+      // XXX: Make it a custom error, catch it and display a UI message
+      Log.error(
+        'Check the Redash data and determine what is the key used to categorize the data.'
+      );
+    }
+
+    if (!result[key]) {
+      // eslint-disable-next-line no-param-reassign
+      result[key] = [];
+    }
+
+    result[key].push(datum);
+
+    return result;
+  }, {});
+  const datasets = Object.keys(buckets).map(key => {
+    const datum = buckets[key];
+
+    return {
+      label: key,
+      data: dataToChartJSformat(datum.sort(sortByDate)),
+    };
+  });
+
+  return { datasets };
+};
 
 const styles = {
   title: {
@@ -28,11 +71,7 @@ class RedashContainer extends Component {
   static propTypes = {
     options: PropTypes.shape({
       title: PropTypes.string,
-      scaleLabel: PropTypes.string,
-      tooltipFormat: PropTypes.bool,
-      tooltips: PropTypes.shape({
-        callbacks: PropTypes.object,
-      }),
+      'axis.y.label': PropTypes.string,
       ticksCallback: PropTypes.func,
     }),
     classes: PropTypes.shape().isRequired,
@@ -44,16 +83,7 @@ class RedashContainer extends Component {
 
   static defaultProps = {
     options: {
-      scaleLabel: 'Miliseconds',
-      tooltipFormat: true,
-      tooltips: {
-        callbacks: {
-          label: (tooltipItems, data) =>
-            `${data.datasets[tooltipItems.datasetIndex].label}: ${
-              tooltipItems.yLabel
-            } ms`,
-        },
-      },
+      'axis.y.label': 'Miliseconds',
       ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
     },
     dataKeyIdentifier: 'label',

@@ -36,8 +36,8 @@ const fennec64onP2 = {
     [709.89, 483.5, 118.14, 702.5, 90.51, 1053, 58.34, "Tp6 mobile: YouTube Watch", "https://www.youtube.com/watch?v=COU5T-Wafa4"],
     [1259.39, 566.5, 144.28, 1240, 143.07, 2842, 160.25, "Tp6 mobile: Reddit", "https://www.reddit.com"],
     [2089.24, 1602, 112.63, 1327, 110.09, 4289, 206.28, "Tp6 mobile: Stackoverflow", "https://stackoverflow.com/"],
-    [968.38, 703.5, 672.06, 896, 681.16, 1440.5, 667.76, null, "https://www.bbc.com/news/business-4724587"],
-    [1996.78, 1209.5, 87.5, 1232.5, 88.83, 5339, 13857.4, null, "https://support.microsoft.com/en-us"],
+    [968.38, 703.5, 672.06, 896, 681.16, 1440.5, 667.76, "Tp6 mobile: BBC", "https://www.bbc.com/news/business-4724587"],
+    [1996.78, 1209.5, 87.5, 1232.5, 88.83, 5339, 13857.4, "Tp6 mobile: Microsoft", "https://support.microsoft.com/en-us"],
     [1601.32, 964.5, 60.61, 1448.5, 163.47, 2938.5, 98.61, "Tp6 mobile: Jianshu", "https://www.jianshu.com/"],
     [1281.51, 784, 232.74, 1181, 177.61, 2272.5, 229.91, "Tp6 mobile: Imdb", "https://m.imdb.com/"],
     [2565.35, 2780, 633.08, 1375, 266.96, 4416, 363.75, "Tp6 mobile: All Recipes", "https://www.allrecipes.com/"],
@@ -48,7 +48,7 @@ const fennec64onP2 = {
   ]
 };
 fennec64onP2.header.push("platform");
-fennec64onP2.data.forEach(d=>d.push('android-p2-aarch64'));
+fennec64onP2.data.forEach(d=>d.push('geckoview-p2-aarch64'));
 const flatP2 = fennec64onP2.data.map(row => Data.zip(fennec64onP2.header, row));
 
 
@@ -93,9 +93,10 @@ const fennec64onG5 =
   };
 
 fennec64onG5.header.push("platform");
-fennec64onG5.data.forEach(d=>d.push('android-g5'));
-const flatG5 = fennec64onG5.data.map(row => Data.zip(fennec64onG5.header, row));
+fennec64onG5.data.forEach(d=>d.push('geckoview-g5'));
 
+const flatG5 = fennec64onG5.data.map(row => Data.zip(fennec64onG5.header, row));
+flatG5.push(...flatG5.map(row=>({...row, platform: 'fenix-g5'})));
 const tests = selectFrom(TP6_TESTS).select('test').toArray();
 
 const raw = selectFrom(flatG5)
