@@ -6,6 +6,7 @@ import fetchJson from '../utils/fetchJson';
 import jx from './jx/expressions';
 import { Log } from './logs';
 
+const DEBUG = false;
 const PERFHERDER = {
   signatures: [],
 };
@@ -63,11 +64,15 @@ const getFramework = async combo => {
                 'raptor-chrome',
                 'raptor-google',
                 'raptor-assorted-dom',
+                'tp4',
+                'tp5',
               ].some(prefix => suite.startsWith(prefix))
             ) {
               lowerIsBetter = true;
             } else {
-              Log.warning('Do not have direction for {{suite}}', { suite });
+              if (DEBUG)
+                Log.note('Do not have direction for {{suite}}', { suite });
+              lowerIsBetter = false;
             }
           }
 

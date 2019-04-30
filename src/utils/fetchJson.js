@@ -9,6 +9,13 @@ const fetchJson = async url => {
 
   if (!response) return null;
 
+  if (response.status !== 200) {
+    Log.error('{{status}} when calling {{url}}', {
+      url,
+      status: response.status,
+    });
+  }
+
   try {
     return response.json();
   } catch (error) {

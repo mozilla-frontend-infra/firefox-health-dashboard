@@ -27,7 +27,7 @@ import { Cube } from './jx/cubes';
 import Matrix from './jx/Matrix';
 import Edge from './jx/Edge';
 
-const DEBUG = true;
+const DEBUG = false;
 let internalFrom = null;
 let internalToPairs = null;
 const getI = i => m => m[i];

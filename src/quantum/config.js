@@ -6,7 +6,7 @@ import { Log } from '../vendor/logs';
 import {getSignatures} from "../vendor/perfherder";
 import { Domain } from "../vendor/jx/domains";
 
-const DEBUG = true;
+const DEBUG = false;
 
 const CONFIG = {
   windows64Regression: [
