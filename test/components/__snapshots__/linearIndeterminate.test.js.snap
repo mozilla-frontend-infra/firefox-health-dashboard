@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LinearIndeterminate /> renders correctly 1`] = `
+<div
+  className="LinearIndeterminate-root-1 X"
+>
+  <div
+    className="MuiLinearProgress-root-2 MuiLinearProgress-colorPrimary-3 MuiLinearProgress-indeterminate-6"
+    role="progressbar"
+  >
+    <div
+      className="MuiLinearProgress-bar-12 MuiLinearProgress-barColorPrimary-13 MuiLinearProgress-bar1Indeterminate-15"
+      style={Object {}}
+    />
+    <div
+      className="MuiLinearProgress-bar-12 MuiLinearProgress-barColorPrimary-13 MuiLinearProgress-bar2Indeterminate-18"
+      style={Object {}}
+    />
+  </div>
+</div>
+`;
