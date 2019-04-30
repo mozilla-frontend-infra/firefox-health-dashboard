@@ -9,7 +9,7 @@ describe('<LinearIndeterminate />', () => {
       .create(
         <LinearIndeterminate
           classes={{
-            root: 'X'
+            root: 'X',
           }}
         />
       )
