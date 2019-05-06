@@ -62,7 +62,9 @@ const mergeProductsData = productsData => {
         return;
       }
 
-      const sortedData = selectFrom(profileInfo.data).sort("date").toArray();
+      const sortedData = selectFrom(profileInfo.data)
+        .sort('date')
+        .toArray();
       const lastDataPoint = sortedData[sortedData.length - 1].value.toFixed(2);
       const scenarioKey = originalKey.split('#')[0];
 
