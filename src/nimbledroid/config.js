@@ -16,11 +16,11 @@ export const CONFIG = {
     'org.mozilla.fenix',
   ],
   summaryTable: [
-    'org.mozilla.klar',
     'org.mozilla.geckoview_example',
+    'org.mozilla.fenix',
     'com.chrome.beta',
   ],
-  baseProduct: 'org.mozilla.geckoview_example',
+  baseProduct: 'org.mozilla.fenix',
   compareProduct: 'com.chrome.beta',
   targetRatio: 1.2,
 };
@@ -59,24 +59,25 @@ export const siteMetrics = (target1, target2, targetRatio) => {
   };
 };
 
+const baseName = CONFIG.packageIdLabels[CONFIG.baseProduct];
 const generateSitesSummary = (count, numSites) => [
   {
     title: {
-      text: 'GeckoView > 20% slower than Chrome Beta',
+      text: `${baseName} > 20% slower than Chrome Beta`,
     },
     statusColor: 'red',
     summary: `${count.red}/${numSites}`,
   },
   {
     title: {
-      text: 'GeckoView > 0% and <= 20% slower than Chrome Beta',
+      text: `${baseName} > 0% and <= 20% slower than Chrome Beta`,
     },
     statusColor: 'yellow',
     summary: `${count.yellow}/${numSites}`,
   },
   {
     title: {
-      text: 'GeckoView <= 0% (i.e. faster than) Chrome Beta',
+      text: `${baseName} <= 0% (i.e. faster than) Chrome Beta`,
     },
     statusColor: 'green',
     summary: `${count.green}/${numSites}`,
@@ -159,7 +160,16 @@ export const generateSitesTableContent = (
 
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: packageIds.map(packageId => scenario[packageId]) || [],
+      dataPoints: packageIds.map(packageId => {
+        const datum = scenario[packageId];
+        const { color } = siteMetrics(
+          datum,
+          scenario[compareProduct],
+          targetRatio
+        );
+
+        return { datum, statusColor: color };
+      }),
       statusColor: color,
       summary: `${((1 - ratio) * 100).toFixed(2)}%`,
       title: {
