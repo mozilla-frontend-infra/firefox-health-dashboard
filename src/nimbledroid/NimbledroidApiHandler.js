@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import fetchJson from '../utils/fetchJson';
+import { selectFrom } from '../vendor/vectors';
 import SETTINGS from '../settings';
 
 const ENDPOINT = `${SETTINGS.backend}/api/android/nimbledroid`;
@@ -45,20 +46,6 @@ const transformedDataForMetrisGraphics = scenarios => {
   return metricsGraphicsData;
 };
 
-const sortDataPointsByRecency = (a, b) => {
-  let retVal;
-
-  if (a.date < b.date) {
-    retVal = -1;
-  } else if (a.date === b.date) {
-    retVal = 0;
-  } else {
-    retVal = 1;
-  }
-
-  return retVal;
-};
-
 const mergeProductsData = productsData => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
@@ -75,7 +62,7 @@ const mergeProductsData = productsData => {
         return;
       }
 
-      const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
+      const sortedData = selectFrom(profileInfo.data).sort("date").toArray();
       const lastDataPoint = sortedData[sortedData.length - 1].value.toFixed(2);
       const scenarioKey = originalKey.split('#')[0];
 
