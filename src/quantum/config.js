@@ -212,6 +212,20 @@ const PLATFORMS = [
       ],
     },
   },
+  {
+    browser: 'fenix',
+    label: 'Firefox Preview p2 (aarch64)',
+    platform: 'fenix-p2-aarch64',
+    platformFilter: {
+      and: [
+        { eq: { platform: 'android-hw-p2-8-0-aarch64' } },
+        {eq: {
+          framework: 10,
+          repo: 'fenix',
+        }},
+      ],
+    },
+  },
 ];
 const TP6_TESTS_DATA = [
   {

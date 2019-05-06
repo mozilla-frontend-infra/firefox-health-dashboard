@@ -159,7 +159,7 @@ async function pullAggregate({
 }
 
 const DESIRED_TESTS = ['cold-loadtime'];
-const DESIRED_PLATFORMS = ['geckoview-p2-aarch64', 'fenix-g5'];
+const DESIRED_PLATFORMS = ['fenix-p2-aarch64', 'fenix-g5'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -175,11 +175,11 @@ class TP6mAggregate_ extends Component {
       or: TP6_COMBOS.filter(
         jx({
           and: [
-            { eq: { browser: ['geckoview', 'fenix'] } },
+            { eq: { browser: ['fenix'] } },
             {
               eq: {
-                platform: ['geckoview-p2-aarch64', 'fenix-g5'],
-                test: 'cold-loadtime',
+                platform: DESIRED_PLATFORMS,
+                test: DESIRED_TESTS,
               },
             },
           ],
@@ -224,12 +224,13 @@ class TP6mAggregate_ extends Component {
               .enumerate()
               .map(row => {
                 const platform = row.platform.getValue();
+                const platformLabel = selectFrom(PLATFORMS)
+                  .where({ platform })
+                  .first().label;
                 const chartData = {
                   datasets: [
                     {
-                      label: selectFrom(PLATFORMS)
-                        .where({ platform })
-                        .first().label,
+                      label: platformLabel,
                       data: row
                         .along('pushDate')
                         .map(({ pushDate, result }) => ({
@@ -265,12 +266,14 @@ class TP6mAggregate_ extends Component {
                   return null;
 
                 return (
-                  <Grid item xs={6} key={label}>
+                  <Grid item xs={6} key={platform}>
                     <ChartJSWrapper
                       title={
                         <span>
-                          Geomean of&nbsp;
+                          {'Geomean of '}
                           {label}
+                          {' for '}
+                          {platformLabel}
                           {' ('}
                           <a
                             href={`/android/tp6m?${toQueryString({
