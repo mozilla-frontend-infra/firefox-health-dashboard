@@ -6,7 +6,7 @@ import { generateSitesTableContent } from './config';
 import fetchNimbledroidData from './NimbledroidApiHandler';
 import { withErrorBoundary } from '../vendor/errors';
 import SummaryTable from './SummaryTable';
-import StatusWidget from '../components/StatusWidget';
+import StatusWidget from './StatusWidget';
 
 const styles = {
   root: {

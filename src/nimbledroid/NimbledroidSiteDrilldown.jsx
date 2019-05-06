@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withErrorBoundary } from '../vendor/errors';
 import NimbledroidGraph from './NimbledroidGraph';
-import StatusWidget from '../components/StatusWidget';
+import StatusWidget from './StatusWidget';
 import { siteMetrics } from './config';
 import fetchNimbledroidData from './NimbledroidApiHandler';
 
