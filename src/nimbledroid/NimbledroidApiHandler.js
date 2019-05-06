@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import fetchJson from '../utils/fetchJson';
+import SETTINGS from '../settings';
 
+const ENDPOINT = `${SETTINGS.backend}/api/android/nimbledroid`;
 const matchUrl = profileName =>
   profileName.replace(
     /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
@@ -102,7 +104,6 @@ const mergeProductsData = productsData => {
   };
 };
 
-let ENDPOINT;
 const productUrl = product => `${ENDPOINT}?product=${product}&version=3`;
 const fetchProductData = async product => {
   const url = productUrl(product);
@@ -114,26 +115,12 @@ const fetchProductData = async product => {
   };
 };
 
-// XXX: There's a strong coupling of data fetching from the API and
-//      data transformation for UI purposes (e.g. mergeProducts data)
-class NimbledroidApiHandler {
-  constructor(backendUrl) {
-    ENDPOINT = `${backendUrl}/api/android/nimbledroid`;
-  }
+async function fetchNimbledroidData(products) {
+  const productsData = await Promise.all(
+    products.map(async product => fetchProductData(product))
+  );
 
-  // No clean way to have interfaces on Javascript
-  getData({ products }) {
-    return this.fetchProducts(products);
-  }
-
-  // e.g. org.mozilla.klar, com.chrome.beta
-  async fetchProducts(products) {
-    const productsData = await Promise.all(
-      products.map(async product => fetchProductData(product))
-    );
-
-    return mergeProductsData(productsData);
-  }
+  return mergeProductsData(productsData);
 }
 
-export default NimbledroidApiHandler;
+export default fetchNimbledroidData;

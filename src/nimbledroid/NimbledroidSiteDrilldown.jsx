@@ -4,7 +4,7 @@ import { withErrorBoundary } from '../vendor/errors';
 import NimbledroidGraph from './NimbledroidGraph';
 import StatusWidget from '../components/StatusWidget';
 import { siteMetrics } from './config';
-import fetchNimbledroidData from './fetchNimbledroidData';
+import fetchNimbledroidData from './NimbledroidApiHandler';
 
 class NimbledroidSiteDrilldown extends Component {
   state = {

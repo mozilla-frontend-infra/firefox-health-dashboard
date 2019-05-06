@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { generateSitesTableContent } from './config';
-import fetchNimbledroidData from './fetchNimbledroidData';
+import fetchNimbledroidData from './NimbledroidApiHandler';
 import { withErrorBoundary } from '../vendor/errors';
 import SummaryTable from './SummaryTable';
 import StatusWidget from '../components/StatusWidget';

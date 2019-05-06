@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import fetchNimbledroidData from './fetchNimbledroidData';
+import fetchNimbledroidData from './NimbledroidApiHandler';
 import NimbledroidGraphContainer from './NimbledroidGraphContainer';
 import NimbledroidProductVersions from './NimbledroidProductVersions';
 import NimbledroidSummaryTable from './NimbledroidSummaryTable';
