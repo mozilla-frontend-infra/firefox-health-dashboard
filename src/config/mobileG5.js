@@ -47,10 +47,12 @@ const fennec64onP2 = {
     [1071.28, 664.5, 49.42, 716.5, 64.35, 2581, 72.18, "Tp6 mobile: Aframe.io", "https://aframe.io/examples/showcase/animation"],
   ]
 };
+// Initial platform was geckoview on p2-aarch64
 fennec64onP2.header.push("platform");
 fennec64onP2.data.forEach(d=>d.push('geckoview-p2-aarch64'));
 const flatP2 = fennec64onP2.data.map(row => Data.zip(fennec64onP2.header, row));
-
+// ADD fenic ON P2
+flatP2.push(...flatP2.map(row=>({...row, platform: 'fenix-p2-aarch64'})));
 
 // COLD https://docs.google.com/spreadsheets/d/1xuYdCodmiFY-NmAXq_8WTcO_WMfsZVNNeiGCr-w2xAY/edit#gid=265906020
 // WARM https://docs.google.com/spreadsheets/d/1xuYdCodmiFY-NmAXq_8WTcO_WMfsZVNNeiGCr-w2xAY/edit#gid=476650517
@@ -91,11 +93,11 @@ const fennec64onG5 =
       [ 2223.17,  1191.5,            1245  ,          7404  ,  359.71,  1509.44, 6001   ,    null,  763.5 ,  750  , "Tp6 mobile: Aframe.io",           "https://aframe.io/examples/showcase/animation"],
     ]
   };
-
+// Initial platform was geckoview on g5
 fennec64onG5.header.push("platform");
 fennec64onG5.data.forEach(d=>d.push('geckoview-g5'));
-
 const flatG5 = fennec64onG5.data.map(row => Data.zip(fennec64onG5.header, row));
+// add fenix on g5
 flatG5.push(...flatG5.map(row=>({...row, platform: 'fenix-g5'})));
 const tests = selectFrom(TP6_TESTS).select('test').toArray();
 
