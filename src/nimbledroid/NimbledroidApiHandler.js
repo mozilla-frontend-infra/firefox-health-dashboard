@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 import fetchJson from '../utils/fetchJson';
+import { selectFrom } from '../vendor/vectors';
+import SETTINGS from '../settings';
 
+const ENDPOINT = `${SETTINGS.backend}/api/android/nimbledroid`;
 const matchUrl = profileName =>
   profileName.replace(
     /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
@@ -43,20 +46,6 @@ const transformedDataForMetrisGraphics = scenarios => {
   return metricsGraphicsData;
 };
 
-const sortDataPointsByRecency = (a, b) => {
-  let retVal;
-
-  if (a.date < b.date) {
-    retVal = -1;
-  } else if (a.date === b.date) {
-    retVal = 0;
-  } else {
-    retVal = 1;
-  }
-
-  return retVal;
-};
-
 const mergeProductsData = productsData => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
@@ -73,7 +62,9 @@ const mergeProductsData = productsData => {
         return;
       }
 
-      const sortedData = profileInfo.data.sort(sortDataPointsByRecency);
+      const sortedData = selectFrom(profileInfo.data)
+        .sortBy('date')
+        .toArray();
       const lastDataPoint = sortedData[sortedData.length - 1].value.toFixed(2);
       const scenarioKey = originalKey.split('#')[0];
 
@@ -102,7 +93,6 @@ const mergeProductsData = productsData => {
   };
 };
 
-let ENDPOINT;
 const productUrl = product => `${ENDPOINT}?product=${product}&version=3`;
 const fetchProductData = async product => {
   const url = productUrl(product);
@@ -114,26 +104,12 @@ const fetchProductData = async product => {
   };
 };
 
-// XXX: There's a strong coupling of data fetching from the API and
-//      data transformation for UI purposes (e.g. mergeProducts data)
-class NimbledroidApiHandler {
-  constructor(backendUrl) {
-    ENDPOINT = `${backendUrl}/api/android/nimbledroid`;
-  }
+async function fetchNimbledroidData(products) {
+  const productsData = await Promise.all(
+    products.map(async product => fetchProductData(product))
+  );
 
-  // No clean way to have interfaces on Javascript
-  getData({ products }) {
-    return this.fetchProducts(products);
-  }
-
-  // e.g. org.mozilla.klar, com.chrome.beta
-  async fetchProducts(products) {
-    const productsData = await Promise.all(
-      products.map(async product => fetchProductData(product))
-    );
-
-    return mergeProductsData(productsData);
-  }
+  return mergeProductsData(productsData);
 }
 
-export default NimbledroidApiHandler;
+export default fetchNimbledroidData;

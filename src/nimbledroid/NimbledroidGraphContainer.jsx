@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { CONFIG } from './config';
 import { withErrorBoundary } from '../vendor/errors';
 import ChartJsWrapper from '../vendor/chartJs/ChartJsWrapper';
-import fetchNimbledroidData from './fetchNimbledroidData';
+import fetchNimbledroidData from './NimbledroidApiHandler';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import Date from '../vendor/dates';
 

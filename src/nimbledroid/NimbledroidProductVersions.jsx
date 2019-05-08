@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import fetchNimbledroidData from './fetchNimbledroidData';
+import fetchNimbledroidData from './NimbledroidApiHandler';
 import { CONFIG } from './config';
 import { withErrorBoundary } from '../vendor/errors';
 

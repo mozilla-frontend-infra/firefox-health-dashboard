@@ -129,7 +129,7 @@ exports[`renders correctly 1`] = `
                 <span
                   className="Section-subtitle-104"
                 >
-                  GeckoView Example vs Chrome Beta
+                  Firefox Preview vs Chrome Beta
                 </span>
               </span>
             </h2>

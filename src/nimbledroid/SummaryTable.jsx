@@ -1,55 +1,43 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
-import StatusWidget from '../components/StatusWidget';
-import { CONFIG } from './config';
-import { selectFrom } from '../vendor/vectors';
+import StatusWidget from './StatusWidget';
 
-const SummaryTable = ({ content = [], header }) => {
-  const compareName = CONFIG.packageIdLabels[CONFIG.baseProduct];
-  const compareColumn = selectFrom(header).findIndex(
-    name => name === compareName
-  );
+const SummaryTable = ({ content = [], header }) => (
+  <table className="summary-table">
+    {header && (
+      <thead>
+        <tr>
+          <th />
+          {header.map(item => (
+            <th className="column" key={item}>
+              {item}
+            </th>
+          ))}
+        </tr>
+      </thead>
+    )}
+    <tbody>
+      {content.map(({ dataPoints = [], summary, title, uid }) => (
+        <tr key={uid}>
+          <td className="title-container">
+            <StatusWidget title={title} />
+          </td>
+          {dataPoints.map(({ datum, statusColor }, columnIndex) => {
+            const className = `status-${statusColor}`;
 
-  return (
-    <table className="summary-table">
-      {header && (
-        <thead>
-          <tr>
-            <th />
-            {header.map(item => (
-              <th className="column" key={item}>
-                {item}
-              </th>
-            ))}
-          </tr>
-        </thead>
-      )}
-      <tbody>
-        {content.map(
-          ({ dataPoints = [], statusColor, summary, title, uid }) => (
-            <tr key={uid}>
-              <td className="title-container">
-                <StatusWidget statusColor={statusColor} title={title} />
+            return (
+              <td key={columnIndex} className={className}>
+                {datum}
               </td>
-              {dataPoints.map((datum, columnIndex) => {
-                const className =
-                  columnIndex === compareColumn ? `status-${statusColor}` : '';
-
-                return (
-                  <td key={columnIndex} className={className}>
-                    {datum}
-                  </td>
-                );
-              })}
-              <td>{summary}</td>
-            </tr>
-          )
-        )}
-      </tbody>
-    </table>
-  );
-};
+            );
+          }) || []}
+          <td>{summary}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
 
 SummaryTable.propTypes = {
   content: PropTypes.arrayOf(
