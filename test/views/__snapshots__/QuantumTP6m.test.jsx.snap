@@ -619,59 +619,6 @@ exports[`renders correctly 1`] = `
                   className="ChartJsWrapper-title-184"
                 >
                   <span>
-                    Tp6 mobile: CNN
-                  </span>
-                </h2>
-                <div
-                  style={
-                    Object {
-                      "height": 80,
-                      "lineHeight": "100%",
-                      "textAlign": "center",
-                      "width": "100%",
-                    }
-                  }
-                >
-                  <div
-                    className="MuiCircularProgress-root-186 MuiCircularProgress-colorPrimary-189 MuiCircularProgress-indeterminate-188"
-                    role="progressbar"
-                    style={
-                      Object {
-                        "height": 40,
-                        "width": 40,
-                      }
-                    }
-                  >
-                    <svg
-                      className="MuiCircularProgress-svg-191"
-                      viewBox="22 22 44 44"
-                    >
-                      <circle
-                        className="MuiCircularProgress-circle-192 MuiCircularProgress-circleIndeterminate-194"
-                        cx={44}
-                        cy={44}
-                        fill="none"
-                        r={20.2}
-                        strokeWidth={3.6}
-                        style={Object {}}
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="MuiGrid-item-12 MuiGrid-grid-xs-6-45 TP6M-chart-3"
-          >
-            <div>
-              <div
-                className="ChartJsWrapper-chartContainer-183"
-              >
-                <h2
-                  className="ChartJsWrapper-title-184"
-                >
-                  <span>
                     Tp6 mobile: CNN AmpStories
                   </span>
                 </h2>
