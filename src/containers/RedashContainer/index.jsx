@@ -1,36 +1,24 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import { fetchJson } from '../../vendor/requests';
 import { withErrorBoundary } from '../../vendor/errors';
-import { Log } from '../../vendor/logs';
 import { selectFrom } from '../../vendor/vectors';
 
-/* eslint-disable camelcase */
-
 const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
-  const queryResulset = data.query_result;
-  // Separate data points into buckets
-  const datasets = selectFrom(queryResulset.data.rows)
-    .map(datum => {
-      const key = datum[dataKeyIdentifier];
-
-      if (!key) {
-        Log.error(
-          'Check the Redash data and determine what is the key used to categorize the data.'
-        );
-      }
-
-      return { datum, key };
-    })
-    .groupBy('key')
-    .map((datum, key) => ({
+  // Separate data points into percentile buckets
+  const datasets = selectFrom(data.query_result.data.rows)
+    .groupBy(dataKeyIdentifier)
+    .map((rows, key) => ({
       label: key,
-      data: selectFrom(datum)
+      data: selectFrom(rows)
         .sortBy('submission_date')
-        .select({ x: 'submission_date', y: 'value' }),
-    }));
+        .select({ x: 'submission_date', y: 'value' })
+        .toArray(),
+    }))
+    .toArray();
 
   return { datasets };
 };
@@ -50,7 +38,7 @@ const styles = {
 
 class RedashContainer extends Component {
   state = {
-    datasets: null,
+    data: null,
     isLoading: false,
   };
 
@@ -85,7 +73,7 @@ class RedashContainer extends Component {
       const redashData = await fetchJson(redashDataUrl);
 
       this.setState({
-        datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
+        data: telemetryDataToDatasets(redashData, dataKeyIdentifier),
       });
     } finally {
       this.setState({ isLoading: false });
@@ -94,14 +82,14 @@ class RedashContainer extends Component {
 
   render() {
     const { classes, options, redashQueryUrl, title } = this.props;
-    const { datasets, isLoading } = this.state;
+    const { data, isLoading } = this.state;
 
     return (
       <div>
         <ChartJsWrapper
           title={title}
           type="line"
-          data={datasets}
+          data={data}
           isLoading={isLoading}
           options={options}
         />
