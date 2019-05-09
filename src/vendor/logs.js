@@ -3,6 +3,7 @@
 import { coalesce, exists, isString, missing } from './utils';
 import Template from './Template';
 import { selectFrom } from './vectors';
+import { value2json } from './convert';
 
 //   Error
 //       at Function.Object.<anonymous>.Log.error (C:\Users\kyle\code\firefox-health-dashboard\src\vendor\errors.jsx:174:9)
@@ -168,6 +169,8 @@ Exception.wrap = err => {
 };
 
 class Log {}
+
+Log._ = value2json;
 
 Log.note = (template, params) => {
   // eslint-disable-next-line no-console
