@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-import { toQueryString } from './convert';
-import { first, missing, toArray, exists } from './utils';
+import { fetchJson, URL } from './requests';
+import { exists, first, missing, toArray } from './utils';
 import { selectFrom, toPairs } from './vectors';
-import fetchJson from '../utils/fetchJson';
 import jx from './jx/expressions';
 import { Log } from './logs';
 
@@ -12,8 +11,9 @@ const PERFHERDER = {
 };
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const getAllOptions = (async () => {
-  const response = await fetch(`${TREEHERDER}/api/optioncollectionhash/`);
-  const output = await response.json();
+  const output = await fetchJson(
+    URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] })
+  );
 
   return selectFrom(output)
     .map(({ option_collection_hash, options }) => [
@@ -30,12 +30,10 @@ const getFramework = async combo => {
 
   if (frameworkCache[comboString] === undefined) {
     frameworkCache[comboString] = (async () => {
-      const url = `${TREEHERDER}/api/project/${repo}/performance/signatures/?${toQueryString(
-        {
-          framework,
-          subtests: 1,
-        }
-      )}`;
+      const url = URL({
+        path: [TREEHERDER, 'api/project', repo, 'performance/signatures/'],
+        query: { framework, subtests: 1 },
+      });
       const rawData = await fetchJson(url);
       // ADD OPTION SIGNATURES
       const lookup = await getAllOptions;
@@ -153,7 +151,7 @@ const getSignatures = async condition => {
   return PERFHERDER.signatures.filter(jx(condition));
 };
 
-const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE TFO DATA
+const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE OF DATA
 const getDataBySignature = async metadatas => {
   // SCHEDULE ANY MISSING SIGNATURES
   selectFrom(metadatas)
@@ -165,11 +163,10 @@ const getDataBySignature = async metadatas => {
         .forEach(chunkOfMetas => {
           // GET ALL SIGNATURES IN THE CHUNK
           const getData = (async () => {
-            const url = `${TREEHERDER}/api/project/${repo}/performance/data/?${toQueryString(
-              {
-                signatures: chunkOfMetas.select('signature'),
-              }
-            )}`;
+            const url = URL({
+              path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
+              query: { signatures: chunkOfMetas.select('signature') },
+            });
 
             return fetchJson(url);
           })();

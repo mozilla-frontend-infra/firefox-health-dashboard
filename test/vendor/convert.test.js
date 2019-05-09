@@ -1,10 +1,6 @@
 /* global describe, it */
-import {
-  fromQueryString,
-  json2value,
-  toQueryString,
-  value2json,
-} from '../../src/vendor/convert';
+import { json2value, value2json } from '../../src/vendor/convert';
+import { fromQueryString, toQueryString } from '../../src/vendor/requests';
 
 describe('convert', () => {
   it('value2json', () => {

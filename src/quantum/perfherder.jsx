@@ -1,22 +1,21 @@
 /* global fetch */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { min, maxBy, minBy } from 'lodash/fp';
+import { maxBy, min, minBy } from 'lodash/fp';
 import cx from 'classnames';
 import moment from 'moment';
 import {
-  curveLinear,
-  line,
-  scaleTime,
-  scaleLinear,
-  format,
-  timeFormat,
   area,
+  curveLinear,
+  format,
+  line,
+  scaleLinear,
+  scaleTime,
+  timeFormat,
   timeMonth,
 } from 'd3';
-import { stringify } from 'query-string';
 import { withErrorBoundary } from '../vendor/errors';
-import fetchJson from '../utils/fetchJson';
+import { fetchJson, URL } from '../vendor/requests';
 import Widget from './widget';
 import SETTINGS from '../settings';
 
@@ -42,12 +41,14 @@ class PerfherderWidget extends React.Component {
       },
       new Map()
     );
-    const query = stringify({
-      signatures: [...splitSignatures.keys()],
-      framework,
-    });
     const evolutions = await fetchJson(
-      `${SETTINGS.backend}/api/perf/herder?${query}`
+      URL({
+        path: [SETTINGS.backend, 'api/perf/herder'],
+        query: {
+          signatures: splitSignatures.keys(),
+          framework,
+        },
+      })
     );
 
     this.setState({
@@ -236,14 +237,16 @@ class PerfherderWidget extends React.Component {
       svg = 'Loading Perfherder …';
     }
 
-    const linkArgs = stringify({
-      timerange: 7776000,
-      series: (signatures
-        ? [...signatures.keys()]
-        : Object.values(this.props.signatures)
-      ).map(signature => `[mozilla-central,${signature},1,${framework}]`),
+    const link = URL({
+      path: 'https://treeherder.mozilla.org/perf.html#/graphs',
+      query: {
+        timerange: 7776000,
+        series: (signatures
+          ? [...signatures.keys()]
+          : Object.values(this.props.signatures)
+        ).map(signature => ['mozilla-central', signature, 1, framework]),
+      },
     });
-    const link = `https://treeherder.mozilla.org/perf.html#/graphs?${linkArgs}`;
 
     return (
       <Widget

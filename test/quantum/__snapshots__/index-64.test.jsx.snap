@@ -67,7 +67,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C8f014459793e2e94c3244d5edeaada0452b0c627%2C1%2C10%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?timerange=7776000&series=mozilla-central%2C8f014459793e2e94c3244d5edeaada0452b0c627%2C1%2C10"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -129,7 +129,7 @@ exports[`renders correctly 1`] = `
             <div>
               <h3>
                 <a
-                  href="https://treeherder.mozilla.org/perf.html#/graphs?series=%5Bmozilla-central%2C9ad671fb568a5b3027af35b5d42fc6dd385f25ed%2C1%2C10%5D&timerange=7776000"
+                  href="https://treeherder.mozilla.org/perf.html#/graphs?timerange=7776000&series=mozilla-central%2C9ad671fb568a5b3027af35b5d42fc6dd385f25ed%2C1%2C10"
                   rel="noopener noreferrer"
                   target="_blank"
                 >

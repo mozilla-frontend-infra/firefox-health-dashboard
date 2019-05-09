@@ -2,25 +2,33 @@
 import percentile from 'aggregatejs/percentile';
 import { Log } from '../../vendor/logs';
 import { selectFrom, toPairs } from '../../vendor/vectors';
-import { toQueryString } from '../../vendor/convert';
+import { fetchJson, URL } from '../../vendor/requests';
 
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const REPO = 'mozilla-central';
 const NINENTY_DAYS = 90 * 24 * 60 * 60;
-const signaturesUrl = (repo = REPO) =>
-  `${TREEHERDER}/api/project/${repo}/performance/signatures`;
 const subtests = async signatureHash => {
-  const url = `${signaturesUrl()}/?parent_signature=${signatureHash}`;
+  const url = URL({
+    path: [TREEHERDER, 'api/project', REPO, 'performance/signatures/'],
+    query: { parent_signature: signatureHash },
+  });
 
   return (await fetch(url)).json();
 };
 
 const parentInfo = async ({ suite, platform, framework, option }) => {
   const [options, signatures] = await Promise.all([
-    await (await fetch(`${TREEHERDER}/api/optioncollectionhash/`)).json(),
-    await (await fetch(
-      `${signaturesUrl()}/?framework=${framework}&platform=${platform}&subtests=0`
-    )).json(),
+    await fetchJson(URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] })),
+    await fetchJson(
+      URL({
+        path: [TREEHERDER, 'api/project', REPO, 'performance/signatures/'],
+        query: {
+          framework,
+          platform,
+          subtests: 0,
+        },
+      })
+    ),
   ]);
   // Create a structure with only jobs matching the suite, make
   // option_collection_hash be the key and track the signatureHash as a property
@@ -46,39 +54,30 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
   return result[0];
 };
 
-const dataUrl = ({
-  tests,
-  framework,
-  repo = REPO,
-  interval = NINENTY_DAYS,
-}) => {
-  const param = {
-    framework,
-    interval,
-    signature_id: toPairs(tests)
-      .select('id')
-      .toArray(),
-  };
-
-  return `${TREEHERDER}/api/project/${repo}/performance/data/?${toQueryString(
-    param
-  )}`;
-};
-
+const dataUrl = ({ tests, framework, repo = REPO, interval = NINENTY_DAYS }) =>
+  URL({
+    path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
+    query: {
+      framework,
+      interval,
+      signature_id: toPairs(tests)
+        .select('id')
+        .toArray(),
+    },
+  });
 const perherderGraphUrl = ({
   signatureIds,
   framework,
   repo = REPO,
   timerange = NINENTY_DAYS,
-}) => {
-  let baseDataUrl = `${TREEHERDER}/perf.html#/graphs?timerange=${timerange}`;
-
-  baseDataUrl += `&${signatureIds
-    .map(id => `series=${repo},${id},1,${framework}`)
-    .join('&')}`;
-
-  return baseDataUrl;
-};
+}) =>
+  URL({
+    path: [TREEHERDER, 'perf.html#/graphs'],
+    query: {
+      timerange,
+      series: signatureIds.map(id => [repo, id, 1, framework]),
+    },
+  });
 
 export const adjustedData = (data, percentileThreshold, measure = 'value') => {
   let transformedData = data;

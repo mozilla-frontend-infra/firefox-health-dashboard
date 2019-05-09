@@ -83,6 +83,21 @@ const strings = {
     return v;
   },
 
+  trim(value, prefix) {
+    if (prefix === undefined) return value.trim();
+    let v = value;
+
+    while (v.startsWith(prefix)) {
+      v = v.slice(prefix.length);
+    }
+
+    while (v.endsWith(prefix)) {
+      v = v.slice(0, value.length - prefix.length);
+    }
+
+    return v;
+  },
+
   replaceAll(value, find, replace) {
     return value.split(find).join(replace);
   },

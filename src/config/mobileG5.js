@@ -51,7 +51,7 @@ const fennec64onP2 = {
 fennec64onP2.header.push("platform");
 fennec64onP2.data.forEach(d=>d.push('geckoview-p2-aarch64'));
 const flatP2 = fennec64onP2.data.map(row => Data.zip(fennec64onP2.header, row));
-// ADD fenic ON P2
+// ADD fenix ON P2
 flatP2.push(...flatP2.map(row=>({...row, platform: 'fenix-p2-aarch64'})));
 
 // COLD https://docs.google.com/spreadsheets/d/1xuYdCodmiFY-NmAXq_8WTcO_WMfsZVNNeiGCr-w2xAY/edit#gid=265906020

@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from '../utils';
 import { round } from '../math';
+import { URL } from '../requests';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -102,12 +103,19 @@ class CustomTooltip extends React.Component {
       ? 'lower is better'
       : 'higher is better';
     const curr = currSeries.data[index];
-    const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${
-      curr.revision
-    }`;
-    const jobURL = `https://treeherder.mozilla.org/#/jobs?repo=mozilla-central&revision=${
-      curr.revision
-    }&selectedJob=${curr.job_id}&group_state=expanded`;
+    const hgURL = URL({
+      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
+      query: { changeset: curr.revision },
+    });
+    const jobURL = URL({
+      path: 'https://treeherder.mozilla.org/#/jobs',
+      query: {
+        repo: 'mozilla-central',
+        revision: curr.revision,
+        selectedJob: curr.job_id,
+        group_state: 'expanded',
+      },
+    });
 
     return (
       <div

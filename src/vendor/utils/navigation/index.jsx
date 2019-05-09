@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { isEqual } from '../../Data';
 import { selectFrom } from '../../vectors';
 import { missing } from '../../utils';
-import { fromQueryString, toQueryString } from '../../convert';
+import { fromQueryString, URL } from '../../requests';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
@@ -82,9 +82,7 @@ function withNavigation(config) {
 
         if (isEqual(newState, oldState)) return;
 
-        const query = toQueryString(newState);
-
-        history.push(`${location.pathname}?${query}`);
+        history.push(URL({ path: location.pathname, query: newState }));
       }
 
       navComponents() {

@@ -3,9 +3,8 @@
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { stringify } from 'query-string';
 import { Log } from '../vendor/logs';
-import fetchJson from '../utils/fetchJson';
+import { fetchJson, URL } from '../vendor/requests';
 import SETTINGS from '../settings';
 import { withErrorBoundary } from '../vendor/errors';
 
@@ -15,11 +14,12 @@ class TelemetryContainer extends React.Component {
   }
 
   async fetchPlotGraph(id, queryParams) {
-    let url = `${SETTINGS.backend}/api/perf/telemetry?`;
-
-    url += stringify({
-      name: id,
-      ...queryParams,
+    const url = URL({
+      path: [SETTINGS.backend, 'api/perf/telemetry'],
+      query: {
+        name: id,
+        ...queryParams,
+      },
     });
 
     try {
@@ -29,7 +29,10 @@ class TelemetryContainer extends React.Component {
         return;
       }
 
-      const fullTelemetryUrl = `${telemetryUrl}&processType=parent`;
+      const fullTelemetryUrl = URL({
+        path: telemetryUrl,
+        query: { processType: 'parent' },
+      });
 
       this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
       this.graphSubtitleEl.textContent = graphData.description;

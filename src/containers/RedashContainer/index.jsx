@@ -2,49 +2,35 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
-import fetchJson from '../../utils/fetchJson';
+import { fetchJson } from '../../vendor/requests';
 import { withErrorBoundary } from '../../vendor/errors';
 import { Log } from '../../vendor/logs';
+import { selectFrom } from '../../vendor/vectors';
 
 /* eslint-disable camelcase */
 
-const sortByDate = (a, b) =>
-  new Date(b.submission_date) - new Date(a.submission_date);
-const dataToChartJSformat = data =>
-  data.map(({ submission_date, value }) => ({
-    x: submission_date,
-    y: value,
-  }));
 const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
   const queryResulset = data.query_result;
   // Separate data points into buckets
-  const buckets = queryResulset.data.rows.reduce((result, datum) => {
-    const key = datum[dataKeyIdentifier];
+  const datasets = selectFrom(queryResulset.data.rows)
+    .map(datum => {
+      const key = datum[dataKeyIdentifier];
 
-    if (!key) {
-      // XXX: Make it a custom error, catch it and display a UI message
-      Log.error(
-        'Check the Redash data and determine what is the key used to categorize the data.'
-      );
-    }
+      if (!key) {
+        Log.error(
+          'Check the Redash data and determine what is the key used to categorize the data.'
+        );
+      }
 
-    if (!result[key]) {
-      // eslint-disable-next-line no-param-reassign
-      result[key] = [];
-    }
-
-    result[key].push(datum);
-
-    return result;
-  }, {});
-  const datasets = Object.keys(buckets).map(key => {
-    const datum = buckets[key];
-
-    return {
+      return { datum, key };
+    })
+    .groupBy('key')
+    .map((datum, key) => ({
       label: key,
-      data: dataToChartJSformat(datum.sort(sortByDate)),
-    };
-  });
+      data: selectFrom(datum)
+        .sortBy('submission_date')
+        .select({ x: 'submission_date', y: 'value' }),
+    }));
 
   return { datasets };
 };

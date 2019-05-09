@@ -26,6 +26,8 @@ const OBJECT_CONSTRUCTOR = {}.constructor;
 function isData(val) {
   if (missing(val)) return false;
 
+  if (val[Symbol.iterator]) return false;
+
   return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
 }
 
@@ -54,6 +56,17 @@ function isEqual(a, b, done = []) {
 
   return false;
 }
+
+/*
+RETURN true IF value HAS NO KEYS
+ */
+Data.isEmpty = value => {
+  if (missing(value)) return true;
+
+  if (toPairs(value).some(exists)) return false;
+
+  return true;
+};
 
 /*
 LIST OF [k, v] TUPLES EXPECTED
