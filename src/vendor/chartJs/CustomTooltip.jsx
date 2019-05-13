@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { missing } from '../utils';
 import { round } from '../math';
+import { URL } from '../requests';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -76,7 +77,9 @@ class CustomTooltip extends React.Component {
   render() {
     const { classes, tooltipModel, series, canvas, isLocked } = this.props;
 
-    if (tooltipModel.opacity === 0) return null;
+    if (tooltipModel.opacity === 0) {
+      return null;
+    }
 
     const top = canvas.offsetTop + tooltipModel.caretY;
     const left = canvas.offsetLeft + tooltipModel.caretX;
@@ -97,17 +100,27 @@ class CustomTooltip extends React.Component {
     const { index } = currPoint;
     const currSeries = series[currPoint.datasetIndex];
 
-    if (missing(currSeries)) return null;
+    if (missing(currSeries)) {
+      return null;
+    }
+
     const higherOrLower = currSeries.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
     const curr = currSeries.data[index];
-    const hgURL = `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${
-      curr.revision
-    }`;
-    const jobURL = `https://treeherder.mozilla.org/#/jobs?repo=mozilla-central&revision=${
-      curr.revision
-    }&selectedJob=${curr.job_id}&group_state=expanded`;
+    const hgURL = URL({
+      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
+      query: { changeset: curr.revision },
+    });
+    const jobURL = URL({
+      path: 'https://treeherder.mozilla.org/#/jobs',
+      query: {
+        repo: 'mozilla-central',
+        revision: curr.revision,
+        selectedJob: curr.job_id,
+        group_state: 'expanded',
+      },
+    });
 
     return (
       <div
@@ -122,7 +135,9 @@ class CustomTooltip extends React.Component {
           {currPoint.yLabel} ({higherOrLower})
         </div>
         {(() => {
-          if (index === 0) return null;
+          if (index === 0) {
+            return null;
+          }
 
           const prev = currSeries.data[index - 1];
           const delta = curr.value - prev.value;

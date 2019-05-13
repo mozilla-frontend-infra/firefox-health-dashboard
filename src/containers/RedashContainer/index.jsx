@@ -1,50 +1,24 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
-import fetchJson from '../../utils/fetchJson';
+import { fetchJson } from '../../vendor/requests';
 import { withErrorBoundary } from '../../vendor/errors';
-import { Log } from '../../vendor/logs';
+import { selectFrom } from '../../vendor/vectors';
 
-/* eslint-disable camelcase */
-
-const sortByDate = (a, b) =>
-  new Date(b.submission_date) - new Date(a.submission_date);
-const dataToChartJSformat = data =>
-  data.map(({ submission_date, value }) => ({
-    x: submission_date,
-    y: value,
-  }));
 const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
-  const queryResulset = data.query_result;
-  // Separate data points into buckets
-  const buckets = queryResulset.data.rows.reduce((result, datum) => {
-    const key = datum[dataKeyIdentifier];
-
-    if (!key) {
-      // XXX: Make it a custom error, catch it and display a UI message
-      Log.error(
-        'Check the Redash data and determine what is the key used to categorize the data.'
-      );
-    }
-
-    if (!result[key]) {
-      // eslint-disable-next-line no-param-reassign
-      result[key] = [];
-    }
-
-    result[key].push(datum);
-
-    return result;
-  }, {});
-  const datasets = Object.keys(buckets).map(key => {
-    const datum = buckets[key];
-
-    return {
+  // Separate data points into percentile buckets
+  const datasets = selectFrom(data.query_result.data.rows)
+    .groupBy(dataKeyIdentifier)
+    .map((rows, key) => ({
       label: key,
-      data: dataToChartJSformat(datum.sort(sortByDate)),
-    };
-  });
+      data: selectFrom(rows)
+        .sortBy('submission_date')
+        .select({ x: 'submission_date', y: 'value' })
+        .toArray(),
+    }))
+    .toArray();
 
   return { datasets };
 };
@@ -64,7 +38,7 @@ const styles = {
 
 class RedashContainer extends Component {
   state = {
-    datasets: null,
+    data: null,
     isLoading: false,
   };
 
@@ -99,7 +73,7 @@ class RedashContainer extends Component {
       const redashData = await fetchJson(redashDataUrl);
 
       this.setState({
-        datasets: telemetryDataToDatasets(redashData, dataKeyIdentifier),
+        data: telemetryDataToDatasets(redashData, dataKeyIdentifier),
       });
     } finally {
       this.setState({ isLoading: false });
@@ -108,14 +82,14 @@ class RedashContainer extends Component {
 
   render() {
     const { classes, options, redashQueryUrl, title } = this.props;
-    const { datasets, isLoading } = this.state;
+    const { data, isLoading } = this.state;
 
     return (
       <div>
         <ChartJsWrapper
           title={title}
           type="line"
-          data={datasets}
+          data={data}
           isLoading={isLoading}
           options={options}
         />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
-import { toQueryString } from '../vendor/convert';
+import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
@@ -200,7 +200,7 @@ class TP6mAggregate_ extends Component {
   render() {
     const { data } = this.state;
 
-    if (missing(data))
+    if (missing(data)) {
       return (
         <div
           style={{
@@ -211,6 +211,7 @@ class TP6mAggregate_ extends Component {
           <CircularProgress />
         </div>
       );
+    }
 
     return (
       <Grid container spacing={24}>
@@ -262,8 +263,11 @@ class TP6mAggregate_ extends Component {
                 };
 
                 // do not show charts with no data
-                if (!chartData.datasets.some(ds => ds.data.some(({ y }) => y)))
+                if (
+                  !chartData.datasets.some(ds => ds.data.some(({ y }) => y))
+                ) {
                   return null;
+                }
 
                 return (
                   <Grid item xs={6} key={platform}>
@@ -276,10 +280,13 @@ class TP6mAggregate_ extends Component {
                           {platformLabel}
                           {' ('}
                           <a
-                            href={`/android/tp6m?${toQueryString({
-                              test,
-                              platform,
-                            })}`}
+                            href={URL({
+                              path: '/android/tp6m',
+                              query: {
+                                test,
+                                platform,
+                              },
+                            })}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ fontSize: '0.9em' }}>

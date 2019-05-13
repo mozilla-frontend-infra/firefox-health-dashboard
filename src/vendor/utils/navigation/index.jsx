@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { isEqual } from '../../Data';
 import { selectFrom } from '../../vectors';
 import { missing } from '../../utils';
-import { fromQueryString, toQueryString } from '../../convert';
+import { fromQueryString, URL } from '../../requests';
 
 function withNavigation(config) {
   // https://reactjs.org/docs/higher-order-components.html
@@ -34,7 +34,9 @@ function withNavigation(config) {
           .map(({ id, defaultValue, options }) => {
             const selected = params[id];
 
-            if (missing(selected)) return [defaultValue, id];
+            if (missing(selected)) {
+              return [defaultValue, id];
+            }
 
             if (
               selectFrom(options)
@@ -80,11 +82,11 @@ function withNavigation(config) {
         const newState = { ...this.state, ...change };
         const oldState = fromQueryString(location.search);
 
-        if (isEqual(newState, oldState)) return;
+        if (isEqual(newState, oldState)) {
+          return;
+        }
 
-        const query = toQueryString(newState);
-
-        history.push(`${location.pathname}?${query}`);
+        history.push(URL({ path: location.pathname, query: newState }));
       }
 
       navComponents() {

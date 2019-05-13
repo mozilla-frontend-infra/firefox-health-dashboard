@@ -1,6 +1,6 @@
-import { stringify } from 'query-string';
 import BZ_HOST from './settings';
 import queryBugzilla from './queryBugzilla';
+import { URL } from '../../vendor/requests';
 
 const DEFAULT_COLUMNLIST = [
   'priority',
@@ -11,18 +11,17 @@ const DEFAULT_COLUMNLIST = [
   'status_whiteboard',
   'changeddate',
 ].join(',');
-const generateBugzillaUrl = queryParameters => {
-  const query = stringify({
-    order: !queryParameters.order ? 'Bug Number' : queryParameters.order,
-    columnlist: !queryParameters.columnlist
-      ? DEFAULT_COLUMNLIST
-      : !queryParameters.columnlist,
-    ...queryParameters,
+const generateBugzillaUrl = queryParameters =>
+  URL({
+    path: [BZ_HOST, 'buglist.cgi'],
+    query: {
+      order: !queryParameters.order ? 'Bug Number' : queryParameters.order,
+      columnlist: !queryParameters.columnlist
+        ? DEFAULT_COLUMNLIST
+        : queryParameters.columnlist,
+      ...queryParameters,
+    },
   });
-
-  return `${BZ_HOST}/buglist.cgi?${query}`;
-};
-
 const generateBugzillaUrls = async (queries, includeBugCount) =>
   Promise.all(
     queries.map(async ({ parameters, text }) => {

@@ -55,7 +55,9 @@ pick first non-missing value
  */
 function coalesce(...args) {
   for (const a of args) {
-    if (exists(a)) return a;
+    if (exists(a)) {
+      return a;
+    }
   }
 
   return null;
@@ -74,7 +76,9 @@ function first(list) {
 return last element from list, or null
  */
 function last(list) {
-  if (isArray(list)) return list[list.length - 1];
+  if (isArray(list)) {
+    return list[list.length - 1];
+  }
 
   let value = null;
 
@@ -87,7 +91,10 @@ function last(list) {
 return all but last element
  */
 function notLast(list) {
-  if (isArray(list)) return list.slice(0, list.length - 1);
+  if (isArray(list)) {
+    return list.slice(0, list.length - 1);
+  }
+
   const arr = Array.from(list);
 
   return arr.slice(arr.length - 1);
@@ -102,13 +109,21 @@ function isString(value) {
 
 function toArray(value) {
   // return a list
-  if (value == null) return [];
+  if (value == null) {
+    return [];
+  }
 
-  if (isString(value)) return [value];
+  if (isString(value)) {
+    return [value];
+  }
 
-  if (isArray(value)) return value;
+  if (isArray(value)) {
+    return value;
+  }
 
-  if (value[Symbol.iterator]) return Array.from(value);
+  if (value[Symbol.iterator]) {
+    return Array.from(value);
+  }
 
   return [value];
 }

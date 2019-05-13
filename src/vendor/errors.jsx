@@ -112,7 +112,9 @@ const withErrorBoundary = WrappedComponent => {
     }
 
     async componentDidUpdate(...args) {
-      if (!super.componentDidUpdate) return;
+      if (!super.componentDidUpdate) {
+        return;
+      }
 
       try {
         await super.componentDidUpdate(...args);

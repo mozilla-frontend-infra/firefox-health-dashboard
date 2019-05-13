@@ -78,6 +78,48 @@ describe('Template', () => {
     expect(result).toBe('ring');
   });
 
+  it('trimRight', () => {
+    const value = ' \n\ttest\n\t ';
+    const result = Template.expand('{{value|trimRight}}', { value });
+
+    expect(result).toBe(' \n\ttest');
+  });
+
+  it('trimLeft', () => {
+    const value = ' \n\ttest\n\t ';
+    const result = Template.expand('{{value|trimLeft}}', { value });
+
+    expect(result).toBe('test\n\t ');
+  });
+
+  it('trim', () => {
+    const value = ' \n\ttest\n\t ';
+    const result = Template.expand('{{value|trim}}', { value });
+
+    expect(result).toBe('test');
+  });
+
+  it('trimRight/', () => {
+    const value = '/test/';
+    const result = Template.expand('{{value|trimRight("/")}}', { value });
+
+    expect(result).toBe('/test');
+  });
+
+  it('trimLeft/', () => {
+    const value = '/test/';
+    const result = Template.expand('{{value|trimLeft("/")}}', { value });
+
+    expect(result).toBe('test/');
+  });
+
+  it('trim/', () => {
+    const value = '/test/';
+    const result = Template.expand('{{value|trim("/")}}', { value });
+
+    expect(result).toBe('test');
+  });
+
   it('json', () => {
     const value = { a: 'v', b: 2 };
     const result = Template.expand('example:\n{{value|json|indent}}', {

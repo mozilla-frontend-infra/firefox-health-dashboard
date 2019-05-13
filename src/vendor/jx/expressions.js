@@ -15,9 +15,13 @@ import { Log } from '../logs';
 
 const expressions = {};
 const defineFunction = expr => {
-  if (isFunction(expr)) return expr;
+  if (isFunction(expr)) {
+    return expr;
+  }
 
-  if (isString(expr)) return row => Data.get(row, expr);
+  if (isString(expr)) {
+    return row => Data.get(row, expr);
+  }
 
   if (isData(expr)) {
     const output = first(
@@ -32,10 +36,15 @@ const defineFunction = expr => {
       })
     );
 
-    if (exists(output)) return output;
+    if (exists(output)) {
+      return output;
+    }
   }
 
-  if (exists(expr)) return () => expr; // some constant
+  if (exists(expr)) {
+    return () => expr; // some constant
+  }
+
   Log.error('does not look like an expression: {{expr|json}}', { expr });
 };
 
@@ -47,9 +56,13 @@ return true if all `terms` return true
 expressions.and = terms => {
   const filters = toArray(terms).map(defineFunction);
 
-  if (filters.length === 0) return () => true;
+  if (filters.length === 0) {
+    return () => true;
+  }
 
-  if (filters.length === 1) return row => filters[0](row);
+  if (filters.length === 1) {
+    return row => filters[0](row);
+  }
 
   return row => filters.every(f => f(row));
 };
@@ -62,9 +75,13 @@ return true if any `terms` return true
 expressions.or = terms => {
   const filters = toArray(terms).map(defineFunction);
 
-  if (filters.length === 0) return () => false;
+  if (filters.length === 0) {
+    return () => false;
+  }
 
-  if (filters.length === 1) return row => filters[0](row);
+  if (filters.length === 1) {
+    return row => filters[0](row);
+  }
 
   return row => filters.some(f => f(row));
 };
@@ -77,7 +94,10 @@ Return true if variable name equals literal value
 expressions.eq = term => {
   if (isData(term)) {
     const filters = Object.entries(term).map(([k, v]) => {
-      if (missing(v)) return () => true;
+      if (missing(v)) {
+        return () => true;
+      }
+
       const allowed = toArray(v);
       const s = defineFunction(k);
 
@@ -111,7 +131,9 @@ expressions.prefix = term => row =>
   Object.entries(term).every(([name, prefix]) => {
     const value = Data.get(row, name);
 
-    if (missing(value)) return false;
+    if (missing(value)) {
+      return false;
+    }
 
     return value.startsWith(prefix);
   });
@@ -141,7 +163,9 @@ expressions.gte = obj => {
       const av = a(row);
       const bv = b(row);
 
-      if (missing(av) || missing(bv)) return false;
+      if (missing(av) || missing(bv)) {
+        return false;
+      }
 
       return av >= bv;
     });

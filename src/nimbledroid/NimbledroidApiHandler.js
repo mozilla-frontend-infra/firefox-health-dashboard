@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import fetchJson from '../utils/fetchJson';
 import { selectFrom } from '../vendor/vectors';
+import { fetchJson, URL } from '../vendor/requests';
 import SETTINGS from '../settings';
 
-const ENDPOINT = `${SETTINGS.backend}/api/android/nimbledroid`;
+const ENDPOINT = URL({ path: [SETTINGS.backend, 'api/android/nimbledroid'] });
 const matchUrl = profileName =>
   profileName.replace(
     /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
@@ -93,9 +93,14 @@ const mergeProductsData = productsData => {
   };
 };
 
-const productUrl = product => `${ENDPOINT}?product=${product}&version=3`;
 const fetchProductData = async product => {
-  const url = productUrl(product);
+  const url = URL({
+    path: ENDPOINT,
+    query: {
+      product,
+      version: 3,
+    },
+  });
   const { meta, scenarios } = await fetchJson(url);
 
   return {

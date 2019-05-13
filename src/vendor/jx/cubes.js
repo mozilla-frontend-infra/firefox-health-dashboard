@@ -53,7 +53,9 @@ class Cube {
     const coords = this.edges.map(e => {
       const value = combination[e.name];
 
-      if (missing(value)) return null;
+      if (missing(value)) {
+        return null;
+      }
 
       return e.domain.valueToIndex(value);
     });
@@ -86,7 +88,9 @@ class Cube {
         const self = cs[UNLIKELY_PROPERTY_NAME];
 
         Object.entries(cs).forEach(([k, v]) => {
-          if (k !== UNLIKELY_PROPERTY_NAME) self[k] = v;
+          if (k !== UNLIKELY_PROPERTY_NAME) {
+            self[k] = v;
+          }
         });
         yield [self, coord];
       }
@@ -175,12 +179,14 @@ function align(cubes, cube) {
       const foreignParts = foreignEdge.domain.partitions;
       const selfEdge = getEdgeByName(cubes, foreignEdge.name);
 
-      if (missing(selfEdge) || selfEdge === foreignEdge)
+      if (missing(selfEdge) || selfEdge === foreignEdge) {
         return [
           foreignEdge,
           foreignParts.map((v, i) => i),
           foreignParts.length,
         ];
+      }
+
       const selfParts = selfEdge.domain.partitions;
       // MAP foreignEdge PARTS TO selfEdge parts
       const nameToIndex = selectFrom(selfParts)
@@ -197,7 +203,7 @@ function align(cubes, cube) {
       if (newPart.length > 0) {
         different = true;
 
-        if (DEBUG)
+        if (DEBUG) {
           Log.warning(
             'right edge {{name|quote}} has more parts ({{newPart|json}}) than the left',
             {
@@ -205,6 +211,7 @@ function align(cubes, cube) {
               name: foreignEdge.name,
             }
           );
+        }
       }
 
       if (mapping.some((v, i) => v !== i)) {
@@ -234,8 +241,9 @@ function sequence(cubes, requestedEdges, options = {}) {
 
   const { nulls = true } = options;
 
-  if (requestedEdges.some(isString))
+  if (requestedEdges.some(isString)) {
     Log.error('sequence() requires edge objects');
+  }
 
   // MAP FROM name TO (requested dimension TO matrix dimension)
   const maps = cubes
@@ -262,7 +270,9 @@ function sequence(cubes, requestedEdges, options = {}) {
         coord.forEach((c, i) => {
           const d = map[i];
 
-          if (exists(d)) selfCoord[d] = c;
+          if (exists(d)) {
+            selfCoord[d] = c;
+          }
         });
         output[name] = new Cube(residue[name], matrix.get(selfCoord));
       });
@@ -276,15 +286,20 @@ function sequence(cubes, requestedEdges, options = {}) {
     let i = 0;
 
     for (const p of first.domain.partitions) {
-      // eslint-disable-next-line no-continue
-      if (!nulls && p === NULL) continue;
+      if (!nulls && p === NULL) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
       coord[depth] = i;
 
       for (const s of _sequence(depth + 1, rest, {
         ...result,
         [first.name]: new Cube([], new Matrix({ dims: [], data: p.value })),
-      }))
+      })) {
         yield s;
+      }
+
       i += 1;
     }
   }
@@ -303,14 +318,18 @@ function window(cubes, { value, edges: edgeNames, along }) {
     .exists()
     .enumerate()
     .map((cube, name, i) => {
-      if (i === 0) return cube;
+      if (i === 0) {
+        return cube;
+      }
 
       return align(flat.limit(i), cube);
     })
     .materialize();
   const innerNames = toArray(along);
 
-  if (innerNames.length > 1) Log.error('can only handle zero/one dimension');
+  if (innerNames.length > 1) {
+    Log.error('can only handle zero/one dimension');
+  }
 
   const outerEdges = toArray(edgeNames)
     .map(n => getEdgeByName(alignedCubes, n))

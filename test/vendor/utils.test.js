@@ -128,6 +128,7 @@ describe('utils', () => {
     expect(isData(() => 0)).toBe(false);
     expect(isData(GMTDate.now())).toBe(false);
     expect(isData(new Duration())).toBe(false);
+    expect(isData(new Map().keys())).toBe(false);
   });
 
   it('missing', () => {

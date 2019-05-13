@@ -1,23 +1,33 @@
 import { coalesce, missing, exists } from './utils';
 
 function sign(n) {
-  if (missing(n)) return null;
+  if (missing(n)) {
+    return null;
+  }
 
-  if (n > 0.0) return 1.0;
+  if (n > 0.0) {
+    return 1.0;
+  }
 
-  if (n < 0.0) return -1.0;
+  if (n < 0.0) {
+    return -1.0;
+  }
 
   return 0.0;
 }
 
 function abs(n) {
-  if (missing(n)) return null;
+  if (missing(n)) {
+    return null;
+  }
 
   return Math.abs(n);
 }
 
 function log10(v) {
-  if (missing(v) || v <= 0) return null;
+  if (missing(v) || v <= 0) {
+    return null;
+  }
 
   return Math.log(v) / Math.log(10);
 }
@@ -55,7 +65,9 @@ function ceiling(value, mod) {
 }
 
 function round(value, rounding) {
-  if (rounding === undefined) return Math.round(value);
+  if (rounding === undefined) {
+    return Math.round(value);
+  }
 
   if (missing(value)) {
     return null;
@@ -94,7 +106,10 @@ function count(values) {
   let output = null;
 
   values.forEach(v => {
-    if (missing(v)) return;
+    if (missing(v)) {
+      return;
+    }
+
     output += 1;
   });
 
@@ -105,10 +120,13 @@ function sum(values) {
   let sum = null;
 
   values.forEach(v => {
-    if (missing(v)) return;
+    if (missing(v)) {
+      return;
+    }
 
-    if (missing(sum)) sum = v;
-    else sum += v;
+    if (missing(sum)) {
+      sum = v;
+    } else sum += v;
   });
 
   return sum;
@@ -119,18 +137,25 @@ function average(values) {
   let count = 0;
 
   values.forEach(v => {
-    if (missing(v)) return;
+    if (missing(v)) {
+      return;
+    }
+
     total += v;
     count += 1;
   });
 
-  if (count === 0) return null;
+  if (count === 0) {
+    return null;
+  }
 
   return total / count;
 }
 
 function exp(value) {
-  if (missing(value)) return null;
+  if (missing(value)) {
+    return null;
+  }
 
   return Math.exp(value);
 }
@@ -143,9 +168,13 @@ function max(values) {
   let max = null;
 
   values.forEach(v => {
-    if (missing(v)) return;
+    if (missing(v)) {
+      return;
+    }
 
-    if (missing(max) || max < v) max = v;
+    if (missing(max) || max < v) {
+      max = v;
+    }
   });
 
   return max;
@@ -155,28 +184,38 @@ function min(values) {
   let min = null;
 
   values.forEach(v => {
-    if (missing(v)) return;
+    if (missing(v)) {
+      return;
+    }
 
-    if (missing(min) || min > v) min = v;
+    if (missing(min) || min > v) {
+      min = v;
+    }
   });
 
   return min;
 }
 
 function div(a, b) {
-  if (missing(a) || missing(b) || b === 0) return null;
+  if (missing(a) || missing(b) || b === 0) {
+    return null;
+  }
 
   return a / b;
 }
 
 function add(a, b) {
-  if (missing(a) || missing(b)) return null;
+  if (missing(a) || missing(b)) {
+    return null;
+  }
 
   return a + b;
 }
 
 function mul(a, b) {
-  if (missing(a) || missing(b)) return null;
+  if (missing(a) || missing(b)) {
+    return null;
+  }
 
   return a * b;
 }

@@ -1,55 +1,8 @@
-import { parse } from 'query-string';
-import { selectFrom, leaves, length, toPairs } from './vectors';
+import { length, selectFrom, toPairs } from './vectors';
 import { Log } from './logs';
 import { isData } from './Data';
-import { exists, isArray, isFunction, isString, toArray } from './utils';
+import { isArray, isFunction } from './utils';
 import strings from './strings';
-
-function fromQueryString(query) {
-  const decode = v => {
-    if (isArray(v)) return v.map(decode);
-
-    if (v === null || v === '') return true;
-
-    try {
-      return JSON.parse(v);
-    } catch (e) {
-      return v;
-    }
-  };
-
-  return toPairs(parse(query))
-    .map(decode)
-    .fromLeaves();
-}
-
-function toQueryString(value) {
-  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
-  const encode = (v, k) =>
-    toArray(v)
-      .filter(exists)
-      .map(vv => {
-        if (vv === true) return e(k);
-
-        if (isString(vv)) {
-          try {
-            JSON.parse(vv);
-
-            return `${e(k)}=${e(JSON.stringify(vv))}`;
-          } catch (e) {
-            // USE STANDARD ENCODING
-          }
-        }
-
-        return `${e(k)}=${e(vv)}`;
-      })
-      .join('&');
-  const output = leaves(value)
-    .map(encode)
-    .join('&');
-
-  return output;
-}
 
 function json2value(json) {
   try {
@@ -68,15 +21,21 @@ function prettyJSON(json, maxDepth) {
     if (isArray(json)) {
       const output = selectFrom(json)
         .map(v => {
-          if (v === undefined) return;
+          if (v === undefined) {
+            return;
+          }
 
           return prettyJSON(v, maxDepth - 1);
         })
         .exists();
 
-      if (output.length === 0) return '[]';
+      if (output.length === 0) {
+        return '[]';
+      }
 
-      if (output.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+      if (output.length === 1) {
+        return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+      }
 
       const lengths = output.map(length);
 
@@ -98,15 +57,21 @@ function prettyJSON(json, maxDepth) {
     if (isData(json)) {
       const output = toPairs(json)
         .map((v, k) => {
-          if (v === undefined) return;
+          if (v === undefined) {
+            return;
+          }
 
           return `"${k}":${prettyJSON(v, maxDepth - 1)}`;
         })
         .exists();
 
-      if (output.length === 0) return '{}';
+      if (output.length === 0) {
+        return '{}';
+      }
 
-      if (output.length === 1) return `{${output.first()}}`;
+      if (output.length === 1) {
+        return `{${output.first()}}`;
+      }
 
       const lengths = output.map(length);
 
@@ -129,4 +94,4 @@ function value2json(json) {
 
 strings.json = value2json;
 
-export { fromQueryString, toQueryString, value2json, json2value };
+export { value2json, json2value };

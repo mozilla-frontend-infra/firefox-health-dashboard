@@ -1,13 +1,14 @@
-import { stringify } from 'query-string';
-import fetchJson from '../fetchJson';
+import { fetchJson, URL } from '../../vendor/requests';
 import BZ_HOST from './settings';
 import advancedSearchToRestApi from './advancedSearchToRestApi';
 
 const generateBugzillaRestApiUrl = queryParameters => {
   const transformedParameters = advancedSearchToRestApi(queryParameters);
-  const query = stringify({ ...transformedParameters });
 
-  return `${BZ_HOST}/rest/bug?${query}`;
+  return URL({
+    path: [BZ_HOST, '/rest/bug'],
+    query: transformedParameters,
+  });
 };
 
 const queryBugzilla = async queryParameters =>

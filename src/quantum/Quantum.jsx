@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { parse } from 'query-string';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderWidget from './perfherder';
 import { selectFrom, toPairs } from '../vendor/vectors';
-import { fromQueryString } from '../vendor/convert';
+import { fromQueryString, URL } from '../vendor/requests';
 import TelemetryContainer from '../telemetry/graph';
 import {
   quantum32QueryParams,
@@ -23,7 +22,7 @@ export default class QuantumIndex extends React.Component {
 
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
-    const { full } = parse(this.props.location.search);
+    const { full } = fromQueryString(this.props.location.search);
     const {
       location,
       match: { params },
@@ -149,7 +148,13 @@ export default class QuantumIndex extends React.Component {
       },
       {
         title: 'Page Load tests (TP6)',
-        more: `/quantum/tp6?bits=${bits}&test=warm-loadtime`,
+        more: URL({
+          path: '/quantum/tp6',
+          query: {
+            bits,
+            test: 'warm-loadtime',
+          },
+        }),
         rows: selectFrom(TP6_COMBOS)
           .where({
             bits,

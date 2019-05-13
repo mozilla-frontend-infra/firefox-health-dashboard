@@ -6,7 +6,7 @@ import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import CustomTooltip from '../../vendor/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
 import { exists, missing } from '../../vendor/utils';
-import { toQueryString } from '../../vendor/convert';
+import { URL } from '../../vendor/requests';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
@@ -87,7 +87,10 @@ const perfherderFormatter = (series, timeDomain) => {
 
   return {
     options: generateInitialOptions(series.filter(Boolean), timeDomain),
-    jointUrl: `${TREEHERDER}/perf.html#/graphs?${toQueryString(jointParam)}`,
+    jointUrl: URL({
+      path: [TREEHERDER, 'perf.html#/graphs'],
+      query: jointParam,
+    }),
     data,
     series: combinedSeries,
   };
@@ -112,10 +115,11 @@ const getPerfherderData = async (series, timeDomain) => {
     })
   );
 
-  if (missing(selectFrom(newData).exists('sources')))
+  if (missing(selectFrom(newData).exists('sources'))) {
     Log.error('can not get data for {{query|json}}', {
       query: series[0].seriesConfig,
     });
+  }
 
   return perfherderFormatter(newData, timeDomain);
 };
