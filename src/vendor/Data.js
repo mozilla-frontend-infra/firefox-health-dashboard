@@ -24,9 +24,13 @@ const OBJECT_CONSTRUCTOR = {}.constructor;
  * Direct instances of Object are also considered data
  */
 function isData(val) {
-  if (missing(val)) return false;
+  if (missing(val)) {
+    return false;
+  }
 
-  if (val[Symbol.iterator]) return false;
+  if (val[Symbol.iterator]) {
+    return false;
+  }
 
   return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
 }
@@ -35,12 +39,19 @@ function isData(val) {
 return true if a and b are structurally similar
  */
 function isEqual(a, b, done = []) {
-  if (a === b) return true;
+  if (a === b) {
+    return true;
+  }
 
-  if (missing(a) && missing(b)) return true;
+  if (missing(a) && missing(b)) {
+    return true;
+  }
 
   if (isData(a) && isData(b)) {
-    if (done.includes(a) || done.includes(b)) Log.error('recursive structure');
+    if (done.includes(a) || done.includes(b)) {
+      Log.error('recursive structure');
+    }
+
     const moreDone = [a, b, ...done];
 
     return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k =>
@@ -49,7 +60,9 @@ function isEqual(a, b, done = []) {
   }
 
   if (isMany(a) && isMany(b)) {
-    if (done.includes(a) || done.includes(b)) Log.error('recursive structure');
+    if (done.includes(a) || done.includes(b)) {
+      Log.error('recursive structure');
+    }
 
     return selectFrom(a, b).every((aa, bb) => isEqual(aa, bb, [a, b, ...done]));
   }
@@ -61,9 +74,13 @@ function isEqual(a, b, done = []) {
 RETURN true IF value HAS NO KEYS
  */
 Data.isEmpty = value => {
-  if (missing(value)) return true;
+  if (missing(value)) {
+    return true;
+  }
 
-  if (toPairs(value).some(exists)) return false;
+  if (toPairs(value).some(exists)) {
+    return false;
+  }
 
   return true;
 };
@@ -93,7 +110,9 @@ Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
   toPairs(from).forEach((v, k) => {
-    if (exists(v)) output[k] = v;
+    if (exists(v)) {
+      output[k] = v;
+    }
   });
 
   return output;
@@ -124,7 +143,9 @@ Data.setDefault = (dest, ...args) => {
   }
 
   args.forEach(source => {
-    if (missing(source)) return;
+    if (missing(source)) {
+      return;
+    }
 
     if (missing(dest)) {
       if (isData(source)) {
@@ -148,9 +169,13 @@ AND THE RESULTING LIST IS A PATH INTO THE STRUCTURE
 (ESCAPE "." WITH "\\.", IF REQUIRED)
 */
 Data.get = (obj, path) => {
-  if (missing(obj)) return obj;
+  if (missing(obj)) {
+    return obj;
+  }
 
-  if (path === '.') return obj;
+  if (path === '.') {
+    return obj;
+  }
 
   const pathArray = splitField(path);
   let output = obj;
@@ -170,7 +195,9 @@ Data.get = (obj, path) => {
       return null;
     }
 
-    if (missing(output)) return null;
+    if (missing(output)) {
+      return null;
+    }
   }
 
   return output;
@@ -181,8 +208,9 @@ Set `obj[path]=value`
 where path is dot-delimited path into structure
  */
 Data.set = (obj, path, value) => {
-  if (missing(obj) || path === '.')
+  if (missing(obj) || path === '.') {
     Log.error('must be given an object and field');
+  }
 
   const split = splitField(path);
   const [last] = split.slice(-1);
@@ -209,8 +237,9 @@ Data.set = (obj, path, value) => {
 Append `value` to the multivalue at `obj[path]`
  */
 Data.add = (obj, path, value) => {
-  if (missing(obj) || path === '.')
+  if (missing(obj) || path === '.') {
     Log.error('must be given an object and field');
+  }
 
   const split = splitField(path);
   const [last] = split.slice(-1);

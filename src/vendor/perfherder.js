@@ -68,8 +68,10 @@ const getFramework = async combo => {
             ) {
               lowerIsBetter = true;
             } else {
-              if (DEBUG)
+              if (DEBUG) {
                 Log.note('Do not have direction for {{suite}}', { suite });
+              }
+
               lowerIsBetter = false;
             }
           }
@@ -103,12 +105,13 @@ return an array of {repo, framework} objects
 const findCombo = expression =>
   toPairs(expression)
     .map((v, k) => {
-      if (k === 'or' || k === 'and')
+      if (k === 'or' || k === 'and') {
         return selectFrom(v)
           .map(findCombo)
           .flatten()
           .groupBy(['repo', 'framework'])
           .map(first);
+      }
 
       const { repo, framework } = v;
 
@@ -139,10 +142,11 @@ const getSignatures = async condition => {
   // find out what frameworks to extract
   const combos = findCombo(condition);
 
-  if (missing(combos))
+  if (missing(combos)) {
     Log.error('expecting to find a framework in the condtion: {{condition}}', {
       condition,
     });
+  }
 
   await Promise.all(combos.map(getFramework));
 

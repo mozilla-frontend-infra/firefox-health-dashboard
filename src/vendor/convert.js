@@ -21,15 +21,21 @@ function prettyJSON(json, maxDepth) {
     if (isArray(json)) {
       const output = selectFrom(json)
         .map(v => {
-          if (v === undefined) return;
+          if (v === undefined) {
+            return;
+          }
 
           return prettyJSON(v, maxDepth - 1);
         })
         .exists();
 
-      if (output.length === 0) return '[]';
+      if (output.length === 0) {
+        return '[]';
+      }
 
-      if (output.length === 1) return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+      if (output.length === 1) {
+        return `[${prettyJSON(json[0], maxDepth - 1)}]`;
+      }
 
       const lengths = output.map(length);
 
@@ -51,15 +57,21 @@ function prettyJSON(json, maxDepth) {
     if (isData(json)) {
       const output = toPairs(json)
         .map((v, k) => {
-          if (v === undefined) return;
+          if (v === undefined) {
+            return;
+          }
 
           return `"${k}":${prettyJSON(v, maxDepth - 1)}`;
         })
         .exists();
 
-      if (output.length === 0) return '{}';
+      if (output.length === 0) {
+        return '{}';
+      }
 
-      if (output.length === 1) return `{${output.first()}}`;
+      if (output.length === 1) {
+        return `{${output.first()}}`;
+      }
 
       const lengths = output.map(length);
 

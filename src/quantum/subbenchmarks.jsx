@@ -91,9 +91,13 @@ class PerfherderContainerPre extends Component {
   render() {
     const { perfherderUrl, data, parentSignature } = this.state;
     const sortAlphabetically = (a, b) => {
-      if (a.meta.test < b.meta.test) return -1;
+      if (a.meta.test < b.meta.test) {
+        return -1;
+      }
 
-      if (a.meta.test > b.meta.test) return 1;
+      if (a.meta.test > b.meta.test) {
+        return 1;
+      }
 
       return 0;
     };

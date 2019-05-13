@@ -112,7 +112,7 @@ const raw = selectFrom(flatG5)
 const g5Reference = window({raw}, {
   edges: ['test', 'site', 'platform'],
   value: ({test, site, platform, raw}) => {
-    if ([test, site, platform].some(missing)) return null;
+    if ([test, site, platform].some(missing)) {return null;}
 
     if (raw.length > 1) {
       Log.error('expecting only one value for {{combo}}', {
@@ -122,7 +122,7 @@ const g5Reference = window({raw}, {
       });
     }
 
-    if (missing(raw) || missing(first(raw).value)) return null;
+    if (missing(raw) || missing(first(raw).value)) {return null;}
     return round(first(raw).value * 0.80, {places: 3}); // "onload event is >20% faster than Fennec 64"
   },
 });

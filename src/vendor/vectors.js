@@ -40,7 +40,9 @@ function preSelector(columnName) {
     return internalFrom(columnName)
       .sortBy()
       .map(name => {
-        if (isString(name)) return [[row => Data.get(row, name), name]];
+        if (isString(name)) {
+          return [[row => Data.get(row, name), name]];
+        }
 
         return preSelector(name).map(([s, n]) => [s, concatField(name, n)]);
       })
@@ -188,7 +190,11 @@ class ArrayWrapper {
   filter(func) {
     // restrict to rows where `func()` is truthy
     function* output(argslist) {
-      for (const args of argslist) if (func(...args)) yield args;
+      for (const args of argslist) {
+        if (func(...args)) {
+          yield args;
+        }
+      }
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -202,7 +208,10 @@ class ArrayWrapper {
       let i = 0;
 
       for (const args of argslist) {
-        if (i >= start) yield args;
+        if (i >= start) {
+          yield args;
+        }
+
         i += 1;
       }
     }
@@ -218,7 +227,10 @@ class ArrayWrapper {
       let i = 0;
 
       for (const args of argslist) {
-        if (i >= max) break;
+        if (i >= max) {
+          break;
+        }
+
         yield args;
         i += 1;
       }
@@ -243,7 +255,10 @@ class ArrayWrapper {
       const selects = toArray(columns).map(selector);
 
       func = row => {
-        for (const s of selects) if (missing(s(row))) return false;
+        for (const s of selects)
+          if (missing(s(row))) {
+            return false;
+          }
 
         return true;
       };
@@ -262,7 +277,10 @@ class ArrayWrapper {
       const selects = toArray(columns).map(selector);
 
       func = row => {
-        for (const s of selects) if (exists(s(row))) return false;
+        for (const s of selects)
+          if (exists(s(row))) {
+            return false;
+          }
 
         return true;
       };
@@ -287,7 +305,9 @@ class ArrayWrapper {
         acc.push(value);
       }
 
-      if (acc.length > 0) yield [internalFrom(acc), count];
+      if (acc.length > 0) {
+        yield [internalFrom(acc), count];
+      }
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -298,7 +318,11 @@ class ArrayWrapper {
     // append extra index parameter to args
     function* output(argslist) {
       for (const [values] of argslist)
-        if (exists(values)) for (const value of values) yield [value];
+        if (exists(values)) {
+          for (const value of values) {
+            yield [value];
+          }
+        }
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -526,7 +550,9 @@ class ArrayWrapper {
    */
   some(func) {
     for (const args of this.argslist) {
-      if (func(...args)) return true;
+      if (func(...args)) {
+        return true;
+      }
     }
 
     return false;
@@ -537,7 +563,9 @@ class ArrayWrapper {
     */
   every(func) {
     for (const args of this.argslist) {
-      if (!func(...args)) return false;
+      if (!func(...args)) {
+        return false;
+      }
     }
 
     return true;
@@ -547,7 +575,11 @@ class ArrayWrapper {
   return true if value is in this list
    */
   includes(value) {
-    for (const [arg] of this.argslist) if (arg === value) return true;
+    for (const [arg] of this.argslist) {
+      if (arg === value) {
+        return true;
+      }
+    }
 
     return false;
   }
@@ -584,7 +616,10 @@ class ArrayWrapper {
     let i = 0;
 
     for (const args of this.argslist) {
-      if (func(...args)) return i;
+      if (func(...args)) {
+        return i;
+      }
+
       i += 1;
     }
 
@@ -646,7 +681,9 @@ internalFrom = selectFrom;
  * notice the **value is first**
  */
 function toPairs(obj) {
-  if (missing(obj)) return new ArrayWrapper(() => []);
+  if (missing(obj)) {
+    return new ArrayWrapper(() => []);
+  }
 
   if (obj instanceof Map) {
     return new ArrayWrapper(
@@ -696,7 +733,9 @@ function leaves(obj, formal = true) {
 
 function length(list) {
   // return length of this list
-  if (list instanceof ArrayWrapper) return list.length;
+  if (list instanceof ArrayWrapper) {
+    return list.length;
+  }
 
   return list.length;
 }

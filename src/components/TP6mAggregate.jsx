@@ -200,7 +200,7 @@ class TP6mAggregate_ extends Component {
   render() {
     const { data } = this.state;
 
-    if (missing(data))
+    if (missing(data)) {
       return (
         <div
           style={{
@@ -211,6 +211,7 @@ class TP6mAggregate_ extends Component {
           <CircularProgress />
         </div>
       );
+    }
 
     return (
       <Grid container spacing={24}>
@@ -262,8 +263,11 @@ class TP6mAggregate_ extends Component {
                 };
 
                 // do not show charts with no data
-                if (!chartData.datasets.some(ds => ds.data.some(({ y }) => y)))
+                if (
+                  !chartData.datasets.some(ds => ds.data.some(({ y }) => y))
+                ) {
                   return null;
+                }
 
                 return (
                   <Grid item xs={6} key={platform}>

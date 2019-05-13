@@ -57,13 +57,14 @@ const ChartJsWrapper = ({
       );
     }
 
-    if (!data)
+    if (!data) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
           <div style={{ height: chartHeight }} />
         </div>
       );
+    }
 
     const allOldData = data.datasets.every(dataset => {
       const latestDataDate = new Date(

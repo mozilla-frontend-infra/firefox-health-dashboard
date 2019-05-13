@@ -1,4 +1,4 @@
-import { coalesce, isString } from './utils';
+import { coalesce, isString, missing } from './utils';
 import { round as mathRound, roundMetric } from './math';
 
 const between = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -62,7 +62,10 @@ const strings = {
   },
 
   trimLeft(value, prefix) {
-    if (prefix === undefined) return value.trimLeft();
+    if (missing(prefix)) {
+      return value.trimLeft();
+    }
+
     let v = value;
 
     while (v.startsWith(prefix)) {
@@ -72,7 +75,9 @@ const strings = {
     return v;
   },
   trimRight(value, prefix) {
-    if (prefix === undefined) return value.trimRight();
+    if (missing(prefix)) {
+      return value.trimRight();
+    }
 
     let v = value;
 
@@ -84,7 +89,10 @@ const strings = {
   },
 
   trim(value, prefix) {
-    if (prefix === undefined) return value.trim();
+    if (missing(prefix)) {
+      return value.trim();
+    }
+
     let v = value;
 
     while (v.startsWith(prefix)) {
@@ -92,7 +100,7 @@ const strings = {
     }
 
     while (v.endsWith(prefix)) {
-      v = v.slice(0, value.length - prefix.length);
+      v = v.slice(0, v.length - prefix.length);
     }
 
     return v;

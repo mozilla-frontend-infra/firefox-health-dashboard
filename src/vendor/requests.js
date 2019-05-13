@@ -6,11 +6,22 @@ import { Data } from './Data';
 import { exists, isArray, isString, toArray } from './utils';
 import strings from './strings';
 
+/*
+Parse a query string into an object. Leading ? or # are ignored, so you can
+pass location.search or location.hash directly. Also, hanldes inner and nested
+objects
+
+see also https://github.com/sindresorhus/query-string#parsestring-options
+ */
 function fromQueryString(query) {
   const decode = v => {
-    if (isArray(v)) return v.map(decode);
+    if (isArray(v)) {
+      return v.map(decode);
+    }
 
-    if (v === null || v === '') return true;
+    if (v === null || v === '') {
+      return true;
+    }
 
     try {
       return JSON.parse(v);
@@ -24,13 +35,18 @@ function fromQueryString(query) {
     .fromLeaves();
 }
 
+/*
+Convert a JSON object into a query string
+ */
 function toQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) =>
     toArray(v)
       .filter(exists)
       .map(vv => {
-        if (vv === true) return e(k);
+        if (vv === true) {
+          return e(k);
+        }
 
         if (isString(vv)) {
           try {
@@ -58,7 +74,9 @@ const jsonHeaders = {
 const fetchJson = async url => {
   const response = await fetch(url, jsonHeaders);
 
-  if (!response) return null;
+  if (!response) {
+    return null;
+  }
 
   if (response.status !== 200) {
     Log.error('{{status}} when calling {{url}}', {
@@ -70,8 +88,7 @@ const fetchJson = async url => {
   try {
     return response.json();
   } catch (error) {
-    Log.error(`Problem parsing ${response.text()}`);
-    // Log.error("Problem parsing {{text}}", {text: response.text()});
+    Log.error('Problem parsing {{text}}', { text: response.text() });
   }
 };
 
@@ -83,13 +100,17 @@ const URL = ({ path, query, fragment }) => {
       ? paths[0]
       : paths
           .map((p, i) => {
-            let pp = p;
+            let output = p;
 
-            if (i !== 0) pp = strings.trimLeft(pp, '/');
+            if (i !== 0) {
+              output = strings.trimLeft(output, '/');
+            }
 
-            if (i !== last) pp = strings.trimRight(pp, '/');
+            if (i !== last) {
+              output = strings.trimRight(output, '/');
+            }
 
-            return pp;
+            return output;
           })
           .join('/');
 

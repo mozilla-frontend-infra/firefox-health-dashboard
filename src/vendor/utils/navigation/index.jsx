@@ -34,7 +34,9 @@ function withNavigation(config) {
           .map(({ id, defaultValue, options }) => {
             const selected = params[id];
 
-            if (missing(selected)) return [defaultValue, id];
+            if (missing(selected)) {
+              return [defaultValue, id];
+            }
 
             if (
               selectFrom(options)
@@ -80,7 +82,9 @@ function withNavigation(config) {
         const newState = { ...this.state, ...change };
         const oldState = fromQueryString(location.search);
 
-        if (isEqual(newState, oldState)) return;
+        if (isEqual(newState, oldState)) {
+          return;
+        }
 
         history.push(URL({ path: location.pathname, query: newState }));
       }

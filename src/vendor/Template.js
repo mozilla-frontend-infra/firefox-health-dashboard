@@ -14,7 +14,9 @@ function expandArray(arr, namespaces) {
 function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
-  if (!isString(from)) Log.error('expecting from clause to be string');
+  if (!isString(from)) {
+    Log.error('expecting from clause to be string');
+  }
 
   return Data.get(namespaces[0], loop.from)
     .map(m => {
@@ -127,7 +129,10 @@ expandAny = (template, namespaces) => {
 
 function expand(template, parameters) {
   if (parameters === undefined) {
-    if (isString(template)) return template;
+    if (isString(template)) {
+      return template;
+    }
+
     Log.error('Must have parameters');
   }
 

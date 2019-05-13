@@ -77,7 +77,9 @@ class CustomTooltip extends React.Component {
   render() {
     const { classes, tooltipModel, series, canvas, isLocked } = this.props;
 
-    if (tooltipModel.opacity === 0) return null;
+    if (tooltipModel.opacity === 0) {
+      return null;
+    }
 
     const top = canvas.offsetTop + tooltipModel.caretY;
     const left = canvas.offsetLeft + tooltipModel.caretX;
@@ -98,7 +100,10 @@ class CustomTooltip extends React.Component {
     const { index } = currPoint;
     const currSeries = series[currPoint.datasetIndex];
 
-    if (missing(currSeries)) return null;
+    if (missing(currSeries)) {
+      return null;
+    }
+
     const higherOrLower = currSeries.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
@@ -130,7 +135,9 @@ class CustomTooltip extends React.Component {
           {currPoint.yLabel} ({higherOrLower})
         </div>
         {(() => {
-          if (index === 0) return null;
+          if (index === 0) {
+            return null;
+          }
 
           const prev = currSeries.data[index - 1];
           const delta = curr.value - prev.value;

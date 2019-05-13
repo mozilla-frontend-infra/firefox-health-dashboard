@@ -115,10 +115,11 @@ const getPerfherderData = async (series, timeDomain) => {
     })
   );
 
-  if (missing(selectFrom(newData).exists('sources')))
+  if (missing(selectFrom(newData).exists('sources'))) {
     Log.error('can not get data for {{query|json}}', {
       query: series[0].seriesConfig,
     });
+  }
 
   return perfherderFormatter(newData, timeDomain);
 };

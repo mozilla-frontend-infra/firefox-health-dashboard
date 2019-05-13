@@ -20,14 +20,18 @@ const stackPatterns = [
 ];
 
 function parseStack(stackString) {
-  if (missing(stackString)) return [];
+  if (missing(stackString)) {
+    return [];
+  }
 
   return stackString.split('\n').map(line =>
     selectFrom(stackPatterns)
       .map(stackPattern => {
         const parts = stackPattern.exec(line);
 
-        if (missing(parts)) return { function: line };
+        if (missing(parts)) {
+          return { function: line };
+        }
 
         return {
           function: parts[1],
@@ -92,12 +96,17 @@ class Exception extends Error {
         ...this.trace.map(s => {
           const output = ['    '];
 
-          if (exists(s.function)) output.push('at {{function}}');
+          if (exists(s.function)) {
+            output.push('at {{function}}');
+          }
 
           if (exists(s.fileName)) {
             output.push(' ({{fileName}}');
 
-            if (exists(s.line)) output.push(' line {{line}} column {{column}}');
+            if (exists(s.line)) {
+              output.push(' line {{line}} column {{column}}');
+            }
+
             output.push(')');
           }
 
@@ -118,9 +127,13 @@ class Exception extends Error {
     // RETURN THE SHORT MESSAGE
     const { template, props, cause } = this;
 
-    if (cause) return cause.message;
+    if (cause) {
+      return cause.message;
+    }
 
-    if (template) return Template.expand(template, props);
+    if (template) {
+      return Template.expand(template, props);
+    }
 
     return 'unknown error';
   }
@@ -136,9 +149,13 @@ class Exception extends Error {
 }
 
 Exception.wrap = err => {
-  if (missing(err)) return null;
+  if (missing(err)) {
+    return null;
+  }
 
-  if (err instanceof Exception) return err;
+  if (err instanceof Exception) {
+    return err;
+  }
 
   const output = new Exception();
 

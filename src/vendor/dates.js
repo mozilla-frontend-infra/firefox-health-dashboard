@@ -26,15 +26,23 @@ class GMTDate extends Date {
 
   between = (min, max) => {
     if (exists(min)) {
-      if (min.getMilli && this.milli() < min.milli()) return false;
+      if (min.getMilli && this.milli() < min.milli()) {
+        return false;
+      }
 
-      if (this.milli() < min) return false;
+      if (this.milli() < min) {
+        return false;
+      }
     }
 
     if (exists(max)) {
-      if (max.getMilli && max.milli() < this.milli()) return false;
+      if (max.getMilli && max.milli() < this.milli()) {
+        return false;
+      }
 
-      if (max <= this.milli()) return false;
+      if (max <= this.milli()) {
+        return false;
+      }
     }
 
     return true;
@@ -52,10 +60,11 @@ class GMTDate extends Date {
   };
 
   subtract = time => {
-    if (isString(time))
+    if (isString(time)) {
       Log.error(
         'expecting to subtract a Duration or GMTDate object, not a string'
       );
+    }
 
     if (time instanceof GMTDate) {
       // SUBTRACT TIME
@@ -112,13 +121,17 @@ class GMTDate extends Date {
   addWeekday = value => {
     let output = this.addDay(1);
 
-    if ([0, 1].includes(output.dow())) output = output.floorWeek().addDay(2);
+    if ([0, 1].includes(output.dow())) {
+      output = output.floorWeek().addDay(2);
+    }
 
     const weeks = floor(value / 5);
 
     output = output.addDay(value - weeks * 5);
 
-    if ([0, 1].includes(output.dow())) output = output.floorWeek().addDay(2);
+    if ([0, 1].includes(output.dow())) {
+      output = output.floorWeek().addDay(2);
+    }
 
     output = output.addWeek(weeks).addDay(-1);
 
@@ -135,7 +148,10 @@ class GMTDate extends Date {
   };
 
   addMonth = value => {
-    if (value === 0) return this; // WHOA! SETTING MONTH IS CRAZY EXPENSIVE!!
+    if (value === 0) {
+      return this;
+    } // WHOA! SETTING MONTH IS CRAZY EXPENSIVE!!
+
     const output = new GMTDate(this);
 
     output.setUTCMonth(this.getUTCMonth() + value);
@@ -153,8 +169,9 @@ class GMTDate extends Date {
 
   // RETURN A DATE ROUNDED DOWN TO THE CLOSEST FULL INTERVAL
   floor = (interval, minDate) => {
-    if (exists(minDate))
+    if (exists(minDate)) {
       return minDate.add(this.subtract(minDate).floor(interval));
+    }
 
     if (exists(interval.month) && interval.month > 0) {
       if (interval.month % 12 === 0) {
@@ -176,15 +193,26 @@ class GMTDate extends Date {
       intervalStr = interval.toString();
     }
 
-    if (intervalStr.indexOf('year') >= 0) return this.floorYear();
+    if (intervalStr.indexOf('year') >= 0) {
+      return this.floorYear();
+    }
 
-    if (intervalStr.indexOf('month') >= 0) return this.floorMonth();
+    if (intervalStr.indexOf('month') >= 0) {
+      return this.floorMonth();
+    }
 
-    if (intervalStr.indexOf('week') >= 0) return this.floorWeek();
+    if (intervalStr.indexOf('week') >= 0) {
+      return this.floorWeek();
+    }
 
-    if (intervalStr.indexOf('day') >= 0) return this.floorDay();
+    if (intervalStr.indexOf('day') >= 0) {
+      return this.floorDay();
+    }
 
-    if (intervalStr.indexOf('hour') >= 0) return this.floorHour();
+    if (intervalStr.indexOf('hour') >= 0) {
+      return this.floorHour();
+    }
+
     Log.error(`Can not floor interval '${intervalStr}'`);
   };
 
@@ -263,9 +291,13 @@ class GMTDate extends Date {
     v.MMM = GMTDate.MONTH_NAMES[M - 1];
     v.NNN = GMTDate.MONTH_NAMES[M + 11];
     v.days = (() => {
-      if (d === 1) return '';
+      if (d === 1) {
+        return '';
+      }
 
-      if (d === 2) return '1 day';
+      if (d === 2) {
+        return '1 day';
+      }
 
       return `${d - 1} days`;
     })();
@@ -315,12 +347,16 @@ class GMTDate extends Date {
 }
 
 GMTDate.newInstance = value => {
-  if (missing(value)) return null;
+  if (missing(value)) {
+    return null;
+  }
 
   if (isString(value)) {
     const newval = GMTDate.tryParse(value);
 
-    if (newval !== null) return newval;
+    if (newval !== null) {
+      return newval;
+    }
   }
 
   if (isNumeric(value)) {
@@ -351,9 +387,13 @@ GMTDate.min = (...args) => {
   let min = null;
 
   args.forEach(v => {
-    if (v === undefined || v === null) return;
+    if (v === undefined || v === null) {
+      return;
+    }
 
-    if (min === null || min > v) min = v;
+    if (min === null || min > v) {
+      min = v;
+    }
   });
 
   return min;
@@ -363,9 +403,13 @@ GMTDate.max = (...args) => {
   let max = null;
 
   args.forEach(a => {
-    if (a === null) return;
+    if (a === null) {
+      return;
+    }
 
-    if (max === null || max < a) max = a;
+    if (max === null || max < a) {
+      max = a;
+    }
   });
 
   return max;
@@ -378,11 +422,15 @@ GMTDate.diffWeekday = (endTime_, startTime_) => {
   // TEST
   if (startTime_ <= endTime_) {
     for (let d = startTime_; d.milli() < endTime_.milli(); d = d.addDay(1)) {
-      if (![6, 0].includes(d.dow())) out += 1;
+      if (![6, 0].includes(d.dow())) {
+        out += 1;
+      }
     }
   } else {
     for (let d = endTime_; d.milli() < startTime_.milli(); d = d.addDay(1)) {
-      if (![6, 0].includes(d.dow())) out -= 1;
+      if (![6, 0].includes(d.dow())) {
+        out -= 1;
+      }
     }
   }
 
@@ -407,8 +455,9 @@ GMTDate.diffWeekday = (endTime_, startTime_) => {
       (endTime.milli() - endWeek.addDay(2).milli())) /
     Duration.DAY.milli;
 
-  if (out !== sign(output) * ceiling(abs(output)))
+  if (out !== sign(output) * ceiling(abs(output))) {
     Log.error('Weekday calculation failed internal test');
+  }
 
   return output;
 };
@@ -437,12 +486,13 @@ GMTDate.diffMonth = (endTime, startTime) => {
 
   testMonth -= 1;
 
-  if (testMonth !== numMonths)
+  if (testMonth !== numMonths) {
     Log.error(
       `Error calculating number of months between (${startTime.format(
         'yy-MM-dd HH:mm:ss'
       )}) and (${endTime.format('yy-MM-dd HH:mm:ss')})`
     );
+  }
   // DONE TEST
   // //////////////////////////////////////////////////////////////////////////
 
@@ -579,9 +629,13 @@ GMTDate.getTimezone = () => {
     const offset = new GMTDate().getTimezoneOffset();
 
     // CHEAT AND SIMPLY GUESS
-    if (offset === 240 || offset === 300) return 'EDT';
+    if (offset === 240 || offset === 300) {
+      return 'EDT';
+    }
 
-    if (offset === 420 || offset === 480) return 'PDT';
+    if (offset === 420 || offset === 480) {
+      return 'PDT';
+    }
 
     return `(${round(offset / 60)}GMT)`;
   };
@@ -593,21 +647,35 @@ GMTDate.getTimezone = () => {
 // WHAT IS THE MOST COMPACT DATE FORMAT TO DISTINGUISH THE RANGE
 // //////////////////////////////////////////////////////////////////////////////
 GMTDate.niceFormat = ({ type, min, max, interval }) => {
-  if (!['date', 'time'].includes(type)) Log.error('Expecting a time domain');
+  if (!['date', 'time'].includes(type)) {
+    Log.error('Expecting a time domain');
+  }
 
   let minFormat = 0; // SECONDS
 
-  if (interval.milli >= Duration.MILLI_VALUES.minute) minFormat = 1;
+  if (interval.milli >= Duration.MILLI_VALUES.minute) {
+    minFormat = 1;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.hour) minFormat = 2;
+  if (interval.milli >= Duration.MILLI_VALUES.hour) {
+    minFormat = 2;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.day) minFormat = 3;
+  if (interval.milli >= Duration.MILLI_VALUES.day) {
+    minFormat = 3;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.month) minFormat = 4;
+  if (interval.milli >= Duration.MILLI_VALUES.month) {
+    minFormat = 4;
+  }
 
-  if (interval.month >= Duration.MONTH_VALUES.month) minFormat = 4;
+  if (interval.month >= Duration.MONTH_VALUES.month) {
+    minFormat = 4;
+  }
 
-  if (interval.month >= Duration.MONTH_VALUES.year) minFormat = 5;
+  if (interval.month >= Duration.MONTH_VALUES.year) {
+    minFormat = 5;
+  }
 
   let maxFormat = 5; // year
   const span = max.subtract(min, interval);
@@ -624,13 +692,21 @@ GMTDate.niceFormat = ({ type, min, max, interval }) => {
   )
     maxFormat = 3; // day
 
-  if (span.milli < Duration.MILLI_VALUES.day) maxFormat = 2;
+  if (span.milli < Duration.MILLI_VALUES.day) {
+    maxFormat = 2;
+  }
 
-  if (span.milli < Duration.MILLI_VALUES.hour) maxFormat = 1;
+  if (span.milli < Duration.MILLI_VALUES.hour) {
+    maxFormat = 1;
+  }
 
-  if (span.milli < Duration.MILLI_VALUES.minute) maxFormat = 0;
+  if (span.milli < Duration.MILLI_VALUES.minute) {
+    maxFormat = 0;
+  }
 
-  if (maxFormat <= minFormat) maxFormat = minFormat;
+  if (maxFormat <= minFormat) {
+    maxFormat = minFormat;
+  }
 
   // INDEX BY [minFormat][maxFormat]
   return [
@@ -675,7 +751,9 @@ GMTDate.getBestInterval = (
   const smallest = dur.divideBy(max).milli;
   const biggest = dur.divideBy(min).milli;
 
-  if (smallest <= requested && requested < biggest) return requestedInterval;
+  if (smallest <= requested && requested < biggest) {
+    return requestedInterval;
+  }
 
   if (requested > biggest) {
     return coalesce(
@@ -715,12 +793,18 @@ function internalChecks(year, month, date, hh_, mm, ss, fff, ampm) {
   if (month === 2) {
     // LEAP YEAR
     if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-      if (date > 29) return 0;
-    } else if (date > 28) return 0;
+      if (date > 29) {
+        return 0;
+      }
+    } else if (date > 28) {
+      return 0;
+    }
   }
 
   if (month === 4 || month === 6 || month === 9 || month === 11) {
-    if (date > 30) return 0;
+    if (date > 30) {
+      return 0;
+    }
   }
 
   // Correct hours value
@@ -799,7 +883,10 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
 
       year = _getInt(val, valueIndex, x, y);
 
-      if (year === null) return 0;
+      if (year === null) {
+        return 0;
+      }
+
       valueIndex += year.length;
 
       if (year.length === 2) {
@@ -958,7 +1045,9 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
   }
 
   // If there are any trailing characters left in the value, it doesn't match
-  if (valueIndex !== val.length) return 0;
+  if (valueIndex !== val.length) {
+    return 0;
+  }
 
   if (year == null) {
     // WE HAVE TO GUESS THE YEAR
@@ -976,12 +1065,16 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
     );
 
     if (isPastDate) {
-      if (newDate !== 0 && `${newDate}` < `${oldDate}`) return newDate;
+      if (newDate !== 0 && `${newDate}` < `${oldDate}`) {
+        return newDate;
+      }
 
       return internalChecks(year - 1, month, dayOfMonth, hh, mm, ss, fff, ampm);
     }
 
-    if (newDate !== 0 && `${newDate}` > `${oldDate}`) return newDate;
+    if (newDate !== 0 && `${newDate}` > `${oldDate}`) {
+      return newDate;
+    }
 
     return internalChecks(year + 1, month, dayOfMonth, hh, mm, ss, fff, ampm);
   }
@@ -1079,7 +1172,9 @@ GMTDate.tryParse = (val_, isFutureDate = false) => {
   GMTDate.CheckList.some((format, i) => {
     d = GMTDate.getDateFromFormat(val, format, isFutureDate);
 
-    if (d === 0) return false;
+    if (d === 0) {
+      return false;
+    }
 
     // MAKE THIS THE PREFERRED FORMAT
     GMTDate.CheckList.splice(i, 1);

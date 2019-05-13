@@ -45,11 +45,16 @@ class ValueDomain extends Domain {
     /*
     Return the canonical value that represents `value`, or NULL
      */
-    if (missing(value)) return this.partitions.length - 1;
+    if (missing(value)) {
+      return this.partitions.length - 1;
+    }
+
     const output = this.partitions.findIndex(v => v.value === value);
 
     if (output === -1) {
-      if (this.locked) return this.partitions.length - 1;
+      if (this.locked) {
+        return this.partitions.length - 1;
+      }
 
       this.partitions.splice(this.partitions.length - 1, 0, { value });
 
@@ -64,7 +69,10 @@ class TimeDomain extends Domain {
   constructor({ type, min, max, interval, format }) {
     super();
 
-    if (type !== 'time') Log.error('expecting time type');
+    if (type !== 'time') {
+      Log.error('expecting time type');
+    }
+
     this.min = Date.newInstance(min);
     this.max = Date.newInstance(max);
     this.interval = Duration.newInstance(interval);
@@ -122,7 +130,9 @@ class SetDomain extends Domain {
 
     const parts = selectFrom(partitions);
 
-    if (type !== 'set') Log.error('expecting "set" type');
+    if (type !== 'set') {
+      Log.error('expecting "set" type');
+    }
 
     if (parts.missing('where').length > 0) {
       Log.error('Expecting all parts to have a "where" clause ');
@@ -151,7 +161,9 @@ class SetDomain extends Domain {
   valueToIndex(value) {
     const output = this.partitions.findIndex(part => part.value === value);
 
-    if (output === -1) return this.partitions.length - 1;
+    if (output === -1) {
+      return this.partitions.length - 1;
+    }
 
     return output;
   }
@@ -162,7 +174,9 @@ class SetDomain extends Domain {
 }
 
 Domain.newInstance = desc => {
-  if (desc instanceof Domain) return desc;
+  if (desc instanceof Domain) {
+    return desc;
+  }
 
   if (isString(desc)) {
     return ValueDomain(desc);

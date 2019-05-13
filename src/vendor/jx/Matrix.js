@@ -10,7 +10,10 @@ dims - an array of integers; number of part along each dimension
 zero - a function the will be used to create an element in the multiarray
  */
 function newMultiArray(dims, zero) {
-  if (dims.length === 0) return zero();
+  if (dims.length === 0) {
+    return zero();
+  }
+
   const length = dims[0];
   const rest = dims.slice(1);
 
@@ -49,7 +52,10 @@ class Matrix {
    */
   get(coord) {
     function _iter(coord, data) {
-      if (coord.length === 0) return data;
+      if (coord.length === 0) {
+        return data;
+      }
+
       const c = coord[0];
 
       if (missing(c)) {
@@ -123,7 +129,9 @@ class Matrix {
     for (const [v, coord] of this) {
       const n = coord.map((c, i) => ordering[i][c]);
 
-      if (n.every(n => exists(n))) output.set(n, v);
+      if (n.every(n => exists(n))) {
+        output.set(n, v);
+      }
     }
 
     return output;

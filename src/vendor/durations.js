@@ -62,8 +62,9 @@ class Duration {
       } else {
         r -= this.month * Duration.MILLI_VALUES.month;
 
-        if (r >= Duration.MILLI_VALUES.day * 31)
+        if (r >= Duration.MILLI_VALUES.day * 31) {
           Log.error('Do not know how to handle');
+        }
       }
 
       r = min(29 / 30, (r + tod) / (Duration.MILLI_VALUES.day * 30));
@@ -95,8 +96,10 @@ class Duration {
   }
 
   floor(interval) {
-    if (interval === undefined || interval.milli === undefined)
+    if (interval === undefined || interval.milli === undefined) {
       Log.error('Expecting an interval as a Duration object');
+    }
+
     const output = new Duration();
 
     if (interval.month !== 0) {
@@ -133,7 +136,9 @@ class Duration {
   }
 
   toString(rounding) {
-    if (this.milli === 0) return 'zero';
+    if (this.milli === 0) {
+      return 'zero';
+    }
 
     let round = coalesce(rounding, 'milli');
     let rem;
@@ -146,7 +151,10 @@ class Duration {
     if (round === 'milli') {
       rem = rest % 1000;
 
-      if (rem !== 0) output = `+${rem}milli${output}`;
+      if (rem !== 0) {
+        output = `+${rem}milli${output}`;
+      }
+
       rest = floor(rest / 1000);
       round = 'second';
     } else {
@@ -156,7 +164,10 @@ class Duration {
     if (round === 'second') {
       rem = Math.round(rest) % 60;
 
-      if (rem !== 0) output = `+${rem}second${output}`;
+      if (rem !== 0) {
+        output = `+${rem}second${output}`;
+      }
+
       rest = floor(rest / 60);
       round = 'minute';
     } else {
@@ -166,7 +177,10 @@ class Duration {
     if (round === 'minute') {
       rem = Math.round(rest) % 60;
 
-      if (rem !== 0) output = `+${rem}minute${output}`;
+      if (rem !== 0) {
+        output = `+${rem}minute${output}`;
+      }
+
       rest = floor(rest / 60);
       round = 'hour';
     } else {
@@ -177,7 +191,10 @@ class Duration {
     if (round === 'hour') {
       rem = Math.round(rest) % 24;
 
-      if (rem !== 0) output = `+${rem}hour${output}`;
+      if (rem !== 0) {
+        output = `+${rem}hour${output}`;
+      }
+
       rest = floor(rest / 24);
       round = 'day';
     } else {
@@ -195,7 +212,9 @@ class Duration {
         round = 'week';
       }
 
-      if (rem !== 0) output = `+${rem}day${output}`;
+      if (rem !== 0) {
+        output = `+${rem}day${output}`;
+      }
     } else {
       rest /= 7;
     }
@@ -204,10 +223,14 @@ class Duration {
     if (round === 'week') {
       rest = Math.round(rest);
 
-      if (rest !== 0) output = `+${rest}week${output}`;
+      if (rest !== 0) {
+        output = `+${rest}week${output}`;
+      }
     }
 
-    if (isNegative) output = output.replace('+', '-');
+    if (isNegative) {
+      output = output.replace('+', '-');
+    }
 
     // MONTH AND YEAR
     if (this.month !== 0) {
@@ -219,17 +242,23 @@ class Duration {
       } else {
         const m = month % 12;
 
-        if (m !== 0) output = `${sign + m}month${output}`;
+        if (m !== 0) {
+          output = `${sign + m}month${output}`;
+        }
+
         const y = floor(month / 12);
 
         output = `${sign + y}year${output}`;
       }
     }
 
-    if (output.charAt(0) === '+') output = strings.rightBut(output, 1);
-
-    if (output.charAt(0) === '1' && !isNumeric(output.charAt(1)))
+    if (output.charAt(0) === '+') {
       output = strings.rightBut(output, 1);
+    }
+
+    if (output.charAt(0) === '1' && !isNumeric(output.charAt(1))) {
+      output = strings.rightBut(output, 1);
+    }
 
     return output;
   }
@@ -287,7 +316,9 @@ Duration.MONTH_SKEW =
 // CONVERT SIMPLE <float><type> TO A DURATION OBJECT
 // //////////////////////////////////////////////////////////////////////////////
 Duration.String2Duration = text => {
-  if (text === '' || text === 'zero') return new Duration();
+  if (text === '' || text === 'zero') {
+    return new Duration();
+  }
 
   let s = 0;
 
@@ -298,11 +329,12 @@ Duration.String2Duration = text => {
   const interval = strings.rightBut(text, s);
   const amount = s === 0 ? 1 : JSON.parse(strings.left(text, s));
 
-  if (Duration.MILLI_VALUES[interval] === undefined)
+  if (Duration.MILLI_VALUES[interval] === undefined) {
     Log.error(
       `{{interval}} is not a recognized duration type (did you use the pural form by mistake?`,
       { interval }
     );
+  }
 
   if (Duration.MONTH_VALUES[interval] === 0) {
     output.milli = amount * Duration.MILLI_VALUES[interval];
@@ -366,7 +398,9 @@ Duration.min = (a, b) => {
 };
 
 Duration.newInstance = obj => {
-  if (missing(obj)) return null;
+  if (missing(obj)) {
+    return null;
+  }
 
   let output = null;
 
@@ -426,11 +460,15 @@ Duration.niceSteps = (min, max, desiredSteps, desiredInterval) => {
   let monthInterval = -1;
 
   milliSteps.forEach((i, m) => {
-    if (interval.milli >= i) milliInterval = m;
+    if (interval.milli >= i) {
+      milliInterval = m;
+    }
   });
 
   monthSteps.forEach((i, m) => {
-    if (interval.month >= i) monthInterval = m;
+    if (interval.month >= i) {
+      monthInterval = m;
+    }
   });
 
   const output = new Duration();
@@ -467,17 +505,29 @@ Duration.niceFormat = (min, max, desiredSteps, desiredInterval) => {
 
   let minFormat = 0; // SECONDS
 
-  if (interval.milli >= Duration.MILLI_VALUES.minute) minFormat = 1;
+  if (interval.milli >= Duration.MILLI_VALUES.minute) {
+    minFormat = 1;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.hour) minFormat = 2;
+  if (interval.milli >= Duration.MILLI_VALUES.hour) {
+    minFormat = 2;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.day) minFormat = 3;
+  if (interval.milli >= Duration.MILLI_VALUES.day) {
+    minFormat = 3;
+  }
 
-  if (interval.milli >= Duration.MILLI_VALUES.month) minFormat = 4;
+  if (interval.milli >= Duration.MILLI_VALUES.month) {
+    minFormat = 4;
+  }
 
-  if (interval.month >= Duration.MONTH_VALUES.month) minFormat = 4;
+  if (interval.month >= Duration.MONTH_VALUES.month) {
+    minFormat = 4;
+  }
 
-  if (interval.month >= Duration.MONTH_VALUES.year) minFormat = 5;
+  if (interval.month >= Duration.MONTH_VALUES.year) {
+    minFormat = 5;
+  }
 
   let maxFormat = 5; // YEAR
   const span = endDuration.subtract(startDuration, interval);
@@ -494,13 +544,21 @@ Duration.niceFormat = (min, max, desiredSteps, desiredInterval) => {
   )
     maxFormat = 3; // day
 
-  if (span.milli < Duration.MILLI_VALUES.day) maxFormat = 2;
+  if (span.milli < Duration.MILLI_VALUES.day) {
+    maxFormat = 2;
+  }
 
-  if (span.milli < Duration.MILLI_VALUES.hour) maxFormat = 1;
+  if (span.milli < Duration.MILLI_VALUES.hour) {
+    maxFormat = 1;
+  }
 
-  if (span.milli < Duration.MILLI_VALUES.minute) maxFormat = 0;
+  if (span.milli < Duration.MILLI_VALUES.minute) {
+    maxFormat = 0;
+  }
 
-  if (maxFormat <= minFormat) maxFormat = minFormat;
+  if (maxFormat <= minFormat) {
+    maxFormat = minFormat;
+  }
 
   // INDEX BY [minFormat][maxFormat]
   return [
