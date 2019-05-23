@@ -23,12 +23,12 @@ const generateInitialOptions = (series, timeDomain) => {
   const { lowerIsBetter } = series[0].sources[0].meta;
 
   return {
-    reverse: !lowerIsBetter,
     tooltips: {
       enabled: false,
     },
     // Start using: chartSchema.md
     'axis.y.label': lowerIsBetter ? 'Duration' : 'Score',
+    'axis.y.reverse': !lowerIsBetter,
     'axis.x.min': timeDomain.min,
     'axis.x.max': timeDomain.max,
   };

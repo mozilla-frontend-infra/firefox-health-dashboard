@@ -40,7 +40,7 @@ const getFramework = async combo => {
       const clean = toPairs(rawData)
         .map((meta, signature) => {
           const { suite, test, lower_is_better } = meta;
-          let lowerIsBetter = true;
+          let lowerIsBetter = lower_is_better;
 
           if (lower_is_better === undefined) {
             if (
