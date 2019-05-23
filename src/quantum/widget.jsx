@@ -1,8 +1,8 @@
 /* global fetch */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Link } from '../vendor/utils/links';
 import { DetailsIcon } from '../utils/icons';
 
 const enrich = (text, key = 'none') =>

@@ -19,7 +19,9 @@ exports[`renders correctly 1`] = `
       </h3>
       <span
         className="sides-padding"
-      />
+      >
+        
+      </span>
     </div>
   </header>
   <div

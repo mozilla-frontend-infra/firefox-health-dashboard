@@ -21,42 +21,159 @@ exports[`renders correctly 1`] = `
         Release criteria
       </small>
     </h1>
-    <span
+    <div
       style={
         Object {
           "float": "right",
+          "padding": "0 1rem 0 0",
         }
       }
     >
       <a
-        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+        href="/"
+        title="Home"
       >
-        <img
-          alt="Go to Github Repo"
-          src="test-file-stub"
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-4"
+          focusable="false"
+          role="presentation"
           style={
             Object {
-              "padding": "0 0.5rem 0 0",
-              "width": "2rem",
+              "margin": "0 .2rem 0 .2rem",
+              "verticalAlign": "baseline",
             }
           }
-        />
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
       </a>
-    </span>
+      <a
+        href="/android"
+        title="Android Performance"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-4"
+          focusable="false"
+          role="presentation"
+          style={
+            Object {
+              "margin": "0 .2rem 0 .2rem",
+              "verticalAlign": "baseline",
+            }
+          }
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"
+          />
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+        </svg>
+      </a>
+      <a
+        href="/quantum/64"
+        title="Quantum 64 Performance"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-4"
+          focusable="false"
+          role="presentation"
+          style={
+            Object {
+              "margin": "0 .2rem 0 .2rem",
+              "verticalAlign": "baseline",
+            }
+          }
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"
+          />
+        </svg>
+      </a>
+      <a
+        href="/battery"
+        title="Power Usage"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-4"
+          focusable="false"
+          role="presentation"
+          style={
+            Object {
+              "margin": "0 .2rem 0 .2rem",
+              "verticalAlign": "baseline",
+            }
+          }
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z"
+          />
+        </svg>
+      </a>
+      <a
+        href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+        title="Source Code"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-4"
+          focusable="false"
+          role="presentation"
+          style={
+            Object {
+              "margin": "0 .2rem 0 .2rem",
+              "verticalAlign": "baseline",
+            }
+          }
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M0 0h24v24H0V0z"
+            fill="none"
+          />
+          <path
+            d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"
+          />
+        </svg>
+      </a>
+    </div>
   </div>
   <div>
     <div
-      className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
+      className="MuiGrid-container-13 MuiGrid-spacing-xs-24-37"
     >
       <div
-        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+        className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
         <div>
           <div
-            className="Section-header-102"
+            className="Section-header-111"
           >
             <h2
-              className="Section-title-103"
+              className="Section-title-112"
             >
               <span>
                 Bugzilla
@@ -64,13 +181,13 @@ exports[`renders correctly 1`] = `
             </h2>
           </div>
           <div
-            className="Section-content-101"
+            className="Section-content-110"
           >
             <div
-              className="ChartJsWrapper-chartContainer-106"
+              className="ChartJsWrapper-chartContainer-115"
             >
               <h2
-                className="ChartJsWrapper-title-107"
+                className="ChartJsWrapper-title-116"
               >
                 Firefox Preview Bugs
               </h2>
@@ -85,7 +202,7 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <div
-                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
                   role="progressbar"
                   style={
                     Object {
@@ -95,11 +212,11 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <svg
-                    className="MuiCircularProgress-svg-114"
+                    className="MuiCircularProgress-svg-123"
                     viewBox="22 22 44 44"
                   >
                     <circle
-                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
                       cx={44}
                       cy={44}
                       fill="none"
@@ -115,19 +232,19 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+        className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
         <div>
           <div
-            className="Section-header-102"
+            className="Section-header-111"
           >
             <h2
-              className="Section-title-103"
+              className="Section-title-112"
             >
               <span>
                 Nimbledroid
                 <span
-                  className="Section-subtitle-104"
+                  className="Section-subtitle-113"
                 >
                   Firefox Preview vs Chrome Beta
                 </span>
@@ -135,7 +252,7 @@ exports[`renders correctly 1`] = `
             </h2>
           </div>
           <div
-            className="Section-content-101"
+            className="Section-content-110"
           >
             <div />
           </div>
@@ -145,27 +262,57 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-102"
+      className="Section-header-111"
     >
       <h2
-        className="Section-title-103"
+        className="Section-title-112"
       >
         <span>
           Raptor (TP6m)
           <span>
-             (
+             
             <a
               href="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
+              title="show details"
             >
-              more
+              <div
+                style={
+                  Object {
+                    "display": "inline-block",
+                    "margin": "-1rem 0",
+                    "verticalAlign": "middle",
+                  }
+                }
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root-4"
+                  focusable="false"
+                  role="presentation"
+                  style={
+                    Object {
+                      "margin": "0 .2rem 0 .2rem",
+                      "verticalAlign": "baseline",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                  />
+                </svg>
+              </div>
             </a>
-            )
           </span>
         </span>
       </h2>
     </div>
     <div
-      className="Section-content-101"
+      className="Section-content-110"
     >
       <div
         style={
@@ -177,7 +324,7 @@ exports[`renders correctly 1`] = `
         }
       >
         <div
-          className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+          className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
           role="progressbar"
           style={
             Object {
@@ -187,11 +334,11 @@ exports[`renders correctly 1`] = `
           }
         >
           <svg
-            className="MuiCircularProgress-svg-114"
+            className="MuiCircularProgress-svg-123"
             viewBox="22 22 44 44"
           >
             <circle
-              className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+              className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
               cx={44}
               cy={44}
               fill="none"
@@ -206,10 +353,10 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-102"
+      className="Section-header-111"
     >
       <h2
-        className="Section-title-103"
+        className="Section-title-112"
       >
         <span>
           Telemetry
@@ -217,22 +364,63 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-101"
+      className="Section-content-110"
     >
       <div
-        className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
+        className="MuiGrid-container-13 MuiGrid-spacing-xs-24-37"
       >
         <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+          className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
         >
           <div>
             <div
-              className="ChartJsWrapper-chartContainer-106"
+              className="ChartJsWrapper-chartContainer-115"
             >
               <h2
-                className="ChartJsWrapper-title-107"
+                className="ChartJsWrapper-title-116"
               >
-                Total content page load time (no 95th)
+                <div>
+                  Total content page load time (no 95th)
+                   
+                  <a
+                    href="https://sql.telemetry.mozilla.org/queries/59395"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="go to Redash query"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "margin": "-1rem 0",
+                          "verticalAlign": "middle",
+                        }
+                      }
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className="MuiSvgIcon-root-4"
+                        focusable="false"
+                        role="presentation"
+                        style={
+                          Object {
+                            "margin": "0 .2rem 0 .2rem",
+                            "verticalAlign": "baseline",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </div>
               </h2>
               <div
                 style={
@@ -245,7 +433,7 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <div
-                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
                   role="progressbar"
                   style={
                     Object {
@@ -255,11 +443,11 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <svg
-                    className="MuiCircularProgress-svg-114"
+                    className="MuiCircularProgress-svg-123"
                     viewBox="22 22 44 44"
                   >
                     <circle
-                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
                       cx={44}
                       cy={44}
                       fill="none"
@@ -270,40 +458,61 @@ exports[`renders correctly 1`] = `
                   </svg>
                 </div>
               </div>
-            </div>
-            <div
-              className="ErrorBoundary-linkContainer-120"
-            >
-              <a
-                href="https://sql.telemetry.mozilla.org/queries/59395"
-                rel="noopener noreferrer"
-                target="_blank"
-                title="go to Redash query"
-              >
-                <span
-                  style={
-                    Object {
-                      "verticalAlign": "middle",
-                    }
-                  }
-                >
-                  Show Redash query
-                </span>
-              </a>
             </div>
           </div>
         </div>
         <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+          className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
         >
           <div>
             <div
-              className="ChartJsWrapper-chartContainer-106"
+              className="ChartJsWrapper-chartContainer-115"
             >
               <h2
-                className="ChartJsWrapper-title-107"
+                className="ChartJsWrapper-title-116"
               >
-                Total content page load time
+                <div>
+                  Total content page load time
+                   
+                  <a
+                    href="https://sql.telemetry.mozilla.org/queries/59397"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="go to Redash query"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "margin": "-1rem 0",
+                          "verticalAlign": "middle",
+                        }
+                      }
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className="MuiSvgIcon-root-4"
+                        focusable="false"
+                        role="presentation"
+                        style={
+                          Object {
+                            "margin": "0 .2rem 0 .2rem",
+                            "verticalAlign": "baseline",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </div>
               </h2>
               <div
                 style={
@@ -316,7 +525,7 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <div
-                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
                   role="progressbar"
                   style={
                     Object {
@@ -326,11 +535,11 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <svg
-                    className="MuiCircularProgress-svg-114"
+                    className="MuiCircularProgress-svg-123"
                     viewBox="22 22 44 44"
                   >
                     <circle
-                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
                       cx={44}
                       cy={44}
                       fill="none"
@@ -341,26 +550,6 @@ exports[`renders correctly 1`] = `
                   </svg>
                 </div>
               </div>
-            </div>
-            <div
-              className="ErrorBoundary-linkContainer-120"
-            >
-              <a
-                href="https://sql.telemetry.mozilla.org/queries/59397"
-                rel="noopener noreferrer"
-                target="_blank"
-                title="go to Redash query"
-              >
-                <span
-                  style={
-                    Object {
-                      "verticalAlign": "middle",
-                    }
-                  }
-                >
-                  Show Redash query
-                </span>
-              </a>
             </div>
           </div>
         </div>
@@ -369,15 +558,15 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-102"
+      className="Section-header-111"
     >
       <h2
-        className="Section-title-103"
+        className="Section-title-112"
       >
         <span>
           Perfherder
           <span
-            className="Section-subtitle-104"
+            className="Section-subtitle-113"
           >
             Lower in the graph is better regardless if it is a score or execution time (read the Y label)
           </span>
@@ -385,24 +574,24 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-101"
+      className="Section-content-110"
     >
       <div
-        className="MuiGrid-container-4 MuiGrid-spacing-xs-24-28"
+        className="MuiGrid-container-13 MuiGrid-spacing-xs-24-37"
       >
         <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+          className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
         >
           <div>
             <div
-              className="ChartJsWrapper-chartContainer-106"
+              className="ChartJsWrapper-chartContainer-115"
             >
               <h2
-                className="ChartJsWrapper-title-107"
+                className="ChartJsWrapper-title-116"
               >
-                <span>
+                <div>
                   Speedometer
-                </span>
+                </div>
               </h2>
               <div
                 style={
@@ -415,7 +604,7 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <div
-                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
                   role="progressbar"
                   style={
                     Object {
@@ -425,11 +614,11 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <svg
-                    className="MuiCircularProgress-svg-114"
+                    className="MuiCircularProgress-svg-123"
                     viewBox="22 22 44 44"
                   >
                     <circle
-                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
                       cx={44}
                       cy={44}
                       fill="none"
@@ -444,18 +633,18 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
         <div
-          className="MuiGrid-item-5 MuiGrid-grid-xs-6-38"
+          className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
         >
           <div>
             <div
-              className="ChartJsWrapper-chartContainer-106"
+              className="ChartJsWrapper-chartContainer-115"
             >
               <h2
-                className="ChartJsWrapper-title-107"
+                className="ChartJsWrapper-title-116"
               >
-                <span>
+                <div>
                   Unity WebGl
-                </span>
+                </div>
               </h2>
               <div
                 style={
@@ -468,7 +657,7 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <div
-                  className="MuiCircularProgress-root-109 MuiCircularProgress-colorPrimary-112 MuiCircularProgress-indeterminate-111"
+                  className="MuiCircularProgress-root-118 MuiCircularProgress-colorPrimary-121 MuiCircularProgress-indeterminate-120"
                   role="progressbar"
                   style={
                     Object {
@@ -478,11 +667,11 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <svg
-                    className="MuiCircularProgress-svg-114"
+                    className="MuiCircularProgress-svg-123"
                     viewBox="22 22 44 44"
                   >
                     <circle
-                      className="MuiCircularProgress-circle-115 MuiCircularProgress-circleIndeterminate-117"
+                      className="MuiCircularProgress-circle-124 MuiCircularProgress-circleIndeterminate-126"
                       cx={44}
                       cy={44}
                       fill="none"

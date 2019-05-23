@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from '../../vendor/utils/links';
 import DashboardPage from '../../components/DashboardPage';
 import { AndroidIcon, BatteryIcon, DesktopIcon } from '../../utils/icons';
 
