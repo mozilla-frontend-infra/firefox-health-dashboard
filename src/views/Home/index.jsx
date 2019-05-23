@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import DashboardPage from '../../components/DashboardPage';
+import { AndroidIcon, BatteryIcon, DesktopIcon } from '../../utils/icons';
 
 const styles = {
   root: {
@@ -35,10 +36,18 @@ const Home = ({ classes }) => (
     title="Firefox health"
     subtitle="Tracking metrics for Firefox products">
     <div className={classes.links}>
-      <Link to="/android">Android</Link>
-      <Link to="/quantum/32">Quantum 32bit</Link>
-      <Link to="/quantum/64">Quantum 64bit</Link>
-      <Link to="/js-team">JS team</Link>
+      <Link to="/android">
+        <AndroidIcon /> Android
+      </Link>
+      <Link to="/quantum/32">
+        <DesktopIcon /> Quantum 32bit
+      </Link>
+      <Link to="/quantum/64">
+        <DesktopIcon /> Quantum 64bit
+      </Link>
+      <Link to="/battery">
+        <BatteryIcon /> Power Usage
+      </Link>
     </div>
     <div className={classes.netlify}>
       <a href="https://www.netlify.com">

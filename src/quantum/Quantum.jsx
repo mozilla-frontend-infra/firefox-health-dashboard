@@ -13,6 +13,7 @@ import {
 } from './constants';
 import { CONFIG, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { DetailsIcon } from '../utils/icons';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -581,11 +582,10 @@ export default class QuantumIndex extends React.Component {
                 {`${title}`}
                 {more && (
                   <span>
-                    {' ('}
-                    <a href={more} style={{ fontSize: '0.8em' }}>
-                      more
+                    {' '}
+                    <a href={more} title="show details">
+                      <DetailsIcon />
                     </a>
-                    {')'}
                   </span>
                 )}
               </span>

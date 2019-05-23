@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { DetailsIcon } from '../utils/icons';
 
 const enrich = (text, key = 'none') =>
   typeof text === 'string' ? (
@@ -35,14 +36,14 @@ export default class Widget extends React.Component {
     );
     let $secondTitle;
 
-    if (this.props.secondTitle) {
-      if (this.props.secondLink) {
-        $secondTitle = (
-          <Link to={this.props.secondLink}>{this.props.secondTitle}</Link>
-        );
-      } else {
-        $secondTitle = this.props.secondTitle;
-      }
+    if (this.props.secondLink) {
+      $secondTitle = (
+        <Link to={this.props.secondLink} title="show details">
+          <DetailsIcon />
+        </Link>
+      );
+    } else {
+      $secondTitle = '';
     }
 
     let { target } = this.props;
@@ -135,7 +136,6 @@ Widget.propTypes = {
   reading: PropTypes.string,
   title: PropTypes.string,
   secondLink: PropTypes.string,
-  secondTitle: PropTypes.string,
   target: PropTypes.string,
   targetStatus: PropTypes.string,
   explainer: PropTypes.string,

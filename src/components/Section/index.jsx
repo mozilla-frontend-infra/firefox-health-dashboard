@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { DetailsIcon } from '../../utils/icons';
 
 const LEFT_MARGIN = '1rem';
 const styles = {
@@ -14,7 +15,7 @@ const styles = {
   title: {
     color: 'white',
     margin: `0 0 0 ${LEFT_MARGIN}`,
-    padding: '.5rem 0 .5rem',
+    padding: '.4rem 0 .4rem',
   },
   subtitle: {
     color: '#d1d2d3',
@@ -29,14 +30,15 @@ const Section = ({ classes, children, subtitle, title, more }) => (
       <h2 className={classes.title}>
         <span>
           {title}
+          {subtitle && <span className={classes.subtitle}>{subtitle}</span>}
           {more && (
             <span>
-              {' ('}
-              <a href={more}>more</a>
-              {')'}
+              {' '}
+              <a href={more} title="show details">
+                <DetailsIcon />
+              </a>
             </span>
           )}
-          {subtitle && <span className={classes.subtitle}>{subtitle}</span>}
         </span>
       </h2>
     </div>

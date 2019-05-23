@@ -19,6 +19,7 @@ import { HyperCube, window } from '../vendor/jx/cubes';
 import { g5Reference, TARGET_NAME } from '../config/mobileG5';
 import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
+import { DetailsIcon } from '../utils/icons';
 
 /*
 condition - json expression to pull perfherder data
@@ -277,8 +278,7 @@ class TP6mAggregate_ extends Component {
                           {'Geomean of '}
                           {label}
                           {' for '}
-                          {platformLabel}
-                          {' ('}
+                          {platformLabel}{' '}
                           <a
                             href={URL({
                               path: '/android/tp6m',
@@ -287,12 +287,11 @@ class TP6mAggregate_ extends Component {
                                 platform,
                               },
                             })}
+                            title="show details"
                             target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ fontSize: '0.9em' }}>
-                            {'details'}
+                            rel="noopener noreferrer">
+                            <DetailsIcon />
                           </a>
-                          {')'}
                         </span>
                       }
                       type="line"

@@ -107,8 +107,10 @@ function isString(value) {
   return typeof value === 'string';
 }
 
+/*
+return an Array
+ */
 function toArray(value) {
-  // return a list
   if (value == null) {
     return [];
   }
