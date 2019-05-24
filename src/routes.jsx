@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './views/Home';
 import AndroidPage from './views/Android';
-import JsTeam from './views/JsTeam';
 import NimbledroidGraphPage from './nimbledroid/NimbledroidGraphPage';
 import Quantum from './quantum/Quantum';
 import TP6 from './quantum/TP6';
 import TP6M from './views/Android/TP6m';
+import Power from './power';
 import Subbenchmark from './quantum/subbenchmarks';
 
 const NoMatch = () => <div>404</div>;
@@ -18,13 +18,14 @@ const Routes = () => (
       <Route path="/quantum/tp6m" component={TP6M} />
       <Route path="/android/tp6m" component={TP6M} />
       <Route path="/android/graph" component={NimbledroidGraphPage} />
+
       <Route path="/android" component={AndroidPage} />
+      <Route path="/power" component={Power} />
       <Route
         path="/quantum/:framework/:platform/:suite/:option"
         component={Subbenchmark}
       />
       <Route path="/quantum/:bits" component={Quantum} />
-      <Route path="/js-team" component={JsTeam} />
       <Route path="/" component={Home} />
       <Route component={NoMatch} />
     </Switch>

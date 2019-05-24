@@ -47,7 +47,7 @@ const DashboardPage = ({ classes, children, title, subtitle }) => (
         <Link to="/quantum/64" title="Quantum 64 Performance">
           <DesktopIcon />
         </Link>
-        <Link to="/battery" title="Power Usage">
+        <Link to="/power" title="Power Usage">
           <BatteryIcon />
         </Link>
         <a

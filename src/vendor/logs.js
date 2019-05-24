@@ -25,25 +25,28 @@ function parseStack(stackString) {
     return [];
   }
 
-  return stackString.split('\n').map(line =>
-    selectFrom(stackPatterns)
-      .map(stackPattern => {
-        const parts = stackPattern.exec(line);
+  return selectFrom(stackString.split('\n'))
+    .map(line =>
+      selectFrom(stackPatterns)
+        .map(stackPattern => {
+          const parts = stackPattern.exec(line);
 
-        if (missing(parts)) {
-          return { function: line };
-        }
+          if (missing(parts)) {
+            return null;
+          }
 
-        return {
-          function: parts[1],
-          fileName: parts[2],
-          line: parts[3],
-          column: parts[4],
-        };
-      })
-      .exists()
-      .first()
-  );
+          return {
+            function: parts[1],
+            fileName: parts[2],
+            line: parts[3],
+            column: parts[4],
+          };
+        })
+        .exists()
+        .first()
+    )
+    .exists()
+    .toArray();
 }
 
 class Exception extends Error {

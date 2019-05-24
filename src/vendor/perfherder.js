@@ -40,6 +40,15 @@ const getFramework = async combo => {
       const clean = toPairs(rawData)
         .map((meta, signature) => {
           const { suite, test, lower_is_better } = meta;
+          const cleanTest = (() => {
+            if (missing(test)) return null;
+
+            if (test === suite) return null;
+
+            if (test.startsWith(suite)) return test.slice(suite.length + 1);
+
+            return test;
+          })();
           let lowerIsBetter = lower_is_better;
 
           if (lower_is_better === undefined) {
@@ -79,7 +88,7 @@ const getFramework = async combo => {
           return {
             signature,
             suite,
-            test: test === suite ? null : test,
+            test: cleanTest,
             lowerIsBetter,
             options: lookup[meta.option_collection_hash],
             extraOptions: toArray(meta.extra_options).sort(),
