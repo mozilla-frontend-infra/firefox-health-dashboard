@@ -71,7 +71,6 @@ const generateOptions = (rawOptions = {}, data) => {
         .select('y')
     )
   );
-
   const yAxes = [
     {
       ticks: {

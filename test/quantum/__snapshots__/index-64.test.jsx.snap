@@ -108,7 +108,7 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
       <a
-        href="/battery"
+        href="/power"
         title="Power Usage"
       >
         <svg
