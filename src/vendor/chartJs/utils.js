@@ -26,6 +26,7 @@ const mostlyMax = values => {
 return nice, round, upper bound
  */
 const niceCeiling = value => {
+  if (value === 0) return 1;
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
   const norm = value / d;
   const nice = [1.5, 2, 3, 5, 7.5, 10].find(v => norm <= v);
@@ -70,6 +71,7 @@ const generateOptions = (rawOptions = {}, data) => {
         .select('y')
     )
   );
+
   const yAxes = [
     {
       ticks: {
