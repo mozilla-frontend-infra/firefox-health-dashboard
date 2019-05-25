@@ -12,6 +12,7 @@ import {
 
 const styles = {
   root: {
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
   },
