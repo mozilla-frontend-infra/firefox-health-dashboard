@@ -4,7 +4,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { isEqual } from '../../Data';
-import { selectFrom } from '../../vectors';
+import { ArrayWrapper, selectFrom } from '../../vectors';
 import { missing } from '../../utils';
 import { fromQueryString, URL } from '../../requests';
 
@@ -134,12 +134,15 @@ function withNavigation(config) {
           value: PropTypes.string,
           defaultValue: PropTypes.string,
           onChange: PropTypes.func.isRequired,
-          options: PropTypes.arrayOf(
-            PropTypes.shape({
-              id: PropTypes.string.isRequired,
-              label: PropTypes.string.isRequired,
-            })
-          ),
+          options: PropTypes.oneOfType([
+            PropTypes.arrayOf(
+              PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                label: PropTypes.string.isRequired,
+              })
+            ),
+            PropTypes.instanceOf(ArrayWrapper),
+          ]),
         })
       ),
     };

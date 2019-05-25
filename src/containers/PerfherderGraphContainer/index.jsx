@@ -20,14 +20,14 @@ const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
 const generateInitialOptions = (series, timeDomain) => {
   // TODO: map tests and suite scores to measurement units and
   // add some label for scale
-  const { lowerIsBetter } = series[0].sources[0].meta;
+  const { lowerIsBetter, unit } = series[0].sources[0].meta;
 
   return {
     tooltips: {
       enabled: false,
     },
     // Start using: chartSchema.md
-    'axis.y.label': lowerIsBetter ? 'Duration' : 'Score',
+    'axis.y.label': unit,
     'axis.y.reverse': !lowerIsBetter,
     'axis.x.min': timeDomain.min,
     'axis.x.max': timeDomain.max,

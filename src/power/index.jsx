@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import { BROWSERS, PLATFORMS, TESTS } from './config';
+import { COMBOS, PLATFORMS, TESTS } from './config';
 import { withNavigation } from '../vendor/utils/navigation';
 import Picker from '../vendor/utils/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
@@ -17,30 +17,40 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, platform: platformId } = this.props;
-    const platform = selectFrom(PLATFORMS)
-      .where({ id: platformId })
+    const { classes, navigation, suite, platform } = this.props;
+    const platformDetails = selectFrom(PLATFORMS)
+      .where({ id: platform })
       .first();
+    const combos = selectFrom(COMBOS).where({ suite });
+    const idleFilter = selectFrom(COMBOS)
+      .where({ suite: 'scn-power-idle', browser: 'geckoview' })
+      .first().filter;
 
     return (
-      <DashboardPage title="Power Usage" key={`page_${platform.id}`}>
+      <DashboardPage title="Power Usage" key={`page_${platform}_${suite}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
             <Grid
               item
               xs={6}
-              key={`page_${id}_${platform.id}`}
+              key={`page_${id}_${platform}_${suite}`}
               className={classes.chart}>
               <PerfherderGraphContainer
                 title={label}
-                series={selectFrom(BROWSERS)
-                  .map(({ label, filter: browserFilter }) => ({
-                    label,
+                series={combos
+                  .map(({ browserLabel, filter: browserFilter }) => ({
+                    label: browserLabel,
                     seriesConfig: {
-                      and: [testFilter, platform.filter, browserFilter],
+                      and: [testFilter, platformDetails.filter, browserFilter],
                     },
                   }))
+                  .append({
+                    label: 'Idle Power (geckoview)',
+                    seriesConfig: {
+                      and: [testFilter, platformDetails.filter, idleFilter],
+                    },
+                  })
                   .toArray()}
               />
             </Grid>
@@ -58,6 +68,16 @@ const nav = [
     label: 'Platform',
     defaultValue: 'p2-aarch64',
     options: PLATFORMS,
+  },
+  {
+    type: Picker,
+    id: 'suite',
+    label: 'Suite',
+    defaultValue: 'speedometer',
+    options: selectFrom(COMBOS)
+      // .filter(jx({ not: { eq: { suite: 'scn-power-idle' } } }))
+      .groupBy('suite')
+      .map((v, suite) => ({ id: suite, label: suite })),
   },
 ];
 

@@ -50,9 +50,13 @@ const getFramework = async combo => {
             return test;
           })();
           let lowerIsBetter = lower_is_better;
+          let unit = 'Score';
 
           if (lower_is_better === undefined) {
-            if (
+            if (suite.endsWith('-power')) {
+              lowerIsBetter = true;
+              unit = 'mAh';
+            } else if (
               [
                 'raptor-speedometer',
                 'raptor-stylebench',
@@ -76,12 +80,14 @@ const getFramework = async combo => {
               ].some(prefix => suite.startsWith(prefix))
             ) {
               lowerIsBetter = true;
+              unit = 'Duration';
             } else {
               if (DEBUG) {
                 Log.note('Do not have direction for {{suite}}', { suite });
               }
 
               lowerIsBetter = false;
+              unit = 'Score';
             }
           }
 
@@ -90,6 +96,7 @@ const getFramework = async combo => {
             suite,
             test: cleanTest,
             lowerIsBetter,
+            unit,
             options: lookup[meta.option_collection_hash],
             extraOptions: toArray(meta.extra_options).sort(),
             platform: meta.machine_platform,

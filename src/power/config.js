@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Data } from '../vendor/Data';
 
 const TESTS = [
@@ -43,7 +45,7 @@ const PLATFORMS = [
   },
   {
     id: 'p2-aarch64',
-    label: 'Pixel 2 (ARM64)',
+    label: 'Pixel 2 (aarch64)',
     filter: {
       eq: {
         // options: 'opt',
@@ -53,69 +55,20 @@ const PLATFORMS = [
   },
 ];
 const COMBO_TABLE = {
-  header: ['id', 'label', 'suite', 'filter'],
+  header: ['browser', 'browserLabel', 'suite', 'filter'],
   data: [
-    // [
-    //   'geckoview',
-    //   'speedometer',
-    //   {
-    //     eq: {
-    //       framework: 10,
-    //       repo: 'mozilla-central',
-    //       suite: ['raptor-speedometer-geckoview-power'],
-    //     },
-    //   },
-    // ],
-    [
-      'geckoview',
-      'Geckoview',
-      'scn-power-idle',
-      {
-        eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: ['raptor-scn-power-idle-geckoview-power'],
-        },
-      },
-    ],
-    [
-      'refbrow',
-      'Reference Browser',
-      'scn-power-idle',
-      {
-        eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: ['raptor-scn-power-idle-refbrow-power'],
-        },
-      },
-    ],
-    [
-      'fenix',
-      'Firefox Preview',
-      'scn-power-idle',
-      {
-        eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: ['raptor-scn-power-idle-fenix-power'],
-        },
-      },
-    ],
-    [
-      'fennec',
-      'Fennec',
-      'scn-power-idle',
-      {
-        eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: ['raptor-scn-power-idle-fennec-power'],
-        },
-      },
-    ],
+    ['geckoview', 'Geckoview', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-geckoview-power']}}],
+    ['refbrow', 'Reference Browser', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fenix-power']}}],
+    ['fennec', 'Fennec', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fennec-power']}}],
+
+    ['geckoview', 'Geckoview', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-geckoview-power']}}],
+    ['refbrow', 'Reference Browser', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fenix-power']}}],
+    ['fennec', 'Fennec', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fennec-power']}}],
+
   ],
 };
-const BROWSERS = COMBO_TABLE.data.map(row => Data.zip(COMBO_TABLE.header, row));
+const COMBOS = COMBO_TABLE.data.map(row => Data.zip(COMBO_TABLE.header, row));
 
-export { TESTS, BROWSERS, PLATFORMS };
+export { TESTS, COMBOS, PLATFORMS };
