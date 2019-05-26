@@ -3,7 +3,7 @@
 import { selectFrom } from "../vendor/vectors";
 
 const SIZES = [
-  // {size: "2160p60"},
+  {size: "2160p60"},
   {size: "2160p30"},
   {size: "1440p60"},
   {size: "1440p30"},
