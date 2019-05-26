@@ -53,7 +53,10 @@ const getFramework = async combo => {
           let unit = 'Score';
 
           if (lower_is_better === undefined) {
-            if (suite.endsWith('-power')) {
+            if (suite.includes('youtube-playback')) {
+              lowerIsBetter = true;
+              unit = 'dropped frames';
+            } else if (suite.endsWith('-power')) {
               lowerIsBetter = true;
               unit = 'mAh';
             } else if (
