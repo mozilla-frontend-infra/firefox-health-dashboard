@@ -5,17 +5,17 @@ import { selectFrom } from "../vendor/vectors";
 const SIZES = [
   // {size: "2160p60"},
   {size: "2160p30"},
-  // {size: "1440p60"},
-  // {size: "1440p30"},
-  // {size: "1080p60"},
-  // {size: "1080p30"},
-  // {size: "720p60"},
-  // {size: "720p30"},
-  // {size: "480p30"},
-  // {size: "360p30"},
-  // {size: "240p30"},
-  // {size: "144p30"},
-  // {size: "144p15"},
+  {size: "1440p60"},
+  {size: "1440p30"},
+  {size: "1080p60"},
+  {size: "1080p30"},
+  {size: "720p60"},
+  {size: "720p30"},
+  {size: "480p30"},
+  {size: "360p30"},
+  {size: "240p30"},
+  {size: "144p30"},
+  {size: "144p15"},
 ];
 
 const ENCODINGS = [
