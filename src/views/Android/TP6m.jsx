@@ -44,7 +44,7 @@ class TP6M extends React.Component {
     ).materialize();
     const aggregate = await pullAggregate({
       condition: {
-        or: TP6_COMBOS.where({ test, platform }).select('seriesConfig'),
+        or: TP6_COMBOS.where({ test, platform }).select('filter'),
       },
       sites,
       tests,
@@ -175,10 +175,7 @@ class TP6M extends React.Component {
                     })()}
                     series={selectFrom(series)
                       .sortBy(['ordering'])
-                      .map(s => ({
-                        label: s.browser,
-                        seriesConfig: s.seriesConfig,
-                      }))
+                      .select({ label: 'browser', filter: 'filter' })
                       .toArray()}
                   />
                 </Grid>

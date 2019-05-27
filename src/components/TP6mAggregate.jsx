@@ -185,7 +185,7 @@ class TP6mAggregate_ extends Component {
             },
           ],
         })
-      ).select('seriesConfig'),
+      ).select('filter'),
     };
     const data = await pullAggregate({
       condition,

@@ -519,7 +519,7 @@ const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
   .leftJoin('browser', PLATFORMS, 'browser')
   .leftJoin('mode', TP6_TESTS_DATA, 'mode')
   .map(row => {
-    row.seriesConfig = {
+    row.filter = {
       and: [row.siteFilter, row.testFilter, row.platformFilter],
     };
 

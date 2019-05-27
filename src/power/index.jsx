@@ -41,13 +41,13 @@ class Power extends React.Component {
                 series={combos
                   .map(({ browserLabel, filter: browserFilter }) => ({
                     label: browserLabel,
-                    seriesConfig: {
+                    filter: {
                       and: [testFilter, platformDetails.filter, browserFilter],
                     },
                   }))
                   .append({
                     label: 'Idle Power (geckoview)',
-                    seriesConfig: {
+                    filter: {
                       and: [testFilter, platformDetails.filter, idleFilter],
                     },
                   })

@@ -110,7 +110,7 @@ class Android extends Component {
                 series={[
                   {
                     label: 'Moto G5 (arm7)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {
@@ -128,7 +128,7 @@ class Android extends Component {
                   },
                   {
                     label: 'Pixel 2 (arm7)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {
@@ -146,7 +146,7 @@ class Android extends Component {
                   },
                   {
                     label: 'Pixel 2 (ARM64)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {
@@ -170,7 +170,7 @@ class Android extends Component {
                 series={[
                   {
                     label: 'Moto G5 (arm7)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {
@@ -188,7 +188,7 @@ class Android extends Component {
                   },
                   {
                     label: 'Pixel 2 (arm7)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {
@@ -206,7 +206,7 @@ class Android extends Component {
                   },
                   {
                     label: 'Pixel 2 (ARM64)',
-                    seriesConfig: {
+                    filter: {
                       and: [
                         { missing: 'test' },
                         {

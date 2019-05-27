@@ -106,7 +106,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [
                     { missing: 'test' },
                     platform,
@@ -122,7 +122,7 @@ export default class QuantumIndex extends React.Component {
               },
               {
                 label: 'Chromium',
-                seriesConfig: {
+                filter: {
                   and: [
                     { missing: 'test' },
                     nightlyPlatform,
@@ -175,10 +175,7 @@ export default class QuantumIndex extends React.Component {
               title={site}
               series={selectFrom(series)
                 .sortBy(['ordering'])
-                .map(s => ({
-                  label: s.browser,
-                  seriesConfig: s.seriesConfig,
-                }))}
+                .select({ label: 'browser', filter: 'filter' })}
             />
           ))
           .enumerate(),
@@ -192,7 +189,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tp5o' } }],
                 },
               },
@@ -204,7 +201,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tpaint' } }],
                 },
               },
@@ -216,7 +213,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'sessionrestore' } }],
                 },
               },
@@ -228,7 +225,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [
                     performanceFilter,
                     { eq: { suite: 'sessionrestore_no_auto_restore' } },
@@ -243,7 +240,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'ts_paint' } }],
                 },
               },
@@ -255,7 +252,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tabpaint' } }],
                 },
               },
@@ -267,7 +264,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tart' } }],
                 },
               },
@@ -279,7 +276,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox (tabswitch)',
-                seriesConfig: {
+                filter: {
                   and: [
                     performanceFilter,
                     { eq: { suite: ['tps', 'tabswitch'] } },
@@ -294,7 +291,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tsvg_static' } }],
                 },
               },
@@ -306,7 +303,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
                 },
               },
@@ -318,7 +315,7 @@ export default class QuantumIndex extends React.Component {
             series={[
               {
                 label: 'Firefox',
-                seriesConfig: {
+                filter: {
                   and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
                 },
               },

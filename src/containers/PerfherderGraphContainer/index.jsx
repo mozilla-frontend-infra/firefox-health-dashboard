@@ -99,7 +99,7 @@ const perfherderFormatter = (series, timeDomain) => {
 const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
     series.map(async row => {
-      const sources = await getData(row.seriesConfig);
+      const sources = await getData(row.filter);
 
       // filter out old data
       return {
@@ -117,7 +117,7 @@ const getPerfherderData = async (series, timeDomain) => {
 
   if (missing(selectFrom(newData).exists('sources'))) {
     Log.error('can not get data for {{query|json}}', {
-      query: series[0].seriesConfig,
+      query: series[0].filter,
     });
   }
 
@@ -255,7 +255,7 @@ PerfherderGraphContainer.propTypes = {
   series: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      seriesConfig: PropTypes.shape({}).isRequired,
+      filter: PropTypes.shape({}).isRequired,
       options: PropTypes.shape({
         includeSubtests: PropTypes.bool,
       }),

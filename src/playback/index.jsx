@@ -49,7 +49,7 @@ class Power extends React.Component {
                     style: {
                       'axis.y.format': '{{.|percent}}',
                     },
-                    seriesConfig: {
+                    filter: {
                       and: [
                         platformDetails.filter,
                         browserDetails.filter,
