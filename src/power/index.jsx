@@ -22,9 +22,6 @@ class Power extends React.Component {
       .where({ id: platform })
       .first();
     const combos = selectFrom(COMBOS).where({ suite });
-    const idleFilter = selectFrom(COMBOS)
-      .where({ suite: 'scn-power-idle', browser: 'geckoview' })
-      .first().filter;
 
     return (
       <DashboardPage title="Power Usage" key={`page_${platform}_${suite}`}>
@@ -45,12 +42,6 @@ class Power extends React.Component {
                       and: [testFilter, platformDetails.filter, browserFilter],
                     },
                   }))
-                  .append({
-                    label: 'Idle Power (geckoview)',
-                    seriesConfig: {
-                      and: [testFilter, platformDetails.filter, idleFilter],
-                    },
-                  })
                   .toArray()}
               />
             </Grid>
@@ -75,9 +66,8 @@ const nav = [
     label: 'Suite',
     defaultValue: 'speedometer',
     options: selectFrom(COMBOS)
-      // .filter(jx({ not: { eq: { suite: 'scn-power-idle' } } }))
-      .groupBy('suite')
-      .map((v, suite) => ({ id: suite, label: suite })),
+      .groupBy('suiteLabel')
+      .map(([v]) => ({ id: v.suite, label: v.suiteLabel })),
   },
 ];
 

@@ -55,17 +55,17 @@ const PLATFORMS = [
   },
 ];
 const COMBO_TABLE = {
-  header: ['browser', 'browserLabel', 'suite', 'filter'],
+  header: ['browser', 'browserLabel', 'suite', 'suiteLabel', 'filter'],
   data: [
-    ['geckoview', 'Geckoview', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-geckoview-power']}}],
-    ['refbrow', 'Reference Browser', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
-    ['fenix', 'Firefox Preview', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fenix-power']}}],
-    ['fennec', 'Fennec', 'scn-power-idle', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fennec-power']}}],
+    ['geckoview', 'Geckoview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-geckoview-power']}}],
+    ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fenix-power']}}],
+    ['fennec', 'Fennec', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fennec-power']}}],
 
-    ['geckoview', 'Geckoview', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-geckoview-power']}}],
-    ['refbrow', 'Reference Browser', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
-    ['fenix', 'Firefox Preview', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fenix-power']}}],
-    ['fennec', 'Fennec', 'speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fennec-power']}}],
+    ['geckoview', 'Geckoview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-geckoview-power']}}],
+    ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fenix-power']}}],
+    ['fennec', 'Fennec', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fennec-power']}}],
 
   ],
 };
