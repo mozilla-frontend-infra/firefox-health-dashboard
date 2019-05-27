@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, SUITES, TESTS } from './config';
+import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS } from './config';
 import { withNavigation } from '../vendor/utils/navigation';
 import Picker from '../vendor/utils/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
@@ -17,14 +17,7 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const {
-      classes,
-      navigation,
-      platform,
-      browser,
-      suite,
-      encoding,
-    } = this.props;
+    const { classes, navigation, platform, browser, encoding } = this.props;
     const platformDetails = selectFrom(PLATFORMS)
       .where({ id: platform })
       .first();
@@ -35,25 +28,27 @@ class Power extends React.Component {
     return (
       <DashboardPage
         title="Playback"
-        key={`page_${platform}_${browser}_${suite}_${encoding}`}>
+        key={`page_${platform}_${browser}_${encoding}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(SIZES).map(({ size }) => (
             <Grid
               item
               xs={6}
-              key={`page_${platform}_${browser}_${suite}_${encoding}_${size}`}
+              key={`page_${platform}_${browser}_${encoding}_${size}`}
               className={classes.chart}>
               <PerfherderGraphContainer
                 title={size}
                 series={selectFrom(TESTS)
                   .where({
-                    suite,
                     encoding,
                     size,
                   })
                   .map(({ speed, filter: testFilter }) => ({
-                    label: speed,
+                    label: `${speed}x`,
+                    style: {
+                      'axis.y.format': '{{.|percent}}',
+                    },
                     seriesConfig: {
                       and: [
                         platformDetails.filter,
@@ -86,13 +81,6 @@ const nav = [
     label: 'Browser',
     defaultValue: 'firefox',
     options: BROWSERS,
-  },
-  {
-    type: Picker,
-    id: 'suite',
-    label: 'Suite',
-    defaultValue: 'Playback',
-    options: selectFrom(SUITES).select({ id: 'suite', label: 'suite' }),
   },
   {
     type: Picker,

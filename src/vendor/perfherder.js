@@ -52,14 +52,18 @@ const getFramework = async combo => {
           let lowerIsBetter = lower_is_better;
           let unit = 'Score';
 
-          if (lower_is_better === undefined) {
-            if (suite.includes('youtube-playback')) {
-              lowerIsBetter = true;
-              unit = 'dropped frames';
-            } else if (suite.endsWith('-power')) {
-              lowerIsBetter = true;
-              unit = 'mAh';
-            } else if (
+          if (suite.includes('youtube-playback')) {
+            lowerIsBetter = true;
+            unit = 'count';
+
+            if (exists(test) && test.includes('%')) {
+              unit = '/1';
+            }
+          } else if (suite.endsWith('-power')) {
+            lowerIsBetter = true;
+            unit = 'mAh';
+          } else if (lower_is_better === undefined) {
+            if (
               [
                 'raptor-speedometer',
                 'raptor-stylebench',

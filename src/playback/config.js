@@ -23,11 +23,6 @@ const ENCODINGS = [
   {encoding: "H264"},
 ];
 
-const SUITES = [
-  {"suite": "Playback", "suitePrefix": "PlaybackPerf."},
-  {"suite": "Plain", "suitePrefix": ""},
-];
-
 const SPEEDS = [
   {speedLabel: "2", speed: 2},
   {speedLabel: "1.5", speed: 1.5},
@@ -37,20 +32,19 @@ const SPEEDS = [
   {speedLabel: "0.25", speed: 0.25},
 ];
 
-const TESTS = selectFrom(SUITES)
-  .leftJoin('dummy', ENCODINGS, 'dummy')
+const TESTS = selectFrom(ENCODINGS)
   .leftJoin('dummy', SIZES, 'dummy')
   .leftJoin('dummy', SPEEDS, 'dummy')
-  .map(({suite, suitePrefix, encoding, size, speed, speedLabel}) => {
+  .map(({encoding, size, speed, speedLabel}) => {
     // H264.1080p30@1.25X_%_dropped_frames
-    const fullName = suitePrefix + encoding + '.' + size + '@' + speedLabel + 'X_dropped_frames';
+    const fullName1 =  encoding + '.' + size + '@' + speedLabel + 'X_%_dropped_frames';
+    const fullName2 = "PlaybackPerf." + fullName1;
 
     return {
-      suite,
       encoding,
       size,
       speed,
-      filter: {"eq": {"test": fullName}}
+      filter: {"eq": {"test": [fullName1, fullName2]}}
     }
   })
   .toArray();
