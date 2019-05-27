@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from '../../utils/icons';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import CustomTooltip from '../../vendor/chartJs/CustomTooltip';
+import { Data } from '../../vendor/Data';
 import { withErrorBoundary } from '../../vendor/errors';
 import { exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
@@ -144,12 +145,14 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    const { series, reference } = this.props;
+    const { series, style, reference } = this.props;
 
     try {
       this.setState({ isLoading: true });
 
       const config = await getPerfherderData(series, DEFAULT_TIME_DOMAIN);
+
+      Data.setDefault(config.options, style);
 
       if (exists(reference) && exists(reference.value)) {
         const { label, value } = reference;

@@ -38,7 +38,11 @@ class Power extends React.Component {
               key={`page_${platform}_${browser}_${encoding}_${size}`}
               className={classes.chart}>
               <PerfherderGraphContainer
-                title={size}
+                title={`Percent dropped frames ${size}`}
+                style={{
+                  'axis.y.format': '{{.|percent}}',
+                  'axis.y.max.max': 1,
+                }}
                 series={selectFrom(TESTS)
                   .where({
                     encoding,
@@ -46,9 +50,6 @@ class Power extends React.Component {
                   })
                   .map(({ speed, filter: testFilter }) => ({
                     label: `${speed}x`,
-                    style: {
-                      'axis.y.format': '{{.|percent}}',
-                    },
                     filter: {
                       and: [
                         platformDetails.filter,

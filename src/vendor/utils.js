@@ -88,6 +88,13 @@ function last(list) {
 }
 
 /*
+return new array in reverse order
+ */
+function reverse(list) {
+  return list.slice().reverse();
+}
+
+/*
 return all but last element
  */
 function notLast(list) {
@@ -227,4 +234,5 @@ export {
   notLast,
   MANY_TYPES,
   isMany,
+  reverse,
 };

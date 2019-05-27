@@ -162,7 +162,7 @@ class Template {
   }
 
   expand(values) {
-    expand(this.template, values);
+    return expand(this.template, values);
   }
 }
 

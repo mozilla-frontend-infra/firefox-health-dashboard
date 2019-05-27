@@ -134,6 +134,10 @@ const strings = {
 
     return value.slice(s, e);
   },
+
+  percent(value) {
+    return `${mathRound(value * 100, { places: 2 })}%`;
+  },
 };
 
 export default strings;

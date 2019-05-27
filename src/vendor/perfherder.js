@@ -57,7 +57,7 @@ const getFramework = async combo => {
             unit = 'count';
 
             if (exists(test) && test.includes('%')) {
-              unit = '/1';
+              unit = '';
             }
           } else if (suite.endsWith('-power')) {
             lowerIsBetter = true;

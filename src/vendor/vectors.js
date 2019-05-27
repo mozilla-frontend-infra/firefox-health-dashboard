@@ -19,6 +19,7 @@ import {
   missing,
   toArray,
   zip,
+  reverse,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';
@@ -770,9 +771,7 @@ extendWrapper({
       .flatten();
   },
 
-  reverse: function reverse(list) {
-    return list.slice().reverse();
-  },
+  reverse,
 });
 
 export { selectFrom, toPairs, leaves, first, last, length, ArrayWrapper };
