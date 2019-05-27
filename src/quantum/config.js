@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { selectFrom } from '../vendor/vectors';
-import { Data } from '../vendor/Data';
+import { Data } from '../vendor/datas';
 import { first, toArray } from '../vendor/utils';
 import { Log } from '../vendor/logs';
 import {getSignatures} from "../vendor/perfherder";

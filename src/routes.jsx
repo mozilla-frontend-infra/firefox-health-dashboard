@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './views/Home';
-import AndroidPage from './views/Android';
+import Home from './Home';
+import AndroidPage from './android';
 import NimbledroidGraphPage from './nimbledroid/NimbledroidGraphPage';
 import Quantum from './quantum/Quantum';
 import TP6 from './quantum/TP6';
-import TP6M from './views/Android/TP6m';
+import TP6M from './android/TP6m';
 import Power from './power';
 import Playback from './playback';
 import Subbenchmark from './quantum/subbenchmarks';

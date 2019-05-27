@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from '../../vendor/utils/links';
-import DashboardPage from '../../components/DashboardPage';
+import { Link } from './vendor/components/links';
+import DashboardPage from './components/DashboardPage';
 import {
   AndroidIcon,
   BatteryIcon,
   DesktopIcon,
   VideoIcon,
-} from '../../utils/icons';
+} from './utils/icons';
 
 const styles = {
   root: {

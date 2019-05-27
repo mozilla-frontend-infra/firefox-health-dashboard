@@ -1,5 +1,5 @@
 /* global describe, it */
-import { Data } from '../../src/vendor/Data';
+import { Data } from '../../src/vendor/datas';
 
 const data = { a: { b: { c: { d: 42 } } } };
 const dataArray = {

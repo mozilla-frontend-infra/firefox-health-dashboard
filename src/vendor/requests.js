@@ -2,7 +2,7 @@
 import { parse } from 'query-string';
 import { leaves, toPairs } from './vectors';
 import { Log } from './logs';
-import { Data } from './Data';
+import { Data } from './datas';
 import { exists, isArray, isString, toArray } from './utils';
 import strings from './strings';
 

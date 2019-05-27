@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import { COMBOS, PLATFORMS, TESTS } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 

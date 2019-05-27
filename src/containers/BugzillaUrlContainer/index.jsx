@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import BugzillaUrl from '../../components/BugzillaUrl';
+import Badge from '@material-ui/core/Badge/Badge';
 import generateBugzillaUrls from '../../utils/bugzilla/generateBugzillaUrls';
 
 const styles = {
@@ -10,6 +10,23 @@ const styles = {
     flexDirection: 'column',
     margin: '0 0 1rem 0',
   },
+};
+const BugzillaUrl = ({ bugCount, text, url }) => (
+  <a href={url} target="_blank" rel="noopener noreferrer">
+    {!bugCount && text}
+    {bugCount && (
+      <Badge color="primary" badgeContent={bugCount}>
+        {text}
+      </Badge>
+    )}
+  </a>
+);
+
+BugzillaUrl.propTypes = {
+  bugCount: PropTypes.number,
+  classes: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };
 
 class BugzillaUrlContainer extends Component {

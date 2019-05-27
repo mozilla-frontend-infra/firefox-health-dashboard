@@ -1,11 +1,11 @@
-import SETTINGS from '../../settings';
-import { isNumeric, missing, toArray } from '../utils';
-import { Data, isData } from '../Data';
-import { first, selectFrom } from '../vectors';
-import { max, min } from '../math';
-import Color from '../colors';
-import Date from '../dates';
-import Template from '../Template';
+import SETTINGS from '../../../settings';
+import { isNumeric, missing, toArray } from '../../utils';
+import { Data, isData } from '../../datas';
+import { first, selectFrom } from '../../vectors';
+import { max, min } from '../../math';
+import Color from '../../colors';
+import Date from '../../dates';
+import Template from '../../Template';
 
 const invisible = 'rgba(0,0,0,0)';
 /*

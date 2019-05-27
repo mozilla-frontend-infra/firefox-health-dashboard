@@ -1,15 +1,15 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import DashboardPage from '../../components/DashboardPage';
-import Section from '../../components/Section';
-import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
-import BugzillaGraph from '../../containers/BugzillaGraph';
-import NimbledroidSection from '../../nimbledroid/NimbledroidSection';
-import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import RedashContainer from '../../containers/RedashContainer';
-import { CONFIG } from '../../nimbledroid/config';
-import { TP6mAggregate } from '../../components/TP6mAggregate';
+import DashboardPage from '../components/DashboardPage';
+import Section from '../components/Section';
+import BugzillaUrlContainer from '../containers/BugzillaUrlContainer';
+import BugzillaGraph from '../containers/BugzillaGraph';
+import NimbledroidSection from '../nimbledroid/NimbledroidSection';
+import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import RedashContainer from '../containers/RedashContainer';
+import { CONFIG } from '../nimbledroid/config';
+import { TP6mAggregate } from './TP6mAggregate';
 
 class Android extends Component {
   render() {

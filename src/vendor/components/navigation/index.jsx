@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { isEqual } from '../../Data';
+import { isEqual } from '../../datas';
 import { ArrayWrapper, selectFrom } from '../../vectors';
 import { missing } from '../../utils';
 import { fromQueryString, URL } from '../../requests';

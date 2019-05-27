@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 
@@ -73,7 +73,7 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'win64',
+    defaultValue: 'mac',
     options: PLATFORMS,
   },
   {
@@ -87,7 +87,7 @@ const nav = [
     type: Picker,
     id: 'encoding',
     label: 'Encoding',
-    defaultValue: 'H264',
+    defaultValue: 'VP9',
     options: selectFrom(ENCODINGS).select({
       id: 'encoding',
       label: 'encoding',

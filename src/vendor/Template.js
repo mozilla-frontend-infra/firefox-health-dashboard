@@ -1,7 +1,7 @@
 import { array, coalesce, isArray, isString, missing } from './utils';
 import { toPairs } from './vectors';
 import { Log } from './logs';
-import { Data, isData } from './Data';
+import { Data, isData } from './datas';
 import strings from './strings';
 
 let expandAny = null;

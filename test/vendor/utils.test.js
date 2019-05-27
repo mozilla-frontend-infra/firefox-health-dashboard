@@ -1,5 +1,5 @@
 /* global describe, it */
-import { Data, isData } from '../../src/vendor/Data';
+import { Data, isData } from '../../src/vendor/datas';
 import {
   array,
   isInteger,

@@ -3,7 +3,7 @@
 
 import unzip from 'lodash/unzip';
 import lodashSortBy from 'lodash/sortBy';
-import { Data, isData } from './Data';
+import { Data, isData } from './datas';
 import {
   array,
   coalesce,

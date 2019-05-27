@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Data } from '../vendor/Data';
+import { Data } from '../vendor/datas';
 
 const TESTS = [
   {

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from '../../vendor/utils/links';
+import { Link } from '../vendor/components/links';
 import {
   AndroidIcon,
   BatteryIcon,
@@ -9,7 +9,7 @@ import {
   CodeIcon,
   HomeIcon,
   VideoIcon,
-} from '../../utils/icons';
+} from '../utils/icons';
 
 const styles = {
   root: {

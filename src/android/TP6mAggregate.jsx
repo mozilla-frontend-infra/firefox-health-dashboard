@@ -16,8 +16,8 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { HyperCube, window } from '../vendor/jx/cubes';
-import { g5Reference, TARGET_NAME } from '../config/mobileG5';
-import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
+import { g5Reference, TARGET_NAME } from './config';
+import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
 
