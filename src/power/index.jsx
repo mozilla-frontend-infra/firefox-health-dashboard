@@ -17,29 +17,28 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, suite, platform } = this.props;
-    const platformDetails = selectFrom(PLATFORMS)
-      .where({ id: platform })
-      .first();
-    const combos = selectFrom(COMBOS).where({ suite });
+    const { classes, navigation, suite, browser } = this.props;
+    const browserFilter = selectFrom(COMBOS)
+      .where({ browser, suite })
+      .first().filter;
 
     return (
-      <DashboardPage title="Power Usage" key={`page_${platform}_${suite}`}>
+      <DashboardPage title="Power Usage" key={`page_${browser}_${suite}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
             <Grid
               item
               xs={6}
-              key={`page_${id}_${platform}_${suite}`}
+              key={`page_${id}_${browser}_${suite}`}
               className={classes.chart}>
               <PerfherderGraphContainer
                 title={label}
-                series={combos
-                  .map(({ browserLabel, filter: browserFilter }) => ({
-                    label: browserLabel,
+                series={selectFrom(PLATFORMS)
+                  .map(({ label, filter: platformFilter }) => ({
+                    label,
                     seriesConfig: {
-                      and: [testFilter, platformDetails.filter, browserFilter],
+                      and: [testFilter, platformFilter, browserFilter],
                     },
                   }))
                   .toArray()}
@@ -55,10 +54,12 @@ class Power extends React.Component {
 const nav = [
   {
     type: Picker,
-    id: 'platform',
-    label: 'Platform',
-    defaultValue: 'p2-aarch64',
-    options: PLATFORMS,
+    id: 'browser',
+    label: 'Browser',
+    defaultValue: 'fenix',
+    options: selectFrom(COMBOS)
+      .groupBy('browserLabel')
+      .map(([v]) => ({ id: v.browser, label: v.browserLabel })),
   },
   {
     type: Picker,
