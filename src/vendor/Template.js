@@ -1,9 +1,10 @@
+/* global require */
+
 import { array, coalesce, isArray, isString, missing } from './utils';
-import { toPairs } from './vectors';
-import { Log } from './logs';
 import { Data, isData } from './datas';
 import strings from './strings';
 
+let Log = null;
 let expandAny = null;
 
 function expandArray(arr, namespaces) {
@@ -23,7 +24,7 @@ function expandLoop(loop, namespaces) {
       const ns = Data.copy(namespaces[0]);
 
       if (isData(m)) {
-        toPairs(m).forEach((v, k) => {
+        Object.entries(m).forEach(([k, v]) => {
           ns[k.toLowerCase()] = v;
         });
       }
@@ -142,10 +143,13 @@ function expand(template, parameters) {
     }
 
     if (isData(v)) {
-      return toPairs(v)
-        .map((v, k) => [lower(v), k.toLowerCase()])
-        .args()
-        .fromPairs();
+      const output = {};
+
+      Object.entries(v).forEach(([k, v]) => {
+        output[k.toLowerCase()] = lower(v);
+      });
+
+      return output;
     }
 
     return v;
@@ -168,4 +172,8 @@ class Template {
 
 Template.expand = expand;
 
-export default Template;
+const addLogger = log => {
+  Log = log;
+};
+
+export { Template, expand, addLogger };

@@ -730,8 +730,10 @@ GMTDate.getBestInterval = (
   minDate,
   maxDate,
   requestedInterval = Duration.DAY,
-  { min = 7, max = 20 } // INTERVAL WILL SPLIT DOMAIN INTO N PARTS; min <= N < max
+  range = {}
 ) => {
+  // INTERVAL WILL SPLIT DOMAIN INTO N PARTS; min <= N < max
+  const { min = 7, max = 20 } = range;
   let dur = maxDate.subtract(minDate);
 
   if (dur.milli > Duration.MONTH.milli * min) {
@@ -743,7 +745,7 @@ GMTDate.getBestInterval = (
       Duration.COMMON_INTERVALS.slice()
         .reverse()
         .find(d => biggest > d.month),
-      Duration.COMMON_INTERVALS[0]
+      first(Duration.COMMON_INTERVALS)
     );
   }
 
@@ -760,12 +762,12 @@ GMTDate.getBestInterval = (
       Duration.COMMON_INTERVALS.slice()
         .reverse()
         .find(d => biggest > d.milli),
-      Duration.COMMON_INTERVALS[0]
+      first(Duration.COMMON_INTERVALS)
     );
   }
 
   if (requested < smallest) {
-    coalesce(
+    return coalesce(
       Duration.COMMON_INTERVALS.find(d => smallest <= d.milli),
       last(Duration.COMMON_INTERVALS)
     );

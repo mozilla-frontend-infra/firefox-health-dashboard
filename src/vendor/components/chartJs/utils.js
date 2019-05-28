@@ -5,7 +5,7 @@ import { first, selectFrom } from '../../vectors';
 import { max, min } from '../../math';
 import Color from '../../colors';
 import Date from '../../dates';
-import Template from '../../Template';
+import { Template } from '../../Template';
 
 const invisible = 'rgba(0,0,0,0)';
 /*

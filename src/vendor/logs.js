@@ -1,8 +1,11 @@
 /* eslint-disable max-len */
 
 import { coalesce, exists, isString, missing } from './utils';
-import Template from './Template';
-import { value2json } from './convert';
+import { addLogger as addDataLogger } from './datas';
+import {
+  expand as templateExpand,
+  addLogger as addTemplateLogger,
+} from './Template';
 
 //   Error
 //       at Function.Object.<anonymous>.Log.error (C:\Users\kyle\code\firefox-health-dashboard\src\vendor\errors.jsx:174:9)
@@ -24,7 +27,8 @@ function parseStack(stackString) {
     return [];
   }
 
-  return stackString.split('\n')
+  return stackString
+    .split('\n')
     .map(line =>
       stackPatterns
         .map(stackPattern => {
@@ -86,7 +90,7 @@ class Exception extends Error {
     const output = [];
 
     if (exists(this.template)) {
-      output.push(Template.expand(this.template, this.props));
+      output.push(templateExpand(this.template, this.props));
     }
 
     if (this.trace) {
@@ -109,7 +113,7 @@ class Exception extends Error {
             output.push(')');
           }
 
-          return Template.expand(output.join(''), s);
+          return templateExpand(output.join(''), s);
         })
       );
     }
@@ -131,7 +135,7 @@ class Exception extends Error {
     }
 
     if (template) {
-      return Template.expand(template, props);
+      return templateExpand(template, props);
     }
 
     return 'unknown error';
@@ -168,11 +172,9 @@ Exception.wrap = err => {
 
 class Log {}
 
-Log._ = value2json;
-
 Log.note = (template, params) => {
   // eslint-disable-next-line no-console
-  console.log(Template.expand(template, params));
+  console.log(templateExpand(template, params));
 };
 
 Log.warning = (template, params, cause) => {
@@ -191,5 +193,8 @@ Log.warning = (template, params, cause) => {
 Log.error = (template, params, cause) => {
   throw new Exception(template, params, cause, 1);
 };
+
+addDataLogger(Log);
+addTemplateLogger(Log);
 
 export { Exception, Log };

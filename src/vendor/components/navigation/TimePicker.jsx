@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ArrayWrapper, selectFrom } from '../../vectors';
+import { missing } from "../../utils";
 
 const styles = () => ({
   root: {
@@ -13,24 +14,29 @@ const styles = () => ({
   },
 });
 
-class Picker extends React.Component{
+class TimePickerPre extends Component {
+
   constructor(props){
     super(props);
 
-    const {defaultValue, options, value} = this.props;
+    const {id, defaultValue, options, value} = this.props;
     if (selectFrom(options)
       .select('id')
       .includes(value)
     ) {
       this.state = {value}
     } else {
+
+
+
       this.state = {value: defaultValue}
     }//endif
   }
 
-  render(){
-    const { classes, id, label, handleChange, options } = this.props;
-    const { value } = this.state;
+
+  render() {
+    const {classes, id, label, handleChange, options} = this.props;
+    const {value} = this.state;
     return (
       <form className={classes.root} autoComplete="off">
         <TextField
@@ -39,7 +45,7 @@ class Picker extends React.Component{
           label={label}
           value={value}
           onChange={handleChange}>
-          {options.map(({ label, id }) => (
+          {options.map(({label, id}) => (
             <MenuItem key={id} value={id}>
               {label}
             </MenuItem>
@@ -48,11 +54,9 @@ class Picker extends React.Component{
       </form>
     );
   }
-
 }
 
-
-Picker.propTypes = {
+TimePickerPre.propTypes = {
   classes: PropTypes.shape().isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -70,4 +74,4 @@ Picker.propTypes = {
   ]).isRequired,
 };
 
-export default withStyles(styles)(Picker);
+export default withStyles(styles)(TimePickerPre);

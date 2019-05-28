@@ -8,7 +8,6 @@ import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
 import { exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
-import { TimeDomain } from '../../vendor/jx/domains';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
@@ -136,13 +135,23 @@ const styles = () => ({
 });
 
 class PerfherderGraphContainer extends Component {
-  state = {
-    data: null,
-    tooltipModel: null,
-    tooltipIsLocked: false,
-    canvas: null,
-    isLoading: false,
-  };
+
+  constructor(props){
+    super(props);
+    const { series, style, reference, timeDomain } = this.props;
+
+    if (missing(timeDomain)){
+      Log.error("expecting a time range");
+    }
+
+    this.state = {
+      data: null,
+      tooltipModel: null,
+      tooltipIsLocked: false,
+      canvas: null,
+      isLoading: false,
+    };
+  }
 
   async componentDidMount() {
     const { series, style, reference, timeDomain } = this.props;
@@ -265,7 +274,7 @@ PerfherderGraphContainer.propTypes = {
     })
   ),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  timeDomain: PropTypes.instanceOf(TimeDomain).isRequired(),
+  // timeDomain: PropTypes.instanceOf(TimeDomain).isRequired(),
 };
 
 export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));

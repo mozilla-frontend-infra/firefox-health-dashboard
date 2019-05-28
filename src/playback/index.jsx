@@ -8,11 +8,9 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { Domain } from '../vendor/jx/domains';
-import {
-  DurationPicker,
-  QUERY_TIME_FORMAT,
-} from '../vendor/components/navigation/DurationPicker';
+import { QUERY_TIME_FORMAT, } from '../vendor/components/navigation/DurationPicker';
 import Date from '../vendor/dates';
+import {timePickers} from "../utils/timePickers";
 
 const styles = {
   chart: {
@@ -43,7 +41,7 @@ class Power extends React.Component {
     return (
       <DashboardPage
         title="Playback"
-        key={`page_${platform}_${browser}_${encoding}`}>
+        key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(SIZES).map(({ size }) => (
@@ -110,28 +108,7 @@ const nav = [
       label: 'encoding',
     }),
   },
-  {
-    type: DurationPicker,
-    id: 'past',
-    label: 'Show past',
-    defaultValue: 'month',
-    options: [
-      { id: 'day', label: '1 day' },
-      { id: '2day', label: '2 days' },
-      { id: 'week', label: 'week' },
-      { id: '2week', label: '2 weeks' },
-      { id: 'month', label: 'month' },
-      { id: '3month', label: '3 months' },
-      { id: 'year', label: 'year' },
-    ],
-  },
-  {
-    type: Picker,
-    id: 'ending',
-    label: 'Ending',
-    defaultValue: todayText,
-    options: [{ id: todayText, label: 'Today' }],
-  },
+  ...timePickers
 ];
 
 export default withNavigation(nav)(withStyles(styles)(Power));

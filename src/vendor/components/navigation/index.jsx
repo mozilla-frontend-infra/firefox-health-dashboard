@@ -151,6 +151,7 @@ function withNavigation(config) {
       root: {
         // display: 'flex',
         textAlign: 'left',
+        paddingBottom: '2rem',
       },
     });
 

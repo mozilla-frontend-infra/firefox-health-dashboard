@@ -1,21 +1,21 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs, selectFrom, leaves } from './vectors';
-// import { Log } from './logs';
 import {
   coalesce,
+  Data as DataImport,
   exists,
   isArray,
+  isData as isDataImport,
   isInteger,
+  isMany,
   missing,
   splitField,
-  isMany,
 } from './utils';
+import { leaves, selectFrom, toPairs } from './vectors';
 
-import {Data as Data_, isData as isData_} from './utils';
-
-const Data = Data_;
-const isData = isData_;
+let Log = null;
+const Data = DataImport;
+const isData = isDataImport;
 
 /*
 return true if a and b are structurally similar
@@ -257,4 +257,8 @@ We assume dots in property names refer to paths
  */
 Data.fromConfig = obj => leaves(obj, false).fromLeaves();
 
-export { Data, isData, isEqual };
+const addLogger = log => {
+  Log = log;
+};
+
+export { Data, isData, isEqual, addLogger };
