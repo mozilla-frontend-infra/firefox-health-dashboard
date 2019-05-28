@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 
 import { toPairs, selectFrom, leaves } from './vectors';
-import { Log } from './logs';
+// import { Log } from './logs';
 import {
   coalesce,
   exists,
@@ -12,28 +12,10 @@ import {
   isMany,
 } from './utils';
 
-/*
-Represent JSON object: map from string keys to values
- */
-class Data {}
+import {Data as Data_, isData as isData_} from './utils';
 
-const OBJECT_CONSTRUCTOR = {}.constructor;
-
-/*
- * Check if the `val` is Data
- * Direct instances of Object are also considered data
- */
-function isData(val) {
-  if (missing(val)) {
-    return false;
-  }
-
-  if (val[Symbol.iterator]) {
-    return false;
-  }
-
-  return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
-}
+const Data = Data_;
+const isData = isData_;
 
 /*
 return true if a and b are structurally similar

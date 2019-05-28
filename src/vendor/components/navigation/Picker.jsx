@@ -7,6 +7,8 @@ import { ArrayWrapper } from '../../vectors';
 
 const styles = () => ({
   root: {
+    display: 'inline-block',
+    paddingTop: '2rem',
     margin: '0 20px',
   },
 });

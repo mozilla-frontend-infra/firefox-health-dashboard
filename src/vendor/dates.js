@@ -729,8 +729,8 @@ GMTDate.niceFormat = ({ type, min, max, interval }) => {
 GMTDate.getBestInterval = (
   minDate,
   maxDate,
-  requestedInterval,
-  { min, max }
+  requestedInterval = Duration.DAY,
+  { min = 7, max = 20 } // INTERVAL WILL SPLIT DOMAIN INTO N PARTS; min <= N < max
 ) => {
   let dur = maxDate.subtract(minDate);
 

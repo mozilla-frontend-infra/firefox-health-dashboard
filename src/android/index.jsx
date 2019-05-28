@@ -10,12 +10,14 @@ import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import RedashContainer from '../containers/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
+import { Domain } from '../vendor/jx/domains';
 
 class Android extends Component {
   render() {
     const nimbledroidSubTitle = `${
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
+    const timeDomain = Domain.newInstance({ type: 'time', past: '6week' });
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
@@ -80,7 +82,7 @@ class Android extends Component {
         <Section
           title="Raptor (TP6m)"
           more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64">
-          <TP6mAggregate />
+          <TP6mAggregate timeDomain={timeDomain} />
         </Section>
         <Section title="Telemetry">
           <Grid container spacing={24}>
@@ -106,6 +108,7 @@ class Android extends Component {
           <Grid container spacing={24}>
             <Grid item xs={6}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title="Speedometer"
                 series={[
                   {
@@ -166,6 +169,7 @@ class Android extends Component {
             </Grid>
             <Grid item xs={6}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title="Unity WebGl"
                 series={[
                   {

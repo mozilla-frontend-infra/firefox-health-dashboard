@@ -7,6 +7,12 @@ import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { Domain } from '../vendor/jx/domains';
+import {
+  DurationPicker,
+  QUERY_TIME_FORMAT,
+} from '../vendor/components/navigation/DurationPicker';
+import Date from '../vendor/dates';
 
 const styles = {
   chart: {
@@ -17,7 +23,16 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, platform, browser, encoding } = this.props;
+    const {
+      classes,
+      navigation,
+      platform,
+      browser,
+      encoding,
+      past,
+      ending,
+    } = this.props;
+    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
     const platformDetails = selectFrom(PLATFORMS)
       .where({ id: platform })
       .first();
@@ -38,6 +53,7 @@ class Power extends React.Component {
               key={`page_${platform}_${browser}_${encoding}_${size}`}
               className={classes.chart}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title={`Percent dropped frames ${size}`}
                 style={{
                   'axis.y.format': '{{.|percent}}',
@@ -68,6 +84,7 @@ class Power extends React.Component {
   }
 }
 
+const todayText = Date.today().format(QUERY_TIME_FORMAT);
 const nav = [
   {
     type: Picker,
@@ -92,6 +109,28 @@ const nav = [
       id: 'encoding',
       label: 'encoding',
     }),
+  },
+  {
+    type: DurationPicker,
+    id: 'past',
+    label: 'Show past',
+    defaultValue: 'month',
+    options: [
+      { id: 'day', label: '1 day' },
+      { id: '2day', label: '2 days' },
+      { id: 'week', label: 'week' },
+      { id: '2week', label: '2 weeks' },
+      { id: 'month', label: 'month' },
+      { id: '3month', label: '3 months' },
+      { id: 'year', label: 'year' },
+    ],
+  },
+  {
+    type: Picker,
+    id: 'ending',
+    label: 'Ending',
+    defaultValue: todayText,
+    options: [{ id: todayText, label: 'Today' }],
   },
 ];
 

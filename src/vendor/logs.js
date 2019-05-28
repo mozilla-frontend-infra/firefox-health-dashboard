@@ -2,7 +2,6 @@
 
 import { coalesce, exists, isString, missing } from './utils';
 import Template from './Template';
-import { selectFrom } from './vectors';
 import { value2json } from './convert';
 
 //   Error
@@ -25,15 +24,13 @@ function parseStack(stackString) {
     return [];
   }
 
-  return selectFrom(stackString.split('\n'))
+  return stackString.split('\n')
     .map(line =>
-      selectFrom(stackPatterns)
+      stackPatterns
         .map(stackPattern => {
           const parts = stackPattern.exec(line);
 
-          if (missing(parts)) {
-            return null;
-          }
+          if (missing(parts)) return null;
 
           return {
             function: parts[1],
@@ -42,11 +39,9 @@ function parseStack(stackString) {
             column: parts[4],
           };
         })
-        .exists()
-        .first()
+        .find(exists)
     )
-    .exists()
-    .toArray();
+    .filter(exists);
 }
 
 class Exception extends Error {

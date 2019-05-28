@@ -10,6 +10,12 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { Log } from '../vendor/logs';
+import Date from '../vendor/dates';
+import {
+  DurationPicker,
+  QUERY_TIME_FORMAT,
+} from '../vendor/components/navigation/DurationPicker';
+import { Domain } from '../vendor/jx/domains';
 
 const styles = {
   body: {
@@ -23,7 +29,8 @@ const styles = {
 
 class TP6 extends React.Component {
   render() {
-    const { classes, navigation, test, bits } = this.props;
+    const { classes, navigation, test, bits, past, ending } = this.props;
+    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
       .first();
@@ -48,6 +55,7 @@ class TP6 extends React.Component {
                   key={`page_${site}_${test}_${bits}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
+                    timeDomain={timeDomain}
                     title={site}
                     series={selectFrom(series)
                       .sortBy(['ordering'])
@@ -70,6 +78,7 @@ TP6.propTypes = {
   }).isRequired,
 };
 
+const todayText = Date.today().format(QUERY_TIME_FORMAT);
 const nav = [
   {
     type: Picker,
@@ -87,6 +96,28 @@ const nav = [
     label: 'Bits',
     defaultValue: 64,
     options: [{ id: 32, label: '32 bits' }, { id: 64, label: '64 bits' }],
+  },
+  {
+    type: DurationPicker,
+    id: 'past',
+    label: 'Show past',
+    defaultValue: 'month',
+    options: [
+      { id: 'day', label: '1 day' },
+      { id: '2day', label: '2 days' },
+      { id: 'week', label: 'week' },
+      { id: '2week', label: '2 weeks' },
+      { id: 'month', label: 'month' },
+      { id: '3month', label: '3 months' },
+      { id: 'year', label: 'year' },
+    ],
+  },
+  {
+    type: Picker,
+    id: 'ending',
+    label: 'Ending',
+    defaultValue: todayText,
+    options: [{ id: todayText, label: 'Today' }],
   },
 ];
 

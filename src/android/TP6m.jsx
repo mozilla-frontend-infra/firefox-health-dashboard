@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { round } from '../vendor/math';
 import { exists, missing } from '../vendor/utils';
+import Date from '../vendor/dates';
 import { selectFrom } from '../vendor/vectors';
 import {
-  DEFAULT_TIME_DOMAIN,
   PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
@@ -15,12 +15,17 @@ import {
 } from '../quantum/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
+import {
+  DurationPicker,
+  QUERY_TIME_FORMAT,
+} from '../vendor/components/navigation/DurationPicker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
+import { Domain } from '../vendor/jx/domains';
 
 const styles = {
   chart: {
@@ -36,7 +41,8 @@ class TP6M extends React.Component {
   }
 
   async componentDidMount() {
-    const { test, platform } = this.props;
+    const { test, platform, past, ending } = this.props;
+    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -49,13 +55,13 @@ class TP6M extends React.Component {
       sites,
       tests,
       platforms: selectFrom(PLATFORMS).where({ platform }),
-      timeDomain: DEFAULT_TIME_DOMAIN,
+      timeDomain,
     });
     const referenceValue = aggregate.where({ test, platform }).ref.getValue();
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
-      this.setState({ summaryData: null, test, platform });
+      this.setState({ summaryData: null, test, platform, timeDomain });
 
       return;
     }
@@ -117,6 +123,7 @@ class TP6M extends React.Component {
   render() {
     const { classes, navigation, test, platform } = this.props;
     let { summaryData } = this.state;
+    const { timeDomain } = this.state;
 
     if (test !== this.state.test || platform !== this.state.platform) {
       summaryData = null;
@@ -141,7 +148,7 @@ class TP6M extends React.Component {
                   height={200}
                   options={{
                     'axis.y.label': 'Geomean',
-                    'axis.x': DEFAULT_TIME_DOMAIN,
+                    'axis.x': timeDomain,
                   }}
                 />
               )}
@@ -161,6 +168,7 @@ class TP6M extends React.Component {
                   key={`page_${site}_${test}_${platform}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
+                    timeDomain={timeDomain}
                     title={site}
                     reference={(() => {
                       const value = round(
@@ -195,7 +203,7 @@ TP6M.propTypes = {
   test: PropTypes.string.isRequired,
   platform: PropTypes.string.isRequired,
 };
-
+const todayText = Date.today().format(QUERY_TIME_FORMAT);
 const nav = [
   {
     type: Picker,
@@ -206,7 +214,6 @@ const nav = [
       .select({ id: 'test', label: 'label' })
       .toArray(),
   },
-
   {
     type: Picker,
     id: 'platform',
@@ -216,6 +223,28 @@ const nav = [
       .where({ browser: ['geckoview', 'fenix'] })
       .select({ id: 'platform', label: 'label' })
       .toArray(),
+  },
+  {
+    type: DurationPicker,
+    id: 'past',
+    label: 'Show past',
+    defaultValue: 'month',
+    options: [
+      { id: 'day', label: '1 day' },
+      { id: '2day', label: '2 days' },
+      { id: 'week', label: 'week' },
+      { id: '2week', label: '2 weeks' },
+      { id: 'month', label: 'month' },
+      { id: '3month', label: '3 months' },
+      { id: 'year', label: 'year' },
+    ],
+  },
+  {
+    type: Picker,
+    id: 'ending',
+    label: 'Ending',
+    defaultValue: todayText,
+    options: [{ id: todayText, label: 'Today' }],
   },
 ];
 

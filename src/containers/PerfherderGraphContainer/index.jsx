@@ -8,11 +8,11 @@ import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
 import { exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
+import { TimeDomain } from '../../vendor/jx/domains';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
-import { DEFAULT_TIME_DOMAIN } from '../../quantum/config';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -145,12 +145,12 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    const { series, style, reference } = this.props;
+    const { series, style, reference, timeDomain } = this.props;
 
     try {
       this.setState({ isLoading: true });
 
-      const config = await getPerfherderData(series, DEFAULT_TIME_DOMAIN);
+      const config = await getPerfherderData(series, timeDomain);
 
       Data.setDefault(config.options, style);
 
@@ -265,7 +265,7 @@ PerfherderGraphContainer.propTypes = {
     })
   ),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  timeRange: PropTypes.string,
+  timeDomain: PropTypes.instanceOf(TimeDomain).isRequired(),
 };
 
 export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));

@@ -3,7 +3,6 @@
 
 import unzip from 'lodash/unzip';
 import lodashSortBy from 'lodash/sortBy';
-import { Data, isData } from './datas';
 import {
   array,
   coalesce,
@@ -20,6 +19,8 @@ import {
   toArray,
   zip,
   reverse,
+  Data,
+  isData,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';

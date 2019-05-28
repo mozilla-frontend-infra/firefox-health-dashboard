@@ -14,6 +14,7 @@ import {
 import { CONFIG, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
+import { Domain } from '../vendor/jx/domains';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class QuantumIndex extends React.Component {
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
     const { full } = fromQueryString(this.props.location.search);
+    const timeDomain = Domain.newInstance({ type: 'time', past: '6week' });
     const {
       location,
       match: { params },
@@ -101,6 +103,7 @@ export default class QuantumIndex extends React.Component {
             <PerfherderWidget {...config} key={config.title} />
           )),
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="speedometer"
             title="Speedometer"
             series={[
@@ -170,6 +173,7 @@ export default class QuantumIndex extends React.Component {
           .groupBy('site')
           .map((series, site) => (
             <PerfherderGraphContainer
+              timeDomain={timeDomain}
               // eslint-disable-next-line react/no-array-index-key
               key={`page_${site}_${bits}`}
               title={site}
@@ -184,6 +188,7 @@ export default class QuantumIndex extends React.Component {
         title: 'Performance Tests',
         rows: [
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="page-load-(tp5)"
             title="Page load (tp5)"
             series={[
@@ -196,6 +201,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="window-opening-(tpaint-e10s)"
             title="Window Opening (tpaint e10s)"
             series={[
@@ -208,6 +214,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="start-up-(sessionrestore)"
             title="Start-up (sessionrestore)"
             series={[
@@ -220,6 +227,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="start-up-(sessionrestore_no_auto_restore)"
             title="Start-up (sessionrestore_no_auto_restore)"
             series={[
@@ -235,6 +243,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="start-up-(ts_paint)"
             title="Start-Up (ts_paint)"
             series={[
@@ -247,6 +256,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="tab-opening-(tabpaint)"
             title="Tab Opening (tabpaint)"
             series={[
@@ -259,6 +269,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="tab-animation-(tart)"
             title="Tab Animation (TART)"
             series={[
@@ -271,6 +282,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="tab-switch-(tabswitch)"
             title="Tab Switch (tabswitch)"
             series={[
@@ -286,6 +298,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="svg-(tsvg_static)"
             title="SVG (tsvg_static)"
             series={[
@@ -298,6 +311,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="svg-(tsvgr_opacity)"
             title="SVG (tsvgr_opacity)"
             series={[
@@ -310,6 +324,7 @@ export default class QuantumIndex extends React.Component {
             ]}
           />,
           <PerfherderGraphContainer
+            timeDomain={timeDomain}
             key="svg-(tsvgx)"
             title="SVG (tsvgx)"
             series={[

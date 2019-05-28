@@ -149,9 +149,8 @@ function withNavigation(config) {
 
     const styles = () => ({
       root: {
-        display: 'flex',
+        // display: 'flex',
         textAlign: 'left',
-        padding: '1rem',
       },
     });
 

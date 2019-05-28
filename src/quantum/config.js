@@ -602,15 +602,4 @@ if (DEBUG){
   })();
 }
 
-
-const DEFAULT_TIME_DOMAIN = Domain.newInstance({
-  type: "time",
-  min: 'today-6week',
-  max: 'eod',
-  interval: 'day'
-});
-
-
-
-
-export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS, DEFAULT_TIME_DOMAIN };
+export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS };

@@ -4,7 +4,7 @@
 import { Log } from '../logs';
 import Date from '../dates';
 import { Duration } from '../durations';
-import { coalesce, isString, missing } from '../utils';
+import { coalesce, isString, missing, exists } from '../utils';
 import { selectFrom } from '../vectors';
 import jx from './expressions';
 
@@ -66,16 +66,25 @@ class ValueDomain extends Domain {
 }
 
 class TimeDomain extends Domain {
-  constructor({ type, min, max, interval, format }) {
+  constructor({ type, min, max, interval, past, ending, format }) {
     super();
 
     if (type !== 'time') {
       Log.error('expecting time type');
     }
 
-    this.min = Date.newInstance(min);
-    this.max = Date.newInstance(max);
-    this.interval = Duration.newInstance(interval);
+    if (exists(past)) {
+      this.max = Date.newInstance(coalesce(ending, 'today')).addDay();
+      this.min = this.max.addDay(-1).subtract(Duration.newInstance(past));
+    } else {
+      this.min = Date.newInstance(min);
+      this.max = Date.newInstance(max);
+    } // endif
+
+    this.interval = exists(interval)
+      ? Duration.newInstance(interval)
+      : Date.getBestInterval(this.min, this.max);
+
     this.format = format;
     this.values = this._constructTimeRange();
   }
