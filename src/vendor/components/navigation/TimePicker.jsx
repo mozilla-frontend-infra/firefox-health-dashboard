@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ArrayWrapper, selectFrom } from '../../vectors';
-import { missing } from "../../utils";
+import Date from '../../dates';
 
 const styles = () => ({
   root: {
@@ -15,28 +15,29 @@ const styles = () => ({
 });
 
 class TimePickerPre extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
 
-    const {id, defaultValue, options, value} = this.props;
-    if (selectFrom(options)
-      .select('id')
-      .includes(value)
+    const { options, value } = this.props;
+
+    if (
+      !selectFrom(options)
+        .select('id')
+        .includes(value)
     ) {
-      this.state = {value}
-    } else {
+      options.push({
+        id: value,
+        label: Date.newInstance(value).format('MMM dd, yyyy'),
+      });
+    } // endif
 
-
-
-      this.state = {value: defaultValue}
-    }//endif
+    this.state = { value };
   }
 
-
   render() {
-    const {classes, id, label, handleChange, options} = this.props;
-    const {value} = this.state;
+    const { classes, id, label, handleChange, options } = this.props;
+    const { value } = this.state;
+
     return (
       <form className={classes.root} autoComplete="off">
         <TextField
@@ -45,7 +46,7 @@ class TimePickerPre extends Component {
           label={label}
           value={value}
           onChange={handleChange}>
-          {options.map(({label, id}) => (
+          {options.map(({ label, id }) => (
             <MenuItem key={id} value={id}>
               {label}
             </MenuItem>

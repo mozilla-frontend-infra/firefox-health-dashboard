@@ -6,7 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import { round } from '../vendor/math';
 import { exists, missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
-import { PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES, } from '../quantum/config';
+import {
+  PLATFORMS,
+  TP6_COMBOS,
+  TP6_TESTS,
+  TP6M_SITES,
+} from '../quantum/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
@@ -15,7 +20,7 @@ import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
-import { timePickers} from "../utils/timePickers";
+import { timePickers } from '../utils/timePickers';
 import { Domain } from '../vendor/jx/domains';
 
 const styles = {
@@ -28,15 +33,14 @@ const styles = {
 class TP6M extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   async componentDidMount() {
-    const {test, platform, past, ending} = this.props;
-
+    const { test, platform, past, ending } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
-    const timeDomain = Domain.newInstance({type: 'time', past, ending});
-    const tests = selectFrom(TP6_TESTS).where({test});
+    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
+    const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
       mode.includes(testMode)
@@ -51,7 +55,6 @@ class TP6M extends React.Component {
       timeDomain,
     });
     const referenceValue = aggregate.where({ test, platform }).ref.getValue();
-
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
@@ -105,7 +108,11 @@ class TP6M extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (["test", "platform", "past", "ending"].every(v=>this.props[v]===prevProps[v])){
+    if (
+      ['test', 'platform', 'past', 'ending'].every(
+        v => this.props[v] === prevProps[v]
+      )
+    ) {
       return;
     }
 
@@ -114,8 +121,9 @@ class TP6M extends React.Component {
 
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
-    const timeDomain = Domain.newInstance({type: 'time', past, ending});
+    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
     let { summaryData } = this.state;
+
     if (test !== this.state.test || platform !== this.state.platform) {
       summaryData = null;
     }
@@ -215,7 +223,7 @@ const nav = [
       .select({ id: 'platform', label: 'label' })
       .toArray(),
   },
-  ...timePickers
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(TP6M));

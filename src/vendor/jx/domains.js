@@ -81,11 +81,12 @@ class TimeDomain extends Domain {
       this.max = Date.newInstance(max);
     } // endif
 
-    if (exists(interval)){
+    if (exists(interval)) {
       this.interval = Duration.newInstance(interval);
-    }else{
+    } else {
       this.interval = Date.getBestInterval(this.min, this.max);
     }
+
     this.format = format;
     this.values = this._constructTimeRange();
   }

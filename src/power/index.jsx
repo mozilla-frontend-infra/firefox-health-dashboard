@@ -7,7 +7,7 @@ import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import {timePickers} from "../utils/timePickers";
+import { timePickers } from '../utils/timePickers';
 import { Domain } from '../vendor/jx/domains';
 
 const styles = {
@@ -30,7 +30,9 @@ class Power extends React.Component {
       .first().filter;
 
     return (
-      <DashboardPage title="Power Usage" key={`page_${platform}_${suite}_${past}_${ending}`}>
+      <DashboardPage
+        title="Power Usage"
+        key={`page_${platform}_${suite}_${past}_${ending}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
@@ -83,7 +85,7 @@ const nav = [
       .groupBy('suite')
       .map((v, suite) => ({ id: suite, label: suite })),
   },
-  ...timePickers
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(Power));

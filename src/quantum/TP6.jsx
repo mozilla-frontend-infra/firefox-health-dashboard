@@ -10,7 +10,7 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { Log } from '../vendor/logs';
-import { timePickers } from "../utils/timePickers";
+import { timePickers } from '../utils/timePickers';
 import { Domain } from '../vendor/jx/domains';
 
 const styles = {
@@ -92,7 +92,7 @@ const nav = [
     defaultValue: 64,
     options: [{ id: 32, label: '32 bits' }, { id: 64, label: '64 bits' }],
   },
-  ...timePickers
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(TP6));

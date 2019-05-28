@@ -4,8 +4,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { isEqual } from '../../datas';
-import { ArrayWrapper, selectFrom } from '../../vectors';
-import { missing } from '../../utils';
+import { ArrayWrapper } from '../../vectors';
 import { fromQueryString, URL } from '../../requests';
 
 function withNavigation(config) {
@@ -27,30 +26,8 @@ function withNavigation(config) {
       constructor(props) {
         super(props);
         const { location } = props;
-        const params = fromQueryString(location.search);
 
-        // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
-        this.state = selectFrom(config)
-          .map(({ id, defaultValue, options }) => {
-            const selected = params[id];
-
-            if (missing(selected)) {
-              return [defaultValue, id];
-            }
-
-            if (
-              selectFrom(options)
-                .select('id')
-                .includes(selected)
-            ) {
-              return [selected, id];
-            }
-
-            return [defaultValue, id];
-          })
-          .args()
-          .fromPairs();
-
+        this.state = fromQueryString(location.search);
         this.updateHistory({});
       }
 
@@ -96,7 +73,7 @@ function withNavigation(config) {
         return (
           <div className={classes.root}>
             {config.map(c => {
-              const { type, id, label, options } = c;
+              const { type, id, label, options, defaultValue } = c;
 
               return React.createElement(type, {
                 key: id,
@@ -104,6 +81,7 @@ function withNavigation(config) {
                 label,
                 handleChange: this.onPathChange,
                 value: params[id],
+                defaultValue,
                 options,
               });
             })}

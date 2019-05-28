@@ -8,9 +8,7 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { Domain } from '../vendor/jx/domains';
-import { QUERY_TIME_FORMAT, } from '../vendor/components/navigation/DurationPicker';
-import Date from '../vendor/dates';
-import {timePickers} from "../utils/timePickers";
+import { timePickers } from '../utils/timePickers';
 
 const styles = {
   chart: {
@@ -82,7 +80,6 @@ class Power extends React.Component {
   }
 }
 
-const todayText = Date.today().format(QUERY_TIME_FORMAT);
 const nav = [
   {
     type: Picker,
@@ -108,7 +105,7 @@ const nav = [
       label: 'encoding',
     }),
   },
-  ...timePickers
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(Power));

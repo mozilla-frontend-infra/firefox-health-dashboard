@@ -13,24 +13,27 @@ const styles = () => ({
   },
 });
 
-class Picker extends React.Component{
-  constructor(props){
+class Picker extends React.Component {
+  constructor(props) {
     super(props);
 
-    const {defaultValue, options, value} = this.props;
-    if (selectFrom(options)
-      .select('id')
-      .includes(value)
+    const { defaultValue, options, value } = this.props;
+
+    if (
+      selectFrom(options)
+        .select('id')
+        .includes(value)
     ) {
-      this.state = {value}
+      this.state = { value };
     } else {
-      this.state = {value: defaultValue}
-    }//endif
+      this.state = { value: defaultValue };
+    } // endif
   }
 
-  render(){
+  render() {
     const { classes, id, label, handleChange, options } = this.props;
     const { value } = this.state;
+
     return (
       <form className={classes.root} autoComplete="off">
         <TextField
@@ -48,9 +51,7 @@ class Picker extends React.Component{
       </form>
     );
   }
-
 }
-
 
 Picker.propTypes = {
   classes: PropTypes.shape().isRequired,
