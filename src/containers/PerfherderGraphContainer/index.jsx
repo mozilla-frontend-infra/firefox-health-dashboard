@@ -274,8 +274,8 @@ PerfherderGraphContainer.propTypes = {
   ),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   timeDomain: PropTypes.shape({
-    min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired,
+    min: PropTypes.instanceOf(Date).isRequired,
+    max: PropTypes.instanceOf(Date).isRequired,
   }),
 };
 

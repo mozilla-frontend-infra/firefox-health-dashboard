@@ -92,6 +92,7 @@ function value2json(json) {
   return prettyJSON(json, 30);
 }
 
+// deal with cyclic imports
 strings.json = value2json;
 
 export { value2json, json2value };

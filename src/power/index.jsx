@@ -43,7 +43,7 @@ class Power extends React.Component {
                 series={selectFrom(PLATFORMS)
                   .map(({ label, filter: platformFilter }) => ({
                     label,
-                    seriesConfig: {
+                    filter: {
                       and: [testFilter, platformFilter, browserFilter],
                     },
                   }))
@@ -62,7 +62,7 @@ const nav = [
     type: Picker,
     id: 'browser',
     label: 'Browser',
-    defaultValue: 'fenix',
+    defaultValue: 'geckoview',
     options: selectFrom(COMBOS)
       .groupBy('browserLabel')
       .map(([v]) => ({ id: v.browser, label: v.browserLabel })),

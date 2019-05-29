@@ -137,7 +137,7 @@ expandAny = (template, namespaces) => {
   Template.log.error('Not recognized {{template|json}}', { template });
 };
 
-function expand(template, parameters) {
+function expando(template, parameters) {
   if (parameters === undefined) {
     if (isString(template)) {
       return template;
@@ -169,10 +169,10 @@ function expand(template, parameters) {
   return expandAny(template, [map]);
 }
 
-Template.expand = expand;
+Template.expand = expando;
 
 Template.prototype.expand = function expand(values) {
-  return expand(this.template, values);
+  return expando(this.template, values);
 };
 
 export { Template }; // eslint-disable-line import/prefer-default-export

@@ -138,6 +138,10 @@ const strings = {
   percent(value) {
     return `${mathRound(value * 100, { places: 2 })}%`;
   },
+
+  json(value) {
+    return JSON.stringify(value);
+  },
 };
 
 export default strings;
