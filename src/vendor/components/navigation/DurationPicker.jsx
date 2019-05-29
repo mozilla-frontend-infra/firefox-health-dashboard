@@ -115,8 +115,9 @@ DurationPickerPre.prepare = props => {
     selectFrom(options)
       .select('id')
       .includes(value)
-  )
+  ) {
     return value;
+  }
 
   return defaultValue;
 };

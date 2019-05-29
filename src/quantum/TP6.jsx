@@ -43,7 +43,7 @@ class TP6 extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${bits}`}
+                  key={`page_${site}_${test}_${bits}_${past}_${ending}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
@@ -74,7 +74,7 @@ const nav = [
     type: Picker,
     id: 'test',
     label: 'Test',
-    defaultValue: 'cold-loadtime',
+    defaultValue: 'warm-loadtime',
     options: selectFrom(TP6_TESTS)
       .select({ id: 'test', label: 'label' })
       .toArray(),
