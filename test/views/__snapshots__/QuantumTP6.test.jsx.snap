@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
         <small
           className="DashboardPage-subtitle-6"
         >
-          Cold load time on 64 bits
+          Warm load time on 64 bits
         </small>
       </h1>
       <div
@@ -225,12 +225,12 @@ exports[`renders correctly 1`] = `
                 role="button"
                 tabIndex={0}
               >
-                Cold load time
+                Warm load time
               </div>
               <input
                 name="test"
                 type="hidden"
-                value="cold-loadtime"
+                value="warm-loadtime"
               />
               <svg
                 aria-hidden="true"
@@ -438,7 +438,1810 @@ exports[`renders correctly 1`] = `
     </div>
     <div
       className="MuiGrid-container-102 MuiGrid-spacing-xs-24-126"
-    />
+    >
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Amazon
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Apple
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Bing
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Docs
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Facebook
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Google
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Google Mail
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Imdb
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Imgur
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Instagram
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Instagram (binast)
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: LinkedIn
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Microsoft
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Office
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Outlook
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: PayPal
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Pinterest
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Reddit
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Sheets
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Slides
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Tumblr
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Twiter
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Twitter
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Wikia
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Wikipedia
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Wikipedia 404-202
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Wikipedia 404-404
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Yahoo Mail
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Yahoo News
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: Yandex
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: YouTube
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: eBay
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: eBay 404-202
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div>
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
+                Tp6: eBay 404-404
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "lineHeight": "100%",
+                  "textAlign": "center",
+                  "width": "100%",
+                }
+              }
+            >
+              <div
+                className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                role="progressbar"
+                style={
+                  Object {
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+              >
+                <svg
+                  className="MuiCircularProgress-svg-208"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                    cx={44}
+                    cy={44}
+                    fill="none"
+                    r={20.2}
+                    strokeWidth={3.6}
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
