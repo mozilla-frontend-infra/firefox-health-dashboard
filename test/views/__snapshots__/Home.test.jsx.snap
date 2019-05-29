@@ -269,7 +269,7 @@ exports[`renders correctly 1`] = `
        Quantum 64bit
     </a>
     <a
-      href="/battery"
+      href="/power"
     >
       <svg
         aria-hidden="true"
