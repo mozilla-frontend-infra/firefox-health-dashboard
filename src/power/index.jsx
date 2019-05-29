@@ -17,40 +17,30 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, suite, platform } = this.props;
-    const platformDetails = selectFrom(PLATFORMS)
-      .where({ id: platform })
-      .first();
-    const combos = selectFrom(COMBOS).where({ suite });
-    const idleFilter = selectFrom(COMBOS)
-      .where({ suite: 'scn-power-idle', browser: 'geckoview' })
+    const { classes, navigation, suite, browser } = this.props;
+    const browserFilter = selectFrom(COMBOS)
+      .where({ browser, suite })
       .first().filter;
 
     return (
-      <DashboardPage title="Power Usage" key={`page_${platform}_${suite}`}>
+      <DashboardPage title="Power Usage" key={`page_${browser}_${suite}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
             <Grid
               item
               xs={6}
-              key={`page_${id}_${platform}_${suite}`}
+              key={`page_${id}_${browser}_${suite}`}
               className={classes.chart}>
               <PerfherderGraphContainer
                 title={label}
-                series={combos
-                  .map(({ browserLabel, filter: browserFilter }) => ({
-                    label: browserLabel,
-                    filter: {
-                      and: [testFilter, platformDetails.filter, browserFilter],
+                series={selectFrom(PLATFORMS)
+                  .map(({ label, filter: platformFilter }) => ({
+                    label,
+                    seriesConfig: {
+                      and: [testFilter, platformFilter, browserFilter],
                     },
                   }))
-                  .append({
-                    label: 'Idle Power (geckoview)',
-                    filter: {
-                      and: [testFilter, platformDetails.filter, idleFilter],
-                    },
-                  })
                   .toArray()}
               />
             </Grid>
@@ -64,10 +54,12 @@ class Power extends React.Component {
 const nav = [
   {
     type: Picker,
-    id: 'platform',
-    label: 'Platform',
-    defaultValue: 'p2-aarch64',
-    options: PLATFORMS,
+    id: 'browser',
+    label: 'Browser',
+    defaultValue: 'fenix',
+    options: selectFrom(COMBOS)
+      .groupBy('browserLabel')
+      .map(([v]) => ({ id: v.browser, label: v.browserLabel })),
   },
   {
     type: Picker,
@@ -75,9 +67,8 @@ const nav = [
     label: 'Suite',
     defaultValue: 'speedometer',
     options: selectFrom(COMBOS)
-      // .filter(jx({ not: { eq: { suite: 'scn-power-idle' } } }))
-      .groupBy('suite')
-      .map((v, suite) => ({ id: suite, label: suite })),
+      .groupBy('suiteLabel')
+      .map(([v]) => ({ id: v.suite, label: v.suiteLabel })),
   },
 ];
 
