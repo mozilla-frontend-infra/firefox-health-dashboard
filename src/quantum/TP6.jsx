@@ -9,7 +9,6 @@ import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import { Log } from '../vendor/logs';
 import { timePickers } from '../utils/timePickers';
 import { Domain } from '../vendor/jx/domains';
 
@@ -31,10 +30,6 @@ class TP6 extends React.Component {
       .where({ test })
       .first();
     const subtitle = `${label} on ${bits} bits`;
-
-    if (bits !== 32 && bits !== 64) {
-      Log.error('Invalid URL');
-    }
 
     return (
       <div className={classes.body}>
@@ -79,7 +74,7 @@ const nav = [
     type: Picker,
     id: 'test',
     label: 'Test',
-    defaultValue: 'warm-loadtime',
+    defaultValue: 'cold-loadtime',
     options: selectFrom(TP6_TESTS)
       .select({ id: 'test', label: 'label' })
       .toArray(),

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ArrayWrapper, selectFrom } from '../../vectors';
+import { missing } from '../../utils';
 import Date from '../../dates';
 
 const styles = () => ({
@@ -14,22 +15,11 @@ const styles = () => ({
   },
 });
 
-class TimePickerPre extends Component {
+class TimePicker extends Component {
   constructor(props) {
     super(props);
 
-    const { options, value } = this.props;
-
-    if (
-      !selectFrom(options)
-        .select('id')
-        .includes(value)
-    ) {
-      options.push({
-        id: value,
-        label: Date.newInstance(value).format('MMM dd, yyyy'),
-      });
-    } // endif
+    const { value } = this.props;
 
     this.state = { value };
   }
@@ -57,7 +47,31 @@ class TimePickerPre extends Component {
   }
 }
 
-TimePickerPre.propTypes = {
+/*
+ENSURE THE options ARE UPDATED
+RETURN CORRECTED VALUE
+ */
+TimePicker.prepare = props => {
+  const { options, value, defaultValue } = props;
+
+  if (missing(value)) return defaultValue;
+
+  if (
+    selectFrom(options)
+      .select('id')
+      .includes(value)
+  )
+    return value;
+
+  options.push({
+    id: value,
+    label: Date.newInstance(value).format('MMM dd, yyyy'),
+  });
+
+  return value;
+};
+
+TimePicker.propTypes = {
   classes: PropTypes.shape().isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -75,4 +89,4 @@ TimePickerPre.propTypes = {
   ]).isRequired,
 };
 
-export default withStyles(styles)(TimePickerPre);
+export default withStyles(styles)(TimePicker);

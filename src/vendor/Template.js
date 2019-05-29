@@ -4,8 +4,13 @@ import { array, coalesce, isArray, isString, missing } from './utils';
 import { Data, isData } from './datas';
 import strings from './strings';
 
-let Log = null;
 let expandAny = null;
+
+class Template {
+  constructor(template) {
+    this.template = template;
+  }
+}
 
 function expandArray(arr, namespaces) {
   // AN ARRAY OF TEMPLATES IS SIMPLY CONCATENATED
@@ -16,7 +21,7 @@ function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
   if (!isString(from)) {
-    Log.error('expecting from clause to be string');
+    Template.log.error('expecting from clause to be string');
   }
 
   return Data.get(namespaces[0], loop.from)
@@ -67,7 +72,7 @@ function expandText(template, namespaces) {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
-          Log.error(
+          Template.log.error(
             `{{func}} is an unknown string function for template expansion`,
             { func }
           );
@@ -81,7 +86,11 @@ function expandText(template, namespaces) {
           try {
             val = run(method, val, rest);
           } catch (f) {
-            Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
+            Template.log.warning(
+              `Can not evaluate {{variable|json}}`,
+              { variable },
+              f
+            );
           }
         }
       });
@@ -125,7 +134,7 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  Log.error('Not recognized {{template|json}}', { template });
+  Template.log.error('Not recognized {{template|json}}', { template });
 };
 
 function expand(template, parameters) {
@@ -134,7 +143,7 @@ function expand(template, parameters) {
       return template;
     }
 
-    Log.error('Must have parameters');
+    Template.log.error('Must have parameters');
   }
 
   function lower(v) {
@@ -160,20 +169,10 @@ function expand(template, parameters) {
   return expandAny(template, [map]);
 }
 
-class Template {
-  constructor(template) {
-    this.template = template;
-  }
-
-  expand(values) {
-    return expand(this.template, values);
-  }
-}
-
 Template.expand = expand;
 
-const addLogger = log => {
-  Log = log;
+Template.prototype.expand = function expand(values) {
+  return expand(this.template, values);
 };
 
-export { Template, expand, addLogger };
+export { Template, expand };

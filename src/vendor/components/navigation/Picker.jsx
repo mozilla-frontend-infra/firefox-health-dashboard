@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ArrayWrapper, selectFrom } from '../../vectors';
+import { missing } from '../../utils';
 
 const styles = () => ({
   root: {
@@ -52,6 +53,25 @@ class Picker extends React.Component {
     );
   }
 }
+
+/*
+ENSURE THE options ARE UPDATED
+RETURN CORRECTED VALUE
+ */
+Picker.prepare = props => {
+  const { options, value, defaultValue } = props;
+
+  if (missing(value)) return defaultValue;
+
+  if (
+    selectFrom(options)
+      .select('id')
+      .includes(value)
+  )
+    return value;
+
+  return defaultValue;
+};
 
 Picker.propTypes = {
   classes: PropTypes.shape().isRequired,

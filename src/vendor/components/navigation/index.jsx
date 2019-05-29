@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { isEqual } from '../../datas';
+import { Data, isEqual } from '../../datas';
 import { ArrayWrapper } from '../../vectors';
 import { fromQueryString, URL } from '../../requests';
 
@@ -25,10 +25,20 @@ function withNavigation(config) {
     class Output extends React.Component {
       constructor(props) {
         super(props);
-        const { location } = props;
+        const { history, location } = props;
+        const state = fromQueryString(location.search);
+        const updates = Data.zip(
+          config.map(c => {
+            const { type, id } = c;
 
-        this.state = fromQueryString(location.search);
-        this.updateHistory({});
+            return [id, type.prepare({ value: state[id], ...c })];
+          })
+        );
+
+        this.state = updates;
+
+        if (isEqual(state, updates)) return;
+        history.push(URL({ path: location.pathname, query: updates }));
       }
 
       onPathChange = event => {

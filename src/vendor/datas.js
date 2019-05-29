@@ -11,9 +11,7 @@ import {
   missing,
   splitField,
 } from './utils';
-import { leaves, selectFrom, toPairs } from './vectors';
 
-let Log = null;
 const Data = DataImport;
 const isData = isDataImport;
 
@@ -31,7 +29,7 @@ function isEqual(a, b, done = []) {
 
   if (isData(a) && isData(b)) {
     if (done.includes(a) || done.includes(b)) {
-      Log.error('recursive structure');
+      Data.log.error('recursive structure');
     }
 
     const moreDone = [a, b, ...done];
@@ -43,10 +41,12 @@ function isEqual(a, b, done = []) {
 
   if (isMany(a) && isMany(b)) {
     if (done.includes(a) || done.includes(b)) {
-      Log.error('recursive structure');
+      Data.log.error('recursive structure');
     }
 
-    return selectFrom(a, b).every((aa, bb) => isEqual(aa, bb, [a, b, ...done]));
+    return Data.selectFrom(a, b).every((aa, bb) =>
+      isEqual(aa, bb, [a, b, ...done])
+    );
   }
 
   return false;
@@ -60,7 +60,7 @@ Data.isEmpty = value => {
     return true;
   }
 
-  if (toPairs(value).some(exists)) {
+  if (Data.toPairs(value).some(exists)) {
     return false;
   }
 
@@ -91,7 +91,7 @@ Data.zip = (keys, values) => {
 Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
-  toPairs(from).forEach((v, k) => {
+  Data.toPairs(from).forEach((v, k) => {
     if (exists(v)) {
       output[k] = v;
     }
@@ -109,13 +109,13 @@ Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
 
-    toPairs(source).forEach((sourceValue, key) => {
+    Data.toPairs(source).forEach((sourceValue, key) => {
       const value = output[key];
 
       if (missing(value)) {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
-        Log.warning('possible loop');
+        Data.log.warning('possible loop');
       } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
@@ -191,7 +191,7 @@ where path is dot-delimited path into structure
  */
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.') {
-    Log.error('must be given an object and field');
+    Data.log.error('must be given an object and field');
   }
 
   const split = splitField(path);
@@ -220,7 +220,7 @@ Append `value` to the multivalue at `obj[path]`
  */
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.') {
-    Log.error('must be given an object and field');
+    Data.log.error('must be given an object and field');
   }
 
   const split = splitField(path);
@@ -254,11 +254,13 @@ Data.add = (obj, path, value) => {
 
 /*
 We assume dots in property names refer to paths
- */
-Data.fromConfig = obj => leaves(obj, false).fromLeaves();
+convert Data from leaf form to standard form
 
-const addLogger = log => {
-  Log = log;
+Example:
+{"and.everything": 42} => {"and":{"everything":42}}
+ */
+Data.fromConfig = () => {
+  throw new Error('please import vectors to make this work');
 };
 
-export { Data, isData, isEqual, addLogger };
+export { Data, isData, isEqual };

@@ -1,11 +1,8 @@
 /* eslint-disable max-len */
 
 import { coalesce, exists, isString, missing } from './utils';
-import { addLogger as addDataLogger } from './datas';
-import {
-  expand as templateExpand,
-  addLogger as addTemplateLogger,
-} from './Template';
+import { Data } from './datas';
+import { Template, expand } from './Template';
 
 //   Error
 //       at Function.Object.<anonymous>.Log.error (C:\Users\kyle\code\firefox-health-dashboard\src\vendor\errors.jsx:174:9)
@@ -90,7 +87,7 @@ class Exception extends Error {
     const output = [];
 
     if (exists(this.template)) {
-      output.push(templateExpand(this.template, this.props));
+      output.push(expand(this.template, this.props));
     }
 
     if (this.trace) {
@@ -113,7 +110,7 @@ class Exception extends Error {
             output.push(')');
           }
 
-          return templateExpand(output.join(''), s);
+          return expand(output.join(''), s);
         })
       );
     }
@@ -135,7 +132,7 @@ class Exception extends Error {
     }
 
     if (template) {
-      return templateExpand(template, props);
+      return expand(template, props);
     }
 
     return 'unknown error';
@@ -174,7 +171,7 @@ class Log {}
 
 Log.note = (template, params) => {
   // eslint-disable-next-line no-console
-  console.log(templateExpand(template, params));
+  console.log(expand(template, params));
 };
 
 Log.warning = (template, params, cause) => {
@@ -194,7 +191,7 @@ Log.error = (template, params, cause) => {
   throw new Exception(template, params, cause, 1);
 };
 
-addDataLogger(Log);
-addTemplateLogger(Log);
+Data.log = Log;
+Template.log = Log;
 
 export { Exception, Log };

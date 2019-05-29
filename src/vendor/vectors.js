@@ -775,4 +775,9 @@ extendWrapper({
   reverse,
 });
 
+// ASSIGN USEFUL FUNCTIONS TO Data
+Data.fromConfig = obj => leaves(obj, false).fromLeaves();
+Data.toPairs = toPairs;
+Data.selectFrom = selectFrom;
+
 export { selectFrom, toPairs, leaves, first, last, length, ArrayWrapper };

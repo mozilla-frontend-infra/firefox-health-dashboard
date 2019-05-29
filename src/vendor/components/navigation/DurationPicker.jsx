@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MuiSlider from '@material-ui/lab/Slider';
-import { ArrayWrapper } from '../../vectors';
+import { ArrayWrapper, selectFrom } from '../../vectors';
 import { coalesce, toArray } from '../../utils';
 
 const QUERY_TIME_FORMAT = 'yyyy-MM-dd';
@@ -103,6 +103,23 @@ class DurationPickerPre extends Component {
     );
   }
 }
+
+/*
+ENSURE THE options ARE UPDATED
+RETURN CORRECTED VALUE
+ */
+DurationPickerPre.prepare = props => {
+  const { options, value, defaultValue } = props;
+
+  if (
+    selectFrom(options)
+      .select('id')
+      .includes(value)
+  )
+    return value;
+
+  return defaultValue;
+};
 
 DurationPickerPre.propTypes = {
   classes: PropTypes.shape().isRequired,
