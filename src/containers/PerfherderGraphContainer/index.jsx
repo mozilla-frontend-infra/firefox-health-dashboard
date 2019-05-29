@@ -12,7 +12,6 @@ import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
-import { TimeDomain } from '../../vendor/jx/domains';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -274,7 +273,10 @@ PerfherderGraphContainer.propTypes = {
     })
   ),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  timeDomain: PropTypes.instanceOf(TimeDomain).isRequired(),
+  timeDomain: PropTypes.shape({
+    min: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+  }),
 };
 
 export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));
