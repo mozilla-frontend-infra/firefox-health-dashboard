@@ -66,12 +66,8 @@ class ValueDomain extends Domain {
 }
 
 class TimeDomain extends Domain {
-  constructor({ type, min, max, interval, past, ending, format }) {
+  constructor({ min, max, interval, past, ending, format }) {
     super();
-
-    if (type !== 'time') {
-      Log.error('expecting time type');
-    }
 
     if (exists(past)) {
       this.max = Date.newInstance(coalesce(ending, 'today')).addDay();

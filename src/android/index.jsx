@@ -10,14 +10,14 @@ import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import RedashContainer from '../containers/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
-import { Domain } from '../vendor/jx/domains';
+import { TimeDomain } from '../vendor/jx/domains';
 
 class Android extends Component {
   render() {
     const nimbledroidSubTitle = `${
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
-    const timeDomain = Domain.newInstance({ type: 'time', past: '6week' });
+    const timeDomain = new TimeDomain({ past: '6week' });
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">

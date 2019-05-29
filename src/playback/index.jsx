@@ -7,7 +7,7 @@ import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import { Domain } from '../vendor/jx/domains';
+import { TimeDomain } from '../vendor/jx/domains';
 import { timePickers } from '../utils/timePickers';
 
 const styles = {
@@ -28,7 +28,7 @@ class Power extends React.Component {
       past,
       ending,
     } = this.props;
-    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
+    const timeDomain = new TimeDomain({ past, ending });
     const platformDetails = selectFrom(PLATFORMS)
       .where({ id: platform })
       .first();

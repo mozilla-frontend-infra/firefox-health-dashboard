@@ -14,7 +14,7 @@ import {
 import { CONFIG, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
-import { Domain } from '../vendor/jx/domains';
+import { TimeDomain } from '../vendor/jx/domains';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class QuantumIndex extends React.Component {
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
     const { full } = fromQueryString(this.props.location.search);
-    const timeDomain = Domain.newInstance({ type: 'time', past: '6week' });
+    const timeDomain = new TimeDomain({ past: '6week' });
     const {
       location,
       match: { params },

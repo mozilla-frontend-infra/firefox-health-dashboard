@@ -21,7 +21,7 @@ import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
 import { timePickers } from '../utils/timePickers';
-import { Domain } from '../vendor/jx/domains';
+import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
   chart: {
@@ -39,7 +39,7 @@ class TP6M extends React.Component {
   async componentDidMount() {
     const { test, platform, past, ending } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
-    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
+    const timeDomain = new TimeDomain({ past, ending });
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -121,7 +121,7 @@ class TP6M extends React.Component {
 
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
-    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
+    const timeDomain = new TimeDomain({ past, ending });
     let { summaryData } = this.state;
 
     if (test !== this.state.test || platform !== this.state.platform) {

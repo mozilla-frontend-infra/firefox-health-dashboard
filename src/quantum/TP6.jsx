@@ -10,7 +10,7 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
-import { Domain } from '../vendor/jx/domains';
+import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
   body: {
@@ -25,7 +25,7 @@ const styles = {
 class TP6 extends React.Component {
   render() {
     const { classes, navigation, test, bits, past, ending } = this.props;
-    const timeDomain = Domain.newInstance({ type: 'time', past, ending });
+    const timeDomain = new TimeDomain({ past, ending });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
       .first();
