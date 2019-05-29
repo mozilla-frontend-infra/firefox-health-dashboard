@@ -10,7 +10,7 @@ import { exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
-import { selectFrom } from '../../vendor/vectors';
+import { selectFrom, ArrayWrapper } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
 
 // treeherder can only accept particular time ranges
@@ -263,15 +263,18 @@ class PerfherderGraphContainer extends Component {
 
 PerfherderGraphContainer.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  series: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      filter: PropTypes.shape({}).isRequired,
-      options: PropTypes.shape({
-        includeSubtests: PropTypes.bool,
-      }),
-    })
-  ),
+  series: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        filter: PropTypes.shape({}).isRequired,
+        options: PropTypes.shape({
+          includeSubtests: PropTypes.bool,
+        }),
+      })
+    ),
+    PropTypes.instanceOf(ArrayWrapper),
+  ]).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   timeDomain: PropTypes.shape({
     min: PropTypes.instanceOf(Date).isRequired,

@@ -79,7 +79,6 @@ const nav = [
       .select({ id: 'test', label: 'label' })
       .toArray(),
   },
-
   {
     type: Picker,
     id: 'bits',
