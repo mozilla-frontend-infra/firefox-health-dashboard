@@ -2,7 +2,7 @@
 
 import { coalesce, exists, isString, missing } from './utils';
 import { Data } from './datas';
-import { Template, expand } from './Template';
+import { Template } from './Template';
 
 //   Error
 //       at Function.Object.<anonymous>.Log.error (C:\Users\kyle\code\firefox-health-dashboard\src\vendor\errors.jsx:174:9)
@@ -87,7 +87,7 @@ class Exception extends Error {
     const output = [];
 
     if (exists(this.template)) {
-      output.push(expand(this.template, this.props));
+      output.push(Template.expand(this.template, this.props));
     }
 
     if (this.trace) {
@@ -110,7 +110,7 @@ class Exception extends Error {
             output.push(')');
           }
 
-          return expand(output.join(''), s);
+          return Template.expand(output.join(''), s);
         })
       );
     }
@@ -132,7 +132,7 @@ class Exception extends Error {
     }
 
     if (template) {
-      return expand(template, props);
+      return Template.expand(template, props);
     }
 
     return 'unknown error';
@@ -171,7 +171,7 @@ class Log {}
 
 Log.note = (template, params) => {
   // eslint-disable-next-line no-console
-  console.log(expand(template, params));
+  console.log(Template.expand(template, params));
 };
 
 Log.warning = (template, params, cause) => {

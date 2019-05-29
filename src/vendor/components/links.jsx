@@ -17,5 +17,4 @@ class Link extends React.Component {
   }
 }
 
-/* eslint-disable-next-line import/prefer-default-export */
-export { Link };
+export { Link }; // eslint-disable-line import/prefer-default-export

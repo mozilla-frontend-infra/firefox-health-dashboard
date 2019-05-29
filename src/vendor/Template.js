@@ -175,4 +175,4 @@ Template.prototype.expand = function expand(values) {
   return expand(this.template, values);
 };
 
-export { Template, expand };
+export { Template }; // eslint-disable-line import/prefer-default-export
