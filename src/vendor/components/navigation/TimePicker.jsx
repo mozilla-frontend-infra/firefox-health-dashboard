@@ -63,6 +63,7 @@ TimePicker.prepare = props => {
   )
     return value;
 
+  // THIS PICKER WILL TAKE THE URL VALUE AND ADD IT AS A SELECTABLE VALUE
   options.push({
     id: value,
     label: Date.newInstance(value).format('MMM dd, yyyy'),

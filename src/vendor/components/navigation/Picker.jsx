@@ -18,17 +18,9 @@ class Picker extends React.Component {
   constructor(props) {
     super(props);
 
-    const { defaultValue, options, value } = this.props;
+    const { value } = this.props;
 
-    if (
-      selectFrom(options)
-        .select('id')
-        .includes(value)
-    ) {
-      this.state = { value };
-    } else {
-      this.state = { value: defaultValue };
-    } // endif
+    this.state = { value };
   }
 
   render() {
