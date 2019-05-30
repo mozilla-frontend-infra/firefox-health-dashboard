@@ -56,7 +56,7 @@ const nav = [
     type: Picker,
     id: 'browser',
     label: 'Browser',
-    defaultValue: 'fenix',
+    defaultValue: 'geckoview',
     options: selectFrom(COMBOS)
       .groupBy('browserLabel')
       .map(([v]) => ({ id: v.browser, label: v.browserLabel })),
