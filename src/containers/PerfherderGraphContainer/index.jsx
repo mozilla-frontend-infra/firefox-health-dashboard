@@ -6,7 +6,7 @@ import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
 import CustomTooltip from '../../vendor/components/chartJs/CustomTooltip';
 import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
-import { exists, missing } from '../../vendor/utils';
+import { sleep, exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
@@ -155,9 +155,10 @@ class PerfherderGraphContainer extends Component {
   async componentDidMount() {
     const { series, style, reference, timeDomain } = this.props;
 
-    try {
-      this.setState({ isLoading: true });
+    this.setState({ isLoading: true });
+    await sleep(0); // ALLOW UI TO UPDATE
 
+    try {
       const config = await getPerfherderData(series, timeDomain);
 
       Data.setDefault(config.options, style);

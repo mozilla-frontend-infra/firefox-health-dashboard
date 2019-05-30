@@ -235,6 +235,12 @@ function isData(val) {
   return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
 }
 
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export {
   first,
   last,
@@ -260,4 +266,5 @@ export {
   reverse,
   Data,
   isData,
+  sleep,
 };
