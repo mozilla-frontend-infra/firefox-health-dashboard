@@ -14,7 +14,6 @@ const CONFIG = {
       title: 'MotionMark HTML suite',
       secondLink:
         '/quantum/10/windows10-64/raptor-motionmark-htmlsuite-firefox/pgo',
-      secondTitle: 'Breakdown',
       signatures: {
         'windows10-64': '8f014459793e2e94c3244d5edeaada0452b0c627',
       },
@@ -25,7 +24,6 @@ const CONFIG = {
       title: 'MotionMark Animometer',
       secondLink:
         '/quantum/10/windows10-64/raptor-motionmark_animometer-firefox/pgo',
-      secondTitle: 'Breakdown',
       signatures: {
         'windows10-64': '9ad671fb568a5b3027af35b5d42fc6dd385f25ed',
       },
@@ -38,7 +36,6 @@ const CONFIG = {
       title: 'MotionMark HTML suite',
       secondLink:
         '/quantum/10/windows7-32/raptor-motionmark_htmlsuite-firefox/pgo',
-      secondTitle: 'Breakdown',
       signatures: { 'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23' },
       repo: 'mozilla-central',
       framework: 10,
@@ -47,7 +44,6 @@ const CONFIG = {
       title: 'MotionMark Animometer',
       secondLink:
         '/quantum/10/windows7-32/raptor-motionmark_animometer-firefox/pgo',
-      secondTitle: 'Breakdown',
       signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
       repo: 'mozilla-central',
       framework: 10,

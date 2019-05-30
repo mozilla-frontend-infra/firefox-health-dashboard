@@ -23,9 +23,6 @@ import { pullAggregate } from '../../components/TP6mAggregate';
 import Section from '../../components/Section';
 
 const styles = {
-  body: {
-    backgroundColor: 'white',
-  },
   chart: {
     justifyContent: 'center',
     padding: '1rem',
@@ -130,69 +127,65 @@ class TP6M extends React.Component {
       .first().label;
 
     return (
-      <div className={classes.body}>
-        <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
-          <Section title="Details by site">
-            <Grid container spacing={24}>
-              <Grid item xs={6} className={classes.chart}>
-                {navigation}
-              </Grid>
-              <Grid item xs={6} className={classes.chart}>
-                {summaryData && (
-                  <ChartJSWrapper
-                    title={`Geomean of ${subtitle}`}
-                    data={summaryData}
-                    height={200}
-                    options={{
-                      'axis.y.label': 'Geomean',
-                      'axis.x': DEFAULT_TIME_DOMAIN,
-                    }}
-                  />
-                )}
-              </Grid>
-
-              {selectFrom(TP6_COMBOS)
-                .where({
-                  browser: ['geckoview', 'fenix'],
-                  platform,
-                  test,
-                })
-                .groupBy('site')
-                .map((series, site) => (
-                  <Grid
-                    item
-                    xs={6}
-                    key={`page_${site}_${test}_${platform}`}
-                    className={classes.chart}>
-                    <PerfherderGraphContainer
-                      title={site}
-                      reference={(() => {
-                        const value = round(
-                          g5Reference
-                            .where({ test, platform, site })
-                            .getValue(),
-                          { places: 2 }
-                        );
-
-                        return {
-                          label: `Target (${value})`,
-                          value,
-                        };
-                      })()}
-                      series={selectFrom(series)
-                        .sortBy(['ordering'])
-                        .map(s => ({
-                          label: s.browser,
-                          seriesConfig: s.seriesConfig,
-                        }))
-                        .toArray()}
-                    />
-                  </Grid>
-                ))}
+      <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
+        <Section title="Details by site">
+          <Grid container spacing={24}>
+            <Grid item xs={6} className={classes.chart}>
+              {navigation}
             </Grid>
-          </Section>
-        </DashboardPage>
-      </div>
+            <Grid item xs={6} className={classes.chart}>
+              {summaryData && (
+                <ChartJSWrapper
+                  title={`Geomean of ${subtitle}`}
+                  data={summaryData}
+                  height={200}
+                  options={{
+                    'axis.y.label': 'Geomean',
+                    'axis.x': DEFAULT_TIME_DOMAIN,
+                  }}
+                />
+              )}
+            </Grid>
+
+            {selectFrom(TP6_COMBOS)
+              .where({
+                browser: ['geckoview', 'fenix'],
+                platform,
+                test,
+              })
+              .groupBy('site')
+              .map((series, site) => (
+                <Grid
+                  item
+                  xs={6}
+                  key={`page_${site}_${test}_${platform}`}
+                  className={classes.chart}>
+                  <PerfherderGraphContainer
+                    title={site}
+                    reference={(() => {
+                      const value = round(
+                        g5Reference.where({ test, platform, site }).getValue(),
+                        { places: 2 }
+                      );
+
+                      return {
+                        label: `Target (${value})`,
+                        value,
+                      };
+                    })()}
+                    series={selectFrom(series)
+                      .sortBy(['ordering'])
+                      .map(s => ({
+                        label: s.browser,
+                        seriesConfig: s.seriesConfig,
+                      }))
+                      .toArray()}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Section>
+      </DashboardPage>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import LinkIcon from '@material-ui/icons/Link';
 import { withStyles } from '@material-ui/core/styles';
+import { LinkIcon } from '../../utils/icons';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import CustomTooltip from '../../vendor/chartJs/CustomTooltip';
 import { withErrorBoundary } from '../../vendor/errors';
@@ -20,15 +20,15 @@ const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
 const generateInitialOptions = (series, timeDomain) => {
   // TODO: map tests and suite scores to measurement units and
   // add some label for scale
-  const { lowerIsBetter } = series[0].sources[0].meta;
+  const { lowerIsBetter, unit } = series[0].sources[0].meta;
 
   return {
-    reverse: !lowerIsBetter,
     tooltips: {
       enabled: false,
     },
     // Start using: chartSchema.md
-    'axis.y.label': lowerIsBetter ? 'Duration' : 'Score',
+    'axis.y.label': unit,
+    'axis.y.reverse': !lowerIsBetter,
     'axis.x.min': timeDomain.min,
     'axis.x.max': timeDomain.max,
   };
@@ -132,10 +132,6 @@ const styles = () => ({
     padding: '.2rem .3rem .3rem .3rem',
     margin: '0 1rem 0 0',
   },
-  linkIcon: {
-    marginLeft: '0.2rem',
-    marginBottom: -5,
-  },
 });
 
 class PerfherderGraphContainer extends Component {
@@ -207,7 +203,7 @@ class PerfherderGraphContainer extends Component {
   };
 
   render() {
-    const { classes, title } = this.props;
+    const { title } = this.props;
     const {
       data,
       series,
@@ -223,7 +219,7 @@ class PerfherderGraphContainer extends Component {
       <div key={title}>
         <ChartJsWrapper
           title={
-            <span>
+            <div>
               {title}
               {jointUrl && (
                 <a
@@ -231,10 +227,10 @@ class PerfherderGraphContainer extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                   title="show Perfherder">
-                  <LinkIcon className={classes.linkIcon} />
+                  <LinkIcon />
                 </a>
               )}
-            </span>
+            </div>
           }
           style={{ type: 'scatter' }}
           data={data}

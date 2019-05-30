@@ -87,6 +87,17 @@ expressions.or = terms => {
 };
 
 /*
+example {not: expr}
+
+return opposite of expr
+ */
+expressions.not = expr => {
+  const filter = defineFunction(expr);
+
+  return row => !filter(row);
+};
+
+/*
 example {eq: {name: value}}
 
 Return true if variable name equals literal value

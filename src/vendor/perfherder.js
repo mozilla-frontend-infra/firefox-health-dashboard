@@ -40,10 +40,23 @@ const getFramework = async combo => {
       const clean = toPairs(rawData)
         .map((meta, signature) => {
           const { suite, test, lower_is_better } = meta;
-          let lowerIsBetter = true;
+          const cleanTest = (() => {
+            if (missing(test)) return null;
+
+            if (test === suite) return null;
+
+            if (test.startsWith(suite)) return test.slice(suite.length + 1);
+
+            return test;
+          })();
+          let lowerIsBetter = lower_is_better;
+          let unit = 'Score';
 
           if (lower_is_better === undefined) {
-            if (
+            if (suite.endsWith('-power')) {
+              lowerIsBetter = true;
+              unit = 'mAh';
+            } else if (
               [
                 'raptor-speedometer',
                 'raptor-stylebench',
@@ -67,20 +80,23 @@ const getFramework = async combo => {
               ].some(prefix => suite.startsWith(prefix))
             ) {
               lowerIsBetter = true;
+              unit = 'Duration';
             } else {
               if (DEBUG) {
                 Log.note('Do not have direction for {{suite}}', { suite });
               }
 
               lowerIsBetter = false;
+              unit = 'Score';
             }
           }
 
           return {
             signature,
             suite,
-            test: test === suite ? null : test,
+            test: cleanTest,
             lowerIsBetter,
+            unit,
             options: lookup[meta.option_collection_hash],
             extraOptions: toArray(meta.extra_options).sort(),
             platform: meta.machine_platform,

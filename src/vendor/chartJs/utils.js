@@ -26,6 +26,7 @@ const mostlyMax = values => {
 return nice, round, upper bound
  */
 const niceCeiling = value => {
+  if (value === 0) return 1;
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
   const norm = value / d;
   const nice = [1.5, 2, 3, 5, 7.5, 10].find(v => norm <= v);
@@ -36,7 +37,7 @@ const niceCeiling = value => {
 const generateOptions = (rawOptions = {}, data) => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
   const options = Data.fromConfig(rawOptions);
-  const { title, reverse = false, tooltips, ticksCallback, onClick } = options;
+  const { title, tooltips, ticksCallback, onClick } = options;
   const xAxes = (() => {
     if (Data.get(options, 'axis.x')) {
       return toArray(options.axis.x).map(x => {
@@ -74,7 +75,7 @@ const generateOptions = (rawOptions = {}, data) => {
     {
       ticks: {
         beginAtZero: true,
-        reverse,
+        reverse: Data.get(options, 'axis.y.reverse'),
         min: 0,
         max: yMax,
       },

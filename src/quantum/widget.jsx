@@ -1,8 +1,9 @@
 /* global fetch */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Link } from '../vendor/utils/links';
+import { DetailsIcon } from '../utils/icons';
 
 const enrich = (text, key = 'none') =>
   typeof text === 'string' ? (
@@ -33,18 +34,17 @@ export default class Widget extends React.Component {
     ) : (
       title
     );
-    let $secondTitle;
-
-    if (this.props.secondTitle) {
+    const secondTitle = (() => {
       if (this.props.secondLink) {
-        $secondTitle = (
-          <Link to={this.props.secondLink}>{this.props.secondTitle}</Link>
+        return (
+          <Link to={this.props.secondLink} title="show details">
+            <DetailsIcon />
+          </Link>
         );
-      } else {
-        $secondTitle = this.props.secondTitle;
       }
-    }
 
+      return '';
+    })();
     let { target } = this.props;
 
     if (target) {
@@ -90,7 +90,7 @@ export default class Widget extends React.Component {
         <header className="sides-padding">
           <div>
             <h3>{$title}</h3>
-            <span className="sides-padding">{$secondTitle}</span>
+            <span className="sides-padding">{secondTitle}</span>
           </div>
           {$targetStatus}
         </header>
@@ -135,7 +135,6 @@ Widget.propTypes = {
   reading: PropTypes.string,
   title: PropTypes.string,
   secondLink: PropTypes.string,
-  secondTitle: PropTypes.string,
   target: PropTypes.string,
   targetStatus: PropTypes.string,
   explainer: PropTypes.string,

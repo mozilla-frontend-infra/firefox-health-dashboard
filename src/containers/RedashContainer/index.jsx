@@ -6,6 +6,7 @@ import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import { fetchJson } from '../../vendor/requests';
 import { withErrorBoundary } from '../../vendor/errors';
 import { selectFrom } from '../../vendor/vectors';
+import { LinkIcon } from '../../utils/icons';
 
 const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
   // Separate data points into percentile buckets
@@ -81,32 +82,29 @@ class RedashContainer extends Component {
   }
 
   render() {
-    const { classes, options, redashQueryUrl, title } = this.props;
+    const { options, redashQueryUrl, title } = this.props;
     const { data, isLoading } = this.state;
 
     return (
       <div>
         <ChartJsWrapper
-          title={title}
+          title={
+            <div>
+              {title}{' '}
+              <a
+                href={redashQueryUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="go to Redash query">
+                <LinkIcon />
+              </a>
+            </div>
+          }
           type="line"
           data={data}
           isLoading={isLoading}
           options={options}
         />
-        <div className={classes.linkContainer}>
-          <a
-            href={redashQueryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            title="go to Redash query">
-            <span
-              style={{
-                verticalAlign: 'middle',
-              }}>
-              Show Redash query
-            </span>
-          </a>
-        </div>
       </div>
     );
   }

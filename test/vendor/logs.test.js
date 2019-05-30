@@ -18,6 +18,6 @@ describe('logs', () => {
     expect(result.template).toEqual('problem');
     expect(result.props).toEqual(null);
     expect(result.cause).toEqual(null);
-    expect(result.trace[0].fileName).toEndWith('logs.js');
+    expect(result.trace[0].fileName).toEndWith('logs.test.js');
   });
 });
