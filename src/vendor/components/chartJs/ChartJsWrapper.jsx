@@ -4,6 +4,7 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { generateDatasetStyle, generateOptions } from './utils';
+import { Data } from '../../datas';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 
@@ -66,13 +67,13 @@ const ChartJsWrapper = ({
       );
     }
 
+    const currentDate = Data.get(Data.fromConfig(options), 'axis.x.max');
     const allOldData = data.datasets.every(dataset => {
       const latestDataDate = new Date(
         selectFrom(dataset.data)
           .select('x')
           .max()
       );
-      const currentDate = new Date(); // get current date
       const timeDifference = Math.abs(
         currentDate.getTime() - latestDataDate.getTime()
       );

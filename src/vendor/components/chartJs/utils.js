@@ -158,6 +158,8 @@ const generateOptions = (rawOptions = {}, data) => {
     chartJsOptions.onClick = onClick;
   }
 
+  chartJsOptions.animation = false;
+
   return chartJsOptions;
 };
 
