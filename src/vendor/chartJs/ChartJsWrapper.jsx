@@ -35,7 +35,7 @@ const ChartJsWrapper = ({
   isLoading,
   options,
   title,
-  style = {},
+  style = {}, // SEE chartSchema.md
   chartHeight,
   spinnerSize,
 }) =>

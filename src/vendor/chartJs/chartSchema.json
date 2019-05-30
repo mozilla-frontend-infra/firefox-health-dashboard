@@ -344,17 +344,45 @@
         "$ref": "#definitions.object_style"
       }
     },
+    "range": {
+      "description": "define range of values",
+      "type": "object",
+      "properties": {
+        "min": {
+          "description": "minimum",
+          "type": "number"
+        },
+        "max": {
+          "description": "maximum",
+          "type": "number"
+        }
+      }
+    },
     "domain": {
       "description": "define the range of values on axis",
       "type": "object",
       "properties": {
         "min": {
           "description": "minimum axis value shown",
-          "type": "number"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#definitions.range"
+            }
+          ]
         },
         "max": {
           "description": "maximum axis value shown",
-          "type": "number"
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#definitions.range"
+            }
+          ]
         },
         "showZero": {
           "description": "show zero coordinate, even if calculated range would not",

@@ -1,4 +1,4 @@
-import { coalesce, isString, missing } from './utils';
+import { coalesce, isString, missing, exists } from './utils';
 import { round as mathRound, roundMetric } from './math';
 
 const between = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -108,6 +108,35 @@ const strings = {
 
   replaceAll(value, find, replace) {
     return value.split(find).join(replace);
+  },
+
+  between(value, prefix, suffix) {
+    let s = 0;
+
+    if (exists(prefix)) {
+      s = value.indexOf(prefix);
+
+      if (s === -1) return null; // NOT FOUND
+      s += suffix.length;
+    }
+
+    let e = value.length;
+
+    if (exists(suffix)) {
+      e = value.indexOf(suffix, s);
+
+      if (e === -1) return null;
+
+      if (exists(prefix)) {
+        s = value.lastIndexOf(prefix, e) + prefix.length;
+      }
+    }
+
+    return value.slice(s, e);
+  },
+
+  percent(value) {
+    return `${mathRound(value * 100, { places: 2 })}%`;
   },
 };
 

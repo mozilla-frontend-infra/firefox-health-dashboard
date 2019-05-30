@@ -1,9 +1,11 @@
 import SETTINGS from '../../settings';
-import { missing, toArray } from '../utils';
-import { Data } from '../Data';
-import { selectFrom, first } from '../vectors';
+import { isNumeric, missing, toArray } from '../utils';
+import { Data, isData } from '../Data';
+import { first, selectFrom } from '../vectors';
+import { max, min } from '../math';
 import Color from '../colors';
 import Date from '../dates';
+import Template from '../Template';
 
 const invisible = 'rgba(0,0,0,0)';
 /*
@@ -18,8 +20,11 @@ const mostlyMax = values => {
   const p50 = sorted[Math.ceil(num * 0.5)];
   const p90 = sorted[Math.ceil(num * 0.9)];
   const max = sorted[num];
+  const most = Math.max(p50 * 2.0, p90 * 1.1);
 
-  return Math.min(max * 1.1, Math.max(p50 * 2.0, p90 * 1.1));
+  if (most === 0) return max * 1.1;
+
+  return Math.min(max * 1.1, most);
 };
 
 /*
@@ -63,14 +68,28 @@ const generateOptions = (rawOptions = {}, data) => {
       },
     ];
   })();
-  const yMax = niceCeiling(
-    mostlyMax(
-      selectFrom(data.datasets)
-        .select('data')
-        .flatten()
-        .select('y')
-    )
-  );
+  const yMax = (() => {
+    const requestedMax = Data.get(options, 'axis.y.max');
+
+    if (isNumeric(requestedMax)) {
+      return requestedMax;
+    }
+
+    const niceMax = niceCeiling(
+      mostlyMax(
+        selectFrom(data.datasets)
+          .select('data')
+          .flatten()
+          .select('y')
+      )
+    );
+
+    if (isData(requestedMax)) {
+      return min([requestedMax.max, max([niceMax, requestedMax.min])]);
+    }
+
+    return niceMax;
+  })();
   const yAxes = [
     {
       ticks: {
@@ -87,6 +106,23 @@ const generateOptions = (rawOptions = {}, data) => {
     yAxes[0].scaleLabel = {
       display: true,
       labelString: yLabel,
+    };
+  }
+
+  const yFormat = first(toArray(Data.get(options, 'axis.y.format')));
+
+  if (yFormat) {
+    const t = new Template(yFormat);
+
+    yAxes[0].ticks.callback = (value, i, values) => {
+      const [last1, last2, last3] = values;
+
+      // DO NOT SHOW LAST VALUE IF IT IS NOT A FULL STEP ABOVE SECOND-LAST VALUE
+      if (value === last1 && last1 - last2 < 0.9 * (last2 - last3)) {
+        return '';
+      } // endif
+
+      return t.expand(value);
     };
   }
 

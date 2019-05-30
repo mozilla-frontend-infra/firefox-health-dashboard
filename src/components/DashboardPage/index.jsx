@@ -8,6 +8,7 @@ import {
   DesktopIcon,
   CodeIcon,
   HomeIcon,
+  VideoIcon,
 } from '../../utils/icons';
 
 const styles = {
@@ -50,6 +51,9 @@ const DashboardPage = ({ classes, children, title, subtitle }) => (
         </Link>
         <Link to="/power" title="Power Usage">
           <BatteryIcon />
+        </Link>
+        <Link to="/playback" title="Playback">
+          <VideoIcon />
         </Link>
         <a
           href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"

@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from '../../utils/icons';
 import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
 import CustomTooltip from '../../vendor/chartJs/CustomTooltip';
+import { Data } from '../../vendor/Data';
 import { withErrorBoundary } from '../../vendor/errors';
 import { exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
@@ -99,7 +100,7 @@ const perfherderFormatter = (series, timeDomain) => {
 const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
     series.map(async row => {
-      const sources = await getData(row.seriesConfig);
+      const sources = await getData(row.filter);
 
       // filter out old data
       return {
@@ -117,7 +118,7 @@ const getPerfherderData = async (series, timeDomain) => {
 
   if (missing(selectFrom(newData).exists('sources'))) {
     Log.error('can not get data for {{query|json}}', {
-      query: series[0].seriesConfig,
+      query: series[0].filter,
     });
   }
 
@@ -144,12 +145,14 @@ class PerfherderGraphContainer extends Component {
   };
 
   async componentDidMount() {
-    const { series, reference } = this.props;
+    const { series, style, reference } = this.props;
 
     try {
       this.setState({ isLoading: true });
 
       const config = await getPerfherderData(series, DEFAULT_TIME_DOMAIN);
+
+      Data.setDefault(config.options, style);
 
       if (exists(reference) && exists(reference.value)) {
         const { label, value } = reference;
@@ -255,7 +258,7 @@ PerfherderGraphContainer.propTypes = {
   series: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
-      seriesConfig: PropTypes.shape({}).isRequired,
+      filter: PropTypes.shape({}).isRequired,
       options: PropTypes.shape({
         includeSubtests: PropTypes.bool,
       }),
