@@ -73,7 +73,7 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'win64',
+    defaultValue: 'mac',
     options: PLATFORMS,
   },
   {
@@ -87,7 +87,7 @@ const nav = [
     type: Picker,
     id: 'encoding',
     label: 'Encoding',
-    defaultValue: 'H264',
+    defaultValue: 'VP9',
     options: selectFrom(ENCODINGS).select({
       id: 'encoding',
       label: 'encoding',
