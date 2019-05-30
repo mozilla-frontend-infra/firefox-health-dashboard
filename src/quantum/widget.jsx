@@ -34,18 +34,17 @@ export default class Widget extends React.Component {
     ) : (
       title
     );
-    let $secondTitle;
+    const secondTitle = (() => {
+      if (this.props.secondLink) {
+        return (
+          <Link to={this.props.secondLink} title="show details">
+            <DetailsIcon />
+          </Link>
+        );
+      }
 
-    if (this.props.secondLink) {
-      $secondTitle = (
-        <Link to={this.props.secondLink} title="show details">
-          <DetailsIcon />
-        </Link>
-      );
-    } else {
-      $secondTitle = '';
-    }
-
+      return '';
+    })();
     let { target } = this.props;
 
     if (target) {
@@ -91,7 +90,7 @@ export default class Widget extends React.Component {
         <header className="sides-padding">
           <div>
             <h3>{$title}</h3>
-            <span className="sides-padding">{$secondTitle}</span>
+            <span className="sides-padding">{secondTitle}</span>
           </div>
           {$targetStatus}
         </header>
