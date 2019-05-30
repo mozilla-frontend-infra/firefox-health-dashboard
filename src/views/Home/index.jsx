@@ -50,7 +50,7 @@ const Home = ({ classes }) => (
       <Link to="/quantum/64">
         <DesktopIcon /> Quantum 64bit
       </Link>
-      <Link to="/battery">
+      <Link to="/power">
         <BatteryIcon /> Power Usage
       </Link>
       <Link to="/playback">

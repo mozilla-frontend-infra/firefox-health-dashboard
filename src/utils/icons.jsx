@@ -1,22 +1,22 @@
 import React from 'react';
-import LinkIco from '@material-ui/icons/Launch';
-import HomeIco from '@material-ui/icons/Home';
-import TimerIco from '@material-ui/icons/Timer';
-import BatteryIco from '@material-ui/icons/BatteryChargingFull';
-import VideoIco from '@material-ui/icons/Videocam';
-import DesktopIco from '@material-ui/icons/DesktopWindows';
-import AndroidIco from '@material-ui/icons/PhoneAndroid';
-import DetailsIco from '@material-ui/icons/MoreHoriz';
-import CodeIco from '@material-ui/icons/Code';
+import LinkIconInternal from '@material-ui/icons/Launch';
+import HomeIconInternal from '@material-ui/icons/Home';
+import TimerIconInternal from '@material-ui/icons/Timer';
+import BatteryIconInternal from '@material-ui/icons/BatteryChargingFull';
+import VideoIconInternal from '@material-ui/icons/Videocam';
+import DesktopIconInternal from '@material-ui/icons/DesktopWindows';
+import AndroidIconInternal from '@material-ui/icons/PhoneAndroid';
+import DetailsIconInternal from '@material-ui/icons/MoreHoriz';
+import CodeIconInternal from '@material-ui/icons/Code';
 import githubMark from '../static/GitHub-Mark.png';
 
 const iconStyle = { verticalAlign: 'baseline', margin: '0 .2rem 0 .2rem' };
-const HomeIcon = () => <HomeIco style={iconStyle} />;
-const TimerIcon = () => <TimerIco style={iconStyle} />;
-const BatteryIcon = () => <BatteryIco style={iconStyle} />;
-const VideoIcon = () => <VideoIco style={iconStyle} />;
-const DesktopIcon = () => <DesktopIco style={iconStyle} />;
-const AndroidIcon = () => <AndroidIco style={iconStyle} />;
+const HomeIcon = () => <HomeIconInternal style={iconStyle} />;
+const TimerIcon = () => <TimerIconInternal style={iconStyle} />;
+const BatteryIcon = () => <BatteryIconInternal style={iconStyle} />;
+const VideoIcon = () => <VideoIconInternal style={iconStyle} />;
+const DesktopIcon = () => <DesktopIconInternal style={iconStyle} />;
+const AndroidIcon = () => <AndroidIconInternal style={iconStyle} />;
 const LinkIcon = () => (
   <div
     style={{
@@ -24,7 +24,7 @@ const LinkIcon = () => (
       margin: '-1rem 0',
       verticalAlign: 'middle',
     }}>
-    <LinkIco style={iconStyle} />
+    <LinkIconInternal style={iconStyle} />
   </div>
 );
 const DetailsIcon = () => (
@@ -34,10 +34,10 @@ const DetailsIcon = () => (
       margin: '-1rem 0',
       verticalAlign: 'middle',
     }}>
-    <DetailsIco style={iconStyle} />
+    <DetailsIconInternal style={iconStyle} />
   </div>
 );
-const CodeIcon = () => <CodeIco style={iconStyle} />;
+const CodeIcon = () => <CodeIconInternal style={iconStyle} />;
 const GithubIcon = () => (
   <img
     src={githubMark}
