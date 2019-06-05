@@ -418,7 +418,7 @@ exports[`renders correctly url 1`] = `
               <input
                 name="ending"
                 type="hidden"
-                value="2019-05-30"
+                value="2019-06-05"
               />
               <svg
                 aria-hidden="true"
