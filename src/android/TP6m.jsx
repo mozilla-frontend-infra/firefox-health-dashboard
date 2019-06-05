@@ -36,7 +36,7 @@ class TP6M extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {
+  async update() {
     const { test, platform, past, ending } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending });
@@ -107,6 +107,10 @@ class TP6M extends React.Component {
     this.setState({ summaryData, test, platform });
   }
 
+  async componentDidMount() {
+    await this.update();
+  }
+
   async componentDidUpdate(prevProps) {
     if (
       ['test', 'platform', 'past', 'ending'].every(
@@ -116,7 +120,7 @@ class TP6M extends React.Component {
       return;
     }
 
-    this.componentDidMount();
+    await this.update();
   }
 
   render() {

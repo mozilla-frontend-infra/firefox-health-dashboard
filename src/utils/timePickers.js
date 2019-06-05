@@ -31,4 +31,6 @@ const timePickers = [
   },
 ];
 
+// This is config for the time pickers; which is the same in all
+// the components that use them.
 export { timePickers, todayText };
