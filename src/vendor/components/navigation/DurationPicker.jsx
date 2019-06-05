@@ -44,28 +44,19 @@ class DurationPickerPre extends Component {
   constructor(props) {
     super(props);
 
-    const { defaultValue, value } = props;
+    const { value, id } = props;
     const width = coalesce(props.width, '8rem');
     const options = toArray(props.options);
     const range = { min: 0, max: options.length - 1, step: 1 };
-    const requestedIndex = options.findIndex(({ id }) => id === value);
+    const index = options.findIndex(({ id }) => id === value);
 
-    if (requestedIndex !== -1) {
-      this.state = {
-        index: requestedIndex,
-        range,
-        options,
-        event: { target: {} },
-        width,
-      };
-
-      return;
-    }
-
-    const index = options.findIndex(({ id }) => id === defaultValue);
-
-    this.state = { index, range, options, event: { target: {} }, width };
-    this.handleDragEnd();
+    this.state = {
+      index,
+      range,
+      options,
+      event: { target: { name: id, value } },
+      width,
+    };
   }
 
   handleChange = (event, index) => {

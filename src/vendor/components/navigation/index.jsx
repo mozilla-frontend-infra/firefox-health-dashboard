@@ -137,7 +137,6 @@ function withNavigation(config) {
 
     const styles = () => ({
       root: {
-        // display: 'flex',
         textAlign: 'left',
         paddingBottom: '2rem',
       },
