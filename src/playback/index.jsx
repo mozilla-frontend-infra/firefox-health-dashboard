@@ -28,7 +28,7 @@ class Power extends React.Component {
       past,
       ending,
     } = this.props;
-    const timeDomain = new TimeDomain({ past, ending });
+    const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const platformDetails = selectFrom(PLATFORMS)
       .where({ id: platform })
       .first();

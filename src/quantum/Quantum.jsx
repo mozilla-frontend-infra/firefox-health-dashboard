@@ -25,7 +25,7 @@ export default class QuantumIndex extends React.Component {
   render() {
     // THESE LINES ARE USED TO MERGE THE index-32bit and index-64bit FILES
     const { full } = fromQueryString(this.props.location.search);
-    const timeDomain = new TimeDomain({ past: '6week' });
+    const timeDomain = new TimeDomain({ past: '6week', interval: 'day' });
     const {
       location,
       match: { params },
