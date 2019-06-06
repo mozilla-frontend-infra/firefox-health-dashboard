@@ -39,7 +39,7 @@ class TP6M extends React.Component {
   async update() {
     const { test, platform, past, ending } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
-    const timeDomain = new TimeDomain({ past, ending });
+    const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -125,7 +125,7 @@ class TP6M extends React.Component {
 
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
-    const timeDomain = new TimeDomain({ past, ending });
+    const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     let { summaryData } = this.state;
 
     if (test !== this.state.test || platform !== this.state.platform) {

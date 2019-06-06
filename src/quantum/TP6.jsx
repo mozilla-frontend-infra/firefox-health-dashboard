@@ -25,7 +25,7 @@ const styles = {
 class TP6 extends React.Component {
   render() {
     const { classes, navigation, test, bits, past, ending } = this.props;
-    const timeDomain = new TimeDomain({ past, ending });
+    const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
       .first();

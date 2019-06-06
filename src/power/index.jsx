@@ -20,7 +20,7 @@ const styles = {
 class Power extends React.Component {
   render() {
     const { classes, navigation, suite, browser, past, ending } = this.props;
-    const timeDomain = new TimeDomain({ past, ending });
+    const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const browserFilter = selectFrom(COMBOS)
       .where({ browser, suite })
       .first().filter;

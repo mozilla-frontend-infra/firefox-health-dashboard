@@ -17,7 +17,7 @@ class Android extends Component {
     const nimbledroidSubTitle = `${
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
-    const timeDomain = new TimeDomain({ past: '6week' });
+    const timeDomain = new TimeDomain({ past: '6week', interval: 'day' });
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
