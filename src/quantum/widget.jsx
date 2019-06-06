@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Link } from '../vendor/utils/links';
+import { Link } from '../vendor/components/links';
 import { DetailsIcon } from '../utils/icons';
 
 const enrich = (text, key = 'none') =>

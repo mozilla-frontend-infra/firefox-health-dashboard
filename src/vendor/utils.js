@@ -212,6 +212,35 @@ function concatField(...many) {
   return output;
 }
 
+/*
+Represent JSON object: map from string keys to values
+ */
+class Data {}
+
+const OBJECT_CONSTRUCTOR = {}.constructor;
+
+/*
+ * Check if the `val` is Data
+ * Direct instances of Object are also considered data
+ */
+function isData(val) {
+  if (missing(val)) {
+    return false;
+  }
+
+  if (val[Symbol.iterator]) {
+    return false;
+  }
+
+  return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export {
   first,
   last,
@@ -235,4 +264,7 @@ export {
   MANY_TYPES,
   isMany,
   reverse,
+  Data,
+  isData,
+  sleep,
 };

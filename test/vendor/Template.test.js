@@ -1,5 +1,5 @@
 /* global describe, it */
-import Template from '../../src/vendor/Template';
+import { Template } from '../../src/vendor/Template';
 import strings from '../../src/vendor/strings';
 import { value2json } from '../../src/vendor/convert';
 

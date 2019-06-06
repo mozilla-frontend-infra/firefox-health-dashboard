@@ -3,10 +3,12 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import { COMBOS, PLATFORMS, TESTS } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { timePickers } from '../utils/timePickers';
+import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
   chart: {
@@ -17,13 +19,16 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, suite, browser } = this.props;
+    const { classes, navigation, suite, browser, past, ending } = this.props;
+    const timeDomain = new TimeDomain({ past, ending });
     const browserFilter = selectFrom(COMBOS)
       .where({ browser, suite })
       .first().filter;
 
     return (
-      <DashboardPage title="Power Usage" key={`page_${browser}_${suite}`}>
+      <DashboardPage
+        title="Power Usage"
+        key={`page_${browser}_${suite}_${past}_${ending}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
@@ -33,6 +38,7 @@ class Power extends React.Component {
               key={`page_${id}_${browser}_${suite}`}
               className={classes.chart}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title={label}
                 series={selectFrom(PLATFORMS)
                   .map(({ label, filter: platformFilter }) => ({
@@ -70,6 +76,7 @@ const nav = [
       .groupBy('suiteLabel')
       .map(([v]) => ({ id: v.suite, label: v.suiteLabel })),
   },
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(Power));

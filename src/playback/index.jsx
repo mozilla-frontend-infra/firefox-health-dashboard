@@ -3,10 +3,12 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import { TimeDomain } from '../vendor/jx/domains';
+import { timePickers } from '../utils/timePickers';
 
 const styles = {
   chart: {
@@ -17,7 +19,16 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, platform, browser, encoding } = this.props;
+    const {
+      classes,
+      navigation,
+      platform,
+      browser,
+      encoding,
+      past,
+      ending,
+    } = this.props;
+    const timeDomain = new TimeDomain({ past, ending });
     const platformDetails = selectFrom(PLATFORMS)
       .where({ id: platform })
       .first();
@@ -28,7 +39,7 @@ class Power extends React.Component {
     return (
       <DashboardPage
         title="Playback"
-        key={`page_${platform}_${browser}_${encoding}`}>
+        key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}>
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(SIZES).map(({ size }) => (
@@ -38,6 +49,7 @@ class Power extends React.Component {
               key={`page_${platform}_${browser}_${encoding}_${size}`}
               className={classes.chart}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title={`Percent dropped frames ${size}`}
                 style={{
                   'axis.y.format': '{{.|percent}}',
@@ -93,6 +105,7 @@ const nav = [
       label: 'encoding',
     }),
   },
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(Power));

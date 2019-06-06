@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
 
 import { coalesce, exists, isString, missing } from './utils';
-import Template from './Template';
-import { selectFrom } from './vectors';
-import { value2json } from './convert';
+import { Data } from './datas';
+import { Template } from './Template';
 
 //   Error
 //       at Function.Object.<anonymous>.Log.error (C:\Users\kyle\code\firefox-health-dashboard\src\vendor\errors.jsx:174:9)
@@ -25,15 +24,14 @@ function parseStack(stackString) {
     return [];
   }
 
-  return selectFrom(stackString.split('\n'))
+  return stackString
+    .split('\n')
     .map(line =>
-      selectFrom(stackPatterns)
+      stackPatterns
         .map(stackPattern => {
           const parts = stackPattern.exec(line);
 
-          if (missing(parts)) {
-            return null;
-          }
+          if (missing(parts)) return null;
 
           return {
             function: parts[1],
@@ -42,11 +40,9 @@ function parseStack(stackString) {
             column: parts[4],
           };
         })
-        .exists()
-        .first()
+        .find(exists)
     )
-    .exists()
-    .toArray();
+    .filter(exists);
 }
 
 class Exception extends Error {
@@ -173,8 +169,6 @@ Exception.wrap = err => {
 
 class Log {}
 
-Log._ = value2json;
-
 Log.note = (template, params) => {
   // eslint-disable-next-line no-console
   console.log(Template.expand(template, params));
@@ -196,5 +190,8 @@ Log.warning = (template, params, cause) => {
 Log.error = (template, params, cause) => {
   throw new Exception(template, params, cause, 1);
 };
+
+Data.log = Log;
+Template.log = Log;
 
 export { Exception, Log };

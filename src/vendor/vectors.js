@@ -3,7 +3,6 @@
 
 import unzip from 'lodash/unzip';
 import lodashSortBy from 'lodash/sortBy';
-import { Data, isData } from './Data';
 import {
   array,
   coalesce,
@@ -20,6 +19,8 @@ import {
   toArray,
   zip,
   reverse,
+  Data,
+  isData,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';
@@ -773,5 +774,10 @@ extendWrapper({
 
   reverse,
 });
+
+// ASSIGN USEFUL FUNCTIONS TO Data
+Data.fromConfig = obj => leaves(obj, false).fromLeaves();
+Data.toPairs = toPairs;
+Data.selectFrom = selectFrom;
 
 export { selectFrom, toPairs, leaves, first, last, length, ArrayWrapper };

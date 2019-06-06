@@ -1,10 +1,16 @@
+/* global require */
+
 import { array, coalesce, isArray, isString, missing } from './utils';
-import { toPairs } from './vectors';
-import { Log } from './logs';
-import { Data, isData } from './Data';
+import { Data, isData } from './datas';
 import strings from './strings';
 
 let expandAny = null;
+
+class Template {
+  constructor(template) {
+    this.template = template;
+  }
+}
 
 function expandArray(arr, namespaces) {
   // AN ARRAY OF TEMPLATES IS SIMPLY CONCATENATED
@@ -15,7 +21,7 @@ function expandLoop(loop, namespaces) {
   const { from, template, separator } = loop;
 
   if (!isString(from)) {
-    Log.error('expecting from clause to be string');
+    Template.log.error('expecting from clause to be string');
   }
 
   return Data.get(namespaces[0], loop.from)
@@ -23,7 +29,7 @@ function expandLoop(loop, namespaces) {
       const ns = Data.copy(namespaces[0]);
 
       if (isData(m)) {
-        toPairs(m).forEach((v, k) => {
+        Object.entries(m).forEach(([k, v]) => {
           ns[k.toLowerCase()] = v;
         });
       }
@@ -66,7 +72,7 @@ function expandText(template, namespaces) {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
-          Log.error(
+          Template.log.error(
             `{{func}} is an unknown string function for template expansion`,
             { func }
           );
@@ -80,7 +86,11 @@ function expandText(template, namespaces) {
           try {
             val = run(method, val, rest);
           } catch (f) {
-            Log.warning(`Can not evaluate {{variable|json}}`, { variable }, f);
+            Template.log.warning(
+              `Can not evaluate {{variable|json}}`,
+              { variable },
+              f
+            );
           }
         }
       });
@@ -124,16 +134,16 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  Log.error('Not recognized {{template|json}}', { template });
+  Template.log.error('Not recognized {{template|json}}', { template });
 };
 
-function expand(template, parameters) {
+function expando(template, parameters) {
   if (parameters === undefined) {
     if (isString(template)) {
       return template;
     }
 
-    Log.error('Must have parameters');
+    Template.log.error('Must have parameters');
   }
 
   function lower(v) {
@@ -142,10 +152,13 @@ function expand(template, parameters) {
     }
 
     if (isData(v)) {
-      return toPairs(v)
-        .map((v, k) => [lower(v), k.toLowerCase()])
-        .args()
-        .fromPairs();
+      const output = {};
+
+      Object.entries(v).forEach(([k, v]) => {
+        output[k.toLowerCase()] = lower(v);
+      });
+
+      return output;
     }
 
     return v;
@@ -156,16 +169,10 @@ function expand(template, parameters) {
   return expandAny(template, [map]);
 }
 
-class Template {
-  constructor(template) {
-    this.template = template;
-  }
+Template.expand = expando;
 
-  expand(values) {
-    return expand(this.template, values);
-  }
-}
+Template.prototype.expand = function expand(values) {
+  return expando(this.template, values);
+};
 
-Template.expand = expand;
-
-export default Template;
+export { Template }; // eslint-disable-line import/prefer-default-export

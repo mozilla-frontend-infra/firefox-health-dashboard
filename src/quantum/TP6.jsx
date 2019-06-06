@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import { TP6_COMBOS, TP6_TESTS } from './config';
-import { withNavigation } from '../vendor/utils/navigation';
-import Picker from '../vendor/utils/navigation/Picker';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../components/DashboardPage';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import { Log } from '../vendor/logs';
+import { timePickers } from '../utils/timePickers';
+import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
   body: {
@@ -23,15 +24,12 @@ const styles = {
 
 class TP6 extends React.Component {
   render() {
-    const { classes, navigation, test, bits } = this.props;
+    const { classes, navigation, test, bits, past, ending } = this.props;
+    const timeDomain = new TimeDomain({ past, ending });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
       .first();
     const subtitle = `${label} on ${bits} bits`;
-
-    if (bits !== 32 && bits !== 64) {
-      Log.error('Invalid URL');
-    }
 
     return (
       <div className={classes.body}>
@@ -45,9 +43,10 @@ class TP6 extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${bits}`}
+                  key={`page_${site}_${test}_${bits}_${past}_${ending}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
+                    timeDomain={timeDomain}
                     title={site}
                     series={selectFrom(series)
                       .sortBy(['ordering'])
@@ -80,7 +79,6 @@ const nav = [
       .select({ id: 'test', label: 'label' })
       .toArray(),
   },
-
   {
     type: Picker,
     id: 'bits',
@@ -88,6 +86,7 @@ const nav = [
     defaultValue: 64,
     options: [{ id: 32, label: '32 bits' }, { id: 64, label: '64 bits' }],
   },
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(TP6));

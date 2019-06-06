@@ -1,10 +1,10 @@
 /* global fetch */
 import { parse } from 'query-string';
-import { leaves, toPairs } from './vectors';
-import { Log } from './logs';
-import { Data } from './Data';
 import { exists, isArray, isString, toArray } from './utils';
+import { Data } from './datas';
 import strings from './strings';
+import { Log } from './logs';
+import { leaves, toPairs } from './vectors';
 
 /*
 Parse a query string into an object. Leading ? or # are ignored, so you can

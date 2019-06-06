@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import Home from '../../src/views/Home';
+import Home from '../../src/Home';
 
 it('renders correctly', () => {
   const tree = renderer

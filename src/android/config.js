@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { Data } from "../vendor/Data";
+import { Data } from "../vendor/datas";
 import { selectFrom } from "../vendor/vectors";
 import { first, missing } from "../vendor/utils";
 import { round } from "../vendor/math";

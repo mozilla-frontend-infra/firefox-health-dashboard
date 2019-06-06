@@ -6,7 +6,6 @@ import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
 import { geomean, round } from '../vendor/math';
 import {
-  DEFAULT_TIME_DOMAIN,
   PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
@@ -16,8 +15,8 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { HyperCube, window } from '../vendor/jx/cubes';
-import { g5Reference, TARGET_NAME } from '../config/mobileG5';
-import ChartJSWrapper from '../vendor/chartJs/ChartJsWrapper';
+import { g5Reference, TARGET_NAME } from './config';
+import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
 
@@ -169,6 +168,7 @@ class TP6mAggregate_ extends Component {
   }
 
   async componentDidMount() {
+    const { timeDomain } = this.props;
     const platforms = selectFrom(PLATFORMS).where({
       platform: DESIRED_PLATFORMS,
     });
@@ -192,7 +192,7 @@ class TP6mAggregate_ extends Component {
       sites: TP6M_SITES,
       tests: TP6_TESTS.where({ test: DESIRED_TESTS }),
       platforms,
-      timeDomain: DEFAULT_TIME_DOMAIN,
+      timeDomain,
     });
 
     this.setState({ data });

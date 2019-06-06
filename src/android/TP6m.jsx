@@ -3,24 +3,25 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { round } from '../../vendor/math';
-import { exists, missing } from '../../vendor/utils';
-import { selectFrom } from '../../vendor/vectors';
+import { round } from '../vendor/math';
+import { exists, missing } from '../vendor/utils';
+import { selectFrom } from '../vendor/vectors';
 import {
   PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
-  DEFAULT_TIME_DOMAIN,
-} from '../../quantum/config';
-import { withNavigation } from '../../vendor/utils/navigation';
-import Picker from '../../vendor/utils/navigation/Picker';
-import DashboardPage from '../../components/DashboardPage';
-import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import ChartJSWrapper from '../../vendor/chartJs/ChartJsWrapper';
-import { g5Reference, TARGET_NAME } from '../../config/mobileG5';
-import { pullAggregate } from '../../components/TP6mAggregate';
-import Section from '../../components/Section';
+} from '../quantum/config';
+import { withNavigation } from '../vendor/components/navigation';
+import Picker from '../vendor/components/navigation/Picker';
+import DashboardPage from '../components/DashboardPage';
+import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
+import { g5Reference, TARGET_NAME } from './config';
+import { pullAggregate } from './TP6mAggregate';
+import Section from '../components/Section';
+import { timePickers } from '../utils/timePickers';
+import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
   chart: {
@@ -35,8 +36,10 @@ class TP6M extends React.Component {
     this.state = {};
   }
 
-  async componentDidMount() {
-    const { test, platform } = this.props;
+  async update() {
+    const { test, platform, past, ending } = this.props;
+    // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
+    const timeDomain = new TimeDomain({ past, ending });
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
     const sites = TP6M_SITES.filter(({ mode }) =>
@@ -49,7 +52,7 @@ class TP6M extends React.Component {
       sites,
       tests,
       platforms: selectFrom(PLATFORMS).where({ platform }),
-      timeDomain: DEFAULT_TIME_DOMAIN,
+      timeDomain,
     });
     const referenceValue = aggregate.where({ test, platform }).ref.getValue();
 
@@ -104,18 +107,25 @@ class TP6M extends React.Component {
     this.setState({ summaryData, test, platform });
   }
 
+  async componentDidMount() {
+    await this.update();
+  }
+
   async componentDidUpdate(prevProps) {
     if (
-      this.props.test === prevProps.test &&
-      this.props.platform === prevProps.platform
-    )
+      ['test', 'platform', 'past', 'ending'].every(
+        v => this.props[v] === prevProps[v]
+      )
+    ) {
       return;
+    }
 
-    this.componentDidMount();
+    await this.update();
   }
 
   render() {
-    const { classes, navigation, test, platform } = this.props;
+    const { classes, navigation, test, platform, past, ending } = this.props;
+    const timeDomain = new TimeDomain({ past, ending });
     let { summaryData } = this.state;
 
     if (test !== this.state.test || platform !== this.state.platform) {
@@ -141,7 +151,7 @@ class TP6M extends React.Component {
                   height={200}
                   options={{
                     'axis.y.label': 'Geomean',
-                    'axis.x': DEFAULT_TIME_DOMAIN,
+                    'axis.x': timeDomain,
                   }}
                 />
               )}
@@ -158,9 +168,10 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${platform}`}
+                  key={`page_${site}_${test}_${platform}_${past}_${ending}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
+                    timeDomain={timeDomain}
                     title={site}
                     reference={(() => {
                       const value = round(
@@ -201,12 +212,11 @@ const nav = [
     type: Picker,
     id: 'test',
     label: 'Test',
-    defaultValue: 'warm-loadtime',
+    defaultValue: 'cold-loadtime',
     options: selectFrom(TP6_TESTS)
       .select({ id: 'test', label: 'label' })
       .toArray(),
   },
-
   {
     type: Picker,
     id: 'platform',
@@ -217,6 +227,7 @@ const nav = [
       .select({ id: 'platform', label: 'label' })
       .toArray(),
   },
+  ...timePickers,
 ];
 
 export default withNavigation(nav)(withStyles(styles)(TP6M));

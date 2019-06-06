@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { isEqual } from '../../Data';
-import { ArrayWrapper, selectFrom } from '../../vectors';
-import { missing } from '../../utils';
+import { Data, isEqual } from '../../datas';
+import { ArrayWrapper } from '../../vectors';
 import { fromQueryString, URL } from '../../requests';
 
 function withNavigation(config) {
@@ -26,32 +25,20 @@ function withNavigation(config) {
     class Output extends React.Component {
       constructor(props) {
         super(props);
-        const { location } = props;
-        const params = fromQueryString(location.search);
+        const { history, location } = props;
+        const state = fromQueryString(location.search);
+        const updates = Data.zip(
+          config.map(c => {
+            const { type, id } = c;
 
-        // SET PARAMETERS TO DEFAULT VALUES, OR URL PARAMETER
-        this.state = selectFrom(config)
-          .map(({ id, defaultValue, options }) => {
-            const selected = params[id];
-
-            if (missing(selected)) {
-              return [defaultValue, id];
-            }
-
-            if (
-              selectFrom(options)
-                .select('id')
-                .includes(selected)
-            ) {
-              return [selected, id];
-            }
-
-            return [defaultValue, id];
+            return [id, type.prepare({ value: state[id], ...c })];
           })
-          .args()
-          .fromPairs();
+        );
 
-        this.updateHistory({});
+        this.state = updates;
+
+        if (isEqual(state, updates)) return;
+        history.push(URL({ path: location.pathname, query: updates }));
       }
 
       onPathChange = event => {
@@ -96,7 +83,7 @@ function withNavigation(config) {
         return (
           <div className={classes.root}>
             {config.map(c => {
-              const { type, id, label, options } = c;
+              const { type, id, label, options, defaultValue } = c;
 
               return React.createElement(type, {
                 key: id,
@@ -104,6 +91,7 @@ function withNavigation(config) {
                 label,
                 handleChange: this.onPathChange,
                 value: params[id],
+                defaultValue,
                 options,
               });
             })}
@@ -149,9 +137,8 @@ function withNavigation(config) {
 
     const styles = () => ({
       root: {
-        display: 'flex',
         textAlign: 'left',
-        padding: '1rem',
+        paddingBottom: '2rem',
       },
     });
 

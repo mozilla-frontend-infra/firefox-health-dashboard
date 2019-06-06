@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-
 import {
   exists,
   first,
@@ -9,7 +8,7 @@ import {
   isArray,
   isFunction,
 } from '../utils';
-import { Data, isData } from '../Data';
+import { Data, isData } from '../datas';
 import Date from '../dates';
 import { Log } from '../logs';
 

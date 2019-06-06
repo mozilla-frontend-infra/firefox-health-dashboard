@@ -1,6 +1,9 @@
 /* global describe, it */
-import { Data } from '../../src/vendor/Data';
+import { Data } from '../../src/vendor/datas';
+import { toPairs } from '../../src/vendor/vectors';
 
+// eslint-disable-next-line no-unused-vars
+const _ = toPairs; // `datas` does not work without `vectors`
 const data = { a: { b: { c: { d: 42 } } } };
 const dataArray = {
   a: { b: [{ c: 1 }, { c: 2 }, { c: 3 }, { c: 4 }, { c: null }] },

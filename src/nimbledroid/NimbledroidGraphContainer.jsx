@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CONFIG } from './config';
 import { withErrorBoundary } from '../vendor/errors';
-import ChartJsWrapper from '../vendor/chartJs/ChartJsWrapper';
+import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import fetchNimbledroidData from './NimbledroidApiHandler';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import Date from '../vendor/dates';

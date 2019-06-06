@@ -1,21 +1,23 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import DashboardPage from '../../components/DashboardPage';
-import Section from '../../components/Section';
-import BugzillaUrlContainer from '../../containers/BugzillaUrlContainer';
-import BugzillaGraph from '../../containers/BugzillaGraph';
-import NimbledroidSection from '../../nimbledroid/NimbledroidSection';
-import PerfherderGraphContainer from '../../containers/PerfherderGraphContainer';
-import RedashContainer from '../../containers/RedashContainer';
-import { CONFIG } from '../../nimbledroid/config';
-import { TP6mAggregate } from '../../components/TP6mAggregate';
+import DashboardPage from '../components/DashboardPage';
+import Section from '../components/Section';
+import BugzillaUrlContainer from '../containers/BugzillaUrlContainer';
+import BugzillaGraph from '../containers/BugzillaGraph';
+import NimbledroidSection from '../nimbledroid/NimbledroidSection';
+import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import RedashContainer from '../containers/RedashContainer';
+import { CONFIG } from '../nimbledroid/config';
+import { TP6mAggregate } from './TP6mAggregate';
+import { TimeDomain } from '../vendor/jx/domains';
 
 class Android extends Component {
   render() {
     const nimbledroidSubTitle = `${
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
+    const timeDomain = new TimeDomain({ past: '6week' });
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
@@ -80,7 +82,7 @@ class Android extends Component {
         <Section
           title="Raptor (TP6m)"
           more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64">
-          <TP6mAggregate />
+          <TP6mAggregate timeDomain={timeDomain} />
         </Section>
         <Section title="Telemetry">
           <Grid container spacing={24}>
@@ -106,6 +108,7 @@ class Android extends Component {
           <Grid container spacing={24}>
             <Grid item xs={6}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title="Speedometer"
                 series={[
                   {
@@ -166,6 +169,7 @@ class Android extends Component {
             </Grid>
             <Grid item xs={6}>
               <PerfherderGraphContainer
+                timeDomain={timeDomain}
                 title="Unity WebGl"
                 series={[
                   {

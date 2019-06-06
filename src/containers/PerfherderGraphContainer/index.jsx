@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from '../../utils/icons';
-import ChartJsWrapper from '../../vendor/chartJs/ChartJsWrapper';
-import CustomTooltip from '../../vendor/chartJs/CustomTooltip';
-import { Data } from '../../vendor/Data';
+import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
+import CustomTooltip from '../../vendor/components/chartJs/CustomTooltip';
+import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
-import { exists, missing } from '../../vendor/utils';
+import { sleep, exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
 import Date from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
-import { selectFrom } from '../../vendor/vectors';
+import { selectFrom, ArrayWrapper } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
-import { DEFAULT_TIME_DOMAIN } from '../../quantum/config';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -136,21 +135,31 @@ const styles = () => ({
 });
 
 class PerfherderGraphContainer extends Component {
-  state = {
-    data: null,
-    tooltipModel: null,
-    tooltipIsLocked: false,
-    canvas: null,
-    isLoading: false,
-  };
+  constructor(props) {
+    super(props);
+    const { timeDomain } = this.props;
+
+    if (missing(timeDomain)) {
+      Log.error('expecting a time range');
+    }
+
+    this.state = {
+      data: null,
+      tooltipModel: null,
+      tooltipIsLocked: false,
+      canvas: null,
+      isLoading: false,
+    };
+  }
 
   async componentDidMount() {
-    const { series, style, reference } = this.props;
+    const { series, style, reference, timeDomain } = this.props;
+
+    this.setState({ isLoading: true });
+    await sleep(0); // ALLOW UI TO UPDATE
 
     try {
-      this.setState({ isLoading: true });
-
-      const config = await getPerfherderData(series, DEFAULT_TIME_DOMAIN);
+      const config = await getPerfherderData(series, timeDomain);
 
       Data.setDefault(config.options, style);
 
@@ -255,17 +264,23 @@ class PerfherderGraphContainer extends Component {
 
 PerfherderGraphContainer.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  series: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      filter: PropTypes.shape({}).isRequired,
-      options: PropTypes.shape({
-        includeSubtests: PropTypes.bool,
-      }),
-    })
-  ),
+  series: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        filter: PropTypes.shape({}).isRequired,
+        options: PropTypes.shape({
+          includeSubtests: PropTypes.bool,
+        }),
+      })
+    ),
+    PropTypes.instanceOf(ArrayWrapper),
+  ]).isRequired,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  timeRange: PropTypes.string,
+  timeDomain: PropTypes.shape({
+    min: PropTypes.instanceOf(Date).isRequired,
+    max: PropTypes.instanceOf(Date).isRequired,
+  }),
 };
 
 export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));

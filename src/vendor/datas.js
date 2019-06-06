@@ -1,39 +1,19 @@
 /* eslint-disable no-restricted-syntax */
 
-import { toPairs, selectFrom, leaves } from './vectors';
-import { Log } from './logs';
 import {
   coalesce,
+  Data as DataImport,
   exists,
   isArray,
+  isData as isDataImport,
   isInteger,
+  isMany,
   missing,
   splitField,
-  isMany,
 } from './utils';
 
-/*
-Represent JSON object: map from string keys to values
- */
-class Data {}
-
-const OBJECT_CONSTRUCTOR = {}.constructor;
-
-/*
- * Check if the `val` is Data
- * Direct instances of Object are also considered data
- */
-function isData(val) {
-  if (missing(val)) {
-    return false;
-  }
-
-  if (val[Symbol.iterator]) {
-    return false;
-  }
-
-  return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
-}
+const Data = DataImport;
+const isData = isDataImport;
 
 /*
 return true if a and b are structurally similar
@@ -49,7 +29,7 @@ function isEqual(a, b, done = []) {
 
   if (isData(a) && isData(b)) {
     if (done.includes(a) || done.includes(b)) {
-      Log.error('recursive structure');
+      Data.log.error('recursive structure');
     }
 
     const moreDone = [a, b, ...done];
@@ -61,10 +41,12 @@ function isEqual(a, b, done = []) {
 
   if (isMany(a) && isMany(b)) {
     if (done.includes(a) || done.includes(b)) {
-      Log.error('recursive structure');
+      Data.log.error('recursive structure');
     }
 
-    return selectFrom(a, b).every((aa, bb) => isEqual(aa, bb, [a, b, ...done]));
+    return Data.selectFrom(a, b).every((aa, bb) =>
+      isEqual(aa, bb, [a, b, ...done])
+    );
   }
 
   return false;
@@ -78,7 +60,7 @@ Data.isEmpty = value => {
     return true;
   }
 
-  if (toPairs(value).some(exists)) {
+  if (Data.toPairs(value).some(exists)) {
     return false;
   }
 
@@ -109,7 +91,7 @@ Data.zip = (keys, values) => {
 Data.copy = (from, to) => {
   const output = coalesce(to, {});
 
-  toPairs(from).forEach((v, k) => {
+  Data.toPairs(from).forEach((v, k) => {
     if (exists(v)) {
       output[k] = v;
     }
@@ -127,13 +109,13 @@ Data.setDefault = (dest, ...args) => {
   function setDefault(dest, source, path) {
     const output = dest;
 
-    toPairs(source).forEach((sourceValue, key) => {
+    Data.toPairs(source).forEach((sourceValue, key) => {
       const value = output[key];
 
       if (missing(value)) {
         output[key] = sourceValue;
       } else if (path.indexOf(value) !== -1) {
-        Log.warning('possible loop');
+        Data.log.warning('possible loop');
       } else if (isData(value)) {
         setDefault(value, sourceValue, path.concat([value]));
       }
@@ -209,7 +191,7 @@ where path is dot-delimited path into structure
  */
 Data.set = (obj, path, value) => {
   if (missing(obj) || path === '.') {
-    Log.error('must be given an object and field');
+    Data.log.error('must be given an object and field');
   }
 
   const split = splitField(path);
@@ -238,7 +220,7 @@ Append `value` to the multivalue at `obj[path]`
  */
 Data.add = (obj, path, value) => {
   if (missing(obj) || path === '.') {
-    Log.error('must be given an object and field');
+    Data.log.error('must be given an object and field');
   }
 
   const split = splitField(path);
@@ -272,7 +254,13 @@ Data.add = (obj, path, value) => {
 
 /*
 We assume dots in property names refer to paths
+convert Data from leaf form to standard form
+
+Example:
+{"and.everything": 42} => {"and":{"everything":42}}
  */
-Data.fromConfig = obj => leaves(obj, false).fromLeaves();
+Data.fromConfig = () => {
+  throw new Error('please import vectors to make this work');
+};
 
 export { Data, isData, isEqual };
