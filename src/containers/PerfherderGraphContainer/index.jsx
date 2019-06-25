@@ -8,7 +8,7 @@ import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
 import { sleep, exists, missing } from '../../vendor/utils';
 import { URL } from '../../vendor/requests';
-import Date from '../../vendor/dates';
+import { Date } from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom, ArrayWrapper } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
@@ -228,7 +228,7 @@ class PerfherderGraphContainer extends Component {
     } = this.state;
 
     return (
-      <div key={title}>
+      <div key={title} style={{ position: 'relative' }}>
         <ChartJsWrapper
           title={
             <div>
