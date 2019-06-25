@@ -1,9 +1,9 @@
+/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from '../../utils/icons';
 import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
-import CustomTooltip from '../../vendor/components/chartJs/CustomTooltip';
 import { Data } from '../../vendor/datas';
 import { withErrorBoundary } from '../../vendor/errors';
 import { sleep, exists, missing } from '../../vendor/utils';
@@ -12,6 +12,8 @@ import { Date } from '../../vendor/dates';
 import { getData, TREEHERDER } from '../../vendor/perfherder';
 import { selectFrom, ArrayWrapper } from '../../vendor/vectors';
 import { Log } from '../../vendor/logs';
+import { round } from '../../vendor/math';
+import { withTooltip } from '../../vendor/components/chartJs/CustomTooltip';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -145,9 +147,6 @@ class PerfherderGraphContainer extends Component {
 
     this.state = {
       data: null,
-      tooltipModel: null,
-      tooltipIsLocked: false,
-      canvas: null,
       isLoading: false,
     };
   }
@@ -216,16 +215,7 @@ class PerfherderGraphContainer extends Component {
 
   render() {
     const { title } = this.props;
-    const {
-      data,
-      series,
-      jointUrl,
-      options,
-      canvas,
-      tooltipModel,
-      isLoading,
-      tooltipIsLocked,
-    } = this.state;
+    const { data, jointUrl, options, isLoading } = this.state;
 
     return (
       <div key={title} style={{ position: 'relative' }}>
@@ -249,14 +239,6 @@ class PerfherderGraphContainer extends Component {
           isLoading={isLoading}
           options={options}
         />
-        {tooltipModel && (
-          <CustomTooltip
-            tooltipModel={tooltipModel}
-            series={series}
-            canvas={canvas}
-            isLocked={tooltipIsLocked}
-          />
-        )}
       </div>
     );
   }
@@ -283,4 +265,76 @@ PerfherderGraphContainer.propTypes = {
   }),
 };
 
-export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));
+const tipStyles = {
+  tooltipKey: {
+    display: 'inline-block',
+    width: '10px',
+    height: '10px',
+    marginRight: '10px',
+  },
+  lockMessage: {
+    color: '#ccc',
+  },
+};
+const tooltip = withStyles(tipStyles)(
+  ({ record, index, data, series, classes, isLocked }) => {
+    const higherOrLower = series.meta.lowerIsBetter
+      ? 'lower is better'
+      : 'higher is better';
+    const hgURL = URL({
+      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
+      query: { changeset: record.revision },
+    });
+    const jobURL = URL({
+      path: 'https://treeherder.mozilla.org/#/jobs',
+      query: {
+        repo: 'mozilla-central',
+        revision: record.revision,
+        selectedJob: record.job_id,
+        group_state: 'expanded',
+      },
+    });
+
+    return (
+      <div>
+        <div className={classes.test}>{record.x}</div>
+        <div>
+          <span style={series.style.color} className={classes.tooltipKey} />
+          {series.label}: {round(record.y, { places: 3 })}
+        </div>
+        <div>
+          {record.y} ({higherOrLower})
+        </div>
+        {(() => {
+          if (index === 0) return null;
+          const prev = data[index - 1];
+          const delta = record.value - prev.value;
+          const deltaPercentage = (delta / prev.value) * 100;
+
+          return (
+            <div>
+              Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
+            </div>
+          );
+        })()}
+        <div>
+          <a href={hgURL} target="_blank" rel="noopener noreferrer">
+            {record.revision.slice(0, 12)}
+          </a>
+          {` `}(
+          <a href={jobURL} target="_blank" rel="noopener noreferrer">
+            job
+          </a>
+          )
+        </div>
+        <div className={classes.lockMessage}>
+          {isLocked ? 'Click to unlock' : 'Click to lock'}
+        </div>
+      </div>
+    );
+  }
+);
+
+export default withTooltip(tooltip)(
+  withStyles(styles)(withErrorBoundary(PerfherderGraphContainer))
+);
