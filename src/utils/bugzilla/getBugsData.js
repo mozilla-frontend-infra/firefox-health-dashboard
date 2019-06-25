@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import queryBugzilla from './queryBugzilla';
-import Date from '../../vendor/dates';
+import { Date } from '../../vendor/dates';
 
 const newDate = (datetime, startDate) => {
   const onlyDate = datetime.slice(0, 10);

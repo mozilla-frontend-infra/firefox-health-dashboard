@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 import { Log } from '../logs';
-import Date from '../dates';
+import { Date } from '../dates';
 import { Duration } from '../durations';
 import { coalesce, isString, missing, exists } from '../utils';
 import { selectFrom } from '../vectors';

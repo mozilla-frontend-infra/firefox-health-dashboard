@@ -3,7 +3,7 @@
 
 import { coalesce, exists, isNumeric, isString, missing } from './utils';
 import { abs, floor, min } from './math';
-import Date from './dates';
+import { Date } from './dates';
 import { Log } from './logs';
 import strings from './strings';
 

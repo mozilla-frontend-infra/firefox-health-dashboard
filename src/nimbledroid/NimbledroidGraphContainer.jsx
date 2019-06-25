@@ -5,7 +5,7 @@ import { withErrorBoundary } from '../vendor/errors';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import fetchNimbledroidData from './NimbledroidApiHandler';
 import { selectFrom, toPairs } from '../vendor/vectors';
-import Date from '../vendor/dates';
+import { Date } from '../vendor/dates';
 
 const SINCE = Date.newInstance('today-13week').milli();
 const nimbledroidFormatter = ({ data }) => ({

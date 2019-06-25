@@ -9,7 +9,7 @@ import {
   isFunction,
 } from '../utils';
 import { Data, isData } from '../datas';
-import Date from '../dates';
+import { Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};

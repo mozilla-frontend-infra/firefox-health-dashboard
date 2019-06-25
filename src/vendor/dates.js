@@ -1212,4 +1212,4 @@ strings.format = (value, format) => {
 
 strings.unix = value => GMTDate.newInstance(value).unix();
 
-export default GMTDate;
+export { GMTDate as Date }; // eslint-disable-line import/prefer-default-export

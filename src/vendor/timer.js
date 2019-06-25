@@ -1,4 +1,4 @@
-import Date from './dates';
+import { Date } from './dates';
 import { Log } from './logs';
 
 class Timer {
