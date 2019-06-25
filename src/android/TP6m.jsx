@@ -21,6 +21,7 @@ import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
 import { timePickers } from '../utils/timePickers';
+import { Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
@@ -150,6 +151,20 @@ class TP6M extends React.Component {
                   data={summaryData}
                   height={200}
                   options={{
+                    tip: (point, series) => (
+                      <div>
+                        <div className={classes.title}>
+                          {Date(point.x).format('yyyy-MM-dd')}
+                        </div>
+                        <div>
+                          <span
+                            style={series.style}
+                            className={classes.tooltipKey}
+                          />
+                          {round(point.y, { places: 2 })}
+                        </div>
+                      </div>
+                    ),
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,
                   }}
