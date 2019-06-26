@@ -53,7 +53,7 @@ class NimbledroidGraphContainer extends Component {
     return (
       <ChartJsWrapper
         data={data}
-        options={{ 'axis.y.label': 'Seconds' }}
+        standardOptions={{ 'axis.y.label': 'Seconds' }}
         title={`${scenarioName} on Nexus 5`}
       />
     );

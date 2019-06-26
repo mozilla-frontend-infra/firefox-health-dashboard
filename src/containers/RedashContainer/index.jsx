@@ -44,7 +44,7 @@ class RedashContainer extends Component {
   };
 
   static propTypes = {
-    options: PropTypes.shape({
+    standardOptions: PropTypes.shape({
       title: PropTypes.string,
       'axis.y.label': PropTypes.string,
       ticksCallback: PropTypes.func,
@@ -57,7 +57,7 @@ class RedashContainer extends Component {
   };
 
   static defaultProps = {
-    options: {
+    standardOptions: {
       'axis.y.label': 'Miliseconds',
       ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
     },
@@ -82,7 +82,7 @@ class RedashContainer extends Component {
   }
 
   render() {
-    const { options, redashQueryUrl, title } = this.props;
+    const { standardOptions, redashQueryUrl, title } = this.props;
     const { data, isLoading } = this.state;
 
     return (
@@ -101,9 +101,11 @@ class RedashContainer extends Component {
             </div>
           }
           type="line"
-          data={data}
-          isLoading={isLoading}
-          options={options}
+          {...{
+            data,
+            isLoading,
+            standardOptions,
+          }}
         />
       </div>
     );

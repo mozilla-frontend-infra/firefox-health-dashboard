@@ -39,9 +39,9 @@ const niceCeiling = value => {
   return nice * d;
 };
 
-const generateOptions = (rawOptions = {}, data) => {
+const cjsOptionsGenerator = (standardOptions = {}, data) => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
-  const options = Data.fromConfig(rawOptions);
+  const options = Data.fromConfig(standardOptions);
   const { title, tooltips, ticksCallback, onClick } = options;
   const xAxes = (() => {
     if (Data.get(options, 'axis.x')) {
@@ -126,7 +126,7 @@ const generateOptions = (rawOptions = {}, data) => {
     };
   }
 
-  const chartJsOptions = {
+  const cjsOptions = {
     legend: {
       labels: {
         boxWidth: 10,
@@ -140,27 +140,27 @@ const generateOptions = (rawOptions = {}, data) => {
   };
 
   if (ticksCallback) {
-    chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
+    cjsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
   }
 
   if (tooltips) {
-    chartJsOptions.tooltips = tooltips;
+    cjsOptions.tooltips = tooltips;
   }
 
   if (title) {
-    chartJsOptions.title = {
+    cjsOptions.title = {
       display: true,
       text: title,
     };
   }
 
   if (onClick) {
-    chartJsOptions.onClick = onClick;
+    cjsOptions.onClick = onClick;
   }
 
-  chartJsOptions.animation = false;
+  cjsOptions.animation = false;
 
-  return chartJsOptions;
+  return cjsOptions;
 };
 
 const generateLineChartStyle = color => ({
@@ -210,4 +210,4 @@ const generateDatasetStyle = (index, type = 'line') => {
   return generateLineChartStyle(colour);
 };
 
-export { generateOptions, generateDatasetStyle };
+export { cjsOptionsGenerator, generateDatasetStyle };

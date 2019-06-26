@@ -2,7 +2,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { missing } from '../../utils';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -68,11 +67,10 @@ class CustomTooltip extends React.Component {
   render() {
     const {
       classes,
+      standardOptions,
       tooltipModel,
-      series,
       canvas,
       tooltipIsLocked,
-      renderTooltip,
     } = this.props;
 
     if (!tooltipModel) return null;
@@ -88,15 +86,13 @@ class CustomTooltip extends React.Component {
       // eslint-disable-next-line no-underscore-dangle
       fontFamily: tooltipModel._bodyFontFamily,
       // eslint-disable-next-line no-underscore-dangle
-      fontSize: `${tooltipModel._bodyFontSize}px`,
+      fontSize: `${tooltipModel.bodyFontSize}px`,
     };
     const currPoint = tooltipModel.dataPoints[0];
-    const { index } = currPoint;
+    const { data, series } = standardOptions;
+    const index = data.findIndex(currPoint);
     const s = currPoint.datasetIndex;
     const currSeries = series[s];
-
-    if (missing(currSeries)) return null;
-    const { data } = currSeries;
     const record = data[index];
     // BUILD CANONICAL SERIES
     const newSeries = {
@@ -106,16 +102,20 @@ class CustomTooltip extends React.Component {
         color: tooltipModel.labelColors[0].borderColor,
       },
     };
+    const HandleTooltip = standardOptions.tooltip;
 
     return (
       <div className={[classes, ...alignments].join(' ')} style={inlineStyle}>
-        {renderTooltip({
-          record,
-          index,
-          data,
-          series: newSeries,
-          isLocked: tooltipIsLocked,
-        })}
+        <HandleTooltip
+          {...{
+            record,
+            index,
+            data,
+            series: newSeries,
+            isLocked: tooltipIsLocked,
+            seri: series,
+          }}
+        />
       </div>
     );
   }
@@ -123,7 +123,8 @@ class CustomTooltip extends React.Component {
 
 CustomTooltip.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  renderTooltip: PropTypes.func.isRequired,
+  HandleTooltip: PropTypes.func.isRequired,
+  series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   tooltipModel: PropTypes.shape({}),
   tooltipIsLocked: PropTypes.bool.isRequired,
   canvas: PropTypes.shape({}),
@@ -131,10 +132,10 @@ CustomTooltip.propTypes = {
 
 const StyledCustomTooltip = withStyles(styles)(CustomTooltip);
 
-function withTooltip(renderTooltip) {
+function withTooltip() {
   // https://reactjs.org/docs/higher-order-components.html
   //
-  // Expects `renderTooltip` function that accepts
+  // Expects `HandleTooltip` property that accepts
   // * record - particualr raw record being shown
   // * index - position of record in data
   // * data - all the data in the series
@@ -142,34 +143,33 @@ function withTooltip(renderTooltip) {
   // * s - index into series
   // * seri - all series shown on this chart
 
-  return WrappedComponent => {
+  return WrappedChart => {
     class Output extends React.Component {
-      constructor(...props) {
-        super(...props);
+      constructor(props, ...moreArgs) {
+        const { standardOptions, options, ...moreProps } = props;
 
-        this.state = {
-          tooltipModel: null,
-          tooltipIsLocked: false,
-          canvas: null,
-        };
-      }
+        super(moreProps, ...moreArgs);
 
-      async componentDidMount() {
         const self = this;
+        const newOptions = { tooltips: {}, ...options };
 
-        this.setState(prevState => {
-          const { options } = prevState;
-
-          options.onClick = this.handleChartClick;
-          options.tooltips.custom = function custom(tooltipModel) {
+        if (standardOptions.tooltip) {
+          newOptions.onClick = this.handleChartClick;
+          newOptions.tooltips.custom = function custom(tooltipModel) {
             if (!self.state.tooltipIsLocked) {
               // eslint-disable-next-line no-underscore-dangle
               self.setState({ tooltipModel, canvas: this._chart.canvas });
             }
           };
+        }
 
-          return { ...prevState, options };
-        });
+        this.state = {
+          options: newOptions,
+          standardOptions,
+          tooltipModel: null,
+          tooltipIsLocked: false,
+          canvas: null,
+        };
       }
 
       handleChartClick = () => {
@@ -179,23 +179,18 @@ function withTooltip(renderTooltip) {
       };
 
       render() {
-        const { series } = this.props;
-        const { tooltipModel, tooltipIsLocked, canvas, ...state } = this.state;
+        const { standardOptions, options, ...rest } = this.state;
 
-        return (
-          <div style={{ position: 'relative' }}>
-            <WrappedComponent {...this.props} {...state} />
-            <StyledCustomTooltip
-              {...{
-                tooltipModel,
-                series,
-                canvas,
-                tooltipIsLocked,
-                renderTooltip,
-              }}
-            />
-          </div>
-        );
+        if (standardOptions.tooltip) {
+          return (
+            <div style={{ position: 'relative' }}>
+              <WrappedChart {...{ ...this.props, options }} />
+              <StyledCustomTooltip {...{ standardOptions, ...rest }} />
+            </div>
+          );
+        }
+
+        return <WrappedChart {...this.props} />;
       }
     }
 

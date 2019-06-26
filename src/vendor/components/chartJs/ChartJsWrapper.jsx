@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import { generateDatasetStyle, generateOptions } from './utils';
+import { generateDatasetStyle, cjsOptionsGenerator } from './utils';
 import { Data } from '../../datas';
 import { Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 import { coalesce } from '../../utils';
+import { withTooltip } from './CustomTooltip';
 
 const styles = {
   // This div helps with canvas size changes
@@ -32,17 +33,20 @@ const styles = {
     width: '70%',
   },
 };
+const ToolTipChart = withTooltip()(Chart);
 const ChartJsWrapper = ({
   classes,
   data,
   isLoading,
-  options,
+  standardOptions, // SEE chartSchema.md
   title,
   style = {}, // SEE chartSchema.md
   chartHeight,
   spinnerSize,
 }) =>
   (() => {
+    const defaultStyle = style;
+
     if (isLoading) {
       return (
         <div className={classes.chartContainer}>
@@ -70,7 +74,7 @@ const ChartJsWrapper = ({
     }
 
     const currentDate = coalesce(
-      Data.get(Data.fromConfig(options), 'axis.x.max'),
+      Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod()
     );
     const allOldData = data.datasets.every(dataset => {
@@ -86,9 +90,8 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
-    const cOptions = generateOptions(options, data);
-    const defaultStyle = style;
-    const cData = {
+    const cjsOptions = cjsOptionsGenerator(standardOptions, data);
+    const cjsData = {
       datasets: data.datasets.map((ds, i) => {
         const { style = {}, data, label } = ds;
         const type = style.type || defaultStyle.type;
@@ -112,11 +115,12 @@ const ChartJsWrapper = ({
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
             {title && <h2 className={classes.title}>{title}</h2>}
-            <Chart
+            <ToolTipChart
               type="line"
-              data={cData}
+              data={cjsData}
               height={chartHeight}
-              options={cOptions}
+              options={cjsOptions}
+              standardOptions={standardOptions}
             />
           </ErrorMessage>
         </div>
@@ -126,12 +130,15 @@ const ChartJsWrapper = ({
     return (
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
-        <Chart
-          type="line"
-          data={cData}
-          height={chartHeight}
-          options={cOptions}
-        />
+        <div style={{ position: 'relative' }}>
+          <ToolTipChart
+            type="line"
+            data={cjsData}
+            height={chartHeight}
+            options={cjsOptions}
+            standardOptions={standardOptions}
+          />
+        </div>
       </div>
     );
   })();
@@ -139,7 +146,7 @@ const ChartJsWrapper = ({
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  options: PropTypes.shape({
+  standardOptions: PropTypes.shape({
     reverse: PropTypes.bool,
     'axis.y.label': PropTypes.string,
     title: PropTypes.string,
@@ -171,7 +178,7 @@ ChartJsWrapper.propTypes = {
 
 ChartJsWrapper.defaultProps = {
   data: undefined,
-  options: undefined,
+  standardOptions: undefined,
   title: '',
   chartHeight: 80,
   spinnerSize: '100%',
