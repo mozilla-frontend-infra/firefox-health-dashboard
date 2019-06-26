@@ -15,7 +15,7 @@ const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
     .map((rows, key) => ({
       label: key,
       data: selectFrom(rows)
-        .sortBy('submission_date')
+        .sort('submission_date')
         .select({ x: 'submission_date', y: 'value' })
         .toArray(),
     }))

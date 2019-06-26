@@ -2,6 +2,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { Data } from '../../datas';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -88,30 +89,31 @@ class CustomTooltip extends React.Component {
       // eslint-disable-next-line no-underscore-dangle
       fontSize: `${tooltipModel.bodyFontSize}px`,
     };
-    const currPoint = tooltipModel.dataPoints[0];
-    const { data, series } = standardOptions;
-    const index = data.findIndex(currPoint);
-    const s = currPoint.datasetIndex;
-    const currSeries = series[s];
+    const {
+      datasetIndex: seriesIndex,
+      index: dataIndex,
+    } = tooltipModel.dataPoints[0];
+    const { cjsLookup, data, series } = standardOptions;
+    const index = cjsLookup[seriesIndex][dataIndex];
+    const currSeries = series[seriesIndex];
     const record = data[index];
     // BUILD CANONICAL SERIES
-    const newSeries = {
-      label: currSeries.label,
-      meta: currSeries.meta,
-      style: {
-        color: tooltipModel.labelColors[0].borderColor,
-      },
-    };
-    const HandleTooltip = standardOptions.tooltip;
+
+    standardOptions.series.forEach((s, i) => {
+      Data.set(s, 'style.color', tooltipModel.labelColors[i].borderColor);
+    });
+    const HandleTooltip = standardOptions.tip;
 
     return (
-      <div className={[classes, ...alignments].join(' ')} style={inlineStyle}>
+      <div
+        className={[classes.tooltip, ...alignments].join(' ')}
+        style={inlineStyle}>
         <HandleTooltip
           {...{
             record,
             index,
             data,
-            series: newSeries,
+            series: currSeries,
             isLocked: tooltipIsLocked,
             seri: series,
           }}
@@ -123,8 +125,10 @@ class CustomTooltip extends React.Component {
 
 CustomTooltip.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  HandleTooltip: PropTypes.func.isRequired,
-  series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  standardOptions: PropTypes.shape({
+    tip: PropTypes.func.isRequired,
+    series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
   tooltipModel: PropTypes.shape({}),
   tooltipIsLocked: PropTypes.bool.isRequired,
   canvas: PropTypes.shape({}),
@@ -148,12 +152,12 @@ function withTooltip() {
       constructor(props, ...moreArgs) {
         const { standardOptions, options, ...moreProps } = props;
 
-        super(moreProps, ...moreArgs);
+        super({ options, ...moreProps }, ...moreArgs);
 
         const self = this;
         const newOptions = { tooltips: {}, ...options };
 
-        if (standardOptions.tooltip) {
+        if (standardOptions.tip) {
           newOptions.onClick = this.handleChartClick;
           newOptions.tooltips.custom = function custom(tooltipModel) {
             if (!self.state.tooltipIsLocked) {
@@ -181,7 +185,7 @@ function withTooltip() {
       render() {
         const { standardOptions, options, ...rest } = this.state;
 
-        if (standardOptions.tooltip) {
+        if (standardOptions.tip) {
           return (
             <div style={{ position: 'relative' }}>
               <WrappedChart {...{ ...this.props, standardOptions, options }} />

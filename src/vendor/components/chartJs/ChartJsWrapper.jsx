@@ -36,7 +36,6 @@ const styles = {
 const ToolTipChart = withTooltip()(Chart);
 const ChartJsWrapper = ({
   classes,
-  data,
   isLoading,
   standardOptions, // SEE chartSchema.md
   title,
@@ -64,7 +63,9 @@ const ChartJsWrapper = ({
       );
     }
 
-    if (!data) {
+    const { cjsData } = standardOptions;
+
+    if (!cjsData) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
@@ -77,7 +78,7 @@ const ChartJsWrapper = ({
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod()
     );
-    const allOldData = data.datasets.every(dataset => {
+    const allOldData = cjsData.datasets.every(dataset => {
       const latestDataDate = new Date(
         selectFrom(dataset.data)
           .select('x')
@@ -90,9 +91,9 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
-    const cjsOptions = cjsOptionsGenerator(standardOptions, data);
-    const cjsData = {
-      datasets: data.datasets.map((ds, i) => {
+    const cjsOptions = cjsOptionsGenerator(standardOptions, cjsData);
+    const styledData = {
+      datasets: cjsData.datasets.map((ds, i) => {
         const { style = {}, data, label } = ds;
         const type = style.type || defaultStyle.type;
 
@@ -117,7 +118,7 @@ const ChartJsWrapper = ({
             {title && <h2 className={classes.title}>{title}</h2>}
             <ToolTipChart
               type="line"
-              data={cjsData}
+              data={styledData}
               height={chartHeight}
               options={cjsOptions}
               standardOptions={standardOptions}
@@ -133,7 +134,7 @@ const ChartJsWrapper = ({
         <div style={{ position: 'relative' }}>
           <ToolTipChart
             type="line"
-            data={cjsData}
+            data={styledData}
             height={chartHeight}
             options={cjsOptions}
             standardOptions={standardOptions}
@@ -151,24 +152,25 @@ ChartJsWrapper.propTypes = {
     'axis.y.label': PropTypes.string,
     title: PropTypes.string,
     ticksCallback: PropTypes.func,
-  }),
-  data: PropTypes.shape({
-    datasets: PropTypes.arrayOf(
-      PropTypes.shape({
-        // There can be more properties than data and value,
-        // however, we mainly care about these as a minimum requirement
-        data: PropTypes.arrayOf(
-          PropTypes.shape({
-            x: PropTypes.oneOfType([
-              PropTypes.string,
-              PropTypes.instanceOf(Date),
-            ]),
-            y: PropTypes.number,
-          })
-        ),
-        label: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    cjsData: PropTypes.shape({
+      datasets: PropTypes.arrayOf(
+        PropTypes.shape({
+          // There can be more properties than data and value,
+          // however, we mainly care about these as a minimum requirement
+          data: PropTypes.arrayOf(
+            PropTypes.shape({
+              x: PropTypes.oneOfType([
+                PropTypes.number,
+                PropTypes.string,
+                PropTypes.instanceOf(Date),
+              ]),
+              y: PropTypes.number,
+            })
+          ),
+          label: PropTypes.string.isRequired,
+        })
+      ).isRequired,
+    }),
   }),
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   isLoading: PropTypes.bool,
@@ -177,8 +179,6 @@ ChartJsWrapper.propTypes = {
 };
 
 ChartJsWrapper.defaultProps = {
-  data: undefined,
-  standardOptions: undefined,
   title: '',
   chartHeight: 80,
   spinnerSize: '100%',

@@ -178,7 +178,7 @@ export default class QuantumIndex extends React.Component {
               key={`page_${site}_${bits}`}
               title={site}
               series={selectFrom(series)
-                .sortBy(['ordering'])
+                .sort(['ordering'])
                 .select({ label: 'browser', filter: 'filter' })}
             />
           ))

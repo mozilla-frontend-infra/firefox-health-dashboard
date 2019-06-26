@@ -29,7 +29,7 @@ const tipStyles = {
     color: '#ccc',
   },
 };
-const tooltip = withStyles(tipStyles)(
+const tip = withStyles(tipStyles)(
   ({ record, index, data, series, classes, isLocked }) => {
     const higherOrLower = series.meta.lowerIsBetter
       ? 'lower is better'
@@ -52,8 +52,11 @@ const tooltip = withStyles(tipStyles)(
       <div>
         <div className={classes.test}>{record.x}</div>
         <div>
-          <span style={series.style.color} className={classes.tooltipKey} />
-          {series.label}: {round(record.y, { places: 3 })}
+          <span
+            style={{ backgroundColor: series.style.color }}
+            className={classes.tooltipKey}
+          />
+          {series.label}: {round(record.value, { places: 3 })}
         </div>
         <div>
           {record.y} ({higherOrLower})
@@ -88,34 +91,65 @@ const tooltip = withStyles(tipStyles)(
   }
 );
 const generateStandardOptions = (series, timeDomain) => {
-  const { lowerIsBetter, unit } = series[0].sources[0].meta;
+  const { lowerIsBetter, unit } = series[0].meta;
   const data = selectFrom(series)
-    .map(s =>
-      selectFrom(s.data).map(d => {
-        // eslint-disable-next-line no-param-reassign
-        d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
+    .enumerate()
+    .map((s, si) =>
+      selectFrom(s.data)
+        .sort('push_timestamp')
+        .enumerate()
+        .map((d, di) => {
+          // eslint-disable-next-line no-param-reassign
+          d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
+          // eslint-disable-next-line no-param-reassign
+          d.seriesIndex = si;
+          // eslint-disable-next-line no-param-reassign
+          d.dataIndex = di;
 
-        return d;
-      })
+          return d;
+        })
+        .toArray()
     )
     .flatten()
-    .sortBy('push_timestamp')
+    .sort('push_timestamp')
     .toArray();
+  // MAP FROM cjs DATASET INDEXES TO data INDEX
+  const cjsLookup = series.map(s => s.data.map(() => 0));
+
+  data.forEach((d, i) => {
+    cjsLookup[d.seriesIndex][d.dataIndex] = i;
+  });
+
+  const cjsData = {
+    datasets: series.map(({ data, ...row }) => ({
+      ...row,
+      /* eslint-disable-next-line camelcase */
+      data: data.map(({ push_timestamp, value }) => ({
+        /* eslint-disable-next-line camelcase */
+        x: new Date(push_timestamp * 1000),
+        y: value,
+      })),
+    })),
+  };
 
   return {
-    tooltip,
-    series: selectFrom(series).map(s => ({
-      ...s,
-      select: [
-        { value: s.label, axis: 'y' },
-        { value: 'push_timestamp', axis: 'x' },
-      ],
-    })),
+    tip,
+    series: selectFrom(series)
+      .map(s => ({
+        ...s,
+        select: [
+          { value: s.label, axis: 'y' },
+          { value: 'push_timestamp', axis: 'x' },
+        ],
+      }))
+      .toArray(),
     data,
     'axis.y.label': unit,
     'axis.y.reverse': !lowerIsBetter,
     'axis.x.min': timeDomain.min,
     'axis.x.max': timeDomain.max,
+    cjsData,
+    cjsLookup,
   };
 };
 
@@ -141,7 +175,7 @@ const perfherderFormatter = (series, timeDomain) => {
       ...row,
       // choose meta from the source with most recent data
       meta: selectFrom(sources)
-        .sortBy(s =>
+        .sort(s =>
           selectFrom(s.data)
             .select('push_timestamp')
             .max()
@@ -151,24 +185,10 @@ const perfherderFormatter = (series, timeDomain) => {
       data: selectFrom(sources)
         .select('data')
         .flatten()
-        .sortBy('push_timestamp')
+        .sort('push_timestamp')
         .toArray(),
     }))
     .toArray();
-  const cjsData = {
-    datasets: selectFrom(combinedSeries)
-      .enumerate()
-      .map(({ data, ...row }) => ({
-        ...row,
-        /* eslint-disable-next-line camelcase */
-        data: data.map(({ push_timestamp, value }) => ({
-          /* eslint-disable-next-line camelcase */
-          x: new Date(push_timestamp * 1000),
-          y: value,
-        })),
-      }))
-      .toArray(),
-  };
 
   return {
     standardOptions: generateStandardOptions(combinedSeries, timeDomain),
@@ -176,7 +196,6 @@ const perfherderFormatter = (series, timeDomain) => {
       path: [TREEHERDER, 'perf.html#/graphs'],
       query: jointParam,
     }),
-    cjsData,
   };
 };
 
@@ -228,8 +247,9 @@ class PerfherderGraphContainer extends React.Component {
     }
 
     this.state = {
-      data: null,
-      isLoading: false,
+      standardOptions: null,
+      jointUrl: null,
+      isLoading: true,
     };
   }
 
@@ -241,17 +261,15 @@ class PerfherderGraphContainer extends React.Component {
 
     try {
       const config = await getPerfherderData(series, timeDomain);
+      const { standardOptions } = config;
 
-      Data.setDefault(config.standardOptions, style);
+      Data.setDefault(standardOptions, style);
 
       if (exists(reference) && exists(reference.value)) {
         const { label, value } = reference;
-        const x = selectFrom(config.data.datasets)
-          .select('data')
-          .flatten()
-          .select('x');
+        const x = selectFrom(standardOptions.data).select('push_timestamp');
 
-        config.data.datasets.push({
+        standardOptions.cjsData.datasets.push({
           label,
           data: [{ x: x.min(), y: value }, { x: x.max(), y: value }],
           style: {
@@ -275,7 +293,7 @@ class PerfherderGraphContainer extends React.Component {
 
   render() {
     const { title } = this.props;
-    const { data, jointUrl, standardOptions, isLoading } = this.state;
+    const { jointUrl, standardOptions, isLoading } = this.state;
 
     return (
       <div key={title} style={{ position: 'relative' }}>
@@ -296,7 +314,6 @@ class PerfherderGraphContainer extends React.Component {
           }
           {...{
             style: { type: 'scatter' },
-            data,
             isLoading,
             standardOptions,
           }}

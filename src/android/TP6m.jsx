@@ -150,21 +150,24 @@ class TP6M extends React.Component {
                   title={`Geomean of ${subtitle}`}
                   data={summaryData}
                   height={200}
-                  options={{
-                    tip: (point, series) => (
+                  standardOptions={{
+                    tip: ({ record, series }) => (
                       <div>
                         <div className={classes.title}>
-                          {Date(point.x).format('yyyy-MM-dd')}
+                          {Date(record.x).format('yyyy-MM-dd')}
                         </div>
                         <div>
                           <span
-                            style={series.style}
+                            style={{ backgroundColor: series.style.color }}
                             className={classes.tooltipKey}
                           />
-                          {round(point.y, { places: 2 })}
+                          {round(record.y, { places: 2 })}
                         </div>
                       </div>
                     ),
+                    series: [
+                      { label: 'Geomean', select: [{ value: 'y', axis: 'y' }] },
+                    ],
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,
                   }}
@@ -200,7 +203,7 @@ class TP6M extends React.Component {
                       };
                     })()}
                     series={selectFrom(series)
-                      .sortBy(['ordering'])
+                      .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })
                       .toArray()}
                   />

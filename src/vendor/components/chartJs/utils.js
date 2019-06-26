@@ -14,7 +14,7 @@ return maximum for most of the values
 const mostlyMax = values => {
   const sorted = selectFrom(values)
     .exists()
-    .sortBy()
+    .sort()
     .toArray();
   const num = sorted.length - 1;
   const p50 = sorted[Math.ceil(num * 0.5)];
@@ -39,8 +39,9 @@ const niceCeiling = value => {
   return nice * d;
 };
 
-const cjsOptionsGenerator = (standardOptions = {}, data) => {
+const cjsOptionsGenerator = standardOptions => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
+  const { cjsData } = standardOptions;
   const options = Data.fromConfig(standardOptions);
   const { title, tooltips, ticksCallback, onClick } = options;
   const xAxes = (() => {
@@ -77,7 +78,7 @@ const cjsOptionsGenerator = (standardOptions = {}, data) => {
 
     const niceMax = niceCeiling(
       mostlyMax(
-        selectFrom(data.datasets)
+        selectFrom(cjsData.datasets)
           .select('data')
           .flatten()
           .select('y')

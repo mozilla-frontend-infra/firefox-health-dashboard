@@ -40,7 +40,7 @@ function preSelector(columnName) {
   if (isArray(columnName)) {
     // select many columns
     return internalFrom(columnName)
-      .sortBy()
+      .sort()
       .map(name => {
         if (isString(name)) {
           return [[row => Data.get(row, name), name]];
@@ -53,7 +53,7 @@ function preSelector(columnName) {
 
   if (typeof columnName === 'object') {
     return internalToPairs(columnName)
-      .sortBy((selectors, name) => name)
+      .sort((selectors, name) => name)
       .map((selector, name) =>
         preSelector(selector).map(([s, n]) => [s, concatField(name, n)])
       )
@@ -406,7 +406,7 @@ class ArrayWrapper {
     return new Cube(normalizedEdges, matrix);
   }
 
-  sortBy(selectors) {
+  sort(selectors) {
     if (missing(selectors)) {
       const simpleSorted = lodashSortBy(Array.from(this.argsGen()), [
         ([arg]) => arg,
