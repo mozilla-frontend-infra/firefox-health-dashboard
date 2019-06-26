@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge/Badge';
-import generateBugzillaUrls from '../../utils/bugzilla/generateBugzillaUrls';
+import generateBugzillaUrls from '../utils/bugzilla/generateBugzillaUrls';
 
 const styles = {
   root: {

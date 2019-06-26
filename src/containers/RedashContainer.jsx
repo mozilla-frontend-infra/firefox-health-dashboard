@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
-import { fetchJson } from '../../vendor/requests';
-import { withErrorBoundary } from '../../vendor/errors';
-import { selectFrom } from '../../vendor/vectors';
-import { LinkIcon } from '../../utils/icons';
+import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
+import { fetchJson } from '../vendor/requests';
+import { withErrorBoundary } from '../vendor/errors';
+import { selectFrom } from '../vendor/vectors';
+import { LinkIcon } from '../utils/icons';
 
 const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
   // Separate data points into percentile buckets

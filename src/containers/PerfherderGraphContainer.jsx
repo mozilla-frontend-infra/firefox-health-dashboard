@@ -1,18 +1,18 @@
 /* eslint-disable react/no-multi-comp */
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { LinkIcon } from '../../utils/icons';
-import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
-import { Data } from '../../vendor/datas';
-import { withErrorBoundary } from '../../vendor/errors';
-import { exists, missing, sleep } from '../../vendor/utils';
-import { URL } from '../../vendor/requests';
-import { Date } from '../../vendor/dates';
-import { getData, TREEHERDER } from '../../vendor/perfherder';
-import { ArrayWrapper, selectFrom } from '../../vendor/vectors';
-import { Log } from '../../vendor/logs';
-import { round } from '../../vendor/math';
+import { LinkIcon } from '../utils/icons';
+import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
+import { Data } from '../vendor/datas';
+import { withErrorBoundary } from '../vendor/errors';
+import { exists, missing, sleep } from '../vendor/utils';
+import { URL } from '../vendor/requests';
+import { Date } from '../vendor/dates';
+import { getData, TREEHERDER } from '../vendor/perfherder';
+import { ArrayWrapper, selectFrom } from '../vendor/vectors';
+import { Log } from '../vendor/logs';
+import { round } from '../vendor/math';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -218,7 +218,7 @@ const styles = () => ({
   },
 });
 
-class PerfherderGraphContainer extends Component {
+class PerfherderGraphContainer extends React.Component {
   constructor(props) {
     super(props);
     const { timeDomain } = this.props;
