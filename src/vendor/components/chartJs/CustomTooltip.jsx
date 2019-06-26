@@ -94,7 +94,16 @@ class CustomTooltip extends React.Component {
       index: dataIndex,
     } = tooltipModel.dataPoints[0];
     const { cjsLookup, data, series } = standardOptions;
-    const index = cjsLookup[seriesIndex][dataIndex];
+    let index = null;
+
+    try {
+      index = cjsLookup[seriesIndex][dataIndex];
+    } catch (e) {
+      // we allow additional series to be inserted
+      // but, we also want to ensure the lookup does not crash
+      return null;
+    }
+
     const currSeries = series[seriesIndex];
     const record = data[index];
     // BUILD CANONICAL SERIES
@@ -159,6 +168,7 @@ function withTooltip() {
 
         if (standardOptions.tip) {
           newOptions.onClick = this.handleChartClick;
+          newOptions.tooltips.enabled = false;
           newOptions.tooltips.custom = function custom(tooltipModel) {
             if (!self.state.tooltipIsLocked) {
               // eslint-disable-next-line no-underscore-dangle

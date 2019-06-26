@@ -63,9 +63,7 @@ const ChartJsWrapper = ({
       );
     }
 
-    const { cjsData } = standardOptions;
-
-    if (!cjsData) {
+    if (!standardOptions) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
@@ -78,6 +76,7 @@ const ChartJsWrapper = ({
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod()
     );
+    const { cjsData } = standardOptions;
     const allOldData = cjsData.datasets.every(dataset => {
       const latestDataDate = new Date(
         selectFrom(dataset.data)
@@ -131,15 +130,13 @@ const ChartJsWrapper = ({
     return (
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
-        <div style={{ position: 'relative' }}>
-          <ToolTipChart
-            type="line"
-            data={styledData}
-            height={chartHeight}
-            options={cjsOptions}
-            standardOptions={standardOptions}
-          />
-        </div>
+        <ToolTipChart
+          type="line"
+          data={styledData}
+          height={chartHeight}
+          options={cjsOptions}
+          standardOptions={standardOptions}
+        />
       </div>
     );
   })();
@@ -147,35 +144,17 @@ const ChartJsWrapper = ({
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  isLoading: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  chartHeight: PropTypes.number,
+  spinnerSize: PropTypes.string,
   standardOptions: PropTypes.shape({
     reverse: PropTypes.bool,
     'axis.y.label': PropTypes.string,
     title: PropTypes.string,
     ticksCallback: PropTypes.func,
-    cjsData: PropTypes.shape({
-      datasets: PropTypes.arrayOf(
-        PropTypes.shape({
-          // There can be more properties than data and value,
-          // however, we mainly care about these as a minimum requirement
-          data: PropTypes.arrayOf(
-            PropTypes.shape({
-              x: PropTypes.oneOfType([
-                PropTypes.number,
-                PropTypes.string,
-                PropTypes.instanceOf(Date),
-              ]),
-              y: PropTypes.number,
-            })
-          ),
-          label: PropTypes.string.isRequired,
-        })
-      ).isRequired,
-    }),
+    data: PropTypes.arrayOf(PropTypes.shape({})),
   }),
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  isLoading: PropTypes.bool,
-  chartHeight: PropTypes.number,
-  spinnerSize: PropTypes.string,
 };
 
 ChartJsWrapper.defaultProps = {

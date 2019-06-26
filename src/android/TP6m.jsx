@@ -59,53 +59,63 @@ class TP6M extends React.Component {
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
-      this.setState({ summaryData: null, test, platform });
+      this.setState({
+        cjsData: null,
+        cjsLookup: null,
+        data: null,
+        test,
+        platform,
+      });
 
       return;
     }
 
-    const summaryData = {
-      datasets: aggregate
-        .where({ test, platform })
-        .along('platform') // dummy (only one)
-        .map(({ result }) => ({
-          label: selectFrom(PLATFORMS)
-            .where({ platform })
-            .first().label,
-          data: result
+    const geomean = aggregate
+      .where({ test, platform })
+      .along('platform') // dummy (only one)
+      .map(({ result }) => ({
+        label: selectFrom(PLATFORMS)
+          .where({ platform })
+          .first().label,
+        data: result
+          .along('pushDate')
+          .map(point => ({
+            x: point.pushDate.getValue(),
+            y: point.getValue(),
+          }))
+          .toArray(),
+      }))
+      .toArray();
+    // THIS IS TERRIBLE { cjsData, cjsLookup, data } IS USED TO DRIVE THE TOOLTIP
+    const data = geomean[0].data;
+    const cjsLookup = geomean.map(s => s.data.map((_, i) => i));
+    const cjsData = {
+      datasets: [
+        ...geomean,
+        exists(referenceValue) && {
+          label: TARGET_NAME,
+          style: {
+            type: 'line',
+            backgroundColor: 'gray',
+            borderColor: 'gray',
+            fill: false,
+            pointRadius: '0',
+            pointHoverBackgroundColor: 'gray',
+            lineTension: 0,
+          },
+          data: aggregate
+            .where({ test, platform })
             .along('pushDate')
-            .map(point => ({
-              x: point.pushDate.getValue(),
-              y: point.getValue(),
+            .map(({ pushDate, ref }) => ({
+              x: pushDate.getValue(),
+              y: ref.getValue(),
             }))
             .toArray(),
-        }))
-        .append(
-          exists(referenceValue) && {
-            label: TARGET_NAME,
-            style: {
-              type: 'line',
-              backgroundColor: 'gray',
-              borderColor: 'gray',
-              fill: false,
-              pointRadius: '0',
-              pointHoverBackgroundColor: 'gray',
-              lineTension: 0,
-            },
-            data: aggregate
-              .where({ test, platform })
-              .along('pushDate')
-              .map(({ pushDate, ref }) => ({
-                x: pushDate.getValue(),
-                y: ref.getValue(),
-              }))
-              .toArray(),
-          }
-        )
-        .toArray(),
+        },
+      ],
     };
 
-    this.setState({ summaryData, test, platform });
+    this.setState({ cjsData, cjsLookup, data, test, platform });
   }
 
   async componentDidMount() {
@@ -127,12 +137,15 @@ class TP6M extends React.Component {
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    let { summaryData } = this.state;
+    const { cjsData, cjsLookup, data } = (() => {
+      if (test !== this.state.test || platform !== this.state.platform) {
+        return {};
+      }
 
-    if (test !== this.state.test || platform !== this.state.platform) {
-      summaryData = null;
-    }
+      const { cjsData, cjsLookup, data } = this.state;
 
+      return { cjsData, cjsLookup, data };
+    })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
       .first().label;
@@ -145,16 +158,18 @@ class TP6M extends React.Component {
               {navigation}
             </Grid>
             <Grid item xs={6} className={classes.chart}>
-              {summaryData && (
+              {cjsData && (
                 <ChartJSWrapper
                   title={`Geomean of ${subtitle}`}
-                  data={summaryData}
                   height={200}
                   standardOptions={{
+                    cjsData,
+                    cjsLookup,
+                    data,
                     tip: ({ record, series }) => (
                       <div>
                         <div className={classes.title}>
-                          {Date(record.x).format('yyyy-MM-dd')}
+                          {new Date(record.x).format('yyyy-MM-dd')}
                         </div>
                         <div>
                           <span

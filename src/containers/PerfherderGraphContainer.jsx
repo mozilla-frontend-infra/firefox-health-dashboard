@@ -267,6 +267,13 @@ class PerfherderGraphContainer extends React.Component {
 
       if (exists(reference) && exists(reference.value)) {
         const { label, value } = reference;
+
+        standardOptions.series.push({
+          label,
+          type: 'line',
+          select: { value, axis: 'y' },
+          style: { color: 'gray' },
+        });
         const x = selectFrom(standardOptions.data).select('push_timestamp');
 
         standardOptions.cjsData.datasets.push({

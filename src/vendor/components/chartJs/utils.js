@@ -1,11 +1,12 @@
 import SETTINGS from '../../../settings';
 import { isNumeric, missing, toArray } from '../../utils';
 import { Data, isData } from '../../datas';
-import { first, selectFrom } from '../../vectors';
+import { first, selectFrom, selector } from '../../vectors';
 import { max, min } from '../../math';
 import Color from '../../colors';
 import { Date } from '../../dates';
 import { Template } from '../../Template';
+import { Log } from '../../logs';
 
 const invisible = 'rgba(0,0,0,0)';
 /*
@@ -41,8 +42,40 @@ const niceCeiling = value => {
 
 const cjsOptionsGenerator = standardOptions => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
-  const { cjsData } = standardOptions;
   const options = Data.fromConfig(standardOptions);
+  const xAxis = selectFrom(options.series)
+    .where({ 'select.axis': 'x' })
+    .first();
+
+  if (missing(xAxis)) {
+    Log.error(
+      "Expecting chart definition to have series.select.axis=='x'; pointing to the X axis"
+    );
+  }
+
+  const x = xAxis.select;
+  const datasets = options.series.map(s => {
+    const { select } = s.select;
+
+    return {
+      data: selectFrom(options.data)
+        .select({
+          [select.axis]: select.value,
+          [x.axis]: x.value,
+        })
+        .toArray(),
+      style: {
+        type: s.type,
+        backgroundColor: s.style.color,
+        borderColor: s.style.color,
+        fill: false,
+        pointRadius: '0',
+        pointHoverRadius: '0',
+        pointHoverBackgroundColor: s.style.color,
+        lineTension: 0,
+      },
+    };
+  });
   const { title, tooltips, ticksCallback, onClick } = options;
   const xAxes = (() => {
     if (Data.get(options, 'axis.x')) {
@@ -78,7 +111,7 @@ const cjsOptionsGenerator = standardOptions => {
 
     const niceMax = niceCeiling(
       mostlyMax(
-        selectFrom(cjsData.datasets)
+        selectFrom(datasets)
           .select('data')
           .flatten()
           .select('y')
@@ -138,6 +171,7 @@ const cjsOptionsGenerator = standardOptions => {
       xAxes,
       yAxes,
     },
+    datasets,
   };
 
   if (ticksCallback) {
@@ -210,5 +244,6 @@ const generateDatasetStyle = (index, type = 'line') => {
 
   return generateLineChartStyle(colour);
 };
+
 
 export { cjsOptionsGenerator, generateDatasetStyle };
