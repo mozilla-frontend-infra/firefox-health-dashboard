@@ -27,14 +27,14 @@ describe('vectors', () => {
   it('select rename', () => {
     expect(
       selectFrom(data)
-        .select({ x: 'a', y: 'd' })
+        .select({ x: 'a', y: 'd', z: 20 })
         .toArray()
     ).toEqual([
-      { x: 1, y: null },
-      { x: { b: 0, c: 1 }, y: 3 },
-      { x: null, y: null },
-      { x: null, y: 3 },
-      { x: null, y: null },
+      { x: 1, y: null, z: 20 },
+      { x: { b: 0, c: 1 }, y: 3, z: 20 },
+      { x: null, y: null, z: 20 },
+      { x: null, y: 3, z: 20 },
+      { x: null, y: null, z: 20 },
     ]);
   });
 

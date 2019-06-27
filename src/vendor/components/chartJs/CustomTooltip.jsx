@@ -61,6 +61,7 @@ const styles = {
       '--trans-y': 'calc(-100% - var(--tip-size))',
       '&::before': { top: '100%', borderTopColor: 'var(--bg-color)' },
     },
+    display: 'inline-table',
   },
 };
 
@@ -89,28 +90,10 @@ class CustomTooltip extends React.Component {
       // eslint-disable-next-line no-underscore-dangle
       fontSize: `${tooltipModel.bodyFontSize}px`,
     };
-    const {
-      datasetIndex: seriesIndex,
-      index: dataIndex,
-    } = tooltipModel.dataPoints[0];
-    const { cjsLookup, data, series } = standardOptions;
-    let index = null;
-
-    try {
-      index = cjsLookup[seriesIndex][dataIndex];
-    } catch (e) {
-      // we allow additional series to be inserted
-      // but, we also want to ensure the lookup does not crash
-      return null;
-    }
-
+    const { datasetIndex: seriesIndex, index } = tooltipModel.dataPoints[0];
+    const { data, series } = standardOptions;
     const currSeries = series[seriesIndex];
     const record = data[index];
-    // BUILD CANONICAL SERIES
-
-    standardOptions.series.forEach((s, i) => {
-      Data.set(s, 'style.color', tooltipModel.labelColors[i].borderColor);
-    });
     const HandleTooltip = standardOptions.tip;
 
     return (
@@ -125,6 +108,7 @@ class CustomTooltip extends React.Component {
             series: currSeries,
             isLocked: tooltipIsLocked,
             seri: series,
+            standardOptions,
           }}
         />
       </div>
@@ -159,17 +143,15 @@ function withTooltip() {
   return WrappedChart => {
     class Output extends React.Component {
       constructor(props, ...moreArgs) {
-        const { standardOptions, options, ...moreProps } = props;
-
-        super({ options, ...moreProps }, ...moreArgs);
-
+        super(props, ...moreArgs);
+        const { standardOptions, ...moreProps } = props;
         const self = this;
-        const newOptions = { tooltips: {}, ...options };
+        const moreOptions = { tooltips: {} };
 
         if (standardOptions.tip) {
-          newOptions.onClick = this.handleChartClick;
-          newOptions.tooltips.enabled = false;
-          newOptions.tooltips.custom = function custom(tooltipModel) {
+          moreOptions.onClick = this.handleChartClick;
+          moreOptions.tooltips.enabled = false;
+          moreOptions.tooltips.custom = function custom(tooltipModel) {
             if (!self.state.tooltipIsLocked) {
               // eslint-disable-next-line no-underscore-dangle
               self.setState({ tooltipModel, canvas: this._chart.canvas });
@@ -178,7 +160,8 @@ function withTooltip() {
         }
 
         this.state = {
-          options: newOptions,
+          moreProps,
+          moreOptions,
           standardOptions,
           tooltipModel: null,
           tooltipIsLocked: false,
@@ -193,18 +176,20 @@ function withTooltip() {
       };
 
       render() {
-        const { standardOptions, options, ...rest } = this.state;
+        const { standardOptions, moreProps, moreOptions, ...rest } = this.state;
 
         if (standardOptions.tip) {
           return (
             <div style={{ position: 'relative' }}>
-              <WrappedChart {...{ ...this.props, standardOptions, options }} />
+              <WrappedChart
+                {...Data.setDefault(moreProps, { options: moreOptions })}
+              />
               <StyledCustomTooltip {...{ standardOptions, ...rest }} />
             </div>
           );
         }
 
-        return <WrappedChart {...this.props} />;
+        return <WrappedChart {...moreProps} />;
       }
     }
 

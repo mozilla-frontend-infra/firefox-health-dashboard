@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-restricted-syntax */
 import {
   exists,
   first,
@@ -7,6 +8,8 @@ import {
   toArray,
   isArray,
   isFunction,
+  splitField,
+  isInteger,
 } from '../utils';
 import { Data, isData } from '../datas';
 import { Date } from '../dates';
@@ -19,7 +22,61 @@ const defineFunction = expr => {
   }
 
   if (isString(expr)) {
-    return row => Data.get(row, expr);
+    const pathArray = splitField(expr);
+
+    if (pathArray.length === 0) {
+      return row => row;
+    }
+
+    if (pathArray.length === 1) {
+      const step = pathArray[0];
+
+      return row => {
+        if (isArray(row)) {
+          if (step === 'length') {
+            return row.length;
+          }
+
+          if (isInteger(step)) {
+            return row[step];
+          }
+
+          if (isArray(row)) {
+            return row.map(o => (isData(o) ? o[step] : null));
+          }
+        } else if (isData(row)) {
+          return row[step];
+        } else {
+          return null;
+        }
+      };
+    }
+
+    return row => {
+      let output = row;
+
+      for (const step of pathArray) {
+        if (isArray(output)) {
+          if (step === 'length') {
+            output = output.length;
+          } else if (isInteger(step)) {
+            output = output[step];
+          } else if (isArray(output)) {
+            output = output.map(o => (isData(o) ? o[step] : null));
+          }
+        } else if (isData(output)) {
+          output = output[step];
+        } else {
+          return null;
+        }
+
+        if (missing(output)) {
+          return null;
+        }
+      }
+
+      return output;
+    };
   }
 
   if (isData(expr)) {

@@ -32,6 +32,7 @@ import Edge from './jx/Edge';
 const DEBUG = false;
 let internalFrom = null;
 let internalToPairs = null;
+let internalLeaves = null;
 const getI = i => m => m[i];
 
 function preSelector(columnName) {
@@ -41,28 +42,28 @@ function preSelector(columnName) {
     // select many columns
     return internalFrom(columnName)
       .sort()
-      .map(name => {
-        if (isString(name)) {
-          return [[row => Data.get(row, name), name]];
+      .map(select => {
+        if (isString(select)) {
+          const selector = jx(select);
+
+          return [[selector, select]];
         }
 
-        return preSelector(name).map(([s, n]) => [s, concatField(name, n)]);
+        return preSelector(select);
       })
       .flatten();
   }
 
-  if (typeof columnName === 'object') {
-    return internalToPairs(columnName)
-      .sort((selectors, name) => name)
-      .map((selector, name) =>
-        preSelector(selector).map(([s, n]) => [s, concatField(name, n)])
+  if (isData(columnName)) {
+    return internalLeaves(columnName)
+      .sort((selector, path) => path)
+      .map((selector, path) =>
+        preSelector(selector).map(([s, n]) => [s, concatField(path, n)])
       )
       .flatten();
   }
 
-  if (isString(columnName)) {
-    return [[row => Data.get(row, columnName), '.']];
-  }
+  return [[jx(columnName), '.']];
 }
 
 function selector(columnName) {
@@ -87,7 +88,7 @@ function selector(columnName) {
   }
 
   if (isString(columnName)) {
-    return row => Data.get(row, columnName);
+    return jx(columnName);
   }
 
   return columnName;
@@ -632,9 +633,10 @@ class ArrayWrapper {
     // Return an object indexed on `column`
     // We assume the key is unique
     const output = {};
+    const selector = jx(column);
 
     for (const [row] of this.argslist) {
-      const key = Data.get(row, column);
+      const key = selector(row);
 
       if (!(key in output)) {
         output[key] = row;
@@ -733,6 +735,8 @@ function leaves(obj, formal = true) {
   return new ArrayWrapper(() => leafGen(obj, '.'));
 }
 
+internalLeaves = leaves;
+
 function length(list) {
   // return length of this list
   if (list instanceof ArrayWrapper) {
@@ -776,8 +780,17 @@ extendWrapper({
 });
 
 // ASSIGN USEFUL FUNCTIONS TO Data
-Data.fromConfig = obj => leaves(obj, false).fromLeaves();
+Data.fromConfig = obj => internalLeaves(obj, false).fromLeaves();
 Data.toPairs = toPairs;
 Data.selectFrom = selectFrom;
 
-export { selectFrom, toPairs, leaves, first, last, length, ArrayWrapper };
+export {
+  selectFrom,
+  toPairs,
+  leaves,
+  first,
+  last,
+  length,
+  ArrayWrapper,
+  selector,
+};

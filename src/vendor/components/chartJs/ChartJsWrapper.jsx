@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import { generateDatasetStyle, cjsOptionsGenerator } from './utils';
+import { cjsGenerator } from './utils';
 import { Data } from '../../datas';
 import { Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
@@ -34,17 +34,22 @@ const styles = {
   },
 };
 const ToolTipChart = withTooltip()(Chart);
-const ChartJsWrapper = ({
-  classes,
-  isLoading,
-  standardOptions, // SEE chartSchema.md
-  title,
-  style = {}, // SEE chartSchema.md
-  chartHeight,
-  spinnerSize,
-}) =>
-  (() => {
-    const defaultStyle = style;
+
+class ChartJsWrapper extends React.Component {
+  state = {};
+
+  componentDidUpdate(prevProps) {
+    const { standardOptions } = this.props;
+
+    if (standardOptions && prevProps.standardOptions !== standardOptions) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(cjsGenerator(this.props.standardOptions));
+    }
+  }
+
+  render() {
+    const { classes, isLoading, title, chartHeight, spinnerSize } = this.props;
+    const { cjsOptions, standardOptions } = this.state;
 
     if (isLoading) {
       return (
@@ -76,9 +81,8 @@ const ChartJsWrapper = ({
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod()
     );
-    const { cjsData } = standardOptions;
-    const allOldData = cjsData.datasets.every(dataset => {
-      const latestDataDate = new Date(
+    const allOldData = cjsOptions.data.datasets.every(dataset => {
+      const latestDataDate = Date.newInstance(
         selectFrom(dataset.data)
           .select('x')
           .max()
@@ -90,21 +94,6 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
-    const cjsOptions = cjsOptionsGenerator(standardOptions, cjsData);
-    const styledData = {
-      datasets: cjsData.datasets.map((ds, i) => {
-        const { style = {}, data, label } = ds;
-        const type = style.type || defaultStyle.type;
-
-        return {
-          ...generateDatasetStyle(i, type),
-          ...defaultStyle,
-          ...style,
-          data,
-          label,
-        };
-      }),
-    };
 
     if (allOldData) {
       const error = new Error(
@@ -116,11 +105,9 @@ const ChartJsWrapper = ({
           <ErrorMessage error={error}>
             {title && <h2 className={classes.title}>{title}</h2>}
             <ToolTipChart
-              type="line"
-              data={styledData}
               height={chartHeight}
-              options={cjsOptions}
               standardOptions={standardOptions}
+              {...cjsOptions}
             />
           </ErrorMessage>
         </div>
@@ -131,15 +118,14 @@ const ChartJsWrapper = ({
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
         <ToolTipChart
-          type="line"
-          data={styledData}
           height={chartHeight}
-          options={cjsOptions}
           standardOptions={standardOptions}
+          {...cjsOptions}
         />
       </div>
     );
-  })();
+  }
+}
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {

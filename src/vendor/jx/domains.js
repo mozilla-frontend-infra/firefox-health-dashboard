@@ -122,12 +122,16 @@ class TimeDomain extends Domain {
   }
 
   /*
-  Return true if `value` is in the domain
+  Return value if `value` is in the domain else return null
    */
   includes(value) {
     const dateValue = Date.newInstance(value).milli();
 
-    return this.min.milli() <= dateValue && dateValue < this.max.milli();
+    if (this.min.milli() <= dateValue && dateValue < this.max.milli()) {
+      return dateValue;
+    }
+
+    return null;
   }
 }
 

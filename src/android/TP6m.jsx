@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { round } from '../vendor/math';
-import { exists, missing } from '../vendor/utils';
+import { missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
   PLATFORMS,
@@ -30,6 +30,60 @@ const styles = {
     padding: '1rem',
   },
 };
+const tipStyles = {
+  below: {
+    color: 'LightGreen',
+  },
+  above: {
+    color: 'Pink',
+  },
+};
+const geoTip = withStyles(tipStyles)(
+  ({ record, series, classes, standardOptions }) => {
+    const referenceValue = selectFrom(standardOptions.series)
+      .where({ label: TARGET_NAME })
+      .first()
+      .selector(record);
+
+    return (
+      <div>
+        <div className={classes.title}>
+          {new Date(record.x).format('yyyy-MM-dd')}
+        </div>
+        <div>
+          <span
+            style={{ backgroundColor: series.style.color }}
+            className={classes.tooltipKey}
+          />
+          {series.label} : {round(record.y, { places: 3 })}
+        </div>
+        <div>
+          {(() => {
+            const diff = record.y - referenceValue;
+
+            if (diff > 0) {
+              return (
+                <span className={classes.above}>
+                  {`${round(diff, {
+                    places: 2,
+                  })}ms above target`}
+                </span>
+              );
+            }
+
+            return (
+              <span className={classes.below}>
+                {`${round(-diff, {
+                  places: 2,
+                })}ms below target`}
+              </span>
+            );
+          })()}
+        </div>
+      </div>
+    );
+  }
+);
 
 class TP6M extends React.Component {
   constructor(props) {
@@ -60,9 +114,8 @@ class TP6M extends React.Component {
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
       this.setState({
-        cjsData: null,
-        cjsLookup: null,
         data: null,
+        referenceValue: null,
         test,
         platform,
       });
@@ -86,36 +139,9 @@ class TP6M extends React.Component {
           .toArray(),
       }))
       .toArray();
-    // THIS IS TERRIBLE { cjsData, cjsLookup, data } IS USED TO DRIVE THE TOOLTIP
-    const data = geomean[0].data;
-    const cjsLookup = geomean.map(s => s.data.map((_, i) => i));
-    const cjsData = {
-      datasets: [
-        ...geomean,
-        exists(referenceValue) && {
-          label: TARGET_NAME,
-          style: {
-            type: 'line',
-            backgroundColor: 'gray',
-            borderColor: 'gray',
-            fill: false,
-            pointRadius: '0',
-            pointHoverBackgroundColor: 'gray',
-            lineTension: 0,
-          },
-          data: aggregate
-            .where({ test, platform })
-            .along('pushDate')
-            .map(({ pushDate, ref }) => ({
-              x: pushDate.getValue(),
-              y: ref.getValue(),
-            }))
-            .toArray(),
-        },
-      ],
-    };
+    const { data } = geomean[0];
 
-    this.setState({ cjsData, cjsLookup, data, test, platform });
+    this.setState({ data, test, platform, referenceValue });
   }
 
   async componentDidMount() {
@@ -137,14 +163,14 @@ class TP6M extends React.Component {
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const { cjsData, cjsLookup, data } = (() => {
+    const { data, referenceValue } = (() => {
       if (test !== this.state.test || platform !== this.state.platform) {
         return {};
       }
 
-      const { cjsData, cjsLookup, data } = this.state;
+      const { data, referenceValue } = this.state;
 
-      return { cjsData, cjsLookup, data };
+      return { data, referenceValue };
     })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
@@ -158,30 +184,21 @@ class TP6M extends React.Component {
               {navigation}
             </Grid>
             <Grid item xs={6} className={classes.chart}>
-              {cjsData && (
+              {data && (
                 <ChartJSWrapper
                   title={`Geomean of ${subtitle}`}
                   height={200}
                   standardOptions={{
-                    cjsData,
-                    cjsLookup,
                     data,
-                    tip: ({ record, series }) => (
-                      <div>
-                        <div className={classes.title}>
-                          {new Date(record.x).format('yyyy-MM-dd')}
-                        </div>
-                        <div>
-                          <span
-                            style={{ backgroundColor: series.style.color }}
-                            className={classes.tooltipKey}
-                          />
-                          {round(record.y, { places: 2 })}
-                        </div>
-                      </div>
-                    ),
+                    tip: geoTip,
                     series: [
-                      { label: 'Geomean', select: [{ value: 'y', axis: 'y' }] },
+                      { label: 'Geomean', select: { value: 'y', axis: 'y' } },
+                      {
+                        label: TARGET_NAME,
+                        select: { value: referenceValue, axis: 'y' },
+                        style: { color: 'gray' },
+                      },
+                      { label: 'Date', select: { value: 'x', axis: 'x' } },
                     ],
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,

@@ -31,6 +31,10 @@ const tipStyles = {
 };
 const tip = withStyles(tipStyles)(
   ({ record, index, data, series, classes, isLocked }) => {
+    if (missing(series.meta)) {
+      return <div> {series.label} </div>;
+    }
+
     const higherOrLower = series.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
@@ -50,7 +54,11 @@ const tip = withStyles(tipStyles)(
 
     return (
       <div>
-        <div className={classes.test}>{record.x}</div>
+        <div className={classes.test}>
+          {`${Date.newInstance(record.push_timestamp).format(
+            'MMM dd, yyyy - HH:mm'
+          )}GMT`}
+        </div>
         <div>
           <span
             style={{ backgroundColor: series.style.color }}
@@ -94,17 +102,13 @@ const generateStandardOptions = (series, timeDomain) => {
   const { lowerIsBetter, unit } = series[0].meta;
   const data = selectFrom(series)
     .enumerate()
-    .map((s, si) =>
+    .map(s =>
       selectFrom(s.data)
         .sort('push_timestamp')
         .enumerate()
-        .map((d, di) => {
+        .map(d => {
           // eslint-disable-next-line no-param-reassign
           d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
-          // eslint-disable-next-line no-param-reassign
-          d.seriesIndex = si;
-          // eslint-disable-next-line no-param-reassign
-          d.dataIndex = di;
 
           return d;
         })
@@ -113,43 +117,25 @@ const generateStandardOptions = (series, timeDomain) => {
     .flatten()
     .sort('push_timestamp')
     .toArray();
-  // MAP FROM cjs DATASET INDEXES TO data INDEX
-  const cjsLookup = series.map(s => s.data.map(() => 0));
-
-  data.forEach((d, i) => {
-    cjsLookup[d.seriesIndex][d.dataIndex] = i;
-  });
-
-  const cjsData = {
-    datasets: series.map(({ data, ...row }) => ({
-      ...row,
-      /* eslint-disable-next-line camelcase */
-      data: data.map(({ push_timestamp, value }) => ({
-        /* eslint-disable-next-line camelcase */
-        x: new Date(push_timestamp * 1000),
-        y: value,
-      })),
-    })),
-  };
 
   return {
     tip,
     series: selectFrom(series)
       .map(s => ({
+        type: 'scatter',
         ...s,
-        select: [
-          { value: s.label, axis: 'y' },
-          { value: 'push_timestamp', axis: 'x' },
-        ],
+        select: { value: s.label, axis: 'y' },
       }))
+      .append({
+        label: 'Push Date',
+        select: { value: 'push_timestamp', axis: 'x' },
+      })
       .toArray(),
     data,
     'axis.y.label': unit,
     'axis.y.reverse': !lowerIsBetter,
     'axis.x.min': timeDomain.min,
     'axis.x.max': timeDomain.max,
-    cjsData,
-    cjsLookup,
   };
 };
 
@@ -266,6 +252,7 @@ class PerfherderGraphContainer extends React.Component {
       Data.setDefault(standardOptions, style);
 
       if (exists(reference) && exists(reference.value)) {
+        // ADD HORIZONTAL LINE
         const { label, value } = reference;
 
         standardOptions.series.push({
@@ -273,22 +260,6 @@ class PerfherderGraphContainer extends React.Component {
           type: 'line',
           select: { value, axis: 'y' },
           style: { color: 'gray' },
-        });
-        const x = selectFrom(standardOptions.data).select('push_timestamp');
-
-        standardOptions.cjsData.datasets.push({
-          label,
-          data: [{ x: x.min(), y: value }, { x: x.max(), y: value }],
-          style: {
-            type: 'line',
-            backgroundColor: 'gray',
-            borderColor: 'gray',
-            fill: false,
-            pointRadius: '0',
-            pointHoverRadius: '0',
-            pointHoverBackgroundColor: 'gray',
-            lineTension: 0,
-          },
         });
       }
 
