@@ -1,33 +1,29 @@
+/* global require */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 
 import unzip from 'lodash/unzip';
 import lodashSortBy from 'lodash/sortBy';
 import {
-  array,
   coalesce,
   concatField,
+  Data,
   exists,
   first,
   isArray,
+  isData,
   isFunction,
   isString,
   last,
   literalField,
   MANY_TYPES,
   missing,
-  toArray,
-  zip,
   reverse,
-  Data,
-  isData,
+  toArray,
 } from './utils';
 import { average, geomean, max, min, sum } from './math';
 import { Log } from './logs';
 import jx from './jx/expressions';
-import { Cube } from './jx/cubes';
-import Matrix from './jx/Matrix';
-import Edge from './jx/Edge';
 
 const DEBUG = false;
 let internalFrom = null;
@@ -331,6 +327,10 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
+  edges(...args){
+    return ArrayWrapper.edges(this, ...args);
+  }
+
   groupBy(columns) {
     // Groupby one, or many, columns by name or by {name: selector} pairs
     // return array of [rows, key, index] tuples
@@ -374,37 +374,6 @@ class ArrayWrapper {
     return new ArrayWrapper(function* outputGen() {
       for (const v of Object.values(output)) yield v;
     });
-  }
-
-  /*
-  Groupby, but with all combinations of all columns grouped.
-  For 2 dimensions this is a pivot table, for more dimensions it is a "cube".
-  Google "sql group by cube" for more information
-   */
-  edges(edges, zero = array) {
-    const normalizedEdges = edges.map(Edge.newInstance);
-    const dims = normalizedEdges.map(e => e.domain.partitions.length);
-    const matrix = new Matrix({ dims, zero });
-
-    this.forEach(row => {
-      const coord = normalizedEdges.map(e =>
-        e.domain.valueToIndex(e.value(row))
-      );
-
-      zip(dims, normalizedEdges).forEach(([d, e], i) => {
-        if (e.domain.type === 'value' && d < e.domain.partitions.length) {
-          // last element of value domain is NULL, ensure it is still last
-          matrix.insertPart(i, d - 1);
-          dims[i] = d + 1;
-        }
-      });
-
-      matrix.add(coord, row);
-    });
-
-    normalizedEdges.forEach(e => e.domain.lock());
-
-    return new Cube(normalizedEdges, matrix);
   }
 
   sort(selectors) {

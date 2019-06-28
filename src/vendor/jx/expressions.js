@@ -10,6 +10,7 @@ import {
   isFunction,
   splitField,
   isInteger,
+  coalesce,
 } from '../utils';
 import { Data, isData } from '../datas';
 import { Date } from '../dates';
@@ -25,7 +26,7 @@ const defineFunction = expr => {
     const pathArray = splitField(expr);
 
     if (pathArray.length === 0) {
-      return row => row;
+      return row => coalesce(row);
     }
 
     if (pathArray.length === 1) {
@@ -45,7 +46,7 @@ const defineFunction = expr => {
             return row.map(o => (isData(o) ? o[step] : null));
           }
         } else if (isData(row)) {
-          return row[step];
+          return coalesce(row[step]);
         } else {
           return null;
         }
@@ -70,9 +71,7 @@ const defineFunction = expr => {
           return null;
         }
 
-        if (missing(output)) {
-          return null;
-        }
+        if (missing(output)) return null;
       }
 
       return output;

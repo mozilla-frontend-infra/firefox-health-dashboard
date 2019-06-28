@@ -385,7 +385,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -490,7 +496,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -543,7 +555,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -596,7 +614,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -649,7 +673,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -715,7 +745,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -768,7 +804,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -821,7 +863,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -874,7 +922,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -927,7 +981,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -980,7 +1040,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -1033,7 +1099,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -1086,7 +1158,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -1139,7 +1217,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -1192,7 +1276,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >
@@ -1245,7 +1335,13 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
       >
-        <div>
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
           <div
             className="ChartJsWrapper-chartContainer-111"
           >

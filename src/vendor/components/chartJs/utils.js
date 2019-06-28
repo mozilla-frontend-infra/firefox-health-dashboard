@@ -46,7 +46,7 @@ const generateLineChartStyle = color => ({
   backgroundColor: color,
   borderColor: color,
   fill: false,
-  pointRadius: '0',
+  pointRadius: 0,
   pointHoverBackgroundColor: 'white',
   lineTension: 0.1,
 });
@@ -233,10 +233,10 @@ const cjsGenerator = standardOptions => {
   }
 
   const cjsOptions = {
+    type: 'line', // dummy value to get legend to show
     options: {
       animation: false,
       legend: {
-        // display: true,
         labels: {
           boxWidth: 10,
           fontSize: 10,
