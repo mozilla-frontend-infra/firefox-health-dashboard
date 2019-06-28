@@ -91,7 +91,13 @@ Convert from standard chart structure to CharJS structure
  */
 const cjsGenerator = standardOptions => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
-  const options = Data.fromConfig(standardOptions);
+  const options = (() => {
+    // DEEP COPY, BUT NOT THE data
+    const { data, ...rest } = standardOptions;
+    const newRest = Data.deepCopy(rest);
+
+    return Data.fromConfig({ data, ...newRest });
+  })();
   const xAxes = (() => {
     if (Data.get(options, 'axis.x')) {
       return toArray(options.axis.x).map(x => {
@@ -228,6 +234,7 @@ const cjsGenerator = standardOptions => {
 
   const cjsOptions = {
     options: {
+      animation: false,
       legend: {
         // display: true,
         labels: {
@@ -244,25 +251,23 @@ const cjsGenerator = standardOptions => {
   };
 
   if (ticksCallback) {
-    cjsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
+    cjsOptions.options.scales.yAxes[0].ticks.callback = ticksCallback;
   }
 
   if (tooltips) {
-    cjsOptions.tooltips = tooltips;
+    cjsOptions.options.tooltips = tooltips;
   }
 
   if (title) {
-    cjsOptions.title = {
+    cjsOptions.options.title = {
       display: true,
       text: title,
     };
   }
 
   if (onClick) {
-    cjsOptions.onClick = onClick;
+    cjsOptions.options.onClick = onClick;
   }
-
-  cjsOptions.animation = false;
 
   return { cjsOptions, standardOptions: options };
 };

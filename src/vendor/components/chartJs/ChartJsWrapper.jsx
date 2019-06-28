@@ -4,7 +4,7 @@ import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { cjsGenerator } from './utils';
-import { Data } from '../../datas';
+import { Data, isEqual } from '../../datas';
 import { Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
@@ -36,15 +36,22 @@ const styles = {
 const ToolTipChart = withTooltip()(Chart);
 
 class ChartJsWrapper extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    const { standardOptions } = props;
 
-  componentDidUpdate(prevProps) {
+    this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+  }
+
+  async componentDidUpdate(prevProps) {
     const { standardOptions } = this.props;
 
-    if (standardOptions && prevProps.standardOptions !== standardOptions) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState(cjsGenerator(this.props.standardOptions));
+    if (isEqual(standardOptions, prevProps.standardOptions)) {
+      return;
     }
+
+    // eslint-disable-next-line react/no-did-update-set-state
+    this.setState(cjsGenerator(standardOptions));
   }
 
   render() {

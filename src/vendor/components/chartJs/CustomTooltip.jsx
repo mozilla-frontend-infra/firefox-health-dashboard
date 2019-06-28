@@ -132,7 +132,7 @@ const StyledCustomTooltip = withStyles(styles)(CustomTooltip);
 function withTooltip() {
   // https://reactjs.org/docs/higher-order-components.html
   //
-  // Expects `HandleTooltip` property that accepts
+  // Expects `standardOptions.tip` property that accepts
   // * record - particualr raw record being shown
   // * index - position of record in data
   // * data - all the data in the series
@@ -144,14 +144,14 @@ function withTooltip() {
     class Output extends React.Component {
       constructor(props, ...moreArgs) {
         super(props, ...moreArgs);
-        const { standardOptions, ...moreProps } = props;
+        const { standardOptions } = props;
         const self = this;
-        const moreOptions = { tooltips: {} };
+        const options = { tooltips: {} };
 
         if (standardOptions.tip) {
-          moreOptions.onClick = this.handleChartClick;
-          moreOptions.tooltips.enabled = false;
-          moreOptions.tooltips.custom = function custom(tooltipModel) {
+          options.onClick = this.handleChartClick;
+          options.tooltips.enabled = false;
+          options.tooltips.custom = function custom(tooltipModel) {
             if (!self.state.tooltipIsLocked) {
               // eslint-disable-next-line no-underscore-dangle
               self.setState({ tooltipModel, canvas: this._chart.canvas });
@@ -160,8 +160,7 @@ function withTooltip() {
         }
 
         this.state = {
-          moreProps,
-          moreOptions,
+          options,
           standardOptions,
           tooltipModel: null,
           tooltipIsLocked: false,
@@ -175,15 +174,23 @@ function withTooltip() {
         }));
       };
 
+      async componentDidUpdate(prevProps) {
+        const { standardOptions } = this.props;
+
+        if (prevProps.standardOptions !== standardOptions) {
+          // eslint-disable-next-line react/no-did-update-set-state
+          this.setState({ standardOptions });
+        }
+      }
+
       render() {
-        const { standardOptions, moreProps, moreOptions, ...rest } = this.state;
+        const { standardOptions: _, ...moreProps } = this.props;
+        const { standardOptions, options, ...rest } = this.state;
 
         if (standardOptions.tip) {
           return (
             <div style={{ position: 'relative' }}>
-              <WrappedChart
-                {...Data.setDefault(moreProps, { options: moreOptions })}
-              />
+              <WrappedChart {...Data.setDefault(moreProps, { options })} />
               <StyledCustomTooltip {...{ standardOptions, ...rest }} />
             </div>
           );

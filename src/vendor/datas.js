@@ -19,13 +19,11 @@ const isData = isDataImport;
 return true if a and b are structurally similar
  */
 function isEqual(a, b, done = []) {
-  if (a === b) {
-    return true;
-  }
+  if (a === b) return true;
 
-  if (missing(a) && missing(b)) {
-    return true;
-  }
+  if (missing(a)) return missing(b);
+
+  if (missing(b)) return false;
 
   if (isData(a) && isData(b)) {
     if (done.includes(a) || done.includes(b)) {
@@ -48,6 +46,10 @@ function isEqual(a, b, done = []) {
       isEqual(aa, bb, [a, b, ...done])
     );
   }
+
+  if (a.isEqual) return a.isEqual(b);
+
+  if (b.isEqual) return b.isEqual(a);
 
   return false;
 }
@@ -98,6 +100,26 @@ Data.copy = (from, to) => {
   });
 
   return output;
+};
+
+/*
+deepcopy Data and Array-like objects
+ */
+Data.deepCopy = value => {
+  if (isData(value)) {
+    const output = {};
+
+    Object.entries(value).forEach(([k, v]) => {
+      // LIST OF [k, v] TUPLES EXPECTED
+      output[k] = Data.deepCopy(v);
+    });
+
+    return output;
+  }
+
+  if (isMany(value)) return value.map(v => Data.deepCopy(v));
+
+  return value;
 };
 
 /*

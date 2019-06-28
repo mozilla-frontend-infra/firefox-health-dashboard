@@ -13,6 +13,10 @@ class Duration {
     this.month = 0;
   }
 
+  isEqual(other) {
+    return this.milli === other.milli && this.month === other.month;
+  }
+
   add(duration) {
     const output = new Duration();
 

@@ -24,6 +24,10 @@ class GMTDate extends Date {
     // RETURN NUMBER OF SECONDS SINCE EPOCH
     this.milli() / 1000.0;
 
+  isEqual(other) {
+    return this.milli() === other.milli();
+  }
+
   between = (min, max) => {
     if (exists(min)) {
       if (min.getMilli && this.milli() < min.milli()) {
