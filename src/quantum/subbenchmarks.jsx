@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import getData from '../utils/perfherder/subbenchmarks';
 import { withErrorBoundary } from '../vendor/errors';
+import { toPairs } from '../vendor/vectors';
 
 const DEFAULT_PERCENTILE_THRESHOULD = 99;
 const Subbenchmarks = ({ match }) => (
@@ -90,18 +91,6 @@ class PerfherderContainerPre extends Component {
 
   render() {
     const { perfherderUrl, data, parentSignature } = this.state;
-    const sortAlphabetically = (a, b) => {
-      if (a.meta.test < b.meta.test) {
-        return -1;
-      }
-
-      if (a.meta.test > b.meta.test) {
-        return 1;
-      }
-
-      return 0;
-    };
-
     let parent;
 
     if (parentSignature && parentSignature in data) {
@@ -111,46 +100,52 @@ class PerfherderContainerPre extends Component {
 
     return (
       <div className="subbenchmarks align-center">
-        {!data ? (
-          <div>
-            <h3>Loading...</h3>
-          </div>
-        ) : (
-          <div>
-            <div className="header">
-              <h2 className="wider-letter-spacing">{this.props.suite}</h2>
-              <a
-                className="header-item"
-                href={perfherderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                alt="View all subtests on Perfherder">
-                <FontAwesomeIcon
-                  icon={faExternalLinkAlt}
-                  style={{ marginLeft: '0.3em' }}
-                />
-              </a>
-            </div>
-            {parent && (
-              <Graph
-                key={parent.meta.test}
-                data={[parent.data]}
-                name={parent.meta.test}
-                url={parent.meta.url}
-              />
-            )}
-            {Object.values(data)
-              .sort(sortAlphabetically)
-              .map(el => (
+        {(() => {
+          if (!data) {
+            return (
+              <div>
+                <h3>Loading...</h3>
+              </div>
+            );
+          }
+
+          return (
+            <div>
+              <div className="header">
+                <h2 className="wider-letter-spacing">{this.props.suite}</h2>
+                <a
+                  className="header-item"
+                  href={perfherderUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  alt="View all subtests on Perfherder">
+                  <FontAwesomeIcon
+                    icon={faExternalLinkAlt}
+                    style={{ marginLeft: '0.3em' }}
+                  />
+                </a>
+              </div>
+              {parent && (
                 <Graph
-                  key={el.meta.test}
-                  data={[el.data]}
-                  name={el.meta.test}
-                  url={el.meta.url}
+                  key={parent.meta.test}
+                  data={[parent.data]}
+                  name={parent.meta.test}
+                  url={parent.meta.url}
                 />
-              ))}
-          </div>
-        )}
+              )}
+              {toPairs(data)
+                .sort('meta.test')
+                .map(el => (
+                  <Graph
+                    key={el.meta.test}
+                    data={[el.data]}
+                    name={el.meta.test}
+                    url={el.meta.url}
+                  />
+                ))}
+            </div>
+          );
+        })()}
       </div>
     );
   }

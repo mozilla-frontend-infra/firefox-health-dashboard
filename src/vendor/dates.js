@@ -1100,16 +1100,18 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
 // ------------------------------------------------------------------
 {
   const generalFormats = [
+    // SPACE DELIMITED PATTERNS
+    'yyyy - MM - dd HH : mm : ss . fff',
+    'yyyy - MM - dd T HH : mm : ss Z',
     'EE MMM d, yyyy',
     'EE MMM d, yyyy @ hh:mm a',
     'y M d',
     'y - M - d',
-    'yyyy - MM - dd HH : mm : ss',
     'MMM d, y',
     'MMM d y',
     'MMM d',
     'y - MMM - d',
-    'yyyyMMMd',
+    'yyyy MMM d',
     'd - MMM - y',
     'd MMM y',
   ];
@@ -1167,10 +1169,6 @@ GMTDate.parseRelative = val => {
 
 GMTDate.tryParse = (val_, isFutureDate = false) => {
   const val = val_.trim();
-
-  // ATTEMPT ZULU
-  // "2019-03-02T21:49:43Z"
-  if (val.endsWith('Z')) return new GMTDate(val);
 
   // ATTEMPT EXPRESSIONS
   if (Object.keys(RELATIVE).some(r => val.includes(r))) {

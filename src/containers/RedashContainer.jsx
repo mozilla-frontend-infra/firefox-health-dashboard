@@ -7,8 +7,9 @@ import { fetchJson } from '../vendor/requests';
 import { withErrorBoundary } from '../vendor/errors';
 import { selectFrom } from '../vendor/vectors';
 import { LinkIcon } from '../utils/icons';
+import { GMTDate as Date } from '../vendor/dates';
 
-const telemetryDataToDatasets = (sourceData, dataKeyIdentifier) => {
+const telemetryDataToDatasets = (sourceData, dataKeyIdentifier, timeDomain) => {
   // Separate data points into percentile buckets
 
   const series = selectFrom(sourceData.query_result.data.rows)
@@ -23,24 +24,23 @@ const telemetryDataToDatasets = (sourceData, dataKeyIdentifier) => {
     })
     .toArray();
   const data = selectFrom(sourceData.query_result.data.rows)
+    .groupBy('submission_date')
+    .map((rows, submission_date) => ({
+      submission_date: Date.newInstance(submission_date),
+      ...selectFrom(rows)
+        .map(r => {
+          const { value } = r;
+          const label = r[dataKeyIdentifier];
+
+          return [value, label];
+        })
+        .args()
+        .fromPairs(),
+    }))
     .sort('submission_date')
-    .map(r => {
-      const { submission_date, value } = r;
-      const label = r[dataKeyIdentifier];
-
-      if (label) {
-        return {
-          submission_date,
-          [label]: value,
-        };
-      }
-
-      return null;
-    })
-    .exists()
     .toArray();
 
-  return { series, data };
+  return { 'axis.x.domain': timeDomain, series, data };
 };
 
 const styles = {
@@ -58,7 +58,7 @@ const styles = {
 
 class RedashContainer extends Component {
   state = {
-    data: null,
+    standardOptions: null,
     isLoading: true,
   };
 
@@ -66,14 +66,18 @@ class RedashContainer extends Component {
     await this.fetchSetState(this.props);
   }
 
-  async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
+  async fetchSetState({ dataKeyIdentifier, redashDataUrl, timeDomain }) {
     this.setState({ isLoading: true });
 
     try {
       const redashData = await fetchJson(redashDataUrl);
 
       this.setState({
-        standardOptions: telemetryDataToDatasets(redashData, dataKeyIdentifier),
+        standardOptions: telemetryDataToDatasets(
+          redashData,
+          dataKeyIdentifier,
+          timeDomain
+        ),
       });
     } finally {
       this.setState({ isLoading: false });

@@ -14,13 +14,13 @@ class BugzillaGraph extends Component {
     await this.fetchData(this.props);
   }
 
-  async fetchData({ queries, startDate }) {
+  async fetchData({ queries, timeDomain }) {
     this.setState({ isLoading: true });
 
     try {
       this.setState({
         standardOptions: {
-          ...(await getBugsData(queries, startDate)),
+          ...(await getBugsData(queries, timeDomain)),
           'axis.y.label': 'Number of bugs',
         },
       });

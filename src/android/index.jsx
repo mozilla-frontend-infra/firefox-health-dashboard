@@ -17,7 +17,7 @@ class Android extends Component {
     const nimbledroidSubTitle = `${
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
-    const timeDomain = new TimeDomain({ past: '6week', interval: 'day' });
+    const timeDomain = new TimeDomain({ past: '3month', interval: 'day' });
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
@@ -66,7 +66,7 @@ class Android extends Component {
                       },
                     },
                   ]}
-                  startDate="2019-02-01"
+                  timeDomain={timeDomain}
                   title="Firefox Preview Bugs"
                 />
               </Section>
@@ -91,6 +91,7 @@ class Android extends Component {
                 title="Total content page load time (no 95th)"
                 redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
                 redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
+                timeDomain={timeDomain}
               />
             </Grid>
             <Grid item xs={6}>
@@ -98,6 +99,7 @@ class Android extends Component {
                 title="Total content page load time"
                 redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
                 redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
+                timeDomain={timeDomain}
               />
             </Grid>
           </Grid>

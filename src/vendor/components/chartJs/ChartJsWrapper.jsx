@@ -55,21 +55,27 @@ class ChartJsWrapper extends React.Component {
   }
 
   render() {
-    const { classes, isLoading, title, chartHeight, spinnerSize } = this.props;
+    const { classes, isLoading, title, chartHeight } = this.props;
     const { cjsOptions, standardOptions } = this.state;
 
     if (isLoading) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
+
           <div
             style={{
+              position: 'relative',
               height: chartHeight,
-              lineHeight: spinnerSize,
-              textAlign: 'center',
-              width: spinnerSize,
             }}>
-            <CircularProgress />
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+              }}>
+              <CircularProgress />
+            </div>
           </div>
         </div>
       );
@@ -80,6 +86,28 @@ class ChartJsWrapper extends React.Component {
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
           <div style={{ height: chartHeight }} />
+        </div>
+      );
+    }
+
+    if (!standardOptions.data.length) {
+      return (
+        <div className={classes.chartContainer}>
+          {title && <h2 className={classes.title}>{title}</h2>}
+          <div
+            style={{
+              position: 'relative',
+              height: chartHeight,
+            }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+              }}>
+              No Data
+            </div>
+          </div>
         </div>
       );
     }
@@ -120,6 +148,8 @@ class ChartJsWrapper extends React.Component {
         </div>
       );
     }
+
+    // Log.note(value2json(cjsOptions));
 
     return (
       <div className={classes.chartContainer}>

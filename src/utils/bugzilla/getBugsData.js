@@ -2,11 +2,10 @@
 /* eslint-disable no-param-reassign */
 import queryBugzilla from './queryBugzilla';
 import { GMTDate as Date } from '../../vendor/dates';
-import { TimeDomain } from '../../vendor/jx/domains';
 import { selectFrom } from '../../vendor/vectors';
 
 // It formats the data and options to meet chartJs' data structures
-const getBugsData = async (queries = [], startDate) => {
+const getBugsData = async (queries = [], timeDomain) => {
   const bugSeries = await Promise.all(
     queries.map(async ({ label, parameters }) => {
       // This speeds up and the size of the call to Bugzilla
@@ -18,11 +17,6 @@ const getBugsData = async (queries = [], startDate) => {
       };
     })
   );
-  const timeDomain = new TimeDomain({
-    min: Date.newInstance(startDate),
-    max: Date.today(),
-    interval: 'day',
-  });
   const data = selectFrom(timeDomain.partitions)
     .map(p => ({
       date: p.min,
