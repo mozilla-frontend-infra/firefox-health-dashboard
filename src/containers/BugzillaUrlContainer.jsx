@@ -24,7 +24,7 @@ const BugzillaUrl = ({ bugCount, text, url }) => (
 
 BugzillaUrl.propTypes = {
   bugCount: PropTypes.number,
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };

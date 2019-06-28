@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { ArrayWrapper, selectFrom } from '../../vectors';
 import { missing } from '../../utils';
-import { Date } from '../../dates';
+import { GMTDate as Date } from '../../dates';
 
 const styles = () => ({
   root: {

@@ -4,7 +4,7 @@ import { Data, isData } from '../../datas';
 import { first, selectFrom } from '../../vectors';
 import { max, min } from '../../math';
 import Color from '../../colors';
-import { Date } from '../../dates';
+import { GMTDate as Date } from '../../dates';
 import { Template } from '../../Template';
 import { Log } from '../../logs';
 import jx from '../../jx/expressions';
@@ -99,9 +99,11 @@ const cjsGenerator = standardOptions => {
     return Data.fromConfig({ data, ...newRest });
   })();
   const xAxes = (() => {
-    if (Data.get(options, 'axis.x')) {
-      return toArray(options.axis.x).map(x => {
-        const { min, max } = x;
+    const xDomain = Data.get(options, 'axis.x.domain');
+
+    if (xDomain) {
+      return toArray(xDomain).map(x => {
+        const [min, max] = [x.min, x.max];
 
         return {
           type: 'time',
@@ -124,7 +126,12 @@ const cjsGenerator = standardOptions => {
       },
     ];
   })();
-  const xEdge = selectFrom(options.series)
+
+  if (missing(options.series)) {
+    Log.error('expecting series');
+  }
+
+  const xEdge = selectFrom(toArray(options.series))
     .where({ 'select.axis': 'x' })
     .first();
 
@@ -141,7 +148,7 @@ const cjsGenerator = standardOptions => {
     Data.setDefault(
       s,
       { style: standardOptions.style },
-      { style: { color: SETTINGS.colors[i] } }
+      { style: { color: SETTINGS.colors[i] }, select: { axis: 'y' } }
     );
   });
 

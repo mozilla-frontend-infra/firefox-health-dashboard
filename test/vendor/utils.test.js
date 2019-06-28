@@ -10,7 +10,7 @@ import {
   toArray,
 } from '../../src/vendor/utils';
 import { selectFrom } from '../../src/vendor/vectors';
-import { Date } from '../../src/vendor/dates';
+import { GMTDate as Date } from '../../src/vendor/dates';
 import { Duration } from '../../src/vendor/durations';
 
 describe('utils', () => {

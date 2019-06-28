@@ -396,6 +396,8 @@ function window(cubes, { value, edges: edgeNames, along }) {
 
 /*
 Groupby, but with all combinations of all columns grouped.
+The result is s a cube of lists, where the lists are elements from `self`
+edges.value is used to determine what part of each edge a record belowngs
 For 2 dimensions this is a pivot table, for more dimensions it is a "cube".
 Google "sql group by cube" for more information
  */

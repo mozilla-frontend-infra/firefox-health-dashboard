@@ -21,7 +21,7 @@ import {
   reverse,
   toArray,
 } from './utils';
-import { average, geomean, max, min, sum } from './math';
+import { average, geomean, max, min, sum, count } from './math';
 import { Log } from './logs';
 import jx from './jx/expressions';
 
@@ -327,7 +327,11 @@ class ArrayWrapper {
     return new ArrayWrapper(() => output(this.argslist));
   }
 
-  edges(...args){
+  edges(...args) {
+    if (!ArrayWrapper.edges) {
+      Log.error('import ./jx/cubes.js to use this method');
+    }
+
     return ArrayWrapper.edges(this, ...args);
   }
 
@@ -495,6 +499,10 @@ class ArrayWrapper {
   last(defaultValue = null) {
     // return last element, or defaultValue
     return coalesce(last(this), defaultValue);
+  }
+
+  count() {
+    return count(this);
   }
 
   sum() {

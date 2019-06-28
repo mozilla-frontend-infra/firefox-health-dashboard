@@ -1,4 +1,4 @@
-import { Date } from '../../src/vendor/dates';
+import { GMTDate as Date } from '../../src/vendor/dates';
 
 describe('dates', () => {
   it('gmt', () => {

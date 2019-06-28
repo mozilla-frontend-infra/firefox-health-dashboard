@@ -3,7 +3,7 @@ import {
   QUERY_TIME_FORMAT,
 } from '../vendor/components/navigation/DurationPicker';
 import TimePicker from '../vendor/components/navigation/TimePicker';
-import { Date } from '../vendor/dates';
+import { GMTDate as Date } from '../vendor/dates';
 
 const todayText = Date.today().format(QUERY_TIME_FORMAT);
 const timePickers = [

@@ -1168,6 +1168,10 @@ GMTDate.parseRelative = val => {
 GMTDate.tryParse = (val_, isFutureDate = false) => {
   const val = val_.trim();
 
+  // ATTEMPT ZULU
+  // "2019-03-02T21:49:43Z"
+  if (val.endsWith('Z')) return new GMTDate(val);
+
   // ATTEMPT EXPRESSIONS
   if (Object.keys(RELATIVE).some(r => val.includes(r))) {
     return GMTDate.parseRelative(val);
@@ -1216,4 +1220,4 @@ strings.format = (value, format) => {
 
 strings.unix = value => GMTDate.newInstance(value).unix();
 
-export { GMTDate as Date }; // eslint-disable-line import/prefer-default-export
+export { GMTDate }; // eslint-disable-line import/prefer-default-export

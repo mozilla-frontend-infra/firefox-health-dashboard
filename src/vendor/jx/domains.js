@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 import { Log } from '../logs';
-import { Date } from '../dates';
+import { GMTDate as Date } from '../dates';
 import { isEqual } from '../datas';
 import { Duration } from '../durations';
 import { coalesce, exists, isString, missing } from '../utils';

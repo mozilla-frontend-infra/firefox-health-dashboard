@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import { cjsGenerator } from './utils';
 import { Data, isEqual } from '../../datas';
-import { Date } from '../../dates';
+import { GMTDate as Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 import { coalesce } from '../../utils';

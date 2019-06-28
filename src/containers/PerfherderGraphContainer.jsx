@@ -8,7 +8,7 @@ import { Data } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import { exists, missing, sleep } from '../vendor/utils';
 import { URL } from '../vendor/requests';
-import { Date } from '../vendor/dates';
+import { GMTDate as Date } from '../vendor/dates';
 import { getData, TREEHERDER } from '../vendor/perfherder';
 import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';

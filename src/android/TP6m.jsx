@@ -21,7 +21,7 @@ import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
 import { timePickers } from '../utils/timePickers';
-import { Date } from '../vendor/dates';
+import { GMTDate as Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
@@ -187,15 +187,14 @@ class TP6M extends React.Component {
               {data && (
                 <ChartJSWrapper
                   title={`Geomean of ${subtitle}`}
-                  height={200}
                   standardOptions={{
                     data,
                     tip: geoTip,
                     series: [
-                      { label: 'Geomean', select: { value: 'y', axis: 'y' } },
+                      { label: 'Geomean', select: { value: 'y' } },
                       {
                         label: TARGET_NAME,
-                        select: { value: referenceValue, axis: 'y' },
+                        select: { value: referenceValue },
                         style: { color: 'gray' },
                       },
                       { label: 'Date', select: { value: 'x', axis: 'x' } },

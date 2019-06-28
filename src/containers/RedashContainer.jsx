@@ -8,20 +8,39 @@ import { withErrorBoundary } from '../vendor/errors';
 import { selectFrom } from '../vendor/vectors';
 import { LinkIcon } from '../utils/icons';
 
-const telemetryDataToDatasets = (data, dataKeyIdentifier) => {
+const telemetryDataToDatasets = (sourceData, dataKeyIdentifier) => {
   // Separate data points into percentile buckets
-  const datasets = selectFrom(data.query_result.data.rows)
+
+  const series = selectFrom(sourceData.query_result.data.rows)
     .groupBy(dataKeyIdentifier)
-    .map((rows, key) => ({
-      label: key,
-      data: selectFrom(rows)
-        .sort('submission_date')
-        .select({ x: 'submission_date', y: 'value' })
-        .toArray(),
+    .map((_, label) => ({
+      label,
+      select: { value: label },
     }))
+    .append({
+      label: 'Submission Date',
+      select: { value: 'submission_date', axis: 'x' },
+    })
+    .toArray();
+  const data = selectFrom(sourceData.query_result.data.rows)
+    .sort('submission_date')
+    .map(r => {
+      const { submission_date, value } = r;
+      const label = r[dataKeyIdentifier];
+
+      if (label) {
+        return {
+          submission_date,
+          [label]: value,
+        };
+      }
+
+      return null;
+    })
+    .exists()
     .toArray();
 
-  return { datasets };
+  return { series, data };
 };
 
 const styles = {
@@ -40,28 +59,7 @@ const styles = {
 class RedashContainer extends Component {
   state = {
     data: null,
-    isLoading: false,
-  };
-
-  static propTypes = {
-    standardOptions: PropTypes.shape({
-      title: PropTypes.string,
-      'axis.y.label': PropTypes.string,
-      ticksCallback: PropTypes.func,
-    }),
-    classes: PropTypes.shape().isRequired,
-    dataKeyIdentifier: PropTypes.string.isRequired,
-    redashDataUrl: PropTypes.string.isRequired,
-    redashQueryUrl: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  };
-
-  static defaultProps = {
-    standardOptions: {
-      'axis.y.label': 'Miliseconds',
-      ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
-    },
-    dataKeyIdentifier: 'label',
+    isLoading: true,
   };
 
   async componentDidMount() {
@@ -69,12 +67,13 @@ class RedashContainer extends Component {
   }
 
   async fetchSetState({ dataKeyIdentifier, redashDataUrl }) {
+    this.setState({ isLoading: true });
+
     try {
-      this.setState({ isLoading: true });
       const redashData = await fetchJson(redashDataUrl);
 
       this.setState({
-        data: telemetryDataToDatasets(redashData, dataKeyIdentifier),
+        standardOptions: telemetryDataToDatasets(redashData, dataKeyIdentifier),
       });
     } finally {
       this.setState({ isLoading: false });
@@ -82,8 +81,7 @@ class RedashContainer extends Component {
   }
 
   render() {
-    const { standardOptions, redashQueryUrl, title } = this.props;
-    const { data, isLoading } = this.state;
+    const { redashQueryUrl, title } = this.props;
 
     return (
       <div>
@@ -100,16 +98,32 @@ class RedashContainer extends Component {
               </a>
             </div>
           }
-          type="line"
-          {...{
-            data,
-            isLoading,
-            standardOptions,
-          }}
+          {...this.state}
         />
       </div>
     );
   }
 }
+
+RedashContainer.propTypes = {
+  standardOptions: PropTypes.shape({
+    title: PropTypes.string,
+    'axis.y.label': PropTypes.string,
+    ticksCallback: PropTypes.func,
+  }),
+  classes: PropTypes.shape().isRequired,
+  dataKeyIdentifier: PropTypes.string.isRequired,
+  redashDataUrl: PropTypes.string.isRequired,
+  redashQueryUrl: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
+
+RedashContainer.defaultProps = {
+  standardOptions: {
+    'axis.y.label': 'Miliseconds',
+    ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
+  },
+  dataKeyIdentifier: 'label',
+};
 
 export default withStyles(styles)(withErrorBoundary(RedashContainer));

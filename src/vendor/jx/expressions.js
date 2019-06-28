@@ -13,7 +13,7 @@ import {
   coalesce,
 } from '../utils';
 import { Data, isData } from '../datas';
-import { Date } from '../dates';
+import { GMTDate as Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
