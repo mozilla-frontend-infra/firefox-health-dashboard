@@ -208,7 +208,27 @@ describe('math', () => {
   it('broken js: exp', () => {
     // WE EXPECT THIS CALCULATION TO FAIL, OR RETURN NOTHING
     // WE DO NOT EXPECT A LEGITIMATE VALUE
-    expect(Math.exp(null)).toBe(1);
+    expect(Math.exp(null)).toBe(1); // BAD
+    expect(Math.exp(undefined)).toBe(NaN); // GOOD
+  });
+
+  it('broken js: lt', () => {
+    // WE EXPECT THIS COMPARISON TO:
+    // 1. THROW ERROR - aka STRICT
+    // 2. RETURN false - aka DECISIVE
+    // 3. RETURN NOTHING - aka CONSERVATIVE
+    // WE DO NOT EXPECT null TO BE ON THE NUMBER LINE
+    expect(null < 5).toBe(true); // BAD
+    expect(null >= 5).toBe(false); // GOOD
+    // eslint-disable-next-line eqeqeq
+    expect(null == 0).toBe(false); // GOOD
+    expect(null === 0).toBe(false); // GOOD
+
+    expect(undefined < 5).toBe(false); // GOOD
+    expect(undefined >= 5).toBe(false); // GOOD
+    // eslint-disable-next-line eqeqeq
+    expect(undefined == 0).toBe(false); // GOOD
+    expect(undefined === 0).toBe(false); // GOOD
   });
 
   it('exp', () => {

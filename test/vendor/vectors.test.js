@@ -1,5 +1,6 @@
 /* global describe, it */
 import { selectFrom, leaves, toPairs } from '../../src/vendor/vectors';
+import jx from '../../src/vendor/jx/expressions';
 
 const data = [
   { a: 1 },
@@ -103,6 +104,48 @@ describe('vectors', () => {
       [[{ a: 1 }, null], { d: null, e: null }],
       [[{ a: { b: 0, c: 1 }, d: 3 }, { d: 3 }], { d: 3, e: null }],
       [[{ a: null, e: 3 }], { d: null, e: 3 }],
+    ]);
+  });
+
+  it('groupBy lessThan function', () => {
+    expect(
+      selectFrom([
+        { a: 0 },
+        { a: 3 },
+        { a: 10 },
+        { a: 11 },
+        { a: 7 },
+        { a: 0.5 },
+        {},
+        { a: null },
+      ])
+        .groupBy(({ a }) => a < 5)
+        .map((v, g) => [v, g])
+        .toArray()
+    ).toEqual([
+      [[{ a: 0 }, { a: 3 }, { a: 0.5 }, { a: null }], true],
+      [[{ a: 10 }, { a: 11 }, { a: 7 }, {}], false],
+    ]);
+  });
+
+  it('groupBy jx', () => {
+    expect(
+      selectFrom([
+        { a: 0 },
+        { a: 3 },
+        { a: 10 },
+        { a: 11 },
+        { a: 7 },
+        { a: 0.5 },
+        {},
+        { a: null },
+      ])
+        .groupBy(jx({ lt: { a: 5 } }))
+        .map((v, g) => [v, g])
+        .toArray()
+    ).toEqual([
+      [[{ a: 0 }, { a: 3 }, { a: 0.5 }], true],
+      [[{ a: 10 }, { a: 11 }, { a: 7 }, {}, { a: null }], false],
     ]);
   });
 

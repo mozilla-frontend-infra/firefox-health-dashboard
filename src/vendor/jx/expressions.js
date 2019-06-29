@@ -238,6 +238,30 @@ expressions.gte = obj => {
 };
 
 /*
+example {lt: {name: reference}
+
+return true if `name` < `reference`
+ */
+expressions.lt = obj => {
+  const lookup = Object.entries(obj).map(([name, reference]) => [
+    defineFunction(name),
+    defineFunction(reference),
+  ]);
+
+  return row =>
+    lookup.every(([a, b]) => {
+      const av = a(row);
+      const bv = b(row);
+
+      if (missing(av) || missing(bv)) {
+        return false;
+      }
+
+      return av < bv;
+    });
+};
+
+/*
 convert a date-like value into unix timestamp
  */
 expressions.date = value => {
