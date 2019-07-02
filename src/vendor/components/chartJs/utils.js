@@ -46,8 +46,15 @@ const generateLineChartStyle = color => ({
   backgroundColor: color,
   borderColor: color,
   fill: false,
-  pointRadius: 0,
-  pointHoverBackgroundColor: 'white',
+
+  pointRadius: 5,
+  pointBackgroundColor: invisible,
+  pointBorderColor: invisible,
+
+  pointHoverRadius: 3,
+  pointHoverBackgroundColor: color,
+  pointHoverBorderWidth: 6,
+
   lineTension: 0.1,
 });
 const generateScatterChartStyle = color => {
