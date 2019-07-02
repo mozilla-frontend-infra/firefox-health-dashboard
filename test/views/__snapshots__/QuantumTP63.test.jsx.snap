@@ -1930,7 +1930,7 @@ exports[`renders correctly integer 1`] = `
               className="ChartJsWrapper-title-201"
             >
               <div>
-                Tp6: Twiter
+                Tp6: Twitter
               </div>
             </h2>
             <div
