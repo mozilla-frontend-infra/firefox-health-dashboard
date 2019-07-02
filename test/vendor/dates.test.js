@@ -20,4 +20,10 @@ describe('dates', () => {
 
     expect(timezone).toEqual(0);
   });
+
+  it('some date', () => {
+    const timezone = Date.newInstance('2019-07-01').unix();
+
+    expect(timezone).toEqual(1561939200);
+  });
 });

@@ -436,7 +436,7 @@ exports[`renders correctly 1`] = `
                     <input
                       name="ending"
                       type="hidden"
-                      value="2019-06-28"
+                      value="2019-07-01"
                     />
                     <svg
                       aria-hidden="true"

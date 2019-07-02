@@ -31,6 +31,14 @@ const timePickers = [
   },
 ];
 
+// For testing
+timePickers.mock = () => {
+  const todayText = '2019-07-01';
+
+  timePickers[1].defaultValue = todayText;
+  timePickers[1].options[0].id = todayText;
+};
+
 // This is config for the time pickers; which is the same in all
 // the components that use them.
 export { timePickers, todayText };
