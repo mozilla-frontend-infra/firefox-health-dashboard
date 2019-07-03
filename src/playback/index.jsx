@@ -50,11 +50,13 @@ class Power extends React.Component {
               className={classes.chart}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title={`Percent dropped frames ${size}`}
-                style={{
-                  'axis.y.format': '{{.|percent}}',
-                  'axis.y.max.max': 1,
-                }}
+                title={`Dropped Frames ${size}`}
+                style={
+                  {
+                    // 'axis.y.format': '{{.}}%',
+                    // 'axis.y.max.max': 1,
+                  }
+                }
                 series={selectFrom(TESTS)
                   .where({
                     encoding,

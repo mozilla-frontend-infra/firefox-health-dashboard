@@ -15,6 +15,7 @@ import { CONFIG, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
+import PlaybackSummary from '../playback/summary';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -186,6 +187,13 @@ export default class QuantumIndex extends React.Component {
             />
           ))
           .enumerate(),
+      },
+      {
+        title: 'Media Playback',
+        rows: [
+          <PlaybackSummary key={`${bits}_VP9`} bits={bits} encoding="VP9" />,
+          <PlaybackSummary key={`${bits}_H264`} bits={bits} encoding="H264" />,
+        ],
       },
       {
         title: 'Performance Tests',
