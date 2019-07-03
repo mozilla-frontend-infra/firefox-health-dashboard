@@ -10,7 +10,7 @@ import {
   toArray,
 } from '../../src/vendor/utils';
 import { selectFrom } from '../../src/vendor/vectors';
-import GMTDate from '../../src/vendor/dates';
+import { GMTDate as Date } from '../../src/vendor/dates';
 import { Duration } from '../../src/vendor/durations';
 
 describe('utils', () => {
@@ -126,7 +126,7 @@ describe('utils', () => {
     expect(isData([42])).toBe(false);
     expect(isData(selectFrom([]))).toBe(false);
     expect(isData(() => 0)).toBe(false);
-    expect(isData(GMTDate.now())).toBe(false);
+    expect(isData(Date.now())).toBe(false);
     expect(isData(new Duration())).toBe(false);
     expect(isData(new Map().keys())).toBe(false);
   });

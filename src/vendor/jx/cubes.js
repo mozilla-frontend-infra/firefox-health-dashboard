@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
 
-import { array, exists, isString, missing, toArray } from '../utils';
+import { array, exists, isString, missing, toArray, zip } from '../utils';
 import { ArrayWrapper, selectFrom, toPairs } from '../vectors';
 import { Log } from '../logs';
 import { NULL } from './domains';
@@ -34,6 +34,7 @@ function getEdgeByName(cubes, edgeName) {
 /*
  * Matrix with named edge access
  * elements are accessed via Objects, called combinations
+ * https://blog.acolyer.org/2019/06/28/machine-learning-systems-are-stuck-in-a-rut/
  */
 class Cube {
   constructor(edges, matrix) {
@@ -311,6 +312,7 @@ function sequence(cubes, requestedEdges, options = {}) {
 /*
  * group by `edges`, then for each group
  * run value(row, coord, rows) over all rows in group
+ * `along` is the edge to sort by, if any
  */
 function window(cubes, { value, edges: edgeNames, along }) {
   const flat = toPairs(cubes);
@@ -391,5 +393,36 @@ function window(cubes, { value, edges: edgeNames, along }) {
     })
   );
 }
+
+/*
+Groupby, but with all combinations of all columns grouped.
+The result is s a cube of lists, where the lists are elements from `self`
+edges.value is used to determine what part of each edge a record belowngs
+For 2 dimensions this is a pivot table, for more dimensions it is a "cube".
+Google "sql group by cube" for more information
+ */
+ArrayWrapper.edges = (self, edges, zero = array) => {
+  const normalizedEdges = edges.map(Edge.newInstance);
+  const dims = normalizedEdges.map(e => e.domain.partitions.length);
+  const matrix = new Matrix({ dims, zero });
+
+  self.forEach(row => {
+    const coord = normalizedEdges.map(e => e.domain.valueToIndex(e.value(row)));
+
+    zip(dims, normalizedEdges).forEach(([d, e], i) => {
+      if (e.domain.type === 'value' && d < e.domain.partitions.length) {
+        // last element of value domain is NULL, ensure it is still last
+        matrix.insertPart(i, d - 1);
+        dims[i] = d + 1;
+      }
+    });
+
+    matrix.add(coord, row);
+  });
+
+  normalizedEdges.forEach(e => e.domain.lock());
+
+  return new Cube(normalizedEdges, matrix);
+};
 
 export { Cube, HyperCube, window };

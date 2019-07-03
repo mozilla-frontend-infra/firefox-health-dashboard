@@ -7,6 +7,10 @@ import { round } from "../vendor/math";
 import { Log } from "../vendor/logs";
 import { window } from "../vendor/jx/cubes";
 import { PLATFORMS, TP6_TESTS } from "../quantum/config";
+import { Cube } from "../vendor/jx/cubes";
+
+
+const _ = Cube;
 
 const TARGET_NAME = "Fennec64 -20%";
 

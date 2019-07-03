@@ -5,24 +5,44 @@ import { withErrorBoundary } from '../vendor/errors';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import fetchNimbledroidData from './NimbledroidApiHandler';
 import { selectFrom, toPairs } from '../vendor/vectors';
-import Date from '../vendor/dates';
+import { GMTDate as Date } from '../vendor/dates';
 
 const SINCE = Date.newInstance('today-13week').milli();
-const nimbledroidFormatter = ({ data }) => ({
-  datasets: toPairs(data)
-    .map((details, packageId) => ({
-      data: selectFrom(details)
+const nimbledroidFormatter = sourceData => {
+  const data = toPairs(sourceData.data)
+    .map((details, packageId) => {
+      const label = CONFIG.packageIdLabels[packageId];
+
+      return selectFrom(details)
         .filter(({ date }) => date > SINCE)
-        .select({ x: 'date', y: 'value' })
-        .toArray(),
-      label: CONFIG.packageIdLabels[packageId],
-    }))
-    .toArray(),
-});
+        .map(({ date, value }) => ({ date, [label]: value }));
+    })
+    .flatten()
+    .toArray();
+
+  return {
+    'axis.y.label': 'Seconds',
+    series: toPairs(sourceData.data)
+      .map((_, packageId) => {
+        const label = CONFIG.packageIdLabels[packageId];
+
+        return {
+          label,
+          select: { value: label },
+        };
+      })
+      .append({
+        label: 'Run Date',
+        select: { value: 'date', axis: 'x' },
+      })
+      .toArray(),
+    data,
+  };
+};
 
 class NimbledroidGraphContainer extends Component {
   state = {
-    data: null,
+    standardOptions: null,
   };
 
   constructor(props) {
@@ -30,30 +50,28 @@ class NimbledroidGraphContainer extends Component {
     const { scenarioData } = this.props;
 
     if (scenarioData) {
-      this.state = this.generateData(scenarioData);
+      this.state = { standardOptions: nimbledroidFormatter(scenarioData) };
     }
   }
 
   async componentDidMount() {
     const { configuration, scenarioName } = this.props;
     const nimbledroidData = await fetchNimbledroidData(configuration.products);
-    const data = this.generateData(nimbledroidData.scenarios[scenarioName]);
 
-    this.setState(data);
-  }
-
-  generateData(scenarioData) {
-    return { data: nimbledroidFormatter(scenarioData) };
+    this.setState({
+      standardOptions: nimbledroidFormatter(
+        nimbledroidData.scenarios[scenarioName]
+      ),
+    });
   }
 
   render() {
     const { scenarioName } = this.props;
-    const { data } = this.state;
+    const { standardOptions } = this.state;
 
     return (
       <ChartJsWrapper
-        data={data}
-        options={{ 'axis.y.label': 'Seconds' }}
+        standardOptions={standardOptions}
         title={`${scenarioName} on Nexus 5`}
       />
     );

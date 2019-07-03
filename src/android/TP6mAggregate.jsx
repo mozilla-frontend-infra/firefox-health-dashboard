@@ -229,46 +229,6 @@ class TP6mAggregate_ extends Component {
                 const platformLabel = selectFrom(PLATFORMS)
                   .where({ platform })
                   .first().label;
-                const chartData = {
-                  datasets: [
-                    {
-                      label: platformLabel,
-                      data: row
-                        .along('pushDate')
-                        .map(({ pushDate, result }) => ({
-                          x: pushDate.getValue(),
-                          y: result.getValue(),
-                        }))
-                        .toArray(),
-                    },
-                    {
-                      label: TARGET_NAME,
-                      style: {
-                        type: 'line',
-                        backgroundColor: 'gray',
-                        borderColor: 'gray',
-                        fill: false,
-                        pointRadius: '0',
-                        pointHoverBackgroundColor: 'gray',
-                        lineTension: 0,
-                      },
-                      data: row
-                        .along('pushDate')
-                        .map(({ pushDate, ref }) => ({
-                          x: pushDate.getValue(),
-                          y: ref.getValue(),
-                        }))
-                        .toArray(),
-                    },
-                  ],
-                };
-
-                // do not show charts with no data
-                if (
-                  !chartData.datasets.some(ds => ds.data.some(({ y }) => y))
-                ) {
-                  return null;
-                }
 
                 return (
                   <Grid item xs={6} key={platform}>
@@ -294,9 +254,29 @@ class TP6mAggregate_ extends Component {
                           </a>
                         </span>
                       }
-                      type="line"
-                      data={chartData}
-                      height={200}
+                      standardOptions={{
+                        series: [
+                          {
+                            label: platformLabel,
+                            select: { value: 'result' },
+                          },
+                          {
+                            label: TARGET_NAME,
+                            select: { value: row.ref.getValue() },
+                          },
+                          {
+                            label: 'Push Date',
+                            select: { value: 'pushDate', axis: 'x' },
+                          },
+                        ],
+                        data: row
+                          .along('pushDate')
+                          .map(({ pushDate, result }) => ({
+                            pushDate: pushDate.getValue(),
+                            result: result.getValue(),
+                          }))
+                          .toArray(),
+                      }}
                     />
                   </Grid>
                 );

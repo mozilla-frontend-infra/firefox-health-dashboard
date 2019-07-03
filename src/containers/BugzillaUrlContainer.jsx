@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge/Badge';
-import generateBugzillaUrls from '../../utils/bugzilla/generateBugzillaUrls';
+import generateBugzillaUrls from '../utils/bugzilla/generateBugzillaUrls';
 
 const styles = {
   root: {
@@ -24,7 +24,7 @@ const BugzillaUrl = ({ bugCount, text, url }) => (
 
 BugzillaUrl.propTypes = {
   bugCount: PropTypes.number,
-  classes: PropTypes.object.isRequired,
+  // classes: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
 };

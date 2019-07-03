@@ -1,8 +1,8 @@
+/* eslint-disable react/no-multi-comp */
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { missing } from '../../utils';
-import { round } from '../../math';
-import { URL } from '../../requests';
+import PropTypes from 'prop-types';
+import { Data } from '../../datas';
 
 const topAligned = {
   '--trans-y': 'var(--tip-size)',
@@ -61,110 +61,147 @@ const styles = {
       '--trans-y': 'calc(-100% - var(--tip-size))',
       '&::before': { top: '100%', borderTopColor: 'var(--bg-color)' },
     },
-  },
-  tooltipKey: {
-    display: 'inline-block',
-    width: '10px',
-    height: '10px',
-    marginRight: '10px',
-  },
-  lockMessage: {
-    color: '#ccc',
+    display: 'inline-table',
   },
 };
 
 class CustomTooltip extends React.Component {
   render() {
-    const { classes, tooltipModel, series, canvas, isLocked } = this.props;
+    const {
+      classes,
+      standardOptions,
+      tooltipModel,
+      canvas,
+      tooltipIsLocked,
+    } = this.props;
 
-    if (tooltipModel.opacity === 0) {
-      return null;
-    }
+    if (!tooltipModel) return null;
+
+    if (tooltipModel.opacity === 0) return null;
 
     const top = canvas.offsetTop + tooltipModel.caretY;
     const left = canvas.offsetLeft + tooltipModel.caretX;
     const alignments = [`x${tooltipModel.xAlign}`, `y${tooltipModel.yAlign}`];
-    // console.log(alignments);
     const inlineStyle = {
       top,
       left,
       // eslint-disable-next-line no-underscore-dangle
       fontFamily: tooltipModel._bodyFontFamily,
       // eslint-disable-next-line no-underscore-dangle
-      fontSize: `${tooltipModel._bodyFontSize}px`,
+      fontSize: `${tooltipModel.bodyFontSize}px`,
     };
-    const currPoint = tooltipModel.dataPoints[0];
-    const labelColor = {
-      backgroundColor: tooltipModel.labelColors[0].borderColor,
-    };
-    const { index } = currPoint;
-    const currSeries = series[currPoint.datasetIndex];
-
-    if (missing(currSeries)) {
-      return null;
-    }
-
-    const higherOrLower = currSeries.meta.lowerIsBetter
-      ? 'lower is better'
-      : 'higher is better';
-    const curr = currSeries.data[index];
-    const hgURL = URL({
-      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
-      query: { changeset: curr.revision },
-    });
-    const jobURL = URL({
-      path: 'https://treeherder.mozilla.org/#/jobs',
-      query: {
-        repo: 'mozilla-central',
-        revision: curr.revision,
-        selectedJob: curr.job_id,
-        group_state: 'expanded',
-      },
-    });
+    const { datasetIndex: seriesIndex, index } = tooltipModel.dataPoints[0];
+    const { data, series } = standardOptions;
+    const currSeries = series[seriesIndex];
+    const record = data[index];
+    const HandleTooltip = standardOptions.tip;
 
     return (
       <div
         className={[classes.tooltip, ...alignments].join(' ')}
         style={inlineStyle}>
-        <div className={classes.test}>{currPoint.xLabel}</div>
-        <div>
-          <span style={labelColor} className={classes.tooltipKey} />
-          {currSeries.label}: {round(currPoint.yLabel, { places: 3 })}
-        </div>
-        <div>
-          {currPoint.yLabel} ({higherOrLower})
-        </div>
-        {(() => {
-          if (index === 0) {
-            return null;
-          }
-
-          const prev = currSeries.data[index - 1];
-          const delta = curr.value - prev.value;
-          const deltaPercentage = (delta / prev.value) * 100;
-
-          return (
-            <div>
-              Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
-            </div>
-          );
-        })()}
-        <div>
-          <a href={hgURL} target="_blank" rel="noopener noreferrer">
-            {curr.revision.slice(0, 12)}
-          </a>
-          {` `}(
-          <a href={jobURL} target="_blank" rel="noopener noreferrer">
-            job
-          </a>
-          )
-        </div>
-        <div className={classes.lockMessage}>
-          {isLocked ? 'Click to unlock' : 'Click to lock'}
-        </div>
+        <HandleTooltip
+          {...{
+            record,
+            index,
+            data,
+            series: currSeries,
+            isLocked: tooltipIsLocked,
+            seri: series,
+            standardOptions,
+          }}
+        />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(CustomTooltip);
+CustomTooltip.propTypes = {
+  classes: PropTypes.shape({}).isRequired,
+  standardOptions: PropTypes.shape({
+    tip: PropTypes.func.isRequired,
+    series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }).isRequired,
+  tooltipModel: PropTypes.shape({}),
+  tooltipIsLocked: PropTypes.bool.isRequired,
+  canvas: PropTypes.shape({}),
+};
+
+const StyledCustomTooltip = withStyles(styles)(CustomTooltip);
+
+function withTooltip() {
+  // https://reactjs.org/docs/higher-order-components.html
+  //
+  // Expects `standardOptions.tip` property that accepts
+  // * record - particualr raw record being shown
+  // * index - position of record in data
+  // * data - all the data in the series
+  // * series - the particular dataset being shown
+  // * s - index into series
+  // * seri - all series shown on this chart
+
+  return WrappedChart => {
+    class Output extends React.Component {
+      constructor(props, ...moreArgs) {
+        super(props, ...moreArgs);
+        const { standardOptions } = props;
+        const self = this;
+        const options = { tooltips: {} };
+
+        if (standardOptions.tip) {
+          options.onClick = this.handleChartClick;
+          options.tooltips.enabled = false;
+          options.tooltips.custom = function custom(tooltipModel) {
+            if (!self.state.tooltipIsLocked) {
+              // eslint-disable-next-line no-underscore-dangle
+              self.setState({ tooltipModel, canvas: this._chart.canvas });
+            }
+          };
+        }
+
+        this.state = {
+          options,
+          standardOptions,
+          tooltipModel: null,
+          tooltipIsLocked: false,
+          canvas: null,
+        };
+      }
+
+      handleChartClick = () => {
+        this.setState(prevState => ({
+          tooltipIsLocked: !prevState.tooltipIsLocked,
+        }));
+      };
+
+      async componentDidUpdate(prevProps) {
+        const { standardOptions } = this.props;
+
+        if (prevProps.standardOptions !== standardOptions) {
+          // eslint-disable-next-line react/no-did-update-set-state
+          this.setState({ standardOptions });
+        }
+      }
+
+      render() {
+        const { standardOptions: _, ...moreProps } = this.props;
+        const { standardOptions, options, ...rest } = this.state;
+
+        if (standardOptions.tip) {
+          return (
+            <div style={{ position: 'relative' }}>
+              <WrappedChart {...Data.setDefault(moreProps, { options })} />
+              <StyledCustomTooltip {...{ standardOptions, ...rest }} />
+            </div>
+          );
+        }
+
+        return <WrappedChart {...moreProps} />;
+      }
+    }
+
+    return Output;
+  };
+}
+
+export { withTooltip }; // eslint-disable-line import/prefer-default-export

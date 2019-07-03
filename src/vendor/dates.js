@@ -24,6 +24,10 @@ class GMTDate extends Date {
     // RETURN NUMBER OF SECONDS SINCE EPOCH
     this.milli() / 1000.0;
 
+  isEqual(other) {
+    return this.milli() === other.milli();
+  }
+
   between = (min, max) => {
     if (exists(min)) {
       if (min.getMilli && this.milli() < min.milli()) {
@@ -1096,16 +1100,18 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
 // ------------------------------------------------------------------
 {
   const generalFormats = [
+    // SPACE DELIMITED PATTERNS
+    'yyyy - MM - dd HH : mm : ss . fff',
+    'yyyy - MM - dd T HH : mm : ss Z',
     'EE MMM d, yyyy',
     'EE MMM d, yyyy @ hh:mm a',
     'y M d',
     'y - M - d',
-    'yyyy - MM - dd HH : mm : ss',
     'MMM d, y',
     'MMM d y',
     'MMM d',
     'y - MMM - d',
-    'yyyyMMMd',
+    'yyyy MMM d',
     'd - MMM - y',
     'd MMM y',
   ];
@@ -1212,4 +1218,4 @@ strings.format = (value, format) => {
 
 strings.unix = value => GMTDate.newInstance(value).unix();
 
-export default GMTDate;
+export { GMTDate }; // eslint-disable-line import/prefer-default-export

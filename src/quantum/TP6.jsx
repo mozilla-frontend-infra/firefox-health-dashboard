@@ -49,7 +49,7 @@ class TP6 extends React.Component {
                     timeDomain={timeDomain}
                     title={site}
                     series={selectFrom(series)
-                      .sortBy(['ordering'])
+                      .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })
                       .toArray()}
                   />

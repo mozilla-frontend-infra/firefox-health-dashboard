@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
-import { generateDatasetStyle, generateOptions } from './utils';
-import { Data } from '../../datas';
-import Date from '../../dates';
+import { cjsGenerator } from './utils';
+import { Data, isEqual } from '../../datas';
+import { GMTDate as Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 import { coalesce } from '../../utils';
+import { withTooltip } from './CustomTooltip';
 
 const styles = {
   // This div helps with canvas size changes
@@ -32,35 +33,55 @@ const styles = {
     width: '70%',
   },
 };
-const ChartJsWrapper = ({
-  classes,
-  data,
-  isLoading,
-  options,
-  title,
-  style = {}, // SEE chartSchema.md
-  chartHeight,
-  spinnerSize,
-}) =>
-  (() => {
+const ToolTipChart = withTooltip()(Chart);
+
+class ChartJsWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    const { standardOptions } = props;
+
+    this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { standardOptions } = this.props;
+
+    if (isEqual(standardOptions, prevProps.standardOptions)) {
+      return;
+    }
+
+    // eslint-disable-next-line react/no-did-update-set-state
+    this.setState(cjsGenerator(standardOptions));
+  }
+
+  render() {
+    const { classes, isLoading, title, chartHeight } = this.props;
+    const { cjsOptions, standardOptions } = this.state;
+
     if (isLoading) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
+
           <div
             style={{
+              position: 'relative',
               height: chartHeight,
-              lineHeight: spinnerSize,
-              textAlign: 'center',
-              width: spinnerSize,
             }}>
-            <CircularProgress />
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+              }}>
+              <CircularProgress />
+            </div>
           </div>
         </div>
       );
     }
 
-    if (!data) {
+    if (!standardOptions) {
       return (
         <div className={classes.chartContainer}>
           {title && <h2 className={classes.title}>{title}</h2>}
@@ -69,12 +90,34 @@ const ChartJsWrapper = ({
       );
     }
 
+    if (!standardOptions.data.length) {
+      return (
+        <div className={classes.chartContainer}>
+          {title && <h2 className={classes.title}>{title}</h2>}
+          <div
+            style={{
+              position: 'relative',
+              height: chartHeight,
+            }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+              }}>
+              No Data
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     const currentDate = coalesce(
-      Data.get(Data.fromConfig(options), 'axis.x.max'),
+      Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod()
     );
-    const allOldData = data.datasets.every(dataset => {
-      const latestDataDate = new Date(
+    const allOldData = cjsOptions.data.datasets.every(dataset => {
+      const latestDataDate = Date.newInstance(
         selectFrom(dataset.data)
           .select('x')
           .max()
@@ -86,22 +129,6 @@ const ChartJsWrapper = ({
 
       return daysDifference > 3;
     });
-    const cOptions = generateOptions(options, data);
-    const defaultStyle = style;
-    const cData = {
-      datasets: data.datasets.map((ds, i) => {
-        const { style = {}, data, label } = ds;
-        const type = style.type || defaultStyle.type;
-
-        return {
-          ...generateDatasetStyle(i, type),
-          ...defaultStyle,
-          ...style,
-          data,
-          label,
-        };
-      }),
-    };
 
     if (allOldData) {
       const error = new Error(
@@ -112,66 +139,48 @@ const ChartJsWrapper = ({
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
             {title && <h2 className={classes.title}>{title}</h2>}
-            <Chart
-              type="line"
-              data={cData}
+            <ToolTipChart
               height={chartHeight}
-              options={cOptions}
+              standardOptions={standardOptions}
+              {...cjsOptions}
             />
           </ErrorMessage>
         </div>
       );
     }
 
+    // Log.note(value2json(cjsOptions));
+
     return (
       <div className={classes.chartContainer}>
         {title && <h2 className={classes.title}>{title}</h2>}
-        <Chart
-          type="line"
-          data={cData}
+        <ToolTipChart
           height={chartHeight}
-          options={cOptions}
+          standardOptions={standardOptions}
+          {...cjsOptions}
         />
       </div>
     );
-  })();
+  }
+}
 
 // The properties are to match ChartJs properties
 ChartJsWrapper.propTypes = {
   classes: PropTypes.shape({}).isRequired,
-  options: PropTypes.shape({
+  isLoading: PropTypes.bool,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  chartHeight: PropTypes.number,
+  spinnerSize: PropTypes.string,
+  standardOptions: PropTypes.shape({
     reverse: PropTypes.bool,
     'axis.y.label': PropTypes.string,
     title: PropTypes.string,
     ticksCallback: PropTypes.func,
+    data: PropTypes.arrayOf(PropTypes.shape({})),
   }),
-  data: PropTypes.shape({
-    datasets: PropTypes.arrayOf(
-      PropTypes.shape({
-        // There can be more properties than data and value,
-        // however, we mainly care about these as a minimum requirement
-        data: PropTypes.arrayOf(
-          PropTypes.shape({
-            x: PropTypes.oneOfType([
-              PropTypes.string,
-              PropTypes.instanceOf(Date),
-            ]),
-            y: PropTypes.number,
-          })
-        ),
-        label: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }),
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  isLoading: PropTypes.bool,
-  chartHeight: PropTypes.number,
-  spinnerSize: PropTypes.string,
 };
 
 ChartJsWrapper.defaultProps = {
-  data: undefined,
-  options: undefined,
   title: '',
   chartHeight: 80,
   spinnerSize: '100%',

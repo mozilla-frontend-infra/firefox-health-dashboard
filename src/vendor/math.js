@@ -103,7 +103,7 @@ function roundMetric(value, rounding) {
 }
 
 function count(values) {
-  let output = null;
+  let output = 0;
 
   values.forEach(v => {
     if (missing(v)) {

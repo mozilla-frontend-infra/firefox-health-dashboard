@@ -1,81 +1,12 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import queryBugzilla from './queryBugzilla';
-import Date from '../../vendor/dates';
-
-const newDate = (datetime, startDate) => {
-  const onlyDate = datetime.slice(0, 10);
-
-  return startDate && onlyDate < startDate ? startDate : onlyDate;
-};
-
-// startDate enables counting into a starting date all previous data points
-const bugsByCreationDate = (bugs, startDate) => {
-  // Count bugs created on each day
-  const byCreationDate = bugs.reduce(
-    (result, { creation_time, cf_last_resolved }) => {
-      const createdDate = newDate(creation_time, startDate);
-
-      if (!result[createdDate]) {
-        result[createdDate] = 0;
-      }
-
-      result[createdDate] += 1;
-
-      if (cf_last_resolved) {
-        const resolvedDate = newDate(cf_last_resolved, startDate);
-
-        if (!result[resolvedDate]) {
-          result[resolvedDate] = 0;
-        }
-
-        result[resolvedDate] -= 1;
-      }
-
-      return result;
-    },
-    {}
-  );
-  let count = 0;
-  let lastDataPoint;
-  const accumulatedCount = Object.keys(byCreationDate)
-    .sort()
-    .reduce((result, date) => {
-      count += byCreationDate[date];
-      lastDataPoint = { x: new Date(date), y: count };
-      result.push(lastDataPoint);
-
-      return result;
-    }, []);
-  // This guarantees that the line goes all the way to the end of the graph
-  const today = new Date();
-  const todaysDate = today.format('yyyy-MM-dd');
-
-  if (lastDataPoint && lastDataPoint.x !== todaysDate) {
-    accumulatedCount.push({ x: new Date(todaysDate), y: count });
-  }
-
-  return accumulatedCount;
-};
-
-const chartJsFormatter = (bugSeries, startDate) => {
-  const newData = { data: { datasets: [] } };
-
-  bugSeries.forEach(({ bugs, label }) => {
-    const bugCountPerDay = bugsByCreationDate(bugs, startDate);
-
-    newData.data.datasets.push({
-      data: bugCountPerDay,
-      label,
-    });
-  });
-
-  return newData;
-};
+import { GMTDate as Date } from '../../vendor/dates';
+import { selectFrom } from '../../vendor/vectors';
 
 // It formats the data and options to meet chartJs' data structures
-const getBugsData = async (queries = [], startDate) => {
-  const data = await Promise.all(
+const getBugsData = async (queries = [], timeDomain) => {
+  const bugSeries = await Promise.all(
     queries.map(async ({ label, parameters }) => {
       // This speeds up and the size of the call to Bugzilla
       parameters.include_fields = ['cf_last_resolved', 'creation_time'];
@@ -86,8 +17,37 @@ const getBugsData = async (queries = [], startDate) => {
       };
     })
   );
+  const data = selectFrom(timeDomain.partitions)
+    .map(p => ({
+      date: p.min,
+      ...selectFrom(bugSeries)
+        .map(({ bugs, label }) => [
+          selectFrom(bugs)
+            .filter(({ cf_last_resolved, creation_time }) => {
+              const end = Date.newInstance(cf_last_resolved);
+              const start = Date.newInstance(creation_time);
 
-  return chartJsFormatter(data, startDate);
+              return !(end < p.min || p.max < start);
+            })
+            .count(),
+          label,
+        ])
+        .args()
+        .fromPairs(),
+    }))
+    .toArray();
+
+  return {
+    axis: { x: { domain: timeDomain } },
+    series: selectFrom(bugSeries)
+      .map(({ label }) => ({
+        label,
+        select: { value: label },
+      }))
+      .append({ select: { value: 'date', axis: 'x' } })
+      .toArray(),
+    data,
+  };
 };
 
 export default getBugsData;

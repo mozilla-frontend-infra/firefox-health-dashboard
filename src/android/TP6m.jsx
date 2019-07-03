@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { round } from '../vendor/math';
-import { exists, missing } from '../vendor/utils';
+import { missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
   PLATFORMS,
@@ -21,6 +21,7 @@ import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../components/Section';
 import { timePickers } from '../utils/timePickers';
+import { GMTDate as Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
@@ -29,6 +30,60 @@ const styles = {
     padding: '1rem',
   },
 };
+const tipStyles = {
+  below: {
+    color: 'LightGreen',
+  },
+  above: {
+    color: 'Pink',
+  },
+};
+const geoTip = withStyles(tipStyles)(
+  ({ record, series, classes, standardOptions }) => {
+    const referenceValue = selectFrom(standardOptions.series)
+      .where({ label: TARGET_NAME })
+      .first()
+      .selector(record);
+
+    return (
+      <div>
+        <div className={classes.title}>
+          {new Date(record.x).format('yyyy-MM-dd')}
+        </div>
+        <div>
+          <span
+            style={{ backgroundColor: series.style.color }}
+            className={classes.tooltipKey}
+          />
+          {series.label} : {round(record.y, { places: 3 })}
+        </div>
+        <div>
+          {(() => {
+            const diff = record.y - referenceValue;
+
+            if (diff > 0) {
+              return (
+                <span className={classes.above}>
+                  {`${round(diff, {
+                    places: 2,
+                  })}ms above target`}
+                </span>
+              );
+            }
+
+            return (
+              <span className={classes.below}>
+                {`${round(-diff, {
+                  places: 2,
+                })}ms below target`}
+              </span>
+            );
+          })()}
+        </div>
+      </div>
+    );
+  }
+);
 
 class TP6M extends React.Component {
   constructor(props) {
@@ -58,53 +113,35 @@ class TP6M extends React.Component {
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
-      this.setState({ summaryData: null, test, platform });
+      this.setState({
+        data: null,
+        referenceValue: null,
+        test,
+        platform,
+      });
 
       return;
     }
 
-    const summaryData = {
-      datasets: aggregate
-        .where({ test, platform })
-        .along('platform') // dummy (only one)
-        .map(({ result }) => ({
-          label: selectFrom(PLATFORMS)
-            .where({ platform })
-            .first().label,
-          data: result
-            .along('pushDate')
-            .map(point => ({
-              x: point.pushDate.getValue(),
-              y: point.getValue(),
-            }))
-            .toArray(),
-        }))
-        .append(
-          exists(referenceValue) && {
-            label: TARGET_NAME,
-            style: {
-              type: 'line',
-              backgroundColor: 'gray',
-              borderColor: 'gray',
-              fill: false,
-              pointRadius: '0',
-              pointHoverBackgroundColor: 'gray',
-              lineTension: 0,
-            },
-            data: aggregate
-              .where({ test, platform })
-              .along('pushDate')
-              .map(({ pushDate, ref }) => ({
-                x: pushDate.getValue(),
-                y: ref.getValue(),
-              }))
-              .toArray(),
-          }
-        )
-        .toArray(),
-    };
+    const geomean = aggregate
+      .where({ test, platform })
+      .along('platform') // dummy (only one)
+      .map(({ result }) => ({
+        label: selectFrom(PLATFORMS)
+          .where({ platform })
+          .first().label,
+        data: result
+          .along('pushDate')
+          .map(point => ({
+            x: point.pushDate.getValue(),
+            y: point.getValue(),
+          }))
+          .toArray(),
+      }))
+      .toArray();
+    const { data } = geomean[0];
 
-    this.setState({ summaryData, test, platform });
+    this.setState({ data, test, platform, referenceValue });
   }
 
   async componentDidMount() {
@@ -126,12 +163,15 @@ class TP6M extends React.Component {
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    let { summaryData } = this.state;
+    const { data, referenceValue } = (() => {
+      if (test !== this.state.test || platform !== this.state.platform) {
+        return {};
+      }
 
-    if (test !== this.state.test || platform !== this.state.platform) {
-      summaryData = null;
-    }
+      const { data, referenceValue } = this.state;
 
+      return { data, referenceValue };
+    })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
       .first().label;
@@ -144,12 +184,21 @@ class TP6M extends React.Component {
               {navigation}
             </Grid>
             <Grid item xs={6} className={classes.chart}>
-              {summaryData && (
+              {data && (
                 <ChartJSWrapper
                   title={`Geomean of ${subtitle}`}
-                  data={summaryData}
-                  height={200}
-                  options={{
+                  standardOptions={{
+                    data,
+                    tip: geoTip,
+                    series: [
+                      { label: 'Geomean', select: { value: 'y' } },
+                      {
+                        label: TARGET_NAME,
+                        select: { value: referenceValue },
+                        style: { color: 'gray' },
+                      },
+                      { label: 'Date', select: { value: 'x', axis: 'x' } },
+                    ],
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,
                   }}
@@ -185,7 +234,7 @@ class TP6M extends React.Component {
                       };
                     })()}
                     series={selectFrom(series)
-                      .sortBy(['ordering'])
+                      .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })
                       .toArray()}
                   />

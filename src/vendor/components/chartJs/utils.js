@@ -4,8 +4,10 @@ import { Data, isData } from '../../datas';
 import { first, selectFrom } from '../../vectors';
 import { max, min } from '../../math';
 import Color from '../../colors';
-import Date from '../../dates';
+import { GMTDate as Date } from '../../dates';
 import { Template } from '../../Template';
+import { Log } from '../../logs';
+import jx from '../../jx/expressions';
 
 const invisible = 'rgba(0,0,0,0)';
 /*
@@ -14,7 +16,7 @@ return maximum for most of the values
 const mostlyMax = values => {
   const sorted = selectFrom(values)
     .exists()
-    .sortBy()
+    .sort()
     .toArray();
   const num = sorted.length - 1;
   const p50 = sorted[Math.ceil(num * 0.5)];
@@ -39,14 +41,76 @@ const niceCeiling = value => {
   return nice * d;
 };
 
-const generateOptions = (rawOptions = {}, data) => {
+const generateLineChartStyle = color => ({
+  type: 'line',
+  backgroundColor: color,
+  borderColor: color,
+  fill: false,
+
+  pointRadius: 5,
+  pointBackgroundColor: invisible,
+  pointBorderColor: invisible,
+
+  pointHoverRadius: 3,
+  pointHoverBackgroundColor: color,
+  pointHoverBorderWidth: 6,
+
+  lineTension: 0.1,
+});
+const generateScatterChartStyle = color => {
+  const gentleColor = missing(color)
+    ? color
+    : Color.parseHTML(color)
+        .setOpacity(0.9)
+        .toRGBA();
+
+  return {
+    type: 'scatter',
+    backgroundColor: gentleColor,
+    borderWidth: 0,
+    borderColor: invisible,
+    fill: false,
+    lineTension: 0,
+
+    pointRadius: 3,
+    pointBackgroundColor: invisible,
+    pointBorderColor: gentleColor,
+    pointBorderWidth: 2,
+    pointHitRadius: 10,
+
+    pointHoverRadius: 3,
+    pointHoverBackgroundColor: color,
+    pointHoverBorderColor: gentleColor,
+    pointHoverBorderWidth: 6,
+  };
+};
+
+const generateDatasetStyle = (colour, type = 'line') => {
+  if (type === 'scatter') {
+    return generateScatterChartStyle(colour);
+  }
+
+  return generateLineChartStyle(colour);
+};
+
+/*
+Convert from standard chart structure to CharJS structure
+ */
+const cjsGenerator = standardOptions => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
-  const options = Data.fromConfig(rawOptions);
-  const { title, tooltips, ticksCallback, onClick } = options;
+  const options = (() => {
+    // DEEP COPY, BUT NOT THE data
+    const { data, ...rest } = standardOptions;
+    const newRest = Data.deepCopy(rest);
+
+    return Data.fromConfig({ data, ...newRest });
+  })();
   const xAxes = (() => {
-    if (Data.get(options, 'axis.x')) {
-      return toArray(options.axis.x).map(x => {
-        const { min, max } = x;
+    const xDomain = Data.get(options, 'axis.x.domain');
+
+    if (xDomain) {
+      return toArray(xDomain).map(x => {
+        const [min, max] = [x.min, x.max];
 
         return {
           type: 'time',
@@ -59,6 +123,7 @@ const generateOptions = (rawOptions = {}, data) => {
       });
     }
 
+    // DEFAULT
     return [
       {
         type: 'time',
@@ -68,6 +133,61 @@ const generateOptions = (rawOptions = {}, data) => {
       },
     ];
   })();
+
+  if (missing(options.series)) {
+    Log.error('expecting series');
+  }
+
+  const xEdge = selectFrom(toArray(options.series))
+    .where({ 'select.axis': 'x' })
+    .first();
+
+  if (missing(xEdge)) {
+    Log.error(
+      "Expecting chart definition to have series.select.axis=='x'; pointing to the X axis"
+    );
+  }
+
+  // BE SURE THE xEdge IS LAST (SO IT LINES UP WITH ChartJS datasetIndex
+  options.series = [...options.series.filter(s => s !== xEdge), xEdge];
+  // ENSURE ALL SERIES HAVE A COLOR
+  options.series.forEach((s, i) => {
+    Data.setDefault(
+      s,
+      { style: standardOptions.style },
+      { style: { color: SETTINGS.colors[i] }, select: { axis: 'y' } }
+    );
+  });
+
+  const x = xEdge.select;
+  const xSelector = jx(x.value);
+
+  xEdge.selector = xSelector;
+
+  const datasets = options.series
+    .filter(s => s !== xEdge)
+    .map(s => {
+      const { select: y, style, type } = s;
+      const color = Data.get(style, 'color');
+      const temp = selectFrom;
+      const ySelector = jx(y.value);
+
+      // eslint-disable-next-line no-param-reassign
+      s.selector = ySelector;
+
+      return {
+        type,
+        label: s.label,
+        data: temp(options.data)
+          .select({
+            [y.axis]: ySelector,
+            [x.axis]: r => Date.newInstance(xSelector(r)),
+          })
+          .toArray(),
+        ...generateDatasetStyle(color, type),
+      };
+    });
+  const { title, tooltips, ticksCallback, onClick } = options;
   const yMax = (() => {
     const requestedMax = Data.get(options, 'axis.y.max');
 
@@ -77,7 +197,7 @@ const generateOptions = (rawOptions = {}, data) => {
 
     const niceMax = niceCeiling(
       mostlyMax(
-        selectFrom(data.datasets)
+        selectFrom(datasets)
           .select('data')
           .flatten()
           .select('y')
@@ -126,88 +246,45 @@ const generateOptions = (rawOptions = {}, data) => {
     };
   }
 
-  const chartJsOptions = {
-    legend: {
-      labels: {
-        boxWidth: 10,
-        fontSize: 10,
+  const cjsOptions = {
+    type: 'line', // dummy value to get legend to show
+    options: {
+      animation: false,
+      legend: {
+        labels: {
+          boxWidth: 10,
+          fontSize: 10,
+        },
+      },
+      scales: {
+        xAxes,
+        yAxes,
       },
     },
-    scales: {
-      xAxes,
-      yAxes,
-    },
+    data: { datasets },
   };
 
   if (ticksCallback) {
-    chartJsOptions.scales.yAxes[0].ticks.callback = ticksCallback;
+    cjsOptions.options.scales.yAxes[0].ticks.callback = ticksCallback;
   }
 
   if (tooltips) {
-    chartJsOptions.tooltips = tooltips;
+    cjsOptions.options.tooltips = tooltips;
   }
 
   if (title) {
-    chartJsOptions.title = {
+    cjsOptions.options.title = {
       display: true,
       text: title,
     };
   }
 
   if (onClick) {
-    chartJsOptions.onClick = onClick;
+    cjsOptions.options.onClick = onClick;
   }
 
-  chartJsOptions.animation = false;
-
-  return chartJsOptions;
+  return { cjsOptions, standardOptions: options };
 };
 
-const generateLineChartStyle = color => ({
-  type: 'line',
-  backgroundColor: color,
-  borderColor: color,
-  fill: false,
-  pointRadius: '0',
-  pointHoverBackgroundColor: 'white',
-  lineTension: 0.1,
-});
-const generateScatterChartStyle = color => {
-  const gentleColor = missing(color)
-    ? color
-    : Color.parseHTML(color)
-        .setOpacity(0.9)
-        .toRGBA();
-
-  return {
-    type: 'scatter',
-    backgroundColor: gentleColor,
-    borderWidth: 0,
-    borderColor: invisible,
-    fill: false,
-    lineTension: 0,
-
-    pointRadius: 3,
-    pointBackgroundColor: invisible,
-    pointBorderColor: gentleColor,
-    pointBorderWidth: 2,
-    pointHitRadius: 10,
-
-    pointHoverRadius: 3,
-    pointHoverBackgroundColor: color,
-    pointHoverBorderColor: gentleColor,
-    pointHoverBorderWidth: 6,
-  };
-};
-
-const generateDatasetStyle = (index, type = 'line') => {
-  const colour = SETTINGS.colors[index];
-
-  if (type === 'scatter') {
-    return generateScatterChartStyle(colour);
-  }
-
-  return generateLineChartStyle(colour);
-};
-
-export { generateOptions, generateDatasetStyle };
+// eslint-disable-next-line import/prefer-default-export
+export { cjsGenerator };

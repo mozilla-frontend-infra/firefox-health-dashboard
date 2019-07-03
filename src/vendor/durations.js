@@ -3,7 +3,6 @@
 
 import { coalesce, exists, isNumeric, isString, missing } from './utils';
 import { abs, floor, min } from './math';
-import Date from './dates';
 import { Log } from './logs';
 import strings from './strings';
 
@@ -11,6 +10,10 @@ class Duration {
   constructor() {
     this.milli = 0; // INCLUDES THE MONTH VALUE AS MILLISECONDS
     this.month = 0;
+  }
+
+  isEqual(other) {
+    return this.milli === other.milli && this.month === other.month;
   }
 
   add(duration) {
@@ -263,9 +266,9 @@ class Duration {
     return output;
   }
 
-  format(_format) {
-    return new Date(this.milli).format(_format);
-  }
+  // format(_format) {
+  //   return new Date(this.milli).format(_format);
+  // }
 
   round(interval, rounding) {
     const rounding_ = coalesce(rounding, 0);

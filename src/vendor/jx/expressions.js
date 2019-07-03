@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-restricted-syntax */
 import {
   exists,
   first,
@@ -7,9 +8,12 @@ import {
   toArray,
   isArray,
   isFunction,
+  splitField,
+  isInteger,
+  coalesce,
 } from '../utils';
 import { Data, isData } from '../datas';
-import Date from '../dates';
+import { GMTDate as Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
@@ -19,7 +23,59 @@ const defineFunction = expr => {
   }
 
   if (isString(expr)) {
-    return row => Data.get(row, expr);
+    const pathArray = splitField(expr);
+
+    if (pathArray.length === 0) {
+      return row => coalesce(row);
+    }
+
+    if (pathArray.length === 1) {
+      const step = pathArray[0];
+
+      return row => {
+        if (isArray(row)) {
+          if (step === 'length') {
+            return row.length;
+          }
+
+          if (isInteger(step)) {
+            return row[step];
+          }
+
+          if (isArray(row)) {
+            return row.map(o => (isData(o) ? o[step] : null));
+          }
+        } else if (isData(row)) {
+          return coalesce(row[step]);
+        } else {
+          return null;
+        }
+      };
+    }
+
+    return row => {
+      let output = row;
+
+      for (const step of pathArray) {
+        if (isArray(output)) {
+          if (step === 'length') {
+            output = output.length;
+          } else if (isInteger(step)) {
+            output = output[step];
+          } else if (isArray(output)) {
+            output = output.map(o => (isData(o) ? o[step] : null));
+          }
+        } else if (isData(output)) {
+          output = output[step];
+        } else {
+          return null;
+        }
+
+        if (missing(output)) return null;
+      }
+
+      return output;
+    };
   }
 
   if (isData(expr)) {
@@ -178,6 +234,30 @@ expressions.gte = obj => {
       }
 
       return av >= bv;
+    });
+};
+
+/*
+example {lt: {name: reference}
+
+return true if `name` < `reference`
+ */
+expressions.lt = obj => {
+  const lookup = Object.entries(obj).map(([name, reference]) => [
+    defineFunction(name),
+    defineFunction(reference),
+  ]);
+
+  return row =>
+    lookup.every(([a, b]) => {
+      const av = a(row);
+      const bv = b(row);
+
+      if (missing(av) || missing(bv)) {
+        return false;
+      }
+
+      return av < bv;
     });
 };
 

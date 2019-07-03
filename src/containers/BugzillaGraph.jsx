@@ -1,40 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withErrorBoundary } from '../../vendor/errors';
-import ChartJsWrapper from '../../vendor/components/chartJs/ChartJsWrapper';
-import getBugsData from '../../utils/bugzilla/getBugsData';
+import { withErrorBoundary } from '../vendor/errors';
+import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
+import getBugsData from '../utils/bugzilla/getBugsData';
 
 class BugzillaGraph extends Component {
   state = {
     data: null,
-    isLoading: false,
+    isLoading: true,
   };
 
   async componentDidMount() {
     await this.fetchData(this.props);
   }
 
-  async fetchData({ queries, startDate }) {
+  async fetchData({ queries, timeDomain }) {
+    this.setState({ isLoading: true });
+
     try {
-      this.setState({ isLoading: true });
-      this.setState(await getBugsData(queries, startDate));
+      this.setState({
+        standardOptions: {
+          ...(await getBugsData(queries, timeDomain)),
+          'axis.y.label': 'Number of bugs',
+        },
+      });
     } finally {
       this.setState({ isLoading: false });
     }
   }
 
   render() {
-    const { data, isLoading } = this.state;
     const { title } = this.props;
 
-    return (
-      <ChartJsWrapper
-        data={data}
-        isLoading={isLoading}
-        options={{ 'axis.y.label': 'Number of bugs' }}
-        title={title}
-      />
-    );
+    return <ChartJsWrapper title={title} {...this.state} />;
   }
 }
 

@@ -2,9 +2,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 import { Log } from '../logs';
-import Date from '../dates';
+import { GMTDate as Date } from '../dates';
+import { isEqual } from '../datas';
 import { Duration } from '../durations';
-import { coalesce, isString, missing, exists } from '../utils';
+import { coalesce, exists, isString, missing } from '../utils';
 import { selectFrom } from '../vectors';
 import jx from './expressions';
 
@@ -26,6 +27,10 @@ class Domain {
 
   lock() {
     this.locked = true;
+  }
+
+  isEqual() {
+    Log.error('not implemented');
   }
 }
 
@@ -122,12 +127,24 @@ class TimeDomain extends Domain {
   }
 
   /*
-  Return true if `value` is in the domain
+  Return value if `value` is in the domain else return null
    */
   includes(value) {
     const dateValue = Date.newInstance(value).milli();
 
-    return this.min.milli() <= dateValue && dateValue < this.max.milli();
+    if (this.min.milli() <= dateValue && dateValue < this.max.milli()) {
+      return dateValue;
+    }
+
+    return null;
+  }
+
+  isEqual(other) {
+    if (this === other) return true;
+
+    return ['min', 'max', 'interval', 'past', 'ending', 'format'].every(v =>
+      isEqual(this[v], other[v])
+    );
   }
 }
 
