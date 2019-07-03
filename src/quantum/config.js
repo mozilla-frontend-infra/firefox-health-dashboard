@@ -55,7 +55,7 @@ const PLATFORMS = [
     ordering: 1,
     bits: 32,
     os: 'win',
-    label: 'Firefox',
+    label: 'Firefox (win32)',
     platform: 'win32',
     platformFilter: {
       and: [
@@ -81,7 +81,7 @@ const PLATFORMS = [
     ordering: 1,
     bits: 64,
     os: 'win',
-    label: 'Firefox',
+    label: 'Firefox (win64)',
     platform: 'win64',
     platformFilter: {and: [
         {or: [
@@ -92,12 +92,50 @@ const PLATFORMS = [
       ]},
   },
   {
+    browser: 'Firefox',
+    ordering: 3,
+    bits: 64,
+    os: 'win',
+    label: 'Firefox (aarch64)',
+    platform: 'aarch64',
+    platformFilter: {
+      and: [
+        {
+          eq: {
+            platform: 'windows10-aarch64',
+            options: 'opt',
+          },
+        },
+        {
+          eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          },
+        },
+      ],
+    },
+  },
+  {
+    browser: 'Firefox',
+    ordering: 4,
+    bits: 64,
+    os: 'linux',
+    label: 'Firefox (linux64)',
+    platform: 'linux64',
+    platformFilter: {and: [
+        {or: [
+            { eq: { platform: 'linux64-shippable', options: 'opt' } },
+          ]},
+        { eq: { framework: 10, repo: 'mozilla-central' } },
+      ]},
+  },
+  {
     browser: 'Chromium',
     ordering: 2,
     bits: 32,
     os: 'win',
-    label: 'Chromium',
-    platform: 'chromium32',
+    label: 'Chromium (win32)',
+    platform: 'win32',
     platformFilter: {
       and: [
         {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
@@ -115,8 +153,8 @@ const PLATFORMS = [
     ordering: 2,
     bits: 64,
     os: 'win',
-    label: 'Chromium',
-    platform: 'chromium64',
+    label: 'Chromium (win64)',
+    platform: 'win64',
     platformFilter: {and: [
       {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
       {eq: {
@@ -126,28 +164,19 @@ const PLATFORMS = [
     ]}
   },
   {
-    browser: 'Firefox (aarch64)',
-    ordering: 3,
+    browser: 'Chromium',
+    ordering: 2,
     bits: 64,
-    os: 'win',
-    label: 'Firefox (aarch64)',
-    platform: 'win64-aarch',
-    platformFilter: {
-      and: [
-        {
-          eq: {
-            platform: 'windows10-aarch64',
-            options: 'opt',
-          },
-        },
-        {
-          eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          },
-        },
-      ],
-    },
+    os: 'linux',
+    label: 'Chromium (linux64)',
+    platform: 'linux64',
+    platformFilter: {and: [
+      {eq: {platform: 'linux64-shippable', options: 'opt'}},
+      {eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+      }}
+    ]}
   },
   {
     browser: 'geckoview',
@@ -322,32 +351,10 @@ const TP6_SITES_DATA = {
     ['Firefox', 'warm', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox'} }],
     ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox'} }],
 
-    ['Firefox (aarch64)', 'warm', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Wikia', {eq: {suite: 'raptor-tp6-wikia-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Office', {eq:{suite:'raptor-tp6-office-firefox'} }],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Instagram (binast)', {eq: {suite: 'raptor-tp6-binast-instagram-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Docs', {eq: {suite: 'raptor-tp6-docs-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Google Mail', {eq: {suite: 'raptor-tp6-google-mail-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: LinkedIn', {eq: {suite: 'raptor-tp6-linkedin-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Outlook', {eq: {suite: 'raptor-tp6-outlook-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Sheets', {eq: {suite: 'raptor-tp6-sheets-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Slides', {eq: {suite: 'raptor-tp6-slides-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Tumblr', {eq: {suite: 'raptor-tp6-tumblr-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Twitter', {eq: {suite: 'raptor-tp6-twitter-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Wikipedia', {eq: {suite: 'raptor-tp6-wikipedia-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Yahoo Mail', {eq: {suite: 'raptor-tp6-yahoo-mail-firefox'}}],
-    ['Firefox (aarch64)', 'warm', 'Tp6: Yahoo News', {eq: {suite: 'raptor-tp6-yahoo-news-firefox'}}],
+    ['Firefox', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox-cold'}}],
+    ['Firefox', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox-cold'}}],
+    ['Firefox', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox-cold'}}],
+    ['Firefox', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox-cold'}}],
 
     ['Chromium', 'warm', 'Tp6: Facebook', {eq: {suite: ['raptor-tp6-facebook-chrome', 'raptor-tp6-facebook-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Amazon', {eq: {suite: ['raptor-tp6-amazon-chrome', 'raptor-tp6-amazon-chromium']}}],
@@ -377,6 +384,11 @@ const TP6_SITES_DATA = {
     ['Chromium', 'warm', 'Tp6: Yahoo Mail', {eq: {suite: ['raptor-tp6-yahoo-mail-chrome', 'raptor-tp6-yahoo-mail-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Yahoo News', {eq: {suite: ['raptor-tp6-yahoo-news-chrome', 'raptor-tp6-yahoo-news-chromium']}}],
 
+    ['Chromium', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-chromium-cold'}}],
+    ['Chromium', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-chromium-cold'}}],
+    ['Chromium', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-chromium-cold'}}],
+    ['Chromium', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-chromium-cold'}}],
+
 
     ['geckoview',         'cold', 'Tp6 mobile: Amazon',               { eq: { suite: ['raptor-tp6m-cold-amazon-geckoview', 'raptor-tp6m-amazon-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: Amazon Search',        { eq: { suite: ['raptor-tp6m-cold-amazon-search-geckoview', 'raptor-tp6m-amazon-search-geckoview-cold']}}],
@@ -386,7 +398,6 @@ const TP6_SITES_DATA = {
     ['geckoview',         'cold', 'Tp6 mobile: Bing',                 { eq: { suite: ['raptor-tp6m-cold-bing-geckoview', 'raptor-tp6m-bing-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-geckoview', 'raptor-tp6m-bing-restaurants-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: Booking',              { eq: { suite: ['raptor-tp6m-cold-booking-geckoview', 'raptor-tp6m-booking-geckoview-cold']}}],
-    // ['geckoview',         'cold', 'Tp6 mobile: CNN',                  { eq: { suite: ['raptor-tp6m-cold-cnn-geckoview', 'raptor-tp6m-cnn-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-geckoview', 'raptor-tp6m-cnn-ampstories-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-geckoview-cold']}}],
     ['geckoview',         'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview-cold']}}],
@@ -416,7 +427,6 @@ const TP6_SITES_DATA = {
     ['geckoview',         'warm', 'Tp6 mobile: Bing',                 { eq: { suite: 'raptor-tp6m-bing-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: 'raptor-tp6m-bing-restaurants-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Booking',              { eq: { suite: 'raptor-tp6m-booking-geckoview'}}],
-    // ['geckoview',         'warm', 'Tp6 mobile: CNN',                  { eq: { suite: 'raptor-tp6m-cnn-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: 'raptor-tp6m-cnn-ampstories-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview'}}],
@@ -445,7 +455,6 @@ const TP6_SITES_DATA = {
     ['fenix',         'cold', 'Tp6 mobile: Bing',                 { eq: { suite: ['raptor-tp6m-cold-bing-fenix', 'raptor-tp6m-bing-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-fenix', 'raptor-tp6m-bing-restaurants-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Booking',              { eq: { suite: ['raptor-tp6m-cold-booking-fenix', 'raptor-tp6m-booking-fenix-cold']}}],
-    // ['fenix',         'cold', 'Tp6 mobile: CNN',                  { eq: { suite: ['raptor-tp6m-cold-cnn-fenix', 'raptor-tp6m-cnn-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-fenix', 'raptor-tp6m-cnn-ampstories-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-fenix', 'raptor-tp6m-ebay-kleinanzeigen-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-fenix', 'raptor-tp6m-ebay-kleinanzeigen-search-fenix-cold']}}],

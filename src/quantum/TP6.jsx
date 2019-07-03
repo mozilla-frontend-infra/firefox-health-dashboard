@@ -50,7 +50,10 @@ class TP6 extends React.Component {
                     title={site}
                     series={selectFrom(series)
                       .sort(['ordering'])
-                      .select({ label: 'browser', filter: 'filter' })
+                      .map(({ browser, platform, filter }) => ({
+                        label: `${browser} (${platform})`,
+                        filter,
+                      }))
                       .toArray()}
                   />
                 </Grid>
