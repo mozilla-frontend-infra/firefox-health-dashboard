@@ -15,7 +15,7 @@ const styles = {
 
   line: {
     '&:hover': {
-      backgroundColor: 'yellow',
+      backgroundColor: '#f8f8f8',
     },
   },
   chart: {
@@ -39,7 +39,7 @@ const styles = {
   },
   pass: {
     fontSize: '1rem',
-    backgroundColor: '#b2ff46',
+    backgroundColor: '#77cc00',
     width: '100%',
     height: '3rem',
   },
@@ -51,7 +51,7 @@ const styles = {
   },
   fail: {
     fontSize: '1rem',
-    backgroundColor: '#e55525',
+    backgroundColor: '#ff3333',
     width: '100%',
     height: '3rem',
   },
