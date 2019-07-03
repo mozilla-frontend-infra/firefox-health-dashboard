@@ -15,7 +15,7 @@ const SIZES = [
   {size: "360p30"},
   {size: "240p30"},
   {size: "144p30"},
-  {size: "144p15"},
+  // {size: "144p15"},
 ];
 
 const ENCODINGS = [
@@ -37,7 +37,7 @@ const TESTS = selectFrom(ENCODINGS)
   .leftJoin('dummy', SPEEDS, 'dummy')
   .map(({encoding, size, speed, speedLabel}) => {
     // H264.1080p30@1.25X_%_dropped_frames
-    const fullName1 =  encoding + '.' + size + '@' + speedLabel + 'X_%_dropped_frames';
+    const fullName1 =  encoding + '.' + size + '@' + speedLabel + 'X_dropped_frames';
     const fullName2 = "PlaybackPerf." + fullName1;
 
     return {
@@ -54,56 +54,61 @@ const PLATFORMS = [
   {
     id: 'win64',
     label: 'Windows 64bit',
+    bits: 64,
     filter: {eq: {platform: 'windows10-64-shippable', options: 'opt'}},
   },
   {
     id: 'win-aarch64',
     label: 'Windows (aarch64)',
+    bits: 64,
     filter: {eq: {platform: 'windows10-64-shippable', options: 'opt'}},
   },
   {
     id: 'win32',
     label: 'Windows 32bit',
+    bits: 32,
     filter: {eq: {platform: 'windows7-32-shippable', options: 'opt'}},
   },
   {
     id: 'linux64',
     label: 'Linux 64bit',
+    bits: 64,
     filter: {eq: {platform: 'linux64-shippable', options: 'opt'}},
   },
   {
     id: 'mac',
     label: 'MacOSX',
+    bits: 64,
     filter:
       {eq: {platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable']}},
   },
-  {
-    id: 'g5',
-    label: 'Moto G5 (arm7)',
-    filter: {
-      eq: {
-        platform: 'android-hw-g5-7-0-arm7-api-16',
-      },
-    },
-  },
-  {
-    id: 'p2',
-    label: 'Pixel 2 (arm7)',
-    filter: {
-      eq: {
-        platform: 'android-hw-p2-8-0-arm7-api-16',
-      },
-    },
-  },
-  {
-    id: 'p2-aarch64',
-    label: 'Pixel 2 (aarch64)',
-    filter: {
-      eq: {
-        platform: 'android-hw-p2-8-0-android-aarch64',
-      },
-    },
-  },
+  // {
+  //   id: 'g5',
+  //   label: 'Moto G5 (arm7)',
+  //   filter: {
+  //     eq: {
+  //       platform: 'android-hw-g5-7-0-arm7-api-16',
+  //     },
+  //   },
+  // },
+  // {
+  //   id: 'p2',
+  //   label: 'Pixel 2 (arm7)',
+  //   filter: {
+  //     eq: {
+  //       platform: 'android-hw-p2-8-0-arm7-api-16',
+  //     },
+  //   },
+  // },
+  // {
+  //   id: 'p2-aarch64',
+  //   label: 'Pixel 2 (aarch64)',
+  //   filter: {
+  //     eq: {
+  //       platform: 'android-hw-p2-8-0-android-aarch64',
+  //     },
+  //   },
+  // },
 ];
 
 
@@ -113,4 +118,4 @@ const BROWSERS =[
 ];
 
 
-export { SUITES, SIZES, ENCODINGS, SPEEDS, TESTS, BROWSERS, PLATFORMS };
+export { SIZES, ENCODINGS, SPEEDS, TESTS, BROWSERS, PLATFORMS };

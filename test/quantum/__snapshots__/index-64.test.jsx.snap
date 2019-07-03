@@ -776,6 +776,113 @@ exports[`renders correctly 1`] = `
       className="section-header"
     >
       <span>
+        Media Playback
+      </span>
+    </h2>
+    <div
+      className="MuiGrid-container-13 MuiGrid-spacing-xs-24-37"
+    >
+      <div
+        className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
+      >
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "position": "absolute",
+                "right": "50%",
+                "top": "50%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-114 MuiCircularProgress-colorPrimary-117 MuiCircularProgress-indeterminate-116"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-119"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-120 MuiCircularProgress-circleIndeterminate-122"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
+      >
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "position": "absolute",
+                "right": "50%",
+                "top": "50%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root-114 MuiCircularProgress-colorPrimary-117 MuiCircularProgress-indeterminate-116"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg-119"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle-120 MuiCircularProgress-circleIndeterminate-122"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2
+      className="section-header"
+    >
+      <span>
         Performance Tests
       </span>
     </h2>

@@ -215,6 +215,10 @@ const getDataBySignature = async metadatas => {
   return Promise.all(toArray(metadatas).map(m => dataCache[m.signature]));
 };
 
+/*
+return a list of {meta, data} objects, each representing
+a perfhereder signature that matches the given filter
+ */
 const getData = async condition => {
   const signatures = await getSignatures(condition);
 
