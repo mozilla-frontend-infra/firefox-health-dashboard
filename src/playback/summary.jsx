@@ -6,7 +6,7 @@ import { selectFrom } from '../vendor/vectors';
 import { BROWSERS, ENCODINGS, PLATFORMS, TESTS } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
-import { coalesce } from '../vendor/utils';
+import { missing } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 
 const styles = {
@@ -81,8 +81,7 @@ class PlaybackSummary extends React.Component {
     const sizes = selectFrom(SPECIAL_SIZES)
       .select('id')
       .toArray();
-    const temp = selectFrom(PLATFORMS);
-    const combos = temp
+    const combos = selectFrom(PLATFORMS)
       .where({ bits })
       .map(platform =>
         selectFrom(ENCODINGS)
@@ -114,15 +113,12 @@ class PlaybackSummary extends React.Component {
     const results = await Promise.all(
       combos.map(async g => {
         const perfData = await getData(g.filter);
-        const loss = coalesce(
-          selectFrom(perfData)
-            .select('data')
-            .flatten()
-            .filter(jx({ gte: { push_timestamp: { date: 'today-week' } } }))
-            .select('value')
-            .average(),
-          0
-        );
+        const loss = selectFrom(perfData)
+          .select('data')
+          .flatten()
+          .filter(jx({ gte: { push_timestamp: { date: 'today-week' } } }))
+          .select('value')
+          .average();
 
         return { ...g, loss };
       })
@@ -135,9 +131,13 @@ class PlaybackSummary extends React.Component {
           lookupType[
             selectFrom(speeds)
               .map(({ speed, loss }) => {
-                if (loss <= 1) return 0;
+                if (speed === 1) {
+                  if (missing(loss) || loss > 1) return 2;
 
-                if (speed === 1) return 2;
+                  return 0;
+                }
+
+                if (missing(loss) || loss <= 1) return 0;
 
                 return 1;
               })

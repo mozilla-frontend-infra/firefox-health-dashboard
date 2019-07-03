@@ -169,7 +169,6 @@ const cjsGenerator = standardOptions => {
     .map(s => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
-      const temp = selectFrom;
       const ySelector = jx(y.value);
 
       // eslint-disable-next-line no-param-reassign
@@ -178,7 +177,7 @@ const cjsGenerator = standardOptions => {
       return {
         type,
         label: s.label,
-        data: temp(options.data)
+        data: selectFrom(options.data)
           .select({
             [y.axis]: ySelector,
             [x.axis]: r => Date.newInstance(xSelector(r)),
