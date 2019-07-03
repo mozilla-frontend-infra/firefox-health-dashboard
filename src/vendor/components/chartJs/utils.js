@@ -209,6 +209,29 @@ const cjsGenerator = standardOptions => {
 
     return niceMax;
   })();
+
+  // MARK EXTREME POINTS AS TRIANGLES, AND AT MAX CHART VALUE
+  datasets.forEach(dataset => {
+    const { data, pointStyle } = dataset;
+    let needNewStyle = false;
+    const newStyle = data.map(d => {
+      if (d.y > yMax) {
+        // eslint-disable-next-line no-param-reassign
+        d.y = yMax;
+        needNewStyle = true;
+
+        return 'triangle';
+      }
+
+      return pointStyle;
+    });
+
+    if (needNewStyle) {
+      // eslint-disable-next-line no-param-reassign
+      dataset.pointStyle = newStyle;
+    }
+  });
+
   const yAxes = [
     {
       ticks: {
