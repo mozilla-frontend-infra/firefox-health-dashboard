@@ -38,13 +38,11 @@ const TESTS = selectFrom(ENCODINGS)
   .map(({encoding, size, speed, speedLabel}) => {
     // H264.1080p30@1.25X_%_dropped_frames
     const fullName1 =  encoding + '.' + size + '@' + speedLabel + 'X_dropped_frames';
-    const fullName2 = "PlaybackPerf." + fullName1;
-
     return {
       encoding,
       size,
       speed,
-      filter: {"eq": {"test": [fullName1, fullName2]}}
+      filter: {"eq": {"test": fullName1}}
     }
   })
   .toArray();

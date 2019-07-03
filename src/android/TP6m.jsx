@@ -109,7 +109,9 @@ class TP6M extends React.Component {
       platforms: selectFrom(PLATFORMS).where({ platform }),
       timeDomain,
     });
-    const referenceValue = aggregate.where({ test, platform }).ref.getValue();
+    // THE SPECIFIC combo FOR THIS VERSION OF THE PAGE
+    const combo = aggregate.where({ test, platform });
+    const referenceValue = combo.ref.getValue();
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
@@ -123,6 +125,8 @@ class TP6M extends React.Component {
       return;
     }
 
+    const count = combo.count.getValue();
+    const total = combo.total.getValue();
     const geomean = aggregate
       .where({ test, platform })
       .along('platform') // dummy (only one)
@@ -141,7 +145,7 @@ class TP6M extends React.Component {
       .toArray();
     const { data } = geomean[0];
 
-    this.setState({ data, test, platform, referenceValue });
+    this.setState({ data, count, total, test, platform, referenceValue });
   }
 
   async componentDidMount() {
@@ -163,14 +167,14 @@ class TP6M extends React.Component {
   render() {
     const { classes, navigation, test, platform, past, ending } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const { data, referenceValue } = (() => {
+    const { data, count, total, referenceValue } = (() => {
       if (test !== this.state.test || platform !== this.state.platform) {
         return {};
       }
 
-      const { data, referenceValue } = this.state;
+      const { data, count, total, referenceValue } = this.state;
 
-      return { data, referenceValue };
+      return { data, count, total, referenceValue };
     })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
@@ -186,7 +190,8 @@ class TP6M extends React.Component {
             <Grid item xs={6} className={classes.chart}>
               {data && (
                 <ChartJSWrapper
-                  title={`Geomean of ${subtitle}`}
+                  title={`${`Geomean of ${subtitle}` +
+                    ' ('}${count} of ${total} sites reported)`}
                   standardOptions={{
                     data,
                     tip: geoTip,

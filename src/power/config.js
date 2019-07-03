@@ -8,11 +8,11 @@ const TESTS = [
     label: 'CPU',
     filter: { eq: { test: 'cpu' } },
   },
-  {
-    id: 'proportional',
-    label: 'Proportional',
-    filter: { eq: { test: 'proportional' } },
-  },
+  // {
+  //   id: 'proportional',
+  //   label: 'Proportional',
+  //   filter: { eq: { test: 'proportional' } },
+  // },
   {
     id: 'screen',
     label: 'Screen',

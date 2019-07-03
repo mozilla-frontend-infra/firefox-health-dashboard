@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
-import { geomean, round } from '../vendor/math';
+import { geomean, round, sum } from '../vendor/math';
 import {
   PLATFORMS,
   TP6_COMBOS,
@@ -14,7 +14,7 @@ import {
 import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
-import { HyperCube, window } from '../vendor/jx/cubes';
+import { Cube, HyperCube, window } from '../vendor/jx/cubes';
 import { g5Reference, TARGET_NAME } from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
@@ -144,6 +144,14 @@ async function pullAggregate({
           .isEmpty(),
     }
   );
+  const count = window(
+    { mask },
+    {
+      edges: ['test', 'platform'],
+      value: ({ mask }) => sum(selectFrom(mask).map(m => (m ? 1 : 0))),
+    }
+  );
+  const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
   const ref = window(
     { mask, g5Reference },
     {
@@ -155,7 +163,7 @@ async function pullAggregate({
 
   processData.done();
 
-  return new HyperCube({ result, ref });
+  return new HyperCube({ result, ref, count, total });
 }
 
 const DESIRED_TESTS = ['cold-loadtime'];
@@ -226,6 +234,8 @@ class TP6mAggregate_ extends Component {
               .enumerate()
               .map(row => {
                 const platform = row.platform.getValue();
+                const count = row.count.getValue();
+                const total = row.total.getValue();
                 const platformLabel = selectFrom(PLATFORMS)
                   .where({ platform })
                   .first().label;
@@ -235,10 +245,14 @@ class TP6mAggregate_ extends Component {
                     <ChartJSWrapper
                       title={
                         <span>
-                          {'Geomean of '}
-                          {label}
+                          {`Geomean of ${label}`}
                           {' for '}
-                          {platformLabel}{' '}
+                          {platformLabel}
+                          {' ( '}
+                          {count}
+                          {' of '}
+                          {total}
+                          {' sites reporting)'}
                           <a
                             href={URL({
                               path: '/android/tp6m',
@@ -263,6 +277,7 @@ class TP6mAggregate_ extends Component {
                           {
                             label: TARGET_NAME,
                             select: { value: row.ref.getValue() },
+                            style: { color: 'gray' },
                           },
                           {
                             label: 'Push Date',

@@ -6,7 +6,7 @@ import { LinkIcon } from '../utils/icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
-import { exists, missing, sleep } from '../vendor/utils';
+import { exists, missing, sleep, literalField } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
 import { getData, TREEHERDER } from '../vendor/perfherder';
@@ -27,6 +27,13 @@ const tipStyles = {
   },
   lockMessage: {
     color: '#ccc',
+  },
+  value: {
+    fontSize: '1rem',
+  },
+  title: {
+    fontWeight: 'bold',
+    display: 'inline-block',
   },
 };
 const tip = withStyles(tipStyles)(
@@ -54,7 +61,7 @@ const tip = withStyles(tipStyles)(
 
     return (
       <div>
-        <div className={classes.test}>
+        <div className={classes.title}>
           {`${Date.newInstance(record.push_timestamp).format(
             'MMM dd, yyyy - HH:mm'
           )}GMT`}
@@ -64,16 +71,24 @@ const tip = withStyles(tipStyles)(
             style={{ backgroundColor: series.style.color }}
             className={classes.tooltipKey}
           />
-          {series.label}: {round(record.value, { places: 3 })}
+          {series.label}
         </div>
-        <div>
-          {record.y} ({higherOrLower})
-        </div>
+        <span className={classes.value}>
+          {round(record.value, { places: 3 })}
+        </span>{' '}
+        ({higherOrLower})
         {(() => {
           if (index === 0) return null;
           const prev = data[index - 1];
           const delta = record.value - prev.value;
+
+          if (delta === 0) return null;
+
           const deltaPercentage = (delta / prev.value) * 100;
+
+          if (missing(deltaPercentage)) {
+            return <div>Δ {delta.toFixed(2)}</div>;
+          }
 
           return (
             <div>
@@ -124,7 +139,7 @@ const generateStandardOptions = (series, timeDomain) => {
       .map(s => ({
         type: 'scatter',
         ...s,
-        select: { value: s.label, axis: 'y' },
+        select: { value: literalField(s.label) },
       }))
       .append({
         label: 'Push Date',

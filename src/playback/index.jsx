@@ -51,12 +51,6 @@ class Power extends React.Component {
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title={`Dropped Frames ${size}`}
-                style={
-                  {
-                    // 'axis.y.format': '{{.}}%',
-                    // 'axis.y.max.max': 1,
-                  }
-                }
                 series={selectFrom(TESTS)
                   .where({
                     encoding,
