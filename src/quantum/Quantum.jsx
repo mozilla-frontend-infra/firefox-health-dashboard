@@ -16,7 +16,6 @@ import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
-import { PowerSummary } from '../power/summary';
 
 export default class QuantumIndex extends React.Component {
   constructor(props) {
@@ -149,12 +148,6 @@ export default class QuantumIndex extends React.Component {
                 },
               },
             ]}
-          />,
-          <PowerSummary
-            key="power"
-            browser="geckoview"
-            suite="speedometer"
-            timeDomain={timeDomain}
           />,
         ],
       },
