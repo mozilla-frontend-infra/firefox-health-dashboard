@@ -11,10 +11,12 @@ class BugzillaGraph extends Component {
   };
 
   async componentDidMount() {
-    await this.fetchData(this.props);
+    await this.fetchData();
   }
 
-  async fetchData({ queries, timeDomain }) {
+  async fetchData() {
+    const { queries, timeDomain } = this.props;
+
     this.setState({ isLoading: true });
 
     try {
@@ -52,7 +54,7 @@ BugzillaGraph.propTypes = {
     })
   ),
   startDate: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
 };
 
 export default withErrorBoundary(BugzillaGraph);

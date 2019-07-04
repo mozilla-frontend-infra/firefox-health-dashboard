@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import DashboardPage from '../components/DashboardPage';
 import Section from '../components/Section';
-import BugzillaUrlContainer from '../containers/BugzillaUrlContainer';
 import BugzillaGraph from '../containers/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
 import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
@@ -11,6 +10,8 @@ import RedashContainer from '../containers/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
+import { DetailsIcon } from '../utils/icons';
+import { showBugsUrl } from '../utils/bugzilla/query';
 
 class Android extends Component {
   render() {
@@ -25,49 +26,45 @@ class Android extends Component {
           <Grid container spacing={24}>
             <Grid item xs={6} key="bugzilla">
               <Section title="Bugzilla">
-                <BugzillaUrlContainer
-                  includeBugCount
-                  queries={[
-                    {
-                      text: 'All GV Firefox Preview MVP bugs',
-                      parameters: {
-                        resolution: '---',
-                        status_whiteboard: '[geckoview:fenix:m',
-                        status_whiteboard_type: 'substring',
-                      },
-                    },
-                  ]}
-                />
                 <BugzillaGraph
-                  queries={[
-                    {
-                      label: 'GV M3 bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: [
-                          '[geckoview:fenix:m2]',
-                          '[geckoview:fenix:m3]',
-                        ],
-                        status_whiteboard_type: 'anywordssubstr',
-                      },
-                    },
-                    {
-                      label: 'GV M4 bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m4]',
-                      },
-                    },
-                    {
-                      label: 'GV M5 bugs',
-                      parameters: {
-                        resolution: ['---', 'FIXED'],
-                        whiteboard: '[geckoview:fenix:m5]',
-                      },
-                    },
-                  ]}
+                  title={
+                    <span>
+                      Firefox Preview Bugs
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={showBugsUrl({
+                          filter: {
+                            and: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized':
+                                    'geckoview:fenix:m',
+                                },
+                              },
+                            ],
+                          },
+                        })}
+                        title="All GV Firefox Preview MVP bugs">
+                        <DetailsIcon />
+                      </a>
+                    </span>
+                  }
                   timeDomain={timeDomain}
-                  title="Firefox Preview Bugs"
+                  queries={[4, 5, 6, 7].map(v => ({
+                    label: `GV M${v}bugs`,
+                    filter: {
+                      and: [
+                        { eq: { resolution: ['---', 'FIXED'] } },
+                        {
+                          eq: {
+                            'status_whiteboard.tokenized': `geckoview:fenix:m${v}`,
+                          },
+                        },
+                      ],
+                    },
+                  }))}
                 />
               </Section>
             </Grid>

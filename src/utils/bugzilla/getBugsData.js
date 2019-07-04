@@ -1,21 +1,19 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
-import queryBugzilla from './queryBugzilla';
+import { queryBugzilla } from './query';
 import { GMTDate as Date } from '../../vendor/dates';
 import { selectFrom } from '../../vendor/vectors';
 
 // It formats the data and options to meet chartJs' data structures
 const getBugsData = async (queries = [], timeDomain) => {
   const bugSeries = await Promise.all(
-    queries.map(async ({ label, parameters }) => {
-      // This speeds up and the size of the call to Bugzilla
-      parameters.include_fields = ['cf_last_resolved', 'creation_time'];
-
-      return {
-        label,
-        ...(await queryBugzilla(parameters)),
-      };
-    })
+    queries.map(async ({ label, filter }) => ({
+      label,
+      ...(await queryBugzilla({
+        select: ['cf_last_resolved', 'creation_time'],
+        where: filter,
+      })),
+    }))
   );
   const data = selectFrom(timeDomain.partitions)
     .map(p => ({

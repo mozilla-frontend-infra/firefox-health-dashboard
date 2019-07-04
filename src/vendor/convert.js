@@ -95,4 +95,8 @@ function value2json(json) {
 // deal with cyclic imports
 strings.json = value2json;
 
-export { value2json, json2value };
+function escapeRegEx(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+export { value2json, json2value, escapeRegEx };
