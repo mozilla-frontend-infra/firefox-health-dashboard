@@ -449,6 +449,113 @@ exports[`renders correctly 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="MuiGrid-item-14 MuiGrid-grid-xs-6-47"
+      >
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          <div
+            className="ChartJsWrapper-chartContainer-111"
+          >
+            <h2
+              className="ChartJsWrapper-title-112"
+            >
+              <div>
+                <span>
+                  Speedometer CPU usage
+                  <a
+                    href="/power?browser=geckoview&suite=speedometer"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="Show details"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "margin": "-1rem 0",
+                          "verticalAlign": "middle",
+                        }
+                      }
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className="MuiSvgIcon-root-4"
+                        focusable="false"
+                        role="presentation"
+                        style={
+                          Object {
+                            "margin": "0 .2rem 0 .2rem",
+                            "verticalAlign": "baseline",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </span>
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "position": "relative",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": "50%",
+                    "top": "50%",
+                  }
+                }
+              >
+                <div
+                  className="MuiCircularProgress-root-114 MuiCircularProgress-colorPrimary-117 MuiCircularProgress-indeterminate-116"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
+                >
+                  <svg
+                    className="MuiCircularProgress-svg-119"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-120 MuiCircularProgress-circleIndeterminate-122"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div>
