@@ -36,6 +36,7 @@ class Android extends Component {
                         href={showBugsUrl({
                           filter: {
                             and: [
+                              { eq: { product: 'GeckoView' } },
                               { eq: { resolution: ['---', 'FIXED'] } },
                               {
                                 prefix: {
@@ -56,6 +57,7 @@ class Android extends Component {
                     label: `GV M${v}bugs`,
                     filter: {
                       and: [
+                        { eq: { product: 'GeckoView' } },
                         { eq: { resolution: ['---', 'FIXED'] } },
                         {
                           eq: {

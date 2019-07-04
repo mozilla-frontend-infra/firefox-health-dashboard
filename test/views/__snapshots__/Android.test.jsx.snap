@@ -218,7 +218,7 @@ exports[`renders correctly 1`] = `
                 <span>
                   Firefox Preview Bugs
                   <a
-                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=OP&j2=OR&f3=resolution&o3=equals&v3=---&f4=resolution&o4=equals&v4=FIXED&f5=CP&f6=status_whiteboard&o6=regexp&v6=.*%5C%5Bgeckoview%3Afenix%3Am.*.*&f7=CP&include_fields=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
+                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=product&o2=equals&v2=GeckoView&f3=OP&j3=OR&f4=resolution&o4=equals&v4=---&f5=resolution&o5=equals&v5=FIXED&f6=CP&f7=status_whiteboard&o7=regexp&v7=.*%5C%5Bgeckoview%3Afenix%3Am.*.*&f8=CP&include_fields=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
                     rel="noopener noreferrer"
                     target="_blank"
                     title="All GV Firefox Preview MVP bugs"
