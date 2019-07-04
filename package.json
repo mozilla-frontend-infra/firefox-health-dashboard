@@ -12,7 +12,9 @@
     "prepush": "yarn lint --fix && yarn test",
     "coverage": "nyc --all jest --collectCoverage",
     "coveralls": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov | coveralls",
-    "heroku-postbuild": "yarn build"
+    "heroku-postbuild": "yarn build",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "nyc": {
     "include": [
@@ -57,7 +59,8 @@
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "typeface-roboto": "^0.0.54"
+    "typeface-roboto": "^0.0.54",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@mozilla-frontend-infra/react-lint": "^1.1.1",
@@ -79,5 +82,6 @@
     "webpack-dev-server": "^3"
   },
   "main": "index.js",
-  "repository": "git@github.com:mozilla/firefox-health-dashboard.git"
+  "repository": "git@github.com:mozilla/firefox-health-dashboard.git",
+  "snyk": true
 }
