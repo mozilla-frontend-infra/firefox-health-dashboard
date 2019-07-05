@@ -83,7 +83,12 @@ class Android extends Component {
                               },
                             ],
                           },
-                          { eq: { priority: ['P1', '--'] } },
+                          {
+                            or: [
+                              { eq: { priority: ['P1', '--'] } },
+                              { missing: 'priority' },
+                            ],
+                          },
                           {
                             or: [
                               { eq: { resolution: ['---', 'FIXED'] } },
@@ -132,35 +137,6 @@ class Android extends Component {
                             ],
                           },
                           { eq: { priority: 'P3' } },
-                          {
-                            or: [
-                              { eq: { resolution: ['---', 'FIXED'] } },
-                              { missing: 'resolution' },
-                            ],
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      label: 'GV Triage',
-                      filter: {
-                        and: [
-                          {
-                            or: [
-                              { eq: { product: 'Geckoview' } },
-                              {
-                                prefix: {
-                                  'status_whiteboard.tokenized': 'geckoview:',
-                                },
-                              },
-                            ],
-                          },
-                          {
-                            or: [
-                              { eq: { priority: '--' } },
-                              { missing: 'priority' },
-                            ],
-                          },
                           {
                             or: [
                               { eq: { resolution: ['---', 'FIXED'] } },
