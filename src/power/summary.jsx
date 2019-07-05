@@ -18,7 +18,7 @@ class PowerSummary extends React.Component {
         key="power usage"
         title={
           <span>
-            Speedometer CPU usage
+            Speedometer CPU power usage
             <a
               target="_blank"
               rel="noopener noreferrer"
