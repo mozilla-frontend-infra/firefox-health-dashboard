@@ -197,6 +197,12 @@ const tokenizedMap = {
     v: toArray(v).map(vv => `[${vv}]`),
   }),
 };
+/*
+convert json query expression to Bugzilla rest query
+https://github.com/mozilla/ActiveData/blob/dev/docs/jx.md
+https://github.com/mozilla/ActiveData/blob/dev/docs/jx_expressions.md
+https://wiki.mozilla.org/Bugzilla:REST_API
+ */
 const jx2rest = expr => {
   const output = { query_format: 'advanced' };
   const params = convert(expr);
@@ -230,7 +236,7 @@ const queryBugzilla = async query => {
   const url = URL({
     path: BUGZILLA_REST,
     query: {
-      ...jx2rest(query.where),
+      ...jx2rest(coalesce(query.where, query.filter)),
       include_fields: coalesce(query.select, 'bug_id').join(','),
       order: coalesce(query.sort, 'bug_id'),
     },
