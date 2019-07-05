@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { DetailsIcon } from '../utils/icons';
+import { DetailsIcon } from './icons';
 
 const LEFT_MARGIN = '1rem';
 const styles = {

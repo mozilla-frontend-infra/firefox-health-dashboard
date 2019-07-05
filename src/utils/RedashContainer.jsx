@@ -6,7 +6,7 @@ import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { fetchJson } from '../vendor/requests';
 import { withErrorBoundary } from '../vendor/errors';
 import { selectFrom } from '../vendor/vectors';
-import { LinkIcon } from '../utils/icons';
+import { LinkIcon } from './icons';
 import { GMTDate as Date } from '../vendor/dates';
 
 const telemetryDataToDatasets = (sourceData, dataKeyIdentifier, timeDomain) => {

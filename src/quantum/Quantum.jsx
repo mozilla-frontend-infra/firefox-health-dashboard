@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
-import DashboardPage from '../components/DashboardPage';
+import DashboardPage from '../utils/DashboardPage';
 import PerfherderWidget from './perfherder';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
@@ -12,7 +12,7 @@ import {
   statusLabels,
 } from './constants';
 import { CONFIG, TP6_COMBOS } from './config';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';

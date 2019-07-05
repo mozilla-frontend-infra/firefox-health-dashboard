@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 import { queryBugzilla } from './query';
-import { GMTDate as Date } from '../../vendor/dates';
-import { selectFrom } from '../../vendor/vectors';
-import { coalesce } from '../../vendor/utils';
+import { GMTDate as Date } from '../vendor/dates';
+import { selectFrom } from '../vendor/vectors';
+import { coalesce } from '../vendor/utils';
 
 // It formats the data and options to meet chartJs' data structures
 const getBugsData = async (queries = [], timeDomain) => {

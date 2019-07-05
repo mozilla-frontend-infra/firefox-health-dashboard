@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withErrorBoundary } from '../vendor/errors';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import getBugsData from '../utils/bugzilla/getBugsData';
+import getBugsData from './getBugsData';
 
 class BugzillaGraph extends Component {
   state = {

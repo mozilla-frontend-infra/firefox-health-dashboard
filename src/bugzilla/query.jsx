@@ -1,9 +1,9 @@
-import { fetchJson, URL } from '../../vendor/requests';
-import { coalesce, missing, toArray } from '../../vendor/utils';
-import { Log } from '../../vendor/logs';
-import { toPairs } from '../../vendor/vectors';
-import { Data } from '../../vendor/datas';
-import { escapeRegEx } from '../../vendor/convert';
+import { fetchJson, URL } from '../vendor/requests';
+import { coalesce, missing, toArray } from '../vendor/utils';
+import { Log } from '../vendor/logs';
+import { toPairs } from '../vendor/vectors';
+import { Data } from '../vendor/datas';
+import { escapeRegEx } from '../vendor/convert';
 
 const BUGZILLA_URL = 'https://bugzilla.mozilla.org/buglist.cgi';
 const BUGZILLA_REST = 'https://bugzilla.mozilla.org/rest/bug';
