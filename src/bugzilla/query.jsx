@@ -38,7 +38,7 @@ const convert = expr => {
 
     return output;
   } catch (e) {
-    Log.warning('Bad filter {{expr|json}}', { expr });
+    Log.warning('Bad filter {{expr|json}}', { expr }, e);
 
     return [];
   }
