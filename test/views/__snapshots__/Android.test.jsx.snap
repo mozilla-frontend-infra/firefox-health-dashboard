@@ -344,7 +344,7 @@ exports[`renders correctly 1`] = `
         <span>
           Raptor (TP6m)
           <span>
-
+             
             <a
               href="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
               title="show details"
@@ -455,7 +455,7 @@ exports[`renders correctly 1`] = `
               >
                 <div>
                   Total content page load time (no 95th)
-
+                   
                   <a
                     href="https://sql.telemetry.mozilla.org/queries/59395"
                     rel="noopener noreferrer"
@@ -555,7 +555,7 @@ exports[`renders correctly 1`] = `
               >
                 <div>
                   Total content page load time
-
+                   
                   <a
                     href="https://sql.telemetry.mozilla.org/queries/59397"
                     rel="noopener noreferrer"
