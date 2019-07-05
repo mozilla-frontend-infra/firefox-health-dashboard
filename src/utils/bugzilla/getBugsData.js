@@ -3,6 +3,7 @@
 import { queryBugzilla } from './query';
 import { GMTDate as Date } from '../../vendor/dates';
 import { selectFrom } from '../../vendor/vectors';
+import { coalesce } from '../../vendor/utils';
 
 // It formats the data and options to meet chartJs' data structures
 const getBugsData = async (queries = [], timeDomain) => {
@@ -15,6 +16,7 @@ const getBugsData = async (queries = [], timeDomain) => {
       })),
     }))
   );
+  const eod = Date.eod();
   const data = selectFrom(timeDomain.partitions)
     .map(p => ({
       date: p.min,
@@ -22,7 +24,7 @@ const getBugsData = async (queries = [], timeDomain) => {
         .map(({ bugs, label }) => [
           selectFrom(bugs)
             .filter(({ cf_last_resolved, creation_time }) => {
-              const end = Date.newInstance(cf_last_resolved);
+              const end = coalesce(Date.newInstance(cf_last_resolved), eod);
               const start = Date.newInstance(creation_time);
 
               return !(end < p.min || p.max < start);

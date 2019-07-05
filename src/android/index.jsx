@@ -36,37 +36,141 @@ class Android extends Component {
                         href={showBugsUrl({
                           filter: {
                             and: [
-                              { eq: { product: 'GeckoView' } },
-                              { eq: { resolution: ['---', 'FIXED'] } },
                               {
-                                prefix: {
-                                  'status_whiteboard.tokenized':
-                                    'geckoview:fenix:m',
-                                },
+                                or: [
+                                  { eq: { product: 'Geckoview' } },
+                                  {
+                                    prefix: {
+                                      'status_whiteboard.tokenized':
+                                        'geckoview:',
+                                    },
+                                  },
+                                ],
+                              },
+                              {
+                                or: [
+                                  { eq: { priority: ['P1', '--'] } },
+                                  { missing: 'priority' },
+                                ],
+                              },
+                              {
+                                or: [
+                                  { eq: { resolution: '---' } },
+                                  { missing: 'resolution' },
+                                ],
                               },
                             ],
                           },
                         })}
-                        title="All GV Firefox Preview MVP bugs">
+                        title="All Geckoview P1 and Triage bugs">
                         <DetailsIcon />
                       </a>
                     </span>
                   }
                   timeDomain={timeDomain}
-                  queries={[4, 5, 6, 7].map(v => ({
-                    label: `GV M${v}bugs`,
-                    filter: {
-                      and: [
-                        { eq: { product: 'GeckoView' } },
-                        { eq: { resolution: ['---', 'FIXED'] } },
-                        {
-                          eq: {
-                            'status_whiteboard.tokenized': `geckoview:fenix:m${v}`,
+                  queries={[
+                    {
+                      label: 'GV P1 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
                           },
-                        },
-                      ],
+                          { eq: { priority: ['P1', '--'] } },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
                     },
-                  }))}
+                    {
+                      label: 'GV P2 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
+                          },
+                          { eq: { priority: 'P2' } },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      label: 'GV P3 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
+                          },
+                          { eq: { priority: 'P3' } },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      label: 'GV Triage',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
+                          },
+                          {
+                            or: [
+                              { eq: { priority: '--' } },
+                              { missing: 'priority' },
+                            ],
+                          },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ]}
                 />
               </Section>
             </Grid>

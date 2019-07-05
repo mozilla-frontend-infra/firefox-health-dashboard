@@ -151,7 +151,7 @@ Data.setDefault(expressionLookup, {
     return expr.not;
   },
   missing(expr) {
-    const fld = expr.exists;
+    const fld = expr.missing;
 
     return [
       {
@@ -247,7 +247,7 @@ const showBugsUrl = query =>
     path: BUGZILLA_URL,
     query: {
       ...jx2rest(coalesce(query.where, query.filter)),
-      include_fields: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
+      columnlist: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
       order: coalesce(query.sort, 'Bug Number'),
     },
   });
