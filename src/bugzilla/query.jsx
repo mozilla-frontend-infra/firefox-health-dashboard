@@ -1,9 +1,9 @@
-import { fetchJson, URL } from '../../vendor/requests';
-import { coalesce, missing, toArray } from '../../vendor/utils';
-import { Log } from '../../vendor/logs';
-import { toPairs } from '../../vendor/vectors';
-import { Data } from '../../vendor/datas';
-import { escapeRegEx } from '../../vendor/convert';
+import { fetchJson, URL } from '../vendor/requests';
+import { coalesce, first, missing, toArray } from '../vendor/utils';
+import { Log } from '../vendor/logs';
+import { selectFrom, toPairs } from '../vendor/vectors';
+import { Data } from '../vendor/datas';
+import { escapeRegEx } from '../vendor/convert';
 
 const BUGZILLA_URL = 'https://bugzilla.mozilla.org/buglist.cgi';
 const BUGZILLA_REST = 'https://bugzilla.mozilla.org/rest/bug';
@@ -38,7 +38,7 @@ const convert = expr => {
 
     return output;
   } catch (e) {
-    Log.warning('Bad filter {{expr|json}}', { expr });
+    Log.warning('Bad filter {{expr|json}}', { expr }, e);
 
     return [];
   }
@@ -46,32 +46,28 @@ const convert = expr => {
 
 Data.setDefault(expressionLookup, {
   and(expr) {
-    if (expr.and.length > 1) {
+    const and = selectFrom(toArray(expr.and));
+
+    if (and.length > 1) {
       return [
         { f: 'OP', j: 'AND' },
-        ...expr.and.map(convert).flat(),
+        ...and.map(convert).flatten(),
         { f: 'CP' },
       ];
     }
 
-    if (expr.and.length === 1) {
-      return convert(expr.and[0]);
-    }
+    if (and.length === 1) return convert(first(and));
 
     return []; // RETURN true
   },
   or(expr) {
-    if (expr.or.length > 1) {
-      return [
-        { f: 'OP', j: 'OR' },
-        ...expr.or.map(convert).flat(),
-        { f: 'CP' },
-      ];
+    const or = selectFrom(toArray(expr.or));
+
+    if (or.length > 1) {
+      return [{ f: 'OP', j: 'OR' }, ...or.map(convert).flatten(), { f: 'CP' }];
     }
 
-    if (expr.or.length === 1) {
-      return convert(expr.or[0]);
-    }
+    if (or.length === 1) return convert(first(or));
 
     return [
       {
@@ -88,7 +84,7 @@ Data.setDefault(expressionLookup, {
     if (patterns.length > 1) {
       return [
         { f: 'OP', j: 'AND' },
-        ...patterns.map(([k, v]) => convert({ eq: { [k]: v } })).flat(),
+        ...patterns.flatMap(([k, v]) => convert({ eq: { [k]: v } })),
         { f: 'CP' },
       ];
     }
@@ -151,7 +147,7 @@ Data.setDefault(expressionLookup, {
     return expr.not;
   },
   missing(expr) {
-    const fld = expr.exists;
+    const fld = expr.missing;
 
     return [
       {
@@ -197,6 +193,12 @@ const tokenizedMap = {
     v: toArray(v).map(vv => `[${vv}]`),
   }),
 };
+/*
+convert json query expression to Bugzilla rest query
+https://github.com/mozilla/ActiveData/blob/dev/docs/jx.md
+https://github.com/mozilla/ActiveData/blob/dev/docs/jx_expressions.md
+https://wiki.mozilla.org/Bugzilla:REST_API
+ */
 const jx2rest = expr => {
   const output = { query_format: 'advanced' };
   const params = convert(expr);
@@ -230,7 +232,7 @@ const queryBugzilla = async query => {
   const url = URL({
     path: BUGZILLA_REST,
     query: {
-      ...jx2rest(query.where),
+      ...jx2rest(coalesce(query.where, query.filter)),
       include_fields: coalesce(query.select, 'bug_id').join(','),
       order: coalesce(query.sort, 'bug_id'),
     },
@@ -247,7 +249,7 @@ const showBugsUrl = query =>
     path: BUGZILLA_URL,
     query: {
       ...jx2rest(coalesce(query.where, query.filter)),
-      include_fields: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
+      columnlist: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
       order: coalesce(query.sort, 'Bug Number'),
     },
   });

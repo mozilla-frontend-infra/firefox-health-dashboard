@@ -1,17 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import DashboardPage from '../components/DashboardPage';
-import Section from '../components/Section';
-import BugzillaGraph from '../containers/BugzillaGraph';
+import DashboardPage from '../utils/DashboardPage';
+import Section from '../utils/Section';
+import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
-import RedashContainer from '../containers/RedashContainer';
+import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import RedashContainer from '../utils/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
 import { DetailsIcon } from '../utils/icons';
-import { showBugsUrl } from '../utils/bugzilla/query';
+import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 
 class Android extends Component {
@@ -37,37 +37,117 @@ class Android extends Component {
                         href={showBugsUrl({
                           filter: {
                             and: [
-                              { eq: { product: 'GeckoView' } },
-                              { eq: { resolution: ['---', 'FIXED'] } },
                               {
-                                prefix: {
-                                  'status_whiteboard.tokenized':
-                                    'geckoview:fenix:m',
-                                },
+                                or: [
+                                  { eq: { product: 'Geckoview' } },
+                                  {
+                                    prefix: {
+                                      'status_whiteboard.tokenized':
+                                        'geckoview:',
+                                    },
+                                  },
+                                ],
+                              },
+                              {
+                                or: [
+                                  { eq: { priority: ['P1', '--'] } },
+                                  { missing: 'priority' },
+                                ],
+                              },
+                              {
+                                or: [
+                                  { eq: { resolution: '---' } },
+                                  { missing: 'resolution' },
+                                ],
                               },
                             ],
                           },
                         })}
-                        title="All GV Firefox Preview MVP bugs">
+                        title="All Geckoview P1 and Triage bugs">
                         <DetailsIcon />
                       </a>
                     </span>
                   }
                   timeDomain={timeDomain}
-                  queries={[4, 5, 6, 7].map(v => ({
-                    label: `GV M${v}bugs`,
-                    filter: {
-                      and: [
-                        { eq: { product: 'GeckoView' } },
-                        { eq: { resolution: ['---', 'FIXED'] } },
-                        {
-                          eq: {
-                            'status_whiteboard.tokenized': `geckoview:fenix:m${v}`,
+                  queries={[
+                    {
+                      label: 'GV P1 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
                           },
-                        },
-                      ],
+                          {
+                            or: [
+                              { eq: { priority: ['P1', '--'] } },
+                              { missing: 'priority' },
+                            ],
+                          },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
                     },
-                  }))}
+                    {
+                      label: 'GV P2 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
+                          },
+                          { eq: { priority: 'P2' } },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      label: 'GV P3 Bugs',
+                      filter: {
+                        and: [
+                          {
+                            or: [
+                              { eq: { product: 'Geckoview' } },
+                              {
+                                prefix: {
+                                  'status_whiteboard.tokenized': 'geckoview:',
+                                },
+                              },
+                            ],
+                          },
+                          { eq: { priority: 'P3' } },
+                          {
+                            or: [
+                              { eq: { resolution: ['---', 'FIXED'] } },
+                              { missing: 'resolution' },
+                            ],
+                          },
+                        ],
+                      },
+                    },
+                  ]}
                 />
               </Section>
             </Grid>

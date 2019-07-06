@@ -1,5 +1,5 @@
 import React from 'react';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { URL } from '../vendor/requests';
 import { COMBOS, PLATFORMS } from './config';
 import { selectFrom } from '../vendor/vectors';

@@ -9,7 +9,7 @@ import {
   CodeIcon,
   HomeIcon,
   VideoIcon,
-} from '../utils/icons';
+} from './icons';
 
 const styles = {
   root: {

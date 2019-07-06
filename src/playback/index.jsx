@@ -5,8 +5,8 @@ import { selectFrom } from '../vendor/vectors';
 import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
-import DashboardPage from '../components/DashboardPage';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import DashboardPage from '../utils/DashboardPage';
+import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
 import { timePickers } from '../utils/timePickers';
 

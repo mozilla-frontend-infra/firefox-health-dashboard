@@ -218,10 +218,10 @@ exports[`renders correctly 1`] = `
                 <span>
                   Firefox Preview Bugs
                   <a
-                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=product&o2=equals&v2=GeckoView&f3=OP&j3=OR&f4=resolution&o4=equals&v4=---&f5=resolution&o5=equals&v5=FIXED&f6=CP&f7=status_whiteboard&o7=regexp&v7=.*%5C%5Bgeckoview%3Afenix%3Am.*.*&f8=CP&include_fields=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
+                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=OP&j2=OR&f3=product&o3=equals&v3=Geckoview&f4=status_whiteboard&o4=regexp&v4=.*%5C%5Bgeckoview%3A.*.*&f5=CP&f6=OP&j6=OR&f7=OP&j7=OR&f8=priority&o8=equals&v8=P1&f9=priority&o9=equals&v9=--&f10=CP&f11=priority&o11=isempty&f12=CP&f13=OP&j13=OR&f14=resolution&o14=equals&v14=---&f15=resolution&o15=isempty&f16=CP&f17=CP&columnlist=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
                     rel="noopener noreferrer"
                     target="_blank"
-                    title="All GV Firefox Preview MVP bugs"
+                    title="All Geckoview P1 and Triage bugs"
                   >
                     <div
                       style={
