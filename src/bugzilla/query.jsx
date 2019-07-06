@@ -47,11 +47,7 @@ const convert = expr => {
 Data.setDefault(expressionLookup, {
   and(expr) {
     if (expr.and.length > 1) {
-      return [
-        { f: 'OP', j: 'AND' },
-        ...expr.and.map(convert).flat(),
-        { f: 'CP' },
-      ];
+      return [{ f: 'OP', j: 'AND' }, ...expr.and.flatMap(convert), { f: 'CP' }];
     }
 
     if (expr.and.length === 1) {
@@ -62,11 +58,7 @@ Data.setDefault(expressionLookup, {
   },
   or(expr) {
     if (expr.or.length > 1) {
-      return [
-        { f: 'OP', j: 'OR' },
-        ...expr.or.map(convert).flat(),
-        { f: 'CP' },
-      ];
+      return [{ f: 'OP', j: 'OR' }, ...expr.or.flatMap(convert), { f: 'CP' }];
     }
 
     if (expr.or.length === 1) {
@@ -88,7 +80,7 @@ Data.setDefault(expressionLookup, {
     if (patterns.length > 1) {
       return [
         { f: 'OP', j: 'AND' },
-        ...patterns.map(([k, v]) => convert({ eq: { [k]: v } })).flat(),
+        ...patterns.flatMap(([k, v]) => convert({ eq: { [k]: v } })),
         { f: 'CP' },
       ];
     }
