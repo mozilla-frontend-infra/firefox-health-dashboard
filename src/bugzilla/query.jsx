@@ -49,19 +49,11 @@ Data.setDefault(expressionLookup, {
     const and = selectFrom(toArray(expr.and));
 
     if (and.length > 1) {
-      try {
-        return [
-          { f: 'OP', j: 'AND' },
-          ...and.map(convert).flatten(),
-          { f: 'CP' },
-        ];
-      } catch (e) {
-        Log.error(
-          'PROBLEM!! {{type}} - {{expr}}',
-          { expr, type: typeof and },
-          e
-        );
-      }
+      return [
+        { f: 'OP', j: 'AND' },
+        ...and.map(convert).flatten(),
+        { f: 'CP' },
+      ];
     }
 
     if (and.length === 1) return convert(first(and));
@@ -69,13 +61,13 @@ Data.setDefault(expressionLookup, {
     return []; // RETURN true
   },
   or(expr) {
-    if (expr.or.length > 1) {
-      return [{ f: 'OP', j: 'OR' }, ...expr.or.flatMap(convert), { f: 'CP' }];
+    const or = selectFrom(toArray(expr.or));
+
+    if (or.length > 1) {
+      return [{ f: 'OP', j: 'OR' }, ...or.map(convert).flatten(), { f: 'CP' }];
     }
 
-    if (expr.or.length === 1) {
-      return convert(expr.or[0]);
-    }
+    if (or.length === 1) return convert(first(or));
 
     return [
       {
