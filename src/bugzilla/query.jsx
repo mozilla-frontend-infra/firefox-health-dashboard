@@ -46,17 +46,15 @@ const convert = expr => {
 
 Data.setDefault(expressionLookup, {
   and(expr) {
-    if (expr.and.length > 1) {
+    const and = toArray(expr.and);
+
+    if (and.length > 1) {
       try {
-        return [
-          { f: 'OP', j: 'AND' },
-          ...expr.and.flatMap(convert),
-          { f: 'CP' },
-        ];
+        return [{ f: 'OP', j: 'AND' }, ...and.flatMap(convert), { f: 'CP' }];
       } catch (e) {
         Log.error(
           'PROBLEM!! {{type}} - {{expr}}',
-          { expr, type: typeof expr.and.flatMap(convert) },
+          { expr, type: typeof and.flatMap(convert) },
           e
         );
       }
