@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import DashboardPage from '../components/DashboardPage';
-import Section from '../components/Section';
+import DashboardPage from '../utils/DashboardPage';
+import Section from '../utils/Section';
 import NimbledroidProductVersions from './NimbledroidProductVersions';
 import NimbledroidSiteDrilldown from './NimbledroidSiteDrilldown';
 import { CONFIG } from './config';

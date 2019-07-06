@@ -27,8 +27,7 @@ function getEdgeByName(cubes, edgeName) {
 
       return edges.find(e => e.name === edgeName);
     })
-    .exists()
-    .first();
+    .coalesce();
 }
 
 /*

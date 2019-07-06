@@ -14,12 +14,12 @@ import {
 } from '../quantum/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
-import DashboardPage from '../components/DashboardPage';
-import PerfherderGraphContainer from '../containers/PerfherderGraphContainer';
+import DashboardPage from '../utils/DashboardPage';
+import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { g5Reference, TARGET_NAME } from './config';
 import { pullAggregate } from './TP6mAggregate';
-import Section from '../components/Section';
+import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
 import { GMTDate as Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';

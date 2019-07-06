@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { LinkIcon } from '../utils/icons';
+import { LinkIcon } from './icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';

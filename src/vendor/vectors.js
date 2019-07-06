@@ -501,6 +501,13 @@ class ArrayWrapper {
     return coalesce(last(this), defaultValue);
   }
 
+  /*
+  return first not-missing value
+   */
+  coalesce() {
+    return coalesce(...this);
+  }
+
   count() {
     return count(this);
   }
