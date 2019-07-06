@@ -1,7 +1,7 @@
 import { fetchJson, URL } from '../vendor/requests';
-import { coalesce, missing, toArray } from '../vendor/utils';
+import { coalesce, first, missing, toArray } from '../vendor/utils';
 import { Log } from '../vendor/logs';
-import { toPairs } from '../vendor/vectors';
+import { selectFrom, toPairs } from '../vendor/vectors';
 import { Data } from '../vendor/datas';
 import { escapeRegEx } from '../vendor/convert';
 
@@ -46,11 +46,15 @@ const convert = expr => {
 
 Data.setDefault(expressionLookup, {
   and(expr) {
-    const and = toArray(expr.and);
+    const and = selectFrom(toArray(expr.and));
 
     if (and.length > 1) {
       try {
-        return [{ f: 'OP', j: 'AND' }, ...and.flatMap(convert), { f: 'CP' }];
+        return [
+          { f: 'OP', j: 'AND' },
+          ...and.map(convert).flatten(),
+          { f: 'CP' },
+        ];
       } catch (e) {
         Log.error(
           'PROBLEM!! {{type}} - {{expr}}',
@@ -60,9 +64,7 @@ Data.setDefault(expressionLookup, {
       }
     }
 
-    if (expr.and.length === 1) {
-      return convert(expr.and[0]);
-    }
+    if (and.length === 1) return convert(first(and));
 
     return []; // RETURN true
   },
