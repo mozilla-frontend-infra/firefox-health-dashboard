@@ -12,6 +12,7 @@ import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
 import { DetailsIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
+import { PowerSummary } from '../power/summary';
 
 class Android extends Component {
   render() {
@@ -246,6 +247,14 @@ class Android extends Component {
                     },
                   },
                 ]}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <PowerSummary
+                key="power"
+                browser="geckoview"
+                suite="speedometer"
+                timeDomain={timeDomain}
               />
             </Grid>
             <Grid item xs={6}>
