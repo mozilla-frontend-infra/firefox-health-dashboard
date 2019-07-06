@@ -54,7 +54,7 @@ Data.setDefault(expressionLookup, {
       } catch (e) {
         Log.error(
           'PROBLEM!! {{type}} - {{expr}}',
-          { expr, type: typeof and.flatMap(convert) },
+          { expr, type: typeof and },
           e
         );
       }
