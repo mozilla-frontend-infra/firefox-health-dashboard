@@ -40,7 +40,11 @@ class ChartJsWrapper extends React.Component {
     super(props);
     const { standardOptions } = props;
 
-    this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    try {
+      this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    } catch (error) {
+      this.state = {};
+    }
   }
 
   async componentDidUpdate(prevProps) {
