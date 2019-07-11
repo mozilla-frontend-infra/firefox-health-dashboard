@@ -285,7 +285,7 @@ class PerfherderGraphContainer extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, missingDataInterval } = this.props;
     const { jointUrl, standardOptions, isLoading } = this.state;
 
     return (
@@ -309,6 +309,7 @@ class PerfherderGraphContainer extends React.Component {
             style: { type: 'scatter' },
             isLoading,
             standardOptions,
+            missingDataInterval,
           }}
         />
       </div>
@@ -332,6 +333,7 @@ PerfherderGraphContainer.propTypes = {
   timeDomain: PropTypes.shape({
     min: PropTypes.instanceOf(Date).isRequired,
     max: PropTypes.instanceOf(Date).isRequired,
+    missingDataInterval: PropTypes.number,
   }),
 };
 
