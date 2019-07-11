@@ -242,6 +242,7 @@ const PLATFORMS = [
     platform: 'fenix-p2-aarch64',
     platformFilter: {
       and: [
+        { eq: { platform: 'android-hw-p2-8-0-aarch64' } },
         { eq: { platform: 'android-hw-p2-8-0-android-aarch64' } },
         {eq: {
           framework: 10,
