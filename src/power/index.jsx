@@ -48,6 +48,7 @@ class Power extends React.Component {
                     },
                   }))
                   .toArray()}
+                missingDataInterval={10}
               />
             </Grid>
           ))}
