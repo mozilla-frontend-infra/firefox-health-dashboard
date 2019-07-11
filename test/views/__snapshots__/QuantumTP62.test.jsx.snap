@@ -791,6 +791,73 @@ exports[`renders correctly url 1`] = `
               className="ChartJsWrapper-title-201"
             >
               <div>
+                Tp6: Fandom
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "position": "relative",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": "50%",
+                    "top": "50%",
+                  }
+                }
+              >
+                <div
+                  className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
+                >
+                  <svg
+                    className="MuiCircularProgress-svg-208"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
+      >
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          <div
+            className="ChartJsWrapper-chartContainer-200"
+          >
+            <h2
+              className="ChartJsWrapper-title-201"
+            >
+              <div>
                 Tp6: Google
               </div>
             </h2>
@@ -1931,73 +1998,6 @@ exports[`renders correctly url 1`] = `
             >
               <div>
                 Tp6: Twitter
-              </div>
-            </h2>
-            <div
-              style={
-                Object {
-                  "height": 80,
-                  "position": "relative",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "position": "absolute",
-                    "right": "50%",
-                    "top": "50%",
-                  }
-                }
-              >
-                <div
-                  className="MuiCircularProgress-root-203 MuiCircularProgress-colorPrimary-206 MuiCircularProgress-indeterminate-205"
-                  role="progressbar"
-                  style={
-                    Object {
-                      "height": 40,
-                      "width": 40,
-                    }
-                  }
-                >
-                  <svg
-                    className="MuiCircularProgress-svg-208"
-                    viewBox="22 22 44 44"
-                  >
-                    <circle
-                      className="MuiCircularProgress-circle-209 MuiCircularProgress-circleIndeterminate-211"
-                      cx={44}
-                      cy={44}
-                      fill="none"
-                      r={20.2}
-                      strokeWidth={3.6}
-                      style={Object {}}
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-item-103 MuiGrid-grid-xs-6-136 TP6-chart-3"
-      >
-        <div
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
-        >
-          <div
-            className="ChartJsWrapper-chartContainer-200"
-          >
-            <h2
-              className="ChartJsWrapper-title-201"
-            >
-              <div>
-                Tp6: Wikia
               </div>
             </h2>
             <div
