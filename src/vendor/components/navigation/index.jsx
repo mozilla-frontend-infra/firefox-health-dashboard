@@ -85,6 +85,8 @@ function withNavigation(config) {
             {config.map(c => {
               const { type, id, label, options, defaultValue } = c;
 
+              if (id === 'ending' && options.length < 2) return null;
+
               return React.createElement(type, {
                 key: id,
                 id,

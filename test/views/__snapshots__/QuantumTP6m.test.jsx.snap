@@ -399,60 +399,6 @@ exports[`renders correctly 1`] = `
                 </div>
               </div>
             </form>
-            <form
-              autoComplete="off"
-              className="TimePicker-root-201"
-            >
-              <div
-                className="MuiFormControl-root-117"
-              >
-                <label
-                  className="MuiFormLabel-root-132 MuiFormLabel-filled-136 MuiInputLabel-root-121 MuiInputLabel-formControl-126 MuiInputLabel-animated-129 MuiInputLabel-shrink-128"
-                  data-shrink={true}
-                >
-                  Ending
-                </label>
-                <div
-                  className="MuiInputBase-root-159 MuiInput-root-146 MuiInput-underline-150 MuiInputBase-formControl-160 MuiInput-formControl-147"
-                  onClick={[Function]}
-                >
-                  <div
-                    className="MuiSelect-root-139"
-                  >
-                    <div
-                      aria-haspopup="true"
-                      aria-pressed="false"
-                      className="MuiSelect-select-140 MuiSelect-selectMenu-143 MuiInputBase-input-169 MuiInput-input-154"
-                      id="select-ending"
-                      onBlur={[Function]}
-                      onClick={[Function]}
-                      onFocus={[Function]}
-                      onKeyDown={[Function]}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      Today
-                    </div>
-                    <input
-                      name="ending"
-                      type="hidden"
-                      value="2019-07-01"
-                    />
-                    <svg
-                      aria-hidden="true"
-                      className="MuiSvgIcon-root-6 MuiSelect-icon-145"
-                      focusable="false"
-                      role="presentation"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M7 10l5 5 5-5z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
         <div
@@ -469,10 +415,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Aframe.io
@@ -496,7 +442,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -506,11 +452,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -536,10 +482,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: All Recipes
@@ -563,7 +509,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -573,11 +519,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -603,10 +549,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Amazon
@@ -630,7 +576,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -640,11 +586,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -670,10 +616,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Amazon Search
@@ -697,7 +643,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -707,11 +653,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -737,10 +683,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: BBC
@@ -764,7 +710,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -774,11 +720,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -804,10 +750,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Bing
@@ -831,7 +777,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -841,11 +787,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -871,10 +817,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Bing Restaurants
@@ -898,7 +844,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -908,11 +854,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -938,10 +884,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Booking
@@ -965,7 +911,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -975,11 +921,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1005,10 +951,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: CNN AmpStories
@@ -1032,7 +978,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1042,11 +988,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1072,10 +1018,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: ESPN
@@ -1099,7 +1045,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1109,11 +1055,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1139,10 +1085,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Facebook
@@ -1166,7 +1112,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1176,11 +1122,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1206,10 +1152,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Facebook Cristiano
@@ -1233,7 +1179,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1243,11 +1189,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1273,10 +1219,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Google
@@ -1300,7 +1246,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1310,11 +1256,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1340,10 +1286,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Google Maps
@@ -1367,7 +1313,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1377,11 +1323,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1407,10 +1353,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Google Restaurants
@@ -1434,7 +1380,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1444,11 +1390,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1474,10 +1420,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Imdb
@@ -1501,7 +1447,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1511,11 +1457,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1541,10 +1487,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Instagram
@@ -1568,7 +1514,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1578,11 +1524,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1608,10 +1554,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Jianshu
@@ -1635,7 +1581,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1645,11 +1591,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1675,10 +1621,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Kleinanzeigen
@@ -1702,7 +1648,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1712,11 +1658,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1742,10 +1688,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Kleinanzeigen Search
@@ -1769,7 +1715,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1779,11 +1725,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1809,10 +1755,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Microsoft Support
@@ -1836,7 +1782,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1846,11 +1792,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1876,10 +1822,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Reddit
@@ -1903,7 +1849,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1913,11 +1859,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -1943,10 +1889,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Stackoverflow
@@ -1970,7 +1916,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -1980,11 +1926,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -2010,10 +1956,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Web.de
@@ -2037,7 +1983,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -2047,11 +1993,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -2077,10 +2023,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: Wikipedia
@@ -2104,7 +2050,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -2114,11 +2060,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -2144,10 +2090,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: YouTube
@@ -2171,7 +2117,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -2181,11 +2127,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
@@ -2211,10 +2157,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-203"
+              className="ChartJsWrapper-chartContainer-202"
             >
               <h2
-                className="ChartJsWrapper-title-204"
+                className="ChartJsWrapper-title-203"
               >
                 <div>
                   Tp6 mobile: YouTube Watch
@@ -2238,7 +2184,7 @@ exports[`renders correctly 1`] = `
                   }
                 >
                   <div
-                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    className="MuiCircularProgress-root-205 MuiCircularProgress-colorPrimary-208 MuiCircularProgress-indeterminate-207"
                     role="progressbar"
                     style={
                       Object {
@@ -2248,11 +2194,11 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      className="MuiCircularProgress-svg-211"
+                      className="MuiCircularProgress-svg-210"
                       viewBox="22 22 44 44"
                     >
                       <circle
-                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        className="MuiCircularProgress-circle-211 MuiCircularProgress-circleIndeterminate-213"
                         cx={44}
                         cy={44}
                         fill="none"
