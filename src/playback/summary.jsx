@@ -57,11 +57,11 @@ const styles = {
   },
 };
 const SPECIAL_SIZES = [
-  { id: '480p30', label: '480' }, // .4M pixels
-  { id: '720p60', label: '720' }, // 1M pixels
-  { id: '1080p60', label: '1080' }, // 2M pixels
-  { id: '1440p60', label: '1440' }, // 4M pixels
-  { id: '2160p60', label: '2160' }, // 8M pixels
+  { id: '480p30', label: '480p' }, // .4M pixels
+  { id: '720p60', label: '720p' }, // 1M pixels
+  { id: '1080p60', label: '1080p' }, // 2M pixels
+  { id: '1440p60', label: '1440p' }, // 4M pixels
+  { id: '2160p60', label: '2160p' }, // 8M pixels
 ];
 const lookupType = {
   '0': 'pass',
