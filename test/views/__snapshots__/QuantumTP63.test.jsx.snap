@@ -1943,6 +1943,73 @@ exports[`renders correctly integer 1`] = `
               className="ChartJsWrapper-title-200"
             >
               <div>
+                Tp6: Twitch
+              </div>
+            </h2>
+            <div
+              style={
+                Object {
+                  "height": 80,
+                  "position": "relative",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "absolute",
+                    "right": "50%",
+                    "top": "50%",
+                  }
+                }
+              >
+                <div
+                  className="MuiCircularProgress-root-202 MuiCircularProgress-colorPrimary-205 MuiCircularProgress-indeterminate-204"
+                  role="progressbar"
+                  style={
+                    Object {
+                      "height": 40,
+                      "width": 40,
+                    }
+                  }
+                >
+                  <svg
+                    className="MuiCircularProgress-svg-207"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      className="MuiCircularProgress-circle-208 MuiCircularProgress-circleIndeterminate-210"
+                      cx={44}
+                      cy={44}
+                      fill="none"
+                      r={20.2}
+                      strokeWidth={3.6}
+                      style={Object {}}
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-item-102 MuiGrid-grid-xs-6-135 TP6-chart-3"
+      >
+        <div
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+        >
+          <div
+            className="ChartJsWrapper-chartContainer-199"
+          >
+            <h2
+              className="ChartJsWrapper-title-200"
+            >
+              <div>
                 Tp6: Twitter
               </div>
             </h2>
