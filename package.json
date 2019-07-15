@@ -44,6 +44,7 @@
     "dateformat": "^3.0.3",
     "jest-extended": "^0.11.1",
     "lodash": "^4.17.2",
+    "merge": "^1.2.1",
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
     "numeral": "^2.0.4",
