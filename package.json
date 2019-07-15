@@ -57,6 +57,7 @@
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-simple-tooltip": "^2.6.0",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
