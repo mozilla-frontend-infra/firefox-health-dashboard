@@ -13,6 +13,7 @@ import { TimeDomain } from '../vendor/jx/domains';
 import { DetailsIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
+import PlaybackSummary from '../playback/summary';
 
 class Android extends Component {
   render() {
@@ -180,6 +181,26 @@ class Android extends Component {
                 redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
                 redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
                 timeDomain={timeDomain}
+              />
+            </Grid>
+          </Grid>
+        </Section>
+        <Section title="Media Playback">
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <PlaybackSummary
+                key="VP9"
+                bits={64}
+                encoding="VP9"
+                browserId="geckoview"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <PlaybackSummary
+                key="H264"
+                bits={64}
+                encoding="H264"
+                browserId="geckoview"
               />
             </Grid>
           </Grid>
