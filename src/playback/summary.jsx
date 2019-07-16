@@ -69,13 +69,13 @@ const lookupType = {
   '1': 'bad',
   '2': 'fail',
 };
-const browserId = 'firefox';
 
 class PlaybackSummary extends React.Component {
   state = { scores: null };
 
   async update() {
-    const { bits, encoding } = this.props;
+    const { bits, encoding, browserId } = this.props;
+    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
     const browser = selectFrom(BROWSERS)
       .where({ id: browserId })
       .first();
@@ -83,7 +83,7 @@ class PlaybackSummary extends React.Component {
       .select('id')
       .toArray();
     const combos = selectFrom(PLATFORMS)
-      .where({ bits })
+      .where({ bits, type: platformType })
       .map(platform =>
         selectFrom(ENCODINGS)
           .where({ encoding })
@@ -181,7 +181,8 @@ class PlaybackSummary extends React.Component {
 
   render() {
     const { scores } = this.state;
-    const { bits, encoding, classes } = this.props;
+    const { bits, encoding, classes, browserId } = this.props;
+    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
 
     if (!scores) {
       return (
@@ -207,7 +208,7 @@ class PlaybackSummary extends React.Component {
           {encoding} (one, or less, dropped frames per test)
         </h2>
         {selectFrom(PLATFORMS)
-          .where({ bits })
+          .where({ bits, type: platformType })
           .map(platform => (
             // https://health.graphics/playback?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
