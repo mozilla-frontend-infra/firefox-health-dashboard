@@ -39,6 +39,7 @@ class PowerSummary extends React.Component {
             },
           }))
           .toArray()}
+        missingDataInterval={10}
       />
     );
   }
