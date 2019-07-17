@@ -268,6 +268,7 @@ class Android extends Component {
                     },
                   },
                 ]}
+                missingDataInterval={10}
               />
             </Grid>
             <Grid item xs={6}>
@@ -337,6 +338,7 @@ class Android extends Component {
                     },
                   },
                 ]}
+                missingDataInterval={10}
               />
             </Grid>
           </Grid>
