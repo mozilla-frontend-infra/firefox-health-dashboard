@@ -6,6 +6,10 @@ import jx from './jx/expressions';
 import { Log } from './logs';
 
 const DEBUG = false;
+const MAX_CHUNK_SIZE = 40; // NUMBER OF SIGNATURES FROM PERFHERDER
+const MIN_CHUNK_SIZE = 10; // ACCUMULATE SIGNATURE REQUESTS TO A SINGLE REQUEST
+
+
 const PERFHERDER = {
   signatures: [],
 };
@@ -178,38 +182,90 @@ const getSignatures = async condition => {
   return PERFHERDER.signatures.filter(jx(condition));
 };
 
+const delayedValue = () => {
+  // return a Promise to a value
+  // this.resolve(value) to assign the value when available
+  let selfResolve = null;
+  let selfReject = null;
+  const self = new Promise((resolve, reject) => {
+    selfResolve = resolve;
+    selfReject = reject;
+  });
+
+  self.resolve = selfResolve;
+  self.reject = selfReject;
+
+  return self;
+};
+
 const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE OF DATA
+let fetchInProgress = 0;
+const pendingFetch = {}; // MAP FROM repo TO LIST OF PENDING
+
+function internalFetch(repo, todo) {
+  // LANCH PROMISE CHAIN TO GET THE DATA, AND then RELEASE SIGNAL
+  let p = pendingFetch[repo];
+
+  if (p === undefined) {
+    p = [];
+    pendingFetch[repo] = p;
+  }
+
+  p.push(...todo);
+
+  selectFrom(p)
+    .chunk(MAX_CHUNK_SIZE)
+    .forEach(() => {
+      (async () => {
+        while ( // LOOPS TWICE, OR LESS
+          (fetchInProgress > 0 && p.length > MIN_CHUNK_SIZE) ||
+          (fetchInProgress === 0 && p.length > 0)
+        ) {
+          const todo = selectFrom(p.slice(0, MAX_CHUNK_SIZE));
+
+          p.splice(0, MAX_CHUNK_SIZE);
+
+          const url = URL({
+            path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
+            query: { signatures: todo.select('signature') },
+          });
+          let data = null;
+
+          try {
+            fetchInProgress += 1;
+            // eslint-disable-next-line no-await-in-loop
+            data = await fetchJson(url);
+          } finally {
+            fetchInProgress -= 1;
+          }
+
+          todo.forEach(meta => {
+            dataCache[meta.signature].resolve({
+              meta,
+              data: data[meta.signature].map(row => ({
+                ...row,
+                meta,
+              })),
+            });
+          });
+        }
+      })();
+    });
+}
+
 const getDataBySignature = async metadatas => {
   // SCHEDULE ANY MISSING SIGNATURES
   selectFrom(metadatas)
     .groupBy('repo')
     .forEach((sigs, repo) => {
-      selectFrom(sigs)
-        .filter(({ signature }) => missing(dataCache[signature]))
-        .chunk(40)
-        .forEach(chunkOfMetas => {
-          // GET ALL SIGNATURES IN THE CHUNK
-          const getData = (async () => {
-            const url = URL({
-              path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
-              query: { signatures: chunkOfMetas.select('signature') },
-            });
+      const todo = sigs.filter(({ signature }) =>
+        missing(dataCache[signature])
+      );
 
-            return fetchJson(url);
-          })();
-
-          // EACH dataCache IS A PROMISE TO THE SPECIFIC DATA
-          selectFrom(chunkOfMetas).forEach(meta => {
-            dataCache[meta.signature] = (async () => {
-              const data = (await getData)[meta.signature].map(row => ({
-                ...row,
-                meta,
-              }));
-
-              return { meta, data };
-            })();
-          });
-        });
+      todo.forEach(meta => {
+        dataCache[meta.signature] = delayedValue();
+      });
+      internalFetch(repo, todo);
     });
 
   return Promise.all(toArray(metadatas).map(m => dataCache[m.signature]));
