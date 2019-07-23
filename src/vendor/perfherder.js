@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
-import { exists, first, missing, toArray } from './utils';
+import { exists, first, missing, toArray, delayedValue } from './utils';
 import { selectFrom, toPairs } from './vectors';
 import jx from './jx/expressions';
 import { Log } from './logs';
@@ -14,7 +14,8 @@ const PERFHERDER = {
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const getAllOptions = (async () => {
   const output = await fetchJson(
-    URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] })
+    URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] }),
+    { expire: 'month' }
   );
 
   return selectFrom(output)
@@ -36,7 +37,7 @@ const getFramework = async combo => {
         path: [TREEHERDER, 'api/project', repo, 'performance/signatures/'],
         query: { framework, subtests: 1 },
       });
-      const rawData = await fetchJson(url);
+      const rawData = await fetchJson(url, { expire: 'month' });
       // ADD OPTION SIGNATURES
       const lookup = await getAllOptions;
       const clean = toPairs(rawData)
@@ -178,22 +179,6 @@ const getSignatures = async condition => {
   Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
 
   return PERFHERDER.signatures.filter(jx(condition));
-};
-
-const delayedValue = () => {
-  // return a Promise to a value
-  // this.resolve(value) to assign the value when available
-  let selfResolve = null;
-  let selfReject = null;
-  const self = new Promise((resolve, reject) => {
-    selfResolve = resolve;
-    selfReject = reject;
-  });
-
-  self.resolve = selfResolve;
-  self.reject = selfReject;
-
-  return self;
 };
 
 const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE OF DATA

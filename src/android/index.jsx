@@ -10,7 +10,7 @@ import RedashContainer from '../utils/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
-import { DetailsIcon } from '../utils/icons';
+import { LinkIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 
@@ -64,7 +64,7 @@ class Android extends Component {
                           },
                         })}
                         title="All Geckoview P1 and Triage bugs">
-                        <DetailsIcon />
+                        <LinkIcon />
                       </a>
                     </span>
                   }

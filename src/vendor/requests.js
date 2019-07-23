@@ -1,10 +1,13 @@
 /* global fetch */
 import { parse } from 'query-string';
-import { exists, isArray, isString, toArray } from './utils';
+import { sleep, exists, isArray, isString, toArray, missing } from './utils';
 import { Data } from './datas';
+import { Duration } from './durations';
+import { GMTDate as Date } from './dates';
 import strings from './strings';
 import { Log } from './logs';
 import { leaves, toPairs } from './vectors';
+import { KVStore } from './db_cache';
 
 /*
 Parse a query string into an object. Leading ? or # are ignored, so you can
@@ -67,27 +70,70 @@ function toQueryString(value) {
     .join('&');
 }
 
+const requestCache = new KVStore('heath.graphics cache');
 const jsonHeaders = {
   Accept: 'application/json',
 };
-const fetchJson = async url => {
-  const response = await fetch(url, jsonHeaders);
+const fetchJson = async (url, options = {}) => {
+  const { expire } = options;
+  const expires = missing(expire)
+    ? null
+    : Date.now().add(Duration.newInstance(expire));
 
-  if (!response) {
-    return null;
-  }
+  if (expire) {
+    const oldData = await requestCache.get(url);
 
-  if (response.status !== 200) {
-    Log.error('{{status}} when calling {{url}}', {
-      url,
-      status: response.status,
-    });
+    (async () => {
+      // Launch promise chain to fill cache with fresh data
+      try {
+        await sleep(10000); // wait 10sec so others can make requests
+        Log.note('refesh cache for {{url}}', { url });
+        const response = await fetch(url, jsonHeaders);
+
+        if (!response || !response.ok) {
+          await requestCache.set(url, null);
+        }
+
+        const content = await response.text();
+
+        await requestCache.set(url, { url, content, expires });
+      } catch (error) {
+        Log.warning('Problem refreshing cache of {{url}}', { url }, error);
+      }
+    })();
+
+    if (oldData && oldData.expires >= Date.now()) {
+      return JSON.parse(oldData.content);
+    }
   }
 
   try {
-    return response.json();
+    const response = await fetch(url, jsonHeaders);
+
+    if (!response) {
+      return null;
+    }
+
+    if (!response.ok) {
+      Log.error('{{status}} when calling {{url}}', {
+        url,
+        status: response.status,
+      });
+    }
+
+    const content = await response.text();
+
+    try {
+      if (expire) {
+        await requestCache.set(url, { url, content, expires });
+      }
+
+      return JSON.parse(content);
+    } catch (error) {
+      Log.error('Problem parsing {{text}}', { text: response.text() }, error);
+    }
   } catch (error) {
-    Log.error('Problem parsing {{text}}', { text: response.text() });
+    Log.error('Problem fetching {{url}}', { url }, error);
   }
 };
 
