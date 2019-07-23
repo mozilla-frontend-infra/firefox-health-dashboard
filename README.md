@@ -104,4 +104,4 @@ NOTE: The `title` parameter is optional and it is available to most containers.
 
 ## Credit
 
-[![Netlify](https://www.netlify.com/img/global/badges/netlify-color-accent.svg)](https://www.netlify.com)
+[![Netlify](https://www.netlify.com/img/global/badges/netlify-color-accent.svg)](https://www.netlify.com) [![Greenkeeper badge](https://badges.greenkeeper.io/mozilla-frontend-infra/firefox-health-dashboard.svg)](https://greenkeeper.io/)
