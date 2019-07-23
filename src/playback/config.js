@@ -51,62 +51,73 @@ const TESTS = selectFrom(ENCODINGS)
 const PLATFORMS = [
   {
     id: 'win64',
+    type: 'desktop',
     label: 'Windows 64bit',
     bits: 64,
     filter: {eq: {platform: 'windows10-64-shippable', options: 'opt'}},
   },
   {
     id: 'win-aarch64',
+    type: 'desktop',
     label: 'Windows (aarch64)',
     bits: 64,
     filter: {eq: {platform: 'windows10-64-shippable', options: 'opt'}},
   },
   {
     id: 'win32',
+    type: 'desktop',
     label: 'Windows 32bit',
     bits: 32,
     filter: {eq: {platform: 'windows7-32-shippable', options: 'opt'}},
   },
   {
     id: 'linux64',
+    type: 'desktop',
     label: 'Linux 64bit',
     bits: 64,
     filter: {eq: {platform: 'linux64-shippable', options: 'opt'}},
   },
   {
     id: 'mac',
+    type: 'desktop',
     label: 'MacOSX',
     bits: 64,
     filter:
       {eq: {platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable']}},
   },
-  // {
-  //   id: 'g5',
-  //   label: 'Moto G5 (arm7)',
-  //   filter: {
-  //     eq: {
-  //       platform: 'android-hw-g5-7-0-arm7-api-16',
-  //     },
-  //   },
-  // },
+  {
+    id: 'g5',
+    type: 'mobile',
+    label: 'Moto G5 (arm7)',
+    bits: 64,
+    filter: {
+      eq: {
+        platform: 'android-hw-g5-7-0-arm7-api-16',
+      },
+    },
+  },
   // {
   //   id: 'p2',
+  //   type: 'mobile',
   //   label: 'Pixel 2 (arm7)',
+  //   bits: 64,
   //   filter: {
   //     eq: {
   //       platform: 'android-hw-p2-8-0-arm7-api-16',
   //     },
   //   },
   // },
-  // {
-  //   id: 'p2-aarch64',
-  //   label: 'Pixel 2 (aarch64)',
-  //   filter: {
-  //     eq: {
-  //       platform: 'android-hw-p2-8-0-android-aarch64',
-  //     },
-  //   },
-  // },
+  {
+    id: 'p2-aarch64',
+    type: 'mobile',
+    label: 'Pixel 2 (aarch64)',
+    bits: 64,
+    filter: {
+      eq: {
+        platform: 'android-hw-p2-8-0-android-aarch64',
+      },
+    },
+  },
 ];
 
 

@@ -240,15 +240,20 @@ const PLATFORMS = [
     browser: 'fenix',
     label: 'Firefox Preview p2 (aarch64)',
     platform: 'fenix-p2-aarch64',
-    platformFilter: {
-      and: [
-        { eq: { platform: 'android-hw-p2-8-0-aarch64' } },
+    platformFilter: {and: [
+        {or: [
+          {eq: {
+            platform: 'android-hw-p2-8-0-aarch64'
+          }},
+          {eq: {
+            platform: 'android-hw-p2-8-0-android-aarch64'
+          }},
+        ]},
         {eq: {
           framework: 10,
           repo: 'fenix',
         }},
-      ],
-    },
+      ]},
   },
 ];
 const TP6_TESTS_DATA = [
@@ -327,7 +332,7 @@ const TP6_SITES_DATA = {
     ['Firefox', 'warm', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Wikia', {eq: {suite: 'raptor-tp6-wikia-firefox'}}],
+    ['Firefox', 'warm', 'Tp6: Fandom', {eq: {suite: 'raptor-tp6-fandom-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox'}}],
@@ -347,6 +352,7 @@ const TP6_SITES_DATA = {
     ['Firefox', 'warm', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox'} }],
     ['Firefox', 'warm', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox'} }],
     ['Firefox', 'warm', 'Tp6: Twitter', {eq:{suite:'raptor-tp6-twitter-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Twitch', {eq: {suite: 'raptor-tp6-twitch-firefox'}}],
     ['Firefox', 'warm', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox'} }],
     ['Firefox', 'warm', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox'} }],
     ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox'} }],
@@ -363,7 +369,7 @@ const TP6_SITES_DATA = {
     ['Chromium', 'warm', 'Tp6: Imdb', {eq: {suite: ['raptor-tp6-imdb-chrome', 'raptor-tp6-imdb-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Imgur', {eq: {suite: ['raptor-tp6-imgur-chrome', 'raptor-tp6-imgur-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Netflix', {eq: {suite: ['raptor-tp6-netflix-chrome', 'raptor-tp6-netflix-chromium']}}],
-    ['Chromium', 'warm', 'Tp6: Wikia', {eq: {suite: ['raptor-tp6-wikia-chrome', 'raptor-tp6-wikia-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Fandom', {eq: {suite: ['raptor-tp6-fandom-chrome', 'raptor-tp6-fandom-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Bing', {eq: {suite: ['raptor-tp6-bing-chrome', 'raptor-tp6-bing-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Yandex', {eq: {suite: ['raptor-tp6-yandex-chrome', 'raptor-tp6-yandex-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Apple', {eq: {suite: ['raptor-tp6-apple-chrome', 'raptor-tp6-apple-chromium']}}],
@@ -380,6 +386,7 @@ const TP6_SITES_DATA = {
     ['Chromium', 'warm', 'Tp6: Slides', {eq: {suite: ['raptor-tp6-slides-chrome', 'raptor-tp6-slides-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Tumblr', {eq: {suite: ['raptor-tp6-tumblr-chrome', 'raptor-tp6-tumblr-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Twitter', {eq: {suite: ['raptor-tp6-twitter-chrome', 'raptor-tp6-twitter-chromium']}}],
+    ['Chromium', 'warm', 'Tp6: Twitch', {eq: {suite: ['raptor-tp6-twitch-chrome', 'raptor-tp6-twitch-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Wikipedia', {eq: {suite: ['raptor-tp6-wikipedia-chrome', 'raptor-tp6-wikipedia-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Yahoo Mail', {eq: {suite: ['raptor-tp6-yahoo-mail-chrome', 'raptor-tp6-yahoo-mail-chromium']}}],
     ['Chromium', 'warm', 'Tp6: Yahoo News', {eq: {suite: ['raptor-tp6-yahoo-news-chrome', 'raptor-tp6-yahoo-news-chromium']}}],

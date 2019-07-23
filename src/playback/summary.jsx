@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
 import { BROWSERS, ENCODINGS, PLATFORMS, TESTS } from './config';
 import { getData } from '../vendor/perfherder';
@@ -57,24 +58,24 @@ const styles = {
   },
 };
 const SPECIAL_SIZES = [
-  { id: '480p30', label: '480' }, // .4M pixels
-  { id: '720p60', label: '720' }, // 1M pixels
-  { id: '1080p60', label: '1080' }, // 2M pixels
-  { id: '1440p60', label: '1440' }, // 4M pixels
-  { id: '2160p60', label: '2160' }, // 8M pixels
+  { id: '480p30', label: '480p' }, // .4M pixels
+  { id: '720p60', label: '720p' }, // 1M pixels
+  { id: '1080p60', label: '1080p' }, // 2M pixels
+  { id: '1440p60', label: '1440p' }, // 4M pixels
+  { id: '2160p60', label: '2160p' }, // 8M pixels
 ];
 const lookupType = {
   '0': 'pass',
   '1': 'bad',
   '2': 'fail',
 };
-const browserId = 'firefox';
 
 class PlaybackSummary extends React.Component {
   state = { scores: null };
 
   async update() {
-    const { bits, encoding } = this.props;
+    const { bits, encoding, browserId } = this.props;
+    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
     const browser = selectFrom(BROWSERS)
       .where({ id: browserId })
       .first();
@@ -82,7 +83,7 @@ class PlaybackSummary extends React.Component {
       .select('id')
       .toArray();
     const combos = selectFrom(PLATFORMS)
-      .where({ bits })
+      .where({ bits, type: platformType })
       .map(platform =>
         selectFrom(ENCODINGS)
           .where({ encoding })
@@ -127,6 +128,7 @@ class PlaybackSummary extends React.Component {
       .groupBy(['encoding', 'platform', 'size'])
       .map((speeds, g) => ({
         ...g,
+        speeds,
         score:
           lookupType[
             selectFrom(speeds)
@@ -153,9 +155,34 @@ class PlaybackSummary extends React.Component {
     await this.update();
   }
 
+  tooltipContent(score, encoding, platform, size) {
+    if (score === lookupType['0'])
+      return 'One or less dropped frames at all playback speeds';
+
+    const { scores } = this.state;
+    const result = selectFrom(scores)
+      .where({ encoding, platform, size })
+      .first();
+
+    if (score === lookupType['1']) {
+      result.speeds.sort((a, b) => a.speed - b.speed);
+
+      const speed = result.speeds.find(s => s.loss > 1);
+
+      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+    }
+
+    if (score === lookupType['2']) {
+      const speed = result.speeds.find(s => s.speed === 1);
+
+      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+    }
+  }
+
   render() {
     const { scores } = this.state;
-    const { bits, encoding, classes } = this.props;
+    const { bits, encoding, classes, browserId } = this.props;
+    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
 
     if (!scores) {
       return (
@@ -181,7 +208,7 @@ class PlaybackSummary extends React.Component {
           {encoding} (one, or less, dropped frames per test)
         </h2>
         {selectFrom(PLATFORMS)
-          .where({ bits })
+          .where({ bits, type: platformType })
           .map(platform => (
             // https://health.graphics/playback?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
@@ -226,16 +253,22 @@ class PlaybackSummary extends React.Component {
                       item
                       xs={1}
                       style={{ position: 'relative', padding: '0.1rem' }}>
-                      <div className={classes[score]}>
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                          }}>
+                      <div
+                        className={classes[score]}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                        <Tooltip
+                          content={this.tooltipContent(
+                            score,
+                            encoding,
+                            platform.id,
+                            id
+                          )}>
                           {label}
-                        </div>
+                        </Tooltip>
                       </div>
                     </Grid>
                   );

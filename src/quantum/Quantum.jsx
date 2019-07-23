@@ -191,8 +191,18 @@ export default class QuantumIndex extends React.Component {
       {
         title: 'Media Playback',
         rows: [
-          <PlaybackSummary key={`${bits}_VP9`} bits={bits} encoding="VP9" />,
-          <PlaybackSummary key={`${bits}_H264`} bits={bits} encoding="H264" />,
+          <PlaybackSummary
+            key={`${bits}_VP9`}
+            bits={bits}
+            encoding="VP9"
+            browserId="firefox"
+          />,
+          <PlaybackSummary
+            key={`${bits}_H264`}
+            bits={bits}
+            encoding="H264"
+            browserId="firefox"
+          />,
         ],
       },
       {

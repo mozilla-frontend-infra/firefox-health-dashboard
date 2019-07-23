@@ -13,6 +13,7 @@ import { TimeDomain } from '../vendor/jx/domains';
 import { LinkIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
+import PlaybackSummary from '../playback/summary';
 
 class Android extends Component {
   render() {
@@ -184,6 +185,26 @@ class Android extends Component {
             </Grid>
           </Grid>
         </Section>
+        <Section title="Media Playback">
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
+              <PlaybackSummary
+                key="VP9"
+                bits={64}
+                encoding="VP9"
+                browserId="geckoview"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <PlaybackSummary
+                key="H264"
+                bits={64}
+                encoding="H264"
+                browserId="geckoview"
+              />
+            </Grid>
+          </Grid>
+        </Section>
         <Section
           title="Perfherder"
           subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)">
@@ -247,6 +268,7 @@ class Android extends Component {
                     },
                   },
                 ]}
+                missingDataInterval={10}
               />
             </Grid>
             <Grid item xs={6}>
@@ -316,6 +338,7 @@ class Android extends Component {
                     },
                   },
                 ]}
+                missingDataInterval={10}
               />
             </Grid>
           </Grid>

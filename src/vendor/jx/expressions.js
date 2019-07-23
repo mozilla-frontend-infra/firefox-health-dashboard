@@ -153,9 +153,13 @@ expressions.not = expr => {
 };
 
 /*
-example {eq: {name: value}}
-
-Return true if variable name equals literal value
+example {eq: {variable: value}}
+        {eq: {variable: [v1, v2, ... v3]}}
+    
+if variable equals literal value then
+    return true
+if value is an array, then 
+    return true if any of the values match
  */
 expressions.eq = term => {
   if (isData(term)) {

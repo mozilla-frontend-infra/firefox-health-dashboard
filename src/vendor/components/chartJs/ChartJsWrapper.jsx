@@ -40,7 +40,11 @@ class ChartJsWrapper extends React.Component {
     super(props);
     const { standardOptions } = props;
 
-    this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    try {
+      this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    } catch (error) {
+      this.state = {};
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -55,7 +59,13 @@ class ChartJsWrapper extends React.Component {
   }
 
   render() {
-    const { classes, isLoading, title, chartHeight } = this.props;
+    const {
+      classes,
+      isLoading,
+      title,
+      chartHeight,
+      missingDataInterval,
+    } = this.props;
     const { cjsOptions, standardOptions } = this.state;
 
     if (isLoading) {
@@ -127,12 +137,12 @@ class ChartJsWrapper extends React.Component {
       );
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-      return daysDifference > 3;
+      return daysDifference > missingDataInterval;
     });
 
     if (allOldData) {
       const error = new Error(
-        'This item has been missing data for at least 3 days.'
+        `This item has been missing data for at least ${missingDataInterval} days.`
       );
 
       return (
@@ -178,6 +188,7 @@ ChartJsWrapper.propTypes = {
     ticksCallback: PropTypes.func,
     data: PropTypes.arrayOf(PropTypes.shape({})),
   }),
+  missingDataInterval: PropTypes.number,
 };
 
 ChartJsWrapper.defaultProps = {
@@ -185,6 +196,7 @@ ChartJsWrapper.defaultProps = {
   chartHeight: 80,
   spinnerSize: '100%',
   isLoading: false,
+  missingDataInterval: 3,
 };
 
 export default withStyles(styles)(ChartJsWrapper);

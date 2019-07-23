@@ -43,7 +43,7 @@
     "d3": "^4.10.0",
     "dateformat": "^3.0.3",
     "jest-extended": "^0.11.1",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.12",
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
     "numeral": "^2.0.4",
@@ -57,6 +57,7 @@
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-simple-tooltip": "^2.6.0",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
