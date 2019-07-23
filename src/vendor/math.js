@@ -65,12 +65,12 @@ function ceiling(value, mod) {
 }
 
 function round(value, rounding) {
-  if (rounding === undefined) {
-    return Math.round(value);
-  }
-
   if (missing(value)) {
     return null;
+  }
+
+  if (rounding === undefined) {
+    return Math.round(value);
   }
 
   if (value === 0) {

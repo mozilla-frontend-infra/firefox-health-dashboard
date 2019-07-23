@@ -597,9 +597,18 @@ class ArrayWrapper {
     return Array.from(this).join(separator);
   }
 
+  /*
+  return first matching row
+   */
+  find(func) {
+    return this.filter(func).first();
+  }
+
+  /*
+  return index of first row where func returns true
+  return null if not found
+  */
   findIndex(func) {
-    // return index of first element where func returns true
-    // return null if not found
     let i = 0;
 
     for (const args of this.argslist) {

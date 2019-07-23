@@ -8,8 +8,6 @@ import { Log } from './logs';
 const DEBUG = false;
 const MAX_CHUNK_SIZE = 40; // NUMBER OF SIGNATURES FROM PERFHERDER
 const MIN_CHUNK_SIZE = 10; // ACCUMULATE SIGNATURE REQUESTS TO A SINGLE REQUEST
-
-
 const PERFHERDER = {
   signatures: [],
 };
@@ -217,7 +215,8 @@ function internalFetch(repo, todo) {
     .chunk(MAX_CHUNK_SIZE)
     .forEach(() => {
       (async () => {
-        while ( // LOOPS TWICE, OR LESS
+        while (
+          // LOOPS TWICE, OR LESS
           (fetchInProgress > 0 && p.length > MIN_CHUNK_SIZE) ||
           (fetchInProgress === 0 && p.length > 0)
         ) {

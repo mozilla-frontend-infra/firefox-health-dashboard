@@ -176,6 +176,8 @@ describe('math', () => {
     expect(round(42, { digits: 0 })).toBe(100);
     expect(round(42, { digits: 1 })).toBe(40);
     expect(round(42, { digits: 2 })).toBe(42);
+    expect(round(null, { digits: 2 })).toBe(null);
+    expect(round(null)).toBe(null);
 
     // expect(round(1.005, { digits: 2 })).toBe(1.01);
   });

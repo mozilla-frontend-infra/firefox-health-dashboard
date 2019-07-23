@@ -232,7 +232,7 @@ const cjsGenerator = standardOptions => {
       dataset.pointStyle = newStyle;
 
       // eslint-disable-next-line no-param-reassign
-      if (yReversed) dataset.pointRotation = data.map(()=>180);
+      if (yReversed) dataset.pointRotation = data.map(() => 180);
     }
   });
 
