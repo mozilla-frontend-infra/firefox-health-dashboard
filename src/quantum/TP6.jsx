@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import { PLATFORMS, TP6_COMBOS, TP6_TESTS } from './config';
+import { TP6_COMBOS, TP6_TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
@@ -73,16 +73,6 @@ TP6.propTypes = {
   platform: PropTypes.string.isRequired,
 };
 
-function getPlatformOptions() {
-  const results = selectFrom(PLATFORMS)
-    .where({ platform: ['win32', 'win64', 'aarch64', 'linux64'] })
-    .select({ id: 'platform', label: 'platform' })
-    .toArray();
-  const unique = new Set(results.map(item => item.label));
-
-  return Array.from(unique).map(item => ({ id: item, label: item }));
-}
-
 const nav = [
   {
     type: Picker,
@@ -98,7 +88,10 @@ const nav = [
     id: 'platform',
     label: 'Platform',
     defaultValue: 'win64',
-    options: getPlatformOptions(),
+    options: ['win32', 'win64', 'aarch64', 'linux64'].map(item => ({
+      id: item,
+      label: item,
+    })),
   },
   ...timePickers,
 ];
