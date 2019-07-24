@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import { TP6_COMBOS, TP6_TESTS } from './config';
+import { PLATFORMS, TP6_COMBOS, TP6_TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
@@ -24,12 +24,12 @@ const styles = {
 
 class TP6 extends React.Component {
   render() {
-    const { classes, navigation, test, bits, past, ending } = this.props;
+    const { classes, navigation, test, past, ending, platform } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
       .first();
-    const subtitle = `${label} on ${bits} bits`;
+    const subtitle = `${label} on ${platform}`;
 
     return (
       <div className={classes.body}>
@@ -37,13 +37,13 @@ class TP6 extends React.Component {
           {navigation}
           <Grid container spacing={24}>
             {selectFrom(TP6_COMBOS)
-              .where({ bits, test })
+              .where({ test, platform })
               .groupBy('site')
               .map((series, site) => (
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${bits}_${past}_${ending}`}
+                  key={`page_${site}_${test}_${platform}_${past}_${ending}`}
                   className={classes.chart}>
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
@@ -70,7 +70,18 @@ TP6.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
+  platform: PropTypes.string.isRequired,
 };
+
+function getPlatformOptions() {
+  const results = selectFrom(PLATFORMS)
+    .where({ platform: ['win32', 'win64', 'aarch64', 'linux64'] })
+    .select({ id: 'platform', label: 'platform' })
+    .toArray();
+  const unique = new Set(results.map(item => item.label));
+
+  return Array.from(unique).map(item => ({ id: item, label: item }));
+}
 
 const nav = [
   {
@@ -84,10 +95,10 @@ const nav = [
   },
   {
     type: Picker,
-    id: 'bits',
-    label: 'Bits',
-    defaultValue: 64,
-    options: [{ id: 32, label: '32 bits' }, { id: 64, label: '64 bits' }],
+    id: 'platform',
+    label: 'Platform',
+    defaultValue: 'win64',
+    options: getPlatformOptions(),
   },
   ...timePickers,
 ];

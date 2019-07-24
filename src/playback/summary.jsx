@@ -169,13 +169,15 @@ class PlaybackSummary extends React.Component {
 
       const speed = result.speeds.find(s => s.loss > 1);
 
-      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+      return `${missing(speed.loss) ? speed.loss : speed.loss.toFixed(2)} 
+        dropped frames at ${speed.speed}x playback speed`;
     }
 
     if (score === lookupType['2']) {
       const speed = result.speeds.find(s => s.speed === 1);
 
-      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+      return `${missing(speed.loss) ? speed.loss : speed.loss.toFixed(2)}
+       dropped frames at ${speed.speed}x playback speed`;
     }
   }
 
@@ -266,7 +268,8 @@ class PlaybackSummary extends React.Component {
                             encoding,
                             platform.id,
                             id
-                          )}>
+                          )}
+                          fontSize="12px">
                           {label}
                         </Tooltip>
                       </div>
