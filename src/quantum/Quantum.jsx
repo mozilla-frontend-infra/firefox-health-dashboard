@@ -156,7 +156,7 @@ export default class QuantumIndex extends React.Component {
         more: URL({
           path: '/quantum/tp6',
           query: {
-            bits,
+            platform: 'win64',
             test: 'warm-loadtime',
           },
         }),
