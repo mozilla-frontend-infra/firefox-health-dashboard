@@ -28,6 +28,7 @@ class TimePicker extends Component {
     const { classes, id, label, handleChange, options } = this.props;
     const { value } = this.state;
 
+    // no need to show a picker if there are no choices
     if (options.length < 2) return null;
 
     return (

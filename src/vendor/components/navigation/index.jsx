@@ -86,7 +86,7 @@ function withNavigation(config) {
               const { type, id, label, options, defaultValue } = c;
 
               return React.createElement(type, {
-                key: id,
+                key: params[id],
                 id,
                 label,
                 handleChange: this.onPathChange,
