@@ -258,7 +258,6 @@ const delayedValue = () => {
 };
 
 export {
-  times,
   delayedValue,
   first,
   last,
