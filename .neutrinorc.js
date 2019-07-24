@@ -1,39 +1,33 @@
+const airbnb = require('@neutrinojs/airbnb');
+const react = require('@neutrinojs/react');
+const jest = require('@neutrinojs/jest');
+const copy = require('@neutrinojs/copy');
+
 module.exports = {
   options: {
     root: __dirname,
   },
   use: [
-    '@mozilla-frontend-infra/react-lint',
-    [
-      '@neutrinojs/react',
-      {
-        html: {
-          title: 'Firefox Health Dashboard',
-        },
-        devtool: {
-          // Enable source-maps in production
-          production: 'source-map',
-        },
-        env: {
-          BACKEND: 'https://firefox-health-backend.herokuapp.com',
-        },
-        // Read https://stackoverflow.com/a/36623117
-        // This is the key to making React Router work with neutrino
-        // Fix issue with nested routes e.g /index/garbage
-        publicPath: '/',
+    airbnb(),
+    react({
+      html: {
+        title: 'Firefox Health Dashboard'
       },
-    ],
-    [
-      '@neutrinojs/jest',
-      {
-        setupTestFrameworkScriptFile: 'jest-extended',
+      env: {
+        BACKEND: 'https://firefox-health-backend.herokuapp.com',
       },
-    ],
-    [
-      '@neutrinojs/copy',
-      {
-        patterns: [{ from: 'src/static/favicon.ico', to: 'favicon.ico' }],
-      },
-    ],
-  ],
+      // Read https://stackoverflow.com/a/36623117
+      // This is the key to making React Router work with neutrino
+      // Fix issue with nested routes e.g /index/garbage
+      publicPath: '/',
+    }),
+    jest({
+      setupFilesAfterEnv: ['jest-extended'],
+    },),
+    copy({
+      patterns: [
+        { from: 'src/static/favicon.ico', to: 'favicon.ico' },
+      ],
+    })
+  ]
 };
