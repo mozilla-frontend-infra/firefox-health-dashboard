@@ -1,3 +1,4 @@
+/* global window */
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';

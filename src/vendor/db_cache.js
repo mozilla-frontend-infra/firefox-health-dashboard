@@ -1,3 +1,4 @@
+/* global window */
 import { delayedValue } from './utils';
 import { Log } from './logs';
 
