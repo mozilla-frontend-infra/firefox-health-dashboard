@@ -209,6 +209,7 @@ const cjsGenerator = standardOptions => {
 
     return niceMax;
   })();
+  const yReversed = Data.get(options, 'axis.y.reverse');
 
   // MARK EXTREME POINTS AS TRIANGLES, AND AT MAX CHART VALUE
   datasets.forEach(dataset => {
@@ -229,6 +230,9 @@ const cjsGenerator = standardOptions => {
     if (needNewStyle) {
       // eslint-disable-next-line no-param-reassign
       dataset.pointStyle = newStyle;
+
+      // eslint-disable-next-line no-param-reassign
+      if (yReversed) dataset.pointRotation = data.map(() => 180);
     }
   });
 
@@ -236,7 +240,7 @@ const cjsGenerator = standardOptions => {
     {
       ticks: {
         beginAtZero: true,
-        reverse: Data.get(options, 'axis.y.reverse'),
+        reverse: yReversed,
         min: 0,
         max: yMax,
       },

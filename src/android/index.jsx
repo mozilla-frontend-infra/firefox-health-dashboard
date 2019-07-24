@@ -10,7 +10,7 @@ import RedashContainer from '../utils/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
-import { DetailsIcon } from '../utils/icons';
+import { LinkIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 import PlaybackSummary from '../playback/summary';
@@ -65,7 +65,7 @@ class Android extends Component {
                           },
                         })}
                         title="All Geckoview P1 and Triage bugs">
-                        <DetailsIcon />
+                        <LinkIcon />
                       </a>
                     </span>
                   }
@@ -187,7 +187,7 @@ class Android extends Component {
         </Section>
         <Section title="Media Playback">
           <Grid container spacing={24}>
-            <Grid item xs={6}>
+            <Grid item xs={6} key="1">
               <PlaybackSummary
                 key="VP9"
                 bits={64}
@@ -195,7 +195,7 @@ class Android extends Component {
                 browserId="geckoview"
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} key="2">
               <PlaybackSummary
                 key="H264"
                 bits={64}

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
-import { missing } from '../vendor/utils';
+import { coalesce, missing } from '../vendor/utils';
 import { geomean, round, sum } from '../vendor/math';
 import {
   PLATFORMS,
@@ -276,7 +276,7 @@ class TP6mAggregate_ extends Component {
                           },
                           {
                             label: TARGET_NAME,
-                            select: { value: row.ref.getValue() },
+                            select: { value: coalesce(row.ref.getValue(), 0) },
                             style: { color: 'gray' },
                           },
                           {

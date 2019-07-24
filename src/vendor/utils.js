@@ -241,7 +241,24 @@ function sleep(ms) {
   });
 }
 
+const delayedValue = () => {
+  // return a Promise to a value
+  // this.resolve(value) to assign the value when available
+  let selfResolve = null;
+  let selfReject = null;
+  const self = new Promise((resolve, reject) => {
+    selfResolve = resolve;
+    selfReject = reject;
+  });
+
+  self.resolve = selfResolve;
+  self.reject = selfReject;
+
+  return self;
+};
+
 export {
+  delayedValue,
   first,
   last,
   toArray,

@@ -11,41 +11,34 @@ const matchUrl = profileName =>
   );
 const matchShorterUrl = url =>
   url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
-const transformedDataForMetrisGraphics = scenarios => {
-  const metricsGraphicsData = Object.keys(scenarios).reduce(
-    (result, scenarioName) => {
-      scenarios[scenarioName].forEach(({ date, ms }) => {
-        // multiple scenarioName have same url0
-        const url = matchUrl(scenarioName);
-        // multiple scenarioName have same url
+const transformedDataForMetrisGraphics = scenarios =>
+  Object.keys(scenarios).reduce((result, scenarioName) => {
+    scenarios[scenarioName].forEach(({ date, ms }) => {
+      // multiple scenarioName have same url0
+      const url = matchUrl(scenarioName);
+      // multiple scenarioName have same url
 
-        if (!result[url]) {
-          result[url] = {
-            data: [],
-            title: matchShorterUrl(url),
-            url,
-          };
-        }
+      if (!result[url]) {
+        result[url] = {
+          data: [],
+          title: matchShorterUrl(url),
+          url,
+        };
+      }
 
-        if (ms > 0) {
-          /* this appends contents of scenarios[scenarioName]
+      if (ms > 0) {
+        /* this appends contents of scenarios[scenarioName]
           to result[url].data **AND** concatenates data when
           matchUrl(scenarioName1) == matchUrl(scenarioName2) */
-          result[url].data.push({
-            date: new Date(date),
-            value: ms / 1000,
-          });
-        }
-      });
+        result[url].data.push({
+          date: new Date(date),
+          value: ms / 1000,
+        });
+      }
+    });
 
-      return result;
-    },
-    {}
-  );
-
-  return metricsGraphicsData;
-};
-
+    return result;
+  }, {});
 const mergeProductsData = productsData => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
