@@ -187,7 +187,7 @@ class Android extends Component {
         </Section>
         <Section title="Media Playback">
           <Grid container spacing={24}>
-            <Grid item xs={6}>
+            <Grid item xs={6} key="1">
               <PlaybackSummary
                 key="VP9"
                 bits={64}
@@ -195,7 +195,7 @@ class Android extends Component {
                 browserId="geckoview"
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} key="2">
               <PlaybackSummary
                 key="H264"
                 bits={64}
