@@ -13,16 +13,16 @@ import {
   first,
 } from './utils';
 import { Duration } from './durations';
-import { abs, ceiling, floor, round, sign } from './math';
+import {
+  abs, ceiling, floor, round, sign,
+} from './math';
 import { Log } from './logs';
 import strings from './strings';
 
 const twoDigits = x => (x < 0 || x > 9 ? '' : '0') + x;
 
 class GMTDate extends Date {
-  unix = () =>
-    // RETURN NUMBER OF SECONDS SINCE EPOCH
-    this.milli() / 1000.0;
+  unix = () => this.milli() / 1000.0;
 
   isEqual(other) {
     return this.milli() === other.milli();
@@ -52,7 +52,7 @@ class GMTDate extends Date {
     return true;
   };
 
-  add = interval => {
+  add = (interval) => {
     if (missing(interval)) {
       Log.error('expecting an interval to add');
     }
@@ -63,10 +63,10 @@ class GMTDate extends Date {
     return this.addMonth(i.month).addMilli(addMilli);
   };
 
-  subtract = time => {
+  subtract = (time) => {
     if (isString(time)) {
       Log.error(
-        'expecting to subtract a Duration or GMTDate object, not a string'
+        'expecting to subtract a Duration or GMTDate object, not a string',
       );
     }
 
@@ -89,7 +89,7 @@ class GMTDate extends Date {
 
   addMilli = value => new GMTDate(this.milli() + value);
 
-  addSecond = value => {
+  addSecond = (value) => {
     const output = new GMTDate(this);
 
     output.setUTCSeconds(this.getUTCSeconds() + value);
@@ -97,7 +97,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addMinute = value => {
+  addMinute = (value) => {
     const output = new GMTDate(this);
 
     output.setUTCMinutes(this.getUTCMinutes() + value);
@@ -105,7 +105,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addHour = value => {
+  addHour = (value) => {
     const output = new GMTDate(this);
 
     output.setUTCHours(this.getUTCHours() + value);
@@ -113,7 +113,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addDay = value => {
+  addDay = (value) => {
     const value_ = coalesce(value, 1);
     const output = new GMTDate(this);
 
@@ -122,7 +122,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addWeekday = value => {
+  addWeekday = (value) => {
     let output = this.addDay(1);
 
     if ([0, 1].includes(output.dow())) {
@@ -142,7 +142,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addWeek = value => {
+  addWeek = (value) => {
     const value_ = coalesce(value, 1);
     const output = new GMTDate(this);
 
@@ -151,7 +151,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addMonth = value => {
+  addMonth = (value) => {
     if (value === 0) {
       return this;
     } // WHOA! SETTING MONTH IS CRAZY EXPENSIVE!!
@@ -163,7 +163,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addYear = value => {
+  addYear = (value) => {
     const output = new GMTDate(this);
 
     output.setUTCFullYear(this.getUTCFullYear() + value);
@@ -276,7 +276,7 @@ class GMTDate extends Date {
   // Returns a date in the output format specified.
   // The format string uses the same abbreviations as in getDateFromFormat()
   // ------------------------------------------------------------------
-  format = format => {
+  format = (format) => {
     const y = `${this.getUTCFullYear()}`;
     const M = this.getUTCMonth() + 1;
     const d = this.getUTCDate();
@@ -350,7 +350,7 @@ class GMTDate extends Date {
   };
 }
 
-GMTDate.newInstance = value => {
+GMTDate.newInstance = (value) => {
   if (missing(value)) {
     return null;
   }
@@ -390,7 +390,7 @@ GMTDate.today = () => new GMTDate().floorDay();
 GMTDate.min = (...args) => {
   let min = null;
 
-  args.forEach(v => {
+  args.forEach((v) => {
     if (v === undefined || v === null) {
       return;
     }
@@ -406,7 +406,7 @@ GMTDate.min = (...args) => {
 GMTDate.max = (...args) => {
   let max = null;
 
-  args.forEach(a => {
+  args.forEach((a) => {
     if (a === null) {
       return;
     }
@@ -452,12 +452,11 @@ GMTDate.diffWeekday = (endTime_, startTime_) => {
 
   const startWeek = startTime.addWeek(1).floorWeek();
   const endWeek = endTime.addMilli(-1).floorWeek();
-  const output =
-    (startWeek.milli() -
-      startTime.milli() +
-      ((endWeek.milli() - startWeek.milli()) / 7) * 5 +
-      (endTime.milli() - endWeek.addDay(2).milli())) /
-    Duration.DAY.milli;
+  const output = (startWeek.milli()
+      - startTime.milli()
+      + ((endWeek.milli() - startWeek.milli()) / 7) * 5
+      + (endTime.milli() - endWeek.addDay(2).milli()))
+    / Duration.DAY.milli;
 
   if (out !== sign(output) * ceiling(abs(output))) {
     Log.error('Weekday calculation failed internal test');
@@ -469,9 +468,9 @@ GMTDate.diffWeekday = (endTime_, startTime_) => {
 GMTDate.diffMonth = (endTime, startTime) => {
   // MAKE SURE WE HAVE numMonths THAT IS TOO BIG;
   let numMonths = floor(
-    ((endTime.milli() - startTime.milli() + Duration.MILLI_VALUES.day * 31) /
-      Duration.MILLI_VALUES.year) *
-      12
+    ((endTime.milli() - startTime.milli() + Duration.MILLI_VALUES.day * 31)
+      / Duration.MILLI_VALUES.year)
+      * 12,
   );
   let test = startTime.addMonth(numMonths);
 
@@ -493,8 +492,8 @@ GMTDate.diffMonth = (endTime, startTime) => {
   if (testMonth !== numMonths) {
     Log.error(
       `Error calculating number of months between (${startTime.format(
-        'yy-MM-dd HH:mm:ss'
-      )}) and (${endTime.format('yy-MM-dd HH:mm:ss')})`
+        'yy-MM-dd HH:mm:ss',
+      )}) and (${endTime.format('yy-MM-dd HH:mm:ss')})`,
     );
   }
   // DONE TEST
@@ -503,10 +502,9 @@ GMTDate.diffMonth = (endTime, startTime) => {
   const output = new Duration();
 
   output.month = numMonths;
-  output.milli =
-    endTime.milli() -
-    startTime.addMonth(numMonths).milli() +
-    numMonths * Duration.MILLI_VALUES.month;
+  output.milli = endTime.milli()
+    - startTime.addMonth(numMonths).milli()
+    + numMonths * Duration.MILLI_VALUES.month;
 
   //  if (output.milli>=Duration.MILLI_VALUES.day*31)
   //    Log.error("problem");
@@ -650,7 +648,9 @@ GMTDate.getTimezone = () => {
 // //////////////////////////////////////////////////////////////////////////////
 // WHAT IS THE MOST COMPACT DATE FORMAT TO DISTINGUISH THE RANGE
 // //////////////////////////////////////////////////////////////////////////////
-GMTDate.niceFormat = ({ type, min, max, interval }) => {
+GMTDate.niceFormat = ({
+  type, min, max, interval,
+}) => {
   if (!['date', 'time'].includes(type)) {
     Log.error('Expecting a time domain');
   }
@@ -685,16 +685,14 @@ GMTDate.niceFormat = ({ type, min, max, interval }) => {
   const span = max.subtract(min, interval);
 
   if (
-    span.month < Duration.MONTH_VALUES.year &&
-    span.milli < Duration.MILLI_VALUES.day * 365
-  )
-    maxFormat = 4; // month
+    span.month < Duration.MONTH_VALUES.year
+    && span.milli < Duration.MILLI_VALUES.day * 365
+  ) maxFormat = 4; // month
 
   if (
-    span.month < Duration.MONTH_VALUES.month &&
-    span.milli < Duration.MILLI_VALUES.day * 31
-  )
-    maxFormat = 3; // day
+    span.month < Duration.MONTH_VALUES.month
+    && span.milli < Duration.MILLI_VALUES.day * 31
+  ) maxFormat = 3; // day
 
   if (span.milli < Duration.MILLI_VALUES.day) {
     maxFormat = 2;
@@ -734,7 +732,7 @@ GMTDate.getBestInterval = (
   minDate,
   maxDate,
   requestedInterval = Duration.DAY,
-  range = {}
+  range = {},
 ) => {
   // INTERVAL WILL SPLIT DOMAIN INTO N PARTS; min <= N < max
   const { min = 7, max = 20 } = range;
@@ -749,7 +747,7 @@ GMTDate.getBestInterval = (
       Duration.COMMON_INTERVALS.slice()
         .reverse()
         .find(d => biggest > d.month),
-      first(Duration.COMMON_INTERVALS)
+      first(Duration.COMMON_INTERVALS),
     );
   }
 
@@ -766,14 +764,14 @@ GMTDate.getBestInterval = (
       Duration.COMMON_INTERVALS.slice()
         .reverse()
         .find(d => biggest > d.milli),
-      first(Duration.COMMON_INTERVALS)
+      first(Duration.COMMON_INTERVALS),
     );
   }
 
   if (requested < smallest) {
     return coalesce(
       Duration.COMMON_INTERVALS.find(d => smallest <= d.milli),
-      last(Duration.COMMON_INTERVALS)
+      last(Duration.COMMON_INTERVALS),
     );
   }
 };
@@ -858,8 +856,7 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
   let ampm = '';
 
   while (formatIndex < format.length) {
-    while (val.charAt(valueIndex) === ' ' && valueIndex < val.length)
-      valueIndex += 1;
+    while (val.charAt(valueIndex) === ' ' && valueIndex < val.length) valueIndex += 1;
 
     // Get next token from format string
     token = '';
@@ -909,8 +906,8 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
         let prefixLength = 0;
 
         while (
-          val.charAt(valueIndex + prefixLength).toLowerCase() ===
-          monthName.charAt(prefixLength).toLowerCase()
+          val.charAt(valueIndex + prefixLength).toLowerCase()
+          === monthName.charAt(prefixLength).toLowerCase()
         ) {
           prefixLength += 1;
         } // while
@@ -940,8 +937,8 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
         const dayName = GMTDate.DAY_NAMES[i];
 
         if (
-          val.slice(valueIndex, valueIndex + dayName.length).toLowerCase() ===
-          dayName.toLowerCase()
+          val.slice(valueIndex, valueIndex + dayName.length).toLowerCase()
+          === dayName.toLowerCase()
         ) {
           valueIndex += dayName.length;
           break;
@@ -1067,7 +1064,7 @@ GMTDate.getDateFromFormat = (val_, format_, isPastDate) => {
       mm,
       ss,
       fff,
-      ampm
+      ampm,
     );
 
     if (isPastDate) {
@@ -1144,10 +1141,10 @@ const RELATIVE = {
   eod: 'ceilingDay',
 };
 
-GMTDate.parseRelative = val => {
+GMTDate.parseRelative = (val) => {
   const parts = [];
 
-  val.split('+').forEach(t => {
+  val.split('+').forEach((t) => {
     t.split('-').forEach((tt, i) => {
       parts.push([i === 0 ? 'add' : 'subtract', tt]);
     });

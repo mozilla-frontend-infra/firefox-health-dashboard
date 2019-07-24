@@ -51,7 +51,7 @@ BugzillaGraph.propTypes = {
         ]),
         priority: PropTypes.arrayOf(PropTypes.string),
       }),
-    })
+    }),
   ),
   startDate: PropTypes.string,
   title: PropTypes.oneOf([PropTypes.string, PropTypes.node]),

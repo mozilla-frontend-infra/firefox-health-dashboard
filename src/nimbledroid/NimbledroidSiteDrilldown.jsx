@@ -29,7 +29,9 @@ class NimbledroidSiteDrilldown extends Component {
   }
 
   generateData(configuration, nimbledroidData) {
-    const { baseProduct, compareProduct, targetRatio, site } = configuration;
+    const {
+      baseProduct, compareProduct, targetRatio, site,
+    } = configuration;
     const { scenarios } = nimbledroidData;
     const profile = scenarios[site];
     const generatedData = {
@@ -37,7 +39,7 @@ class NimbledroidSiteDrilldown extends Component {
       ...siteMetrics(
         profile[baseProduct],
         profile[compareProduct],
-        targetRatio
+        targetRatio,
       ),
     };
 
@@ -61,7 +63,8 @@ class NimbledroidSiteDrilldown extends Component {
           enrich: true,
           text: site,
           hyperlink: site,
-        }}>
+        }}
+      >
         <NimbledroidGraph profile={profile} targetRatio={targetRatio} />
       </StatusWidget>
     );

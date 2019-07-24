@@ -23,8 +23,8 @@ describe('Data', () => {
       Data.setDefault(
         { a: 3, b: { c: 5 }, c: null },
         { a: null, c: null },
-        { b: { d: 0 }, c: 7 }
-      )
+        { b: { d: 0 }, c: 7 },
+      ),
     ).toEqual({ a: 3, b: { c: 5, d: 0 }, c: 7 });
   });
 

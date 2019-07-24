@@ -5,23 +5,22 @@ import cx from 'classnames';
 import { Link } from '../vendor/components/links';
 import { DetailsIcon } from '../utils/icons';
 
-const enrich = (text, key = 'none') =>
-  typeof text === 'string' ? (
-    <span
-      key={`enriched-${key}`}
+const enrich = (text, key = 'none') => (typeof text === 'string' ? (
+  <span
+    key={`enriched-${key}`}
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{
-        __html: text
-          .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-          .replace(
-            /\[([^\]]+)\]\(([^)]+)/g,
-            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</em>'
-          ),
-      }}
-    />
-  ) : (
-    text
-  );
+    dangerouslySetInnerHTML={{
+      __html: text
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(
+          /\[([^\]]+)\]\(([^)]+)/g,
+          '<a href="$2" target="_blank" rel="noopener noreferrer">$1</em>',
+        ),
+    }}
+  />
+) : (
+  text
+));
 
 export default class Widget extends React.Component {
   render() {
@@ -65,7 +64,8 @@ export default class Widget extends React.Component {
               role="img"
               aria-label="Pass"
               key="icon-pass"
-              className="status-icon">
+              className="status-icon"
+            >
               😀
             </span>
           ) : (
@@ -73,7 +73,8 @@ export default class Widget extends React.Component {
               role="img"
               aria-label="Fail"
               key="icon-fail"
-              className="status-icon">
+              className="status-icon"
+            >
               😟
             </span>
           )}
@@ -85,8 +86,9 @@ export default class Widget extends React.Component {
       <div
         className={cx(
           `criteria-widget status-${this.props.status}`,
-          this.props.className
-        )}>
+          this.props.className,
+        )}
+      >
         <header className="sides-padding">
           <div>
             <h3>{$title}</h3>
@@ -98,13 +100,14 @@ export default class Widget extends React.Component {
           className={cx('widget-content', {
             'state-loading': this.props.loading,
           })}
-          ref={node => {
+          ref={(node) => {
             if (node && this.props.viewport) {
               const rect = node.getBoundingClientRect();
 
               this.props.viewport([rect.width, rect.height]);
             }
-          }}>
+          }}
+        >
           {this.props.children}
           {this.props.content && enrich(this.props.content, 'content')}
           {target && (

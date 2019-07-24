@@ -115,12 +115,11 @@ const FILTERED_OUT_SITES = [
   'https://www.washingtonpost.com/graphics/2018/national/amp-stories/border-wall',
   'https://www.wired.com/amp-stories/space-photos-of-the-week-111817',
 ];
-const includeScenario = scenario =>
-  scenario.includes('http') && !FILTERED_OUT_SITES.includes(scenario);
+const includeScenario = scenario => scenario.includes('http') && !FILTERED_OUT_SITES.includes(scenario);
 
 export const generateSitesTableContent = (
   nimbledroidData,
-  { baseProduct, compareProduct, targetRatio }
+  { baseProduct, compareProduct, targetRatio },
 ) => {
   const { meta, scenarios } = nimbledroidData;
   const filteredScenarios = Object.keys(scenarios)
@@ -128,16 +127,15 @@ export const generateSitesTableContent = (
     .map(scenario => scenarios[scenario]);
   const packageIds = Object.keys(meta);
   const numSites = Object.keys(filteredScenarios).length;
-  const sites =
-    numSites > 0
-      ? Object.values(filteredScenarios)
-          .map(scenario => {
-            const ratio = scenario[baseProduct] / scenario[compareProduct];
+  const sites = numSites > 0
+    ? Object.values(filteredScenarios)
+      .map((scenario) => {
+        const ratio = scenario[baseProduct] / scenario[compareProduct];
 
-            return { ratio, ...scenario };
-          })
-          .sort(sortSitesByTargetRatio)
-      : [];
+        return { ratio, ...scenario };
+      })
+      .sort(sortSitesByTargetRatio)
+    : [];
   const count = {
     red: 0,
     yellow: 0,
@@ -148,24 +146,24 @@ export const generateSitesTableContent = (
 
   tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
 
-  const tableContent = sites.map(scenario => {
+  const tableContent = sites.map((scenario) => {
     const { title, url } = scenario;
     const { ratio, color } = siteMetrics(
       scenario[baseProduct],
       scenario[compareProduct],
-      targetRatio
+      targetRatio,
     );
 
     count[color] += 1;
 
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: packageIds.map(packageId => {
+      dataPoints: packageIds.map((packageId) => {
         const datum = scenario[packageId];
         const { color } = siteMetrics(
           datum,
           scenario[compareProduct],
-          targetRatio
+          targetRatio,
         );
 
         return { datum, statusColor: color };

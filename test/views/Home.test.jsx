@@ -8,7 +8,7 @@ it('renders correctly', () => {
     .create(
       <BrowserRouter>
         <Home />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
     .toJSON();
 

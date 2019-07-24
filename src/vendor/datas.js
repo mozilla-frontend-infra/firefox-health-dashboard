@@ -32,9 +32,7 @@ function isEqual(a, b, done = []) {
 
     const moreDone = [a, b, ...done];
 
-    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k =>
-      isEqual(a[k], b[k], moreDone)
-    );
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k => isEqual(a[k], b[k], moreDone));
   }
 
   if (isMany(a) && isMany(b)) {
@@ -42,9 +40,7 @@ function isEqual(a, b, done = []) {
       Data.log.error('recursive structure');
     }
 
-    return Data.selectFrom(a, b).every((aa, bb) =>
-      isEqual(aa, bb, [a, b, ...done])
-    );
+    return Data.selectFrom(a, b).every((aa, bb) => isEqual(aa, bb, [a, b, ...done]));
   }
 
   if (a.isEqual) return a.isEqual(b);
@@ -57,7 +53,7 @@ function isEqual(a, b, done = []) {
 /*
 RETURN true IF value HAS NO KEYS
  */
-Data.isEmpty = value => {
+Data.isEmpty = (value) => {
   if (missing(value)) {
     return true;
   }
@@ -105,7 +101,7 @@ Data.copy = (from, to) => {
 /*
 deepcopy Data and Array-like objects
  */
-Data.deepCopy = value => {
+Data.deepCopy = (value) => {
   if (isData(value)) {
     const output = {};
 
@@ -146,7 +142,7 @@ Data.setDefault = (dest, ...args) => {
     return output;
   }
 
-  args.forEach(source => {
+  args.forEach((source) => {
     if (missing(source)) {
       return;
     }

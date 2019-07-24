@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 
-import { coalesce, exists, isNumeric, isString, missing } from './utils';
+import {
+  coalesce, exists, isNumeric, isString, missing,
+} from './utils';
 import { abs, floor, min } from './math';
 import { Log } from './logs';
 import strings from './strings';
@@ -123,9 +125,8 @@ class Duration {
       }
 
       // A MONTH OF DURATION IS BIGGER THAN A CANONICAL MONTH
-      output.month =
-        floor((this.milli * 12) / Duration.MILLI_VALUES.year / interval.month) *
-        interval.month;
+      output.month = floor((this.milli * 12) / Duration.MILLI_VALUES.year / interval.month)
+        * interval.month;
       output.milli = output.month * Duration.MILLI_VALUES.month;
     } else {
       output.milli = floor(this.milli / interval.milli) * interval.milli;
@@ -312,21 +313,19 @@ Duration.MONTH_VALUES = {
 };
 
 // A REAL MONTH IS LARGER THAN THE CANONICAL MONTH
-Duration.MONTH_SKEW =
-  Duration.MILLI_VALUES.year / 12 - Duration.MILLI_VALUES.month;
+Duration.MONTH_SKEW = Duration.MILLI_VALUES.year / 12 - Duration.MILLI_VALUES.month;
 
 // //////////////////////////////////////////////////////////////////////////////
 // CONVERT SIMPLE <float><type> TO A DURATION OBJECT
 // //////////////////////////////////////////////////////////////////////////////
-Duration.String2Duration = text => {
+Duration.String2Duration = (text) => {
   if (text === '' || text === 'zero') {
     return new Duration();
   }
 
   let s = 0;
 
-  while (s < text.length && (text.charAt(s) <= '9' || text.charAt(s) === '.'))
-    s += 1;
+  while (s < text.length && (text.charAt(s) <= '9' || text.charAt(s) === '.')) s += 1;
 
   const output = new Duration();
   const interval = strings.rightBut(text, s);
@@ -334,23 +333,22 @@ Duration.String2Duration = text => {
 
   if (Duration.MILLI_VALUES[interval] === undefined) {
     Log.error(
-      `{{interval}} is not a recognized duration type (did you use the pural form by mistake?`,
-      { interval }
+      '{{interval}} is not a recognized duration type (did you use the pural form by mistake?',
+      { interval },
     );
   }
 
   if (Duration.MONTH_VALUES[interval] === 0) {
     output.milli = amount * Duration.MILLI_VALUES[interval];
   } else {
-    output.milli =
-      amount * Duration.MONTH_VALUES[interval] * Duration.MILLI_VALUES.month;
+    output.milli = amount * Duration.MONTH_VALUES[interval] * Duration.MILLI_VALUES.month;
     output.month = amount * Duration.MONTH_VALUES[interval];
   }
 
   return output;
 };
 
-Duration.parse = value => {
+Duration.parse = (value) => {
   let output = new Duration();
   // EXPECTING CONCAT OF <sign><integer><type>
   const plist = value.split('+');
@@ -400,7 +398,7 @@ Duration.min = (a, b) => {
   return b;
 };
 
-Duration.newInstance = obj => {
+Duration.newInstance = (obj) => {
   if (missing(obj)) {
     return null;
   }
@@ -419,7 +417,7 @@ Duration.newInstance = obj => {
   } else if (Number.isNaN(obj)) {
     return null;
   } else {
-    Log.error(`Do not know type of object {{obj}} to make a Duration`, { obj });
+    Log.error('Do not know type of object {{obj}} to make a Duration', { obj });
   }
 
   return output;
@@ -451,11 +449,11 @@ Duration.niceSteps = (min, max, desiredSteps, desiredInterval) => {
     interval = Duration.newInstance(desiredInterval);
   } else if (desiredSteps !== null) {
     interval = Duration.newInstance(
-      endDuration.subtract(startDuration).milli / desiredSteps
+      endDuration.subtract(startDuration).milli / desiredSteps,
     );
   } else {
     interval = Duration.newInstance(
-      endDuration.subtract(startDuration).milli / 7
+      endDuration.subtract(startDuration).milli / 7,
     );
   }
 
@@ -498,11 +496,11 @@ Duration.niceFormat = (min, max, desiredSteps, desiredInterval) => {
     interval = Duration.newInstance(desiredInterval);
   } else if (desiredSteps !== null) {
     interval = Duration.newInstance(
-      endDuration.subtract(startDuration).milli / desiredSteps
+      endDuration.subtract(startDuration).milli / desiredSteps,
     );
   } else {
     interval = Duration.newInstance(
-      endDuration.subtract(startDuration).milli / 7
+      endDuration.subtract(startDuration).milli / 7,
     );
   }
 
@@ -536,16 +534,14 @@ Duration.niceFormat = (min, max, desiredSteps, desiredInterval) => {
   const span = endDuration.subtract(startDuration, interval);
 
   if (
-    span.month < Duration.MONTH_VALUES.year &&
-    span.milli < Duration.MILLI_VALUES.day * 365
-  )
-    maxFormat = 4; // month
+    span.month < Duration.MONTH_VALUES.year
+    && span.milli < Duration.MILLI_VALUES.day * 365
+  ) maxFormat = 4; // month
 
   if (
-    span.month < Duration.MONTH_VALUES.month &&
-    span.milli < Duration.MILLI_VALUES.day * 31
-  )
-    maxFormat = 3; // day
+    span.month < Duration.MONTH_VALUES.month
+    && span.milli < Duration.MILLI_VALUES.day * 31
+  ) maxFormat = 3; // day
 
   if (span.milli < Duration.MILLI_VALUES.day) {
     maxFormat = 2;

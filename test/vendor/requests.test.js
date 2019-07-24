@@ -34,15 +34,13 @@ describe('requests', () => {
   ];
 
   it('reversable', () => {
-    reversable.forEach(obj =>
-      expect(
-        (() => {
-          const qs = toQueryString(obj);
+    reversable.forEach(obj => expect(
+      (() => {
+        const qs = toQueryString(obj);
 
-          return fromQueryString(qs);
-        })()
-      ).toEqual(obj)
-    );
+        return fromQueryString(qs);
+      })(),
+    ).toEqual(obj));
   });
 
   const toQuery = [
@@ -91,9 +89,7 @@ describe('requests', () => {
   ];
 
   it('AcceptNonStandardQueryStrings', () => {
-    nonStandardQueryStrings.forEach(([obj, url]) =>
-      expect(fromQueryString(url)).toEqual(obj)
-    );
+    nonStandardQueryStrings.forEach(([obj, url]) => expect(fromQueryString(url)).toEqual(obj));
   });
 
   it('KeyWithoutValueIsTruthy', () => {

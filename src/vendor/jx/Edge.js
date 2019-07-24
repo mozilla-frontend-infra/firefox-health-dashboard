@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 
 import jx from './expressions';
-import { exists, isFunction, isString, missing } from '../utils';
+import {
+  exists, isFunction, isString, missing,
+} from '../utils';
 import { Domain, ValueDomain } from './domains';
 import { Log } from '../logs';
 
@@ -16,7 +18,7 @@ class Edge {
   }
 }
 
-Edge.newInstance = desc => {
+Edge.newInstance = (desc) => {
   if (desc instanceof Edge) {
     return desc;
   }

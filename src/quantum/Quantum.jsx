@@ -33,42 +33,40 @@ export default class QuantumIndex extends React.Component {
     } = this.props;
     const urlParams = fromQueryString(location.search);
     const bits = urlParams.bits || Number.parseInt(params.bits, 10);
-    const quantumQueryParams =
-      bits === 32 ? quantum32QueryParams : quantum64QueryParams;
-    const platform =
-      bits === 32
-        ? {
-            or: [
-              {
-                eq: {
-                  options: 'pgo',
-                  platform: 'windows7-32',
-                },
-              },
-              {
-                eq: {
-                  options: 'opt',
-                  platform: 'windows7-32-shippable',
-                },
-              },
-            ],
-          }
-        : {
-            or: [
-              {
-                eq: {
-                  options: 'pgo',
-                  platform: 'windows10-64',
-                },
-              },
-              {
-                eq: {
-                  options: 'opt',
-                  platform: 'windows10-64-shippable',
-                },
-              },
-            ],
-          };
+    const quantumQueryParams = bits === 32 ? quantum32QueryParams : quantum64QueryParams;
+    const platform = bits === 32
+      ? {
+        or: [
+          {
+            eq: {
+              options: 'pgo',
+              platform: 'windows7-32',
+            },
+          },
+          {
+            eq: {
+              options: 'opt',
+              platform: 'windows7-32-shippable',
+            },
+          },
+        ],
+      }
+      : {
+        or: [
+          {
+            eq: {
+              options: 'pgo',
+              platform: 'windows10-64',
+            },
+          },
+          {
+            eq: {
+              options: 'opt',
+              platform: 'windows10-64-shippable',
+            },
+          },
+        ],
+      };
     const performanceFilter = {
       and: [
         {
@@ -94,8 +92,7 @@ export default class QuantumIndex extends React.Component {
         eq: { platform: ['windows10-64-nightly', 'windows10-64-shippable'] },
       };
     })();
-    const regressionConfig =
-      bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
+    const regressionConfig = bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = [
       {
         title: 'Benchmarks',
@@ -560,7 +557,9 @@ export default class QuantumIndex extends React.Component {
       },
     ];
     const reduced = sections.map(
-      ({ title, more, rows, cssRowExtraClasses }) => {
+      ({
+        title, more, rows, cssRowExtraClasses,
+      }) => {
         const statusList = toPairs(statusLabels)
           .map(() => 0)
           .fromPairs();
@@ -583,7 +582,8 @@ export default class QuantumIndex extends React.Component {
                   xs={6}
                   className={
                     cssRowExtraClasses ? ` ${cssRowExtraClasses}` : ''
-                  }>
+                  }
+                >
                   {widget}
                 </Grid>
               );
@@ -599,8 +599,11 @@ export default class QuantumIndex extends React.Component {
                 <div
                   // eslint-disable-next-line react/no-array-index-key
                   key={`status-${status}`}
-                  className={`header-status header-status-${status}`}>
-                  <em>{count}</em> {desc}
+                  className={`header-status header-status-${status}`}
+                >
+                  <em>{count}</em>
+                  {' '}
+                  {desc}
                 </div>
               );
             }
@@ -628,7 +631,7 @@ export default class QuantumIndex extends React.Component {
             {section}
           </div>
         );
-      }
+      },
     );
 
     document.body.classList[full ? 'add' : 'remove']('summary-fullscreen');

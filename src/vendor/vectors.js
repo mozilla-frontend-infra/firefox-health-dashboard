@@ -21,7 +21,9 @@ import {
   reverse,
   toArray,
 } from './utils';
-import { average, geomean, max, min, sum, count } from './math';
+import {
+  average, geomean, max, min, sum, count,
+} from './math';
 import { Log } from './logs';
 import jx from './jx/expressions';
 
@@ -38,7 +40,7 @@ function preSelector(columnName) {
     // select many columns
     return internalFrom(columnName)
       .sort()
-      .map(select => {
+      .map((select) => {
         if (isString(select)) {
           const selector = jx(select);
 
@@ -53,9 +55,7 @@ function preSelector(columnName) {
   if (isData(columnName)) {
     return internalLeaves(columnName)
       .sort((selector, path) => path)
-      .map((selector, path) =>
-        preSelector(selector).map(([s, n]) => [s, concatField(path, n)])
-      )
+      .map((selector, path) => preSelector(selector).map(([s, n]) => [s, concatField(path, n)]))
       .flatten();
   }
 
@@ -120,7 +120,7 @@ class ArrayWrapper {
     }
   }
 
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     for (const [a] of this.argslist) {
       yield a;
     }
@@ -137,8 +137,7 @@ class ArrayWrapper {
   map(func) {
     // map the value, do not touch the other args
     function* output(argslist) {
-      for (const [value, ...args] of argslist)
-        yield [func(value, ...args), ...args];
+      for (const [value, ...args] of argslist) yield [func(value, ...args), ...args];
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -253,11 +252,12 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = row => {
-        for (const s of selects)
+      func = (row) => {
+        for (const s of selects) {
           if (missing(s(row))) {
             return false;
           }
+        }
 
         return true;
       };
@@ -275,11 +275,12 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = row => {
-        for (const s of selects)
+      func = (row) => {
+        for (const s of selects) {
           if (exists(s(row))) {
             return false;
           }
+        }
 
         return true;
       };
@@ -316,12 +317,13 @@ class ArrayWrapper {
     // assume this is an array of lists, return array of all elements
     // append extra index parameter to args
     function* output(argslist) {
-      for (const [values] of argslist)
+      for (const [values] of argslist) {
         if (exists(values)) {
           for (const value of values) {
             yield [value];
           }
         }
+      }
     }
 
     return new ArrayWrapper(() => output(this.argslist));
@@ -390,11 +392,11 @@ class ArrayWrapper {
         function* outputGen() {
           for (const args of simpleSorted) yield args;
         },
-        { debug: false }
+        { debug: false },
       );
     }
 
-    const func = toArray(selectors).map(selector => {
+    const func = toArray(selectors).map((selector) => {
       if (missing(selector)) {
         return ([arg]) => arg;
       }
@@ -413,7 +415,7 @@ class ArrayWrapper {
       function* outputGen() {
         for (const args of sorted) yield args;
       },
-      { debug: false }
+      { debug: false },
     );
   }
 
@@ -427,7 +429,7 @@ class ArrayWrapper {
       function* outputGen() {
         for (const arg of result) yield [arg];
       },
-      { debug: false }
+      { debug: false },
     );
   }
 
@@ -460,7 +462,7 @@ class ArrayWrapper {
       function* outputGen() {
         for (const args of list) yield args;
       },
-      { debug: false }
+      { debug: false },
     );
   }
 
@@ -659,7 +661,7 @@ function selectFrom(list, ...more) {
           i += 1;
         }
       },
-      { debug: false }
+      { debug: false },
     );
   }
 
@@ -667,7 +669,7 @@ function selectFrom(list, ...more) {
     function* outputGen() {
       for (const v of list) yield [v];
     },
-    { debug: false }
+    { debug: false },
   );
 }
 
@@ -687,7 +689,7 @@ function toPairs(obj) {
       function* outputGen() {
         for (const [k, v] of obj.entries()) yield [v, k];
       },
-      { debug: false }
+      { debug: false },
     );
   }
 
@@ -695,7 +697,7 @@ function toPairs(obj) {
     function* outputGen() {
       for (const [k, v] of Object.entries(obj)) yield [v, k];
     },
-    { debug: false }
+    { debug: false },
   );
 }
 

@@ -7,7 +7,7 @@ import SETTINGS from './settings';
 
 if (process.env.NODE_ENV === 'production') {
   Raven.config(
-    'https://c7561fc1f4df441c9aa8cd203a3aeeed@sentry.prod.mozaws.net/433'
+    'https://c7561fc1f4df441c9aa8cd203a3aeeed@sentry.prod.mozaws.net/433',
   ).install();
 }
 
@@ -76,13 +76,13 @@ class RawErrorMessage extends React.Component {
 }
 
 const ErrorMessage = withStyles(styles)(RawErrorMessage);
-const withErrorBoundary = WrappedComponent => {
+const withErrorBoundary = (WrappedComponent) => {
   if (
-    WrappedComponent.displayName &&
-    WrappedComponent.displayName.startsWith('WithStyles')
+    WrappedComponent.displayName
+    && WrappedComponent.displayName.startsWith('WithStyles')
   ) {
     Log.error(
-      'Can not wrap WithStyles because componentDidMount() returns undefined'
+      'Can not wrap WithStyles because componentDidMount() returns undefined',
     );
   }
 

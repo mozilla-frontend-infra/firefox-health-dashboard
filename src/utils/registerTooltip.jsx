@@ -16,7 +16,7 @@ const handleOnClick = (_, items) => {
     return Chart.defaults.global.onClick;
   }
 
-  Chart.helpers.each(Chart.instances, chartItem => {
+  Chart.helpers.each(Chart.instances, (chartItem) => {
     chartItem.update();
   });
 };
@@ -46,13 +46,13 @@ const registerPlugin = () => {
               // eslint-disable-next-line no-underscore-dangle
               _active: [chart.getDatasetMeta(_datasetIndex).data[_index]],
             },
-            chart
-          )
+            chart,
+          ),
         );
       }
     },
     afterDatasetsDraw(easing) {
-      Chart.helpers.each(this.pluginTooltips, tooltip => {
+      Chart.helpers.each(this.pluginTooltips, (tooltip) => {
         tooltip.initialize();
         tooltip.update();
         tooltip.pivot();

@@ -28,7 +28,8 @@ const Graph = ({ data, name, url }) => (
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        alt="View all subtests on Perfherder">
+        alt="View all subtests on Perfherder"
+      >
         <FontAwesomeIcon
           icon={faExternalLinkAlt}
           style={{ marginLeft: '0.3em' }}
@@ -74,8 +75,10 @@ class PerfherderContainerPre extends Component {
   }
 
   async data(
-    { platform, suite, framework, repo = 'mozilla-central', option },
-    percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD
+    {
+      platform, suite, framework, repo = 'mozilla-central', option,
+    },
+    percentileThreshold = DEFAULT_PERCENTILE_THRESHOULD,
   ) {
     const { perfherderUrl, data, parentSignature } = await getData({
       suite,
@@ -118,7 +121,8 @@ class PerfherderContainerPre extends Component {
                   href={perfherderUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  alt="View all subtests on Perfherder">
+                  alt="View all subtests on Perfherder"
+                >
                   <FontAwesomeIcon
                     icon={faExternalLinkAlt}
                     style={{ marginLeft: '0.3em' }}

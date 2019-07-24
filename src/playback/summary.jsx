@@ -4,7 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
-import { BROWSERS, ENCODINGS, PLATFORMS, TESTS } from './config';
+import {
+  BROWSERS, ENCODINGS, PLATFORMS, TESTS,
+} from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
 import { missing } from '../vendor/utils';
@@ -66,9 +68,9 @@ const SPECIAL_SIZES = [
   { id: '2160p60', label: '2160p' }, // 8M pixels
 ];
 const lookupType = {
-  '0': 'pass',
-  '1': 'bad',
-  '2': 'fail',
+  0: 'pass',
+  1: 'bad',
+  2: 'fail',
 };
 
 class PlaybackSummary extends React.Component {
@@ -85,35 +87,31 @@ class PlaybackSummary extends React.Component {
       .toArray();
     const combos = selectFrom(PLATFORMS)
       .where({ bits, type: platformType })
-      .map(platform =>
-        selectFrom(ENCODINGS)
-          .where({ encoding })
-          .map(({ encoding }) =>
-            selectFrom(TESTS)
-              .where({
-                encoding,
-                size: sizes,
-              })
-              .map(test => {
-                const filter = {
-                  and: [browser.filter, platform.filter, test.filter],
-                };
+      .map(platform => selectFrom(ENCODINGS)
+        .where({ encoding })
+        .map(({ encoding }) => selectFrom(TESTS)
+          .where({
+            encoding,
+            size: sizes,
+          })
+          .map((test) => {
+            const filter = {
+              and: [browser.filter, platform.filter, test.filter],
+            };
 
-                return {
-                  platform: platform.id,
-                  encoding,
-                  size: test.size,
-                  speed: test.speed,
-                  filter,
-                };
-              })
-          )
-          .flatten()
-      )
+            return {
+              platform: platform.id,
+              encoding,
+              size: test.size,
+              speed: test.speed,
+              filter,
+            };
+          }))
+        .flatten())
       .flatten()
       .toArray();
     const results = await Promise.all(
-      combos.map(async g => {
+      combos.map(async (g) => {
         const perfData = await getData(g.filter);
         const loss = selectFrom(perfData)
           .select('data')
@@ -123,7 +121,7 @@ class PlaybackSummary extends React.Component {
           .average();
 
         return { ...g, loss };
-      })
+      }),
     );
     const result = selectFrom(results)
       .groupBy(['encoding', 'platform', 'size'])
@@ -157,8 +155,7 @@ class PlaybackSummary extends React.Component {
   }
 
   tooltipContent(score, encoding, platform, size) {
-    if (score === 'pass')
-      return 'One or less dropped frames at all playback speeds';
+    if (score === 'pass') return 'One or less dropped frames at all playback speeds';
 
     const { scores } = this.state;
     const result = selectFrom(scores)
@@ -190,7 +187,9 @@ class PlaybackSummary extends React.Component {
 
   render() {
     const { scores } = this.state;
-    const { bits, encoding, classes, browserId } = this.props;
+    const {
+      bits, encoding, classes, browserId,
+    } = this.props;
     const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
 
     if (!scores) {
@@ -198,13 +197,15 @@ class PlaybackSummary extends React.Component {
         <div
           style={{
             position: 'relative',
-          }}>
+          }}
+        >
           <div
             style={{
               position: 'absolute',
               top: '50%',
               right: '50%',
-            }}>
+            }}
+          >
             <CircularProgress />
           </div>
         </div>
@@ -214,7 +215,9 @@ class PlaybackSummary extends React.Component {
     return (
       <div key="1">
         <h2 className={classes.title}>
-          {encoding} (one, or less, dropped frames per test)
+          {encoding}
+          {' '}
+(one, or less, dropped frames per test)
         </h2>
         {selectFrom(PLATFORMS)
           .where({ bits, type: platformType })
@@ -235,7 +238,8 @@ class PlaybackSummary extends React.Component {
                 });
 
                 window.open(url, '_blank');
-              }}>
+              }}
+            >
               <Grid container spacing={1}>
                 <Grid item xs={5} style={{ position: 'relative' }}>
                   <div className={classes.name}>
@@ -246,8 +250,10 @@ class PlaybackSummary extends React.Component {
                         right: 0,
                         whiteSpace: 'nowrap',
                         transform: 'translate(0, -50%)',
-                      }}>
-                      {platform.label}:
+                      }}
+                    >
+                      {platform.label}
+:
                     </div>
                   </div>
                 </Grid>
@@ -261,22 +267,25 @@ class PlaybackSummary extends React.Component {
                       key={`${platform.id}_${encoding}_${id}`}
                       item
                       xs={1}
-                      style={{ position: 'relative', padding: '0.1rem' }}>
+                      style={{ position: 'relative', padding: '0.1rem' }}
+                    >
                       <div
                         className={classes[score]}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                        }}>
+                        }}
+                      >
                         <Tooltip
                           content={this.tooltipContent(
                             score,
                             encoding,
                             platform.id,
-                            id
+                            id,
                           )}
-                          fontSize="1rem">
+                          fontSize="1rem"
+                        >
                           {label}
                         </Tooltip>
                       </div>

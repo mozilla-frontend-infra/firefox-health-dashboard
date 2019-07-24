@@ -20,19 +20,19 @@ class KVStoreInternal {
     this.name = name;
     const request = indexedDB.open(name, dbVersion);
 
-    request.onupgradeneeded = event => {
+    request.onupgradeneeded = (event) => {
       event.target.result.createObjectStore(name);
     };
 
-    request.onerror = event => {
+    request.onerror = (event) => {
       Log.error(
         'Error creating/accessing IndexedDB database {{event}}',
         {},
-        event.target.error
+        event.target.error,
       );
     };
 
-    request.onsuccess = event => {
+    request.onsuccess = (event) => {
       this.db.resolve(event.target.result);
     };
   }
@@ -44,11 +44,11 @@ class KVStoreInternal {
       .objectStore(this.name)
       .get(key);
 
-    request.onsuccess = event => {
+    request.onsuccess = (event) => {
       output.resolve(event.target.result);
     };
 
-    request.onerror = event => {
+    request.onerror = (event) => {
       output.reject(event.target.error);
     };
 
@@ -65,11 +65,11 @@ class KVStoreInternal {
       .objectStore(this.name)
       .put(value, key);
 
-    request.onsuccess = event => {
+    request.onsuccess = (event) => {
       output.resolve(event.target.result);
     };
 
-    request.onerror = event => {
+    request.onerror = (event) => {
       output.reject(event.target.error);
     };
 

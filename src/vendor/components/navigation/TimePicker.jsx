@@ -25,7 +25,9 @@ class TimePicker extends Component {
   }
 
   render() {
-    const { classes, id, label, handleChange, options } = this.props;
+    const {
+      classes, id, label, handleChange, options,
+    } = this.props;
     const { value } = this.state;
 
     return (
@@ -35,7 +37,8 @@ class TimePicker extends Component {
           name={id}
           label={label}
           value={value}
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           {options.map(({ label, id }) => (
             <MenuItem key={id} value={id}>
               {label}
@@ -51,7 +54,7 @@ class TimePicker extends Component {
 ENSURE THE options ARE UPDATED
 RETURN CORRECTED VALUE
  */
-TimePicker.prepare = props => {
+TimePicker.prepare = (props) => {
   const { options, value, defaultValue } = props;
 
   if (missing(value)) return defaultValue;
@@ -60,8 +63,7 @@ TimePicker.prepare = props => {
     selectFrom(options)
       .select('id')
       .includes(value)
-  )
-    return value;
+  ) return value;
 
   // THIS PICKER WILL TAKE THE URL VALUE AND ADD IT AS A SELECTABLE VALUE
   options.push({
@@ -84,7 +86,7 @@ TimePicker.propTypes = {
         label: PropTypes.string.isRequired,
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
           .isRequired,
-      })
+      }),
     ),
     PropTypes.instanceOf(ArrayWrapper),
   ]).isRequired,

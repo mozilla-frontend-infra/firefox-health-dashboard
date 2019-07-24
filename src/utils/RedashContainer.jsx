@@ -28,7 +28,7 @@ const telemetryDataToDatasets = (sourceData, dataKeyIdentifier, timeDomain) => {
     .map((rows, submission_date) => ({
       submission_date: Date.newInstance(submission_date),
       ...selectFrom(rows)
-        .map(r => {
+        .map((r) => {
           const { value } = r;
           const label = r[dataKeyIdentifier];
 
@@ -76,7 +76,7 @@ class RedashContainer extends Component {
         standardOptions: telemetryDataToDatasets(
           redashData,
           dataKeyIdentifier,
-          timeDomain
+          timeDomain,
         ),
       });
     } finally {
@@ -90,18 +90,20 @@ class RedashContainer extends Component {
     return (
       <div>
         <ChartJsWrapper
-          title={
+          title={(
             <div>
-              {title}{' '}
+              {title}
+              {' '}
               <a
                 href={redashQueryUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                title="go to Redash query">
+                title="go to Redash query"
+              >
                 <LinkIcon />
               </a>
             </div>
-          }
+)}
           {...this.state}
         />
       </div>

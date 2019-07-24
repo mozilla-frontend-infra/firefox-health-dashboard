@@ -24,7 +24,9 @@ class Picker extends React.Component {
   }
 
   render() {
-    const { classes, id, label, handleChange, options } = this.props;
+    const {
+      classes, id, label, handleChange, options,
+    } = this.props;
     const { value } = this.state;
 
     return (
@@ -34,7 +36,8 @@ class Picker extends React.Component {
           name={id}
           label={label}
           value={value}
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           {options.map(({ label, id }) => (
             <MenuItem key={id} value={id}>
               {label}
@@ -50,7 +53,7 @@ class Picker extends React.Component {
 ENSURE THE options ARE UPDATED
 RETURN CORRECTED VALUE
  */
-Picker.prepare = props => {
+Picker.prepare = (props) => {
   const { options, value, defaultValue } = props;
 
   if (missing(value)) return defaultValue;
@@ -59,8 +62,7 @@ Picker.prepare = props => {
     selectFrom(options)
       .select('id')
       .includes(value)
-  )
-    return value;
+  ) return value;
 
   return defaultValue;
 };
@@ -77,7 +79,7 @@ Picker.propTypes = {
         label: PropTypes.string.isRequired,
         id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
           .isRequired,
-      })
+      }),
     ),
     PropTypes.instanceOf(ArrayWrapper),
   ]).isRequired,

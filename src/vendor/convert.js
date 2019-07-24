@@ -8,7 +8,7 @@ function json2value(json) {
   try {
     return JSON.parse(json);
   } catch (e) {
-    Log.error(`Can not parse json:\n{{json|indent}}`, { json }, e);
+    Log.error('Can not parse json:\n{{json|indent}}', { json }, e);
   }
 }
 
@@ -20,7 +20,7 @@ function prettyJSON(json, maxDepth) {
   try {
     if (isArray(json)) {
       const output = selectFrom(json)
-        .map(v => {
+        .map((v) => {
           if (v === undefined) {
             return;
           }

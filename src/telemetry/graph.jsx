@@ -42,7 +42,9 @@ class TelemetryContainer extends React.Component {
     }
   }
 
-  graphEvolutionsTimeline({ datas, params, yLabel, legendLabels }, graphEl) {
+  graphEvolutionsTimeline({
+    datas, params, yLabel, legendLabels,
+  }, graphEl) {
     const newDatas = datas.map(evo => MG.convert.date(evo, 'date'));
 
     MG.data_graphic({
@@ -79,7 +81,8 @@ class TelemetryContainer extends React.Component {
             <h3 className="graph-title">
               <a
                 className="graph-title-link"
-                ref={a => (this.graphTitleLink = a)}>
+                ref={a => (this.graphTitleLink = a)}
+              >
                 {title}
               </a>
             </h3>
@@ -87,7 +90,8 @@ class TelemetryContainer extends React.Component {
           <div>
             <div
               className="graph-subtitle"
-              ref={div => (this.graphSubtitleEl = div)}>
+              ref={div => (this.graphSubtitleEl = div)}
+            >
               {}
             </div>
             <div className="graph" ref={div => (this.graphEl = div)}>

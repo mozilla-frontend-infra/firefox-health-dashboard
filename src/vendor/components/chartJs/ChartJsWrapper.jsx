@@ -77,13 +77,15 @@ class ChartJsWrapper extends React.Component {
             style={{
               position: 'relative',
               height: chartHeight,
-            }}>
+            }}
+          >
             <div
               style={{
                 position: 'absolute',
                 top: '50%',
                 right: '50%',
-              }}>
+              }}
+            >
               <CircularProgress />
             </div>
           </div>
@@ -108,13 +110,15 @@ class ChartJsWrapper extends React.Component {
             style={{
               position: 'relative',
               height: chartHeight,
-            }}>
+            }}
+          >
             <div
               style={{
                 position: 'absolute',
                 top: '50%',
                 right: '50%',
-              }}>
+              }}
+            >
               No Data
             </div>
           </div>
@@ -124,16 +128,16 @@ class ChartJsWrapper extends React.Component {
 
     const currentDate = coalesce(
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
-      Date.eod()
+      Date.eod(),
     );
-    const allOldData = cjsOptions.data.datasets.every(dataset => {
+    const allOldData = cjsOptions.data.datasets.every((dataset) => {
       const latestDataDate = Date.newInstance(
         selectFrom(dataset.data)
           .select('x')
-          .max()
+          .max(),
       );
       const timeDifference = Math.abs(
-        currentDate.getTime() - latestDataDate.getTime()
+        currentDate.getTime() - latestDataDate.getTime(),
       );
       const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
@@ -142,7 +146,7 @@ class ChartJsWrapper extends React.Component {
 
     if (allOldData) {
       const error = new Error(
-        `This item has been missing data for at least ${missingDataInterval} days.`
+        `This item has been missing data for at least ${missingDataInterval} days.`,
       );
 
       return (

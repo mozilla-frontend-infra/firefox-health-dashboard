@@ -39,7 +39,9 @@ const tipStyles = {
   },
 };
 const geoTip = withStyles(tipStyles)(
-  ({ record, series, classes, standardOptions }) => {
+  ({
+    record, series, classes, standardOptions,
+  }) => {
     const referenceValue = selectFrom(standardOptions.series)
       .where({ label: TARGET_NAME })
       .first()
@@ -55,7 +57,10 @@ const geoTip = withStyles(tipStyles)(
             style={{ backgroundColor: series.style.color }}
             className={classes.tooltipKey}
           />
-          {series.label} : {round(record.y, { places: 3 })}
+          {series.label}
+          {' '}
+:
+          {round(record.y, { places: 3 })}
         </div>
         <div>
           {(() => {
@@ -82,7 +87,7 @@ const geoTip = withStyles(tipStyles)(
         </div>
       </div>
     );
-  }
+  },
 );
 
 class TP6M extends React.Component {
@@ -92,14 +97,14 @@ class TP6M extends React.Component {
   }
 
   async update() {
-    const { test, platform, past, ending } = this.props;
+    const {
+      test, platform, past, ending,
+    } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const tests = selectFrom(TP6_TESTS).where({ test });
     const testMode = tests.select('mode').first();
-    const sites = TP6M_SITES.filter(({ mode }) =>
-      mode.includes(testMode)
-    ).materialize();
+    const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
     const aggregate = await pullAggregate({
       condition: {
         or: TP6_COMBOS.where({ test, platform }).select('filter'),
@@ -145,7 +150,9 @@ class TP6M extends React.Component {
       .toArray();
     const { data } = geomean[0];
 
-    this.setState({ data, count, total, test, platform, referenceValue });
+    this.setState({
+      data, count, total, test, platform, referenceValue,
+    });
   }
 
   async componentDidMount() {
@@ -155,7 +162,7 @@ class TP6M extends React.Component {
   async componentDidUpdate(prevProps) {
     if (
       ['test', 'platform', 'past', 'ending'].every(
-        v => this.props[v] === prevProps[v]
+        v => this.props[v] === prevProps[v],
       )
     ) {
       return;
@@ -165,16 +172,24 @@ class TP6M extends React.Component {
   }
 
   render() {
-    const { classes, navigation, test, platform, past, ending } = this.props;
+    const {
+      classes, navigation, test, platform, past, ending,
+    } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const { data, count, total, referenceValue } = (() => {
+    const {
+      data, count, total, referenceValue,
+    } = (() => {
       if (test !== this.state.test || platform !== this.state.platform) {
         return {};
       }
 
-      const { data, count, total, referenceValue } = this.state;
+      const {
+        data, count, total, referenceValue,
+      } = this.state;
 
-      return { data, count, total, referenceValue };
+      return {
+        data, count, total, referenceValue,
+      };
     })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
@@ -190,8 +205,8 @@ class TP6M extends React.Component {
             <Grid item xs={6} className={classes.chart}>
               {data && (
                 <ChartJSWrapper
-                  title={`${`Geomean of ${subtitle}` +
-                    ' ('}${count} of ${total} sites reported)`}
+                  title={`${`Geomean of ${subtitle}`
+                    + ' ('}${count} of ${total} sites reported)`}
                   standardOptions={{
                     data,
                     tip: geoTip,
@@ -223,14 +238,15 @@ class TP6M extends React.Component {
                   item
                   xs={6}
                   key={`page_${site}_${test}_${platform}_${past}_${ending}`}
-                  className={classes.chart}>
+                  className={classes.chart}
+                >
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}
                     reference={(() => {
                       const value = round(
                         g5Reference.where({ test, platform, site }).getValue(),
-                        { places: 2 }
+                        { places: 2 },
                       );
 
                       return {

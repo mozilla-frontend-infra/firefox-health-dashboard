@@ -1,5 +1,7 @@
 import { fetchJson, URL } from '../vendor/requests';
-import { coalesce, first, missing, toArray } from '../vendor/utils';
+import {
+  coalesce, first, missing, toArray,
+} from '../vendor/utils';
 import { Log } from '../vendor/logs';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { Data } from '../vendor/datas';
@@ -25,7 +27,7 @@ function readOp(expr) {
 }
 
 const expressionLookup = {};
-const convert = expr => {
+const convert = (expr) => {
   try {
     const output = toPairs(expressionLookup)
       .map((restful, op) => (expr[op] ? restful(expr) : []))
@@ -140,7 +142,7 @@ Data.setDefault(expressionLookup, {
     ];
   },
   not(expr) {
-    expr.not.forEach(e => {
+    expr.not.forEach((e) => {
       e.n = 1;
     });
 
@@ -199,7 +201,7 @@ https://github.com/mozilla/ActiveData/blob/dev/docs/jx.md
 https://github.com/mozilla/ActiveData/blob/dev/docs/jx_expressions.md
 https://wiki.mozilla.org/Bugzilla:REST_API
  */
-const jx2rest = expr => {
+const jx2rest = (expr) => {
   const output = { query_format: 'advanced' };
   const params = convert(expr);
 
@@ -228,7 +230,7 @@ const jx2rest = expr => {
 /*
 send json query expression to Bugzilla
  */
-const queryBugzilla = async query => {
+const queryBugzilla = async (query) => {
   const url = URL({
     path: BUGZILLA_REST,
     query: {
@@ -244,14 +246,15 @@ const queryBugzilla = async query => {
 /*
 open a window to show given bugs
  */
-const showBugsUrl = query =>
-  URL({
-    path: BUGZILLA_URL,
-    query: {
-      ...jx2rest(coalesce(query.where, query.filter)),
-      columnlist: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
-      order: coalesce(query.sort, 'Bug Number'),
-    },
-  });
+const showBugsUrl = query => URL({
+  path: BUGZILLA_URL,
+  query: {
+    ...jx2rest(coalesce(query.where, query.filter)),
+    columnlist: coalesce(query.select, DEFAULT_COLUMNLIST).join(','),
+    order: coalesce(query.sort, 'Bug Number'),
+  },
+});
 
-export { jx2rest, queryBugzilla, showBugsUrl, BUGZILLA_URL };
+export {
+  jx2rest, queryBugzilla, showBugsUrl, BUGZILLA_URL,
+};

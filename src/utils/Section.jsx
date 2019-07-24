@@ -24,7 +24,9 @@ const styles = {
     paddingLeft: '.9em',
   },
 };
-const Section = ({ classes, children, subtitle, title, more }) => (
+const Section = ({
+  classes, children, subtitle, title, more,
+}) => (
   <div>
     <div className={classes.header}>
       <h2 className={classes.title}>

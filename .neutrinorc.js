@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const airbnb = require('@neutrinojs/airbnb');
 const react = require('@neutrinojs/react');
 const jest = require('@neutrinojs/jest');
@@ -8,10 +9,31 @@ module.exports = {
     root: __dirname,
   },
   use: [
-    airbnb(),
+    airbnb({
+      eslint: {
+        rules: {
+          'class-methods-use-this': 0,
+          'consistent-return': 0,
+          'jsx-a11y/click-events-have-key-events': 0,
+          'jsx-a11y/no-static-element-interactions': 0,
+          'max-len': 0,
+          'no-mixed-operators': 0,
+          'no-shadow': 0,
+          'no-return-assign': 0,
+          'react/default-props-match-prop-types': 0,
+          'react/destructuring-assignment': 0,
+          'react/forbid-prop-types': 0,
+          'react/no-unused-prop-types': 0,
+          'react/prefer-stateless-function': 0,
+          'react/prop-types': 0,
+          'react/require-default-props': 0,
+          'react/sort-comp': 0,
+        },
+      },
+    }),
     react({
       html: {
-        title: 'Firefox Health Dashboard'
+        title: 'Firefox Health Dashboard',
       },
       env: {
         BACKEND: 'https://firefox-health-backend.herokuapp.com',
@@ -23,11 +45,11 @@ module.exports = {
     }),
     jest({
       setupFilesAfterEnv: ['jest-extended'],
-    },),
+    }),
     copy({
       patterns: [
         { from: 'src/static/favicon.ico', to: 'favicon.ico' },
       ],
-    })
-  ]
+    }),
+  ],
 };

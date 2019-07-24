@@ -11,7 +11,7 @@ it('renders correctly', () => {
           location={{ pathname: '/quantum/64' }}
           match={{ params: { bits: 64 } }}
         />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
     .toJSON();
 

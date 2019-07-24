@@ -29,7 +29,7 @@ class Android extends Component {
             <Grid item xs={6} key="bugzilla">
               <Section title="Bugzilla">
                 <BugzillaGraph
-                  title={
+                  title={(
                     <span>
                       Firefox Preview Bugs
                       <a
@@ -64,11 +64,12 @@ class Android extends Component {
                             ],
                           },
                         })}
-                        title="All Geckoview P1 and Triage bugs">
+                        title="All Geckoview P1 and Triage bugs"
+                      >
                         <LinkIcon />
                       </a>
                     </span>
-                  }
+)}
                   timeDomain={timeDomain}
                   queries={[
                     {
@@ -162,7 +163,8 @@ class Android extends Component {
         </div>
         <Section
           title="Raptor (TP6m)"
-          more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64">
+          more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
+        >
           <TP6mAggregate timeDomain={timeDomain} />
         </Section>
         <Section title="Telemetry">
@@ -207,7 +209,8 @@ class Android extends Component {
         </Section>
         <Section
           title="Perfherder"
-          subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)">
+          subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)"
+        >
           <Grid container spacing={24}>
             <Grid item xs={6}>
               <PerfherderGraphContainer

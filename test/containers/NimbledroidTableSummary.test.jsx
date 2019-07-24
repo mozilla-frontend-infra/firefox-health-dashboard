@@ -15,7 +15,7 @@ it('renders correctly', () => {
           products: ['org.mozilla.klar', 'com.chrome.beta'],
           targetRatio: 1.2,
         }}
-      />
+      />,
     )
     .toJSON();
 

@@ -19,7 +19,9 @@ const styles = {
 
 class Power extends React.Component {
   render() {
-    const { classes, navigation, suite, browser, past, ending } = this.props;
+    const {
+      classes, navigation, suite, browser, past, ending,
+    } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const browserFilter = selectFrom(COMBOS)
       .where({ browser, suite })
@@ -28,7 +30,8 @@ class Power extends React.Component {
     return (
       <DashboardPage
         title="Power Usage"
-        key={`page_${browser}_${suite}_${past}_${ending}`}>
+        key={`page_${browser}_${suite}_${past}_${ending}`}
+      >
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
@@ -36,7 +39,8 @@ class Power extends React.Component {
               item
               xs={6}
               key={`page_${id}_${browser}_${suite}`}
-              className={classes.chart}>
+              className={classes.chart}
+            >
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title={label}
