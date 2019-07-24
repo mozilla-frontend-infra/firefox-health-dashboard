@@ -26,18 +26,6 @@ function array(length = 0) {
 }
 
 /*
-return a generator of length undefined
- */
-function* times(length) {
-  let i = length;
-
-  while (i > 0) {
-    yield;
-    i -= 1;
-  }
-}
-
-/*
 return true if value is null, or undefined, or not a legit value
  */
 function missing(value) {

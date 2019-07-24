@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
-import { times, exists, first, missing, toArray, delayedValue } from './utils';
+import { array, exists, first, missing, toArray, delayedValue } from './utils';
 import { selectFrom, toPairs } from './vectors';
 import jx from './jx/expressions';
 import { Log } from './logs';
@@ -198,7 +198,7 @@ function internalFetch(repo, todo) {
 
   pending.push(...todo);
 
-  times(ceiling(pending.length / MAX_CHUNK_SIZE)).forEach(() => {
+  array(ceiling(pending.length / MAX_CHUNK_SIZE)).forEach(() => {
     (async () => {
       while (
         // LOOPS TWICE, OR LESS
