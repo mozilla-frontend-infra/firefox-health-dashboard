@@ -28,6 +28,8 @@ class TimePicker extends Component {
     const { classes, id, label, handleChange, options } = this.props;
     const { value } = this.state;
 
+    if (options.length < 2) return null;
+
     return (
       <form className={classes.root} autoComplete="off">
         <TextField
