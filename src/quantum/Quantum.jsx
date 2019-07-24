@@ -162,6 +162,7 @@ export default class QuantumIndex extends React.Component {
         }),
         rows: selectFrom(TP6_COMBOS)
           .where({
+            platform: 'win64',
             bits,
             test: 'warm-loadtime',
             site: [

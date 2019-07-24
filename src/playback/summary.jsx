@@ -9,6 +9,7 @@ import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
 import { missing } from '../vendor/utils';
 import { URL } from '../vendor/requests';
+import { round } from '../vendor/math';
 
 const styles = {
   border: '1px',
@@ -156,7 +157,7 @@ class PlaybackSummary extends React.Component {
   }
 
   tooltipContent(score, encoding, platform, size) {
-    if (score === lookupType['0'])
+    if (score === 'pass')
       return 'One or less dropped frames at all playback speeds';
 
     const { scores } = this.state;
@@ -164,18 +165,26 @@ class PlaybackSummary extends React.Component {
       .where({ encoding, platform, size })
       .first();
 
-    if (score === lookupType['1']) {
+    if (score === 'bad') {
       result.speeds.sort((a, b) => a.speed - b.speed);
 
       const speed = result.speeds.find(s => s.loss > 1);
 
-      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+      return `${round(speed.loss, { places: 2 })} dropped frames at ${
+        speed.speed
+      }x playback speed`;
     }
 
-    if (score === lookupType['2']) {
+    if (score === 'fail') {
       const speed = result.speeds.find(s => s.speed === 1);
 
-      return `${speed.loss} dropped frames at ${speed.speed}x playback speed`;
+      if (missing(speed.loss)) {
+        return 'no data for past week';
+      }
+
+      return `${round(speed.loss, { places: 2 })} dropped frames at ${
+        speed.speed
+      }x playback speed`;
     }
   }
 
@@ -266,7 +275,8 @@ class PlaybackSummary extends React.Component {
                             encoding,
                             platform.id,
                             id
-                          )}>
+                          )}
+                          fontSize="1rem">
                           {label}
                         </Tooltip>
                       </div>

@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
         <small
           className="DashboardPage-subtitle-6"
         >
-          Warm load time on 64 bits
+          Warm load time on win64
         </small>
       </h1>
       <div
@@ -258,7 +258,7 @@ exports[`renders correctly 1`] = `
             className="MuiFormLabel-root-32 MuiFormLabel-filled-36 MuiInputLabel-root-21 MuiInputLabel-formControl-26 MuiInputLabel-animated-29 MuiInputLabel-shrink-28"
             data-shrink={true}
           >
-            Bits
+            Platform
           </label>
           <div
             className="MuiInputBase-root-59 MuiInput-root-46 MuiInput-underline-50 MuiInputBase-formControl-60 MuiInput-formControl-47"
@@ -271,7 +271,7 @@ exports[`renders correctly 1`] = `
                 aria-haspopup="true"
                 aria-pressed="false"
                 className="MuiSelect-select-40 MuiSelect-selectMenu-43 MuiInputBase-input-69 MuiInput-input-54"
-                id="select-bits"
+                id="select-platform"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onFocus={[Function]}
@@ -279,12 +279,12 @@ exports[`renders correctly 1`] = `
                 role="button"
                 tabIndex={0}
               >
-                64 bits
+                win64
               </div>
               <input
-                name="bits"
+                name="platform"
                 type="hidden"
-                value={64}
+                value="win64"
               />
               <svg
                 aria-hidden="true"
