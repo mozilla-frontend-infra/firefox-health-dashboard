@@ -13,7 +13,7 @@ const invisible = 'rgba(0,0,0,0)';
 /*
 return maximum for most of the values
  */
-const mostlyMax = values => {
+const mostlyMax = (values) => {
   const sorted = selectFrom(values)
     .exists()
     .sort()
@@ -32,7 +32,7 @@ const mostlyMax = values => {
 /*
 return nice, round, upper bound
  */
-const niceCeiling = value => {
+const niceCeiling = (value) => {
   if (value === 0) return 1;
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
   const norm = value / d;
@@ -57,12 +57,12 @@ const generateLineChartStyle = color => ({
 
   lineTension: 0.1,
 });
-const generateScatterChartStyle = color => {
+const generateScatterChartStyle = (color) => {
   const gentleColor = missing(color)
     ? color
     : Color.parseHTML(color)
-        .setOpacity(0.9)
-        .toRGBA();
+      .setOpacity(0.9)
+      .toRGBA();
 
   return {
     type: 'scatter',
@@ -96,7 +96,7 @@ const generateDatasetStyle = (colour, type = 'line') => {
 /*
 Convert from standard chart structure to CharJS structure
  */
-const cjsGenerator = standardOptions => {
+const cjsGenerator = (standardOptions) => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
   const options = (() => {
     // DEEP COPY, BUT NOT THE data
@@ -109,7 +109,7 @@ const cjsGenerator = standardOptions => {
     const xDomain = Data.get(options, 'axis.x.domain');
 
     if (xDomain) {
-      return toArray(xDomain).map(x => {
+      return toArray(xDomain).map((x) => {
         const [min, max] = [x.min, x.max];
 
         return {
@@ -144,7 +144,7 @@ const cjsGenerator = standardOptions => {
 
   if (missing(xEdge)) {
     Log.error(
-      "Expecting chart definition to have series.select.axis=='x'; pointing to the X axis"
+      "Expecting chart definition to have series.select.axis=='x'; pointing to the X axis",
     );
   }
 
@@ -155,7 +155,7 @@ const cjsGenerator = standardOptions => {
     Data.setDefault(
       s,
       { style: standardOptions.style },
-      { style: { color: SETTINGS.colors[i] }, select: { axis: 'y' } }
+      { style: { color: SETTINGS.colors[i] }, select: { axis: 'y' } },
     );
   });
 
@@ -166,7 +166,7 @@ const cjsGenerator = standardOptions => {
 
   const datasets = options.series
     .filter(s => s !== xEdge)
-    .map(s => {
+    .map((s) => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
       const ySelector = jx(y.value);
@@ -186,7 +186,9 @@ const cjsGenerator = standardOptions => {
         ...generateDatasetStyle(color, type),
       };
     });
-  const { title, tooltips, ticksCallback, onClick } = options;
+  const {
+    title, tooltips, ticksCallback, onClick,
+  } = options;
   const yMax = (() => {
     const requestedMax = Data.get(options, 'axis.y.max');
 
@@ -199,8 +201,8 @@ const cjsGenerator = standardOptions => {
         selectFrom(datasets)
           .select('data')
           .flatten()
-          .select('y')
-      )
+          .select('y'),
+      ),
     );
 
     if (isData(requestedMax)) {
@@ -212,10 +214,10 @@ const cjsGenerator = standardOptions => {
   const yReversed = Data.get(options, 'axis.y.reverse');
 
   // MARK EXTREME POINTS AS TRIANGLES, AND AT MAX CHART VALUE
-  datasets.forEach(dataset => {
+  datasets.forEach((dataset) => {
     const { data, pointStyle } = dataset;
     let needNewStyle = false;
-    const newStyle = data.map(d => {
+    const newStyle = data.map((d) => {
       if (d.y > yMax) {
         // eslint-disable-next-line no-param-reassign
         d.y = yMax;

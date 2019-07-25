@@ -1,4 +1,3 @@
-/* global fetch */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { maxBy, min, minBy } from 'lodash/fp';
@@ -39,7 +38,7 @@ class PerfherderWidget extends React.Component {
 
         return split;
       },
-      new Map()
+      new Map(),
     );
     const evolutions = await fetchJson(
       URL({
@@ -48,7 +47,7 @@ class PerfherderWidget extends React.Component {
           signatures: splitSignatures.keys(),
           framework,
         },
-      })
+      }),
     );
 
     this.setState({
@@ -69,13 +68,13 @@ class PerfherderWidget extends React.Component {
       const referenceYs = [];
       const referenceFit = referenceTime
         ? moment(referenceTime)
-            .add(-5, 'days')
-            .unix()
+          .add(-5, 'days')
+          .unix()
         : 0;
       const [width, height] = this.viewport;
       const full = evolutions.reduce(
         (reduced, evolution) => reduced.concat(evolution),
-        []
+        [],
       );
       const xRange = [
         Math.max(referenceFit, minBy('time', full).time) * 1000,
@@ -106,7 +105,7 @@ class PerfherderWidget extends React.Component {
         }
 
         const ref = evolution.find(
-          d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime
+          d => moment(d.time * 1000).format('YYYY-MM-DD') === referenceTime,
         );
         let $reference = null;
 
@@ -135,26 +134,26 @@ class PerfherderWidget extends React.Component {
               }`,
               {
                 'series-busy': busy,
-              }
+              },
             )}
           />
         );
         const $scatters = busy
           ? null
           : evolution.reduce((reduced, entry) => {
-              entry.runs.forEach(run => {
-                reduced.push(
-                  <circle
-                    cx={xScale(run.time * 1000)}
-                    cy={yScale(run.value)}
-                    r={1.5}
-                    className={`series series-${idx}`}
-                  />
-                );
-              }, reduced);
+            entry.runs.forEach((run) => {
+              reduced.push(
+                <circle
+                  cx={xScale(run.time * 1000)}
+                  cy={yScale(run.value)}
+                  r={1.5}
+                  className={`series series-${idx}`}
+                />,
+              );
+            }, reduced);
 
-              return reduced;
-            }, []);
+            return reduced;
+          }, []);
         const $area = busy ? null : (
           <path
             d={filledPath(evolution)}
@@ -180,7 +179,8 @@ class PerfherderWidget extends React.Component {
               'tick-axis': idx === 0,
               'tick-secondary': idx > 0,
             })}
-            key={`tick-${tick}`}>
+            key={`tick-${tick}`}
+          >
             <line x1={0} y1={y} x2={width} y2={y} />
             <text x={2} y={y}>
               {label}
@@ -189,7 +189,7 @@ class PerfherderWidget extends React.Component {
         );
       });
       const yFormat = timeFormat('%b');
-      const $xAxis = xScale.ticks(timeMonth.every(1)).map(tick => {
+      const $xAxis = xScale.ticks(timeMonth.every(1)).map((tick) => {
         const x = xScale(tick);
         const label = yFormat(tick);
 
@@ -201,18 +201,18 @@ class PerfherderWidget extends React.Component {
           </g>
         );
       });
-      const $legend =
-        signatureLabels.length > 1
-          ? signatureLabels.map((label, idx) => (
-              <text
-                className={`legend series-${idx}`}
-                x={27 + 60 * idx}
-                y={15}
-                key={`legend-${label}`}>
-                {label}
-              </text>
-            ))
-          : null;
+      const $legend = signatureLabels.length > 1
+        ? signatureLabels.map((label, idx) => (
+          <text
+            className={`legend series-${idx}`}
+            x={27 + 60 * idx}
+            y={15}
+            key={`legend-${label}`}
+          >
+            {label}
+          </text>
+        ))
+        : null;
       const $reference = referenceX ? (
         <line
           key="reference-y"

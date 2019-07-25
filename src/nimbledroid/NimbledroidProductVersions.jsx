@@ -49,5 +49,5 @@ NimbledroidProductVersions.propTypes = {
 };
 
 export default withStyles(styles)(
-  withErrorBoundary(NimbledroidProductVersions)
+  withErrorBoundary(NimbledroidProductVersions),
 );

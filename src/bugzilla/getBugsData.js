@@ -14,7 +14,7 @@ const getBugsData = async (queries = [], timeDomain) => {
         select: ['cf_last_resolved', 'creation_time'],
         where: filter,
       })),
-    }))
+    })),
   );
   const eod = Date.eod();
   const data = selectFrom(timeDomain.partitions)

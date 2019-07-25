@@ -7,7 +7,7 @@ import { fetchJson, URL } from '../../vendor/requests';
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const REPO = 'mozilla-central';
 const NINENTY_DAYS = 90 * 24 * 60 * 60;
-const subtests = async signatureHash => {
+const subtests = async (signatureHash) => {
   const url = URL({
     path: [TREEHERDER, 'api/project', REPO, 'performance/signatures/'],
     query: { parent_signature: signatureHash },
@@ -16,7 +16,9 @@ const subtests = async signatureHash => {
   return (await fetch(url)).json();
 };
 
-const parentInfo = async ({ suite, platform, framework, option }) => {
+const parentInfo = async ({
+  suite, platform, framework, option,
+}) => {
   const [options, signatures] = await Promise.all([
     await fetchJson(URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] })),
     await fetchJson(
@@ -27,7 +29,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
           platform,
           subtests: 0,
         },
-      })
+      }),
     ),
   ]);
   // Create a structure with only jobs matching the suite, make
@@ -40,9 +42,7 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
     .map((v, hash) => ({ ...v, framework: v.framework_id, hash }))
     .where({ suite })
     // eslint-disable-next-line camelcase
-    .filter(({ option_collection_hash }) =>
-      optionHashes.includes(option_collection_hash)
-    )
+    .filter(({ option_collection_hash }) => optionHashes.includes(option_collection_hash))
     .toArray();
 
   if (result.length !== 1) {
@@ -54,30 +54,30 @@ const parentInfo = async ({ suite, platform, framework, option }) => {
   return result[0];
 };
 
-const dataUrl = ({ tests, framework, repo = REPO, interval = NINENTY_DAYS }) =>
-  URL({
-    path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
-    query: {
-      framework,
-      interval,
-      signature_id: toPairs(tests)
-        .select('id')
-        .toArray(),
-    },
-  });
+const dataUrl = ({
+  tests, framework, repo = REPO, interval = NINENTY_DAYS,
+}) => URL({
+  path: [TREEHERDER, 'api/project', repo, 'performance/data/'],
+  query: {
+    framework,
+    interval,
+    signature_id: toPairs(tests)
+      .select('id')
+      .toArray(),
+  },
+});
 const perherderGraphUrl = ({
   signatureIds,
   framework,
   repo = REPO,
   timerange = NINENTY_DAYS,
-}) =>
-  URL({
-    path: [TREEHERDER, 'perf.html#/graphs'],
-    query: {
-      timerange,
-      series: signatureIds.map(id => [repo, id, 1, framework]),
-    },
-  });
+}) => URL({
+  path: [TREEHERDER, 'perf.html#/graphs'],
+  query: {
+    timerange,
+    series: signatureIds.map(id => [repo, id, 1, framework]),
+  },
+});
 
 export const adjustedData = (data, percentileThreshold, measure = 'value') => {
   let transformedData = data;
@@ -85,7 +85,7 @@ export const adjustedData = (data, percentileThreshold, measure = 'value') => {
   if (percentileThreshold < 100) {
     const threshold = percentile(
       data.map(d => d[measure]),
-      percentileThreshold / 100.0
+      percentileThreshold / 100.0,
     );
 
     transformedData = data.filter(d => d[measure] < threshold);
@@ -105,7 +105,9 @@ const benchmarkData = async ({
   percentileThreshold = 100,
   includeParentData = true,
 }) => {
-  const parent = await parentInfo({ suite, platform, framework, option });
+  const parent = await parentInfo({
+    suite, platform, framework, option,
+  });
   const rawTests = await subtests(parent.hash);
   const tests = toPairs(rawTests)
     .map((v, h) => ({ ...v, hash: h, framework: v.framework_id }))

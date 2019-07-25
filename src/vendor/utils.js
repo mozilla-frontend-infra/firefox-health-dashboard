@@ -1,4 +1,3 @@
-/* global window */
 /* eslint-disable no-restricted-syntax */
 
 /*
@@ -13,8 +12,8 @@ return true if the container is empty
  */
 function isEmpty(value) {
   return (
-    (isArray(value) && value.length === 0) ||
-    (MANY_TYPES.some(t => value instanceof t) && value.isEmpty())
+    (isArray(value) && value.length === 0)
+    || (MANY_TYPES.some(t => value instanceof t) && value.isEmpty())
   );
 }
 
@@ -30,12 +29,12 @@ return true if value is null, or undefined, or not a legit value
  */
 function missing(value) {
   return (
-    value == null ||
-    value === '' ||
-    Number.isNaN(value) ||
-    value === Number.POSITIVE_INFINITY ||
-    value === Number.NEGATIVE_INFINITY ||
-    isEmpty(value)
+    value == null
+    || value === ''
+    || Number.isNaN(value)
+    || value === Number.POSITIVE_INFINITY
+    || value === Number.NEGATIVE_INFINITY
+    || isEmpty(value)
   );
 }
 
@@ -141,7 +140,7 @@ function isNumeric(n) {
   if (isString(n)) {
     /* eslint-disable-next-line max-len */
     return /^[+-]?[0123456789]+\.?[0123456789]*([eE][+-]?[0123456789]+)?$/y.test(
-      n
+      n,
     );
   }
 
@@ -181,6 +180,8 @@ accept dot-delimited path name
 return array of keys representing the same
  */
 function splitField(fieldname) {
+  if (isArray(fieldname)) return fieldname;
+
   return fieldname
     .replace(/\\\./g, '\b')
     .split('.')
@@ -201,7 +202,7 @@ join two dot-delimited path names
 function concatField(...many) {
   let output = '.';
 
-  many.forEach(m => {
+  many.forEach((m) => {
     if (output === '.') {
       output = m;
     } else if (m !== '.') {
@@ -236,7 +237,7 @@ function isData(val) {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 }

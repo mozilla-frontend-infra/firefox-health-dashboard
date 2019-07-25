@@ -16,7 +16,7 @@ class PowerSummary extends React.Component {
       <PerfherderGraphContainer
         timeDomain={timeDomain}
         key="power usage"
-        title={
+        title={(
           <span>
             Speedometer CPU power usage
             <a
@@ -26,11 +26,12 @@ class PowerSummary extends React.Component {
                 path: '/power',
                 query: { browser, suite },
               })}
-              title="Show details">
+              title="Show details"
+            >
               <DetailsIcon />
             </a>
           </span>
-        }
+)}
         series={selectFrom(PLATFORMS)
           .map(({ label, filter: platformFilter }) => ({
             label,

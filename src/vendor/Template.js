@@ -1,6 +1,6 @@
-/* global require */
-
-import { array, coalesce, isArray, isString, missing } from './utils';
+import {
+  array, coalesce, isArray, isString, missing,
+} from './utils';
 import { Data, isData } from './datas';
 import strings from './strings';
 
@@ -25,7 +25,7 @@ function expandLoop(loop, namespaces) {
   }
 
   return Data.get(namespaces[0], loop.from)
-    .map(m => {
+    .map((m) => {
       const ns = Data.copy(namespaces[0]);
 
       if (isData(m)) {
@@ -63,18 +63,18 @@ function expandText(template, namespaces) {
 
   return [
     acc,
-    ...varStringPairs.map(vsp => {
+    ...varStringPairs.map((vsp) => {
       const [variable, suffixString] = vsp.split('}}', 2);
       const [accessor, ...postProcessing] = variable.split('|');
       let val = Data.get(ns, accessor.toLowerCase());
 
-      postProcessing.forEach(step => {
+      postProcessing.forEach((step) => {
         const [func, rest] = step.split('(', 2);
 
         if (strings[func] === undefined) {
           Template.log.error(
-            `{{func}} is an unknown string function for template expansion`,
-            { func }
+            '{{func}} is an unknown string function for template expansion',
+            { func },
           );
         }
 
@@ -87,9 +87,9 @@ function expandText(template, namespaces) {
             val = run(method, val, rest);
           } catch (f) {
             Template.log.warning(
-              `Can not evaluate {{variable|json}}`,
+              'Can not evaluate {{variable|json}}',
               { variable },
-              f
+              f,
             );
           }
         }
@@ -134,7 +134,7 @@ expandAny = (template, namespaces) => {
     return expandLoop(template, namespaces);
   }
 
-  Template.log.error('Not recognized {{template|json}}', { template });
+  throw Template.log.error('Not recognized {{template|json}}', { template });
 };
 
 function expando(template, parameters) {

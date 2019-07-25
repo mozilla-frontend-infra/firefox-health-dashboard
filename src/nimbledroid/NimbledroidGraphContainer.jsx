@@ -8,7 +8,7 @@ import { selectFrom, toPairs } from '../vendor/vectors';
 import { GMTDate as Date } from '../vendor/dates';
 
 const SINCE = Date.newInstance('today-13week').milli();
-const nimbledroidFormatter = sourceData => {
+const nimbledroidFormatter = (sourceData) => {
   const data = toPairs(sourceData.data)
     .map((details, packageId) => {
       const label = CONFIG.packageIdLabels[packageId];
@@ -60,7 +60,7 @@ class NimbledroidGraphContainer extends Component {
 
     this.setState({
       standardOptions: nimbledroidFormatter(
-        nimbledroidData.scenarios[scenarioName]
+        nimbledroidData.scenarios[scenarioName],
       ),
     });
   }

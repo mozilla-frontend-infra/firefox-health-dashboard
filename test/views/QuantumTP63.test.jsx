@@ -12,9 +12,9 @@ it('renders correctly integer', () => {
       <BrowserRouter>
         <TP6
           location={{ pathname: '/quantum/tp6' }}
-          match={{ params: { bits: 64, test: 'warm-loadtime' } }}
+          match={{ params: { platform: 'win64', test: 'warm-loadtime' } }}
         />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
     .toJSON();
 

@@ -87,13 +87,12 @@ async function pullAggregate({
     {
       // INDEX OF DATE MARKS THE END OF THE DATA
       edges: ['test', 'site', 'platform'],
-      value: ({ measured }) =>
-        measured.length -
-        measured
+      value: ({ measured }) => measured.length
+        - measured
           .slice()
           .reverse()
           .findIndex(m => m.length > 0),
-    }
+    },
   );
   const daily = window(
     { measured, afterLastGoodDate },
@@ -112,13 +111,13 @@ async function pullAggregate({
           .select('value')
           .average();
       },
-    }
+    },
   );
   const result = window(
     { daily, g5Reference },
     {
       edges: ['test', 'platform', 'pushDate'],
-      value: row => {
+      value: (row) => {
         const { daily, g5Reference } = row;
 
         return round(
@@ -126,44 +125,43 @@ async function pullAggregate({
             // IF NO REFERENCE VALUE FOR SITE, DO NOT INCLUDE IN AGGREGATE
             .map((d, r) => (missing(r) ? null : d))
             .geomean(),
-          { places: 4 }
+          { places: 4 },
         );
       },
-    }
+    },
   );
   const mask = window(
     { daily },
     {
       edges: ['test', 'platform', 'site'],
-      value: ({ daily }) =>
-        // if anything in the past week, then we will use the reference
-        !selectFrom(daily)
-          .reverse()
-          .limit(8) // 7+1 for the null entry
-          .exists()
-          .isEmpty(),
-    }
+      value: ({ daily }) => !selectFrom(daily)
+        .reverse()
+        .limit(8) // 7+1 for the null entry
+        .exists()
+        .isEmpty(),
+    },
   );
   const count = window(
     { mask },
     {
       edges: ['test', 'platform'],
       value: ({ mask }) => sum(selectFrom(mask).map(m => (m ? 1 : 0))),
-    }
+    },
   );
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
   const ref = window(
     { mask, g5Reference },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, g5Reference }) =>
-        geomean(selectFrom(mask, g5Reference).map((m, r) => (m ? r : null))),
-    }
+      value: ({ mask, g5Reference }) => geomean(selectFrom(mask, g5Reference).map((m, r) => (m ? r : null))),
+    },
   );
 
   processData.done();
 
-  return new HyperCube({ result, ref, count, total });
+  return new HyperCube({
+    result, ref, count, total,
+  });
 }
 
 const DESIRED_TESTS = ['cold-loadtime'];
@@ -192,7 +190,7 @@ class TP6mAggregate_ extends Component {
               },
             },
           ],
-        })
+        }),
       ).select('filter'),
     };
     const data = await pullAggregate({
@@ -216,7 +214,8 @@ class TP6mAggregate_ extends Component {
             lineHeight: '100%',
             textAlign: 'center',
             width: '100%',
-          }}>
+          }}
+        >
           <CircularProgress />
         </div>
       );
@@ -227,76 +226,75 @@ class TP6mAggregate_ extends Component {
         {selectFrom(TP6_TESTS)
           .where({ test: DESIRED_TESTS })
           .enumerate()
-          .map(({ label, test }) =>
-            data
-              .where({ test })
-              .along('platform')
-              .enumerate()
-              .map(row => {
-                const platform = row.platform.getValue();
-                const count = row.count.getValue();
-                const total = row.total.getValue();
-                const platformLabel = selectFrom(PLATFORMS)
-                  .where({ platform })
-                  .first().label;
+          .map(({ label, test }) => data
+            .where({ test })
+            .along('platform')
+            .enumerate()
+            .map((row) => {
+              const platform = row.platform.getValue();
+              const count = row.count.getValue();
+              const total = row.total.getValue();
+              const platformLabel = selectFrom(PLATFORMS)
+                .where({ platform })
+                .first().label;
 
-                return (
-                  <Grid item xs={6} key={platform}>
-                    <ChartJSWrapper
-                      title={
-                        <span>
-                          {`Geomean of ${label}`}
-                          {' for '}
-                          {platformLabel}
-                          {' ( '}
-                          {count}
-                          {' of '}
-                          {total}
-                          {' sites reporting)'}
-                          <a
-                            href={URL({
-                              path: '/android/tp6m',
-                              query: {
-                                test,
-                                platform,
-                              },
-                            })}
-                            title="show details"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            <DetailsIcon />
-                          </a>
-                        </span>
-                      }
-                      standardOptions={{
-                        series: [
-                          {
-                            label: platformLabel,
-                            select: { value: 'result' },
-                          },
-                          {
-                            label: TARGET_NAME,
-                            select: { value: coalesce(row.ref.getValue(), 0) },
-                            style: { color: 'gray' },
-                          },
-                          {
-                            label: 'Push Date',
-                            select: { value: 'pushDate', axis: 'x' },
-                          },
-                        ],
-                        data: row
-                          .along('pushDate')
-                          .map(({ pushDate, result }) => ({
-                            pushDate: pushDate.getValue(),
-                            result: result.getValue(),
-                          }))
-                          .toArray(),
-                      }}
-                    />
-                  </Grid>
-                );
-              })
-          )
+              return (
+                <Grid item xs={6} key={platform}>
+                  <ChartJSWrapper
+                    title={(
+                      <span>
+                        {`Geomean of ${label}`}
+                        {' for '}
+                        {platformLabel}
+                        {' ( '}
+                        {count}
+                        {' of '}
+                        {total}
+                        {' sites reporting)'}
+                        <a
+                          href={URL({
+                            path: '/android/tp6m',
+                            query: {
+                              test,
+                              platform,
+                            },
+                          })}
+                          title="show details"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <DetailsIcon />
+                        </a>
+                      </span>
+)}
+                    standardOptions={{
+                      series: [
+                        {
+                          label: platformLabel,
+                          select: { value: 'result' },
+                        },
+                        {
+                          label: TARGET_NAME,
+                          select: { value: coalesce(row.ref.getValue(), 0) },
+                          style: { color: 'gray' },
+                        },
+                        {
+                          label: 'Push Date',
+                          select: { value: 'pushDate', axis: 'x' },
+                        },
+                      ],
+                      data: row
+                        .along('pushDate')
+                        .map(({ pushDate, result }) => ({
+                          pushDate: pushDate.getValue(),
+                          result: result.getValue(),
+                        }))
+                        .toArray(),
+                    }}
+                  />
+                </Grid>
+              );
+            }))
           .flatten()
           .toArray()}
       </Grid>

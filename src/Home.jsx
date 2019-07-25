@@ -39,22 +39,33 @@ const Home = ({ classes }) => (
       root: classes.root,
     }}
     title="Firefox health"
-    subtitle="Tracking metrics for Firefox products">
+    subtitle="Tracking metrics for Firefox products"
+  >
     <div className={classes.links}>
       <Link to="/android">
-        <AndroidIcon /> Android
+        <AndroidIcon />
+        {' '}
+Android
       </Link>
       <Link to="/quantum/32">
-        <DesktopIcon /> Quantum 32bit
+        <DesktopIcon />
+        {' '}
+Quantum 32bit
       </Link>
       <Link to="/quantum/64">
-        <DesktopIcon /> Quantum 64bit
+        <DesktopIcon />
+        {' '}
+Quantum 64bit
       </Link>
       <Link to="/power">
-        <BatteryIcon /> Power Usage
+        <BatteryIcon />
+        {' '}
+Power Usage
       </Link>
       <Link to="/playback">
-        <VideoIcon /> Playback
+        <VideoIcon />
+        {' '}
+Playback
       </Link>
     </div>
     <div className={classes.netlify}>

@@ -1,4 +1,6 @@
-import { coalesce, isString, missing, exists } from './utils';
+import {
+  coalesce, isString, missing, exists,
+} from './utils';
 import { round as mathRound, roundMetric } from './math';
 
 const between = (v, min, max) => Math.max(min, Math.min(max, v));

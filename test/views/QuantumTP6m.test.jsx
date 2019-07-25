@@ -11,7 +11,7 @@ it('renders correctly', () => {
     .create(
       <BrowserRouter>
         <QuantumTP6m />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
     .toJSON();
 

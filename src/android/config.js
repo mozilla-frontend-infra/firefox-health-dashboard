@@ -5,9 +5,8 @@ import { selectFrom } from "../vendor/vectors";
 import { first, missing } from "../vendor/utils";
 import { round } from "../vendor/math";
 import { Log } from "../vendor/logs";
-import { window } from "../vendor/jx/cubes";
-import { PLATFORMS, TP6_TESTS } from "../quantum/config";
-import { Cube } from "../vendor/jx/cubes";
+import { Cube, window } from "../vendor/jx/cubes";
+import { TP6_TESTS } from "../quantum/config";
 
 
 const _ = Cube;
@@ -119,7 +118,7 @@ const g5Reference = window({raw}, {
     if ([test, site, platform].some(missing)) {return null;}
 
     if (raw.length > 1) {
-      Log.error('expecting only one value for {{combo}}', {
+      throw Log.error('expecting only one value for {{combo}}', {
         test,
         site,
         platform,

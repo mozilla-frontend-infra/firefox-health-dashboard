@@ -32,7 +32,9 @@ const styles = {
     padding: '.5em 0',
   },
 };
-const DashboardPage = ({ classes, children, title, subtitle }) => (
+const DashboardPage = ({
+  classes, children, title, subtitle,
+}) => (
   <div className={classes.root}>
     <div className={classes.title}>
       <h1 style={{ display: 'inline' }}>
@@ -57,7 +59,8 @@ const DashboardPage = ({ classes, children, title, subtitle }) => (
         </Link>
         <a
           href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
-          title="Source Code">
+          title="Source Code"
+        >
           <CodeIcon />
         </a>
       </div>

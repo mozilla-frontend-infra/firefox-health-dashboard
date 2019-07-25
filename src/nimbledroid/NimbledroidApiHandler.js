@@ -4,42 +4,39 @@ import { fetchJson, URL } from '../vendor/requests';
 import SETTINGS from '../settings';
 
 const ENDPOINT = URL({ path: [SETTINGS.backend, 'api/android/nimbledroid'] });
-const matchUrl = profileName =>
-  profileName.replace(
-    /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
-    (match, firstMatch) => firstMatch
-  );
-const matchShorterUrl = url =>
-  url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
-const transformedDataForMetrisGraphics = scenarios =>
-  Object.keys(scenarios).reduce((result, scenarioName) => {
-    scenarios[scenarioName].forEach(({ date, ms }) => {
-      // multiple scenarioName have same url0
-      const url = matchUrl(scenarioName);
-      // multiple scenarioName have same url
+const matchUrl = profileName => profileName.replace(
+  /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
+  (match, firstMatch) => firstMatch,
+);
+const matchShorterUrl = url => url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
+const transformedDataForMetrisGraphics = scenarios => Object.keys(scenarios).reduce((result, scenarioName) => {
+  scenarios[scenarioName].forEach(({ date, ms }) => {
+    // multiple scenarioName have same url0
+    const url = matchUrl(scenarioName);
+    // multiple scenarioName have same url
 
-      if (!result[url]) {
-        result[url] = {
-          data: [],
-          title: matchShorterUrl(url),
-          url,
-        };
-      }
+    if (!result[url]) {
+      result[url] = {
+        data: [],
+        title: matchShorterUrl(url),
+        url,
+      };
+    }
 
-      if (ms > 0) {
-        /* this appends contents of scenarios[scenarioName]
+    if (ms > 0) {
+      /* this appends contents of scenarios[scenarioName]
           to result[url].data **AND** concatenates data when
           matchUrl(scenarioName1) == matchUrl(scenarioName2) */
-        result[url].data.push({
-          date: new Date(date),
-          value: ms / 1000,
-        });
-      }
-    });
+      result[url].data.push({
+        date: new Date(date),
+        value: ms / 1000,
+      });
+    }
+  });
 
-    return result;
-  }, {});
-const mergeProductsData = productsData => {
+  return result;
+}, {});
+const mergeProductsData = (productsData) => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
     const { latestVersion, packageId } = meta;
@@ -48,7 +45,7 @@ const mergeProductsData = productsData => {
       latestVersion,
     };
 
-    Object.keys(scenarios).forEach(originalKey => {
+    Object.keys(scenarios).forEach((originalKey) => {
       const profileInfo = scenarios[originalKey];
 
       if (profileInfo.data.length === 0) {
@@ -86,7 +83,7 @@ const mergeProductsData = productsData => {
   };
 };
 
-const fetchProductData = async product => {
+const fetchProductData = async (product) => {
   const url = URL({
     path: ENDPOINT,
     query: {
@@ -104,7 +101,7 @@ const fetchProductData = async product => {
 
 async function fetchNimbledroidData(products) {
   const productsData = await Promise.all(
-    products.map(async product => fetchProductData(product))
+    products.map(async product => fetchProductData(product)),
   );
 
   return mergeProductsData(productsData);

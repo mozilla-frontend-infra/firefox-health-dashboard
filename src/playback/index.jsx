@@ -2,7 +2,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import { BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS } from './config';
+import {
+  BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS,
+} from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
@@ -39,7 +41,8 @@ class Power extends React.Component {
     return (
       <DashboardPage
         title="Playback"
-        key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}>
+        key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}
+      >
         {navigation}
         <Grid container spacing={24}>
           {selectFrom(SIZES).map(({ size }) => (
@@ -47,7 +50,8 @@ class Power extends React.Component {
               item
               xs={6}
               key={`page_${platform}_${browser}_${encoding}_${size}`}
-              className={classes.chart}>
+              className={classes.chart}
+            >
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title={`Dropped Frames ${size}`}
