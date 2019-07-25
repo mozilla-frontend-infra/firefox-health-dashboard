@@ -180,6 +180,8 @@ accept dot-delimited path name
 return array of keys representing the same
  */
 function splitField(fieldname) {
+  if (isArray(fieldname)) return fieldname;
+
   return fieldname
     .replace(/\\\./g, '\b')
     .split('.')

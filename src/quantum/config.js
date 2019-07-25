@@ -52,7 +52,6 @@ const CONFIG = {
 const PLATFORMS = [
   {
     browser: 'Firefox',
-    ordering: 1,
     bits: 32,
     os: 'win',
     label: 'Firefox (win32)',
@@ -78,22 +77,20 @@ const PLATFORMS = [
   },
   {
     browser: 'Firefox',
-    ordering: 1,
     bits: 64,
     os: 'win',
     label: 'Firefox (win64)',
     platform: 'win64',
     platformFilter: {and: [
         {or: [
-            { eq: { platform: 'windows10-64', options: 'pgo' } },
-            { eq: { platform: 'windows10-64-shippable', options: 'opt' } },
-          ]},
+          { eq: { platform: 'windows10-64', options: 'pgo' } },
+          { eq: { platform: 'windows10-64-shippable', options: 'opt' } },
+        ]},
         { eq: { framework: 10, repo: 'mozilla-central' } },
       ]},
   },
   {
     browser: 'Firefox',
-    ordering: 3,
     bits: 64,
     os: 'win',
     label: 'Firefox (aarch64)',
@@ -117,7 +114,6 @@ const PLATFORMS = [
   },
   {
     browser: 'Firefox',
-    ordering: 4,
     bits: 64,
     os: 'linux',
     label: 'Firefox (linux64)',
@@ -131,7 +127,6 @@ const PLATFORMS = [
   },
   {
     browser: 'Chromium',
-    ordering: 2,
     bits: 32,
     os: 'win',
     label: 'Chromium (win32)',
@@ -150,7 +145,6 @@ const PLATFORMS = [
   },
   {
     browser: 'Chromium',
-    ordering: 2,
     bits: 64,
     os: 'win',
     label: 'Chromium (win64)',
@@ -165,7 +159,6 @@ const PLATFORMS = [
   },
   {
     browser: 'Chromium',
-    ordering: 2,
     bits: 64,
     os: 'linux',
     label: 'Chromium (linux64)',
@@ -177,16 +170,6 @@ const PLATFORMS = [
           repo: 'mozilla-central',
       }}
     ]}
-  },
-  {
-    browser: 'geckoview',
-    label: 'Geckoview p2 aarch64',
-    platform: 'geckoview-p2-aarch64',
-    platformFilter: {eq: {
-        framework: 10,
-        platform: 'android-hw-p2-8-0-android-aarch64',
-        repo: 'mozilla-central',
-    }},
   },
   {
     browser: 'geckoview',
@@ -223,6 +206,16 @@ const PLATFORMS = [
     },
   },
   {
+    browser: 'geckoview',
+    label: 'Geckoview p2 aarch64',
+    platform: 'geckoview-p2-aarch64',
+    platformFilter: {eq: {
+        framework: 10,
+        platform: 'android-hw-p2-8-0-android-aarch64',
+        repo: 'mozilla-central',
+    }},
+  },
+  {
     browser: 'fenix',
     label: 'Firefox Preview g5',
     platform: 'fenix-g5',
@@ -256,6 +249,8 @@ const PLATFORMS = [
       ]},
   },
 ];
+PLATFORMS.forEach((p, i)=>{p.ordering=i});
+
 const TP6_TESTS_DATA = [
   {
     test: 'cold-fnbpaint',
