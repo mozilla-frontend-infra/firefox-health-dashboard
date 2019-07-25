@@ -1,5 +1,3 @@
-/* global require */
-
 import { array, coalesce, isArray, isString, missing } from './utils';
 import { Data, isData } from './datas';
 import strings from './strings';

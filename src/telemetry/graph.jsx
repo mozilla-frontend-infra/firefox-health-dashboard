@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* global fetch */
 import MG from 'metrics-graphics';
 import PropTypes from 'prop-types';
 import React from 'react';

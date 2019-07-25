@@ -1,4 +1,3 @@
-/* global require */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-param-reassign */
 
