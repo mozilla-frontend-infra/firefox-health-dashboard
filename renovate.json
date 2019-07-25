@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base",
+    ":maintainLockFilesWeekly",
+    ":prNotPending",
+    ":semanticCommitsDisabled",
+    ":unpublishSafe"
+  ],
+  "pinVersions": false
+}
