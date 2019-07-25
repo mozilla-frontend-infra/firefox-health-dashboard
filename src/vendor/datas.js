@@ -146,25 +146,27 @@ Data.setDefault = (dest, ...args) => {
     return output;
   }
 
-  args.forEach(source => {
-    if (missing(source)) {
-      return;
-    }
+  let output = dest;
 
-    if (missing(dest)) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const source of args) {
+    // eslint-disable-next-line no-continue
+    if (missing(source)) continue;
+
+    if (output == null) {
       if (isData(source)) {
         return setDefault({}, source, []);
       }
 
-      return source;
+      output = source;
     }
 
-    if (isData(dest)) {
-      return setDefault(dest, source, []);
+    if (isData(output)) {
+      setDefault(output, source, []);
     }
-  });
+  }
 
-  return dest;
+  return output;
 };
 
 /*
@@ -212,7 +214,7 @@ Set `obj[path]=value`
 where path is dot-delimited path into structure
  */
 Data.set = (obj, path, value) => {
-  if (missing(obj) || path === '.') {
+  if (missing(obj) || path === '.' || missing(path)) {
     Data.log.error('must be given an object and field');
   }
 
@@ -222,9 +224,17 @@ Data.set = (obj, path, value) => {
   let o = obj;
 
   for (const step of pathArray) {
-    let val = o[step];
+    let val = null;
 
-    if (missing(val)) {
+    if (isArray(o) && isInteger(step)) {
+      val = o[Number.parseInt(step, 10)];
+    } else {
+      val = o[step];
+    }
+
+    const typeOfVal = typeof val;
+
+    if (typeOfVal !== 'object' && typeOfVal !== 'function') {
       val = {};
       o[step] = val;
     }
@@ -232,7 +242,13 @@ Data.set = (obj, path, value) => {
     o = val;
   }
 
-  o[last] = value;
+  if (isArray(o) && isInteger(last)) {
+    const i = Number.parseInt(last, 10);
+
+    o[i] = value;
+  } else {
+    o[last] = value;
+  }
 
   return obj;
 };
