@@ -25,7 +25,7 @@ class Timer {
         end: this.end,
         duration,
         ...this.param,
-      }
+      },
     );
   }
 }

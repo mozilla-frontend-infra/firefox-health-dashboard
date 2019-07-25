@@ -34,7 +34,8 @@ class GlobalErrorBoundary extends React.Component {
             <a
               href="https://github.com/mozilla/firefox-health-dashboard/issues/new"
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+            >
               {'https://github.com/mozilla/firefox-health-dashboard/issues/new'}
             </a>
           </span>
@@ -46,15 +47,14 @@ class GlobalErrorBoundary extends React.Component {
   }
 }
 const root = document.getElementById('root');
-const load = () =>
-  render(
-    <AppContainer>
-      <GlobalErrorBoundary>
-        <Routes />
-      </GlobalErrorBoundary>
-    </AppContainer>,
-    root
-  );
+const load = () => render(
+  <AppContainer>
+    <GlobalErrorBoundary>
+      <Routes />
+    </GlobalErrorBoundary>
+  </AppContainer>,
+  root,
+);
 
 // This is needed for Hot Module Replacement
 if (module.hot) {

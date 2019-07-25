@@ -14,7 +14,7 @@ it('renders correctly integer', () => {
           location={{ pathname: '/quantum/tp6' }}
           match={{ params: { bits: 64, test: 'warm-loadtime' } }}
         />
-      </BrowserRouter>
+      </BrowserRouter>,
     )
     .toJSON();
 

@@ -5,7 +5,9 @@ import { Log } from '../logs';
 import { GMTDate as Date } from '../dates';
 import { isEqual } from '../datas';
 import { Duration } from '../durations';
-import { coalesce, exists, isString, missing } from '../utils';
+import {
+  coalesce, exists, isString, missing,
+} from '../utils';
 import { selectFrom } from '../vectors';
 import jx from './expressions';
 
@@ -30,7 +32,7 @@ class Domain {
   }
 
   isEqual() {
-    Log.error('not implemented');
+    throw Log.error('not implemented');
   }
 }
 
@@ -71,7 +73,9 @@ class ValueDomain extends Domain {
 }
 
 class TimeDomain extends Domain {
-  constructor({ min, max, interval, past, ending, format }) {
+  constructor({
+    min, max, interval, past, ending, format,
+  }) {
     super();
 
     if (exists(past)) {
@@ -120,9 +124,8 @@ class TimeDomain extends Domain {
     const dateValue = Date.newInstance(value).milli();
 
     return this.partitions.findIndex(
-      part =>
-        part === NULL ||
-        (part.min.milli() <= dateValue && dateValue < part.max.milli())
+      part => part === NULL
+        || (part.min.milli() <= dateValue && dateValue < part.max.milli()),
     );
   }
 
@@ -142,9 +145,7 @@ class TimeDomain extends Domain {
   isEqual(other) {
     if (this === other) return true;
 
-    return ['min', 'max', 'interval', 'past', 'ending', 'format'].every(v =>
-      isEqual(this[v], other[v])
-    );
+    return ['min', 'max', 'interval', 'past', 'ending', 'format'].every(v => isEqual(this[v], other[v]));
   }
 }
 
@@ -192,12 +193,12 @@ class SetDomain extends Domain {
     return output;
   }
 
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     for (const v of this.partitions) yield v;
   }
 }
 
-Domain.newInstance = desc => {
+Domain.newInstance = (desc) => {
   if (desc instanceof Domain) {
     return desc;
   }
@@ -214,9 +215,11 @@ Domain.newInstance = desc => {
     return new SetDomain(desc);
   }
 
-  Log.error('Do not know how to construct a domain from {{desc|json}}', {
+  throw Log.error('Do not know how to construct a domain from {{desc|json}}', {
     desc,
   });
 };
 
-export { NULL, Domain, ValueDomain, TimeDomain };
+export {
+  NULL, Domain, ValueDomain, TimeDomain,
+};

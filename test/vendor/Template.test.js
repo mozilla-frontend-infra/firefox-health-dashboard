@@ -167,27 +167,23 @@ describe('Template', () => {
     ];
     const result = Template.expand(
       { from: 'data', template: 'test: {{a}}, {{b}}', separator: '\n' },
-      { data }
+      { data },
     );
 
     expect(result).toBe(
-      'test: 10, 21\ntest: 11, 22\ntest: 12, 23\ntest: 13, 24\ntest: 14, 25'
+      'test: 10, 21\ntest: 11, 22\ntest: 12, 23\ntest: 13, 24\ntest: 14, 25',
     );
   });
 
   it('item', () => {
-    expect(() =>
-      Template.expand({ items: 'data', template: 'test' })
-    ).toThrow();
+    expect(() => Template.expand({ items: 'data', template: 'test' })).toThrow();
   });
 
   it('bad template', () => {
     const value = 1551730631.234;
 
     expect(() => Template.expand('{{value|noExists}}', { value })).toThrow();
-    expect(() =>
-      Template.expand('{{value|leftTrim(not!code)}}', { value })
-    ).toThrow();
+    expect(() => Template.expand('{{value|leftTrim(not!code)}}', { value })).toThrow();
   });
 
   it('no template', () => {

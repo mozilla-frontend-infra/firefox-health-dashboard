@@ -111,7 +111,7 @@ class Matrix {
       if (dim === 0) {
         data.splice(position, 0, newMultiArray(subDims, this.zero));
       } else {
-        data.forEach(d => {
+        data.forEach((d) => {
           _insert(dim - 1, d);
         });
       }
@@ -140,7 +140,7 @@ class Matrix {
   /*
   return a generator of [value, coordinate] pairs
    */
-  *[Symbol.iterator]() {
+  * [Symbol.iterator]() {
     function* _iter(depth, data) {
       if (depth === 1) {
         let i = 0;

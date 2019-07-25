@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
-import { array, exists, first, missing, toArray, delayedValue } from './utils';
+import {
+  array, exists, first, missing, toArray, delayedValue,
+} from './utils';
 import { selectFrom, toPairs } from './vectors';
 import jx from './jx/expressions';
 import { Log } from './logs';
@@ -16,7 +18,7 @@ const TREEHERDER = 'https://treeherder.mozilla.org';
 const getAllOptions = (async () => {
   const output = await fetchJson(
     URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] }),
-    { expire: 'month' }
+    { expire: 'month' },
   );
 
   return selectFrom(output)
@@ -28,7 +30,7 @@ const getAllOptions = (async () => {
     .fromPairs();
 })();
 const frameworkCache = {};
-const getFramework = async combo => {
+const getFramework = async (combo) => {
   const { repo, framework } = combo;
   const comboString = JSON.stringify(combo);
 
@@ -129,43 +131,42 @@ const getFramework = async combo => {
 /*
 return an array of {repo, framework} objects
  */
-const findCombo = expression =>
-  toPairs(expression)
-    .map((v, k) => {
-      if (k === 'or' || k === 'and') {
-        return selectFrom(v)
-          .map(findCombo)
-          .flatten()
-          .groupBy(['repo', 'framework'])
-          .map(first);
+const findCombo = expression => toPairs(expression)
+  .map((v, k) => {
+    if (k === 'or' || k === 'and') {
+      return selectFrom(v)
+        .map(findCombo)
+        .flatten()
+        .groupBy(['repo', 'framework'])
+        .map(first);
+    }
+
+    const { repo, framework } = v;
+
+    if (exists(framework)) {
+      if (missing(repo)) {
+        Log.error(
+          'expecting {{expression}} to have {framework, repo} paired',
+          { expression },
+        );
       }
 
-      const { repo, framework } = v;
+      return [{ repo, framework }];
+    }
 
-      if (exists(framework)) {
-        if (missing(repo)) {
-          Log.error(
-            'expecting {{expression}} to have {framework, repo} paired',
-            { expression }
-          );
-        }
+    if (exists(repo)) {
+      Log.error('expecting {{expression}} to have {framework, repo} paired', {
+        expression,
+      });
+    }
 
-        return [{ repo, framework }];
-      }
-
-      if (exists(repo)) {
-        Log.error('expecting {{expression}} to have {framework, repo} paired', {
-          expression,
-        });
-      }
-
-      return [];
-    })
-    .flatten()
-    .groupBy(['repo', 'framework'])
-    .map(first)
-    .toArray();
-const getSignatures = async condition => {
+    return [];
+  })
+  .flatten()
+  .groupBy(['repo', 'framework'])
+  .map(first)
+  .toArray();
+const getSignatures = async (condition) => {
   // find out what frameworks to extract
   const combos = findCombo(condition);
 
@@ -202,8 +203,8 @@ function internalFetch(repo, todo) {
     (async () => {
       while (
         // LOOPS TWICE, OR LESS
-        (activeFetch[repo] > 0 && pending.length >= MIN_CHUNK_SIZE) ||
-        (activeFetch[repo] === 0 && pending.length > 0)
+        (activeFetch[repo] > 0 && pending.length >= MIN_CHUNK_SIZE)
+        || (activeFetch[repo] === 0 && pending.length > 0)
       ) {
         const todo = selectFrom(pending.slice(0, MAX_CHUNK_SIZE));
 
@@ -224,7 +225,7 @@ function internalFetch(repo, todo) {
           activeFetch[repo] -= 1;
         }
 
-        todo.forEach(meta => {
+        todo.forEach((meta) => {
           dataCache[meta.signature].resolve({
             meta,
             data: data[meta.signature].map(row => ({
@@ -238,16 +239,14 @@ function internalFetch(repo, todo) {
   });
 }
 
-const getDataBySignature = async metadatas => {
+const getDataBySignature = async (metadatas) => {
   // SCHEDULE ANY MISSING SIGNATURES
   selectFrom(metadatas)
     .groupBy('repo')
     .forEach((sigs, repo) => {
-      const todo = sigs.filter(({ signature }) =>
-        missing(dataCache[signature])
-      );
+      const todo = sigs.filter(({ signature }) => missing(dataCache[signature]));
 
-      todo.forEach(meta => {
+      todo.forEach((meta) => {
         dataCache[meta.signature] = delayedValue();
       });
       internalFetch(repo, todo);
@@ -260,10 +259,12 @@ const getDataBySignature = async metadatas => {
 return a list of {meta, data} objects, each representing
 a perfhereder signature that matches the given filter
  */
-const getData = async condition => {
+const getData = async (condition) => {
   const signatures = await getSignatures(condition);
 
   return getDataBySignature(signatures);
 };
 
-export { getAllOptions, getSignatures, getData, TREEHERDER };
+export {
+  getAllOptions, getSignatures, getData, TREEHERDER,
+};

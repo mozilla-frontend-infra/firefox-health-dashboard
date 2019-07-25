@@ -11,9 +11,10 @@ it('renders correctly url', () => {
     .create(
       <MemoryRouter
         initialEntries={['/quantum/tp6?bits=64&test=warm-loadtime']}
-        initialIndex={0}>
+        initialIndex={0}
+      >
         <TP6 />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
     .toJSON();
 

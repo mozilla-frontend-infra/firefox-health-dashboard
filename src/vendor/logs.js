@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 
-import { coalesce, exists, isString, missing } from './utils';
+import {
+  coalesce, exists, isString, missing,
+} from './utils';
 import { Data } from './datas';
 import { Template } from './Template';
 
@@ -26,22 +28,20 @@ function parseStack(stackString) {
 
   return stackString
     .split('\n')
-    .map(line =>
-      stackPatterns
-        .map(stackPattern => {
-          const parts = stackPattern.exec(line);
+    .map(line => stackPatterns
+      .map((stackPattern) => {
+        const parts = stackPattern.exec(line);
 
-          if (missing(parts)) return null;
+        if (missing(parts)) return null;
 
-          return {
-            function: parts[1],
-            fileName: parts[2],
-            line: parts[3],
-            column: parts[4],
-          };
-        })
-        .find(exists)
-    )
+        return {
+          function: parts[1],
+          fileName: parts[2],
+          line: parts[3],
+          column: parts[4],
+        };
+      })
+      .find(exists))
     .filter(exists);
 }
 
@@ -62,8 +62,8 @@ class Exception extends Error {
         type: typeof template,
       });
     } else if (
-      missing(cause) &&
-      (params instanceof Exception || params instanceof Error)
+      missing(cause)
+      && (params instanceof Exception || params instanceof Error)
     ) {
       t = template;
       c = Exception.wrap(params);
@@ -91,9 +91,9 @@ class Exception extends Error {
     }
 
     if (this.trace) {
-      output.push(`stacktrace`);
+      output.push('stacktrace');
       output.push(
-        ...this.trace.map(s => {
+        ...this.trace.map((s) => {
           const output = ['    '];
 
           if (exists(s.function)) {
@@ -111,7 +111,7 @@ class Exception extends Error {
           }
 
           return Template.expand(output.join(''), s);
-        })
+        }),
       );
     }
 
@@ -148,7 +148,7 @@ class Exception extends Error {
   }
 }
 
-Exception.wrap = err => {
+Exception.wrap = (err) => {
   if (missing(err)) {
     return null;
   }

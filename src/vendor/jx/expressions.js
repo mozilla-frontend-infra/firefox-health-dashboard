@@ -17,7 +17,7 @@ import { GMTDate as Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
-const defineFunction = expr => {
+const defineFunction = (expr) => {
   if (isFunction(expr)) {
     return expr;
   }
@@ -32,7 +32,7 @@ const defineFunction = expr => {
     if (pathArray.length === 1) {
       const step = pathArray[0];
 
-      return row => {
+      return (row) => {
         if (isArray(row)) {
           if (step === 'length') {
             return row.length;
@@ -53,7 +53,7 @@ const defineFunction = expr => {
       };
     }
 
-    return row => {
+    return (row) => {
       let output = row;
 
       for (const step of pathArray) {
@@ -88,7 +88,7 @@ const defineFunction = expr => {
         }
 
         return func(term);
-      })
+      }),
     );
 
     if (exists(output)) {
@@ -108,7 +108,7 @@ example {and: [a, b, c, ...]}
 
 return true if all `terms` return true
  */
-expressions.and = terms => {
+expressions.and = (terms) => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -127,7 +127,7 @@ example {or: [a, b, c, ...]}
 
 return true if any `terms` return true
  */
-expressions.or = terms => {
+expressions.or = (terms) => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -146,7 +146,7 @@ example {not: expr}
 
 return opposite of expr
  */
-expressions.not = expr => {
+expressions.not = (expr) => {
   const filter = defineFunction(expr);
 
   return row => !filter(row);
@@ -155,13 +155,13 @@ expressions.not = expr => {
 /*
 example {eq: {variable: value}}
         {eq: {variable: [v1, v2, ... v3]}}
-    
+
 if variable equals literal value then
     return true
-if value is an array, then 
+if value is an array, then
     return true if any of the values match
  */
-expressions.eq = term => {
+expressions.eq = (term) => {
   if (isData(term)) {
     const filters = Object.entries(term).map(([k, v]) => {
       if (missing(v)) {
@@ -171,7 +171,7 @@ expressions.eq = term => {
       const allowed = toArray(v);
       const s = defineFunction(k);
 
-      return row => {
+      return (row) => {
         const value = s(row);
 
         return allowed.includes(value);
@@ -197,21 +197,20 @@ example {prefix: {name: prefix}}
 
 Return true if `name` starts with literal `prefix`
  */
-expressions.prefix = term => row =>
-  Object.entries(term).every(([name, prefix]) => {
-    const value = Data.get(row, name);
+expressions.prefix = term => row => Object.entries(term).every(([name, prefix]) => {
+  const value = Data.get(row, name);
 
-    if (missing(value)) {
-      return false;
-    }
+  if (missing(value)) {
+    return false;
+  }
 
-    return value.startsWith(prefix);
-  });
+  return value.startsWith(prefix);
+});
 
 /*
 return true if `expression` is missing
  */
-expressions.missing = expression => {
+expressions.missing = (expression) => {
   const func = defineFunction(expression);
 
   return row => missing(func(row));
@@ -222,23 +221,22 @@ example {gte: {name: reference}
 
 return true if `name` >= `reference`
  */
-expressions.gte = obj => {
+expressions.gte = (obj) => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
   ]);
 
-  return row =>
-    lookup.every(([a, b]) => {
-      const av = a(row);
-      const bv = b(row);
+  return row => lookup.every(([a, b]) => {
+    const av = a(row);
+    const bv = b(row);
 
-      if (missing(av) || missing(bv)) {
-        return false;
-      }
+    if (missing(av) || missing(bv)) {
+      return false;
+    }
 
-      return av >= bv;
-    });
+    return av >= bv;
+  });
 };
 
 /*
@@ -246,29 +244,28 @@ example {lt: {name: reference}
 
 return true if `name` < `reference`
  */
-expressions.lt = obj => {
+expressions.lt = (obj) => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
   ]);
 
-  return row =>
-    lookup.every(([a, b]) => {
-      const av = a(row);
-      const bv = b(row);
+  return row => lookup.every(([a, b]) => {
+    const av = a(row);
+    const bv = b(row);
 
-      if (missing(av) || missing(bv)) {
-        return false;
-      }
+    if (missing(av) || missing(bv)) {
+      return false;
+    }
 
-      return av < bv;
-    });
+    return av < bv;
+  });
 };
 
 /*
 convert a date-like value into unix timestamp
  */
-expressions.date = value => {
+expressions.date = (value) => {
   const date = Date.tryParse(value);
 
   if (exists(date)) {

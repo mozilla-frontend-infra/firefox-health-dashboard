@@ -1,6 +1,8 @@
 /* global fetch */
 import { parse } from 'query-string';
-import { sleep, exists, isArray, isString, toArray, missing } from './utils';
+import {
+  sleep, exists, isArray, isString, toArray, missing,
+} from './utils';
 import { Data } from './datas';
 import { Duration } from './durations';
 import { GMTDate as Date } from './dates';
@@ -17,7 +19,7 @@ objects
 see also https://github.com/sindresorhus/query-string#parsestring-options
  */
 function fromQueryString(query) {
-  const decode = v => {
+  const decode = (v) => {
     if (isArray(v)) {
       return v.map(decode);
     }
@@ -43,27 +45,26 @@ Convert a JSON object into a query string
  */
 function toQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
-  const encode = (v, k) =>
-    toArray(v)
-      .filter(exists)
-      .map(vv => {
-        if (vv === true) {
-          return e(k);
+  const encode = (v, k) => toArray(v)
+    .filter(exists)
+    .map((vv) => {
+      if (vv === true) {
+        return e(k);
+      }
+
+      if (isString(vv)) {
+        try {
+          JSON.parse(vv);
+
+          return `${e(k)}=${e(JSON.stringify(vv))}`;
+        } catch (e) {
+          // USE STANDARD ENCODING
         }
+      }
 
-        if (isString(vv)) {
-          try {
-            JSON.parse(vv);
-
-            return `${e(k)}=${e(JSON.stringify(vv))}`;
-          } catch (e) {
-            // USE STANDARD ENCODING
-          }
-        }
-
-        return `${e(k)}=${e(vv)}`;
-      })
-      .join('&');
+      return `${e(k)}=${e(vv)}`;
+    })
+    .join('&');
 
   return leaves(value)
     .map(encode)
@@ -133,31 +134,30 @@ const fetchJson = async (url, options = {}) => {
       Log.error('Problem parsing {{text}}', { text: response.text() }, error);
     }
   } catch (error) {
-    Log.error('Problem fetching {{url}}', { url }, error);
+    throw Log.error('Problem fetching {{url}}', { url }, error);
   }
 };
 
 const URL = ({ path, query, fragment }) => {
   const paths = toArray(path);
   const last = path.length - 1;
-  const fullPath =
-    last === 0
-      ? paths[0]
-      : paths
-          .map((p, i) => {
-            let output = p;
+  const fullPath = last === 0
+    ? paths[0]
+    : paths
+      .map((p, i) => {
+        let output = p;
 
-            if (i !== 0) {
-              output = strings.trimLeft(output, '/');
-            }
+        if (i !== 0) {
+          output = strings.trimLeft(output, '/');
+        }
 
-            if (i !== last) {
-              output = strings.trimRight(output, '/');
-            }
+        if (i !== last) {
+          output = strings.trimRight(output, '/');
+        }
 
-            return output;
-          })
-          .join('/');
+        return output;
+      })
+      .join('/');
 
   return [
     fullPath,
@@ -166,4 +166,6 @@ const URL = ({ path, query, fragment }) => {
   ].join('');
 };
 
-export { fetchJson, fromQueryString, toQueryString, URL };
+export {
+  fetchJson, fromQueryString, toQueryString, URL,
+};

@@ -18,7 +18,9 @@ const SummaryTable = ({ content = [], header }) => (
       </thead>
     )}
     <tbody>
-      {content.map(({ dataPoints = [], summary, title, uid }) => (
+      {content.map(({
+        dataPoints = [], summary, title, uid,
+      }) => (
         <tr key={uid}>
           <td className="title-container">
             <StatusWidget title={title} />
@@ -45,7 +47,7 @@ SummaryTable.propTypes = {
       dataPoints: PropTypes.arrayOf(PropTypes.string),
       summary: PropTypes.string.isRequired,
       uid: PropTypes.string.isRequired,
-    })
+    }),
   ),
   header: PropTypes.arrayOf(PropTypes.string),
 };

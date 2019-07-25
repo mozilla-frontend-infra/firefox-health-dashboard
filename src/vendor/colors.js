@@ -21,13 +21,13 @@ class RGBAColor extends Color {
 
 RGBAColor.prototype.toString = RGBAColor.prototype.toRGBA;
 
-Color.parseHTML = html => {
+Color.parseHTML = (html) => {
   if (html.startsWith('#')) {
     return new RGBAColor(
       ...selectFrom(html)
         .slice(1)
         .chunk(2)
-        .map(vv => Number.parseInt(vv.join(''), 16))
+        .map(vv => Number.parseInt(vv.join(''), 16)),
     );
   }
 };

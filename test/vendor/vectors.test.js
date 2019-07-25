@@ -15,7 +15,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .select(['a', 'd'])
-        .toArray()
+        .toArray(),
     ).toEqual([
       { a: 1, d: null },
       { a: { b: 0, c: 1 }, d: 3 },
@@ -29,7 +29,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .select({ x: 'a', y: 'd', z: 20 })
-        .toArray()
+        .toArray(),
     ).toEqual([
       { x: 1, y: null, z: 20 },
       { x: { b: 0, c: 1 }, y: 3, z: 20 },
@@ -43,7 +43,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .select({ x: ['a', 'd'] })
-        .toArray()
+        .toArray(),
     ).toEqual([
       { x: { a: 1, d: null } },
       { x: { a: { b: 0, c: 1 }, d: 3 } },
@@ -57,7 +57,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .select('a')
-        .toArray()
+        .toArray(),
     ).toEqual([1, { b: 0, c: 1 }, null, null, null]);
   });
 
@@ -66,7 +66,7 @@ describe('vectors', () => {
       selectFrom(data)
         .enumerate()
         .map((v, i) => i)
-        .toArray()
+        .toArray(),
     ).toEqual([0, 1, 2, 3, 4]);
   });
 
@@ -74,7 +74,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .limit(2)
-        .toArray()
+        .toArray(),
     ).toEqual([{ a: 1 }, { a: { b: 0, c: 1 }, d: 3 }]);
   });
 
@@ -82,7 +82,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .where({ d: 3 })
-        .toArray()
+        .toArray(),
     ).toEqual([{ a: { b: 0, c: 1 }, d: 3 }, { d: 3 }]);
   });
 
@@ -90,7 +90,7 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .missing('d')
-        .toArray()
+        .toArray(),
     ).toEqual([{ a: 1 }, { a: null, e: 3 }, null]);
   });
 
@@ -99,7 +99,7 @@ describe('vectors', () => {
       selectFrom(data)
         .groupBy(['d', 'e'])
         .map((v, g) => [v, g])
-        .toArray()
+        .toArray(),
     ).toEqual([
       [[{ a: 1 }, null], { d: null, e: null }],
       [[{ a: { b: 0, c: 1 }, d: 3 }, { d: 3 }], { d: 3, e: null }],
@@ -121,7 +121,7 @@ describe('vectors', () => {
       ])
         .groupBy(({ a }) => a < 5)
         .map((v, g) => [v, g])
-        .toArray()
+        .toArray(),
     ).toEqual([
       [[{ a: 0 }, { a: 3 }, { a: 0.5 }, { a: null }], true],
       [[{ a: 10 }, { a: 11 }, { a: 7 }, {}], false],
@@ -142,7 +142,7 @@ describe('vectors', () => {
       ])
         .groupBy(jx({ lt: { a: 5 } }))
         .map((v, g) => [v, g])
-        .toArray()
+        .toArray(),
     ).toEqual([
       [[{ a: 0 }, { a: 3 }, { a: 0.5 }], true],
       [[{ a: 10 }, { a: 11 }, { a: 7 }, {}, { a: null }], false],
@@ -153,9 +153,9 @@ describe('vectors', () => {
     expect(
       selectFrom(data)
         .exists('a')
-        .index('d')
+        .index('d'),
     ).toEqual({
-      '3': { a: { b: 0, c: 1 }, d: 3 },
+      3: { a: { b: 0, c: 1 }, d: 3 },
       null: { a: 1 },
     });
   });
@@ -197,7 +197,7 @@ describe('vectors', () => {
       a
         .select('a')
         .flatten()
-        .toArray()
+        .toArray(),
     ).toEqual([1, 2, 3]);
   });
 });

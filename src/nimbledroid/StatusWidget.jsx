@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Title = ({ enrich, hyperlink, text, tooltip }) => {
+const Title = ({
+  enrich, hyperlink, text, tooltip,
+}) => {
   const className = enrich ? 'enrich' : '';
   const span = <span className={className}>{text}</span>;
 
@@ -32,7 +34,8 @@ const StatusWidget = ({
   <div>
     <div
       key={uid || title.text}
-      className={`status-widget status-${statusColor} padded`}>
+      className={`status-widget status-${statusColor} padded`}
+    >
       <Title {...title} />
       {summary && <span>{summary}</span>}
     </div>

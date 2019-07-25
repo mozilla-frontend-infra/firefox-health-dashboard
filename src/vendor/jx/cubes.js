@@ -3,7 +3,9 @@
 /* eslint-disable max-len */
 /* eslint-disable no-use-before-define */
 
-import { array, exists, isString, missing, toArray, zip } from '../utils';
+import {
+  array, exists, isString, missing, toArray, zip,
+} from '../utils';
 import { ArrayWrapper, selectFrom, toPairs } from '../vectors';
 import { Log } from '../logs';
 import { NULL } from './domains';
@@ -50,7 +52,7 @@ class Cube {
    * return a (reduced dimension) cube
    */
   where(combination) {
-    const coords = this.edges.map(e => {
+    const coords = this.edges.map((e) => {
       const value = combination[e.name];
 
       if (missing(value)) {
@@ -62,7 +64,7 @@ class Cube {
 
     return new Cube(
       this.edges.filter(e => missing(combination[e.name])),
-      this.matrix.get(coords)
+      this.matrix.get(coords),
     );
   }
 
@@ -83,7 +85,7 @@ class Cube {
         toArray(getEdgeByName(cubes, edge)),
         {
           nulls,
-        }
+        },
       )) {
         const self = cs[UNLIKELY_PROPERTY_NAME];
 
@@ -106,7 +108,7 @@ Cube.newInstance = ({ edges, zero }) => {
     new Matrix({
       dims: normalizedEdges.map(e => e.domain.partitions.length),
       zero,
-    })
+    }),
   );
 };
 
@@ -128,19 +130,16 @@ class HyperCube {
    */
   where(combination) {
     const selections = toPairs(combination)
-      .map((value, edgeName) =>
-        getEdgeByName(this._values, edgeName).domain.partitions.findIndex(
-          p => p.value === value
-        )
-      )
+      .map((value, edgeName) => getEdgeByName(this._values, edgeName).domain.partitions.findIndex(
+        p => p.value === value,
+      ))
       .fromPairs();
     const values = this._values
       .map(
-        ({ edges, matrix }) =>
-          new Cube(
-            edges.filter(e => missing(combination[e.name])),
-            matrix.get(edges.map(e => selections[e.name]))
-          )
+        ({ edges, matrix }) => new Cube(
+          edges.filter(e => missing(combination[e.name])),
+          matrix.get(edges.map(e => selections[e.name])),
+        ),
       )
       .fromPairs();
 
@@ -175,7 +174,7 @@ function align(cubes, cube) {
   // VERIFY EDGES ARE IDENTICAL
   let different = false;
   const [newEdges, ordering, dims] = selectFrom(cube.edges)
-    .map(foreignEdge => {
+    .map((foreignEdge) => {
       const foreignParts = foreignEdge.domain.partitions;
       const selfEdge = getEdgeByName(cubes, foreignEdge.name);
 
@@ -209,7 +208,7 @@ function align(cubes, cube) {
             {
               newPart,
               name: foreignEdge.name,
-            }
+            },
           );
         }
       }
@@ -247,11 +246,9 @@ function sequence(cubes, requestedEdges, options = {}) {
 
   // MAP FROM name TO (requested dimension TO matrix dimension)
   const maps = cubes
-    .map(({ edges }) =>
-      requestedEdges
-        .map(e => edges.findIndex(f => f.name === e.name))
-        .map(i => (i === -1 ? null : i))
-    )
+    .map(({ edges }) => requestedEdges
+      .map(e => edges.findIndex(f => f.name === e.name))
+      .map(i => (i === -1 ? null : i)))
     .fromPairs();
   // MAP FROM name TO NOT-REQUESTED EDGES
   const residue = cubes
@@ -355,7 +352,7 @@ function window(cubes, { value, edges: edgeNames, along }) {
       const v = value(
         toPairs(outerRow)
           .map(d => d.matrix.data)
-          .fromLeaves()
+          .fromLeaves(),
       );
 
       outerMatrix.set(outerCoord, v);
@@ -367,14 +364,14 @@ function window(cubes, { value, edges: edgeNames, along }) {
 
       for (const [innerRow, innerCoord] of sequence(
         toPairs(outerRow),
-        innerEdges
+        innerEdges,
       )) {
         const v = value(
           toPairs(innerRow)
             .map(d => d.matrix.data)
             .fromLeaves(),
           innerCoord[0],
-          innerMatrix.data
+          innerMatrix.data,
         );
 
         innerMatrix.set(innerCoord, v);
@@ -389,7 +386,7 @@ function window(cubes, { value, edges: edgeNames, along }) {
     new Matrix({
       dims: outerDims.concat(innerDims),
       data: outerMatrix.data,
-    })
+    }),
   );
 }
 
@@ -405,7 +402,7 @@ ArrayWrapper.edges = (self, edges, zero = array) => {
   const dims = normalizedEdges.map(e => e.domain.partitions.length);
   const matrix = new Matrix({ dims, zero });
 
-  self.forEach(row => {
+  self.forEach((row) => {
     const coord = normalizedEdges.map(e => e.domain.valueToIndex(e.value(row)));
 
     zip(dims, normalizedEdges).forEach(([d, e], i) => {

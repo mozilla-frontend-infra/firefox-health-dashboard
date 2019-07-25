@@ -11,7 +11,7 @@ it('renders correctly default', () => {
     .create(
       <MemoryRouter initialEntries={['/quantum/tp6']} initialIndex={0}>
         <TP6 />
-      </MemoryRouter>
+      </MemoryRouter>,
     )
     .toJSON();
 

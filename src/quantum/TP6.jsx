@@ -24,7 +24,9 @@ const styles = {
 
 class TP6 extends React.Component {
   render() {
-    const { classes, navigation, test, past, ending, platform } = this.props;
+    const {
+      classes, navigation, test, past, ending, platform,
+    } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const { label } = selectFrom(TP6_TESTS)
       .where({ test })
@@ -44,7 +46,8 @@ class TP6 extends React.Component {
                   item
                   xs={6}
                   key={`page_${site}_${test}_${platform}_${past}_${ending}`}
-                  className={classes.chart}>
+                  className={classes.chart}
+                >
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}

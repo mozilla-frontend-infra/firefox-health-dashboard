@@ -16,7 +16,7 @@ it('renders correctly', () => {
           site: 'reddit.com',
           targetRatio: 1.2,
         }}
-      />
+      />,
     )
     .toJSON();
 

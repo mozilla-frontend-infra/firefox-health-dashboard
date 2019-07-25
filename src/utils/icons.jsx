@@ -23,7 +23,8 @@ const LinkIcon = () => (
       display: 'inline-block',
       margin: '-1rem 0',
       verticalAlign: 'middle',
-    }}>
+    }}
+  >
     <LinkIconInternal style={iconStyle} />
   </div>
 );
@@ -33,7 +34,8 @@ const DetailsIcon = () => (
       display: 'inline-block',
       margin: '-1rem 0',
       verticalAlign: 'middle',
-    }}>
+    }}
+  >
     <DetailsIconInternal style={iconStyle} />
   </div>
 );

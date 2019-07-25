@@ -6,7 +6,9 @@ import { LinkIcon } from './icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
-import { exists, missing, sleep, literalField } from '../vendor/utils';
+import {
+  exists, missing, sleep, literalField,
+} from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
 import { getData, TREEHERDER } from '../vendor/perfherder';
@@ -16,7 +18,7 @@ import { round } from '../vendor/math';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
-  x => x * 24 * 60 * 60
+  x => x * 24 * 60 * 60,
 );
 const tipStyles = {
   tooltipKey: {
@@ -37,9 +39,17 @@ const tipStyles = {
   },
 };
 const tip = withStyles(tipStyles)(
-  ({ record, index, data, series, classes, isLocked }) => {
+  ({
+    record, index, data, series, classes, isLocked,
+  }) => {
     if (missing(series.meta)) {
-      return <div> {series.label} </div>;
+      return (
+        <div>
+          {' '}
+          {series.label}
+          {' '}
+        </div>
+      );
     }
 
     const higherOrLower = series.meta.lowerIsBetter
@@ -63,7 +73,7 @@ const tip = withStyles(tipStyles)(
       <div>
         <div className={classes.title}>
           {`${Date.newInstance(record.push_timestamp).format(
-            'MMM dd, yyyy - HH:mm'
+            'MMM dd, yyyy - HH:mm',
           )}GMT`}
         </div>
         <div>
@@ -75,8 +85,11 @@ const tip = withStyles(tipStyles)(
         </div>
         <span className={classes.value}>
           {round(record.value, { places: 3 })}
-        </span>{' '}
-        ({higherOrLower})
+        </span>
+        {' '}
+        (
+        {higherOrLower}
+)
         {(() => {
           if (index === 0) return null;
           const prev = data[index - 1];
@@ -87,12 +100,24 @@ const tip = withStyles(tipStyles)(
           const deltaPercentage = (delta / prev.value) * 100;
 
           if (missing(deltaPercentage)) {
-            return <div>Δ {delta.toFixed(2)}</div>;
+            return (
+              <div>
+Δ
+                {delta.toFixed(2)}
+              </div>
+            );
           }
 
           return (
             <div>
-              Δ {delta.toFixed(2)} ({deltaPercentage.toFixed(1)} %)
+              Δ
+              {' '}
+              {delta.toFixed(2)}
+              {' '}
+(
+              {deltaPercentage.toFixed(1)}
+              {' '}
+%)
             </div>
           );
         })()}
@@ -100,7 +125,8 @@ const tip = withStyles(tipStyles)(
           <a href={hgURL} target="_blank" rel="noopener noreferrer">
             {record.revision.slice(0, 12)}
           </a>
-          {` `}(
+          {' '}
+(
           <a href={jobURL} target="_blank" rel="noopener noreferrer">
             job
           </a>
@@ -111,24 +137,22 @@ const tip = withStyles(tipStyles)(
         </div>
       </div>
     );
-  }
+  },
 );
 const generateStandardOptions = (series, timeDomain) => {
   const { lowerIsBetter, unit } = series[0].meta;
   const data = selectFrom(series)
     .enumerate()
-    .map(s =>
-      selectFrom(s.data)
-        .sort('push_timestamp')
-        .enumerate()
-        .map(d => {
-          // eslint-disable-next-line no-param-reassign
-          d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
+    .map(s => selectFrom(s.data)
+      .sort('push_timestamp')
+      .enumerate()
+      .map((d) => {
+        // eslint-disable-next-line no-param-reassign
+        d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
 
-          return d;
-        })
-        .toArray()
-    )
+        return d;
+      })
+      .toArray())
     .flatten()
     .sort('push_timestamp')
     .toArray();
@@ -176,11 +200,9 @@ const perfherderFormatter = (series, timeDomain) => {
       ...row,
       // choose meta from the source with most recent data
       meta: selectFrom(sources)
-        .sort(s =>
-          selectFrom(s.data)
-            .select('push_timestamp')
-            .max()
-        )
+        .sort(s => selectFrom(s.data)
+          .select('push_timestamp')
+          .max())
         .last({}).meta,
       // multiple sources make up a single series, merge them here
       data: selectFrom(sources)
@@ -202,7 +224,7 @@ const perfherderFormatter = (series, timeDomain) => {
 
 const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
-    series.map(async row => {
+    series.map(async (row) => {
       const sources = await getData(row.filter);
 
       // filter out old data
@@ -212,11 +234,11 @@ const getPerfherderData = async (series, timeDomain) => {
           ...row,
           data: data.filter(
             /* eslint-disable-next-line camelcase */
-            ({ push_timestamp }) => timeDomain.includes(push_timestamp)
+            ({ push_timestamp }) => timeDomain.includes(push_timestamp),
           ),
         })),
       };
-    })
+    }),
   );
 
   if (missing(selectFrom(newData).exists('sources'))) {
@@ -255,7 +277,9 @@ class PerfherderGraphContainer extends React.Component {
   }
 
   async componentDidMount() {
-    const { series, style, reference, timeDomain } = this.props;
+    const {
+      series, style, reference, timeDomain,
+    } = this.props;
 
     this.setState({ isLoading: true });
     await sleep(0); // ALLOW UI TO UPDATE
@@ -291,20 +315,21 @@ class PerfherderGraphContainer extends React.Component {
     return (
       <div key={title} style={{ position: 'relative' }}>
         <ChartJsWrapper
-          title={
+          title={(
             <div>
               {title}
               {jointUrl && (
-                <a
-                  href={jointUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="show Perfherder">
-                  <LinkIcon />
-                </a>
+              <a
+                href={jointUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="show Perfherder"
+              >
+                <LinkIcon />
+              </a>
               )}
             </div>
-          }
+)}
           {...{
             style: { type: 'scatter' },
             isLoading,
@@ -325,7 +350,7 @@ PerfherderGraphContainer.propTypes = {
         label: PropTypes.string.isRequired,
         filter: PropTypes.shape({}).isRequired,
         standardOptions: PropTypes.shape({}),
-      })
+      }),
     ),
     PropTypes.instanceOf(ArrayWrapper),
   ]).isRequired,
