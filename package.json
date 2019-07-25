@@ -71,7 +71,7 @@
     "@neutrinojs/react": "^9.0.0-beta.1",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
-    "eslint": "^5",
+    "eslint": "5.6.1",
     "husky": "^0.14.3",
     "jest": "^23",
     "lint-staged": "^7.0.5",
