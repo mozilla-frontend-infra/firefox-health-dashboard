@@ -48,7 +48,7 @@
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
     "prop-types": "^15.6.2",
-    "query-string": "^5.0.1",
+    "query-string": "^6.0.0",
     "raven-js": "^3.26.2",
     "react": "^16.5.0",
     "react-chartjs-2": "^2.7.4",
