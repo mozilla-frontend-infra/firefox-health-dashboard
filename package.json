@@ -53,8 +53,8 @@
     "react-dom": "^16.5.0",
     "react-hot-loader": "^4.3.6",
     "react-metrics-graphics": "^1.0.2",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "react-simple-tooltip": "^2.6.0",
     "typeface-roboto": "^0.0.75"
   },
