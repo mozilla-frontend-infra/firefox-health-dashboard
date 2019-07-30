@@ -71,7 +71,7 @@
     "jest": "^24",
     "lint-staged": "^9.0.0",
     "neutrino": "^9.0.0-rc.3",
-    "nyc": "^11.6.0",
+    "nyc": "^14.0.0",
     "react-test-renderer": "^16.5.2",
     "webpack": "^4",
     "webpack-cli": "^3",
