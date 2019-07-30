@@ -430,7 +430,7 @@ const TP6_SITES_DATA = {
     ['geckoview',         'warm', 'Tp6 mobile: Bing',                 { eq: { suite: 'raptor-tp6m-bing-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: 'raptor-tp6m-bing-restaurants-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Booking',              { eq: { suite: 'raptor-tp6m-booking-geckoview'}}],
-    // ['geckoview',         'warm', 'Tp6 mobile: CNN',                  { eq: { suite: 'raptor-tp6m-cnn-geckoview'}}],
+    ['geckoview',         'warm', 'Tp6 mobile: CNN',                  { eq: { suite: 'raptor-tp6m-cnn-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: 'raptor-tp6m-cnn-ampstories-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-geckoview'}}],
     ['geckoview',         'warm', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview'}}],
