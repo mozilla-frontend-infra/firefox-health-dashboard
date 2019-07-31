@@ -196,7 +196,7 @@ ChartJsWrapper.defaultProps = {
   chartHeight: 80,
   spinnerSize: '100%',
   isLoading: false,
-  missingDataInterval: 3,
+  missingDataInterval: 10,
 };
 
 export default withStyles(styles)(ChartJsWrapper);

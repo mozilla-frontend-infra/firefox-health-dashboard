@@ -228,7 +228,7 @@ class TP6M extends React.Component {
 
             {selectFrom(TP6_COMBOS)
               .where({
-                browser: ['geckoview', 'fenix'],
+                browser: ['geckoview', 'fenix', 'fennec64'],
                 platform,
                 test,
               })
@@ -293,7 +293,7 @@ const nav = [
     label: 'Platform',
     defaultValue: 'geckoview-g5',
     options: selectFrom(PLATFORMS)
-      .where({ browser: ['geckoview', 'fenix'] })
+      .where({ browser: ['geckoview', 'fenix', 'fennec64'] })
       .select({ id: 'platform', label: 'label' })
       .toArray(),
   },
