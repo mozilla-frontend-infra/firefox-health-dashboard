@@ -194,7 +194,7 @@ class Android extends Component {
                 key="VP9"
                 bits={64}
                 encoding="VP9"
-                browserId="geckoview"
+                browserId="fenix"
               />
             </Grid>
             <Grid item xs={6} key="2">
@@ -202,7 +202,7 @@ class Android extends Component {
                 key="H264"
                 bits={64}
                 encoding="H264"
-                browserId="geckoview"
+                browserId="fenix"
               />
             </Grid>
           </Grid>
