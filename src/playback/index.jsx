@@ -71,6 +71,7 @@ class Power extends React.Component {
                     },
                   }))
                   .toArray()}
+                missingDataInterval={browser === 'fenix' ? 7 : undefined}
               />
             </Grid>
           ))}
