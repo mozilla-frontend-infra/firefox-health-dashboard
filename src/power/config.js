@@ -6,7 +6,7 @@ const TESTS = [
   {
     id: 'cpu',
     label: 'CPU',
-    filter: { eq: { test: 'cpu' } },
+    filter: { in: { test: ['cpu', 'power-cpu'] } },
   },
   // {
   //   id: 'proportional',
@@ -16,12 +16,12 @@ const TESTS = [
   {
     id: 'screen',
     label: 'Screen',
-    filter: { eq: { test: 'screen' } },
+    filter: { in: { test: ['screen', 'power-screen'] } },
   },
   {
     id: 'wifi',
     label: 'Wifi',
-    filter: { eq: { test: 'wifi' } },
+    filter: { in: { test: ['wifi', 'power-wifi'] } },
   },
 ];
 const PLATFORMS = [
