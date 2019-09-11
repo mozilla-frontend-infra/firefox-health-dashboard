@@ -202,6 +202,8 @@ function internalFetch(repo, todo) {
   array(ceiling(pending.length / MAX_CHUNK_SIZE)).forEach(() => {
     (async () => {
       while (
+        // WE ARE NOT JUST CHUNKING, BUT ALSO ACCUMULATING MULTIPLE REQUESTS
+        // INTO CHUNKS
         // LOOPS TWICE, OR LESS
         (activeFetch[repo] > 0 && pending.length >= MIN_CHUNK_SIZE)
         || (activeFetch[repo] === 0 && pending.length > 0)

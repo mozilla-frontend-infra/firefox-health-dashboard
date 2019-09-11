@@ -4,9 +4,11 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
 import { coalesce, missing } from '../vendor/utils';
-import { geomean, round, sum } from '../vendor/math';
 import {
-  PLATFORMS,
+  geomean, round, sum,
+} from '../vendor/math';
+import {
+  BROWSER_PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
@@ -15,27 +17,108 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { Cube, HyperCube, window } from '../vendor/jx/cubes';
-import { g5Reference, TARGET_NAME } from './config';
+import { TARGET_NAME } from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
+import { TimeDomain } from '../vendor/jx/domains';
+
+
+const DESIRED_TESTS = ['cold-loadtime'];
+const DESIRED_PLATFORMS = ['p2-aarch64', 'g5'];
+const DESIRED_BROWSER = ['fenix'];
+const REFERENCE_BROWSER = ['fennec64'];
 
 /*
 condition - json expression to pull perfherder data
  */
 async function pullAggregate({
   condition,
-  tests,
-  sites,
-  platforms,
+  test,
+  platform,
   timeDomain,
 }) {
+  const tests = selectFrom(TP6_TESTS).where({ test });
+  const testMode = tests.select('mode').first();
+  const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
+  const platforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser: DESIRED_BROWSER });
   const readData = timer('read data');
-  const sources = await getData(condition);
+  const referenceRange = new TimeDomain({ past: 'month', ending: 'today' });
+  const referencePlatforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser: REFERENCE_BROWSER });
+  const referenceFilter = TP6_COMBOS
+    .where({
+      browser: REFERENCE_BROWSER,
+      platform,
+      test,
+    })
+    .select('filter')
+    .toArray();
+  const [fennec64, sources] = await Promise.all([
+    getData({ or: referenceFilter }),
+    getData(condition),
+  ]);
 
   readData.done();
 
   const processData = timer('process data');
+
+  const reference = selectFrom(fennec64)
+    .select('data')
+    .flatten()
+  /* eslint-disable-next-line camelcase */
+    .filter(({ push_timestamp }) => referenceRange.includes(push_timestamp))
+    .map(row => ({ ...row, ...row.meta }))
+    .edges([
+      {
+        name: 'test',
+        domain: {
+          type: 'set',
+          partitions: tests.select({
+            name: 'label',
+            value: 'test',
+            where: 'testFilter',
+          }),
+        },
+      },
+      {
+        name: 'site',
+        domain: {
+          type: 'set',
+          partitions: sites.select({
+            name: 'site',
+            value: 'site',
+            where: 'siteFilter',
+          }),
+        },
+      },
+      {
+        name: 'platform',
+        domain: {
+          type: 'set',
+          partitions: referencePlatforms.select({
+            name: 'platform',
+            value: 'platform',
+            where: 'platformFilter',
+          }),
+        },
+      },
+    ]);
+  const refMax = window(
+    { reference },
+    {
+      edges: ['test', 'site', 'platform'],
+      value: ({ reference }) => selectFrom(reference).select('value').max(),
+    },
+  );
+  const refMin = window(
+    { reference },
+    {
+      edges: ['test', 'site', 'platform'],
+      value: ({ reference }) => selectFrom(reference).select('value').min(),
+    },
+  );
+
+
   const measured = selectFrom(sources)
     .select('data')
     .flatten()
@@ -114,14 +197,14 @@ async function pullAggregate({
     },
   );
   const result = window(
-    { daily, g5Reference },
+    { daily, refMin },
     {
       edges: ['test', 'platform', 'pushDate'],
       value: (row) => {
-        const { daily, g5Reference } = row;
+        const { daily, refMin } = row;
 
         return round(
-          selectFrom(daily, g5Reference)
+          selectFrom(daily, refMin)
             // IF NO REFERENCE VALUE FOR SITE, DO NOT INCLUDE IN AGGREGATE
             .map((d, r) => (missing(r) ? null : d))
             .geomean(),
@@ -149,23 +232,29 @@ async function pullAggregate({
     },
   );
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
-  const ref = window(
-    { mask, g5Reference },
+
+
+  const refMeanMax = window(
+    { mask, refMax },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, g5Reference }) => geomean(selectFrom(mask, g5Reference).map((m, r) => (m ? r : null))),
+      value: ({ mask, refMax }) => geomean(selectFrom(mask, refMax).map((m, r) => (m ? r : null))),
+    },
+  );
+  const refMeanMin = window(
+    { mask, refMin },
+    {
+      edges: ['test', 'platform'],
+      value: ({ mask, refMin }) => geomean(selectFrom(mask, refMin).map((m, r) => (m ? r : null))),
     },
   );
 
   processData.done();
 
   return new HyperCube({
-    result, ref, count, total,
+    result, refMeanMin, refMeanMax, refMax, refMin, count, total,
   });
 }
-
-const DESIRED_TESTS = ['cold-loadtime'];
-const DESIRED_PLATFORMS = ['fenix-p2-aarch64', 'fenix-g5'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -175,29 +264,22 @@ class TP6mAggregate_ extends Component {
 
   async componentDidMount() {
     const { timeDomain } = this.props;
-    const platforms = selectFrom(PLATFORMS).where({
-      platform: DESIRED_PLATFORMS,
-    });
     const condition = {
       or: TP6_COMBOS.filter(
         jx({
-          and: [
-            { eq: { browser: ['fenix'] } },
-            {
-              eq: {
-                platform: DESIRED_PLATFORMS,
-                test: DESIRED_TESTS,
-              },
-            },
-          ],
+          eq: {
+            browser: DESIRED_BROWSER,
+            platform: DESIRED_PLATFORMS,
+            test: DESIRED_TESTS,
+          },
         }),
       ).select('filter'),
     };
     const data = await pullAggregate({
       condition,
       sites: TP6M_SITES,
-      tests: TP6_TESTS.where({ test: DESIRED_TESTS }),
-      platforms,
+      test: DESIRED_TESTS,
+      platform: DESIRED_PLATFORMS,
       timeDomain,
     });
 
@@ -234,7 +316,7 @@ class TP6mAggregate_ extends Component {
               const platform = row.platform.getValue();
               const count = row.count.getValue();
               const total = row.total.getValue();
-              const platformLabel = selectFrom(PLATFORMS)
+              const platformLabel = selectFrom(BROWSER_PLATFORMS)
                 .where({ platform })
                 .first().label;
 
@@ -266,7 +348,7 @@ class TP6mAggregate_ extends Component {
                           <DetailsIcon />
                         </a>
                       </span>
-)}
+                    )}
                     standardOptions={{
                       series: [
                         {
@@ -274,8 +356,13 @@ class TP6mAggregate_ extends Component {
                           select: { value: 'result' },
                         },
                         {
-                          label: TARGET_NAME,
-                          select: { value: coalesce(row.ref.getValue(), 0) },
+                          label: `max${TARGET_NAME}`,
+                          select: { value: coalesce(row.refMeanMax.getValue(), 0) },
+                          style: { color: 'gray' },
+                        },
+                        {
+                          label: `min ${TARGET_NAME}`,
+                          select: { value: coalesce(row.refMeanMin.getValue(), 0) },
                           style: { color: 'gray' },
                         },
                         {
@@ -304,4 +391,4 @@ class TP6mAggregate_ extends Component {
 
 const TP6mAggregate = withErrorBoundary(TP6mAggregate_);
 
-export { TP6mAggregate, pullAggregate };
+export { TP6mAggregate, pullAggregate, DESIRED_BROWSER };

@@ -8,4 +8,5 @@ dist
 build
 // Coverage (nyc)
 coverage
-
+.idea
+/*.iml

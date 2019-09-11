@@ -7,10 +7,9 @@ import { round } from '../vendor/math';
 import { missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
-  PLATFORMS,
+  BROWSER_PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
-  TP6M_SITES,
 } from '../quantum/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
@@ -18,7 +17,7 @@ import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { g5Reference, TARGET_NAME } from './config';
-import { pullAggregate } from './TP6mAggregate';
+import { pullAggregate, DESIRED_BROWSER } from './TP6mAggregate';
 import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
 import { GMTDate as Date } from '../vendor/dates';
@@ -102,16 +101,12 @@ class TP6M extends React.Component {
     } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const tests = selectFrom(TP6_TESTS).where({ test });
-    const testMode = tests.select('mode').first();
-    const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
     const aggregate = await pullAggregate({
       condition: {
         or: TP6_COMBOS.where({ test, platform }).select('filter'),
       },
-      sites,
-      tests,
-      platforms: selectFrom(PLATFORMS).where({ platform }),
+      test,
+      platform,
       timeDomain,
     });
     // THE SPECIFIC combo FOR THIS VERSION OF THE PAGE
@@ -136,8 +131,8 @@ class TP6M extends React.Component {
       .where({ test, platform })
       .along('platform') // dummy (only one)
       .map(({ result }) => ({
-        label: selectFrom(PLATFORMS)
-          .where({ platform })
+        label: selectFrom(BROWSER_PLATFORMS)
+          .where({ platform, browser: DESIRED_BROWSER })
           .first().label,
         data: result
           .along('pushDate')
@@ -177,7 +172,7 @@ class TP6M extends React.Component {
     } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
-      data, count, total, referenceValue,
+      data, count, total, refMax, refMin,
     } = (() => {
       if (test !== this.state.test || platform !== this.state.platform) {
         return {};
@@ -213,8 +208,13 @@ class TP6M extends React.Component {
                     series: [
                       { label: 'Geomean', select: { value: 'y' } },
                       {
-                        label: TARGET_NAME,
-                        select: { value: referenceValue },
+                        label: `max ${TARGET_NAME}`,
+                        select: { value: refMax },
+                        style: { color: 'gray' },
+                      },
+                      {
+                        label: `min ${TARGET_NAME}`,
+                        select: { value: refMin },
                         style: { color: 'gray' },
                       },
                       { label: 'Date', select: { value: 'x', axis: 'x' } },
@@ -292,7 +292,7 @@ const nav = [
     id: 'platform',
     label: 'Platform',
     defaultValue: 'geckoview-g5',
-    options: selectFrom(PLATFORMS)
+    options: selectFrom(BROWSER_PLATFORMS)
       .where({ browser: ['geckoview', 'fenix'] })
       .select({ id: 'platform', label: 'label' })
       .toArray(),

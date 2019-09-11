@@ -49,7 +49,7 @@ const CONFIG = {
     },
   ],
 };
-const PLATFORMS = [
+const BROWSER_PLATFORMS = [
   {
     browser: 'Firefox',
     bits: 32,
@@ -174,7 +174,7 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview p2',
-    platform: 'geckoview-p2',
+    platform: 'p2',
     platformFilter: {and: [
       {or: [
         {eq: {
@@ -194,7 +194,7 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview g5',
-    platform: 'geckoview-g5',
+    platform: 'g5',
     platformFilter: {
       and: [
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
@@ -208,7 +208,7 @@ const PLATFORMS = [
   {
     browser: 'geckoview',
     label: 'Geckoview p2 aarch64',
-    platform: 'geckoview-p2-aarch64',
+    platform: 'p2-aarch64',
     platformFilter: {eq: {
         framework: 10,
         platform: 'android-hw-p2-8-0-android-aarch64',
@@ -218,38 +218,63 @@ const PLATFORMS = [
   {
     browser: 'fenix',
     label: 'Firefox Preview g5',
-    platform: 'fenix-g5',
+    platform: 'g5',
     platformFilter: {
       and: [
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
         {eq: {
-          framework: 10,
-          repo: 'fenix',
-        }},
+            framework: 10,
+            repo: 'fenix',
+          }},
       ],
     },
   },
   {
     browser: 'fenix',
     label: 'Firefox Preview p2 (aarch64)',
-    platform: 'fenix-p2-aarch64',
+    platform: 'p2-aarch64',
     platformFilter: {and: [
         {or: [
-          {eq: {
-            platform: 'android-hw-p2-8-0-aarch64'
-          }},
-          {eq: {
-            platform: 'android-hw-p2-8-0-android-aarch64'
-          }},
-        ]},
+            {eq: {
+                platform: ['android-hw-p2-8-0-aarch64', 'android-hw-p2-8-0-android-aarch64']
+              }},
+          ]},
         {eq: {
-          framework: 10,
-          repo: 'fenix',
-        }},
+            framework: 10,
+            repo: 'fenix',
+          }},
+      ]},
+  },
+  {
+    browser: 'fennec64',
+    label: 'Fennec 64 g5',
+    platform: 'g5',
+    platformFilter: {
+      and: [
+        { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }},
+      ],
+    },
+  },
+  {
+    browser: 'fennec64',
+    label: 'Fennec 64 p2 (aarch64)',
+    platform: 'p2-aarch64',
+    platformFilter: {and: [
+        {eq: {
+                platform: ['android-hw-p2-8-0-aarch64','android-hw-p2-8-0-android-aarch64']
+              }},
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }},
       ]},
   },
 ];
-PLATFORMS.forEach((p, i)=>{p.ordering=i});
+BROWSER_PLATFORMS.forEach((p, i)=>{p.ordering=i});
 
 const TP6_TESTS_DATA = [
   {
@@ -478,13 +503,43 @@ const TP6_SITES_DATA = {
     ['fenix',         'cold', 'Tp6 mobile: Wikipedia',            { eq: { suite: ['raptor-tp6m-cold-wikipedia-fenix', 'raptor-tp6m-wikipedia-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-cold-youtube-fenix', 'raptor-tp6m-youtube-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-cold-youtube-watch-fenix', 'raptor-tp6m-youtube-watch-fenix-cold']}}],
+
+    ['fennec64',      'cold', 'Tp6 mobile: Amazon',               { eq: { suite: ['raptor-tp6m-amazon-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Amazon Search',        { eq: { suite: ['raptor-tp6m-amazon-search-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Aframe.io',            { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: All Recipes',          { eq: { suite: ['raptor-tp6m-allrecipes-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: BBC',                  { eq: { suite: ['raptor-tp6m-bbc-fennec64-cold']} }],
+    ['fennec64',      'cold', 'Tp6 mobile: Bing',                 { eq: { suite: ['raptor-tp6m-bing-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Booking',              { eq: { suite: ['raptor-tp6m-booking-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: CNN',                  { eq: { suite: ['raptor-tp6m-cnn-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: ESPN',                 { eq: { suite: ['raptor-tp6m-espn-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Facebook',             { eq: { suite: ['raptor-tp6m-facebook-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Facebook Cristiano',   { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Google',               { eq: { suite: ['raptor-tp6m-google-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Google Maps',          { eq: { suite: ['raptor-tp6m-google-maps-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Instagram',            { eq: { suite: ['raptor-tp6m-instagram-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Imdb',                 { eq: { suite: ['raptor-tp6m-imdb-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Jianshu',              { eq: { suite: ['raptor-tp6m-jianshu-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Microsoft Support',    { eq: { suite: ['raptor-tp6m-microsoft-support-fennec64-cold']} }],
+    ['fennec64',      'cold', 'Tp6 mobile: Reddit',               { eq: { suite: ['raptor-tp6m-reddit-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Stackoverflow',        { eq: { suite: ['raptor-tp6m-stackoverflow-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Web.de',               { eq: { suite: ['raptor-tp6m-web-de-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Wikipedia',            { eq: { suite: ['raptor-tp6m-wikipedia-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-youtube-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-youtube-watch-fennec64-cold']}}],
+
+
   ],
 };
 
 // Ensure "site" covers both cold and warm tests
 const TP6M_SITES = selectFrom(TP6_SITES_DATA.data)
   .map(row => Data.zip(TP6_SITES_DATA.header, row))
-  .where({browser: ['geckoview', 'fenix']})
+  .where({browser: ['geckoview', 'fenix', 'fennec64']})
   .groupBy("site")
   .map((ss, site)=>{
     return {
@@ -520,7 +575,7 @@ const TP6_TESTS = selectFrom(TP6_SITES_DATA.data)
 const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
   .map(row => Data.zip(TP6_SITES_DATA.header, row))
   .sort("site")
-  .leftJoin('browser', PLATFORMS, 'browser')
+  .leftJoin('browser', BROWSER_PLATFORMS, 'browser')
   .leftJoin('mode', TP6_TESTS_DATA, 'mode')
   .map(row => {
     row.filter = {
@@ -606,4 +661,4 @@ if (DEBUG){
   })();
 }
 
-export { CONFIG, TP6_COMBOS, TP6M_SITES, PLATFORMS, TP6_TESTS };
+export { CONFIG, TP6_COMBOS, TP6M_SITES, BROWSER_PLATFORMS, TP6_TESTS };

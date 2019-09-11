@@ -134,7 +134,8 @@ class ArrayWrapper {
   // ///////////////////////////////////////////////////////////////////////////
 
   map(func) {
-    // map the value, do not touch the other args
+    // apply func to args
+    // return same args but with first value replaced with func result
     function* output(argslist) {
       for (const [value, ...args] of argslist) yield [func(value, ...args), ...args];
     }
