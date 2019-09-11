@@ -655,6 +655,11 @@ exports[`renders correctly 1`] = `
       >
         <span>
           Media Playback
+          <span
+            className="Section-subtitle-113"
+          >
+            Firefox Preview
+          </span>
         </span>
       </h2>
     </div>
