@@ -15,6 +15,7 @@ import { getData, TREEHERDER } from '../vendor/perfherder';
 import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
+import jx from '../vendor/jx/expressions';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -228,6 +229,31 @@ const getPerfherderData = async (series, timeDomain) => {
       const sources = await getData(row.filter);
 
       // filter out old data
+      if (row.label.includes('Chromium')) {
+        return {
+          ...row,
+          sources: sources.map(({ data, ...row }) => ({
+            ...row,
+            data: data.filter(
+              /* eslint-disable-next-line camelcase */
+              ({ push_timestamp }) => timeDomain.includes(push_timestamp),
+            ).filter((row.meta.suite.includes('chrome'))
+              ? jx({ lt: { push_timestamp: { date: '2019-09-01' } } }) : ({ row }) => row),
+          })),
+        };
+      }
+      if (row.label.includes('Chrome')) {
+        return {
+          ...row,
+          sources: sources.map(({ data, ...row }) => ({
+            ...row,
+            data: data.filter(
+              /* eslint-disable-next-line camelcase */
+              ({ push_timestamp }) => timeDomain.includes(push_timestamp),
+            ).filter(jx({ gt: { push_timestamp: { date: '2019-09-01' } } })),
+          })),
+        };
+      }
       return {
         ...row,
         sources: sources.map(({ data, ...row }) => ({
