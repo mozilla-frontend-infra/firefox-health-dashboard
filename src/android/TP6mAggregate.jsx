@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
-import { coalesce, missing } from '../vendor/utils';
+import { missing } from '../vendor/utils';
 import {
   geomean, round, sum,
 } from '../vendor/math';
@@ -28,7 +28,7 @@ const DESIRED_TESTS = ['cold-loadtime'];
 const DESIRED_PLATFORMS = ['p2-aarch64', 'g5'];
 const DESIRED_BROWSER = ['fenix'];
 const REFERENCE_BROWSER = ['fennec64'];
-
+const TARGET_COLOR = '#45a1ff44';
 /*
 condition - json expression to pull perfherder data
  */
@@ -107,14 +107,14 @@ async function pullAggregate({
     { reference },
     {
       edges: ['test', 'site', 'platform'],
-      value: ({ reference }) => selectFrom(reference).select('value').max(),
+      value: ({ reference }) => selectFrom(reference).select('value').max() * 0.8,
     },
   );
   const refMin = window(
     { reference },
     {
       edges: ['test', 'site', 'platform'],
-      value: ({ reference }) => selectFrom(reference).select('value').min(),
+      value: ({ reference }) => selectFrom(reference).select('value').min() * 0.8,
     },
   );
 
@@ -238,14 +238,20 @@ async function pullAggregate({
     { mask, refMax },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, refMax }) => geomean(selectFrom(mask, refMax).map((m, r) => (m ? r : null))),
+      value: ({ mask, refMax }) => round(
+        geomean(selectFrom(mask, refMax).map((m, r) => (m ? r : null))),
+        { places: 3 },
+      ),
     },
   );
   const refMeanMin = window(
     { mask, refMin },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, refMin }) => geomean(selectFrom(mask, refMin).map((m, r) => (m ? r : null))),
+      value: ({ mask, refMin }) => round(
+        geomean(selectFrom(mask, refMin).map((m, r) => (m ? r : null))),
+        { places: 3 },
+      ),
     },
   );
 
@@ -356,14 +362,14 @@ class TP6mAggregate_ extends Component {
                           select: { value: 'result' },
                         },
                         {
-                          label: `max${TARGET_NAME}`,
-                          select: { value: coalesce(row.refMeanMax.getValue(), 0) },
-                          style: { color: 'gray' },
-                        },
-                        {
-                          label: `min ${TARGET_NAME}`,
-                          select: { value: coalesce(row.refMeanMin.getValue(), 0) },
-                          style: { color: 'gray' },
+                          label: TARGET_NAME,
+                          select: {
+                            range: {
+                              max: row.refMeanMax.getValue(),
+                              min: row.refMeanMin.getValue(),
+                            },
+                          },
+                          style: { color: TARGET_COLOR },
                         },
                         {
                           label: 'Push Date',
