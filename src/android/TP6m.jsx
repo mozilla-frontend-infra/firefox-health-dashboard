@@ -16,8 +16,8 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { g5Reference, TARGET_NAME } from './config';
-import { pullAggregate, DESIRED_BROWSER } from './TP6mAggregate';
+import { TARGET_NAME } from './config';
+import { pullAggregate, REFERENCE_COLOR } from './TP6mAggregate';
 import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
 import { GMTDate as Date } from '../vendor/dates';
@@ -97,27 +97,29 @@ class TP6M extends React.Component {
 
   async update() {
     const {
-      test, platform, past, ending,
+      test, platform: browserPlatform, past, ending,
     } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
+    const { browser, platform, label: browserPlatformLabel } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const aggregate = await pullAggregate({
       condition: {
-        or: TP6_COMBOS.where({ test, platform }).select('filter'),
+        or: TP6_COMBOS.where({ test, browser, platform }).select('filter'),
       },
       test,
+      browser,
       platform,
       timeDomain,
     });
     // THE SPECIFIC combo FOR THIS VERSION OF THE PAGE
     const combo = aggregate.where({ test, platform });
-    const referenceValue = combo.ref.getValue();
+    const referenceValue = combo.refMean.getValue();
 
     if (missing(referenceValue)) {
       // THERE IS NO GEOMEAN TO CALCULATE
       this.setState({
         data: null,
-        referenceValue: null,
+        reference: null,
         test,
         platform,
       });
@@ -131,9 +133,7 @@ class TP6M extends React.Component {
       .where({ test, platform })
       .along('platform') // dummy (only one)
       .map(({ result }) => ({
-        label: selectFrom(BROWSER_PLATFORMS)
-          .where({ platform, browser: DESIRED_BROWSER })
-          .first().label,
+        label: browserPlatformLabel,
         data: result
           .along('pushDate')
           .map(point => ({
@@ -145,8 +145,10 @@ class TP6M extends React.Component {
       .toArray();
     const { data } = geomean[0];
 
+    const { reference, refMean } = combo;
+
     this.setState({
-      data, count, total, test, platform, referenceValue,
+      data, count, total, test, platform: browserPlatform, reference, refMean,
     });
   }
 
@@ -168,27 +170,29 @@ class TP6M extends React.Component {
 
   render() {
     const {
-      classes, navigation, test, platform, past, ending,
+      classes, navigation, test, platform: browserPlatform, past, ending,
     } = this.props;
+    const { browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
-      data, count, total, refMax, refMin,
+      data, count, total, reference, refMean,
     } = (() => {
-      if (test !== this.state.test || platform !== this.state.platform) {
+      if (test !== this.state.test || browserPlatform !== this.state.platform) {
         return {};
       }
 
       const {
-        data, count, total, referenceValue,
+        data, count, total, reference, refMean,
       } = this.state;
 
       return {
-        data, count, total, referenceValue,
+        data, count, total, reference, refMean,
       };
     })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
-      .first().label;
+      .first()
+      .label;
 
     return (
       <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
@@ -208,14 +212,9 @@ class TP6M extends React.Component {
                     series: [
                       { label: 'Geomean', select: { value: 'y' } },
                       {
-                        label: `max ${TARGET_NAME}`,
-                        select: { value: refMax },
-                        style: { color: 'gray' },
-                      },
-                      {
-                        label: `min ${TARGET_NAME}`,
-                        select: { value: refMin },
-                        style: { color: 'gray' },
+                        label: TARGET_NAME,
+                        select: refMean.getValue(),
+                        style: { color: REFERENCE_COLOR },
                       },
                       { label: 'Date', select: { value: 'x', axis: 'x' } },
                     ],
@@ -228,7 +227,7 @@ class TP6M extends React.Component {
 
             {selectFrom(TP6_COMBOS)
               .where({
-                browser: ['geckoview', 'fenix'],
+                browser,
                 platform,
                 test,
               })
@@ -237,23 +236,13 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${platform}_${past}_${ending}`}
+                  key={`page_${site}_${test}_${browserPlatform}_${past}_${ending}`}
                   className={classes.chart}
                 >
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}
-                    reference={(() => {
-                      const value = round(
-                        g5Reference.where({ test, platform, site }).getValue(),
-                        { places: 2 },
-                      );
-
-                      return {
-                        label: `Target (${value})`,
-                        value,
-                      };
-                    })()}
+                    reference={reference ? reference.where({ site }).getValue() : null}
                     series={selectFrom(series)
                       .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })
@@ -291,10 +280,10 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'geckoview-g5',
+    defaultValue: 'fenix-g5',
     options: selectFrom(BROWSER_PLATFORMS)
       .where({ browser: ['geckoview', 'fenix'] })
-      .select({ id: 'platform', label: 'label' })
+      .select(['id', 'label'])
       .toArray(),
   },
   ...timePickers,

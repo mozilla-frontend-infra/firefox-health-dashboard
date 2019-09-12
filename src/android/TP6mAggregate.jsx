@@ -24,24 +24,22 @@ import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 
 
-const DESIRED_TESTS = ['cold-loadtime'];
-const DESIRED_PLATFORMS = ['p2-aarch64', 'g5'];
-const DESIRED_BROWSER = ['fenix'];
 const REFERENCE_BROWSER = ['fennec64'];
-const TARGET_COLOR = '#45a1ff44';
+const REFERENCE_COLOR = '#45a1ff44';
 /*
 condition - json expression to pull perfherder data
  */
 async function pullAggregate({
   condition,
   test,
+  browser,
   platform,
   timeDomain,
 }) {
   const tests = selectFrom(TP6_TESTS).where({ test });
   const testMode = tests.select('mode').first();
   const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
-  const platforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser: DESIRED_BROWSER });
+  const platforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser });
   const readData = timer('read data');
   const referenceRange = new TimeDomain({ past: 'month', ending: 'today' });
   const referencePlatforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser: REFERENCE_BROWSER });
@@ -62,7 +60,7 @@ async function pullAggregate({
 
   const processData = timer('process data');
 
-  const reference = selectFrom(fennec64)
+  const rawReference = selectFrom(fennec64)
     .select('data')
     .flatten()
   /* eslint-disable-next-line camelcase */
@@ -103,18 +101,22 @@ async function pullAggregate({
         },
       },
     ]);
-  const refMax = window(
-    { reference },
+
+  const reference = window(
+    { rawReference },
     {
-      edges: ['test', 'site', 'platform'],
-      value: ({ reference }) => selectFrom(reference).select('value').max() * 0.8,
-    },
-  );
-  const refMin = window(
-    { reference },
-    {
-      edges: ['test', 'site', 'platform'],
-      value: ({ reference }) => selectFrom(reference).select('value').min() * 0.8,
+      edges: ['test', 'platform', 'site'],
+      value: ({ rawReference }) => {
+        const values = selectFrom(rawReference).select('value');
+        if (values.count() === 0) return null;
+        const min = values.min() * 0.8;
+        const max = values.max() * 0.8;
+        const avg = round((min + max) / 2, { places: 3 });
+        return {
+          label: `Target (approx ${avg})`,
+          range: { min, max },
+        };
+      },
     },
   );
 
@@ -197,14 +199,14 @@ async function pullAggregate({
     },
   );
   const result = window(
-    { daily, refMin },
+    { daily, reference },
     {
       edges: ['test', 'platform', 'pushDate'],
       value: (row) => {
-        const { daily, refMin } = row;
+        const { daily, reference } = row;
 
         return round(
-          selectFrom(daily, refMin)
+          selectFrom(daily, reference)
             // IF NO REFERENCE VALUE FOR SITE, DO NOT INCLUDE IN AGGREGATE
             .map((d, r) => (missing(r) ? null : d))
             .geomean(),
@@ -234,31 +236,29 @@ async function pullAggregate({
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
 
 
-  const refMeanMax = window(
-    { mask, refMax },
+  const refMean = window(
+    { mask, reference },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, refMax }) => round(
-        geomean(selectFrom(mask, refMax).map((m, r) => (m ? r : null))),
-        { places: 3 },
-      ),
-    },
-  );
-  const refMeanMin = window(
-    { mask, refMin },
-    {
-      edges: ['test', 'platform'],
-      value: ({ mask, refMin }) => round(
-        geomean(selectFrom(mask, refMin).map((m, r) => (m ? r : null))),
-        { places: 3 },
-      ),
+      value: ({ mask, reference }) => ({
+        range: {
+          min: round(
+            geomean(selectFrom(mask, reference).map((m, r) => ((m && r) ? r.range.min : null))),
+            { places: 3 },
+          ),
+          max: round(
+            geomean(selectFrom(mask, reference).map((m, r) => ((m && r) ? r.range.max : null))),
+            { places: 3 },
+          ),
+        },
+      }),
     },
   );
 
   processData.done();
 
   return new HyperCube({
-    result, refMeanMin, refMeanMax, refMax, refMin, count, total,
+    result, refMean, reference, count, total,
   });
 }
 
@@ -269,14 +269,16 @@ class TP6mAggregate_ extends Component {
   }
 
   async componentDidMount() {
-    const { timeDomain } = this.props;
+    const {
+      browser, platform, test, timeDomain,
+    } = this.props;
     const condition = {
       or: TP6_COMBOS.filter(
         jx({
           eq: {
-            browser: DESIRED_BROWSER,
-            platform: DESIRED_PLATFORMS,
-            test: DESIRED_TESTS,
+            browser,
+            platform,
+            test,
           },
         }),
       ).select('filter'),
@@ -284,8 +286,9 @@ class TP6mAggregate_ extends Component {
     const data = await pullAggregate({
       condition,
       sites: TP6M_SITES,
-      test: DESIRED_TESTS,
-      platform: DESIRED_PLATFORMS,
+      test,
+      browser,
+      platform,
       timeDomain,
     });
 
@@ -293,6 +296,7 @@ class TP6mAggregate_ extends Component {
   }
 
   render() {
+    const { browser, test } = this.props;
     const { data } = this.state;
 
     if (missing(data)) {
@@ -312,7 +316,7 @@ class TP6mAggregate_ extends Component {
     return (
       <Grid container spacing={24}>
         {selectFrom(TP6_TESTS)
-          .where({ test: DESIRED_TESTS })
+          .where({ test })
           .enumerate()
           .map(({ label, test }) => data
             .where({ test })
@@ -323,8 +327,9 @@ class TP6mAggregate_ extends Component {
               const count = row.count.getValue();
               const total = row.total.getValue();
               const platformLabel = selectFrom(BROWSER_PLATFORMS)
-                .where({ platform })
-                .first().label;
+                .where({ browser, platform })
+                .first()
+                .label;
 
               return (
                 <Grid item xs={6} key={platform}>
@@ -363,13 +368,8 @@ class TP6mAggregate_ extends Component {
                         },
                         {
                           label: TARGET_NAME,
-                          select: {
-                            range: {
-                              max: row.refMeanMax.getValue(),
-                              min: row.refMeanMin.getValue(),
-                            },
-                          },
-                          style: { color: TARGET_COLOR },
+                          select: row.refMean.getValue(),
+                          style: { color: REFERENCE_COLOR },
                         },
                         {
                           label: 'Push Date',
@@ -397,4 +397,4 @@ class TP6mAggregate_ extends Component {
 
 const TP6mAggregate = withErrorBoundary(TP6mAggregate_);
 
-export { TP6mAggregate, pullAggregate, DESIRED_BROWSER };
+export { TP6mAggregate, pullAggregate, REFERENCE_COLOR };

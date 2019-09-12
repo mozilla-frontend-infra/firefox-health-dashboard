@@ -49,8 +49,9 @@ const CONFIG = {
     },
   ],
 };
-const BROWSER_PLATFORMS = [
+const BROWSER_PLATFORMS = selectFrom([
   {
+    id: 'firefox-win32',
     browser: 'Firefox',
     bits: 32,
     os: 'win',
@@ -76,6 +77,7 @@ const BROWSER_PLATFORMS = [
     },
   },
   {
+    id: 'firefox-win64',
     browser: 'Firefox',
     bits: 64,
     os: 'win',
@@ -90,6 +92,7 @@ const BROWSER_PLATFORMS = [
       ]},
   },
   {
+    id: 'firefox-win-aarch64',
     browser: 'Firefox',
     bits: 64,
     os: 'win',
@@ -113,6 +116,7 @@ const BROWSER_PLATFORMS = [
     },
   },
   {
+    id: 'firefox-linux64',
     browser: 'Firefox',
     bits: 64,
     os: 'linux',
@@ -126,6 +130,7 @@ const BROWSER_PLATFORMS = [
       ]},
   },
   {
+    id: 'chromium-win32',
     browser: 'Chromium',
     bits: 32,
     os: 'win',
@@ -144,6 +149,7 @@ const BROWSER_PLATFORMS = [
     }
   },
   {
+    id: "chromium-win64",
     browser: 'Chromium',
     bits: 64,
     os: 'win',
@@ -158,6 +164,7 @@ const BROWSER_PLATFORMS = [
     ]}
   },
   {
+    id: "chromium-linux64",
     browser: 'Chromium',
     bits: 64,
     os: 'linux',
@@ -172,6 +179,7 @@ const BROWSER_PLATFORMS = [
     ]}
   },
   {
+    id: 'geckoview-p2',
     browser: 'geckoview',
     label: 'Geckoview p2',
     platform: 'p2',
@@ -192,6 +200,7 @@ const BROWSER_PLATFORMS = [
     ]},
   },
   {
+    id: 'geckoview-g5',
     browser: 'geckoview',
     label: 'Geckoview g5',
     platform: 'g5',
@@ -206,6 +215,7 @@ const BROWSER_PLATFORMS = [
     },
   },
   {
+    id: 'geckoview-p2-aarch64',
     browser: 'geckoview',
     label: 'Geckoview p2 aarch64',
     platform: 'p2-aarch64',
@@ -216,6 +226,7 @@ const BROWSER_PLATFORMS = [
     }},
   },
   {
+    id: 'fenix-g5',
     browser: 'fenix',
     label: 'Firefox Preview g5',
     platform: 'g5',
@@ -230,6 +241,7 @@ const BROWSER_PLATFORMS = [
     },
   },
   {
+    id: 'fenix-p2-aarch64',
     browser: 'fenix',
     label: 'Firefox Preview p2 (aarch64)',
     platform: 'p2-aarch64',
@@ -246,6 +258,7 @@ const BROWSER_PLATFORMS = [
       ]},
   },
   {
+    id: 'fennec64-g5',
     browser: 'fennec64',
     label: 'Fennec 64 g5',
     platform: 'g5',
@@ -260,6 +273,7 @@ const BROWSER_PLATFORMS = [
     },
   },
   {
+    id: 'fennec64-p2-aarch64',
     browser: 'fennec64',
     label: 'Fennec 64 p2 (aarch64)',
     platform: 'p2-aarch64',
@@ -273,7 +287,7 @@ const BROWSER_PLATFORMS = [
           }},
       ]},
   },
-];
+]);
 BROWSER_PLATFORMS.forEach((p, i)=>{p.ordering=i});
 
 const TP6_TESTS_DATA = [

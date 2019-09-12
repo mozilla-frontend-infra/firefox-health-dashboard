@@ -16,6 +16,8 @@ import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
 
+const REFERENCE_COLOR = '#45a1ff44';
+
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
   x => x * 24 * 60 * 60,
@@ -290,15 +292,15 @@ class PerfherderGraphContainer extends React.Component {
 
       Data.setDefault(standardOptions, style);
 
-      if (exists(reference) && exists(reference.value)) {
+      if (exists(reference)) {
         // ADD HORIZONTAL LINE
-        const { label, value } = reference;
+        const { label, ...rest } = reference;
 
         standardOptions.series.push({
           label,
           type: 'line',
-          select: { value, axis: 'y' },
-          style: { color: 'gray' },
+          select: { axis: 'y', ...rest },
+          style: { color: REFERENCE_COLOR },
         });
       }
 
