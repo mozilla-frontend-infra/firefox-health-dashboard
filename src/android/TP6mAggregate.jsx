@@ -17,7 +17,9 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { Cube, HyperCube, window } from '../vendor/jx/cubes';
-import { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR } from './config';
+import {
+  TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, geoTip,
+} from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
@@ -225,10 +227,10 @@ async function pullAggregate({
     },
   );
   const count = window(
-    { mask },
+    { mask, reference },
     {
       edges: ['test', 'platform'],
-      value: ({ mask }) => sum(selectFrom(mask).map(m => (m ? 1 : 0))),
+      value: ({ mask, reference }) => sum(selectFrom(mask, reference).map((m, r) => ((m && r) ? 1 : 0))),
     },
   );
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
@@ -359,6 +361,7 @@ class TP6mAggregate_ extends Component {
                       </span>
                     )}
                     standardOptions={{
+                      tip: geoTip,
                       series: [
                         {
                           label: platformLabel,

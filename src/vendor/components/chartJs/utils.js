@@ -177,7 +177,7 @@ const cjsGenerator = (standardOptions) => {
         const yMax = jx(y.range.max);
 
         // eslint-disable-next-line no-param-reassign
-        s.selector = row => ({ mix: yMin(row), max: yMax(row) });
+        s.selector = row => ({ min: yMin(row), max: yMax(row) });
 
         return [
           {

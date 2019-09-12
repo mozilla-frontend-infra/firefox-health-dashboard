@@ -3,7 +3,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { round } from '../vendor/math';
 import { missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
@@ -16,11 +15,10 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { TARGET_NAME, REFERENCE_COLOR } from './config';
+import { TARGET_NAME, REFERENCE_COLOR, geoTip } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
-import { GMTDate as Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
@@ -29,65 +27,6 @@ const styles = {
     padding: '1rem',
   },
 };
-const tipStyles = {
-  below: {
-    color: 'LightGreen',
-  },
-  above: {
-    color: 'Pink',
-  },
-};
-const geoTip = withStyles(tipStyles)(
-  ({
-    record, series, classes, standardOptions,
-  }) => {
-    const referenceValue = selectFrom(standardOptions.series)
-      .where({ label: TARGET_NAME })
-      .first()
-      .selector(record);
-
-    return (
-      <div>
-        <div className={classes.title}>
-          {new Date(record.x).format('yyyy-MM-dd')}
-        </div>
-        <div>
-          <span
-            style={{ backgroundColor: series.style.color }}
-            className={classes.tooltipKey}
-          />
-          {series.label}
-          {' '}
-:
-          {round(record.y, { places: 3 })}
-        </div>
-        <div>
-          {(() => {
-            const diff = record.y - referenceValue;
-
-            if (diff > 0) {
-              return (
-                <span className={classes.above}>
-                  {`${round(diff, {
-                    places: 2,
-                  })}ms above target`}
-                </span>
-              );
-            }
-
-            return (
-              <span className={classes.below}>
-                {`${round(-diff, {
-                  places: 2,
-                })}ms below target`}
-              </span>
-            );
-          })()}
-        </div>
-      </div>
-    );
-  },
-);
 
 class TP6M extends React.Component {
   constructor(props) {
@@ -137,8 +76,8 @@ class TP6M extends React.Component {
         data: result
           .along('pushDate')
           .map(point => ({
-            x: point.pushDate.getValue(),
-            y: point.getValue(),
+            pushDate: point.pushDate.getValue(),
+            result: point.getValue(),
           }))
           .toArray(),
       }))
@@ -210,13 +149,13 @@ class TP6M extends React.Component {
                     data,
                     tip: geoTip,
                     series: [
-                      { label: 'Geomean', select: { value: 'y' } },
+                      { label: 'Geomean', select: { value: 'result' } },
                       {
                         label: TARGET_NAME,
                         select: refMean.getValue(),
                         style: { color: REFERENCE_COLOR },
                       },
-                      { label: 'Date', select: { value: 'x', axis: 'x' } },
+                      { label: 'Date', select: { value: 'pushDate', axis: 'x' } },
                     ],
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,
