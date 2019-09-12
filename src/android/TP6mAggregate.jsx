@@ -17,15 +17,13 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { Cube, HyperCube, window } from '../vendor/jx/cubes';
-import { TARGET_NAME } from './config';
+import { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR } from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 
 
-const REFERENCE_BROWSER = ['fennec64'];
-const REFERENCE_COLOR = '#45a1ff44';
 /*
 condition - json expression to pull perfherder data
  */
@@ -111,7 +109,7 @@ async function pullAggregate({
         if (values.count() === 0) return null;
         const min = values.min() * 0.8;
         const max = values.max() * 0.8;
-        const avg = round((min + max) / 2, { places: 3 });
+        const avg = round((min + max) / 2, { places: 2 });
         return {
           label: `Target (approx ${avg})`,
           range: { min, max },
@@ -397,4 +395,4 @@ class TP6mAggregate_ extends Component {
 
 const TP6mAggregate = withErrorBoundary(TP6mAggregate_);
 
-export { TP6mAggregate, pullAggregate, REFERENCE_COLOR };
+export { TP6mAggregate, pullAggregate };

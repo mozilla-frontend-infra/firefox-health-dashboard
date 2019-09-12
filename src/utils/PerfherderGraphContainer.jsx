@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from './icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { Data } from '../vendor/datas';
+import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
   exists, missing, sleep, literalField,
@@ -278,7 +278,19 @@ class PerfherderGraphContainer extends React.Component {
     };
   }
 
+  async componentDidUpdate(prevProps) {
+    if (isEqual(this.props, prevProps)) {
+      return;
+    }
+    return this.update();
+  }
+
+
   async componentDidMount() {
+    this.update();
+  }
+
+  async update() {
     const {
       series, style, reference, timeDomain,
     } = this.props;
@@ -346,6 +358,13 @@ class PerfherderGraphContainer extends React.Component {
 
 PerfherderGraphContainer.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  reference: PropTypes.shape({
+    range: PropTypes.shape({
+      min: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired,
+    }),
+    label: PropTypes.string.isRequired,
+  }),
   series: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
