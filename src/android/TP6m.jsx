@@ -3,7 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { missing } from '../vendor/utils';
+import { missing, exists } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
   BROWSER_PLATFORMS,
@@ -52,13 +52,13 @@ class TP6M extends React.Component {
     });
     // THE SPECIFIC combo FOR THIS VERSION OF THE PAGE
     const combo = aggregate.where({ test, platform });
-    const referenceValue = combo.refMean.getValue();
+    const { referenceValue, refMean } = combo;
 
-    if (missing(referenceValue)) {
+    if (missing(refMean.getValue())) {
       // THERE IS NO GEOMEAN TO CALCULATE
       this.setState({
         data: null,
-        reference: null,
+        referenceValue: null,
         test,
         platform,
       });
@@ -84,10 +84,8 @@ class TP6M extends React.Component {
       .toArray();
     const { data } = geomean[0];
 
-    const { reference, refMean } = combo;
-
     this.setState({
-      data, count, total, test, platform: browserPlatform, reference, refMean,
+      data, count, total, test, platform: browserPlatform, referenceValue, refMean,
     });
   }
 
@@ -114,18 +112,18 @@ class TP6M extends React.Component {
     const { browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
-      data, count, total, reference, refMean,
+      data, count, total, referenceValue, refMean,
     } = (() => {
       if (test !== this.state.test || browserPlatform !== this.state.platform) {
         return {};
       }
 
       const {
-        data, count, total, reference, refMean,
+        data, count, total, referenceValue, refMean,
       } = this.state;
 
       return {
-        data, count, total, reference, refMean,
+        data, count, total, referenceValue, refMean,
       };
     })();
     const subtitle = selectFrom(TP6_TESTS)
@@ -175,13 +173,13 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${browserPlatform}_${past}_${ending}`}
+                  key={`page_${site}_${test}_${browserPlatform}_${past}_${ending}_${exists(referenceValue)}`}
                   className={classes.chart}
                 >
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}
-                    reference={reference ? reference.where({ site }).getValue() : null}
+                    reference={referenceValue ? referenceValue.where({ site }).getValue() : null}
                     series={selectFrom(series)
                       .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })

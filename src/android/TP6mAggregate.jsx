@@ -102,7 +102,7 @@ async function pullAggregate({
       },
     ]);
 
-  const reference = window(
+  const referenceValue = window(
     { rawReference },
     {
       edges: ['test', 'platform', 'site'],
@@ -199,14 +199,14 @@ async function pullAggregate({
     },
   );
   const result = window(
-    { daily, reference },
+    { daily, referenceValue },
     {
       edges: ['test', 'platform', 'pushDate'],
       value: (row) => {
-        const { daily, reference } = row;
+        const { daily, referenceValue } = row;
 
         return round(
-          selectFrom(daily, reference)
+          selectFrom(daily, referenceValue)
             // IF NO REFERENCE VALUE FOR SITE, DO NOT INCLUDE IN AGGREGATE
             .map((d, r) => (missing(r) ? null : d))
             .geomean(),
@@ -227,27 +227,27 @@ async function pullAggregate({
     },
   );
   const count = window(
-    { mask, reference },
+    { mask, referenceValue },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, reference }) => sum(selectFrom(mask, reference).map((m, r) => ((m && r) ? 1 : 0))),
+      value: ({ mask, referenceValue }) => sum(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? 1 : 0))),
     },
   );
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
 
 
   const refMean = window(
-    { mask, reference },
+    { mask, referenceValue },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, reference }) => ({
+      value: ({ mask, referenceValue }) => ({
         range: {
           min: round(
-            geomean(selectFrom(mask, reference).map((m, r) => ((m && r) ? r.range.min : null))),
+            geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.min : null))),
             { places: 3 },
           ),
           max: round(
-            geomean(selectFrom(mask, reference).map((m, r) => ((m && r) ? r.range.max : null))),
+            geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.max : null))),
             { places: 3 },
           ),
         },
@@ -258,7 +258,7 @@ async function pullAggregate({
   processData.done();
 
   return new HyperCube({
-    result, refMean, reference, count, total,
+    result, refMean, referenceValue, count, total,
   });
 }
 
