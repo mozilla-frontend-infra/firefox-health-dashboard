@@ -1,13 +1,11 @@
 [![Build Status](https://api.travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard.svg?branch=master)](https://travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard)
 [![Coverage Status](https://coveralls.io/repos/github/mozilla-frontend-infra/firefox-health-dashboard/badge.svg?branch=master)](https://coveralls.io/github/mozilla-frontend-infra/firefox-health-dashboard?branch=master)
 
-# Firefox health dashboard
+# Firefox health dashboard [:link:](https://health.graphics/)
 
-This project show Firefox metrics and insights to help meeting release criteria.
-Find the official site [here](https://health.graphics/).
-The repository for the backend can be found [here](https://github.com/mozilla/firefox-health-backend).
+Show Firefox metrics and insights to help meeting release criteria.
 
-# Developing
+# Development
 
 ## Prerequisites
 
@@ -24,7 +22,7 @@ To update your npm and install globally, type this into your terminal
 npm install npm@latest -g
 
 ```
-To test Node. To see if Node is installed, open the Windows Command Prompt, Powershell or a similar command line tool
+Verify node is installed, and see the version:
 
 ```
 npm -v
@@ -35,42 +33,70 @@ npm -v
 
 To install Yarn, it is best to [consult the official documentation](https://yarnpkg.com/en/docs/install) for your particular platform.
 
-To install yarn globally using node, type this into your terminal
+Install Yarn globally:
 
 ```
 npm install -g yarn
 
 ```
-## Testing 
+Verify the install worked, and see the version installed: 
 
 ```
 yarn -v
 
 ```
-## Building
+## Installing
 
-First, fork this repository to another GitHub account. Then you can clone and install:
+If you want to inspect the code, or want to make changes: Fork this repository to your GitHub account, then clone and install:
 
 ```
 git clone https://github.com/<YOUR_ACCOUNT>/firefox-health-dashboard.git
 cd firefox-health-dashboard
-yarn install // This will install all dependencies
+yarn install
+```
+
+## Development
+
+Start a local development server on [port 5000](http://localhost:5000). 
+
+```
 yarn start
 ```
 
-This will start a local development server on [port 5000](http://localhost:5000).
-Any ESLint errors across the project will be displayed in the terminal during development.
+Any ESLint errors will pollute the console output during development. Many can be fixed with 
 
-## Test local backend changes
+```
+yarn lint --fix
+```
 
-In some cases, you might want to make changes to [the backend](https://github.com/mozilla/firefox-health-backend)
-and test them locally. You can do so with `yarn start:local`.
+You can run the tests with
+
+```
+yarn test 
+``` 
+
+Some tests use html templates for comparision.  If you change the page structure, then you must update the template:
+ 
+```
+yarn test -u
+```
+
+If you want feedback on your pull request, but tests do not pass yet, you can push with `--no-verify`:
+
+```
+git push --no-verify origin
+``` 
+
+
+
+
 
 ## Troubleshooting
 
 - `yarn reset` to clear the local cache
 
 # Extra information
+
 ## Neutrino and preset
 
 This project uses [Neutrino](https://github.com/neutrinojs/neutrino) and the
@@ -79,27 +105,6 @@ This project uses [Neutrino](https://github.com/neutrinojs/neutrino) and the
 ## Attributions
 
 - heartbeat icon by Creative Stall from the Noun Project
-
-# Making changes to a page
-This project is still in development and only certain pages are easy to modify (e.g. the Android page).
-In this section we will *only* be describing certain changes that are **very easy** to make and test.
-
-The modern pages use two important components (**DashboardPage** and **Section**):
-```javascript
-<DashboardPage title='A title' subtitle='Some subtitle'>
-  <Section title='The first section'>
-    <div>Sample</div>
-  <Section/>
-  <Section title='Another section'>
-    <div>Bar</div>
-  </Section>
-</DashboardPage>
-```
-Inside of a `DashboardPage` you include sections and inside of a `Section` you can use HTML tags or use React
-containers. Read below for some documented containers.
-
-NOTE: The `title` parameter is optional and it is available to most containers.
-
 
 
 ## Credit
