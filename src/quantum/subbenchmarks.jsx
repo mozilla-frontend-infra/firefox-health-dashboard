@@ -28,7 +28,7 @@ const Graph = ({ data, name, url }) => (
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        alt="View all subtests on Perfherder"
+        title="View all subtests on Perfherder"
       >
         <FontAwesomeIcon
           icon={faExternalLinkAlt}
@@ -121,7 +121,7 @@ class PerfherderContainerPre extends Component {
                   href={perfherderUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  alt="View all subtests on Perfherder"
+                  title="View all subtests on Perfherder"
                 >
                   <FontAwesomeIcon
                     icon={faExternalLinkAlt}

@@ -12,6 +12,8 @@ The media playback summary is color coded according to how well it meets require
 * **yellow** - Normal playback meets requirements, other speeds do not
 * **red** - Normal playback fails: More than one dropped frame
 
+### Example
+
 ![playback grid](about-media-playback.png "Example Playback Grid")
 
 You may click on any specfic platform for a breakdown.
