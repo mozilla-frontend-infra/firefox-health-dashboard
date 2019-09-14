@@ -507,6 +507,7 @@ const TP6_SITES_DATA = {
     ['fenix',         'cold', 'Tp6 mobile: Facebook Cristiano',   { eq: { suite: ['raptor-tp6m-cold-facebook-cristiano-fenix', 'raptor-tp6m-facebook-cristiano-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Google',               { eq: { suite: ['raptor-tp6m-cold-google-fenix', 'raptor-tp6m-google-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Google Maps',          { eq: { suite: ['raptor-tp6m-cold-google-maps-fenix', 'raptor-tp6m-google-maps-fenix-cold']}}],
+    ['fenix',         'cold', 'Tp6 mobile: Google Restaurants',   { eq: { suite: ['raptor-tp6m-cold-google-restaurants-fenix', 'raptor-tp6m-google-restaurants-fenix-cold']} }],
     ['fenix',         'cold', 'Tp6 mobile: Instagram',            { eq: { suite: ['raptor-tp6m-cold-instagram-fenix', 'raptor-tp6m-instagram-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Imdb',                 { eq: { suite: ['raptor-tp6m-cold-imdb-fenix', 'raptor-tp6m-imdb-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: Jianshu',              { eq: { suite: ['raptor-tp6m-cold-jianshu-fenix', 'raptor-tp6m-jianshu-fenix-cold']}}],
@@ -535,6 +536,7 @@ const TP6_SITES_DATA = {
     ['fennec64',      'cold', 'Tp6 mobile: Facebook Cristiano',   { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: Google',               { eq: { suite: ['raptor-tp6m-google-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: Google Maps',          { eq: { suite: ['raptor-tp6m-google-maps-fennec64-cold']}}],
+    ['fennec64',      'cold', 'Tp6 mobile: Google Restaurants',   { eq: { suite: ['raptor-tp6m-google-restaurants-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: Instagram',            { eq: { suite: ['raptor-tp6m-instagram-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: Imdb',                 { eq: { suite: ['raptor-tp6m-imdb-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: Jianshu',              { eq: { suite: ['raptor-tp6m-jianshu-fennec64-cold']}}],
@@ -545,7 +547,6 @@ const TP6_SITES_DATA = {
     ['fennec64',      'cold', 'Tp6 mobile: Wikipedia',            { eq: { suite: ['raptor-tp6m-wikipedia-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-youtube-fennec64-cold']}}],
     ['fennec64',      'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-youtube-watch-fennec64-cold']}}],
-
 
   ],
 };
