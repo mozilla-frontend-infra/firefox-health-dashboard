@@ -44,7 +44,7 @@ const BENCHMARKS =
       filter: { and: [
         { missing: "test"},
         { eq: {
-          suite: "raptor-motionmark_htmlsuite-firefox",
+          suite: "raptor-motionmark-htmlsuite-firefox",
           repo: "mozilla-central",
           framework: 10,
           platform: "windows7-32"
