@@ -25,7 +25,7 @@ The media playback dashboard attempts to summarize a large combinations of playb
 * browser engine (3)
 * codec (2)
 * hardware platform (7)
-* resolution/interlacing (12)
+* resolution/frame rate (12)
 * playback speed (6)
 
 The first two can be viewed by navigating to the relevant page.  The hardware/resolution are shown along the vertical/horizontal axis respectively.  Finally, the playback speed is packed into the color coding.
