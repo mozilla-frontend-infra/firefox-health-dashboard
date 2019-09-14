@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
 import {
-  array, exists, first, missing, toArray, delayedValue, zip, coalesce, isString, promiseAll,
+  array, exists, first, missing, toArray, delayedValue, zip, coalesce, isString,
 } from './utils';
 import { selectFrom, toPairs, combos } from './vectors';
 import jx from './jx/expressions';
@@ -252,7 +252,7 @@ a perfhereder signature that matches the given filter
 const getData = async (condition) => {
   const collated = extract(condition, ['push_timestamp', 'repo', 'framework']);
 
-  const results = await promiseAll(collated
+  const results = await Promise.all(collated
     .map(async ([pushDate, repo, framework, rest]) => {
       if (repo === true || framework === true) {
         Log.error('expecting expression to have both repo and framework');
@@ -271,8 +271,6 @@ const getData = async (condition) => {
           ...rest,
         }));
     }));
-
-  Log.note('{{condition|json}} return {{num}} signatures', { condition, num: results.length });
 
   return selectFrom(results).flatten();
 };
