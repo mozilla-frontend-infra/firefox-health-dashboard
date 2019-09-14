@@ -13,193 +13,139 @@ const BENCHMARKS =
       title: 'MotionMark HTML suite',
       label: "Firefox",
       bits: 64,
-      filter: {
-        and: [
-          {missing: "test"},
-          {
-            eq: {
-              suite: "raptor-motionmark-htmlsuite-firefox",
-              repo: "mozilla-central",
-              framework: 10,
-              platform: "windows10-64"
-            }
-          }
-        ]
-      }
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-htmlsuite-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows10-64"
+        }}
+      ]}
     },
     {
       title: 'MotionMark Animometer',
       label: "Firefox",
       bits: 64,
-      filter: {
-        and: [
-          {missing: "test"},
-          {
-            eq: {
-              suite: "raptor-motionmark-animometer-firefox",
-              repo: "mozilla-central",
-              framework: 10,
-              platform: "windows10-64",
-            }
-          }
-        ]
-      }
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-animometer-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows10-64",
+        }}
+      ]}
     },
     {
       title: 'MotionMark HTML suite',
       label: "Firefox",
       bits: 32,
-      filter: {
-        and: [
-          {missing: "test"},
-          {
-            eq: {
-              suite: "raptor-motionmark_htmlsuite-firefox",
-              repo: "mozilla-central",
-              framework: 10,
-              platform: "windows7-32"
-            }
-          }
-        ]
-      }
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark_htmlsuite-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows7-32"
+        }}
+      ]}
     },
     {
       title: "MotionMark Animometer",
       label: "Firefox",
       bits: 32,
-      filter: {
-        and: [
-          {missing: "test"},
-          {
-            eq: {
-              suite: "raptor-motionmark-animometer-firefox",
-              repo: "mozilla-central",
-              framework: 10,
-              platform: "windows7-32",
-            }
-          }
-        ]
-      }
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-animometer-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows7-32",
+        }}
+      ]}
     },
     {
       title: "Speedometer",
       label: 'Firefox',
       bits:64,
-      filter: {
-        and: [
-          { missing: 'test' },
-          {
-            or: [
-              {
-                eq: {
-                  options: 'pgo',
-                  platform: 'windows10-64',
-                },
-              },
-              {
-                eq: {
-                  options: 'opt',
-                  platform: 'windows10-64-shippable',
-                },
-              },
-            ],
-          },
-          {
-            eq: {
-              framework: 10,
-              repo: 'mozilla-central',
-              suite: 'raptor-speedometer-firefox',
-            },
-          },
-        ],
-      },
+      filter: { and: [
+        { missing: 'test' },
+        { or: [
+          { eq: {
+            options: 'pgo',
+            platform: 'windows10-64',
+          }},
+          { eq: {
+            options: 'opt',
+            platform: 'windows10-64-shippable',
+          }},
+        ]},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+          suite: 'raptor-speedometer-firefox',
+        }},
+      ]},
     },
     {
       title: "Speedometer",
       label: 'Chromium',
       bits:64,
-      filter: {
-        and: [
-          { missing: 'test' },
-          {
-            eq: { platform: ['windows10-64-nightly', 'windows10-64-shippable'] },
-          },
-          {
-            eq: {
-              suite: [
-                'raptor-speedometer-chrome',
-                'raptor-speedometer-chromium',
-              ],
-            },
-          },
-          {
-            eq: {
-              framework: 10,
-              repo: 'mozilla-central',
-            },
-          },
-        ],
-      },
+      filter: { and: [
+        { missing: 'test' },
+        { eq: {
+          platform: ['windows10-64-nightly', 'windows10-64-shippable'],
+          suite: [
+            'raptor-speedometer-chrome',
+            'raptor-speedometer-chromium',
+          ],
+        }},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+        }},
+      ]},
     },
     {
       title: "Speedometer",
       label: 'Firefox',
       bits:32,
-      filter: {
-        and: [
-          { missing: 'test' },
-          {
-            or: [
-              {
-                eq: {
-                  options: 'pgo',
-                  platform: 'windows7-32',
-                },
-              },
-              {
-                eq: {
-                  options: 'opt',
-                  platform: 'windows7-32-shippable',
-                },
-              },
-            ],
-          },
-          {
-            eq: {
-              framework: 10,
-              repo: 'mozilla-central',
-              suite: 'raptor-speedometer-firefox',
-            },
-          },
-        ],
-      },
+      filter: { and: [
+        { missing: 'test' },
+        { or: [
+          { eq: {
+            options: 'pgo',
+            platform: 'windows7-32',
+          }},
+          { eq: {
+            options: 'opt',
+            platform: 'windows7-32-shippable',
+          }},
+        ]},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+          suite: 'raptor-speedometer-firefox',
+        }},
+      ]},
     },
     {
       title: "Speedometer",
       label: 'Chromium',
       bits:32,
-      filter: {
-        and: [
-          { missing: 'test' },
-          {
-            eq: { platform: ['windows7-32-nightly', 'windows7-32-shippable'] },
-          },
-          {
-            eq: {
-              suite: [
-                'raptor-speedometer-chrome',
-                'raptor-speedometer-chromium',
-              ],
-            },
-          },
-          {
-            eq: {
-              framework: 10,
-              repo: 'mozilla-central',
-            },
-          },
-        ],
-      },
+      filter: { and: [
+        { missing: 'test' },
+        { eq: {
+          platform: ['windows7-32-nightly', 'windows7-32-shippable'],
+          suite: [
+            'raptor-speedometer-chrome',
+            'raptor-speedometer-chromium',
+          ],
+          framework: 10,
+          repo: 'mozilla-central',
+        }},
+      ]},
     },
 
   ];
