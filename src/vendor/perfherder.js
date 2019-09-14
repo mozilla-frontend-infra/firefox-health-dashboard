@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
 import {
-  array, exists, first, missing, toArray, delayedValue,
+  array, exists, first, missing, toArray, delayedValue, zip, coalesce, isString, promiseAll,
 } from './utils';
-import { selectFrom, toPairs } from './vectors';
+import { selectFrom, toPairs, combos } from './vectors';
 import jx from './jx/expressions';
 import { Log } from './logs';
 import { ceiling } from './math';
+import { Data } from './datas';
 
 const DEBUG = false;
 const MAX_CHUNK_SIZE = 40; // NUMBER OF SIGNATURES FROM PERFHERDER
@@ -128,60 +129,49 @@ const getFramework = async (combo) => {
   await frameworkCache[comboString];
 };
 
+
+function simpler(v) {
+  const vv = v.filter(x => x !== true);
+  if (vv.length === 0) return true;
+  if (vv.length === 1) return vv[0];
+  return { and: vv };
+}
+
+
 /*
-return an array of {repo, framework} objects
+ * Expecting props to be an array of N property names
+ * Return a list of expression tuples; meant to represent disjunctive normal
+ * such that
+ *   output[x][i] contains expression on props[i]
+ *   output[x][N] is expressions on everything else
  */
-const findCombo = expression => toPairs(expression)
-  .map((v, k) => {
-    if (k === 'or' || k === 'and') {
-      return selectFrom(v)
-        .map(findCombo)
-        .flatten()
-        .groupBy(['repo', 'framework'])
-        .map(first);
+const extract = (expression, props) => toPairs(expression)
+  .map((param, op) => {
+    if (op === 'or') {
+      return selectFrom(param).map(e => extract(e, props)).flatten();
+    }
+    if (op === 'and') {
+      return combos(...param.map(e => extract(e, props)))
+        .map(v => zip(...v).map(simpler));
     }
 
-    const { repo, framework } = v;
-
-    if (exists(framework)) {
-      if (missing(repo)) {
-        Log.error(
-          'expecting {{expression}} to have {framework, repo} paired',
-          { expression },
-        );
-      }
-
-      return [{ repo, framework }];
+    const lookup = Data.zip(props.map((p, i) => ([p, i])));
+    const inProps = array(props.length + 1).map(() => ([]));
+    if (isString(param)) {
+      const i = coalesce(lookup[param], props.length);
+      inProps[i].push({ [op]: param });
+      return [inProps.map(simpler)];
     }
 
-    if (exists(repo)) {
-      Log.error('expecting {{expression}} to have {framework, repo} paired', {
-        expression,
-      });
-    }
+    toPairs(param).forEach((rhs, lhs) => {
+      const i = coalesce(lookup[lhs], props.length);
+      inProps[i].push({ [op]: { [lhs]: rhs } });
+    });
 
-    return [];
+    return [inProps.map(simpler)];
   })
   .flatten()
-  .groupBy(['repo', 'framework'])
-  .map(first)
   .toArray();
-const getSignatures = async (condition) => {
-  // find out what frameworks to extract
-  const combos = findCombo(condition);
-
-  if (missing(combos)) {
-    Log.error('expecting to find a framework in the condtion: {{condition}}', {
-      condition,
-    });
-  }
-
-  await Promise.all(combos.map(getFramework));
-
-  Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
-
-  return PERFHERDER.signatures.filter(jx(condition));
-};
 
 const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE OF DATA
 const activeFetch = {}; // MAP FROM repo TO COUNT OF ACTIVE FETCHES
@@ -260,11 +250,33 @@ return a list of {meta, data} objects, each representing
 a perfhereder signature that matches the given filter
  */
 const getData = async (condition) => {
-  const signatures = await getSignatures(condition);
+  const collated = extract(condition, ['push_timestamp', 'repo', 'framework']);
 
-  return getDataBySignature(signatures);
+  const results = await promiseAll(collated
+    .map(async ([pushDate, repo, framework, rest]) => {
+      if (repo === true || framework === true) {
+        Log.error('expecting expression to have both repo and framework');
+      }
+      await getFramework({ repo: repo.eq.repo, framework: framework.eq.framework });
+
+      Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
+
+      const data = await getDataBySignature(PERFHERDER.signatures.filter(jx(rest)));
+
+      if (pushDate === true) return data;
+
+      return selectFrom(data)
+        .map(({ data, ...rest }) => ({
+          data: data.filter(jx(pushDate)),
+          ...rest,
+        }));
+    }));
+
+  Log.note('{{condition|json}} return {{num}} signatures', { condition, num: results.length });
+
+  return selectFrom(results).flatten();
 };
 
 export {
-  getAllOptions, getSignatures, getData, TREEHERDER,
+  getAllOptions, getData, TREEHERDER,
 };

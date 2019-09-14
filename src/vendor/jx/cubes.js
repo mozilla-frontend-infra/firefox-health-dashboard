@@ -100,6 +100,9 @@ class Cube {
   }
 }
 
+/*
+zero - constant or function to fill cube with
+ */
 Cube.newInstance = ({ edges, zero }) => {
   const normalizedEdges = toArray(edges).map(Edge.newInstance);
 

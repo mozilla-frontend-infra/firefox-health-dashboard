@@ -109,6 +109,7 @@ class ArrayWrapper {
   // https://en.wikipedia.org/wiki/Fluent_interface
 
   // Represent an iterable set of function arguments
+  // argsGen a function, that returns an argument generator
   constructor(argsGen, ops = { debug: DEBUG }) {
     if (ops.debug) {
       this.runs = 0;
@@ -700,6 +701,33 @@ function toPairs(obj) {
   );
 }
 
+function* internalCombos(first, ...rest) {
+  if (rest.length === 0) {
+    for (const f of first) {
+      yield [f];
+    }
+    return;
+  }
+
+  for (const f of first) {
+    for (const [...r] of internalCombos(...rest)) {
+      yield [f, ...r];
+    }
+  }
+}
+
+/*
+ * return every combination, one from each array
+ */
+function combos(...many) {
+  return new ArrayWrapper(
+    function* outputGen() {
+      for (const t of internalCombos(...many)) yield [t];
+    },
+    { debug: false },
+  );
+}
+
 ArrayWrapper.prototype.all = ArrayWrapper.prototype.every;
 ArrayWrapper.prototype.any = ArrayWrapper.prototype.some;
 
@@ -781,6 +809,7 @@ Data.selectFrom = selectFrom;
 export {
   selectFrom,
   toPairs,
+  combos,
   leaves,
   first,
   last,
