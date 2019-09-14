@@ -140,7 +140,7 @@ function simpler(v) {
 
 /*
  * Expecting props to be an array of N property names
- * Return a list of expression tuples; meant to represent disjunctive normal
+ * Return a list of expression tuples; meant to represent disjunctive normal form
  * such that
  *   output[x][i] contains expression on props[i]
  *   output[x][N] is expressions on everything else
