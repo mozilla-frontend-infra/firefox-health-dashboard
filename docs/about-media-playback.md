@@ -12,6 +12,8 @@ The media playback summary is color coded according to how well it meets require
 * **yellow** - Normal playback meets requirements, other speeds do not
 * **red** - Normal playback fails: More than one dropped frame
 
+### Example
+
 ![playback grid](about-media-playback.png "Example Playback Grid")
 
 You may click on any specfic platform for a breakdown.
@@ -23,7 +25,7 @@ The media playback dashboard attempts to summarize a large combinations of playb
 * browser engine (3)
 * codec (2)
 * hardware platform (7)
-* resolution/interlacing (12)
+* resolution/frame rate (12)
 * playback speed (6)
 
 The first two can be viewed by navigating to the relevant page.  The hardware/resolution are shown along the vertical/horizontal axis respectively.  Finally, the playback speed is packed into the color coding.
