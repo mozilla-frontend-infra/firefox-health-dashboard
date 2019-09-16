@@ -194,8 +194,7 @@ class Android extends Component {
           </Grid>
         </Section>
         <Section
-          title="Media Playback"
-          subtitle={mediaPlaybackBrowser.label}
+          title={`Media Playback - ${mediaPlaybackBrowser.label}`}
         >
           <Grid container spacing={24}>
             <Grid item xs={6} key="1">
