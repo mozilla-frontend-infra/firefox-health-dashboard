@@ -146,7 +146,7 @@ const BENCHMARKS =
 
   ];
 
-const BROWSER_PLATFORMS = [
+const BROWSER_PLATFORMS = selectFrom([
   {
     id: 'firefox-win32',
     browser: 'Firefox',
@@ -384,7 +384,7 @@ const BROWSER_PLATFORMS = [
           }},
       ]},
   },
-];
+]);
 BROWSER_PLATFORMS.forEach((p, i)=>{p.ordering=i});
 
 const TP6_TESTS_DATA = [
