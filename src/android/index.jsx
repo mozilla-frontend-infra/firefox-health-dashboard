@@ -171,7 +171,7 @@ class Android extends Component {
           title="Raptor (TP6m)"
           more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
         >
-          <TP6mAggregate timeDomain={timeDomain} />
+          <TP6mAggregate timeDomain={timeDomain} browser="fenix" platform={['p2-aarch64', 'g5']} test="cold-loadtime" />
         </Section>
         <Section title="Telemetry">
           <Grid container spacing={24}>

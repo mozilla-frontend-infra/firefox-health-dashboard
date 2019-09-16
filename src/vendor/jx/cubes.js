@@ -307,8 +307,9 @@ function sequence(cubes, requestedEdges, options = {}) {
 
 /*
  * group by `edges`, then for each group
- * run value(row, coord, rows) over all rows in group
- * `along` is the edge to sort by, if any
+ * run `value(row, coord, rows)` over all edge combinations
+ * `along` is the edge to sort by. If used, then `coord` and `rows` will be available.
+ * `row` is an object with properties from `cube` and from `edges`, pointing to cubes and combos respectfully
  */
 function window(cubes, { value, edges: edgeNames, along }) {
   const flat = toPairs(cubes);
@@ -393,7 +394,7 @@ function window(cubes, { value, edges: edgeNames, along }) {
 /*
 Groupby, but with all combinations of all columns grouped.
 The result is s a cube of lists, where the lists are elements from `self`
-edges.value is used to determine what part of each edge a record belowngs
+edges.value is used to determine what part of each edge a record belongs
 For 2 dimensions this is a pivot table, for more dimensions it is a "cube".
 Google "sql group by cube" for more information
  */

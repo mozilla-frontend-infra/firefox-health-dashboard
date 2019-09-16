@@ -1,5 +1,7 @@
 import SETTINGS from '../../../settings';
-import { isNumeric, missing, toArray } from '../../utils';
+import {
+  isNumeric, missing, exists, toArray,
+} from '../../utils';
 import { Data, isData } from '../../datas';
 import { first, selectFrom } from '../../vectors';
 import { max, min } from '../../math';
@@ -164,17 +166,56 @@ const cjsGenerator = (standardOptions) => {
 
   xEdge.selector = xSelector;
 
-  const datasets = options.series
+  const datasets = selectFrom(options.series)
     .filter(s => s !== xEdge)
     .map((s) => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
+
+      if (exists(y.range)) {
+        const yMin = jx(y.range.min);
+        const yMax = jx(y.range.max);
+
+        // eslint-disable-next-line no-param-reassign
+        s.selector = row => ({ min: yMin(row), max: yMax(row) });
+
+        return [
+          {
+            type: 'line',
+            label: null,
+            data: selectFrom(options.data)
+              .select({
+                [y.axis]: yMin,
+                [x.axis]: r => Date.newInstance(xSelector(r)),
+              })
+              .toArray(),
+            ...generateDatasetStyle(color, 'line'),
+            borderColor: invisible,
+          },
+          {
+            type: 'line',
+            label: s.label,
+            data: selectFrom(options.data)
+              .select({
+                [y.axis]: yMax,
+                [x.axis]: r => Date.newInstance(xSelector(r)),
+              })
+              .toArray(),
+            ...generateDatasetStyle(color, type),
+            fill: '-1',
+            borderColor: invisible,
+          },
+
+        ];
+      }
+
+      // SINGLE VALUE
       const ySelector = jx(y.value);
 
       // eslint-disable-next-line no-param-reassign
       s.selector = ySelector;
 
-      return {
+      return [{
         type,
         label: s.label,
         data: selectFrom(options.data)
@@ -184,8 +225,10 @@ const cjsGenerator = (standardOptions) => {
           })
           .toArray(),
         ...generateDatasetStyle(color, type),
-      };
-    });
+      }];
+    })
+    .flatten()
+    .toArray();
   const {
     title, tooltips, ticksCallback, onClick,
   } = options;
@@ -282,6 +325,7 @@ const cjsGenerator = (standardOptions) => {
         labels: {
           boxWidth: 10,
           fontSize: 10,
+          filter: item => exists(item.text),
         },
       },
       scales: {

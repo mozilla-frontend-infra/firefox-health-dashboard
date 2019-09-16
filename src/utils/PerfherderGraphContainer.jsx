@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { LinkIcon } from './icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { Data } from '../vendor/datas';
+import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
   exists, missing, sleep, literalField,
@@ -15,6 +15,8 @@ import { getData, TREEHERDER } from '../vendor/perfherder';
 import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
+
+const REFERENCE_COLOR = '#45a1ff44';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
@@ -276,7 +278,19 @@ class PerfherderGraphContainer extends React.Component {
     };
   }
 
+  async componentDidUpdate(prevProps) {
+    if (isEqual(this.props, prevProps)) {
+      return;
+    }
+    return this.update();
+  }
+
+
   async componentDidMount() {
+    this.update();
+  }
+
+  async update() {
     const {
       series, style, reference, timeDomain,
     } = this.props;
@@ -290,15 +304,15 @@ class PerfherderGraphContainer extends React.Component {
 
       Data.setDefault(standardOptions, style);
 
-      if (exists(reference) && exists(reference.value)) {
+      if (exists(reference)) {
         // ADD HORIZONTAL LINE
-        const { label, value } = reference;
+        const { label, ...rest } = reference;
 
         standardOptions.series.push({
           label,
           type: 'line',
-          select: { value, axis: 'y' },
-          style: { color: 'gray' },
+          select: { axis: 'y', ...rest },
+          style: { color: REFERENCE_COLOR },
         });
       }
 
@@ -344,6 +358,13 @@ class PerfherderGraphContainer extends React.Component {
 
 PerfherderGraphContainer.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  reference: PropTypes.shape({
+    range: PropTypes.shape({
+      min: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired,
+    }),
+    label: PropTypes.string.isRequired,
+  }),
   series: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({

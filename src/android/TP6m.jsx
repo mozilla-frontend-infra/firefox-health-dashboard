@@ -3,25 +3,22 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { round } from '../vendor/math';
-import { missing } from '../vendor/utils';
+import { missing, exists } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
 import {
-  PLATFORMS,
+  BROWSER_PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
-  TP6M_SITES,
 } from '../quantum/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { g5Reference, TARGET_NAME } from './config';
+import { TARGET_NAME, REFERENCE_COLOR, geoTip } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
-import { GMTDate as Date } from '../vendor/dates';
 import { TimeDomain } from '../vendor/jx/domains';
 
 const styles = {
@@ -30,65 +27,6 @@ const styles = {
     padding: '1rem',
   },
 };
-const tipStyles = {
-  below: {
-    color: 'LightGreen',
-  },
-  above: {
-    color: 'Pink',
-  },
-};
-const geoTip = withStyles(tipStyles)(
-  ({
-    record, series, classes, standardOptions,
-  }) => {
-    const referenceValue = selectFrom(standardOptions.series)
-      .where({ label: TARGET_NAME })
-      .first()
-      .selector(record);
-
-    return (
-      <div>
-        <div className={classes.title}>
-          {new Date(record.x).format('yyyy-MM-dd')}
-        </div>
-        <div>
-          <span
-            style={{ backgroundColor: series.style.color }}
-            className={classes.tooltipKey}
-          />
-          {series.label}
-          {' '}
-:
-          {round(record.y, { places: 3 })}
-        </div>
-        <div>
-          {(() => {
-            const diff = record.y - referenceValue;
-
-            if (diff > 0) {
-              return (
-                <span className={classes.above}>
-                  {`${round(diff, {
-                    places: 2,
-                  })}ms above target`}
-                </span>
-              );
-            }
-
-            return (
-              <span className={classes.below}>
-                {`${round(-diff, {
-                  places: 2,
-                })}ms below target`}
-              </span>
-            );
-          })()}
-        </div>
-      </div>
-    );
-  },
-);
 
 class TP6M extends React.Component {
   constructor(props) {
@@ -98,27 +36,25 @@ class TP6M extends React.Component {
 
   async update() {
     const {
-      test, platform, past, ending,
+      test, platform: browserPlatform, past, ending,
     } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const tests = selectFrom(TP6_TESTS).where({ test });
-    const testMode = tests.select('mode').first();
-    const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
+    const { browser, platform, label: browserPlatformLabel } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const aggregate = await pullAggregate({
       condition: {
-        or: TP6_COMBOS.where({ test, platform }).select('filter'),
+        or: TP6_COMBOS.where({ test, browser, platform }).select('filter'),
       },
-      sites,
-      tests,
-      platforms: selectFrom(PLATFORMS).where({ platform }),
+      test,
+      browser,
+      platform,
       timeDomain,
     });
     // THE SPECIFIC combo FOR THIS VERSION OF THE PAGE
     const combo = aggregate.where({ test, platform });
-    const referenceValue = combo.ref.getValue();
+    const { referenceValue, refMean } = combo;
 
-    if (missing(referenceValue)) {
+    if (missing(refMean.getValue())) {
       // THERE IS NO GEOMEAN TO CALCULATE
       this.setState({
         data: null,
@@ -136,14 +72,12 @@ class TP6M extends React.Component {
       .where({ test, platform })
       .along('platform') // dummy (only one)
       .map(({ result }) => ({
-        label: selectFrom(PLATFORMS)
-          .where({ platform })
-          .first().label,
+        label: browserPlatformLabel,
         data: result
           .along('pushDate')
           .map(point => ({
-            x: point.pushDate.getValue(),
-            y: point.getValue(),
+            pushDate: point.pushDate.getValue(),
+            result: point.getValue(),
           }))
           .toArray(),
       }))
@@ -151,7 +85,7 @@ class TP6M extends React.Component {
     const { data } = geomean[0];
 
     this.setState({
-      data, count, total, test, platform, referenceValue,
+      data, count, total, test, platform: browserPlatform, referenceValue, refMean,
     });
   }
 
@@ -173,27 +107,29 @@ class TP6M extends React.Component {
 
   render() {
     const {
-      classes, navigation, test, platform, past, ending,
+      classes, navigation, test, platform: browserPlatform, past, ending,
     } = this.props;
+    const { browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
-      data, count, total, referenceValue,
+      data, count, total, referenceValue, refMean,
     } = (() => {
-      if (test !== this.state.test || platform !== this.state.platform) {
+      if (test !== this.state.test || browserPlatform !== this.state.platform) {
         return {};
       }
 
       const {
-        data, count, total, referenceValue,
+        data, count, total, referenceValue, refMean,
       } = this.state;
 
       return {
-        data, count, total, referenceValue,
+        data, count, total, referenceValue, refMean,
       };
     })();
     const subtitle = selectFrom(TP6_TESTS)
       .where({ test })
-      .first().label;
+      .first()
+      .label;
 
     return (
       <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
@@ -211,13 +147,13 @@ class TP6M extends React.Component {
                     data,
                     tip: geoTip,
                     series: [
-                      { label: 'Geomean', select: { value: 'y' } },
+                      { label: 'Geomean', select: { value: 'result' } },
                       {
                         label: TARGET_NAME,
-                        select: { value: referenceValue },
-                        style: { color: 'gray' },
+                        select: refMean.getValue(),
+                        style: { color: REFERENCE_COLOR },
                       },
-                      { label: 'Date', select: { value: 'x', axis: 'x' } },
+                      { label: 'Date', select: { value: 'pushDate', axis: 'x' } },
                     ],
                     'axis.y.label': 'Geomean',
                     'axis.x': timeDomain,
@@ -228,7 +164,7 @@ class TP6M extends React.Component {
 
             {selectFrom(TP6_COMBOS)
               .where({
-                browser: ['geckoview', 'fenix'],
+                browser,
                 platform,
                 test,
               })
@@ -237,23 +173,13 @@ class TP6M extends React.Component {
                 <Grid
                   item
                   xs={6}
-                  key={`page_${site}_${test}_${platform}_${past}_${ending}`}
+                  key={`page_${site}_${test}_${browserPlatform}_${past}_${ending}_${exists(referenceValue)}`}
                   className={classes.chart}
                 >
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}
-                    reference={(() => {
-                      const value = round(
-                        g5Reference.where({ test, platform, site }).getValue(),
-                        { places: 2 },
-                      );
-
-                      return {
-                        label: `Target (${value})`,
-                        value,
-                      };
-                    })()}
+                    reference={referenceValue ? referenceValue.where({ site }).getValue() : null}
                     series={selectFrom(series)
                       .sort(['ordering'])
                       .select({ label: 'browser', filter: 'filter' })
@@ -291,10 +217,10 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'geckoview-g5',
-    options: selectFrom(PLATFORMS)
+    defaultValue: 'fenix-g5',
+    options: selectFrom(BROWSER_PLATFORMS)
       .where({ browser: ['geckoview', 'fenix'] })
-      .select({ id: 'platform', label: 'label' })
+      .select(['id', 'label'])
       .toArray(),
   },
   ...timePickers,
