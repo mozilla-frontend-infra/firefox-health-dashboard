@@ -7,49 +7,150 @@ import { getSignatures } from "../vendor/perfherder";
 
 const DEBUG = false;
 
-const CONFIG = {
-  windows64Regression: [
+const BENCHMARKS =
+  [
     {
       title: 'MotionMark HTML suite',
-      secondLink:
-        '/quantum/10/windows10-64/raptor-motionmark-htmlsuite-firefox/pgo',
-      signatures: {
-        'windows10-64': '8f014459793e2e94c3244d5edeaada0452b0c627',
-      },
-      repo: 'mozilla-central',
-      framework: 10,
+      label: "Firefox",
+      bits: 64,
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-htmlsuite-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows10-64"
+        }}
+      ]}
     },
     {
       title: 'MotionMark Animometer',
-      secondLink:
-        '/quantum/10/windows10-64/raptor-motionmark-animometer-firefox/pgo',
-      signatures: {
-        'windows10-64': '9ad671fb568a5b3027af35b5d42fc6dd385f25ed',
-      },
-      repo: 'mozilla-central',
-      framework: 10,
+      label: "Firefox",
+      bits: 64,
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-animometer-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows10-64",
+        }}
+      ]}
     },
-  ],
-  windows32Regression: [
     {
       title: 'MotionMark HTML suite',
-      secondLink:
-        '/quantum/10/windows7-32/raptor-motionmark_htmlsuite-firefox/pgo',
-      signatures: { 'windows7-32': 'd1984855d038409797bbc8ad82c32489eb04cc23' },
-      repo: 'mozilla-central',
-      framework: 10,
+      label: "Firefox",
+      bits: 32,
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-htmlsuite-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows7-32"
+        }}
+      ]}
     },
     {
-      title: 'MotionMark Animometer',
-      secondLink:
-        '/quantum/10/windows7-32/raptor-motionmark_animometer-firefox/pgo',
-      signatures: { 'windows7-32': '3d5a0a5e3c37f74770bdcb75bd46347be228495f' },
-      repo: 'mozilla-central',
-      framework: 10,
+      title: "MotionMark Animometer",
+      label: "Firefox",
+      bits: 32,
+      filter: { and: [
+        { missing: "test"},
+        { eq: {
+          suite: "raptor-motionmark-animometer-firefox",
+          repo: "mozilla-central",
+          framework: 10,
+          platform: "windows7-32",
+        }}
+      ]}
     },
-  ],
-};
-const BROWSER_PLATFORMS = selectFrom([
+    {
+      title: "Speedometer",
+      label: 'Firefox',
+      bits:64,
+      filter: { and: [
+        { missing: 'test' },
+        { or: [
+          { eq: {
+            options: 'pgo',
+            platform: 'windows10-64',
+          }},
+          { eq: {
+            options: 'opt',
+            platform: 'windows10-64-shippable',
+          }},
+        ]},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+          suite: 'raptor-speedometer-firefox',
+        }},
+      ]},
+    },
+    {
+      title: "Speedometer",
+      label: 'Chromium',
+      bits:64,
+      filter: { and: [
+        { missing: 'test' },
+        { eq: {
+          platform: ['windows10-64-nightly', 'windows10-64-shippable'],
+          suite: [
+            'raptor-speedometer-chrome',
+            'raptor-speedometer-chromium',
+          ],
+        }},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+        }},
+      ]},
+    },
+    {
+      title: "Speedometer",
+      label: 'Firefox',
+      bits:32,
+      filter: { and: [
+        { missing: 'test' },
+        { or: [
+          { eq: {
+            options: 'pgo',
+            platform: 'windows7-32',
+          }},
+          { eq: {
+            options: 'opt',
+            platform: 'windows7-32-shippable',
+          }},
+        ]},
+        { eq: {
+          framework: 10,
+          repo: 'mozilla-central',
+          suite: 'raptor-speedometer-firefox',
+        }},
+      ]},
+    },
+    {
+      title: "Speedometer",
+      label: 'Chromium',
+      bits:32,
+      filter: { and: [
+        { missing: 'test' },
+        { eq: {
+          platform: ['windows7-32-nightly', 'windows7-32-shippable'],
+          suite: [
+            'raptor-speedometer-chrome',
+            'raptor-speedometer-chromium',
+          ],
+          framework: 10,
+          repo: 'mozilla-central',
+        }},
+      ]},
+    },
+
+  ];
+
+const BROWSER_PLATFORMS = [
   {
     id: 'firefox-win32',
     browser: 'Firefox',
@@ -287,7 +388,7 @@ const BROWSER_PLATFORMS = selectFrom([
           }},
       ]},
   },
-]);
+];
 BROWSER_PLATFORMS.forEach((p, i)=>{p.ordering=i});
 
 const TP6_TESTS_DATA = [
@@ -676,4 +777,4 @@ if (DEBUG){
   })();
 }
 
-export { CONFIG, TP6_COMBOS, TP6M_SITES, BROWSER_PLATFORMS, TP6_TESTS };
+export { BENCHMARKS, TP6_COMBOS, TP6M_SITES, BROWSER_PLATFORMS, TP6_TESTS };

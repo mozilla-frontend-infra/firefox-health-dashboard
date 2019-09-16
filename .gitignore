@@ -6,7 +6,6 @@ dist
 .eslintcache
 *.log
 build
-// Coverage (nyc)
 coverage
 .idea
-/*.iml
+*.iml

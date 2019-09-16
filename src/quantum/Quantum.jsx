@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderWidget from './perfherder';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
 import TelemetryContainer from '../telemetry/graph';
@@ -12,7 +11,7 @@ import {
   quantum64QueryParams,
   statusLabels,
 } from './constants';
-import { CONFIG, TP6_COMBOS } from './config';
+import { BENCHMARKS, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
@@ -82,72 +81,20 @@ export default class QuantumIndex extends React.Component {
         },
       ],
     };
-    const nightlyPlatform = (() => {
-      if (bits === 32) {
-        return {
-          eq: { platform: ['windows7-32-nightly', 'windows7-32-shippable'] },
-        };
-      }
-
-      return {
-        eq: { platform: ['windows10-64-nightly', 'windows10-64-shippable'] },
-      };
-    })();
-    const regressionConfig = bits === 32 ? CONFIG.windows32Regression : CONFIG.windows64Regression;
     const sections = [
       {
         title: 'Benchmarks',
-        rows: [
-          ...regressionConfig.map(config => (
-            <PerfherderWidget {...config} key={config.title} />
+        rows: selectFrom(BENCHMARKS)
+          .where({ bits })
+          .groupBy('title')
+          .map((browsers, title) => (
+            <PerfherderGraphContainer
+              timeDomain={timeDomain}
+              key={title} // eslint-disable-line react/no-array-index-key
+              title={title}
+              series={browsers}
+            />
           )),
-          <PerfherderGraphContainer
-            timeDomain={timeDomain}
-            key="speedometer"
-            title="Speedometer"
-            series={[
-              {
-                label: 'Firefox',
-                filter: {
-                  and: [
-                    { missing: 'test' },
-                    platform,
-                    {
-                      eq: {
-                        framework: 10,
-                        repo: 'mozilla-central',
-                        suite: 'raptor-speedometer-firefox',
-                      },
-                    },
-                  ],
-                },
-              },
-              {
-                label: 'Chromium',
-                filter: {
-                  and: [
-                    { missing: 'test' },
-                    nightlyPlatform,
-                    {
-                      eq: {
-                        suite: [
-                          'raptor-speedometer-chrome',
-                          'raptor-speedometer-chromium',
-                        ],
-                      },
-                    },
-                    {
-                      eq: {
-                        framework: 10,
-                        repo: 'mozilla-central',
-                      },
-                    },
-                  ],
-                },
-              },
-            ]}
-          />,
-        ],
       },
       {
         title: 'Page Load tests (TP6)',
@@ -568,11 +515,7 @@ export default class QuantumIndex extends React.Component {
           <Grid container spacing={24}>
             {rows.map((widget, wi) => {
               // Acumulate the section's status
-              if (widget.type.displayName !== 'PerfherderWidget') {
-                statusList[widget.props.status] += 1;
-              } else if (widget.props.status === 'red') {
-                statusList.secondary += 1;
-              }
+              statusList[widget.props.status] += 1;
 
               const id = `${wi}${title}`; // make unique id for key
 
