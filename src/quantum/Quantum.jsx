@@ -6,14 +6,10 @@ import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
 import TelemetryContainer from '../telemetry/graph';
-import {
-  quantum32QueryParams,
-  quantum64QueryParams,
-  statusLabels,
-} from './constants';
+import { quantum32QueryParams, quantum64QueryParams, statusLabels } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
-import { DetailsIcon, HelpIcon } from '../utils/icons';
+import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
 
@@ -93,9 +89,9 @@ export default class QuantumIndex extends React.Component {
               key={title} // eslint-disable-line react/no-array-index-key
               title={title}
               urls={{
-                title: 'more information',
+                title: 'see details',
                 url: selectFrom(browsers).select('more').coalesce(),
-                icon: HelpIcon,
+                icon: DetailsIcon,
               }}
               series={browsers}
             />

@@ -206,7 +206,7 @@ const perfherderFormatter = (series, timeDomain) => {
     .toArray();
 
   const urls = {
-    title: 'more information',
+    title: 'show Perfherder',
     url: URL({
       path: [TREEHERDER, 'perf.html#/graphs'],
       query: {
@@ -306,7 +306,7 @@ class PerfherderGraphContainer extends React.Component {
     try {
       const config = await getPerfherderData(series, timeDomain);
       const { standardOptions, urls: moreUrls } = config;
-      config.moreUrls = [...toArray(propsUrls), ...toArray(moreUrls)];
+      config.urls = [...toArray(propsUrls), ...toArray(moreUrls)];
       Data.setDefault(standardOptions, style);
 
       if (exists(reference)) {
