@@ -266,5 +266,5 @@ const getData = async (condition) => {
 };
 
 export {
-  getAllOptions, getSignatures, getData, TREEHERDER,
+  getAllOptions, getSignatures, getData, TREEHERDER, PERFHERDER, getFramework,
 };

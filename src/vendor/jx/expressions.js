@@ -217,6 +217,28 @@ expressions.missing = (expression) => {
 };
 
 /*
+return index of substring
+return null if not found
+ */
+
+expressions.find = term => row => Object.entries(term).every(([name, substring]) => {
+  const value = Data.get(row, name);
+  if (missing(value)) return false;
+  const index = value.indexOf(substring);
+  if (index === -1) return null;
+  return index;
+});
+
+/*
+return true if `expression` exists
+ */
+expressions.exists = (expression) => {
+  const func = defineFunction(expression);
+
+  return row => exists(func(row));
+};
+
+/*
 example {gte: {name: reference}
 
 return true if `name` >= `reference`

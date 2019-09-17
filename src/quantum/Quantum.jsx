@@ -92,6 +92,7 @@ export default class QuantumIndex extends React.Component {
               timeDomain={timeDomain}
               key={title} // eslint-disable-line react/no-array-index-key
               title={title}
+              moreUrl={selectFrom(browsers).select('more').coalesce()}
               series={browsers}
             />
           )),

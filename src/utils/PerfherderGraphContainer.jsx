@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { LinkIcon } from './icons';
+import { LinkIcon, DetailsIcon } from './icons';
 import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
@@ -215,7 +215,7 @@ const perfherderFormatter = (series, timeDomain) => {
 
   return {
     standardOptions: generateStandardOptions(combinedSeries, timeDomain),
-    jointUrl: URL({
+    perfherderUrl: URL({
       path: [TREEHERDER, 'perf.html#/graphs'],
       query: jointParam,
     }),
@@ -271,7 +271,7 @@ class PerfherderGraphContainer extends React.Component {
 
     this.state = {
       standardOptions: null,
-      jointUrl: null,
+      perfherderUrl: null,
       isLoading: true,
     };
   }
@@ -309,8 +309,8 @@ class PerfherderGraphContainer extends React.Component {
   }
 
   render() {
-    const { title, missingDataInterval } = this.props;
-    const { jointUrl, standardOptions, isLoading } = this.state;
+    const { title, moreUrl, missingDataInterval } = this.props;
+    const { perfherderUrl, standardOptions, isLoading } = this.state;
 
     return (
       <div key={title} style={{ position: 'relative' }}>
@@ -318,9 +318,12 @@ class PerfherderGraphContainer extends React.Component {
           title={(
             <div>
               {title}
-              {jointUrl && (
+              {moreUrl
+               && <a href={moreUrl}><DetailsIcon /></a>
+              }
+              {perfherderUrl && (
               <a
-                href={jointUrl}
+                href={perfherderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 title="show Perfherder"

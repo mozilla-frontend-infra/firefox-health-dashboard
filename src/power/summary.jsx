@@ -3,7 +3,6 @@ import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { URL } from '../vendor/requests';
 import { COMBOS, PLATFORMS, TESTS } from './config';
 import { selectFrom } from '../vendor/vectors';
-import { DetailsIcon } from '../utils/icons';
 
 class PowerSummary extends React.Component {
   render() {
@@ -17,22 +16,11 @@ class PowerSummary extends React.Component {
       <PerfherderGraphContainer
         timeDomain={timeDomain}
         key="power usage"
-        title={(
-          <span>
-            Speedometer CPU power usage
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={URL({
-                path: '/power',
-                query: { browser, suite },
-              })}
-              title="Show details"
-            >
-              <DetailsIcon />
-            </a>
-          </span>
-)}
+        moreUrl={URL({
+          path: '/power',
+          query: { browser, suite },
+        })}
+        title="Speedometer CPU power usage"
         series={selectFrom(PLATFORMS)
           .map(({ label, filter: platformFilter }) => ({
             label,

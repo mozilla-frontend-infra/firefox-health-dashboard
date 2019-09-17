@@ -4,13 +4,15 @@ import { Data } from '../vendor/datas';
 import { first, toArray } from '../vendor/utils';
 import { Log } from '../vendor/logs';
 import { getSignatures } from "../vendor/perfherder";
+import { URL } from '../vendor/requests';
 
 const DEBUG = false;
 
 const BENCHMARKS =
   [
     {
-      title: 'MotionMark HTML suite',
+      title: 'MotionMark HTML',
+      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-html", platform: "windows10-64"}}),
       label: "Firefox",
       bits: 64,
       filter: { and: [
@@ -25,6 +27,7 @@ const BENCHMARKS =
     },
     {
       title: 'MotionMark Animometer',
+      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-animometer", platform: "windows10-64"}}),
       label: "Firefox",
       bits: 64,
       filter: { and: [
@@ -38,7 +41,8 @@ const BENCHMARKS =
       ]}
     },
     {
-      title: 'MotionMark HTML suite',
+      title: 'MotionMark HTML',
+      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-html", platform: "windows7-32"}}),
       label: "Firefox",
       bits: 32,
       filter: { and: [
@@ -53,6 +57,7 @@ const BENCHMARKS =
     },
     {
       title: "MotionMark Animometer",
+      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-animometer", platform: "windows7-32"}}),
       label: "Firefox",
       bits: 32,
       filter: { and: [
@@ -67,6 +72,7 @@ const BENCHMARKS =
     },
     {
       title: "Speedometer",
+      more: URL({path: '/quantum/subtests', query:{suite:"speedometer", platform: "windows10-64"}}),
       label: 'Firefox',
       bits:64,
       filter: { and: [
@@ -109,6 +115,7 @@ const BENCHMARKS =
     },
     {
       title: "Speedometer",
+      more: URL({path: '/quantum/subtests', query: {suite: "speedometer", platform: "windows7-32"}}),
       label: 'Firefox',
       bits:32,
       filter: { and: [
