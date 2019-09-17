@@ -1426,6 +1426,73 @@ exports[`renders correctly 1`] = `
                 className="ChartJsWrapper-title-204"
               >
                 <div>
+                  Tp6 mobile: Google Restaurants
+                </div>
+              </h2>
+              <div
+                style={
+                  Object {
+                    "height": 80,
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "position": "absolute",
+                      "right": "50%",
+                      "top": "50%",
+                    }
+                  }
+                >
+                  <div
+                    className="MuiCircularProgress-root-206 MuiCircularProgress-colorPrimary-209 MuiCircularProgress-indeterminate-208"
+                    role="progressbar"
+                    style={
+                      Object {
+                        "height": 40,
+                        "width": 40,
+                      }
+                    }
+                  >
+                    <svg
+                      className="MuiCircularProgress-svg-211"
+                      viewBox="22 22 44 44"
+                    >
+                      <circle
+                        className="MuiCircularProgress-circle-212 MuiCircularProgress-circleIndeterminate-214"
+                        cx={44}
+                        cy={44}
+                        fill="none"
+                        r={20.2}
+                        strokeWidth={3.6}
+                        style={Object {}}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-20 MuiGrid-grid-xs-6-53 TP6M-chart-2"
+        >
+          <div
+            style={
+              Object {
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              className="ChartJsWrapper-chartContainer-203"
+            >
+              <h2
+                className="ChartJsWrapper-title-204"
+              >
+                <div>
                   Tp6 mobile: Imdb
                 </div>
               </h2>
