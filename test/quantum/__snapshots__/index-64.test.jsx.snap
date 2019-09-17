@@ -214,44 +214,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                MotionMark HTML
-                <a
-                  href="/quantum/subtests?suite=motionmark-html&platform=windows10-64"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "margin": "-1rem 0",
-                        "verticalAlign": "middle",
-                      }
-                    }
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="MuiSvgIcon-root-4"
-                      focusable="false"
-                      role="presentation"
-                      style={
-                        Object {
-                          "margin": "0 .2rem 0 .2rem",
-                          "verticalAlign": "baseline",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                      />
-                    </svg>
-                  </div>
-                </a>
-              </div>
+              MotionMark HTML
             </h2>
             <div
               style={
@@ -316,44 +279,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                MotionMark Animometer
-                <a
-                  href="/quantum/subtests?suite=motionmark-animometer&platform=windows10-64"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "margin": "-1rem 0",
-                        "verticalAlign": "middle",
-                      }
-                    }
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="MuiSvgIcon-root-4"
-                      focusable="false"
-                      role="presentation"
-                      style={
-                        Object {
-                          "margin": "0 .2rem 0 .2rem",
-                          "verticalAlign": "baseline",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                      />
-                    </svg>
-                  </div>
-                </a>
-              </div>
+              MotionMark Animometer
             </h2>
             <div
               style={
@@ -418,44 +344,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Speedometer
-                <a
-                  href="/quantum/subtests?suite=speedometer&platform=windows10-64"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "margin": "-1rem 0",
-                        "verticalAlign": "middle",
-                      }
-                    }
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="MuiSvgIcon-root-4"
-                      focusable="false"
-                      role="presentation"
-                      style={
-                        Object {
-                          "margin": "0 .2rem 0 .2rem",
-                          "verticalAlign": "baseline",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                      />
-                    </svg>
-                  </div>
-                </a>
-              </div>
+              Speedometer
             </h2>
             <div
               style={
@@ -572,9 +461,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Amazon
-              </div>
+              Tp6: Amazon
             </h2>
             <div
               style={
@@ -639,9 +526,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Facebook
-              </div>
+              Tp6: Facebook
             </h2>
             <div
               style={
@@ -706,9 +591,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Google
-              </div>
+              Tp6: Google
             </h2>
             <div
               style={
@@ -773,9 +656,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: YouTube
-              </div>
+              Tp6: YouTube
             </h2>
             <div
               style={
@@ -960,9 +841,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Page load (tp5)
-              </div>
+              Page load (tp5)
             </h2>
             <div
               style={
@@ -1027,9 +906,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Window Opening (tpaint e10s)
-              </div>
+              Window Opening (tpaint e10s)
             </h2>
             <div
               style={
@@ -1094,9 +971,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-up (sessionrestore)
-              </div>
+              Start-up (sessionrestore)
             </h2>
             <div
               style={
@@ -1161,9 +1036,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-up (sessionrestore_no_auto_restore)
-              </div>
+              Start-up (sessionrestore_no_auto_restore)
             </h2>
             <div
               style={
@@ -1228,9 +1101,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-Up (ts_paint)
-              </div>
+              Start-Up (ts_paint)
             </h2>
             <div
               style={
@@ -1295,9 +1166,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Opening (tabpaint)
-              </div>
+              Tab Opening (tabpaint)
             </h2>
             <div
               style={
@@ -1362,9 +1231,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Animation (TART)
-              </div>
+              Tab Animation (TART)
             </h2>
             <div
               style={
@@ -1429,9 +1296,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Switch (tabswitch)
-              </div>
+              Tab Switch (tabswitch)
             </h2>
             <div
               style={
@@ -1496,9 +1361,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvg_static)
-              </div>
+              SVG (tsvg_static)
             </h2>
             <div
               style={
@@ -1563,9 +1426,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvgr_opacity)
-              </div>
+              SVG (tsvgr_opacity)
             </h2>
             <div
               style={
@@ -1630,9 +1491,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvgx)
-              </div>
+              SVG (tsvgx)
             </h2>
             <div
               style={

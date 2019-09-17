@@ -97,7 +97,7 @@ describe('vectors', () => {
   it('filter null', () => {
     expect(
       selectFrom([{ a: 1 }, null])
-        .filter(()=>null)
+        .filter(() => null)
         .toArray(),
     ).toEqual([]);
   });
@@ -105,7 +105,7 @@ describe('vectors', () => {
   it('filter true', () => {
     expect(
       selectFrom([{ a: 1 }, null])
-        .filter(()=>true)
+        .filter(() => true)
         .toArray(),
     ).toEqual([{ a: 1 }, null]);
   });
@@ -113,12 +113,10 @@ describe('vectors', () => {
   it('filter 0', () => {
     expect(
       selectFrom([{ a: 1 }, null])
-        .filter(()=>0)
+        .filter(() => 0)
         .toArray(),
     ).toEqual([{ a: 1 }, null]);
   });
-
-
 
 
   it('groupBy 2', () => {

@@ -800,9 +800,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-115"
               >
-                <div>
-                  Speedometer
-                </div>
+                Speedometer
               </h2>
               <div
                 style={
@@ -867,44 +865,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-115"
               >
-                <div>
-                  Speedometer CPU power usage
-                  <a
-                    href="/power?browser=geckoview&suite=speedometer"
-                  >
-                    <div
-                      style={
-                        Object {
-                          "display": "inline-block",
-                          "margin": "-1rem 0",
-                          "verticalAlign": "middle",
-                        }
-                      }
-                    >
-                      <svg
-                        aria-hidden="true"
-                        className="MuiSvgIcon-root-4"
-                        focusable="false"
-                        role="presentation"
-                        style={
-                          Object {
-                            "margin": "0 .2rem 0 .2rem",
-                            "verticalAlign": "baseline",
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-                        />
-                      </svg>
-                    </div>
-                  </a>
-                </div>
+                Speedometer CPU power usage
               </h2>
               <div
                 style={
@@ -969,9 +930,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-115"
               >
-                <div>
-                  Unity WebGl
-                </div>
+                Unity WebGl
               </h2>
               <div
                 style={

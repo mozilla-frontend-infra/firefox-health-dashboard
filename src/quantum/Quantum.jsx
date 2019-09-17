@@ -13,7 +13,7 @@ import {
 } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
-import { DetailsIcon } from '../utils/icons';
+import { DetailsIcon, HelpIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
 
@@ -92,7 +92,11 @@ export default class QuantumIndex extends React.Component {
               timeDomain={timeDomain}
               key={title} // eslint-disable-line react/no-array-index-key
               title={title}
-              moreUrl={selectFrom(browsers).select('more').coalesce()}
+              urls={{
+                title: 'more information',
+                url: selectFrom(browsers).select('more').coalesce(),
+                icon: HelpIcon,
+              }}
               series={browsers}
             />
           )),

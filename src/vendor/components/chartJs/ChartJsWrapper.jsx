@@ -8,7 +8,7 @@ import { Data, isEqual } from '../../datas';
 import { GMTDate as Date } from '../../dates';
 import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
-import { coalesce } from '../../utils';
+import { coalesce, toArray } from '../../utils';
 import { withTooltip } from './CustomTooltip';
 
 const styles = {
@@ -35,6 +35,18 @@ const styles = {
 };
 const ToolTipChart = withTooltip()(Chart);
 
+
+const showTitle = ({ classes, title, urls }) => (
+  <h2 className={classes.title}>
+    {title}
+    {toArray(urls).map(({ title, icon, url }) => (
+      <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
+        {icon()}
+      </a>
+    ))}
+  </h2>
+);
+
 class ChartJsWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -59,6 +71,7 @@ class ChartJsWrapper extends React.Component {
       classes,
       isLoading,
       title,
+      urls,
       chartHeight,
       missingDataInterval,
     } = this.props;
@@ -67,7 +80,7 @@ class ChartJsWrapper extends React.Component {
     if (isLoading) {
       return (
         <div className={classes.chartContainer}>
-          {title && <h2 className={classes.title}>{title}</h2>}
+          {showTitle({ classes, title, urls })}
 
           <div
             style={{
@@ -92,7 +105,7 @@ class ChartJsWrapper extends React.Component {
     if (!standardOptions) {
       return (
         <div className={classes.chartContainer}>
-          {title && <h2 className={classes.title}>{title}</h2>}
+          {showTitle({ classes, title, urls })}
           <div style={{ height: chartHeight }} />
         </div>
       );
@@ -101,7 +114,7 @@ class ChartJsWrapper extends React.Component {
     if (!standardOptions.data.length) {
       return (
         <div className={classes.chartContainer}>
-          {title && <h2 className={classes.title}>{title}</h2>}
+          {showTitle({ classes, title, urls })}
           <div
             style={{
               position: 'relative',
@@ -148,7 +161,7 @@ class ChartJsWrapper extends React.Component {
       return (
         <div className={classes.chartContainer}>
           <ErrorMessage error={error}>
-            {title && <h2 className={classes.title}>{title}</h2>}
+            {showTitle({ classes, title, urls })}
             <ToolTipChart
               height={chartHeight}
               standardOptions={standardOptions}
@@ -163,7 +176,7 @@ class ChartJsWrapper extends React.Component {
 
     return (
       <div className={classes.chartContainer}>
-        {title && <h2 className={classes.title}>{title}</h2>}
+        {showTitle({ classes, title, urls })}
         <ToolTipChart
           height={chartHeight}
           standardOptions={standardOptions}
