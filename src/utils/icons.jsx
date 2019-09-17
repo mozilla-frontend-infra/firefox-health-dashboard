@@ -8,6 +8,7 @@ import DesktopIconInternal from '@material-ui/icons/DesktopWindows';
 import AndroidIconInternal from '@material-ui/icons/PhoneAndroid';
 import DetailsIconInternal from '@material-ui/icons/MoreHoriz';
 import CodeIconInternal from '@material-ui/icons/Code';
+import InfoIconInternal from '@material-ui/icons/Info';
 import githubMark from '../static/GitHub-Mark.png';
 
 const iconStyle = { verticalAlign: 'baseline', margin: '0 .2rem 0 .2rem' };
@@ -40,6 +41,19 @@ const DetailsIcon = () => (
   </div>
 );
 const CodeIcon = () => <CodeIconInternal style={iconStyle} />;
+const InfoIcon = () => (
+  <div
+    style={{
+      display: 'inline-block',
+      margin: '-1rem 0',
+      verticalAlign: 'middle',
+    }}
+  >
+    <InfoIconInternal style={iconStyle} />
+  </div>
+);
+
+
 const GithubIcon = () => (
   <img
     src={githubMark}
@@ -58,5 +72,6 @@ export {
   DetailsIcon,
   GithubIcon,
   CodeIcon,
+  InfoIcon,
   HomeIcon,
 };

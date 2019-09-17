@@ -297,12 +297,12 @@ exports[`renders correctly 1`] = `
                       role="button"
                       tabIndex={0}
                     >
-                      Geckoview g5
+                      Firefox Preview g5
                     </div>
                     <input
                       name="platform"
                       type="hidden"
-                      value="geckoview-g5"
+                      value="fenix-g5"
                     />
                     <svg
                       aria-hidden="true"

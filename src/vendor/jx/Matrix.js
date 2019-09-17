@@ -24,6 +24,9 @@ function newMultiArray(dims, zero) {
 A multidimensional array
 
 elements are accessed via integer arrays, called coordinates.
+dims - array of integers to indicate dimensionality
+data - optional data to fill the matrix with
+zero - function to generate initial value
  */
 class Matrix {
   constructor({ dims, data, zero = array }) {
