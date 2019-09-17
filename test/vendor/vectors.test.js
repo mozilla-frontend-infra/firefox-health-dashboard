@@ -94,6 +94,33 @@ describe('vectors', () => {
     ).toEqual([{ a: 1 }, { a: null, e: 3 }, null]);
   });
 
+  it('filter null', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(()=>null)
+        .toArray(),
+    ).toEqual([]);
+  });
+
+  it('filter true', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(()=>true)
+        .toArray(),
+    ).toEqual([{ a: 1 }, null]);
+  });
+
+  it('filter 0', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(()=>0)
+        .toArray(),
+    ).toEqual([{ a: 1 }, null]);
+  });
+
+
+
+
   it('groupBy 2', () => {
     expect(
       selectFrom(data)
