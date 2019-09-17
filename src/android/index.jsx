@@ -10,10 +10,13 @@ import RedashContainer from '../utils/RedashContainer';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
+import { selectFrom } from '../vendor/vectors';
 import { LinkIcon } from '../utils/icons';
 import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 import PlaybackSummary from '../playback/summary';
+import { BROWSERS } from '../playback/config';
+
 
 class Android extends Component {
   render() {
@@ -21,6 +24,9 @@ class Android extends Component {
       CONFIG.packageIdLabels[CONFIG.baseProduct]
     } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
     const timeDomain = new TimeDomain({ past: '3month', interval: 'day' });
+    const mediaPlaybackBrowser = selectFrom(BROWSERS)
+      .where({ id: 'fenix' })
+      .first();
 
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
@@ -165,7 +171,7 @@ class Android extends Component {
           title="Raptor (TP6m)"
           more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
         >
-          <TP6mAggregate timeDomain={timeDomain} />
+          <TP6mAggregate timeDomain={timeDomain} browser="fenix" platform={['p2-aarch64', 'g5']} test="cold-loadtime" />
         </Section>
         <Section title="Telemetry">
           <Grid container spacing={24}>
@@ -187,14 +193,16 @@ class Android extends Component {
             </Grid>
           </Grid>
         </Section>
-        <Section title="Media Playback">
+        <Section
+          title={`Media Playback - ${mediaPlaybackBrowser.label}`}
+        >
           <Grid container spacing={24}>
             <Grid item xs={6} key="1">
               <PlaybackSummary
                 key="VP9"
                 bits={64}
                 encoding="VP9"
-                browserId="fenix"
+                browserId={mediaPlaybackBrowser.id}
               />
             </Grid>
             <Grid item xs={6} key="2">
@@ -202,7 +210,7 @@ class Android extends Component {
                 key="H264"
                 bits={64}
                 encoding="H264"
-                browserId="fenix"
+                browserId={mediaPlaybackBrowser.id}
               />
             </Grid>
           </Grid>

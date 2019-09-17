@@ -3,10 +3,12 @@ import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
-import { coalesce, missing } from '../vendor/utils';
-import { geomean, round, sum } from '../vendor/math';
+import { missing } from '../vendor/utils';
 import {
-  PLATFORMS,
+  geomean, round, sum,
+} from '../vendor/math';
+import {
+  BROWSER_PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
   TP6M_SITES,
@@ -15,27 +17,110 @@ import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { Cube, HyperCube, window } from '../vendor/jx/cubes';
-import { g5Reference, TARGET_NAME } from './config';
+import {
+  TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, geoTip,
+} from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
 import { DetailsIcon } from '../utils/icons';
+import { TimeDomain } from '../vendor/jx/domains';
+
 
 /*
 condition - json expression to pull perfherder data
  */
 async function pullAggregate({
   condition,
-  tests,
-  sites,
-  platforms,
+  test,
+  browser,
+  platform,
   timeDomain,
 }) {
+  const tests = selectFrom(TP6_TESTS).where({ test });
+  const testMode = tests.select('mode').first();
+  const sites = TP6M_SITES.filter(({ mode }) => mode.includes(testMode)).materialize();
+  const platforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser });
   const readData = timer('read data');
-  const sources = await getData(condition);
+  const referenceRange = new TimeDomain({ past: 'month', ending: 'today' });
+  const referencePlatforms = selectFrom(BROWSER_PLATFORMS).where({ platform, browser: REFERENCE_BROWSER });
+  const referenceFilter = TP6_COMBOS
+    .where({
+      browser: REFERENCE_BROWSER,
+      platform,
+      test,
+    })
+    .select('filter')
+    .toArray();
+  const [fennec64, sources] = await Promise.all([
+    getData({ or: referenceFilter }),
+    getData(condition),
+  ]);
 
   readData.done();
 
   const processData = timer('process data');
+
+  const rawReference = selectFrom(fennec64)
+    .select('data')
+    .flatten()
+  /* eslint-disable-next-line camelcase */
+    .filter(({ push_timestamp }) => referenceRange.includes(push_timestamp))
+    .map(row => ({ ...row, ...row.meta }))
+    .edges([
+      {
+        name: 'test',
+        domain: {
+          type: 'set',
+          partitions: tests.select({
+            name: 'label',
+            value: 'test',
+            where: 'testFilter',
+          }),
+        },
+      },
+      {
+        name: 'site',
+        domain: {
+          type: 'set',
+          partitions: sites.select({
+            name: 'site',
+            value: 'site',
+            where: 'siteFilter',
+          }),
+        },
+      },
+      {
+        name: 'platform',
+        domain: {
+          type: 'set',
+          partitions: referencePlatforms.select({
+            name: 'platform',
+            value: 'platform',
+            where: 'platformFilter',
+          }),
+        },
+      },
+    ]);
+
+  const referenceValue = window(
+    { rawReference },
+    {
+      edges: ['test', 'platform', 'site'],
+      value: ({ rawReference }) => {
+        const values = selectFrom(rawReference).select('value');
+        if (values.count() === 0) return null;
+        const min = values.min() * 0.8;
+        const max = values.max() * 0.8;
+        const avg = round((min + max) / 2, { places: 2 });
+        return {
+          label: `Target (approx ${avg})`,
+          range: { min, max },
+        };
+      },
+    },
+  );
+
+
   const measured = selectFrom(sources)
     .select('data')
     .flatten()
@@ -114,14 +199,14 @@ async function pullAggregate({
     },
   );
   const result = window(
-    { daily, g5Reference },
+    { daily, referenceValue },
     {
       edges: ['test', 'platform', 'pushDate'],
       value: (row) => {
-        const { daily, g5Reference } = row;
+        const { daily, referenceValue } = row;
 
         return round(
-          selectFrom(daily, g5Reference)
+          selectFrom(daily, referenceValue)
             // IF NO REFERENCE VALUE FOR SITE, DO NOT INCLUDE IN AGGREGATE
             .map((d, r) => (missing(r) ? null : d))
             .geomean(),
@@ -142,30 +227,40 @@ async function pullAggregate({
     },
   );
   const count = window(
-    { mask },
+    { mask, referenceValue },
     {
       edges: ['test', 'platform'],
-      value: ({ mask }) => sum(selectFrom(mask).map(m => (m ? 1 : 0))),
+      value: ({ mask, referenceValue }) => sum(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? 1 : 0))),
     },
   );
   const total = Cube.newInstance({ edges: [], zero: () => sites.count() });
-  const ref = window(
-    { mask, g5Reference },
+
+
+  const refMean = window(
+    { mask, referenceValue },
     {
       edges: ['test', 'platform'],
-      value: ({ mask, g5Reference }) => geomean(selectFrom(mask, g5Reference).map((m, r) => (m ? r : null))),
+      value: ({ mask, referenceValue }) => ({
+        range: {
+          min: round(
+            geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.min : null))),
+            { places: 3 },
+          ),
+          max: round(
+            geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.max : null))),
+            { places: 3 },
+          ),
+        },
+      }),
     },
   );
 
   processData.done();
 
   return new HyperCube({
-    result, ref, count, total,
+    result, refMean, referenceValue, count, total,
   });
 }
-
-const DESIRED_TESTS = ['cold-loadtime'];
-const DESIRED_PLATFORMS = ['fenix-p2-aarch64', 'fenix-g5'];
 
 class TP6mAggregate_ extends Component {
   constructor(props) {
@@ -174,30 +269,26 @@ class TP6mAggregate_ extends Component {
   }
 
   async componentDidMount() {
-    const { timeDomain } = this.props;
-    const platforms = selectFrom(PLATFORMS).where({
-      platform: DESIRED_PLATFORMS,
-    });
+    const {
+      browser, platform, test, timeDomain,
+    } = this.props;
     const condition = {
       or: TP6_COMBOS.filter(
         jx({
-          and: [
-            { eq: { browser: ['fenix'] } },
-            {
-              eq: {
-                platform: DESIRED_PLATFORMS,
-                test: DESIRED_TESTS,
-              },
-            },
-          ],
+          eq: {
+            browser,
+            platform,
+            test,
+          },
         }),
       ).select('filter'),
     };
     const data = await pullAggregate({
       condition,
       sites: TP6M_SITES,
-      tests: TP6_TESTS.where({ test: DESIRED_TESTS }),
-      platforms,
+      test,
+      browser,
+      platform,
       timeDomain,
     });
 
@@ -205,6 +296,7 @@ class TP6mAggregate_ extends Component {
   }
 
   render() {
+    const { browser, test } = this.props;
     const { data } = this.state;
 
     if (missing(data)) {
@@ -224,7 +316,7 @@ class TP6mAggregate_ extends Component {
     return (
       <Grid container spacing={24}>
         {selectFrom(TP6_TESTS)
-          .where({ test: DESIRED_TESTS })
+          .where({ test })
           .enumerate()
           .map(({ label, test }) => data
             .where({ test })
@@ -234,9 +326,10 @@ class TP6mAggregate_ extends Component {
               const platform = row.platform.getValue();
               const count = row.count.getValue();
               const total = row.total.getValue();
-              const platformLabel = selectFrom(PLATFORMS)
-                .where({ platform })
-                .first().label;
+              const platformLabel = selectFrom(BROWSER_PLATFORMS)
+                .where({ browser, platform })
+                .first()
+                .label;
 
               return (
                 <Grid item xs={6} key={platform}>
@@ -266,8 +359,9 @@ class TP6mAggregate_ extends Component {
                           <DetailsIcon />
                         </a>
                       </span>
-)}
+                    )}
                     standardOptions={{
+                      tip: geoTip,
                       series: [
                         {
                           label: platformLabel,
@@ -275,8 +369,8 @@ class TP6mAggregate_ extends Component {
                         },
                         {
                           label: TARGET_NAME,
-                          select: { value: coalesce(row.ref.getValue(), 0) },
-                          style: { color: 'gray' },
+                          select: row.refMean.getValue(),
+                          style: { color: REFERENCE_COLOR },
                         },
                         {
                           label: 'Push Date',
