@@ -11,6 +11,7 @@ import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
 import { timePickers } from '../utils/timePickers';
+import PlaybackSummary from './summary';
 
 const styles = {
   chart: {
@@ -43,8 +44,17 @@ class Power extends React.Component {
         title="Playback"
         key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}
       >
-        {navigation}
         <Grid container spacing={24}>
+          <Grid item xs={6} className={classes.chart}>
+            {navigation}
+          </Grid>
+          <Grid item xs={6} className={classes.chart}>
+            <PlaybackSummary
+              encoding={encoding}
+              platform={platform}
+              browserId={browser}
+            />
+          </Grid>
           {selectFrom(SIZES).map(({ size }) => (
             <Grid
               item

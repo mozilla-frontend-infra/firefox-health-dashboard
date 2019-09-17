@@ -10,7 +10,7 @@ import {
 } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
-import { missing } from '../vendor/utils';
+import { missing, exists } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { round } from '../vendor/math';
 import { HelpIcon } from '../utils/icons';
@@ -79,16 +79,25 @@ class PlaybackSummary extends React.Component {
   state = { scores: null };
 
   async update() {
-    const { bits, encoding, browserId } = this.props;
+    const {
+      encoding, platform, bits, browserId,
+    } = this.props;
     const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
+    const desiredPlatform = (() => {
+      if (exists(platform)) {
+        // Prefer `platform`, if given
+        return selectFrom(PLATFORMS).where({ id: platform });
+      }
+      return selectFrom(PLATFORMS)
+        .where({ bits, type: platformType });
+    })();
     const browser = selectFrom(BROWSERS)
       .where({ id: browserId })
       .first();
     const sizes = selectFrom(SPECIAL_SIZES)
       .select('id')
       .toArray();
-    const combos = selectFrom(PLATFORMS)
-      .where({ bits, type: platformType })
+    const combos = desiredPlatform
       .map(platform => selectFrom(ENCODINGS)
         .where({ encoding })
         .map(({ encoding }) => selectFrom(TESTS)
@@ -149,7 +158,7 @@ class PlaybackSummary extends React.Component {
       }))
       .toArray();
 
-    this.setState({ scores: result });
+    this.setState({ scores: result, desiredPlatform });
   }
 
   async componentDidMount() {
@@ -188,11 +197,10 @@ class PlaybackSummary extends React.Component {
   }
 
   render() {
-    const { scores } = this.state;
+    const { scores, desiredPlatform } = this.state;
     const {
-      bits, encoding, classes, browserId,
+      encoding, classes, browserId,
     } = this.props;
-    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
 
     if (!scores) {
       return (
@@ -227,8 +235,7 @@ class PlaybackSummary extends React.Component {
             <HelpIcon />
           </a>
         </h2>
-        {selectFrom(PLATFORMS)
-          .where({ bits, type: platformType })
+        {desiredPlatform
           .map(platform => (
             // https://health.graphics/playback?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
