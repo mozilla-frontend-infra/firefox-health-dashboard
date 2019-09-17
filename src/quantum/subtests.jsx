@@ -181,10 +181,11 @@ const nav = [
     id: 'platform',
     label: 'Platform',
     defaultValue: 'windows10-64',
-    options: ['windows10-64', 'windos7-32', 'linux32', 'linux64']
-      .map(g => (
-        { id: g, label: g }
-      )),
+    options: [
+      { id: 'windows10-64', label: 'win64' },
+      { id: 'windows7-32', label: 'win32' },
+      { id: 'linux64', label: 'linux64' },
+    ],
   },
   ...timePickers,
 ];
