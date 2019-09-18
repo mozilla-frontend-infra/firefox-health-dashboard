@@ -230,13 +230,13 @@ class PlaybackSummary extends React.Component {
         {selectFrom(PLATFORMS)
           .where({ bits, type: platformType })
           .map(platform => (
-            // https://health.graphics/playback?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
+            // https://health.graphics/playback/details?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
               key={platform}
               className={classes.line}
               onClick={() => {
                 const url = URL({
-                  path: '/playback',
+                  path: '/playback/details',
                   query: {
                     platform: platform.id,
                     encoding,

@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-class Power extends React.Component {
+class PlaybackDetails extends React.Component {
   render() {
     const {
       classes,
@@ -37,10 +37,11 @@ class Power extends React.Component {
     const browserDetails = selectFrom(BROWSERS)
       .where({ id: browser })
       .first();
+    const missingDataInterval = browser === 'fenix' ? 7 : undefined;
 
     return (
       <DashboardPage
-        title="Playback"
+        title="Playback Details"
         key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}
       >
         {navigation}
@@ -71,7 +72,7 @@ class Power extends React.Component {
                     },
                   }))
                   .toArray()}
-                missingDataInterval={browser === 'fenix' ? 7 : undefined}
+                missingDataInterval={missingDataInterval}
               />
             </Grid>
           ))}
@@ -109,4 +110,4 @@ const nav = [
   ...timePickers,
 ];
 
-export default withNavigation(nav)(withStyles(styles)(Power));
+export default withNavigation(nav)(withStyles(styles)(PlaybackDetails));
