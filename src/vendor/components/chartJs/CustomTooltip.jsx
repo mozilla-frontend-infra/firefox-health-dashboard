@@ -134,7 +134,7 @@ function withTooltip() {
   // https://reactjs.org/docs/higher-order-components.html
   //
   // Expects `standardOptions.tip` property that accepts
-  // * record - particualr raw record being shown
+  // * record - particular raw record being shown
   // * index - position of record in data
   // * data - all the data in the series
   // * series - the particular dataset being shown
@@ -185,19 +185,19 @@ function withTooltip() {
       }
 
       render() {
-        const { standardOptions: _, ...moreProps } = this.props;
+        const { standardOptions: _, chartRef, ...moreProps } = this.props;
         const { standardOptions, options, ...rest } = this.state;
 
         if (standardOptions.tip) {
           return (
             <div style={{ position: 'relative' }}>
-              <WrappedChart {...Data.setDefault(moreProps, { options })} />
+              <WrappedChart ref={chartRef} {...Data.setDefault(moreProps, {options})} />
               <StyledCustomTooltip {...{ standardOptions, ...rest }} />
             </div>
           );
         }
 
-        return <WrappedChart {...moreProps} />;
+        return <WrappedChart ref={chartRef} {...moreProps} />;
       }
     }
 

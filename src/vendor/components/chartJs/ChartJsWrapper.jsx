@@ -1,3 +1,4 @@
+/* global browser */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Chart from 'react-chartjs-2';
@@ -10,6 +11,7 @@ import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 import { coalesce, toArray } from '../../utils';
 import { withTooltip } from './CustomTooltip';
+import { CopyIcon } from '../../../utils/icons';
 
 const styles = {
   // This div helps with canvas size changes
@@ -36,23 +38,14 @@ const styles = {
 const ToolTipChart = withTooltip()(Chart);
 
 
-const showTitle = ({ classes, title, urls }) => (
-  <h2 className={classes.title}>
-    {title}
-    {toArray(urls).map(({ title, icon, url }) => (
-      <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
-        {icon()}
-      </a>
-    ))}
-  </h2>
-);
-
 class ChartJsWrapper extends React.Component {
   constructor(props) {
     super(props);
     const { standardOptions } = props;
 
     this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    this.chartRef = React.createRef();
+    this.imageRef = React.createRef();
   }
 
   async componentDidUpdate(prevProps) {
@@ -76,6 +69,37 @@ class ChartJsWrapper extends React.Component {
       missingDataInterval,
     } = this.props;
     const { cjsOptions, standardOptions } = this.state;
+
+    const showTitle = () => (
+      <h2 className={classes.title}>
+        {title}
+        {toArray(urls).map(({ title, icon, url }) => (
+          <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
+            {icon()}
+          </a>
+        ))}
+        <a title="copy chart" onClick={() => {
+          const chart = this.chartRef.current.chartInstance;
+          // const container = this.imageRef.current;
+          // container.value = chart.toBase64Image();
+
+          // container.select();
+          // document.execCommand('copy');
+          try {
+            navigator.clipboard.setImageData(chart.toBase64Image(), "png");
+          }catch (e) {
+            try {
+              chrome.clipboard.setImageData(chart.toBase64Image(), "png");
+            }catch (f) {
+              Log.error("could not copy", {cause:[e, f]});
+            }
+          }
+        }}
+        >
+          <CopyIcon />
+        </a>
+      </h2>
+    );
 
     if (isLoading) {
       return (
@@ -159,7 +183,7 @@ class ChartJsWrapper extends React.Component {
       );
 
       return (
-        <div className={classes.chartContainer}>
+        <div className={classes.chartContainer} ref={this.chartRef}>
           <ErrorMessage error={error}>
             {showTitle({ classes, title, urls })}
             <ToolTipChart
@@ -168,6 +192,7 @@ class ChartJsWrapper extends React.Component {
               {...cjsOptions}
             />
           </ErrorMessage>
+          <textarea ref={this.imageRef}> </textarea>
         </div>
       );
     }
@@ -180,8 +205,10 @@ class ChartJsWrapper extends React.Component {
         <ToolTipChart
           height={chartHeight}
           standardOptions={standardOptions}
+          chartRef={this.chartRef}
           {...cjsOptions}
         />
+        <textarea ref={this.imageRef} > </textarea>
       </div>
     );
   }
