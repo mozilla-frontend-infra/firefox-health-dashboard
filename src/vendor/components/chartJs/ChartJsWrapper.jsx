@@ -62,7 +62,6 @@ class ChartJsWrapper extends React.Component {
     this.state = standardOptions ? cjsGenerator(standardOptions) : {};
     this.state.showImage = null;
     this.chartRef = React.createRef();
-    this.imageRef = React.createRef();
   }
 
   async componentDidUpdate(prevProps) {
