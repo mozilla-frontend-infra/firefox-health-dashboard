@@ -489,48 +489,46 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-115"
               >
-                <div>
-                  Total content page load time (no 95th)
-                   
-                  <a
-                    href="https://sql.telemetry.mozilla.org/queries/59395"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    title="go to Redash query"
+                Total content page load time (no 95th)
+                <a
+                  href="https://sql.telemetry.mozilla.org/queries/59395"
+                  id="go to Redash query"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title="go to Redash query"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
                   >
-                    <div
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
                       style={
                         Object {
-                          "display": "inline-block",
-                          "margin": "-1rem 0",
-                          "verticalAlign": "middle",
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
                         }
                       }
+                      viewBox="0 0 24 24"
                     >
-                      <svg
-                        aria-hidden="true"
-                        className="MuiSvgIcon-root-4"
-                        focusable="false"
-                        role="presentation"
-                        style={
-                          Object {
-                            "margin": "0 .2rem 0 .2rem",
-                            "verticalAlign": "baseline",
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </div>
-                  </a>
-                </div>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </div>
+                </a>
                 <span
                   onClick={[Function]}
                   title="show image for copy"
@@ -625,48 +623,46 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-115"
               >
-                <div>
-                  Total content page load time
-                   
-                  <a
-                    href="https://sql.telemetry.mozilla.org/queries/59397"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    title="go to Redash query"
+                Total content page load time
+                <a
+                  href="https://sql.telemetry.mozilla.org/queries/59397"
+                  id="go to Redash query"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  title="go to Redash query"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
                   >
-                    <div
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
                       style={
                         Object {
-                          "display": "inline-block",
-                          "margin": "-1rem 0",
-                          "verticalAlign": "middle",
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
                         }
                       }
+                      viewBox="0 0 24 24"
                     >
-                      <svg
-                        aria-hidden="true"
-                        className="MuiSvgIcon-root-4"
-                        focusable="false"
-                        role="presentation"
-                        style={
-                          Object {
-                            "margin": "0 .2rem 0 .2rem",
-                            "verticalAlign": "baseline",
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </div>
-                  </a>
-                </div>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </div>
+                </a>
                 <span
                   onClick={[Function]}
                   title="show image for copy"
