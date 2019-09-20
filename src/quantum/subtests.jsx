@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
-import strings from '../vendor/strings';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
@@ -12,7 +11,8 @@ import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
 import jx from '../vendor/jx/expressions';
-import { PERFHERDER, getFramework } from '../vendor/perfherder';
+import { getFramework, PERFHERDER } from '../vendor/perfherder';
+import { BENCHMARKS } from './config';
 
 const FRAMEWORK = { framework: 10, repo: 'mozilla-central' };
 
@@ -46,51 +46,22 @@ class Subtests extends React.Component {
     const { data } = this.state;
     if (!data) return null;
 
+
+    const focus = BENCHMARKS.where({ suite, platform });
     const sigs = selectFrom(PERFHERDER.signatures)
-      .filter(jx({
-        and: [
-          { eq: FRAMEWORK },
-          { eq: { platform } },
-          { find: { suite } },
-        ],
-      }))
+      .filter(jx({ or: focus.select('filter') }))
       .materialize();
 
-    const series = sigs
-      .filter(jx({
-        and: [
-          {
-            or: [
-              { missing: 'test' },
-              { eq: ['test', 'suite'] },
-            ],
-          },
-          { find: { suite } },
-          { eq: { platform, ...FRAMEWORK } },
-        ],
-      }))
-      .map(({ suite: fullName, platform, options }) => (
-        {
-          label: `${strings.between(fullName, `${suite}-`)} (${options})`,
-          filter: {
-            and: [
-              {
-                or: [
-                  { missing: 'test' },
-                  { eq: ['test', 'suite'] },
-                ],
-              },
-              {
-                eq: {
-                  suite: fullName, platform, options, ...FRAMEWORK,
-                },
-              },
-            ],
-          },
-
-        }
-      ))
-      .toArray();
+    const tests = sigs
+      .filter(jx({ exists: 'test' }))
+      .groupBy('test')
+      .map((_, g) => g)
+      .materialize();
+    const series = focus
+      .map(({ browser, filter }) => ({
+        label: browser,
+        filter: { and: [{ missing: 'test' }, filter] },
+      }));
 
     return (
       <div className={classes.body}>
@@ -111,15 +82,8 @@ class Subtests extends React.Component {
             </Grid>
 
 
-            {sigs
-              .filter(jx({
-                and: [
-                  { exists: 'test' },
-                  { not: { eq: ['test', 'suite'] } },
-                ],
-              }))
-              .groupBy('test')
-              .map((series, test) => (
+            {tests
+              .map(test => (
                 <Grid
                   item
                   xs={6}
@@ -129,23 +93,14 @@ class Subtests extends React.Component {
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={test}
-                    series={selectFrom(series)
-                      .sort(['test'])
-                      .map(({ suite: subSuite, test, options }) => (
+                    series={focus
+                      .map(({ browser, filter }) => (
                         {
-                          label: `${strings.between(subSuite, `${suite}-`)} (${options.toUpperCase()})`,
-                          filter: {
-                            and: [
-                              {
-                                eq: {
-                                  suite: subSuite, test, options, platform,
-                                },
-                              },
-                              { eq: FRAMEWORK },
-                            ],
-                          },
+                          label: browser,
+                          filter: { and: [{ eq: { test } }, filter] },
                         }
-                      ))}
+                      ))
+                    }
                   />
                 </Grid>
               ))}
@@ -169,10 +124,10 @@ const nav = [
     type: Picker,
     id: 'suite',
     label: 'Suite',
-    defaultValue: 'motionmark-htmlsuite',
-    options: [
-      'motionmark-htmlsuite', 'motionmark-animometer', 'speedometer']
-      .map(g => (
+    defaultValue: 'MotionMark HTML',
+    options: BENCHMARKS
+      .groupBy('suite')
+      .map((_, g) => (
         { id: g, label: g }
       )),
   },
@@ -180,12 +135,12 @@ const nav = [
     type: Picker,
     id: 'platform',
     label: 'Platform',
-    defaultValue: 'windows10-64',
-    options: [
-      { id: 'windows10-64', label: 'win64' },
-      { id: 'windows7-32', label: 'win32' },
-      { id: 'linux64', label: 'linux64' },
-    ],
+    defaultValue: 'win64',
+    options: BENCHMARKS
+      .groupBy('platform')
+      .map((_, g) => (
+        { id: g, label: g }
+      )),
   },
   ...timePickers,
 ];

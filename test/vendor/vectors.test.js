@@ -225,4 +225,40 @@ describe('vectors', () => {
         .toArray(),
     ).toEqual([1, 2, 3]);
   });
+
+  it('leftJoin', () => {
+    const B = [
+      { a: 1, b: 10 },
+      { a: 1, b: 11 },
+      { a: 3, b: 30 },
+    ];
+    const C = [
+      { a: 1, c: 100 },
+      { a: 1, c: 101 },
+      { a: 2, c: 200 },
+    ];
+    expect(
+      selectFrom(B)
+        .leftJoin('a', C, 'a')
+        .toArray(),
+    ).toEqual([
+      { a: 1, b: 10, c: 100 },
+      { a: 1, b: 10, c: 101 },
+      { a: 1, b: 11, c: 100 },
+      { a: 1, b: 11, c: 101 },
+      { a: 3, b: 30 },
+    ]);
+
+    expect(
+      selectFrom(C)
+        .leftJoin('a', B, 'a')
+        .toArray(),
+    ).toEqual([
+      { a: 1, b: 10, c: 100 },
+      { a: 1, b: 11, c: 100 },
+      { a: 1, b: 10, c: 101 },
+      { a: 1, b: 11, c: 101 },
+      { a: 2, c: 200 },
+    ]);
+  });
 });

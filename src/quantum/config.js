@@ -2,156 +2,24 @@
 import { selectFrom } from '../vendor/vectors';
 import { Data } from '../vendor/datas';
 import { first } from '../vendor/utils';
-import { URL } from '../vendor/requests';
 
-const BENCHMARKS =
-  [
-    {
-      title: 'MotionMark HTML',
-      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-html", platform: "windows10-64"}}),
-      label: "Firefox",
-      bits: 64,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-htmlsuite-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows10-64"
-        }}
-      ]}
-    },
-    {
-      title: 'MotionMark Animometer',
-      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-animometer", platform: "windows10-64"}}),
-      label: "Firefox",
-      bits: 64,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-animometer-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows10-64",
-        }}
-      ]}
-    },
-    {
-      title: 'MotionMark HTML',
-      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-html", platform: "windows7-32"}}),
-      label: "Firefox",
-      bits: 32,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-htmlsuite-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows7-32"
-        }}
-      ]}
-    },
-    {
-      title: "MotionMark Animometer",
-      more: URL({path: '/quantum/subtests', query:{suite:"motionmark-animometer", platform: "windows7-32"}}),
-      label: "Firefox",
-      bits: 32,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-animometer-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows7-32",
-        }}
-      ]}
-    },
-    {
-      title: "Speedometer",
-      more: URL({path: '/quantum/subtests', query:{suite:"speedometer", platform: "windows10-64"}}),
-      label: 'Firefox',
-      bits:64,
-      filter: { and: [
-        { missing: 'test' },
-        { or: [
-          { eq: {
-            options: 'pgo',
-            platform: 'windows10-64',
-          }},
-          { eq: {
-            options: 'opt',
-            platform: 'windows10-64-shippable',
-          }},
-        ]},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: 'raptor-speedometer-firefox',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      label: 'Chromium',
-      bits:64,
-      filter: { and: [
-        { missing: 'test' },
-        { eq: {
-          platform: ['windows10-64-nightly', 'windows10-64-shippable'],
-          suite: [
-            'raptor-speedometer-chrome',
-            'raptor-speedometer-chromium',
-          ],
-        }},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      more: URL({path: '/quantum/subtests', query: {suite: "speedometer", platform: "windows7-32"}}),
-      label: 'Firefox',
-      bits:32,
-      filter: { and: [
-        { missing: 'test' },
-        { or: [
-          { eq: {
-            options: 'pgo',
-            platform: 'windows7-32',
-          }},
-          { eq: {
-            options: 'opt',
-            platform: 'windows7-32-shippable',
-          }},
-        ]},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: 'raptor-speedometer-firefox',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      label: 'Chromium',
-      bits:32,
-      filter: { and: [
-        { missing: 'test' },
-        { eq: {
-          platform: ['windows7-32-nightly', 'windows7-32-shippable'],
-          suite: [
-            'raptor-speedometer-chrome',
-            'raptor-speedometer-chromium',
-          ],
-          framework: 10,
-          repo: 'mozilla-central',
-        }},
-      ]},
-    },
 
-  ];
+const BENCHMARK_SUITES = {
+  header: ['browser', 'suite', 'suiteFilter'],
+
+  data: [
+    ['Firefox', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-firefox"}}],
+    ['Chromium', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chromium"}}],
+    // ['Chrome', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chrome"}}],
+    ['Firefox', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-firefox"}}],
+    ['Chromium', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chromium"}}],
+    // ['Chrome', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chrome"}}],
+    ['Firefox', 'Speedometer', {eq: {suite: "raptor-speedometer-firefox"}}],
+    ['Chromium', 'Speedometer', {eq: {suite: "raptor-speedometer-chromium"}}],
+    // ['Chrome', 'Speedometer', {eq: {suite: "raptor-speedometer-chrome"}}],
+  ]
+};
+
 
 const BROWSER_PLATFORMS = selectFrom([
   {
@@ -696,14 +564,22 @@ const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
   .sort("site")
   .leftJoin('browser', BROWSER_PLATFORMS, 'browser')
   .leftJoin('mode', TP6_TESTS_DATA, 'mode')
-  .map(row => {
-    row.filter = {
-      and: [row.siteFilter, row.testFilter, row.platformFilter],
-    };
-
-    return row;
-  })
+  .map(({siteFilter, testFilter, platformFilter, ...rest}) => ({
+    ...rest,
+    filter: {and:[siteFilter, testFilter, platformFilter]},
+  }))
   .materialize();
+
+const BENCHMARKS = selectFrom(BENCHMARK_SUITES.data)
+  .map(row=>Data.zip(BENCHMARK_SUITES.header, row))
+  .leftJoin("browser", BROWSER_PLATFORMS, "browser")
+  .where({platform: ["win32", "win64", "linux64"]})
+  .map(({id, label, suiteFilter, platformFilter, ...rest})=>({
+    ...rest,
+    filter: {and:[suiteFilter, platformFilter]}
+  }))
+  .materialize();
+
 
 
 export { BENCHMARKS, TP6_COMBOS, TP6M_SITES, BROWSER_PLATFORMS, TP6_TESTS };

@@ -81,19 +81,23 @@ export default class QuantumIndex extends React.Component {
       {
         title: 'Benchmarks',
         rows: selectFrom(BENCHMARKS)
-          .where({ bits })
-          .groupBy('title')
-          .map((browsers, title) => (
+          .where({ bits, platform: ['win32', 'win64'] })
+          .groupBy('suite')
+          .map((browsers, suite) => (
             <PerfherderGraphContainer
               timeDomain={timeDomain}
-              key={title} // eslint-disable-line react/no-array-index-key
-              title={title}
+              key={suite} // eslint-disable-line react/no-array-index-key
+              title={suite}
               urls={{
                 title: 'see details',
-                url: selectFrom(browsers).select('more').coalesce(),
+                url: URL({ path: '/quantum/subtests', query: { suite, platform } }),
                 icon: DetailsIcon,
               }}
-              series={browsers}
+              series={browsers.map(({ browser, filter, ...rest }) => ({
+                label: browser,
+                filter: { and: [{ missing: 'test' }, filter] },
+                ...rest,
+              }))}
             />
           )),
       },

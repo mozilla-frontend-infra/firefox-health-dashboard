@@ -794,7 +794,13 @@ extendWrapper({
     const getterA = jx(propA);
 
     return internalFrom(listA)
-      .map(rowA => lookup[getterA(rowA)].map(rowB => ({ ...rowA, ...rowB })))
+      .map((rowA) => {
+        const b = lookup[getterA(rowA)];
+        if (missing(b)) return [{ ...rowA }];
+        return b.map(rowB => (
+          { ...rowA, ...rowB }
+        ));
+      })
       .flatten();
   },
 
