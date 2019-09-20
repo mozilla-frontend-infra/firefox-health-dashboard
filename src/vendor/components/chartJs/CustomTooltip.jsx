@@ -191,7 +191,7 @@ function withTooltip() {
         if (standardOptions.tip) {
           return (
             <div style={{ position: 'relative' }}>
-              <WrappedChart ref={chartRef} {...Data.setDefault(moreProps, {options})} />
+              <WrappedChart ref={chartRef} {...Data.setDefault(moreProps, { options })} />
               <StyledCustomTooltip {...{ standardOptions, ...rest }} />
             </div>
           );

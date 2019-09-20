@@ -10,6 +10,8 @@ import DetailsIconInternal from '@material-ui/icons/MoreHoriz';
 import CodeIconInternal from '@material-ui/icons/Code';
 import HelpIconInternal from '@material-ui/icons/Help';
 import CopyIconInternal from '@material-ui/icons/FilterNone';
+import ImageIconInternal from '@material-ui/icons/Image';
+import ChartIconInternal from '@material-ui/icons/InsertChart';
 import githubMark from '../static/GitHub-Mark.png';
 
 const iconStyle = { verticalAlign: 'baseline', margin: '0 .2rem 0 .2rem' };
@@ -66,6 +68,30 @@ const CopyIcon = () => (
   </div>
 );
 
+const ImageIcon = () => (
+  <div
+    style={{
+      display: 'inline-block',
+      margin: '-1rem 0',
+      verticalAlign: 'middle',
+    }}
+  >
+    <ImageIconInternal style={iconStyle} />
+  </div>
+);
+
+const ChartIcon = () => (
+  <div
+    style={{
+      display: 'inline-block',
+      margin: '-1rem 0',
+      verticalAlign: 'middle',
+    }}
+  >
+    <ChartIconInternal style={iconStyle} />
+  </div>
+);
+
 
 const GithubIcon = () => (
   <img
@@ -87,5 +113,7 @@ export {
   CodeIcon,
   HelpIcon,
   CopyIcon,
+  ImageIcon,
+  ChartIcon,
   HomeIcon,
 };
