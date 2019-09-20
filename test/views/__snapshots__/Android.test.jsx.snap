@@ -256,6 +256,42 @@ exports[`renders correctly 1`] = `
                     </div>
                   </a>
                 </span>
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={
@@ -495,6 +531,42 @@ exports[`renders correctly 1`] = `
                     </div>
                   </a>
                 </div>
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={
@@ -595,6 +667,42 @@ exports[`renders correctly 1`] = `
                     </div>
                   </a>
                 </div>
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={
@@ -801,6 +909,42 @@ exports[`renders correctly 1`] = `
                 className="ChartJsWrapper-title-115"
               >
                 Speedometer
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={
@@ -866,6 +1010,42 @@ exports[`renders correctly 1`] = `
                 className="ChartJsWrapper-title-115"
               >
                 Speedometer CPU power usage
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={
@@ -931,6 +1111,42 @@ exports[`renders correctly 1`] = `
                 className="ChartJsWrapper-title-115"
               >
                 Unity WebGl
+                <span
+                  onClick={[Function]}
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root-4"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
               </h2>
               <div
                 style={

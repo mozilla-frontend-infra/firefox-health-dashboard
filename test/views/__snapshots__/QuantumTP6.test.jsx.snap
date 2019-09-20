@@ -402,6 +402,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Amazon
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -467,6 +503,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Apple
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -532,6 +604,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Bing
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -597,6 +705,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Docs
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -662,6 +806,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Facebook
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -727,6 +907,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Fandom
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -792,6 +1008,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Google
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -857,6 +1109,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Google Mail
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -922,6 +1210,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Imdb
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -987,6 +1311,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Imgur
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1052,6 +1412,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Instagram
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1117,6 +1513,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Instagram (binast)
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1182,6 +1614,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: LinkedIn
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1247,6 +1715,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Microsoft
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1312,6 +1816,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Netflix
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1377,6 +1917,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Office
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1442,6 +2018,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Outlook
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1507,6 +2119,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: PayPal
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1572,6 +2220,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Pinterest
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1637,6 +2321,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Reddit
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1702,6 +2422,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Sheets
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1767,6 +2523,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Slides
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1832,6 +2624,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Tumblr
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1897,6 +2725,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Twitch
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1962,6 +2826,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Twitter
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2027,6 +2927,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Wikipedia
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2092,6 +3028,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Yahoo Mail
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2157,6 +3129,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Yahoo News
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2222,6 +3230,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: Yandex
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2287,6 +3331,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: YouTube
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -2352,6 +3432,42 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-201"
             >
               Tp6: eBay
+              <span
+                onClick={[Function]}
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-7"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
