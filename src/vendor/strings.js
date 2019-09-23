@@ -119,7 +119,7 @@ const strings = {
       s = value.indexOf(prefix);
 
       if (s === -1) return null; // NOT FOUND
-      s += suffix.length;
+      s += prefix.length;
     }
 
     let e = value.length;

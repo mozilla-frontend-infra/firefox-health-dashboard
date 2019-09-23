@@ -401,9 +401,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Amazon
-              </div>
+              Tp6: Amazon
             </h2>
             <div
               style={
@@ -468,9 +466,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Apple
-              </div>
+              Tp6: Apple
             </h2>
             <div
               style={
@@ -535,9 +531,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Bing
-              </div>
+              Tp6: Bing
             </h2>
             <div
               style={
@@ -602,9 +596,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Docs
-              </div>
+              Tp6: Docs
             </h2>
             <div
               style={
@@ -669,9 +661,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Facebook
-              </div>
+              Tp6: Facebook
             </h2>
             <div
               style={
@@ -736,9 +726,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Fandom
-              </div>
+              Tp6: Fandom
             </h2>
             <div
               style={
@@ -803,9 +791,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Google
-              </div>
+              Tp6: Google
             </h2>
             <div
               style={
@@ -870,9 +856,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Google Mail
-              </div>
+              Tp6: Google Mail
             </h2>
             <div
               style={
@@ -937,9 +921,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Imdb
-              </div>
+              Tp6: Imdb
             </h2>
             <div
               style={
@@ -1004,9 +986,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Imgur
-              </div>
+              Tp6: Imgur
             </h2>
             <div
               style={
@@ -1071,9 +1051,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Instagram
-              </div>
+              Tp6: Instagram
             </h2>
             <div
               style={
@@ -1138,9 +1116,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Instagram (binast)
-              </div>
+              Tp6: Instagram (binast)
             </h2>
             <div
               style={
@@ -1205,9 +1181,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: LinkedIn
-              </div>
+              Tp6: LinkedIn
             </h2>
             <div
               style={
@@ -1272,9 +1246,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Microsoft
-              </div>
+              Tp6: Microsoft
             </h2>
             <div
               style={
@@ -1339,9 +1311,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Netflix
-              </div>
+              Tp6: Netflix
             </h2>
             <div
               style={
@@ -1406,9 +1376,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Office
-              </div>
+              Tp6: Office
             </h2>
             <div
               style={
@@ -1473,9 +1441,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Outlook
-              </div>
+              Tp6: Outlook
             </h2>
             <div
               style={
@@ -1540,9 +1506,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: PayPal
-              </div>
+              Tp6: PayPal
             </h2>
             <div
               style={
@@ -1607,9 +1571,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Pinterest
-              </div>
+              Tp6: Pinterest
             </h2>
             <div
               style={
@@ -1674,9 +1636,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Reddit
-              </div>
+              Tp6: Reddit
             </h2>
             <div
               style={
@@ -1741,9 +1701,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Sheets
-              </div>
+              Tp6: Sheets
             </h2>
             <div
               style={
@@ -1808,9 +1766,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Slides
-              </div>
+              Tp6: Slides
             </h2>
             <div
               style={
@@ -1875,9 +1831,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Tumblr
-              </div>
+              Tp6: Tumblr
             </h2>
             <div
               style={
@@ -1942,9 +1896,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Twitch
-              </div>
+              Tp6: Twitch
             </h2>
             <div
               style={
@@ -2009,9 +1961,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Twitter
-              </div>
+              Tp6: Twitter
             </h2>
             <div
               style={
@@ -2076,9 +2026,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Wikipedia
-              </div>
+              Tp6: Wikipedia
             </h2>
             <div
               style={
@@ -2143,9 +2091,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Yahoo Mail
-              </div>
+              Tp6: Yahoo Mail
             </h2>
             <div
               style={
@@ -2210,9 +2156,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Yahoo News
-              </div>
+              Tp6: Yahoo News
             </h2>
             <div
               style={
@@ -2277,9 +2221,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: Yandex
-              </div>
+              Tp6: Yandex
             </h2>
             <div
               style={
@@ -2344,9 +2286,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: YouTube
-              </div>
+              Tp6: YouTube
             </h2>
             <div
               style={
@@ -2411,9 +2351,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-201"
             >
-              <div>
-                Tp6: eBay
-              </div>
+              Tp6: eBay
             </h2>
             <div
               style={

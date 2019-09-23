@@ -4,21 +4,20 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
 import { missing } from '../vendor/utils';
+import { geomean, round, sum } from '../vendor/math';
 import {
-  geomean, round, sum,
-} from '../vendor/math';
-import {
-  BROWSER_PLATFORMS,
-  TP6_COMBOS,
-  TP6_TESTS,
-  TP6M_SITES,
+  BROWSER_PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES,
 } from '../quantum/config';
 import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
 import { Cube, HyperCube, window } from '../vendor/jx/cubes';
 import {
-  TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, geoTip,
+  GEOMEAN_DESCRIPTION,
+  geoTip,
+  REFERENCE_BROWSER,
+  REFERENCE_COLOR,
+  TARGET_NAME,
 } from './config';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import timer from '../vendor/timer';
@@ -334,32 +333,21 @@ class TP6mAggregate_ extends Component {
               return (
                 <Grid item xs={6} key={platform}>
                   <ChartJSWrapper
-                    title={(
-                      <span>
-                        {`Geomean of ${label}`}
-                        {' for '}
-                        {platformLabel}
-                        {' ( '}
-                        {count}
-                        {' of '}
-                        {total}
-                        {' sites reporting)'}
-                        <a
-                          href={URL({
-                            path: '/android/tp6m',
-                            query: {
-                              test,
-                              platform,
-                            },
-                          })}
-                          title="show details"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <DetailsIcon />
-                        </a>
-                      </span>
-                    )}
+                    title={`Geomean of ${label} for ${platformLabel} (${count} of ${total} sites reporting)`}
+                    urls={[
+                      {
+                        title: 'show details',
+                        icon: DetailsIcon,
+                        url: URL({
+                          path: '/android/tp6m',
+                          query: {
+                            test,
+                            platform,
+                          },
+                        }),
+                      },
+                      GEOMEAN_DESCRIPTION,
+                    ]}
                     standardOptions={{
                       tip: geoTip,
                       series: [

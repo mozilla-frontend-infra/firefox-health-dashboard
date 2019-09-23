@@ -9,7 +9,7 @@ import TP6 from './quantum/TP6';
 import TP6M from './android/TP6m';
 import Power from './power';
 import Playback from './playback';
-import Subbenchmark from './quantum/subbenchmarks';
+import Subtests from './quantum/subtests';
 
 const NoMatch = () => <div>404</div>;
 const Routes = () => (
@@ -23,10 +23,7 @@ const Routes = () => (
       <Route path="/android" component={AndroidPage} />
       <Route path="/power" component={Power} />
       <Route path="/playback" component={Playback} />
-      <Route
-        path="/quantum/:framework/:platform/:suite/:option"
-        component={Subbenchmark}
-      />
+      <Route path="/quantum/subtests" component={Subtests} />
       <Route path="/quantum/:bits" component={Quantum} />
       <Route path="/" component={Home} />
       <Route component={NoMatch} />

@@ -17,22 +17,15 @@ class PowerSummary extends React.Component {
       <PerfherderGraphContainer
         timeDomain={timeDomain}
         key="power usage"
-        title={(
-          <span>
-            Speedometer CPU power usage
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={URL({
-                path: '/power',
-                query: { browser, suite },
-              })}
-              title="Show details"
-            >
-              <DetailsIcon />
-            </a>
-          </span>
-)}
+        urls={{
+          title: 'show details',
+          url: URL({
+            path: '/power',
+            query: { browser, suite },
+          }),
+          icon: DetailsIcon,
+        }}
+        title="Speedometer CPU power usage"
         series={selectFrom(PLATFORMS)
           .map(({ label, filter: platformFilter }) => ({
             label,

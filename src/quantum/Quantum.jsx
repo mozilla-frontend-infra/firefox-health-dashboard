@@ -6,11 +6,7 @@ import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
 import TelemetryContainer from '../telemetry/graph';
-import {
-  quantum32QueryParams,
-  quantum64QueryParams,
-  statusLabels,
-} from './constants';
+import { quantum32QueryParams, quantum64QueryParams, statusLabels } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
@@ -85,14 +81,23 @@ export default class QuantumIndex extends React.Component {
       {
         title: 'Benchmarks',
         rows: selectFrom(BENCHMARKS)
-          .where({ bits })
-          .groupBy('title')
-          .map((browsers, title) => (
+          .where({ bits, platform: ['win32', 'win64'] })
+          .groupBy('suite')
+          .map((browsers, suite) => (
             <PerfherderGraphContainer
               timeDomain={timeDomain}
-              key={title} // eslint-disable-line react/no-array-index-key
-              title={title}
-              series={browsers}
+              key={suite} // eslint-disable-line react/no-array-index-key
+              title={suite}
+              urls={{
+                title: 'see details',
+                url: URL({ path: '/quantum/subtests', query: { suite, platform } }),
+                icon: DetailsIcon,
+              }}
+              series={browsers.map(({ browser, filter, ...rest }) => ({
+                label: browser,
+                filter: { and: [{ missing: 'test' }, filter] },
+                ...rest,
+              }))}
             />
           )),
       },

@@ -786,25 +786,6 @@
  .generic-metrics-graphics .mg-x-axis .label {
   transform:translateY(-.5em)
  }
- .subbenchmarks .header {
-  display:flex;
-  justify-content:center;
-  flex-direction:row
- }
- .subbenchmarks .header-item {
-  -ms-grid-row-align:center;
-  align-self:center
- }
- .subbenchmarks .wider-letter-spacing {
-  letter-spacing:.06em
- }
- .subbenchmarks .black-bar {
-  margin-top:.32143rem;
-  margin-bottom:.32143rem
- }
- .subbenchmarks .metricsGraphicsCon {
-  background-color:#fff
- }
  .align-center {
   text-align:center
  }
@@ -1093,10 +1074,6 @@
   }
   .dashboard-metric .tick-x text {
    transform:translateY(-.14045rem)
-  }
-  .subbenchmarks .black-bar {
-   margin-bottom:.32143rem;
-   margin-top:.32143rem
   }
  }
  @media (min-width:1200px) and (min-height:800px) {

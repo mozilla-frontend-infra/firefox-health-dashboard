@@ -214,9 +214,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                MotionMark HTML suite
-              </div>
+              MotionMark HTML
             </h2>
             <div
               style={
@@ -281,9 +279,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                MotionMark Animometer
-              </div>
+              MotionMark Animometer
             </h2>
             <div
               style={
@@ -348,9 +344,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Speedometer
-              </div>
+              Speedometer
             </h2>
             <div
               style={
@@ -467,9 +461,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Amazon
-              </div>
+              Tp6: Amazon
             </h2>
             <div
               style={
@@ -534,9 +526,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Facebook
-              </div>
+              Tp6: Facebook
             </h2>
             <div
               style={
@@ -601,9 +591,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: Google
-              </div>
+              Tp6: Google
             </h2>
             <div
               style={
@@ -668,9 +656,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tp6: YouTube
-              </div>
+              Tp6: YouTube
             </h2>
             <div
               style={
@@ -855,9 +841,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Page load (tp5)
-              </div>
+              Page load (tp5)
             </h2>
             <div
               style={
@@ -922,9 +906,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Window Opening (tpaint e10s)
-              </div>
+              Window Opening (tpaint e10s)
             </h2>
             <div
               style={
@@ -989,9 +971,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-up (sessionrestore)
-              </div>
+              Start-up (sessionrestore)
             </h2>
             <div
               style={
@@ -1056,9 +1036,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-up (sessionrestore_no_auto_restore)
-              </div>
+              Start-up (sessionrestore_no_auto_restore)
             </h2>
             <div
               style={
@@ -1123,9 +1101,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Start-Up (ts_paint)
-              </div>
+              Start-Up (ts_paint)
             </h2>
             <div
               style={
@@ -1190,9 +1166,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Opening (tabpaint)
-              </div>
+              Tab Opening (tabpaint)
             </h2>
             <div
               style={
@@ -1257,9 +1231,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Animation (TART)
-              </div>
+              Tab Animation (TART)
             </h2>
             <div
               style={
@@ -1324,9 +1296,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                Tab Switch (tabswitch)
-              </div>
+              Tab Switch (tabswitch)
             </h2>
             <div
               style={
@@ -1391,9 +1361,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvg_static)
-              </div>
+              SVG (tsvg_static)
             </h2>
             <div
               style={
@@ -1458,9 +1426,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvgr_opacity)
-              </div>
+              SVG (tsvgr_opacity)
             </h2>
             <div
               style={
@@ -1525,9 +1491,7 @@ exports[`renders correctly 1`] = `
             <h2
               className="ChartJsWrapper-title-112"
             >
-              <div>
-                SVG (tsvgx)
-              </div>
+              SVG (tsvgx)
             </h2>
             <div
               style={
