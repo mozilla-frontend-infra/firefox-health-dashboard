@@ -258,6 +258,11 @@ exports[`renders correctly 1`] = `
                 </span>
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div
@@ -531,6 +536,11 @@ exports[`renders correctly 1`] = `
                 </a>
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div
@@ -665,6 +675,11 @@ exports[`renders correctly 1`] = `
                 </a>
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div
@@ -907,6 +922,11 @@ exports[`renders correctly 1`] = `
                 Speedometer
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div
@@ -1008,6 +1028,11 @@ exports[`renders correctly 1`] = `
                 Speedometer CPU power usage
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div
@@ -1109,6 +1134,11 @@ exports[`renders correctly 1`] = `
                 Unity WebGl
                 <span
                   onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
                   title="show image for copy"
                 >
                   <div

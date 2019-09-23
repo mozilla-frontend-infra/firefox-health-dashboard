@@ -100,6 +100,7 @@ class ChartJsWrapper extends React.Component {
               return (
                 <span
                   title="show chart"
+                  style={{ cursor: 'pointer' }}
                   onClick={() => this.setState({ showImage: null })}
                 >
                   <ChartIcon />
@@ -109,6 +110,7 @@ class ChartJsWrapper extends React.Component {
             return (
               <span
                 title="show image for copy"
+                style={{ cursor: 'pointer' }}
                 onClick={() => {
                   const chart = this.chartRef.current.chartInstance;
                   const data = chart.toBase64Image();

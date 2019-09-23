@@ -404,6 +404,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Amazon
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -505,6 +510,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Apple
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -606,6 +616,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Bing
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -707,6 +722,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Docs
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -808,6 +828,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Facebook
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -909,6 +934,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Fandom
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1010,6 +1040,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Google
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1111,6 +1146,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Google Mail
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1212,6 +1252,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Imdb
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1313,6 +1358,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Imgur
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1414,6 +1464,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Instagram
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1515,6 +1570,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Instagram (binast)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1616,6 +1676,11 @@ exports[`renders correctly default 1`] = `
               Tp6: LinkedIn
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1717,6 +1782,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Microsoft
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1818,6 +1888,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Netflix
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1919,6 +1994,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Office
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2020,6 +2100,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Outlook
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2121,6 +2206,11 @@ exports[`renders correctly default 1`] = `
               Tp6: PayPal
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2222,6 +2312,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Pinterest
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2323,6 +2418,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Reddit
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2424,6 +2524,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Sheets
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2525,6 +2630,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Slides
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2626,6 +2736,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Tumblr
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2727,6 +2842,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Twitch
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2828,6 +2948,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Twitter
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2929,6 +3054,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Wikipedia
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -3030,6 +3160,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Yahoo Mail
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -3131,6 +3266,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Yahoo News
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -3232,6 +3372,11 @@ exports[`renders correctly default 1`] = `
               Tp6: Yandex
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -3333,6 +3478,11 @@ exports[`renders correctly default 1`] = `
               Tp6: YouTube
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -3434,6 +3584,11 @@ exports[`renders correctly default 1`] = `
               Tp6: eBay
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div

@@ -217,6 +217,11 @@ exports[`renders correctly 1`] = `
               MotionMark HTML
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -318,6 +323,11 @@ exports[`renders correctly 1`] = `
               MotionMark Animometer
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -419,6 +429,11 @@ exports[`renders correctly 1`] = `
               Speedometer
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -572,6 +587,11 @@ exports[`renders correctly 1`] = `
               Tp6: Amazon
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -673,6 +693,11 @@ exports[`renders correctly 1`] = `
               Tp6: Facebook
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -774,6 +799,11 @@ exports[`renders correctly 1`] = `
               Tp6: Google
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -875,6 +905,11 @@ exports[`renders correctly 1`] = `
               Tp6: YouTube
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1096,6 +1131,11 @@ exports[`renders correctly 1`] = `
               Page load (tp5)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1197,6 +1237,11 @@ exports[`renders correctly 1`] = `
               Window Opening (tpaint e10s)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1298,6 +1343,11 @@ exports[`renders correctly 1`] = `
               Start-up (sessionrestore)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1399,6 +1449,11 @@ exports[`renders correctly 1`] = `
               Start-up (sessionrestore_no_auto_restore)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1500,6 +1555,11 @@ exports[`renders correctly 1`] = `
               Start-Up (ts_paint)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1601,6 +1661,11 @@ exports[`renders correctly 1`] = `
               Tab Opening (tabpaint)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1702,6 +1767,11 @@ exports[`renders correctly 1`] = `
               Tab Animation (TART)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1803,6 +1873,11 @@ exports[`renders correctly 1`] = `
               Tab Switch (tabswitch)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -1904,6 +1979,11 @@ exports[`renders correctly 1`] = `
               SVG (tsvg_static)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2005,6 +2085,11 @@ exports[`renders correctly 1`] = `
               SVG (tsvgr_opacity)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
@@ -2106,6 +2191,11 @@ exports[`renders correctly 1`] = `
               SVG (tsvgx)
               <span
                 onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
                 title="show image for copy"
               >
                 <div
