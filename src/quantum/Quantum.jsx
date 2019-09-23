@@ -106,13 +106,13 @@ export default class QuantumIndex extends React.Component {
         more: URL({
           path: '/quantum/tp6',
           query: {
-            platform: 'win64',
+            platform: TP6_COMBOS.where({ os: 'win', bits }).select('platform').first(),
             test: 'warm-loadtime',
           },
         }),
         rows: selectFrom(TP6_COMBOS)
           .where({
-            platform: 'win64',
+            os: 'win',
             bits,
             test: 'warm-loadtime',
             site: [
