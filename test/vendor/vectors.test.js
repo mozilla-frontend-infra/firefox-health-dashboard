@@ -94,6 +94,31 @@ describe('vectors', () => {
     ).toEqual([{ a: 1 }, { a: null, e: 3 }, null]);
   });
 
+  it('filter null', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(() => null)
+        .toArray(),
+    ).toEqual([]);
+  });
+
+  it('filter true', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(() => true)
+        .toArray(),
+    ).toEqual([{ a: 1 }, null]);
+  });
+
+  it('filter 0', () => {
+    expect(
+      selectFrom([{ a: 1 }, null])
+        .filter(() => 0)
+        .toArray(),
+    ).toEqual([{ a: 1 }, null]);
+  });
+
+
   it('groupBy 2', () => {
     expect(
       selectFrom(data)
@@ -199,5 +224,41 @@ describe('vectors', () => {
         .flatten()
         .toArray(),
     ).toEqual([1, 2, 3]);
+  });
+
+  it('leftJoin', () => {
+    const B = [
+      { a: 1, b: 10 },
+      { a: 1, b: 11 },
+      { a: 3, b: 30 },
+    ];
+    const C = [
+      { a: 1, c: 100 },
+      { a: 1, c: 101 },
+      { a: 2, c: 200 },
+    ];
+    expect(
+      selectFrom(B)
+        .leftJoin('a', C, 'a')
+        .toArray(),
+    ).toEqual([
+      { a: 1, b: 10, c: 100 },
+      { a: 1, b: 10, c: 101 },
+      { a: 1, b: 11, c: 100 },
+      { a: 1, b: 11, c: 101 },
+      { a: 3, b: 30 },
+    ]);
+
+    expect(
+      selectFrom(C)
+        .leftJoin('a', B, 'a')
+        .toArray(),
+    ).toEqual([
+      { a: 1, b: 10, c: 100 },
+      { a: 1, b: 11, c: 100 },
+      { a: 1, b: 10, c: 101 },
+      { a: 1, b: 11, c: 101 },
+      { a: 2, c: 200 },
+    ]);
   });
 });

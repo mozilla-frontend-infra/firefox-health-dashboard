@@ -1,9 +1,18 @@
 /* eslint-disable camelcase */
 import { fetchJson, URL } from './requests';
 import {
-  array, exists, first, missing, toArray, delayedValue, zip, coalesce, isString,
+  array,
+  coalesce,
+  delayedValue,
+  exists,
+  first,
+  isArray,
+  isString,
+  missing,
+  toArray,
+  zip,
 } from './utils';
-import { selectFrom, toPairs, combos } from './vectors';
+import { combos, selectFrom, toPairs } from './vectors';
 import jx from './jx/expressions';
 import { Log } from './logs';
 import { ceiling } from './math';
@@ -31,9 +40,8 @@ const getAllOptions = (async () => {
     .fromPairs();
 })();
 const frameworkCache = {};
-const getFramework = async (combo) => {
-  const { repo, framework } = combo;
-  const comboString = JSON.stringify(combo);
+const getFramework = async ({ repo, framework }) => {
+  const comboString = JSON.stringify({ repo, framework });
 
   if (frameworkCache[comboString] === undefined) {
     frameworkCache[comboString] = (async () => {
@@ -131,8 +139,8 @@ const getFramework = async (combo) => {
 
 
 function simpler(v) {
-  const vv = v.filter(x => x !== true);
-  if (vv.length === 0) return true;
+  const vv = v.filter(e => e !== true && exists(e));
+  if (vv.length === 0) return null;
   if (vv.length === 1) return vv[0];
   return { and: vv };
 }
@@ -145,33 +153,64 @@ function simpler(v) {
  *   output[x][i] contains expression on props[i]
  *   output[x][N] is expressions on everything else
  */
-const extract = (expression, props) => toPairs(expression)
-  .map((param, op) => {
-    if (op === 'or') {
-      return selectFrom(param).map(e => extract(e, props)).flatten();
-    }
-    if (op === 'and') {
-      return combos(...param.map(e => extract(e, props)))
-        .map(v => zip(...v).map(simpler));
-    }
+const extract = (expression, props) => {
+  const lookup = Data.zip(props.map((p, i) => ([p, i])));
 
-    const lookup = Data.zip(props.map((p, i) => ([p, i])));
-    const inProps = array(props.length + 1).map(() => ([]));
-    if (isString(param)) {
-      const i = coalesce(lookup[param], props.length);
-      inProps[i].push({ [op]: param });
+  if (isString(expression)) {
+    const inProps = array(props.length + 1).map(() => null);
+    const i = coalesce(lookup[expression], props.length);
+    inProps[i] = expression;
+    return [inProps];
+  }
+
+  return toPairs(expression)
+    .map((param, op) => {
+      if (op === 'or') {
+        return selectFrom(param).map(e => extract(e, props)).flatten();
+      }
+      if (op === 'and') {
+        return combos(...param.map(e => extract(e, props)))
+          .map(v => zip(...v).map(simpler));
+      }
+
+      if (isString(param)) {
+        const inProps = array(props.length + 1).map(() => null);
+        const i = coalesce(lookup[param], props.length);
+        inProps[i] = { [op]: param };
+        return [inProps];
+      }
+      if (isArray(param)) {
+        const temp = selectFrom;
+        const expressions = temp(param)
+          .map(e => extract(e, props)) // array of dis-norm-form
+          .flatten() // dis-norm-form
+          .zip() // length==N onfor each props
+          .enumerate()
+          .filter(e => coalesce(...e)) // remove props with nothing
+          .materialize(); // non-lazy
+
+        if (expressions.count() !== 1) {
+          Log.error('can not split expression {{expr|json}}', { expr: { [op]: param } });
+        }
+
+        const i = expressions.map((e, i) => i).first();
+
+        const inProps = array(props.length + 1).map(() => null);
+        inProps[i] = { [op]: param };
+        return [inProps];
+      }
+
+      const inProps = array(props.length + 1).map(() => ([]));
+      toPairs(param).forEach((rhs, lhs) => {
+        const i = coalesce(lookup[lhs], props.length);
+        inProps[i].push({ [op]: { [lhs]: rhs } });
+      });
+
       return [inProps.map(simpler)];
-    }
-
-    toPairs(param).forEach((rhs, lhs) => {
-      const i = coalesce(lookup[lhs], props.length);
-      inProps[i].push({ [op]: { [lhs]: rhs } });
-    });
-
-    return [inProps.map(simpler)];
-  })
-  .flatten()
-  .toArray();
+    })
+    .flatten()
+    .toArray();
+};
 
 const dataCache = {}; // MAP FROM SIGNATURE TO PROMISE OF DATA
 const activeFetch = {}; // MAP FROM repo TO COUNT OF ACTIVE FETCHES
@@ -256,16 +295,17 @@ const getData = async (condition) => {
 
   const results = await Promise.all(collated
     .map(async ([pushDate, repo, framework, rest]) => {
-      if (repo === true || framework === true) {
+      if (missing(repo) || missing(framework)) {
         Log.error('expecting expression to have both repo and framework');
       }
       await getFramework({ repo: repo.eq.repo, framework: framework.eq.framework });
 
       Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
 
-      const data = await getDataBySignature(PERFHERDER.signatures.filter(jx(rest)));
+      const signatures = PERFHERDER.signatures.filter(jx(rest));
+      const data = await getDataBySignature(signatures);
 
-      if (pushDate === true) return data;
+      if (missing(pushDate)) return data;
 
       return selectFrom(data)
         .map(({ data, ...rest }) => ({
@@ -278,5 +318,5 @@ const getData = async (condition) => {
 };
 
 export {
-  getAllOptions, getData, TREEHERDER,
+  getAllOptions, getData, TREEHERDER, PERFHERDER, getFramework,
 };

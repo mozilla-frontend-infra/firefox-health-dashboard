@@ -6,11 +6,11 @@ exports[`renders correctly 1`] = `
 >
   <div>
     <button
-      className="MuiButtonBase-root-29 MuiButton-root-3 MuiButton-text-5 MuiButton-flat-8"
+      className="MuiButtonBase-root MuiButton-root MuiButton-text"
       disabled={false}
       onBlur={[Function]}
       onClick={[Function]}
-      onContextMenu={[Function]}
+      onDragLeave={[Function]}
       onFocus={[Function]}
       onKeyDown={[Function]}
       onKeyUp={[Function]}
@@ -20,17 +20,14 @@ exports[`renders correctly 1`] = `
       onTouchEnd={[Function]}
       onTouchMove={[Function]}
       onTouchStart={[Function]}
-      tabIndex="0"
+      tabIndex={0}
       type="button"
     >
       <span
-        className="MuiButton-label-4"
+        className="MuiButton-label"
       >
         Show detailed view
       </span>
-      <span
-        className="MuiTouchRipple-root-32"
-      />
     </button>
     <div
       className="ErrorBoundary-summary-2"

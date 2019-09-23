@@ -15,11 +15,14 @@ import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
-import { TARGET_NAME, REFERENCE_COLOR, geoTip } from './config';
+import {
+  TARGET_NAME, REFERENCE_COLOR, GEOMEAN_DESCRIPTION, geoTip,
+} from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../utils/Section';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
+
 
 const styles = {
   chart: {
@@ -143,6 +146,7 @@ class TP6M extends React.Component {
                 <ChartJSWrapper
                   title={`${`Geomean of ${subtitle}`
                     + ' ('}${count} of ${total} sites reported)`}
+                  urls={GEOMEAN_DESCRIPTION}
                   standardOptions={{
                     data,
                     tip: geoTip,

@@ -13,7 +13,7 @@ import jx from '../vendor/jx/expressions';
 import { missing } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { round } from '../vendor/math';
-import { InfoIcon } from '../utils/icons';
+import { HelpIcon } from '../utils/icons';
 
 const styles = {
   border: '1px',
@@ -224,7 +224,7 @@ class PlaybackSummary extends React.Component {
             href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/docs/about-media-playback.md#about---media-playback"
             title="more information"
           >
-            <InfoIcon />
+            <HelpIcon />
           </a>
         </h2>
         {selectFrom(PLATFORMS)

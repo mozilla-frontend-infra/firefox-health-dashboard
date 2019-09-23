@@ -1,16 +1,17 @@
 /* eslint-disable */
 
 
-import {withStyles} from "@material-ui/core";
-import {selectFrom} from "../vendor/vectors";
-import {GMTDate as Date} from "../vendor/dates";
-import {round} from "../vendor/math";
 import React from "react";
+import { withStyles } from "@material-ui/core";
+import { selectFrom } from "../vendor/vectors";
+import { GMTDate as Date } from "../vendor/dates";
+import { round } from "../vendor/math";
+import { HelpIcon } from '../utils/icons';
 
 const TARGET_NAME = "Fennec64 -20%";
 const REFERENCE_BROWSER = ['fennec64'];
 const REFERENCE_COLOR = '#45a1ff44';
-
+const GEOMEAN_DESCRIPTION = {title: "more information", url:"https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/docs/about-pageload#about---site-load-times", icon:HelpIcon};
 
 const tipStyles = {
     below: {
@@ -87,4 +88,4 @@ const geoTip = withStyles(tipStyles)(
 
 
 
-export { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, geoTip };
+export { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, GEOMEAN_DESCRIPTION, geoTip };
