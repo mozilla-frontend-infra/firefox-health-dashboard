@@ -151,6 +151,45 @@ const BROWSER_PLATFORMS = selectFrom([
     ]}
   },
   {
+    id: 'firefox-mac',
+    browser: "Firefox",
+    bits: 64,
+    os: 'macosx',
+    label: 'Firefox (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+        platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+        framework: 10,
+        repo: 'mozilla-central'
+      }},
+  },
+  {
+    id: 'chromium-mac',
+    browser: "Chromium",
+    bits: 64,
+    os: 'macosx',
+    label: 'Chromium (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+        platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+        framework: 10,
+        repo: 'mozilla-central'
+      }},
+  },
+  {
+    id: 'chrome-mac',
+    browser: "Chrome",
+    bits: 64,
+    os: 'macosx',
+    label: 'Chrome (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+      platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+      framework: 10,
+      repo: 'mozilla-central'
+    }},
+  },
+  {
     id: 'geckoview-p2',
     browser: 'geckoview',
     label: 'Geckoview p2',
@@ -573,7 +612,7 @@ const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
 const BENCHMARKS = selectFrom(BENCHMARK_SUITES.data)
   .map(row=>Data.zip(BENCHMARK_SUITES.header, row))
   .leftJoin("browser", BROWSER_PLATFORMS, "browser")
-  .where({platform: ["win32", "win64", "linux64"]})
+  .where({platform: ["win32", "win64", "linux64", "macosx"]})
   .map(({id, label, suiteFilter, platformFilter, ...rest})=>({
     ...rest,
     filter: {and:[suiteFilter, platformFilter]}
