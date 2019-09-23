@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Chart from 'react-chartjs-2';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
+import Chart from 'react-chartjs-2';
+import ChartJS from 'chart.js';
 import { cjsGenerator } from './utils';
 import { Data, isEqual } from '../../datas';
 import { GMTDate as Date } from '../../dates';
@@ -10,6 +11,8 @@ import { ErrorMessage } from '../../errors';
 import { selectFrom } from '../../vectors';
 import { coalesce, toArray } from '../../utils';
 import { withTooltip } from './CustomTooltip';
+import { ChartIcon, ImageIcon } from '../../../utils/icons';
+
 
 const styles = {
   // This div helps with canvas size changes
@@ -33,19 +36,23 @@ const styles = {
     width: '70%',
   },
 };
+
+
+ChartJS.plugins.register({
+  afterRender(c) {
+    // SET CHART BACKGROUND FOR WHEN COPYING IMAGE
+    const { ctx } = c.chart;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = styles.chartContainer.background;
+    ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+    ctx.restore();
+  },
+});
+
+
 const ToolTipChart = withTooltip()(Chart);
 
-
-const showTitle = ({ classes, title, urls }) => (
-  <h2 className={classes.title}>
-    {title}
-    {toArray(urls).map(({ title, icon, url }) => (
-      <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
-        {icon()}
-      </a>
-    ))}
-  </h2>
-);
 
 class ChartJsWrapper extends React.Component {
   constructor(props) {
@@ -53,6 +60,8 @@ class ChartJsWrapper extends React.Component {
     const { standardOptions } = props;
 
     this.state = standardOptions ? cjsGenerator(standardOptions) : {};
+    this.state.showImage = null;
+    this.chartRef = React.createRef();
   }
 
   async componentDidUpdate(prevProps) {
@@ -75,7 +84,46 @@ class ChartJsWrapper extends React.Component {
       chartHeight,
       missingDataInterval,
     } = this.props;
-    const { cjsOptions, standardOptions } = this.state;
+    const { cjsOptions, standardOptions, showImage } = this.state;
+
+    const showTitle = () => (
+      <h2 className={classes.title}>
+        {title}
+        {toArray(urls).map(({ title, icon, url }) => (
+          <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
+            {icon()}
+          </a>
+        ))}
+        {(
+          () => {
+            if (showImage) {
+              return (
+                <span
+                  title="show chart"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => this.setState({ showImage: null })}
+                >
+                  <ChartIcon />
+                </span>
+              );
+            }
+            return (
+              <span
+                title="show image for copy"
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  const chart = this.chartRef.current.chartInstance;
+                  const data = chart.toBase64Image();
+                  this.setState({ showImage: data });
+                }}
+              >
+                <ImageIcon />
+              </span>
+            );
+          }
+        )()}
+      </h2>
+    );
 
     if (isLoading) {
       return (
@@ -159,7 +207,7 @@ class ChartJsWrapper extends React.Component {
       );
 
       return (
-        <div className={classes.chartContainer}>
+        <div className={classes.chartContainer} ref={this.chartRef}>
           <ErrorMessage error={error}>
             {showTitle({ classes, title, urls })}
             <ToolTipChart
@@ -177,11 +225,30 @@ class ChartJsWrapper extends React.Component {
     return (
       <div className={classes.chartContainer}>
         {showTitle({ classes, title, urls })}
-        <ToolTipChart
-          height={chartHeight}
-          standardOptions={standardOptions}
-          {...cjsOptions}
-        />
+        <div style={{ position: 'relative' }}>
+          <ToolTipChart
+            height={chartHeight}
+            standardOptions={standardOptions}
+            chartRef={this.chartRef}
+            {...cjsOptions}
+          />
+          {showImage && (
+          <img
+            style={{
+              position: 'absolute',
+              borderColor: 'grey',
+              borderStyle: 'dashed',
+              borderWidth: '0.25rem',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+            }}
+            src={showImage}
+            alt="chart for copy"
+          />
+          )}
+        </div>
       </div>
     );
   }
@@ -211,5 +278,6 @@ ChartJsWrapper.defaultProps = {
   isLoading: false,
   missingDataInterval: 3,
 };
+
 
 export default withStyles(styles)(ChartJsWrapper);

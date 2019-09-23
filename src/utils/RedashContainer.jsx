@@ -90,20 +90,12 @@ class RedashContainer extends Component {
     return (
       <div>
         <ChartJsWrapper
-          title={(
-            <div>
-              {title}
-              {' '}
-              <a
-                href={redashQueryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="go to Redash query"
-              >
-                <LinkIcon />
-              </a>
-            </div>
-)}
+          title={title}
+          urls={{
+            title: 'go to Redash query',
+            url: redashQueryUrl,
+            icon: LinkIcon,
+          }}
           {...this.state}
         />
       </div>

@@ -215,6 +215,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               MotionMark HTML
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -280,6 +321,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               MotionMark Animometer
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -345,6 +427,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Speedometer
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -462,6 +585,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tp6: Amazon
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -527,6 +691,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tp6: Facebook
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -592,6 +797,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tp6: Google
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -657,6 +903,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tp6: YouTube
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -842,6 +1129,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Page load (tp5)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -907,6 +1235,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Window Opening (tpaint e10s)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -972,6 +1341,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Start-up (sessionrestore)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1037,6 +1447,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Start-up (sessionrestore_no_auto_restore)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1102,6 +1553,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Start-Up (ts_paint)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1167,6 +1659,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tab Opening (tabpaint)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1232,6 +1765,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tab Animation (TART)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1297,6 +1871,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               Tab Switch (tabswitch)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1362,6 +1977,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               SVG (tsvg_static)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1427,6 +2083,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               SVG (tsvgr_opacity)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
@@ -1492,6 +2189,47 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-112"
             >
               SVG (tsvgx)
+              <span
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                title="show image for copy"
+              >
+                <div
+                  style={
+                    Object {
+                      "display": "inline-block",
+                      "margin": "-1rem 0",
+                      "verticalAlign": "middle",
+                    }
+                  }
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-4"
+                    focusable="false"
+                    role="presentation"
+                    style={
+                      Object {
+                        "margin": "0 .2rem 0 .2rem",
+                        "verticalAlign": "baseline",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    />
+                  </svg>
+                </div>
+              </span>
             </h2>
             <div
               style={
