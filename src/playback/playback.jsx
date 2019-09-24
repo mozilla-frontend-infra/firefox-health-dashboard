@@ -6,71 +6,52 @@ import Section from '../utils/Section';
 
 export default class Playback extends React.Component {
   render() {
+    const sections = [
+      {
+        title: 'Firefox (Desktop)',
+        bitsVersions: [64, 32],
+        encodings: ['VP9', 'H264'],
+        browserId: 'firefox',
+      }, {
+        title: 'Firefox (Android)',
+        bitsVersions: [64],
+        encodings: ['VP9', 'H264'],
+        browserId: 'geckoview',
+      }, {
+        title: 'Firefox Preview (Android)',
+        bitsVersions: [64],
+        encodings: ['VP9', 'H264'],
+        browserId: 'fenix',
+      },
+    ];
+
     return (
       <DashboardPage
         title="Playback"
         subtitle="Release criteria"
       >
-        <Section title="Firefox (Desktop)">
-          <Grid container spacing={24}>
-            <Grid item xs={6} key="1">
-              <PlaybackSummary
-                key="VP9_firefox"
-                bits={64}
-                encoding="VP9"
-                browserId="firefox"
-              />
+        {sections.map((
+          {
+            title, bitsVersions, encodings, browserId,
+          },
+        ) => (
+          <Section title={title} key={title}>
+            <Grid container spacing={2}>
+              {bitsVersions.map(bits => (
+                encodings.map(encoding => (
+                  <Grid item xs={6} key={`grid_${bits}_${encoding}_${browserId}`}>
+                    <PlaybackSummary
+                      key={`ps_${bits}_${encoding}_${browserId}`}
+                      bits={bits}
+                      encoding={encoding}
+                      browserId={browserId}
+                    />
+                  </Grid>
+                ))
+              ))}
             </Grid>
-            <Grid item xs={6} key="2">
-              <PlaybackSummary
-                key="H264_firefox"
-                bits={64}
-                encoding="H264"
-                browserId="firefox"
-              />
-            </Grid>
-          </Grid>
-        </Section>
-        <Section title="Firefox (Android)">
-          <Grid container spacing={24}>
-            <Grid item xs={6} key="3">
-              <PlaybackSummary
-                key="VP9_geckoview"
-                bits={64}
-                encoding="VP9"
-                browserId="geckoview"
-              />
-            </Grid>
-            <Grid item xs={6} key="4">
-              <PlaybackSummary
-                key="H264_geckoview"
-                bits={64}
-                encoding="H264"
-                browserId="geckoview"
-              />
-            </Grid>
-          </Grid>
-        </Section>
-        <Section title="Firefox Preview (Android)">
-          <Grid container spacing={24}>
-            <Grid item xs={6} key="5">
-              <PlaybackSummary
-                key="VP9_fenix"
-                bits={64}
-                encoding="VP9"
-                browserId="fenix"
-              />
-            </Grid>
-            <Grid item xs={6} key="6">
-              <PlaybackSummary
-                key="H264_fenix"
-                bits={64}
-                encoding="H264"
-                browserId="fenix"
-              />
-            </Grid>
-          </Grid>
-        </Section>
+          </Section>
+        ))}
       </DashboardPage>
     );
   }
