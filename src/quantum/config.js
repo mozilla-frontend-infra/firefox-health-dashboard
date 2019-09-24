@@ -3,148 +3,23 @@ import { selectFrom } from '../vendor/vectors';
 import { Data } from '../vendor/datas';
 import { first } from '../vendor/utils';
 
-const BENCHMARKS =
-  [
-    {
-      title: 'MotionMark HTML suite',
-      label: "Firefox",
-      bits: 64,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-htmlsuite-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows10-64"
-        }}
-      ]}
-    },
-    {
-      title: 'MotionMark Animometer',
-      label: "Firefox",
-      bits: 64,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-animometer-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows10-64",
-        }}
-      ]}
-    },
-    {
-      title: 'MotionMark HTML suite',
-      label: "Firefox",
-      bits: 32,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-htmlsuite-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows7-32"
-        }}
-      ]}
-    },
-    {
-      title: "MotionMark Animometer",
-      label: "Firefox",
-      bits: 32,
-      filter: { and: [
-        { missing: "test"},
-        { eq: {
-          suite: "raptor-motionmark-animometer-firefox",
-          repo: "mozilla-central",
-          framework: 10,
-          platform: "windows7-32",
-        }}
-      ]}
-    },
-    {
-      title: "Speedometer",
-      label: 'Firefox',
-      bits:64,
-      filter: { and: [
-        { missing: 'test' },
-        { or: [
-          { eq: {
-            options: 'pgo',
-            platform: 'windows10-64',
-          }},
-          { eq: {
-            options: 'opt',
-            platform: 'windows10-64-shippable',
-          }},
-        ]},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: 'raptor-speedometer-firefox',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      label: 'Chromium',
-      bits:64,
-      filter: { and: [
-        { missing: 'test' },
-        { eq: {
-          platform: ['windows10-64-nightly', 'windows10-64-shippable'],
-          suite: [
-            'raptor-speedometer-chrome',
-            'raptor-speedometer-chromium',
-          ],
-        }},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      label: 'Firefox',
-      bits:32,
-      filter: { and: [
-        { missing: 'test' },
-        { or: [
-          { eq: {
-            options: 'pgo',
-            platform: 'windows7-32',
-          }},
-          { eq: {
-            options: 'opt',
-            platform: 'windows7-32-shippable',
-          }},
-        ]},
-        { eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-          suite: 'raptor-speedometer-firefox',
-        }},
-      ]},
-    },
-    {
-      title: "Speedometer",
-      label: 'Chromium',
-      bits:32,
-      filter: { and: [
-        { missing: 'test' },
-        { eq: {
-          platform: ['windows7-32-nightly', 'windows7-32-shippable'],
-          suite: [
-            'raptor-speedometer-chrome',
-            'raptor-speedometer-chromium',
-          ],
-          framework: 10,
-          repo: 'mozilla-central',
-        }},
-      ]},
-    },
 
-  ];
+const BENCHMARK_SUITES = {
+  header: ['browser', 'suite', 'suiteFilter'],
+
+  data: [
+    ['Firefox', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-firefox"}}],
+    ['Chromium', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chromium"}}],
+    // ['Chrome', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chrome"}}],
+    ['Firefox', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-firefox"}}],
+    ['Chromium', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chromium"}}],
+    // ['Chrome', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chrome"}}],
+    ['Firefox', 'Speedometer', {eq: {suite: "raptor-speedometer-firefox"}}],
+    ['Chromium', 'Speedometer', {eq: {suite: "raptor-speedometer-chromium"}}],
+    // ['Chrome', 'Speedometer', {eq: {suite: "raptor-speedometer-chrome"}}],
+  ]
+};
+
 
 const BROWSER_PLATFORMS = selectFrom([
   {
@@ -253,12 +128,12 @@ const BROWSER_PLATFORMS = selectFrom([
     label: 'Chromium (win64)',
     platform: 'win64',
     platformFilter: {and: [
-      {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
-      {eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-      }}
-    ]}
+        {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }}
+      ]}
   },
   {
     id: "chromium-linux64",
@@ -268,12 +143,98 @@ const BROWSER_PLATFORMS = selectFrom([
     label: 'Chromium (linux64)',
     platform: 'linux64',
     platformFilter: {and: [
-      {eq: {platform: 'linux64-shippable', options: 'opt'}},
-      {eq: {
+        {eq: {platform: 'linux64-shippable', options: 'opt'}},
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }}
+      ]}
+  },
+  {
+    id: 'chrome-win32',
+    browser: 'Chrome',
+    bits: 32,
+    os: 'win',
+    label: 'Chromium (win32)',
+    platform: 'win32',
+    platformFilter: {
+      and: [
+        {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
+        {eq: {
           framework: 10,
           repo: 'mozilla-central',
-      }}
-    ]}
+        }}
+      ]
+    }
+  },
+  {
+    id: "chrome-win64",
+    browser: 'Chrome',
+    bits: 64,
+    os: 'win',
+    label: 'Chrome (win64)',
+    platform: 'win64',
+    platformFilter: {and: [
+        {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }}
+      ]}
+  },
+  {
+    id: "chrome-linux64",
+    browser: 'Chrome',
+    bits: 64,
+    os: 'linux',
+    label: 'Chrome (linux64)',
+    platform: 'linux64',
+    platformFilter: {and: [
+        {eq: {platform: 'linux64-shippable', options: 'opt'}},
+        {eq: {
+            framework: 10,
+            repo: 'mozilla-central',
+          }}
+      ]}
+  },
+  {
+    id: 'firefox-mac',
+    browser: "Firefox",
+    bits: 64,
+    os: 'macosx',
+    label: 'Firefox (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+        platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+        framework: 10,
+        repo: 'mozilla-central'
+      }},
+  },
+  {
+    id: 'chromium-mac',
+    browser: "Chromium",
+    bits: 64,
+    os: 'macosx',
+    label: 'Chromium (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+        platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+        framework: 10,
+        repo: 'mozilla-central'
+      }},
+  },
+  {
+    id: 'chrome-mac',
+    browser: "Chrome",
+    bits: 64,
+    os: 'macosx',
+    label: 'Chrome (MacOSX)',
+    platform: "macosx",
+    platformFilter: {eq: {
+      platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
+      framework: 10,
+      repo: 'mozilla-central'
+    }},
   },
   {
     id: 'geckoview-p2',
@@ -493,6 +454,7 @@ const TP6_SITES_DATA = {
     ['Firefox', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox-cold'}}],
     ['Firefox', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox-cold'}}],
 
+    // YOU MAY REMOVE THE push_timestamp RESTRICTION AFTER APRIL 2020
     ['Chromium', 'warm', 'Tp6: Facebook', {or: [{and: [{lt: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-facebook-chrome'}}]}, {eq: {suite: 'raptor-tp6-facebook-chromium'}}]}],
     ['Chromium', 'warm', 'Tp6: Amazon', {or: [{and: [{lt: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-amazon-chrome'}}]}, {eq: {suite: 'raptor-tp6-amazon-chromium'}}]}],
     ['Chromium', 'warm', 'Tp6: Google', {or: [{and: [{lt: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-google-chrome'}}]}, {eq: {suite: 'raptor-tp6-google-chromium'}}]}],
@@ -526,6 +488,41 @@ const TP6_SITES_DATA = {
     ['Chromium', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-chromium-cold'}}],
     ['Chromium', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-chromium-cold'}}],
     ['Chromium', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-chromium-cold'}}],
+
+
+    ['Chrome', 'warm', 'Tp6: Facebook', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-facebook-chrome'}}]},],
+    ['Chrome', 'warm', 'Tp6: Amazon', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-amazon-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Google', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-google-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: YouTube', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-youtube-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Imdb', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-imdb-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Imgur', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-imgur-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Netflix', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-netflix-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Fandom', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-fandom-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Bing', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-bing-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Yandex', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-yandex-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Apple', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-apple-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Microsoft', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-microsoft-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Office', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}},{eq: {suite: 'raptor-tp6-office-chromium'}}]}],
+    ['Chrome', 'warm', 'Tp6: Reddit', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-reddit-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Docs', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-docs-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: eBay', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-ebay-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Google Mail', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-google-mail-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Instagram', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-instagram-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: PayPal', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-paypal-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Pinterest', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-pinterest-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Sheets', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-sheets-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Slides', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-slides-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Tumblr', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-tumblr-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Twitter', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-twitter-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Twitch', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-twitch-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Wikipedia', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-wikipedia-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Yahoo Mail', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-yahoo-mail-chrome'}}]}],
+    ['Chrome', 'warm', 'Tp6: Yahoo News', {and: [{gte: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-yahoo-news-chrome'}}]}],
+
+    ['Chrome', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-chrome-cold'}}],
+    ['Chrome', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-chrome-cold'}}],
+    ['Chrome', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-chrome-cold'}}],
+    ['Chrome', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-chrome-cold'}}],
 
 
     ['geckoview',         'cold', 'Tp6 mobile: Amazon',               { eq: { suite: ['raptor-tp6m-cold-amazon-geckoview', 'raptor-tp6m-amazon-geckoview-cold']}}],
@@ -689,14 +686,22 @@ const TP6_COMBOS = selectFrom(TP6_SITES_DATA.data)
   .sort("site")
   .leftJoin('browser', BROWSER_PLATFORMS, 'browser')
   .leftJoin('mode', TP6_TESTS_DATA, 'mode')
-  .map(row => {
-    row.filter = {
-      and: [row.siteFilter, row.testFilter, row.platformFilter],
-    };
-
-    return row;
-  })
+  .map(({siteFilter, testFilter, platformFilter, ...rest}) => ({
+    ...rest,
+    filter: {and:[siteFilter, testFilter, platformFilter]},
+  }))
   .materialize();
+
+const BENCHMARKS = selectFrom(BENCHMARK_SUITES.data)
+  .map(row=>Data.zip(BENCHMARK_SUITES.header, row))
+  .leftJoin("browser", BROWSER_PLATFORMS, "browser")
+  .where({platform: ["win32", "win64", "linux64", "macosx"]})
+  .map(({id, label, suiteFilter, platformFilter, ...rest})=>({
+    ...rest,
+    filter: {and:[suiteFilter, platformFilter]}
+  }))
+  .materialize();
+
 
 
 export { BENCHMARKS, TP6_COMBOS, TP6M_SITES, BROWSER_PLATFORMS, TP6_TESTS };

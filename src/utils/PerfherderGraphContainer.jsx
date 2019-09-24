@@ -7,7 +7,7 @@ import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
-  exists, missing, sleep, literalField,
+  exists, literalField, missing, sleep, toArray,
 } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
@@ -186,16 +186,6 @@ const perfherderFormatter = (series, timeDomain) => {
   const firstTime = timeDomain.min.unix();
   const timeRange = Date.today().unix() - firstTime;
   const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t => t >= timeRange);
-  const jointParam = {
-    timerange: bestRange,
-    series: selectFrom(series)
-      .select('sources')
-      // each series has multiple sources, merge them
-      .flatten()
-      .select('meta')
-      .map(({ repo, id, framework }) => [repo, id, 1, framework])
-      .toArray(),
-  };
   const combinedSeries = selectFrom(series)
     .enumerate()
     .map(({ sources, ...row }) => ({
@@ -215,12 +205,27 @@ const perfherderFormatter = (series, timeDomain) => {
     }))
     .toArray();
 
+  const urls = {
+    title: 'show Perfherder',
+    url: URL({
+      path: [TREEHERDER, 'perf.html#/graphs'],
+      query: {
+        timerange: bestRange,
+        series: selectFrom(series)
+          .select('sources')
+          // each series has multiple sources, merge them
+          .flatten()
+          .select('meta')
+          .map(({ repo, id, framework }) => [repo, id, 1, framework])
+          .toArray(),
+      },
+    }),
+    icon: LinkIcon,
+  };
+
   return {
     standardOptions: generateStandardOptions(combinedSeries, timeDomain),
-    jointUrl: URL({
-      path: [TREEHERDER, 'perf.html#/graphs'],
-      query: jointParam,
-    }),
+    urls,
   };
 };
 
@@ -273,7 +278,7 @@ class PerfherderGraphContainer extends React.Component {
 
     this.state = {
       standardOptions: null,
-      jointUrl: null,
+      urls: null,
       isLoading: true,
     };
   }
@@ -292,7 +297,7 @@ class PerfherderGraphContainer extends React.Component {
 
   async update() {
     const {
-      series, style, reference, timeDomain,
+      series, style, urls: propsUrls, reference, timeDomain,
     } = this.props;
 
     this.setState({ isLoading: true });
@@ -300,8 +305,8 @@ class PerfherderGraphContainer extends React.Component {
 
     try {
       const config = await getPerfherderData(series, timeDomain);
-      const { standardOptions } = config;
-
+      const { standardOptions, urls: moreUrls } = config;
+      config.urls = [...toArray(propsUrls), ...toArray(moreUrls)];
       Data.setDefault(standardOptions, style);
 
       if (exists(reference)) {
@@ -324,26 +329,13 @@ class PerfherderGraphContainer extends React.Component {
 
   render() {
     const { title, missingDataInterval } = this.props;
-    const { jointUrl, standardOptions, isLoading } = this.state;
+    const { urls, standardOptions, isLoading } = this.state;
 
     return (
       <div key={title} style={{ position: 'relative' }}>
         <ChartJsWrapper
-          title={(
-            <div>
-              {title}
-              {jointUrl && (
-              <a
-                href={jointUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="show Perfherder"
-              >
-                <LinkIcon />
-              </a>
-              )}
-            </div>
-)}
+          title={title}
+          urls={urls}
           {...{
             style: { type: 'scatter' },
             isLoading,

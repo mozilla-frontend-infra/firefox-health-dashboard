@@ -1,6 +1,6 @@
 import SETTINGS from '../../../settings';
 import {
-  isNumeric, missing, exists, toArray,
+  exists, isNumeric, missing, toArray,
 } from '../../utils';
 import { Data, isData } from '../../datas';
 import { first, selectFrom } from '../../vectors';
@@ -332,10 +332,10 @@ const cjsGenerator = (standardOptions) => {
         xAxes,
         yAxes,
       },
+      backgroundColor: 'rgb(255,0,0)',
     },
     data: { datasets },
   };
-
   if (ticksCallback) {
     cjsOptions.options.scales.yAxes[0].ticks.callback = ticksCallback;
   }
@@ -357,6 +357,7 @@ const cjsGenerator = (standardOptions) => {
 
   return { cjsOptions, standardOptions: options };
 };
+
 
 // eslint-disable-next-line import/prefer-default-export
 export { cjsGenerator };
