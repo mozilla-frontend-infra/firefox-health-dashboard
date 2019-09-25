@@ -223,7 +223,7 @@ class PlaybackSummary extends React.Component {
     }
 
     return (
-      <div key={`cont_${browserId}_${encoding}_${bits}`}>
+      <div key={`cont_${browserId}_${encoding}`}>
         <h2 className={classes.title}>
           {encoding}
           {' '}
