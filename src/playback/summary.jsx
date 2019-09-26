@@ -61,6 +61,12 @@ const styles = {
     width: '100%',
     height: '3rem',
   },
+  noData: {
+    fontSize: '1rem',
+    backgroundColor: '#d3d3d3',
+    width: '100%',
+    height: '3rem',
+  },
 };
 const SPECIAL_SIZES = [
   { id: '480p30', label: '480p' }, // .4M pixels
@@ -73,6 +79,7 @@ const lookupType = {
   0: 'pass',
   1: 'bad',
   2: 'fail',
+  3: 'noData',
 };
 
 class PlaybackSummary extends React.Component {
@@ -135,7 +142,8 @@ class PlaybackSummary extends React.Component {
             selectFrom(speeds)
               .map(({ speed, loss }) => {
                 if (speed === 1) {
-                  if (missing(loss) || loss > 1) return 2;
+                  if (missing(loss)) return 3;
+                  if (loss > 1) return 2;
 
                   return 0;
                 }
@@ -177,13 +185,13 @@ class PlaybackSummary extends React.Component {
     if (score === 'fail') {
       const speed = result.speeds.find(s => s.speed === 1);
 
-      if (missing(speed.loss)) {
-        return 'no data for past week';
-      }
-
       return `${round(speed.loss, { places: 2 })} dropped frames at ${
         speed.speed
       }x playback speed`;
+    }
+
+    if (score === 'noData') {
+      return 'no data for past week';
     }
   }
 
@@ -215,7 +223,7 @@ class PlaybackSummary extends React.Component {
     }
 
     return (
-      <div key="1">
+      <div key={`cont_${browserId}_${encoding}`}>
         <h2 className={classes.title}>
           {encoding}
           {' '}
@@ -230,13 +238,13 @@ class PlaybackSummary extends React.Component {
         {selectFrom(PLATFORMS)
           .where({ bits, type: platformType })
           .map(platform => (
-            // https://health.graphics/playback?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
+            // https://health.graphics/playback/details?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
               key={platform}
               className={classes.line}
               onClick={() => {
                 const url = URL({
-                  path: '/playback',
+                  path: '/playback/details',
                   query: {
                     platform: platform.id,
                     encoding,
