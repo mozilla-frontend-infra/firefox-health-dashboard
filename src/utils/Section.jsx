@@ -35,7 +35,7 @@ const Section = ({
           {subtitle && <span className={classes.subtitle}>{subtitle}</span>}
           {more && (
             <span>
-              {' '}
+
               <a href={more} title="show details">
                 <DetailsIcon />
               </a>
