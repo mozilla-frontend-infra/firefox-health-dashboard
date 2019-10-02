@@ -10,13 +10,13 @@ const BENCHMARK_SUITES = {
   data: [
     ['Firefox', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-firefox"}}],
     ['Chromium', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chromium"}}],
-    // ['Chrome', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chrome"}}],
+    ['Chrome', 'MotionMark HTML', {eq: {suite: "raptor-motionmark-htmlsuite-chrome"}}],
     ['Firefox', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-firefox"}}],
     ['Chromium', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chromium"}}],
-    // ['Chrome', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chrome"}}],
+    ['Chrome', 'MotionMark Animometer', {eq: {suite: "raptor-motionmark-animometer-chrome"}}],
     ['Firefox', 'Speedometer', {eq: {suite: "raptor-speedometer-firefox"}}],
     ['Chromium', 'Speedometer', {eq: {suite: "raptor-speedometer-chromium"}}],
-    // ['Chrome', 'Speedometer', {eq: {suite: "raptor-speedometer-chrome"}}],
+    ['Chrome', 'Speedometer', {eq: {suite: "raptor-speedometer-chrome"}}],
   ]
 };
 
