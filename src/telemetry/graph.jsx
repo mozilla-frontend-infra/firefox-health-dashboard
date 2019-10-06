@@ -1,15 +1,35 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import MG from 'metrics-graphics';
+import React, { Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
+
+import SETTINGS from '../settings';
 import { Log } from '../vendor/logs';
 import { fetchJson, URL } from '../vendor/requests';
-import SETTINGS from '../settings';
 import { withErrorBoundary } from '../vendor/errors';
 
-class TelemetryContainer extends React.Component {
+const MetricsGraphics = lazy(() => import(/* webpackChunkName: "react-metrics-graphics" */ 'react-metrics-graphics'));
+
+class TelemetryContainer extends Component {
+  state = {
+    graphData: null,
+    telemetryUrl: null,
+  };
+
+  get fullTelemetryUrl() {
+    const { telemetryUrl } = this.state;
+    if (telemetryUrl) {
+      return URL({
+        path: telemetryUrl,
+        query: { processType: 'parent' },
+      });
+    }
+
+    return null;
+  }
+
   async componentDidMount() {
-    await this.fetchPlotGraph(this.props.id, this.props.queryParams);
+    const { id, queryParams } = this.props;
+    await this.fetchPlotGraph(id, queryParams);
   }
 
   async fetchPlotGraph(id, queryParams) {
@@ -23,79 +43,74 @@ class TelemetryContainer extends React.Component {
 
     try {
       const { graphData, telemetryUrl } = await fetchJson(url);
-
-      if (!this.graphTitleLink) {
-        return;
-      }
-
-      const fullTelemetryUrl = URL({
-        path: telemetryUrl,
-        query: { processType: 'parent' },
+      this.setState({
+        graphData,
+        telemetryUrl,
       });
-
-      this.graphTitleLink.setAttribute('href', fullTelemetryUrl);
-      this.graphSubtitleEl.textContent = graphData.description;
-      this.graphEvolutionsTimeline(graphData, this.graphEl);
     } catch (cause) {
       throw Log.error('Problem loading {{url}}', { url }, cause);
     }
   }
 
-  graphEvolutionsTimeline({
-    datas, params, yLabel, legendLabels,
-  }, graphEl) {
-    const newDatas = datas.map(evo => MG.convert.date(evo, 'date'));
+  renderGraph() {
+    const {
+      graphData: {
+        datas, params, yLabel, legendLabels,
+      },
+    } = this.state;
 
-    MG.data_graphic({
-      data: newDatas,
-      chart_type: 'line',
-      full_width: true,
-      full_height: true,
-      top: 0,
-      right: 0,
-      bottom: 40,
-      left: 80,
-      min_y_from_data: true,
-      target: graphEl,
-      x_extended_ticks: true,
-      x_label: params.useSubmissionDate ? 'Submission Date' : 'Built Date',
-      y_label: yLabel,
-      xax_format: date => `${date.getMonth() + 1}-${date.getDate()}`,
-      yax_format: y => y,
-      transition_on_update: false,
-      legend: legendLabels,
-      legend_target: graphEl.querySelector('.graph-legend'),
-      aggregate_rollover: true,
-      show_secondary_x_label: false,
-    });
+    return (
+      <Suspense fallback="">
+        <MetricsGraphics
+          aggregate_rollover
+          bottom={40}
+          chart_type="line"
+          data={datas}
+          full_height
+          full_width
+          left={80}
+          legend={legendLabels}
+          legend_target={this.legendTarget}
+          min_y_from_data
+          right={0}
+          show_secondary_x_label={false}
+          top={0}
+          transition_on_update={false}
+          xax_format={date => `${date.getMonth() + 1}-${date.getDate()}`}
+          x_extended_ticks
+          x_label={params.useSubmissionDate ? 'Submission Date' : 'Built Date'}
+          yax_format={y => y}
+          y_label={yLabel}
+        />
+      </Suspense>
+    );
   }
 
   render() {
     const { id, title } = this.props;
+    const { graphData } = this.state;
+
 
     if (title) {
       return (
         <div id={id} key={id} className="criteria-widget">
           <header>
             <h3 className="graph-title">
-              <a
-                className="graph-title-link"
-                ref={a => (this.graphTitleLink = a)}
-              >
-                {title}
-              </a>
+              {
+                this.fullTelemetryUrl && (
+                  <a className="graph-title-link" href={this.fullTelemetryUrl}>
+                    {title}
+                  </a>
+                )
+              }
             </h3>
           </header>
           <div>
-            <div
-              className="graph-subtitle"
-              ref={div => (this.graphSubtitleEl = div)}
-            >
-              {}
+            <div className="graph-subtitle">
+              {graphData.description}
             </div>
-            <div className="graph" ref={div => (this.graphEl = div)}>
-              <div className="graph-legend">{}</div>
-            </div>
+
+            {graphData && this.renderGraph()}
           </div>
         </div>
       );
