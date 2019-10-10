@@ -231,6 +231,8 @@ class PlaybackSummary extends React.Component {
           <a
             href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/blob/master/docs/about-media-playback.md#about---media-playback"
             title="more information"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <HelpIcon />
           </a>
