@@ -7,7 +7,7 @@ const graph = (specs) => {
   } = specs;
 
   // For every series let's convert the values to proper dates
-  data.map(evo => MG.convert.date(evo, 'date'));
+  data.map((evo) => MG.convert.date(evo, 'date'));
   MG.data_graphic({
     title,
     full_width: true,

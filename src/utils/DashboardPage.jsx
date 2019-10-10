@@ -65,7 +65,7 @@ const DashboardPage = ({
         </a>
       </div>
     </div>
-    <Fragment>{children}</Fragment>
+    <>{children}</>
   </div>
 );
 

@@ -4,12 +4,12 @@ import { fetchJson, URL } from '../vendor/requests';
 import SETTINGS from '../settings';
 
 const ENDPOINT = URL({ path: [SETTINGS.backend, 'api/android/nimbledroid'] });
-const matchUrl = profileName => profileName.replace(
+const matchUrl = (profileName) => profileName.replace(
   /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
   (match, firstMatch) => firstMatch,
 );
-const matchShorterUrl = url => url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
-const transformedDataForMetrisGraphics = scenarios => Object.keys(scenarios).reduce((result, scenarioName) => {
+const matchShorterUrl = (url) => url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
+const transformedDataForMetrisGraphics = (scenarios) => Object.keys(scenarios).reduce((result, scenarioName) => {
   scenarios[scenarioName].forEach(({ date, ms }) => {
     // multiple scenarioName have same url0
     const url = matchUrl(scenarioName);
@@ -101,7 +101,7 @@ const fetchProductData = async (product) => {
 
 async function fetchNimbledroidData(products) {
   const productsData = await Promise.all(
-    products.map(async product => fetchProductData(product)),
+    products.map(async (product) => fetchProductData(product)),
   );
 
   return mergeProductsData(productsData);

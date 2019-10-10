@@ -83,7 +83,7 @@ class Subtests extends React.Component {
 
 
             {tests
-              .map(test => (
+              .map((test) => (
                 <Grid
                   item
                   xs={6}
@@ -99,8 +99,7 @@ class Subtests extends React.Component {
                           label: browser,
                           filter: { and: [{ eq: { test } }, filter] },
                         }
-                      ))
-                    }
+                      ))}
                   />
                 </Grid>
               ))}

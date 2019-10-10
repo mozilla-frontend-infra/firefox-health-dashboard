@@ -75,7 +75,7 @@ const perherderGraphUrl = ({
   path: [TREEHERDER, 'perf.html#/graphs'],
   query: {
     timerange,
-    series: signatureIds.map(id => [repo, id, 1, framework]),
+    series: signatureIds.map((id) => [repo, id, 1, framework]),
   },
 });
 
@@ -84,14 +84,14 @@ export const adjustedData = (data, percentileThreshold, measure = 'value') => {
 
   if (percentileThreshold < 100) {
     const threshold = percentile(
-      data.map(d => d[measure]),
+      data.map((d) => d[measure]),
       percentileThreshold / 100.0,
     );
 
-    transformedData = data.filter(d => d[measure] < threshold);
+    transformedData = data.filter((d) => d[measure] < threshold);
   }
 
-  return transformedData.map(datum => ({
+  return transformedData.map((datum) => ({
     ...datum,
     datetime: new Date(datum.push_timestamp * 1000),
   }));

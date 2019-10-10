@@ -14,7 +14,7 @@ import Edge from './Edge';
 
 const DEBUG = false;
 const UNLIKELY_PROPERTY_NAME = '*';
-const subtractEdges = (a, b) => a.filter(v => b.every(w => w.name !== v.name));
+const subtractEdges = (a, b) => a.filter((v) => b.every((w) => w.name !== v.name));
 
 function getEdgeByName(cubes, edgeName) {
   if (DEBUG && !(cubes instanceof ArrayWrapper)) {
@@ -27,7 +27,7 @@ function getEdgeByName(cubes, edgeName) {
         Log.error('not expected');
       }
 
-      return edges.find(e => e.name === edgeName);
+      return edges.find((e) => e.name === edgeName);
     })
     .coalesce();
 }
@@ -63,7 +63,7 @@ class Cube {
     });
 
     return new Cube(
-      this.edges.filter(e => missing(combination[e.name])),
+      this.edges.filter((e) => missing(combination[e.name])),
       this.matrix.get(coords),
     );
   }
@@ -109,7 +109,7 @@ Cube.newInstance = ({ edges, zero }) => {
   return new Cube(
     normalizedEdges,
     new Matrix({
-      dims: normalizedEdges.map(e => e.domain.partitions.length),
+      dims: normalizedEdges.map((e) => e.domain.partitions.length),
       zero,
     }),
   );
@@ -134,14 +134,14 @@ class HyperCube {
   where(combination) {
     const selections = toPairs(combination)
       .map((value, edgeName) => getEdgeByName(this._values, edgeName).domain.partitions.findIndex(
-        p => p.value === value,
+        (p) => p.value === value,
       ))
       .fromPairs();
     const values = this._values
       .map(
         ({ edges, matrix }) => new Cube(
-          edges.filter(e => missing(combination[e.name])),
-          matrix.get(edges.map(e => selections[e.name])),
+          edges.filter((e) => missing(combination[e.name])),
+          matrix.get(edges.map((e) => selections[e.name])),
         ),
       )
       .fromPairs();
@@ -198,9 +198,9 @@ function align(cubes, cube) {
         .fromPairs();
       const newPart = selectFrom(foreignParts)
         .select('value')
-        .filter(p => missing(nameToIndex[p]))
+        .filter((p) => missing(nameToIndex[p]))
         .toArray();
-      const mapping = foreignParts.map(p => nameToIndex[p.value]);
+      const mapping = foreignParts.map((p) => nameToIndex[p.value]);
 
       if (newPart.length > 0) {
         different = true;
@@ -250,8 +250,8 @@ function sequence(cubes, requestedEdges, options = {}) {
   // MAP FROM name TO (requested dimension TO matrix dimension)
   const maps = cubes
     .map(({ edges }) => requestedEdges
-      .map(e => edges.findIndex(f => f.name === e.name))
-      .map(i => (i === -1 ? null : i)))
+      .map((e) => edges.findIndex((f) => f.name === e.name))
+      .map((i) => (i === -1 ? null : i)))
     .fromPairs();
   // MAP FROM name TO NOT-REQUESTED EDGES
   const residue = cubes
@@ -334,16 +334,16 @@ function window(cubes, { value, edges: edgeNames, along }) {
   }
 
   const outerEdges = toArray(edgeNames)
-    .map(n => getEdgeByName(alignedCubes, n))
+    .map((n) => getEdgeByName(alignedCubes, n))
     .filter(exists);
   const innerEdges = innerNames
-    .map(n => getEdgeByName(alignedCubes, n))
+    .map((n) => getEdgeByName(alignedCubes, n))
     .filter(exists);
   const outerDims = outerEdges
-    .map(e => e.domain.partitions.length)
+    .map((e) => e.domain.partitions.length)
     .filter(exists);
   const innerDims = innerEdges
-    .map(e => e.domain.partitions.length)
+    .map((e) => e.domain.partitions.length)
     .filter(exists);
   const outerMatrix = new Matrix({
     dims: outerDims,
@@ -355,7 +355,7 @@ function window(cubes, { value, edges: edgeNames, along }) {
     if (innerNames.length === 0) {
       const v = value(
         toPairs(outerRow)
-          .map(d => d.matrix.data)
+          .map((d) => d.matrix.data)
           .fromLeaves(),
       );
 
@@ -372,7 +372,7 @@ function window(cubes, { value, edges: edgeNames, along }) {
       )) {
         const v = value(
           toPairs(innerRow)
-            .map(d => d.matrix.data)
+            .map((d) => d.matrix.data)
             .fromLeaves(),
           innerCoord[0],
           innerMatrix.data,
@@ -403,11 +403,11 @@ Google "sql group by cube" for more information
  */
 ArrayWrapper.edges = (self, edges, zero = array) => {
   const normalizedEdges = edges.map(Edge.newInstance);
-  const dims = normalizedEdges.map(e => e.domain.partitions.length);
+  const dims = normalizedEdges.map((e) => e.domain.partitions.length);
   const matrix = new Matrix({ dims, zero });
 
   self.forEach((row) => {
-    const coord = normalizedEdges.map(e => e.domain.valueToIndex(e.value(row)));
+    const coord = normalizedEdges.map((e) => e.domain.valueToIndex(e.value(row)));
 
     zip(dims, normalizedEdges).forEach(([d, e], i) => {
       if (e.domain.type === 'value' && d < e.domain.partitions.length) {
@@ -420,7 +420,7 @@ ArrayWrapper.edges = (self, edges, zero = array) => {
     matrix.add(coord, row);
   });
 
-  normalizedEdges.forEach(e => e.domain.lock());
+  normalizedEdges.forEach((e) => e.domain.lock());
 
   return new Cube(normalizedEdges, matrix);
 };

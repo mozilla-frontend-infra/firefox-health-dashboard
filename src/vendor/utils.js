@@ -13,7 +13,7 @@ return true if the container is empty
 function isEmpty(value) {
   return (
     (isArray(value) && value.length === 0)
-    || (MANY_TYPES.some(t => value instanceof t) && value.isEmpty())
+    || (MANY_TYPES.some((t) => value instanceof t) && value.isEmpty())
   );
 }
 
@@ -39,7 +39,7 @@ function missing(value) {
 }
 
 function isMany(value) {
-  return isArray(value) || MANY_TYPES.some(t => value instanceof t);
+  return isArray(value) || MANY_TYPES.some((t) => value instanceof t);
 }
 
 /*
@@ -163,9 +163,9 @@ function isFunction(f) {
 expecting Array of Arrays, return transpose
  */
 function zip(...args) {
-  const length = Math.max(...args.map(a => a.length));
+  const length = Math.max(...args.map((a) => a.length));
 
-  return array(length).map((_, i) => args.map(a => a[i]));
+  return array(length).map((_, i) => args.map((a) => a[i]));
 }
 
 /*
@@ -185,7 +185,7 @@ function splitField(fieldname) {
   return fieldname
     .replace(/\\\./g, '\b')
     .split('.')
-    .map(v => v.replace(/[\b]/g, '.'));
+    .map((v) => v.replace(/[\b]/g, '.'));
 }
 
 /*

@@ -15,7 +15,7 @@ class RGBAColor extends Color {
   }
 
   toRGBA() {
-    return `rgba(${this.value.map(v => `${v}`).join(',')})`;
+    return `rgba(${this.value.map((v) => `${v}`).join(',')})`;
   }
 }
 
@@ -27,7 +27,7 @@ Color.parseHTML = (html) => {
       ...selectFrom(html)
         .slice(1)
         .chunk(2)
-        .map(vv => Number.parseInt(vv.join(''), 16)),
+        .map((vv) => Number.parseInt(vv.join(''), 16)),
     );
   }
 };

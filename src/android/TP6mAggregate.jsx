@@ -64,7 +64,7 @@ async function pullAggregate({
     .flatten()
   /* eslint-disable-next-line camelcase */
     .filter(({ push_timestamp }) => referenceRange.includes(push_timestamp))
-    .map(row => ({ ...row, ...row.meta }))
+    .map((row) => ({ ...row, ...row.meta }))
     .edges([
       {
         name: 'test',
@@ -125,7 +125,7 @@ async function pullAggregate({
     .flatten()
     /* eslint-disable-next-line camelcase */
     .filter(({ push_timestamp }) => timeDomain.includes(push_timestamp))
-    .map(row => ({ ...row, ...row.meta }))
+    .map((row) => ({ ...row, ...row.meta }))
     .edges([
       {
         name: 'test',
@@ -175,7 +175,7 @@ async function pullAggregate({
         - measured
           .slice()
           .reverse()
-          .findIndex(m => m.length > 0),
+          .findIndex((m) => m.length > 0),
     },
   );
   const daily = window(

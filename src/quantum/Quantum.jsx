@@ -590,11 +590,11 @@ export default class QuantumIndex extends React.Component {
         <DashboardPage title="Quantum" subtitle="Release Criteria Report">
           {selectFrom(reduced).limit(2)}
           <h2 key="moreData">
-            {'More data on'}
+            More data on
             <strong>https://health.graphics/quantum</strong>
-            {'. Ask questions in'}
+            . Ask questions in
             <strong>#quantum</strong>
-            {' (IRC & Slack)'}
+             (IRC & Slack)
           </h2>
         </DashboardPage>
       );

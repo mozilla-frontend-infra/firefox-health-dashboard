@@ -9,7 +9,7 @@ const SummaryTable = ({ content = [], header }) => (
       <thead>
         <tr>
           <th />
-          {header.map(item => (
+          {header.map((item) => (
             <th className="column" key={item}>
               {item}
             </th>

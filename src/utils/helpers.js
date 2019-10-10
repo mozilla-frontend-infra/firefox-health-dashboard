@@ -18,7 +18,7 @@ export const transformGraphData = (keys, data) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const key of keys) {
     finalData.push(
-      data.map(item => ({ date: new Date(item.date), value: item[key] })),
+      data.map((item) => ({ date: new Date(item.date), value: item[key] })),
     );
   }
 
