@@ -1,5 +1,5 @@
 /* global window */
-import { delayedValue } from './utils';
+import { delayedValue } from './signals';
 import { Log } from './logs';
 
 const { indexedDB } = window;

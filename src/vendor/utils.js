@@ -236,30 +236,7 @@ function isData(val) {
   return val.constructor === OBJECT_CONSTRUCTOR || val instanceof Data;
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
-const delayedValue = () => {
-  // return a Promise to a value
-  // this.resolve(value) to assign the value when available
-  let selfResolve = null;
-  let selfReject = null;
-  const self = new Promise((resolve, reject) => {
-    selfResolve = resolve;
-    selfReject = reject;
-  });
-
-  self.resolve = selfResolve;
-  self.reject = selfReject;
-
-  return self;
-};
-
 export {
-  delayedValue,
   first,
   last,
   toArray,
@@ -284,5 +261,4 @@ export {
   reverse,
   Data,
   isData,
-  sleep,
 };
