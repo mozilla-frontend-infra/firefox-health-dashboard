@@ -9,3 +9,4 @@ build
 coverage
 .idea
 *.iml
+/src/vendor/.svn
