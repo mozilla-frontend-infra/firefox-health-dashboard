@@ -1,11 +1,11 @@
 /* global document */
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
+import TelemetryContainer from '../telemetry/graph';
 import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
-import TelemetryContainer from '../telemetry/graph';
 import { quantum32QueryParams, quantum64QueryParams, statusLabels } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
@@ -13,7 +13,8 @@ import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
 
-export default class QuantumIndex extends React.Component {
+
+export default class QuantumIndex extends Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
@@ -594,7 +595,7 @@ export default class QuantumIndex extends React.Component {
             <strong>https://health.graphics/quantum</strong>
             . Ask questions in
             <strong>#quantum</strong>
-             (IRC & Slack)
+            (IRC & Slack)
           </h2>
         </DashboardPage>
       );
