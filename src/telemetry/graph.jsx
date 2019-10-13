@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
-
 import SETTINGS from '../settings';
 import { Log } from '../vendor/logs';
 import { fetchJson, URL } from '../vendor/requests';
@@ -27,12 +26,12 @@ class TelemetryContainer extends Component {
     return null;
   }
 
-  async componentDidMount() {
-    const { id, queryParams } = this.props;
-    await this.fetchPlotGraph(id, queryParams);
+  componentDidMount() {
+    this.fetchPlotGraph();
   }
 
-  async fetchPlotGraph(id, queryParams) {
+  async fetchPlotGraph() {
+    const { id, queryParams } = this.props;
     const url = URL({
       path: [SETTINGS.backend, 'api/perf/telemetry'],
       query: {
