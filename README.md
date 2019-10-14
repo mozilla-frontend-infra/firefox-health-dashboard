@@ -97,7 +97,7 @@ git push --no-verify origin
 ## Neutrino and preset
 
 This project uses [Neutrino](https://github.com/neutrinojs/neutrino) and the
-[@neutrinojs/react](https://neutrino.js.org/packages/react/) preset. You can read about all features included in this preset in [here](https://github.com/neutrinojs/neutrino/blob/master/docs/packages/react/README.md#features).
+[@neutrinojs/react](https://neutrino.js.org/packages/react/) preset. You can read about all features included in this preset in [here](https://github.com/neutrinojs/neutrino/blob/master/packages/react/README.md#features).
 
 ## Attributions
 
