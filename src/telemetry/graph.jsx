@@ -26,8 +26,8 @@ class TelemetryContainer extends Component {
     return null;
   }
 
-  componentDidMount() {
-    this.fetchPlotGraph();
+  async componentDidMount() {
+    await this.fetchPlotGraph();
   }
 
   async fetchPlotGraph() {
