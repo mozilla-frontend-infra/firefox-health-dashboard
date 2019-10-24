@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import { URL } from '../vendor/requests';
 import { selectFrom } from '../vendor/vectors';
-import { missing } from '../vendor/utils';
+import { missing, coalesce } from '../vendor/utils';
 import { geomean, round, sum } from '../vendor/math';
 import {
   BROWSER_PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES,
@@ -241,14 +241,14 @@ async function pullAggregate({
       edges: ['test', 'platform'],
       value: ({ mask, referenceValue }) => ({
         range: {
-          min: round(
+          min: coalesce(round(
             geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.min : null))),
             { places: 3 },
-          ),
-          max: round(
+          ), 0),
+          max: coalesce(round(
             geomean(selectFrom(mask, referenceValue).map((m, r) => ((m && r) ? r.range.max : null))),
             { places: 3 },
-          ),
+          ), 0),
         },
       }),
     },

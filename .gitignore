@@ -8,4 +8,5 @@ dist
 build
 coverage
 .idea
+.svn
 *.iml
