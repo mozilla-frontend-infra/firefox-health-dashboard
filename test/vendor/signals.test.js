@@ -5,8 +5,8 @@ describe('signals', () => {
     const s = new Signal();
     let a = false;
     let b = false;
-    s.then(() => {a = true;});
-    s.then(() => {b = true;});
+    s.then(() => { a = true; });
+    s.then(() => { b = true; });
 
     expect(a).toEqual(false);
     expect(b).toEqual(false);
@@ -20,7 +20,7 @@ describe('signals', () => {
   it('mutiple go trigger only once', () => {
     const s = new Signal();
     let a = 0;
-    s.then(() => {a += 1;});
+    s.then(() => { a += 1; });
     expect(a).toEqual(0);
 
     s.go();
@@ -38,13 +38,13 @@ describe('signals', () => {
     s.go();
 
     let a = 0;
-    s.then(() => {a += 1;});
+    s.then(() => { a += 1; });
     expect(a).toEqual(1);
   });
 
   it('go() does not throw an error', () => {
     const s = new Signal();
-    s.then(() => {return 1 / 0;});
+    s.then(() => 1 / 0);
     s.go();
     expect(s.done).toEqual(true);
   });
@@ -93,34 +93,32 @@ describe('signals', () => {
 
 
     if (s.done) {
-      throw new Error("not expected");
+      throw new Error('not expected');
     }
 
     s.go();
 
     if (!s.done) {
-      throw new Error("not expected");
+      throw new Error('not expected');
     }
   });
 
   it('signal works as a decision value, kinda', () => {
     const s = new Signal();
 
-
+    // eslint-disable-next-line eqeqeq
     if (s == true) {
-      throw new Error("not expected");
+      throw new Error('not expected');
     }
 
     if (+s) {
-      throw new Error("not expected");
+      throw new Error('not expected');
     }
 
     s.go();
 
     if (!s) {
-      throw new Error("not expected");
+      throw new Error('not expected');
     }
   });
-
-
 });

@@ -1,26 +1,26 @@
-import {Log} from "./logs";
-import {GMTDate} from "./dates";
+import { Log } from './logs';
+import { GMTDate } from './dates';
 
 function sleep(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 const delayedValue = () => {
-    // return a Promise to a value
-    // this.resolve(value) to assign the value when available
-    let selfResolve = null;
-    let selfReject = null;
-    const self = new Promise((resolve, reject) => {
-        selfResolve = resolve;
-        selfReject = reject;
-    });
+  // return a Promise to a value
+  // this.resolve(value) to assign the value when available
+  let selfResolve = null;
+  let selfReject = null;
+  const self = new Promise((resolve, reject) => {
+    selfResolve = resolve;
+    selfReject = reject;
+  });
 
-    self.resolve = selfResolve;
-    self.reject = selfReject;
+  self.resolve = selfResolve;
+  self.reject = selfReject;
 
-    return self;
+  return self;
 };
 
 /*
@@ -30,47 +30,46 @@ use `go()` to trigger the signal
 attach dependnecies to signal, or wait on signal to continue async functions.
  */
 class Signal {
+  constructor() {
+    this.done = false;
+    this.waiting = [];
+  }
 
-    constructor(){
-        this.done = false;
-        this._waiting = [];
-    }
+  valueOf() {
+    return this.done;
+  }
 
-    valueOf(){
-        return this.done;
-    }
-
-    /*
+  /*
     Execute `func` when signalled, once and only once.
     If already signalled, then `func` is executed immediately
     Each call to then() adds to the list of work to be done
      */
-    then(func){
-        if (this.done){
-            func();
-        }else{
-            this._waiting.push(func);
-        }
+  then(func) {
+    if (this.done) {
+      func();
+    } else {
+      this.waiting.push(func);
     }
+  }
 
-    /*
+  /*
     Trigger this signal
      */
-    go(){
-        if (this.done) return;
-        this.done = true;
+  go() {
+    if (this.done) return;
+    this.done = true;
 
-        this._waiting.forEach(func=>{
-            try {
-                func()
-            }catch(e){
-                Log.warning("failure during execution of function", e)
-            }
-        });
-        this._waiting = [];
-    }
+    this.waiting.forEach((func) => {
+      try {
+        func();
+      } catch (e) {
+        Log.warning('failure during execution of function', e);
+      }
+    });
+    this.waiting = [];
+  }
 
-    /*
+  /*
     Let async function sleep until signalled
     return a Promise that will resolve when signalled
 
@@ -80,29 +79,30 @@ class Signal {
         await s.wait();
     ```
      */
-    async wait(){
-        return new Promise((resolve) => {
-            this._waiting.push(resolve);
-        });
-    }
-
+  async wait() {
+    return new Promise((resolve) => {
+      this.waiting.push(resolve);
+    });
+  }
 }
 
 /*
 A signal based on a timeout
  */
 class Timer extends Signal {
-    constructor(timeoutInSeconds) {
-        super();
-        let timer;
-        if (timeoutInSeconds instanceof GMTDate) {
-            timer = setTimeout(()=>this.go(), (timeoutInSeconds.unix()-GMTDate.now().unix())*1000);
-        } else {
-            timer = setTimeout(()=>this.go(), timeoutInSeconds*1000);
-        }
-        this.then(() => clearTimeout(timer));
+  constructor(timeoutInSeconds) {
+    super();
+    let timer;
+    if (timeoutInSeconds instanceof GMTDate) {
+      timer = setTimeout(() => this.go(), (timeoutInSeconds.unix() - GMTDate.now().unix()) * 1000);
+    } else {
+      timer = setTimeout(() => this.go(), timeoutInSeconds * 1000);
     }
+    this.then(() => clearTimeout(timer));
+  }
 }
 
 
-export {sleep, delayedValue, Signal, Timer}
+export {
+  sleep, delayedValue, Signal, Timer,
+};

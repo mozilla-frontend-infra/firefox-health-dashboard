@@ -1,6 +1,8 @@
 /* global fetch */
 import { parse } from 'query-string';
-import {exists, isArray, isString, toArray, missing} from './utils';
+import {
+  exists, isArray, isString, missing, toArray,
+} from './utils';
 import { Data } from './datas';
 import { Duration } from './durations';
 import { GMTDate as Date } from './dates';
@@ -8,7 +10,7 @@ import strings from './strings';
 import { Log } from './logs';
 import { leaves, toPairs } from './vectors';
 import { KVStore } from './db_cache';
-import {sleep} from './signals';
+import { sleep } from './signals';
 
 /*
 Parse a query string into an object. Leading ? or # are ignored, so you can
@@ -89,7 +91,7 @@ const fetchJson = async (url, options = {}) => {
       try {
         await sleep(10000); // wait 10sec so others can make requests
         Log.note('refesh cache for {{url}}', { url });
-        const response = await fetch(url, {...options, headers: {...options.headers, ...jsonHeaders}});
+        const response = await fetch(url, { ...options, headers: { ...options.headers, ...jsonHeaders } });
 
         if (!response || !response.ok) {
           await requestCache.set(url, null);
@@ -109,7 +111,7 @@ const fetchJson = async (url, options = {}) => {
   }
 
   try {
-    const response = await fetch(url, {...options, headers: {...options.headers, ...jsonHeaders}});
+    const response = await fetch(url, { ...options, headers: { ...options.headers, ...jsonHeaders } });
 
     if (!response) {
       return null;
@@ -121,8 +123,8 @@ const fetchJson = async (url, options = {}) => {
       Log.error('{{status}} when calling {{url}}: {{details|json}}', {
         url,
         status: response.status,
-        details
-    });
+        details,
+      });
     }
 
     const content = await response.text();

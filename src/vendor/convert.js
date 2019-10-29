@@ -1,7 +1,7 @@
-import {length, selectFrom, toPairs} from './vectors';
-import {Log} from './logs';
-import {isData} from './datas';
-import {isArray, isFunction} from './utils';
+import { length, selectFrom, toPairs } from './vectors';
+import { Log } from './logs';
+import { isData } from './datas';
+import { isArray, isFunction } from './utils';
 import strings from './strings';
 
 function json2value(json) {
@@ -100,25 +100,26 @@ function escapeRegEx(string) {
 }
 
 
-const _toB64 = { '-': '+', '_': '/'};
-const _toURL = { '+': '-', '/': '_', '=': '' };
+const toB64 = { '-': '+', _: '/' };
+const toURL = { '+': '-', '/': '_', '=': '' };
 
 /*
 convert from bytes to base64 (encoded to be URL safe)
  */
-function bytesToBase64URL(bytes){
+function bytesToBase64URL(bytes) {
   return window.btoa(String.fromCharCode(...Array.from(new Uint8Array(bytes))))
-      .replace(/[+/=]/g, (m) => _toURL[m]);
+    .replace(/[+/=]/g, m => toURL[m]);
 }
 
 /*
 convert from base64 in URL (safe, nor not) to bytes
  */
-function base64URLToBytes(base64URL){
+function base64URLToBytes(base64URL) {
   return atob(decodeURIComponent(base64URL)
-      .replace(/[_-]/g, (c)=>_toB64[c])
-  );
+    .replace(/[_-]/g, c => toB64[c]));
 }
 
 
-export { value2json, json2value, escapeRegEx, bytesToBase64URL, base64URLToBytes };
+export {
+  value2json, json2value, escapeRegEx, bytesToBase64URL, base64URLToBytes,
+};
