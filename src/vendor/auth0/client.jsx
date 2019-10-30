@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import React from 'react';
 import {
   createRandomString, runIframe, sha256, unionScopes,
 } from './utils';
@@ -13,6 +14,7 @@ import { Cache } from './cache';
 import { GMTDate as Date } from '../dates';
 import { Signal, sleep, Timer } from '../signals';
 import { toPairs } from '../vectors';
+import SETTINGS from '../../config.json';
 
 const DEFAULT_SCOPE = '';
 
@@ -36,7 +38,6 @@ class Auth0Client {
     this.authenticateCallbackState = new Cache({ name: 'auth0.client.callback' });
     this.domainUrl = `https://${domain}`;
     this.api = api;
-    this.cookie = null;
     this.keep_alive_daemon(false);
   }
 
@@ -54,8 +55,9 @@ class Auth0Client {
       this.last_used = now;
       return response;
     } catch (error) {
+      // Log.warning("Could not login to api", error)
       this.clearCookie();
-      throw error;
+      Log.error('Could not login to api', error);
     }
   }
 
@@ -77,7 +79,7 @@ class Auth0Client {
   }
 
   getCookie() {
-    return this.cookie;
+    return this.cache.get('cookie');
   }
 
   setCookie(cookie) {
@@ -97,16 +99,17 @@ class Auth0Client {
     };
     const cookie_text = `${name}=${value};${
       toPairs(rest).map(str).filter(exists).join(';')}`;
-    this.cookie = cookie;
+    this.cache.set({ cookie });
     document.cookie = cookie_text;
   }
 
   clearCookie() {
     // Set-Cookie: annotation_session=7e092d6a-0783-4922-9456-7b306360898b; Domain=dev.localhost; Expires=Mon, 25-Nov-2019 12:49:05 GMT; Path=/
-    if (this.cookie) {
-      document.cookie = `${this.cookie.name}=;path=${this.cookie.path};domain=${this.cookie.domain};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+    const cookie = this.getCookie();
+    if (cookie) {
+      document.cookie = `${cookie.name}=;path=${cookie.path};domain=${cookie.domain};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+      this.cache.clear('cookie');
     }
-    this.cookie = null;
   }
 
   async refreshAccessToken() {
@@ -125,7 +128,7 @@ class Auth0Client {
       },
     );
 
-    this.cache.set({ ...this.cache.get(), ...authResult });
+    this.cache.set(authResult);
   }
 
   async revokeRefeshToken() {
@@ -142,14 +145,13 @@ class Auth0Client {
         }),
       },
     );
-    this.cache.set({ ...this.cache.get(), refresh_token: null });
+    this.cache.set({ refresh_token: null });
   }
 
-  /**
-   * Performs a redirect to `/authorize` using the parameters
-   * Records state for eventual callback processing
-   */
   async authorizeWithRedirect() {
+    /*
+    Leave the page to perform login
+     */
     try {
       const {
         client_id, audience, scope, redirect_uri, telemetry,
@@ -386,7 +388,7 @@ class Auth0Client {
     await this.login({ rawAccessToken });
 
     new Timer(new Date(access_token.claims.exp * 1000)).then(
-      () => this.cache.clear(),
+      () => this.cache.clear('access_token'),
     );
   }
 
@@ -414,7 +416,8 @@ class Auth0Client {
      */
     while (!pleaseStop) {
       const now = Date.now().unix();
-      if (this.cookie && now > this.last_used + this.cookie.inactive_lifetime - 120) {
+      const cookie = this.getCookie();
+      if (cookie && now > this.last_used + cookie.inactive_lifetime - 120) {
         try {
           /* eslint-disable-next-line no-await-in-loop */
           await this.fetchJson(this.api.keepalive);
@@ -437,7 +440,6 @@ class Auth0Client {
       Log.warning('problem calling logout endpoint', e);
     }
     this.cache.clear();
-    this.clearCookie();
   }
 }
 
@@ -465,10 +467,12 @@ async function newInstance({ onStateChange, ...options }) {
     `);
   }
 
-  const location = window.location.origin + options.home_path;
   const redirect_uri = options.redirect_uri || window.location.origin + window.location.pathname;
-  if (redirect_uri !== location) {
-    Log.error('expecting this SPA to be located at {{location}}', { location });
+  if (options.home_path) {
+    const location = window.location.origin + options.home_path;
+    if (redirect_uri !== location) {
+      Log.error('expecting this application to be located at {{location}}', { location });
+    }
   }
 
   const {
@@ -498,7 +502,7 @@ async function newInstance({ onStateChange, ...options }) {
       auth0.authenticateCallbackState.clear();
       await auth0.verifyAuthorizeCode({ code, ...transaction });
     }
-    window.history.replaceState(null, null, location);
+    window.history.replaceState(null, null, redirect_uri);
   }
 
   return auth0;
@@ -507,4 +511,36 @@ async function newInstance({ onStateChange, ...options }) {
 Auth0Client.CLIENT = null;
 Auth0Client.newInstance = newInstance;
 
-export { Auth0Client }; // eslint-disable-line import/prefer-default-export
+
+const AuthContext = React.createContext(null);
+
+class AuthProvider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  async componentDidMount() {
+    await this.update();
+  }
+
+  async update() {
+    const authenticator = await Auth0Client.newInstance({ onStateChange: () => this.update(), ...SETTINGS.auth0 });
+    this.setState({
+      authenticator,
+      cookie: exists(authenticator.getCookie()),
+    });
+  }
+
+  render() {
+    const { authenticator, cookie } = this.state;
+    return (
+      <AuthContext.Provider value={{ authenticator, cookie }}>
+        {this.props.children}
+      </AuthContext.Provider>
+    );
+  }
+}
+
+
+export { Auth0Client, AuthContext, AuthProvider }; // eslint-disable-line import/prefer-default-export

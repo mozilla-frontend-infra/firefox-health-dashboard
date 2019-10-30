@@ -12,6 +12,9 @@ import HelpIconInternal from '@material-ui/icons/Help';
 import CopyIconInternal from '@material-ui/icons/FilterNone';
 import ImageIconInternal from '@material-ui/icons/Image';
 import ChartIconInternal from '@material-ui/icons/InsertChart';
+import AnnotationIconInternal from '@material-ui/icons/Announcement';
+import AccountIconInternal from '@material-ui/icons/PersonOutline';
+import LogoutIconInternal from '@material-ui/icons/ExitToApp';
 import githubMark from '../static/GitHub-Mark.png';
 
 const iconStyle = { verticalAlign: 'baseline', margin: '0 .2rem 0 .2rem' };
@@ -21,6 +24,10 @@ const BatteryIcon = () => <BatteryIconInternal style={iconStyle} />;
 const VideoIcon = () => <VideoIconInternal style={iconStyle} />;
 const DesktopIcon = () => <DesktopIconInternal style={iconStyle} />;
 const AndroidIcon = () => <AndroidIconInternal style={iconStyle} />;
+const AccountIcon = () => <AccountIconInternal style={iconStyle} />;
+const LogoutIcon = () => <LogoutIconInternal style={iconStyle} />;
+
+
 const LinkIcon = () => (
   <div
     style={{
@@ -92,6 +99,18 @@ const ChartIcon = () => (
   </div>
 );
 
+const AnnotationIcon = () => (
+  <div
+    style={{
+      display: 'inline-block',
+      margin: '-1rem 0',
+      verticalAlign: 'middle',
+    }}
+  >
+    <AnnotationIconInternal style={iconStyle} />
+  </div>
+);
+
 
 const GithubIcon = () => (
   <img
@@ -102,18 +121,21 @@ const GithubIcon = () => (
 );
 
 export {
-  LinkIcon,
-  TimerIcon,
-  BatteryIcon,
-  VideoIcon,
-  DesktopIcon,
+  AccountIcon,
   AndroidIcon,
+  AnnotationIcon,
+  BatteryIcon,
+  ChartIcon,
+  CodeIcon,
+  CopyIcon,
+  DesktopIcon,
   DetailsIcon,
   GithubIcon,
-  CodeIcon,
   HelpIcon,
-  CopyIcon,
-  ImageIcon,
-  ChartIcon,
   HomeIcon,
+  ImageIcon,
+  LinkIcon,
+  LogoutIcon,
+  TimerIcon,
+  VideoIcon,
 };

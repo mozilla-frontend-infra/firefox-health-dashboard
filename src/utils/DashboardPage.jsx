@@ -2,12 +2,15 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from '../vendor/components/links';
+import { AuthContext, AuthProvider } from '../vendor/auth0/client';
 import {
+  AccountIcon,
   AndroidIcon,
   BatteryIcon,
-  DesktopIcon,
   CodeIcon,
+  DesktopIcon,
   HomeIcon,
+  LogoutIcon,
   VideoIcon,
 } from './icons';
 
@@ -35,38 +38,70 @@ const styles = {
 const DashboardPage = ({
   classes, children, title, subtitle,
 }) => (
-  <div className={classes.root}>
-    <div className={classes.title}>
-      <h1 style={{ display: 'inline' }}>
-        {title}
-        <small className={classes.subtitle}>{subtitle}</small>
-      </h1>
-      <div style={{ padding: '0 1rem 0 0', float: 'right' }}>
-        <Link to="/" title="Home">
-          <HomeIcon />
-        </Link>
-        <Link to="/android" title="Android Performance">
-          <AndroidIcon />
-        </Link>
-        <Link to="/quantum/64" title="Quantum 64 Performance">
-          <DesktopIcon />
-        </Link>
-        <Link to="/power" title="Power Usage">
-          <BatteryIcon />
-        </Link>
-        <Link to="/playback" title="Playback">
-          <VideoIcon />
-        </Link>
-        <a
-          href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
-          title="Source Code"
-        >
-          <CodeIcon />
-        </a>
+  <AuthProvider>
+    <div className={classes.root}>
+      <div className={classes.title}>
+        <h1 style={{ display: 'inline' }}>
+          {title}
+          <small className={classes.subtitle}>{subtitle}</small>
+        </h1>
+        <div style={{ padding: '0 1rem 0 0', float: 'right' }}>
+          <Link to="/" title="Home">
+            <HomeIcon />
+          </Link>
+          <Link to="/android" title="Android Performance">
+            <AndroidIcon />
+          </Link>
+          <Link to="/quantum/64" title="Quantum 64 Performance">
+            <DesktopIcon />
+          </Link>
+          <Link to="/power" title="Power Usage">
+            <BatteryIcon />
+          </Link>
+          <Link to="/playback" title="Playback">
+            <VideoIcon />
+          </Link>
+          <a
+            href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
+            title="Source Code"
+          >
+            <CodeIcon />
+          </a>
+          <AuthContext.Consumer>
+            {({ authenticator, cookie }) => {
+              if (!authenticator) {
+                return (
+                  <AccountIcon />
+                );
+              } if (!cookie) {
+                return (
+                  /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+                  <a
+                    onClick={() => authenticator.authorizeWithRedirect()}
+                    title="Login"
+                  >
+                    <AccountIcon />
+                  </a>
+                );
+              }
+              return (
+                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */
+                <a
+                  onClick={() => authenticator.logout()}
+                  title={`logout ${authenticator.getIdToken().claims.email}`}
+                >
+                  <LogoutIcon />
+                </a>
+              );
+            }}
+          </AuthContext.Consumer>
+
+        </div>
       </div>
+      <Fragment>{children}</Fragment>
     </div>
-    <Fragment>{children}</Fragment>
-  </div>
+  </AuthProvider>
+
 );
 
 DashboardPage.propTypes = {

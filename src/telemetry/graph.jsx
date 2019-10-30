@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Log } from '../vendor/logs';
 import { fetchJson, URL } from '../vendor/requests';
-import SETTINGS from '../settings';
+import SETTINGS from '../config';
 import { withErrorBoundary } from '../vendor/errors';
 
 class TelemetryContainer extends React.Component {

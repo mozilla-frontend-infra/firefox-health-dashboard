@@ -1,0 +1,34 @@
+{
+  "backend": "https://firefox-health-backend.herokuapp.com",
+  "colors": [
+    "#e55525",
+    "#ffcd02",
+    "#45a1ff",
+    "#77cc00",
+    "#fd79ff",
+    "#AAAAAA"
+  ],
+  "firefoxReleases": "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
+  "auth0": {
+    "domain": "dev-8821kz09.auth0.com",
+    "client_id": "FYlBPbNm7vZi9YPwVFyR7J2TLKrzNtST",
+    "redirect_uri": "http://dev.localhost:5000/",
+    "_home_path": "/",
+    "audience": "https://locahost/query",
+    "scope": "openid email query:send",
+    "other scopes": "offline_access openid profile email data:change query:send",
+    "telemetry": {
+      "url": "https://github.com/klahnakoski/auth0-spa"
+    },
+    "api": {
+      "cookie": {
+        "name": "annotation_session"
+      },
+      "domain": "dev.localhost",
+      "login": "http://dev.localhost:3000/annotation/login",
+      "logout": "http://dev.localhost:3000/annotation/logout",
+      "keep_alive": "http://dev.localhost:3000/annotation/ping"
+    }
+  }
+}
+

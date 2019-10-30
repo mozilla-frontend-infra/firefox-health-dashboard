@@ -3,7 +3,6 @@ import { fetchJson, URL } from './requests';
 import {
   array,
   coalesce,
-  delayedValue,
   exists,
   first,
   isArray,
@@ -17,6 +16,7 @@ import jx from './jx/expressions';
 import { Log } from './logs';
 import { ceiling } from './math';
 import { Data } from './datas';
+import { delayedValue } from './signals';
 
 const DEBUG = false;
 const MAX_CHUNK_SIZE = 40; // NUMBER OF SIGNATURES FROM PERFHERDER

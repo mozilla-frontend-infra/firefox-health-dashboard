@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { selectFrom } from '../vendor/vectors';
 import { fetchJson, URL } from '../vendor/requests';
-import SETTINGS from '../settings';
+import SETTINGS from '../config';
 
 const ENDPOINT = URL({ path: [SETTINGS.backend, 'api/android/nimbledroid'] });
 const matchUrl = profileName => profileName.replace(

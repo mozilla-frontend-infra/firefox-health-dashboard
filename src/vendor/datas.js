@@ -118,12 +118,12 @@ Data.deepCopy = (value) => {
   return value;
 };
 
-/*
-Coalesce leaf values
-Recursive version of {...argN, ... , ...arg2, ...arg1, ...dest}
-notice the reverse-ordering
- */
 Data.setDefault = (dest, ...args) => {
+  /*
+  Coalesce leaf values
+  Recursive version of {...argN, ... , ...arg2, ...arg1, ...dest}
+  notice the reverse-ordering
+   */
   function setDefault(dest, source, path) {
     const output = dest;
 

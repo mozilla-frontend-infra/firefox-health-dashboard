@@ -45,7 +45,7 @@ class Cache {
 
   set(value) {
     this.timestamp = Date.now().unix();
-    this.value = value;
+    this.value = Data.setDefault({}, value, this.value);
     this.pushToStorage();
     this.onStateChange();
   }
@@ -61,9 +61,14 @@ class Cache {
     ls.setItem(`${this.name}.value`, value2json(this.value));
   }
 
-  clear() {
+  clear(path) {
     this.timestamp = Date.now().unix();
-    this.value = null;
+    if (!path || path === '.') {
+      this.value = {};
+    } else {
+      Data.set(this.value, path, null);
+    }
+
     this.pushToStorage();
     this.onStateChange();
   }

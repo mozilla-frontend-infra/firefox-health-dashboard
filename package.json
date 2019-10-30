@@ -4,7 +4,7 @@
   "description": "Project Platform Health",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --mode development --disable-host-check",
     "start:local": "BACKEND=http://localhost:3000 webpack-dev-server --mode development",
     "test": "jest",
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",

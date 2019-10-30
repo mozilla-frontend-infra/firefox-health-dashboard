@@ -7,7 +7,7 @@ import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
-  exists, literalField, missing, sleep, toArray,
+  exists, literalField, missing, toArray,
 } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
@@ -15,6 +15,7 @@ import { getData, TREEHERDER } from '../vendor/perfherder';
 import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
+import { sleep } from '../vendor/signals';
 
 const REFERENCE_COLOR = '#45a1ff44';
 

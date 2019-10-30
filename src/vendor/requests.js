@@ -134,6 +134,7 @@ const fetchJson = async (url, options = {}) => {
         await requestCache.set(url, { url, content, expires });
       }
 
+      if (missing(content)) return null;
       return JSON.parse(content);
     } catch (error) {
       Log.error('Problem parsing {{text}}', { text: response.text() }, error);
