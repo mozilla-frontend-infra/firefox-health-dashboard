@@ -16,6 +16,8 @@ import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
 import { sleep } from '../vendor/signals';
+import SETTINGS from '../config.json';
+import { Auth0Client } from '../vendor/auth0/client';
 
 const REFERENCE_COLOR = '#45a1ff44';
 
@@ -309,6 +311,29 @@ class PerfherderGraphContainer extends React.Component {
       const { standardOptions, urls: moreUrls } = config;
       config.urls = [...toArray(propsUrls), ...toArray(moreUrls)];
       Data.setDefault(standardOptions, style);
+
+      // ASK ANNOTATION SERVICE FOR ALERTS ON REVISIONS
+      (async () => {
+        const authenticator = await Auth0Client.newInstance({});
+
+        const revisions = selectFrom(standardOptions.series)
+          .map(s => toArray(s.data).map(r => r.revision.substring(0, 12)))
+          .flatten()
+          .union()
+          .toArray();
+
+        const result = await authenticator.fetchJson(
+          SETTINGS.annotation.query,
+          {
+            body: JSON.stringify({
+              from: 'sample_data',
+              where: { in: { revision: revisions } },
+            }),
+          },
+        );
+
+        Log.note('{{result}}', { result });
+      })();
 
       if (exists(reference)) {
         // ADD HORIZONTAL LINE

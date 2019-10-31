@@ -78,7 +78,15 @@ const jsonHeaders = {
   Accept: 'application/json',
 };
 const fetchJson = async (url, options = {}) => {
-  const { expire } = options;
+  const { expire, pleaseStop } = options;
+
+  let abortSignal;
+  if (exists(pleaseStop)) {
+    const controller = new AbortController();
+    pleaseStop.then(() => controller.abort());
+    abortSignal = controller.signal;
+  }
+
   const expires = missing(expire)
     ? null
     : Date.now().add(Duration.newInstance(expire));
@@ -91,7 +99,7 @@ const fetchJson = async (url, options = {}) => {
       try {
         await sleep(10000); // wait 10sec so others can make requests
         Log.note('refesh cache for {{url}}', { url });
-        const response = await fetch(url, { ...options, headers: { ...options.headers, ...jsonHeaders } });
+        const response = await fetch(url, { ...options, signal: abortSignal, headers: { ...options.headers, ...jsonHeaders } });
 
         if (!response || !response.ok) {
           await requestCache.set(url, null);
@@ -111,20 +119,28 @@ const fetchJson = async (url, options = {}) => {
   }
 
   try {
-    const response = await fetch(url, { ...options, headers: { ...options.headers, ...jsonHeaders } });
+    const response = await fetch(url, { ...options, signal: abortSignal, headers: { ...options.headers, ...jsonHeaders } });
 
     if (!response) {
       return null;
     }
 
-
     if (!response.ok) {
-      const details = await response.json();
-      Log.error('{{status}} when calling {{url}}: {{details|json}}', {
-        url,
-        status: response.status,
-        details,
-      });
+      try {
+        const details = await response.json();
+        Log.error('{{status}} when calling {{url}}: {{details|json}}', {
+          url,
+          status: response.status,
+          details,
+        });
+      } catch (e) {
+        const details = await response.body();
+        Log.error('{{status}} when calling {{url}}: {{details|json}}', {
+          url,
+          status: response.status,
+          details,
+        });
+      }
     }
 
     const content = await response.text();

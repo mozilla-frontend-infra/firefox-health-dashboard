@@ -38,7 +38,7 @@ class Auth0Client {
     this.authenticateCallbackState = new Cache({ name: 'auth0.client.callback' });
     this.domainUrl = `https://${domain}`;
     this.api = api;
-    this.keep_alive_daemon(false);
+    this.keepAliveDaemon(false);
   }
 
   async fetchJson(url, options = {}) {
@@ -410,7 +410,16 @@ class Auth0Client {
     }
   }
 
-  async keep_alive_daemon(pleaseStop) {
+  async keepAlive() {
+    try {
+      return this.fetchJson(this.api.keep_alive);
+    } catch (e) {
+      Log.warning('Lost session', e);
+      this.cache.clear();
+    }
+  }
+
+  async keepAliveDaemon(pleaseStop) {
     /*
     KEEP SESSION COOKIE ALIVE BY PINGING THE API 2MIN BEFORE EXPIRY
      */
@@ -420,7 +429,7 @@ class Auth0Client {
       if (cookie && now > this.last_used + cookie.inactive_lifetime - 120) {
         try {
           /* eslint-disable-next-line no-await-in-loop */
-          await this.fetchJson(this.api.keepalive);
+          await this.keepAlive();
         } catch (e) {
           Log.warning('Can not keep session alive', e);
         }
@@ -505,6 +514,8 @@ async function newInstance({ onStateChange, ...options }) {
     window.history.replaceState(null, null, redirect_uri);
   }
 
+  await auth0.keepAlive();
+
   return auth0;
 }
 
@@ -543,4 +554,4 @@ class AuthProvider extends React.Component {
 }
 
 
-export { Auth0Client, AuthContext, AuthProvider }; // eslint-disable-line import/prefer-default-export
+export { AuthContext, AuthProvider, Auth0Client }; // eslint-disable-line import/prefer-default-export

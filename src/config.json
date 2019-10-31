@@ -9,6 +9,9 @@
     "#AAAAAA"
   ],
   "firefoxReleases": "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
+  "annotation": {
+    "query": "http://dev.localhost:3000/annotation"
+  },
   "auth0": {
     "domain": "dev-8821kz09.auth0.com",
     "client_id": "FYlBPbNm7vZi9YPwVFyR7J2TLKrzNtST",
