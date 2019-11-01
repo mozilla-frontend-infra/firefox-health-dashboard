@@ -36,7 +36,7 @@ class GlobalErrorBoundary extends React.Component {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {'https://github.com/mozilla/firefox-health-dashboard/issues/new'}
+              https://github.com/mozilla/firefox-health-dashboard/issues/new
             </a>
           </span>
         </p>

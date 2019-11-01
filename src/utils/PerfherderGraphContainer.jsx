@@ -91,7 +91,7 @@ const tip = withStyles(tipStyles)(
         <span className={classes.value}>
           {round(record.value, { places: 3 })}
         </span>
-        {' '}
+
         (
         {higherOrLower}
 )
@@ -130,7 +130,7 @@ const tip = withStyles(tipStyles)(
           <a href={hgURL} target="_blank" rel="noopener noreferrer">
             {record.revision.slice(0, 12)}
           </a>
-          {' '}
+
 (
           <a href={jobURL} target="_blank" rel="noopener noreferrer">
             job
@@ -317,9 +317,11 @@ class PerfherderGraphContainer extends React.Component {
         const authenticator = await Auth0Client.newInstance({});
 
         const revisions = selectFrom(standardOptions.series)
-          .map(s => toArray(s.data).map(r => r.revision.substring(0, 12)))
+          .select('data')
           .flatten()
+          .select('revision')
           .union()
+          .sort()
           .toArray();
 
         const result = await authenticator.fetchJson(
@@ -327,12 +329,12 @@ class PerfherderGraphContainer extends React.Component {
           {
             body: JSON.stringify({
               from: 'sample_data',
-              where: { in: { revision: revisions } },
+              where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
             }),
           },
         );
 
-        Log.note('{{result}}', { result });
+        Log.note('{{result|json}}', { result });
       })();
 
       if (exists(reference)) {

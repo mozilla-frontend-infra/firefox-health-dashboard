@@ -55,9 +55,7 @@ class Auth0Client {
       this.last_used = now;
       return response;
     } catch (error) {
-      // Log.warning("Could not login to api", error)
-      this.clearCookie();
-      Log.error('Could not login to api', error);
+      Log.error('Call to API failed', error);
     }
   }
 

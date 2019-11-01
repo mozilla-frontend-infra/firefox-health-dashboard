@@ -119,7 +119,18 @@ const fetchJson = async (url, options = {}) => {
   }
 
   try {
-    const response = await fetch(url, { ...options, signal: abortSignal, headers: { ...options.headers, ...jsonHeaders } });
+    const response = await fetch(
+      url,
+      {
+        ...options,
+        method: options.body ? 'POST' : 'GET',
+        signal: abortSignal,
+        headers: {
+          ...options.headers,
+          ...jsonHeaders,
+        },
+      },
+    );
 
     if (!response) {
       return null;
