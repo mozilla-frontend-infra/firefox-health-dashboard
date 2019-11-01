@@ -370,7 +370,6 @@ exports[`renders correctly 1`] = `
         <span>
           Raptor (TP6m)
           <span>
-             
             <a
               href="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
               title="show details"

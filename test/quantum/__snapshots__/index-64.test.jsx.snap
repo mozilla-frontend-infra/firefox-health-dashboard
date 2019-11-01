@@ -506,7 +506,6 @@ exports[`renders correctly 1`] = `
       <span>
         Page Load tests (TP6)
         <span>
-           
           <a
             href="/quantum/tp6?platform=win64&test=warm-loadtime"
             title="show details"
