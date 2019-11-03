@@ -56,7 +56,6 @@ const BROWSER_PLATFORMS = selectFrom([
           { eq: { platform: 'windows10-64', options: 'pgo' } },
           { eq: { platform: 'windows10-64-shippable', options: 'opt' } },
         ]},
-        { eq: { framework: 10, repo: 'mozilla-central' } },
       ]},
   },
   {
@@ -74,12 +73,6 @@ const BROWSER_PLATFORMS = selectFrom([
             options: 'opt',
           },
         },
-        {
-          eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          },
-        },
       ],
     },
   },
@@ -94,7 +87,6 @@ const BROWSER_PLATFORMS = selectFrom([
         {or: [
             { eq: { platform: 'linux64-shippable', options: 'opt' } },
           ]},
-        { eq: { framework: 10, repo: 'mozilla-central' } },
       ]},
   },
   {
@@ -107,12 +99,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platformFilter: {
       and: [
         {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
-        {
-          eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }
-        }
       ]
     }
   },
@@ -125,10 +111,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'win64',
     platformFilter: {and: [
         {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }}
       ]}
   },
   {
@@ -140,10 +122,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'linux64',
     platformFilter: {and: [
         {eq: {platform: 'linux64-shippable', options: 'opt'}},
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }}
       ]}
   },
   {
@@ -156,10 +134,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platformFilter: {
       and: [
         {eq: {platform: ['windows7-32-nightly', 'windows7-32-shippable']}},
-        {eq: {
-          framework: 10,
-          repo: 'mozilla-central',
-        }}
       ]
     }
   },
@@ -172,10 +146,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'win64',
     platformFilter: {and: [
         {eq: {platform: ['windows10-64-nightly', 'windows10-64-shippable']}},
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }}
       ]}
   },
   {
@@ -187,10 +157,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'linux64',
     platformFilter: {and: [
         {eq: {platform: 'linux64-shippable', options: 'opt'}},
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }}
       ]}
   },
   {
@@ -227,9 +193,7 @@ const BROWSER_PLATFORMS = selectFrom([
     label: 'Chrome (MacOSX)',
     platform: "macosx",
     platformFilter: {eq: {
-      platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
-      framework: 10,
-      repo: 'mozilla-central'
+      platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable']
     }},
   },
   {
@@ -247,10 +211,6 @@ const BROWSER_PLATFORMS = selectFrom([
           platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
         }}
       ]},
-      {eq: {
-        framework: 10,
-        repo: 'mozilla-central',
-      }},
     ]},
   },
   {
@@ -261,10 +221,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platformFilter: {
       and: [
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }},
       ],
     },
   },
@@ -274,9 +230,7 @@ const BROWSER_PLATFORMS = selectFrom([
     label: 'Geckoview p2 aarch64',
     platform: 'p2-aarch64',
     platformFilter: {eq: {
-        framework: 10,
         platform: 'android-hw-p2-8-0-android-aarch64',
-        repo: 'mozilla-central',
     }},
   },
   {
@@ -319,10 +273,6 @@ const BROWSER_PLATFORMS = selectFrom([
     platformFilter: {
       and: [
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }},
       ],
     },
   },
@@ -335,10 +285,6 @@ const BROWSER_PLATFORMS = selectFrom([
         {eq: {
                 platform: ['android-hw-p2-8-0-aarch64','android-hw-p2-8-0-android-aarch64']
               }},
-        {eq: {
-            framework: 10,
-            repo: 'mozilla-central',
-          }},
       ]},
   },
 ]);
@@ -425,63 +371,119 @@ const TP6_SITES_DATA = {
     repo: 'mozilla-central'}}],
     ['Firefox', 'warm', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox',framework: 10,
     repo: 'mozilla-central'}}],
-    ['Firefox', 'warm', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Fandom', {eq: {suite: 'raptor-tp6-fandom-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Office', {eq:{suite:'raptor-tp6-office-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: PayPal', {eq: {suite: 'raptor-tp6-paypal-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Docs', {eq:{suite:'raptor-tp6-docs-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Google Mail', {eq:{suite:'raptor-tp6-google-mail-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Outlook', {eq:{suite:'raptor-tp6-outlook-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Sheets', {eq:{suite:'raptor-tp6-sheets-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Twitter', {eq:{suite:'raptor-tp6-twitter-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Twitch', {eq: {suite: 'raptor-tp6-twitch-firefox'}}],
-    ['Firefox', 'warm', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox'} }],
-    ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox'} }],
+    ['Firefox', 'warm', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Fandom', {eq: {suite: 'raptor-tp6-fandom-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Office', {eq:{suite:'raptor-tp6-office-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: PayPal', {eq: {suite: 'raptor-tp6-paypal-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Docs', {eq:{suite:'raptor-tp6-docs-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Google Mail', {eq:{suite:'raptor-tp6-google-mail-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Outlook', {eq:{suite:'raptor-tp6-outlook-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Sheets', {eq:{suite:'raptor-tp6-sheets-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Twitter', {eq:{suite:'raptor-tp6-twitter-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Twitch', {eq: {suite: 'raptor-tp6-twitch-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox',framework: 10,
+    repo: 'mozilla-central'}}],
 
-    ['Firefox', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Fandom', {eq: {suite: 'raptor-tp6-fandom-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Office', {eq:{suite:'raptor-tp6-office-firefox-cold'} }],
-    ['Firefox', 'cold', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: PayPal', {eq: {suite: 'raptor-tp6-paypal-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Docs', {eq:{suite:'raptor-tp6-docs-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Google Mail', {eq:{suite:'raptor-tp6-google-mail-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Outlook', {eq:{suite:'raptor-tp6-outlook-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Sheets', {eq:{suite:'raptor-tp6-sheets-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Twitter', {eq:{suite:'raptor-tp6-twitter-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Twitch', {eq: {suite: 'raptor-tp6-twitch-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox-cold'}}],
-    ['Firefox', 'cold', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox-cold'}}],
+    ['Firefox', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: YouTube', {eq: {suite: 'raptor-tp6-youtube-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Google', {eq: {suite: 'raptor-tp6-google-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Imdb', {eq: {suite: 'raptor-tp6-imdb-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Imgur', {eq: {suite: 'raptor-tp6-imgur-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Netflix', {eq: {suite: 'raptor-tp6-netflix-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Fandom', {eq: {suite: 'raptor-tp6-fandom-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Bing', {eq: {suite: 'raptor-tp6-bing-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Yandex', {eq: {suite: 'raptor-tp6-yandex-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Apple', {eq: {suite: 'raptor-tp6-apple-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Microsoft', {eq: {suite: 'raptor-tp6-microsoft-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Office', {eq:{suite:'raptor-tp6-office-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Reddit', {eq: {suite: 'raptor-tp6-reddit-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: eBay', {eq: {suite: 'raptor-tp6-ebay-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Instagram', {eq: {suite: 'raptor-tp6-instagram-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: PayPal', {eq: {suite: 'raptor-tp6-paypal-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Pinterest', {eq: {suite: 'raptor-tp6-pinterest-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Docs', {eq:{suite:'raptor-tp6-docs-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Google Mail', {eq:{suite:'raptor-tp6-google-mail-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Outlook', {eq:{suite:'raptor-tp6-outlook-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Sheets', {eq:{suite:'raptor-tp6-sheets-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Slides', {eq:{suite:'raptor-tp6-slides-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Tumblr', {eq:{suite:'raptor-tp6-tumblr-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Twitter', {eq:{suite:'raptor-tp6-twitter-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Twitch', {eq: {suite: 'raptor-tp6-twitch-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Wikipedia', {eq:{suite:'raptor-tp6-wikipedia-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Yahoo Mail', {eq:{suite:'raptor-tp6-yahoo-mail-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
+    ['Firefox', 'cold', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox-cold',framework: 10,
+    repo: 'mozilla-central'}}],
 
     // YOU MAY REMOVE THE push_timestamp RESTRICTION AFTER APRIL 2020
     ['Chromium', 'warm', 'Tp6: Facebook', {or: [{and: [{lt: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-facebook-chrome'}}]}, {eq: {suite: 'raptor-tp6-facebook-chromium'}}]}],
