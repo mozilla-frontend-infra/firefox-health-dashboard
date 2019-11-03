@@ -11,6 +11,7 @@ import { Log } from './logs';
 import { leaves, toPairs } from './vectors';
 import { KVStore } from './db_cache';
 import { sleep } from './signals';
+import { json2value } from './convert';
 
 /*
 Parse a query string into an object. Leading ? or # are ignored, so you can
@@ -97,7 +98,7 @@ const fetchJson = async (url, options = {}) => {
     (async () => {
       // Launch promise chain to fill cache with fresh data
       try {
-        await sleep(10000); // wait 10sec so others can make requests
+        await sleep(10); // wait 10sec so others can make requests
         Log.note('refesh cache for {{url}}', { url });
         const response = await fetch(url, { ...options, signal: abortSignal, headers: { ...options.headers, ...jsonHeaders } });
 
@@ -137,21 +138,20 @@ const fetchJson = async (url, options = {}) => {
     }
 
     if (!response.ok) {
+      let cause = await response.text();
       try {
-        const details = await response.json();
-        Log.error('{{status}} when calling {{url}}: {{details|json}}', {
-          url,
-          status: response.status,
-          details,
-        });
+        cause = json2value(cause);
       } catch (e) {
-        const details = await response.body();
-        Log.error('{{status}} when calling {{url}}: {{details|json}}', {
+        // do nothing
+      }
+      Log.error(
+        '{{status}} when calling {{url}}',
+        {
           url,
           status: response.status,
-          details,
-        });
-      }
+        },
+        cause,
+      );
     }
 
     const content = await response.text();

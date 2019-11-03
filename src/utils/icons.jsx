@@ -15,6 +15,8 @@ import ChartIconInternal from '@material-ui/icons/InsertChart';
 import AnnotationIconInternal from '@material-ui/icons/Announcement';
 import AccountIconInternal from '@material-ui/icons/PersonOutline';
 import LogoutIconInternal from '@material-ui/icons/ExitToApp';
+import StarBorderInternal from '@material-ui/icons/StarBorder';
+
 import githubMark from '../static/GitHub-Mark.png';
 
 const iconStyle = { verticalAlign: 'baseline', margin: '0 .2rem 0 .2rem' };
@@ -110,6 +112,17 @@ const AnnotationIcon = () => (
     <AnnotationIconInternal style={iconStyle} />
   </div>
 );
+const StarIcon = () => (
+  <div
+    style={{
+      display: 'inline-block',
+      margin: '-1rem 0',
+      verticalAlign: 'middle',
+    }}
+  >
+    <StarBorderInternal style={iconStyle} />
+  </div>
+);
 
 
 const GithubIcon = () => (
@@ -136,6 +149,7 @@ export {
   ImageIcon,
   LinkIcon,
   LogoutIcon,
+  StarIcon,
   TimerIcon,
   VideoIcon,
 };

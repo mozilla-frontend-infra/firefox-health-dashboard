@@ -8,21 +8,22 @@ import { Log } from '../logs';
 const ls = window.localStorage;
 
 class Cache {
-  constructor({ name, onStateChange }) {
+  constructor({ name, onStateChange, pleaseStop }) {
     this.name = name;
     this.value = null;
     this.timestamp = 0;
     this.onStateChange = coalesce(onStateChange, () => 0); // function called when external change happened
+    this.pleaseStop = pleaseStop;
     this.updater();
   }
 
-  async updater(pleaseStop) {
-    while (!pleaseStop) {
+  async updater() {
+    while (!this.pleaseStop.valueOf()) {
       const { name } = this;
       const timestamp = json2value(ls.getItem(`${name}.timestamp`));
       if (this.timestamp === timestamp) {
         /* eslint-disable-next-line no-await-in-loop */
-        await sleep(1000);
+        await sleep(1);
         /* eslint-disable-next-line no-continue */
         continue;
       }

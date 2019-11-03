@@ -137,6 +137,10 @@ const tip = withStyles(tipStyles)(
           </a>
           )
         </div>
+
+        <div style={{ backgroundColor: series.style.color }}>
+          {record.note}
+        </div>
         <div className={classes.lockMessage}>
           {isLocked ? 'Click to unlock' : 'Click to lock'}
         </div>
@@ -283,6 +287,7 @@ class PerfherderGraphContainer extends React.Component {
       standardOptions: null,
       urls: null,
       isLoading: true,
+      notes: null,
     };
   }
 
@@ -292,7 +297,6 @@ class PerfherderGraphContainer extends React.Component {
     }
     return this.update();
   }
-
 
   async componentDidMount() {
     this.update();
@@ -313,29 +317,51 @@ class PerfherderGraphContainer extends React.Component {
       Data.setDefault(standardOptions, style);
 
       // ASK ANNOTATION SERVICE FOR ALERTS ON REVISIONS
-      (async () => {
-        const authenticator = await Auth0Client.newInstance({});
+      const { notes } = this.state;
+      if (!notes) {
+        (async () => {
+          const authenticator = await Auth0Client.newInstance({});
 
-        const revisions = selectFrom(standardOptions.series)
-          .select('data')
-          .flatten()
-          .select('revision')
-          .union()
-          .sort()
-          .toArray();
+          const revisions = selectFrom(standardOptions.series)
+            .select('data')
+            .flatten()
+            .select('revision')
+            .union()
+            .sort()
+            .toArray();
 
-        const result = await authenticator.fetchJson(
-          SETTINGS.annotation.query,
-          {
-            body: JSON.stringify({
-              from: 'sample_data',
-              where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
-            }),
-          },
-        );
+          const result = await authenticator.fetchJson(
+            SETTINGS.annotation.query,
+            {
+              body: JSON.stringify({
+                from: 'sample_data',
+                where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
+                format: 'list',
+              }),
+            },
+          );
 
-        Log.note('{{result|json}}', { result });
-      })();
+          // MARKUP DATA WITH NOTES
+          if (exists(result.data)) {
+            const detailNotes = selectFrom(result.data)
+              .map(({ revision, description }) => selectFrom(standardOptions.series)
+                .select('data')
+                .flatten()
+                .where({ revision })
+                .map((d) => {
+                  // eslint-disable-next-line no-param-reassign
+                  d.note = description;
+                  return {
+                    x: d.push_timestamp * 1000, y: d.value, note: description, id: revision,
+                  };
+                }))
+              .flatten()
+              .toArray();
+
+            this.setState({ notes: detailNotes });
+          }
+        })();
+      }
 
       if (exists(reference)) {
         // ADD HORIZONTAL LINE
@@ -357,10 +383,12 @@ class PerfherderGraphContainer extends React.Component {
 
   render() {
     const { title, missingDataInterval } = this.props;
-    const { urls, standardOptions, isLoading } = this.state;
+    const {
+      urls, standardOptions, isLoading, notes,
+    } = this.state;
 
     return (
-      <div key={title} style={{ position: 'relative' }}>
+      <div key={title + Boolean(notes)} style={{ position: 'relative' }}>
         <ChartJsWrapper
           title={title}
           urls={urls}
@@ -369,6 +397,7 @@ class PerfherderGraphContainer extends React.Component {
             isLoading,
             standardOptions,
             missingDataInterval,
+            notes,
           }}
         />
       </div>

@@ -33,12 +33,14 @@ class Auth0Client {
     this.options = {
       leeway, client_id, audience, scope, redirect_uri,
     };
+    const pleaseStop = new Signal();
+    this.pleaseStop = pleaseStop;
     this.authorizeSilentlyWorks = true; // optimism
-    this.cache = new Cache({ name: 'auth0.client', onStateChange });
-    this.authenticateCallbackState = new Cache({ name: 'auth0.client.callback' });
+    this.cache = new Cache({ name: 'auth0.client', onStateChange, pleaseStop });
+    this.authenticateCallbackState = new Cache({ name: 'auth0.client.callback', pleaseStop });
     this.domainUrl = `https://${domain}`;
     this.api = api;
-    this.keepAliveDaemon(false);
+    this.keepAliveDaemon();
   }
 
   async fetchJson(url, options = {}) {
@@ -55,6 +57,9 @@ class Auth0Client {
       this.last_used = now;
       return response;
     } catch (error) {
+      if (error.includes('must authorize first')) {
+        this.clearCookie();
+      }
       Log.error('Call to API failed', error);
     }
   }
@@ -290,7 +295,7 @@ class Auth0Client {
       try {
         while (!timeout.done) {
           /* eslint-disable-next-line no-await-in-loop */
-          await sleep(interval * 1000);
+          await sleep(interval);
 
           try {
             /* eslint-disable-next-line no-await-in-loop */
@@ -319,7 +324,7 @@ class Auth0Client {
             if (error === 'slow_down') {
               // DOUBLE THE SLEEP TIME
               /* eslint-disable-next-line no-await-in-loop */
-              await sleep(interval * 1000);
+              await sleep(interval);
               /* eslint-disable-next-line no-continue */
               continue;
             }
@@ -417,11 +422,11 @@ class Auth0Client {
     }
   }
 
-  async keepAliveDaemon(pleaseStop) {
+  async keepAliveDaemon() {
     /*
     KEEP SESSION COOKIE ALIVE BY PINGING THE API 2MIN BEFORE EXPIRY
      */
-    while (!pleaseStop) {
+    while (!this.pleaseStop.valueOf()) {
       const now = Date.now().unix();
       const cookie = this.getCookie();
       if (cookie && now > this.last_used + cookie.inactive_lifetime - 120) {

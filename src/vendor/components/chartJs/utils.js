@@ -1,6 +1,6 @@
 import SETTINGS from '../../../config';
 import {
-  exists, isNumeric, missing, toArray,
+  exists, isNumeric, missing, toArray, zip,
 } from '../../utils';
 import { Data, isData } from '../../datas';
 import { first, selectFrom } from '../../vectors';
@@ -172,6 +172,7 @@ const cjsGenerator = (standardOptions) => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
 
+      // CHART A RANGE, OVER TIME (INDEPENDENT VARIABLE)
       if (exists(y.range)) {
         const yMin = jx(y.range.min);
         const yMax = jx(y.range.max);
@@ -222,6 +223,7 @@ const cjsGenerator = (standardOptions) => {
           .select({
             [y.axis]: ySelector,
             [x.axis]: r => Date.newInstance(xSelector(r)),
+            note: 'note',
           })
           .toArray(),
         ...generateDatasetStyle(color, type),
@@ -244,7 +246,7 @@ const cjsGenerator = (standardOptions) => {
         selectFrom(datasets)
           .select('data')
           .flatten()
-          .select('y'),
+          .select('y'), // TODO: This 'y' may not equal y.axis (above)
       ),
     );
 
@@ -254,6 +256,20 @@ const cjsGenerator = (standardOptions) => {
 
     return niceMax;
   })();
+  const yMin = (() => {
+    const requestedMin = Data.get(options, 'axis.y.min');
+
+    if (isNumeric(requestedMin)) {
+      return requestedMin;
+    }
+
+    const mini = selectFrom(datasets)
+      .select('data')
+      .flatten()
+      .select('y') // TODO: This 'y' may not equal y.axis (above)
+      .min();
+    return min([mini, 0]);
+  })();
   const yReversed = Data.get(options, 'axis.y.reverse');
 
   // MARK EXTREME POINTS AS TRIANGLES, AND AT MAX CHART VALUE
@@ -261,23 +277,33 @@ const cjsGenerator = (standardOptions) => {
     const { data, pointStyle } = dataset;
     let needNewStyle = false;
     const newStyle = data.map((d) => {
-      if (d.y > yMax) {
+      if (exists(d.note)) {
+        needNewStyle = true;
+        return [pointStyle, 0];
+      } if (d.y > yMax) {
         // eslint-disable-next-line no-param-reassign
         d.y = yMax;
         needNewStyle = true;
-
-        return 'triangle';
+        return ['triangle', 0];
+      } if (d.y < yMin) {
+        // eslint-disable-next-line no-param-reassign
+        d.y = yMin;
+        needNewStyle = true;
+        return ['triangle', 180];
       }
-
-      return pointStyle;
+      return [pointStyle, 0];
     });
 
     if (needNewStyle) {
-      // eslint-disable-next-line no-param-reassign
-      dataset.pointStyle = newStyle;
+      [
+        // eslint-disable-next-line no-param-reassign
+        dataset.pointStyle,
+        // eslint-disable-next-line no-param-reassign
+        dataset.pointRotation,
+      ] = zip(...newStyle);
 
       // eslint-disable-next-line no-param-reassign
-      if (yReversed) dataset.pointRotation = data.map(() => 180);
+      if (yReversed) dataset.pointRotation = data.map(v => v - 180);
     }
   });
 
@@ -286,7 +312,7 @@ const cjsGenerator = (standardOptions) => {
       ticks: {
         beginAtZero: true,
         reverse: yReversed,
-        min: 0,
+        min: yMin,
         max: yMax,
       },
     },

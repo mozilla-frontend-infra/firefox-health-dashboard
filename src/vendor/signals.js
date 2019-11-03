@@ -1,9 +1,9 @@
 import { Log } from './logs';
 import { GMTDate } from './dates';
 
-function sleep(ms) {
+function sleep(seconds) {
   return new Promise((resolve) => {
-    setTimeout(resolve, ms);
+    setTimeout(resolve, seconds * 1000);
   });
 }
 

@@ -3,7 +3,7 @@
 import {
   coalesce, exists, isString, missing,
 } from './utils';
-import { Data } from './datas';
+import { Data, isData } from './datas';
 import { Template } from './Template';
 
 //   Error
@@ -83,6 +83,15 @@ class Exception extends Error {
     return parseStack(this.stack).slice(this.stackOffset);
   }
 
+  includes(find) {
+    /*
+    RETURN true IF find CAN BE FOND IN THE CAUSAL CHAIN OF THIS EXCEPTION
+     */
+    if (this.template === find) return true;
+    if (this.cause && this.cause.includes(find)) return true;
+    return Template.expand(this.template, this.props).includes(find);
+  }
+
   toString() {
     const output = [];
 
@@ -159,10 +168,17 @@ Exception.wrap = (err) => {
 
   const output = new Exception();
 
-  output.template = err.message;
-  output.props = null;
-  output.cause = null;
-  output.stack = err.stack;
+  if (err instanceof Error) {
+    output.template = err.message;
+    output.props = null;
+    output.cause = null;
+    output.stack = err.stack;
+  } else if (isData(err)) {
+    output.template = err.template;
+    output.props = err.params;
+    output.stack = err.trace;
+    output.cause = Exception.wrap(output.cause);
+  }
 
   return output;
 };
