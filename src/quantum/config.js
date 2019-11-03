@@ -420,7 +420,6 @@ const TP6_SITES_DATA = {
     repo: 'mozilla-central'}}],
     ['Firefox', 'warm', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox',framework: 10,
     repo: 'mozilla-central'}}],
-
     ['Firefox', 'cold', 'Tp6: Facebook', {eq: {suite: 'raptor-tp6-facebook-firefox-cold',framework: 10,
     repo: 'mozilla-central'}}],
     ['Firefox', 'cold', 'Tp6: Amazon', {eq: {suite: 'raptor-tp6-amazon-firefox-cold',framework: 10,
@@ -483,7 +482,7 @@ const TP6_SITES_DATA = {
     repo: 'mozilla-central'}}],
     ['Firefox', 'cold', 'Tp6: Yahoo News', {eq:{suite:'raptor-tp6-yahoo-news-firefox-cold',framework: 10,
     repo: 'mozilla-central'}}],
-
+    
     // YOU MAY REMOVE THE push_timestamp RESTRICTION AFTER APRIL 2020
     ['Chromium', 'warm', 'Tp6: Facebook', {or: [{and: [{lt: {push_timestamp: {date: '2019-09-01'}}}, {eq: {suite: 'raptor-tp6-facebook-chrome',framework: 10,
     repo: 'mozilla-central'}}]}, {eq: {suite: 'raptor-tp6-facebook-chromium',framework: 10,
