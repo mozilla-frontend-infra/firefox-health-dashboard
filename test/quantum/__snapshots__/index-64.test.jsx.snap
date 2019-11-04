@@ -189,7 +189,7 @@ exports[`renders correctly 1`] = `
       </span>
     </h2>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
@@ -542,7 +542,7 @@ exports[`renders correctly 1`] = `
       </span>
     </h2>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
@@ -963,7 +963,7 @@ exports[`renders correctly 1`] = `
       </span>
     </h2>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
@@ -1070,7 +1070,7 @@ exports[`renders correctly 1`] = `
       </span>
     </h2>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
@@ -2205,7 +2205,7 @@ exports[`renders correctly 1`] = `
       </span>
     </h2>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
