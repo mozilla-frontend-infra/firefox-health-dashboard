@@ -65,9 +65,7 @@ export default class QuantumIndex extends React.Component {
       };
     const performanceFilter = {
       and: [
-        {
-          or: [{ missing: 'test' }, { eq: ['test', 'suite'] }],
-        },
+        { or: [{ missing: 'test' }, { eq: ['test', 'suite'] }] },
         platform,
         {
           eq: {
@@ -286,27 +284,23 @@ export default class QuantumIndex extends React.Component {
             timeDomain={timeDomain}
             key="svg-(tsvgr_opacity)"
             title="SVG (tsvgr_opacity)"
-            series={[
-              {
-                label: 'Firefox',
-                filter: {
-                  and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
-                },
+            series={[{
+              label: 'Firefox',
+              filter: {
+                and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
               },
-            ]}
+            }]}
           />,
           <PerfherderGraphContainer
             timeDomain={timeDomain}
             key="svg-(tsvgx)"
             title="SVG (tsvgx)"
-            series={[
-              {
-                label: 'Firefox',
-                filter: {
-                  and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
-                },
+            series={[{
+              label: 'Firefox',
+              filter: {
+                and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
               },
-            ]}
+            }]}
           />,
         ],
       },
@@ -594,7 +588,7 @@ export default class QuantumIndex extends React.Component {
             <strong>https://health.graphics/quantum</strong>
             . Ask questions in
             <strong>#quantum</strong>
-             (IRC & Slack)
+            (IRC & Slack)
           </h2>
         </DashboardPage>
       );
