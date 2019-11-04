@@ -415,7 +415,7 @@ class Auth0Client {
 
   async keepAlive() {
     try {
-      return this.fetchJson(this.api.keep_alive);
+      return await this.fetchJson(this.api.keep_alive);
     } catch (e) {
       Log.warning('Lost session', e);
       this.cache.clear();
