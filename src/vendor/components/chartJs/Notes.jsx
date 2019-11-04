@@ -79,9 +79,11 @@ Notes.propTypes = {
     PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired,
+      note: PropTypes.string,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     }),
   ),
-  chartRef: PropTypes.instanceOf(React.Component),
+  chartRef: PropTypes.instanceOf(Object),
 };
 
 export { Notes }; // eslint-disable-line import/prefer-default-export

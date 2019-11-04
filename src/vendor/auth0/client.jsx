@@ -447,7 +447,7 @@ class Auth0Client {
     INVALIDATE THE SESSION COOKIE
      */
     try {
-      await fetchJson(this.api.logout);
+      await this.fetchJson(this.api.logout);
     } catch (e) {
       Log.warning('problem calling logout endpoint', e);
     }

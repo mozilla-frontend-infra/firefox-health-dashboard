@@ -517,7 +517,7 @@ export default class QuantumIndex extends React.Component {
           .map(() => 0)
           .fromPairs();
         const section = (
-          <Grid container spacing={24}>
+          <Grid key={title} container spacing={1}>
             {rows.map((widget, wi) => {
               // Acumulate the section's status
               statusList[widget.props.status] += 1;

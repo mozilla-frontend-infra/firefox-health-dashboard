@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 
 import {
-  coalesce, exists, isString, missing,
+  coalesce, exists, isString, missing, isArray,
 } from './utils';
 import { Data, isData } from './datas';
 import { Template } from './Template';
@@ -24,6 +24,10 @@ const stackPatterns = [
 function parseStack(stackString) {
   if (missing(stackString)) {
     return [];
+  }
+
+  if (isArray(stackString)) {
+    return stackString; // ASSUME ALREADY PARSED
   }
 
   return stackString
