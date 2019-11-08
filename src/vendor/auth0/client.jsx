@@ -447,11 +447,13 @@ class Auth0Client {
     INVALIDATE THE SESSION COOKIE
      */
     try {
+      if (!this.getCookie()) return;
       await this.fetchJson(this.api.logout);
     } catch (e) {
       Log.warning('problem calling logout endpoint', e);
+    } finally {
+      this.cache.clear();
     }
-    this.cache.clear();
   }
 }
 
@@ -539,11 +541,14 @@ class AuthProvider extends React.Component {
   }
 
   async update() {
+    const { cookie } = this.state;
     const authenticator = await Auth0Client.newInstance({ onStateChange: () => this.update(), ...SETTINGS.auth0 });
+    const newCookie = exists(authenticator.getCookie());
     this.setState({
       authenticator,
-      cookie: exists(authenticator.getCookie()),
+      cookie: newCookie,
     });
+    if (cookie !== newCookie) this.forceUpdate();
   }
 
   render() {
