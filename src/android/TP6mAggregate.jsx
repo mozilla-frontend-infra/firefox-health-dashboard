@@ -50,7 +50,7 @@ async function pullAggregate({
     })
     .select('filter')
     .toArray();
-  const [fennec64, sources] = await Promise.all([
+  const [fennec68, sources] = await Promise.all([
     getData({ or: referenceFilter }),
     getData(condition),
   ]);
@@ -59,7 +59,7 @@ async function pullAggregate({
 
   const processData = timer('process data');
 
-  const rawReference = selectFrom(fennec64)
+  const rawReference = selectFrom(fennec68)
     .select('data')
     .flatten()
   /* eslint-disable-next-line camelcase */
@@ -108,8 +108,8 @@ async function pullAggregate({
       value: ({ rawReference }) => {
         const values = selectFrom(rawReference).select('value');
         if (values.count() === 0) return null;
-        const min = values.min() * 0.8;
-        const max = values.max() * 0.8;
+        const min = values.min();
+        const max = values.max();
         const avg = round((min + max) / 2, { places: 2 });
         return {
           label: `Target (approx ${avg})`,

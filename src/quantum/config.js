@@ -316,8 +316,8 @@ const BROWSER_PLATFORMS = selectFrom([
       ]},
   },
   {
-    id: 'fennec64-g5',
-    browser: 'fennec64',
+    id: 'fennec68-g5',
+    browser: 'fennec68',
     label: 'Fennec 64 g5',
     platform: 'g5',
     platformFilter: {
@@ -331,8 +331,8 @@ const BROWSER_PLATFORMS = selectFrom([
     },
   },
   {
-    id: 'fennec64-p2-aarch64',
-    browser: 'fennec64',
+    id: 'fennec68-p2-aarch64',
+    browser: 'fennec68',
     label: 'Fennec 64 p2 (aarch64)',
     platform: 'p2-aarch64',
     platformFilter: {and: [
@@ -696,34 +696,34 @@ const TP6_SITES_DATA = {
     ['fenix',         'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-cold-youtube-fenix', 'raptor-tp6m-youtube-fenix-cold']}}],
     ['fenix',         'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-cold-youtube-watch-fenix', 'raptor-tp6m-youtube-watch-fenix-cold']}}],
 
-    ['fennec64',      'cold', 'Tp6 mobile: Amazon',               { eq: { suite: ['raptor-tp6m-amazon-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Amazon Search',        { eq: { suite: ['raptor-tp6m-amazon-search-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Aframe.io',            { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: All Recipes',          { eq: { suite: ['raptor-tp6m-allrecipes-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: BBC',                  { eq: { suite: ['raptor-tp6m-bbc-fennec64-cold']} }],
-    ['fennec64',      'cold', 'Tp6 mobile: Bing',                 { eq: { suite: ['raptor-tp6m-bing-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Booking',              { eq: { suite: ['raptor-tp6m-booking-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: CNN',                  { eq: { suite: ['raptor-tp6m-cnn-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: ESPN',                 { eq: { suite: ['raptor-tp6m-espn-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Facebook',             { eq: { suite: ['raptor-tp6m-facebook-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Facebook Cristiano',   { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Google',               { eq: { suite: ['raptor-tp6m-google-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Google Maps',          { eq: { suite: ['raptor-tp6m-google-maps-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Google Restaurants',   { eq: { suite: ['raptor-tp6m-google-restaurants-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Instagram',            { eq: { suite: ['raptor-tp6m-instagram-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Imdb',                 { eq: { suite: ['raptor-tp6m-imdb-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Jianshu',              { eq: { suite: ['raptor-tp6m-jianshu-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Microsoft Support',    { eq: { suite: ['raptor-tp6m-microsoft-support-fennec64-cold']} }],
-    ['fennec64',      'cold', 'Tp6 mobile: Reddit',               { eq: { suite: ['raptor-tp6m-reddit-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Stackoverflow',        { eq: { suite: ['raptor-tp6m-stackoverflow-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Web.de',               { eq: { suite: ['raptor-tp6m-web-de-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: Wikipedia',            { eq: { suite: ['raptor-tp6m-wikipedia-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-youtube-fennec64-cold']}}],
-    ['fennec64',      'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-youtube-watch-fennec64-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Amazon',               { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Amazon Search',        { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Aframe.io',            { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: All Recipes',          { eq: { suite: ['raptor-tp6m-allrecipes-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: BBC',                  { eq: { suite: ['raptor-tp6m-bbc-fennec68-cold']} }],
+    ['fennec68',      'cold', 'Tp6 mobile: Bing',                 { eq: { suite: ['raptor-tp6m-bing-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Bing Restaurants',     { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Booking',              { eq: { suite: ['raptor-tp6m-booking-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: CNN',                  { eq: { suite: ['raptor-tp6m-cnn-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: CNN AmpStories',       { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Kleinanzeigen',        { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: ESPN',                 { eq: { suite: ['raptor-tp6m-espn-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Facebook',             { eq: { suite: ['raptor-tp6m-facebook-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Facebook Cristiano',   { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Google',               { eq: { suite: ['raptor-tp6m-google-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Google Maps',          { eq: { suite: ['raptor-tp6m-google-maps-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Google Restaurants',   { eq: { suite: ['raptor-tp6m-google-restaurants-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Instagram',            { eq: { suite: ['raptor-tp6m-instagram-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Imdb',                 { eq: { suite: ['raptor-tp6m-imdb-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Jianshu',              { eq: { suite: ['raptor-tp6m-jianshu-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Microsoft Support',    { eq: { suite: ['raptor-tp6m-microsoft-support-fennec68-cold']} }],
+    ['fennec68',      'cold', 'Tp6 mobile: Reddit',               { eq: { suite: ['raptor-tp6m-reddit-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Stackoverflow',        { eq: { suite: ['raptor-tp6m-stackoverflow-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Web.de',               { eq: { suite: ['raptor-tp6m-web-de-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: Wikipedia',            { eq: { suite: ['raptor-tp6m-wikipedia-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: YouTube',              { eq: { suite: ['raptor-tp6m-youtube-fennec68-cold']}}],
+    ['fennec68',      'cold', 'Tp6 mobile: YouTube Watch',        { eq: { suite: ['raptor-tp6m-youtube-watch-fennec68-cold']}}],
 
   ],
 };
@@ -731,7 +731,7 @@ const TP6_SITES_DATA = {
 // Ensure "site" covers both cold and warm tests
 const TP6M_SITES = selectFrom(TP6_SITES_DATA.data)
   .map(row => Data.zip(TP6_SITES_DATA.header, row))
-  .where({browser: ['geckoview', 'fenix', 'fennec64']})
+  .where({browser: ['geckoview', 'fenix', 'fennec68']})
   .groupBy("site")
   .map((ss, site)=>{
     return {
