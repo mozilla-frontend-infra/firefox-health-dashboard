@@ -2,23 +2,23 @@
 
 ## Requirement
 
-Pageload times are 20% better than Fennec64
+Pageload times are better than Fennec68
 
 ## Summary Chart
 
-The page load summary chart shows the geometric mean load time for a number of sites against a Fennec64 -20% range  
+The page load summary chart shows the geometric mean load time for a number of sites against a Fennec68 range  
 
 ![Example Geomean Chart](about-pageload1.png)
 
 **Number of sites reporting**
  
-In the example above, there are 28 candidates sites, but only 26 are reporting.  There are two reasons why a site is not reporting: Either the site test has been failing for over a week, or the Fennec64 test has not been running.  The specific test not reportng can be seen in the detailed breakdown (more below)
+In the example above, there are 28 candidates sites, but only 26 are reporting.  There are two reasons why a site is not reporting: Either the site test has been failing for over a week, or the Fennec68 test has not been running.  The specific test not reportng can be seen in the detailed breakdown (more below)
   
-**Fennec64 -20% Range**
+**Fennec68 Range**
 
-Fennec64 pageload times are shown as a range. For each site, the worst observed loadtime and best observed loadtime (min) from the past 6 weeks is found.  Then a geometric mean of all worst (max) and a best (min) reported sites is used to establish a range. 20% is subtracted from the range to show on the chart.
+Fennec68 pageload times are shown as a range. For each site, the worst observed loadtime and best observed loadtime (min) from the past 6 weeks is found.  Then a geometric mean of all worst (max) and a best (min) reported sites is used to establish a range.
 
-Fennec64 is only run once per week, and pageload times are highly variable (as seen by the range), so daily, or weekly, moving range is not possible.
+Fennec68 is only run once per week, and pageload times are highly variable (as seen by the range), so daily, or weekly, moving range is not possible.
 
 **Geomean (red) line**
 
@@ -32,11 +32,11 @@ Clicking on the triple dots (`...`) will show a per-site breakdown for the geome
 
 ![Example Detail Chart](about-pageload2.png)
 
-In the above example the specific pageload test time are shown, and the fennec64 range for that site is also shown.
+In the above example the specific pageload test time are shown, and the fennec68 range for that site is also shown.
 
 **Target Range**
 
-The target range is derived from Fennec64: The worst observed load time (max) and best observed loadtime (min) from the past 6 weeks, for the given site, with 20% subtracted. 
+The target range is derived from Fennec68: The worst observed load time (max) and best observed loadtime (min) from the past 6 weeks, for the given site. 
 
 **Missing Sites**
 
