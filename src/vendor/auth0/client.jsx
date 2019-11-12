@@ -414,11 +414,17 @@ class Auth0Client {
   }
 
   async keepAlive() {
-    try {
-      return await this.fetchJson(this.api.keep_alive);
-    } catch (e) {
-      Log.warning('Lost session', e);
-      this.cache.clear();
+    /*
+    CALL THIS FUNCTION TO KEEP THE SESSION ALIVE
+     */
+    const cookie = this.getCookie();
+    if (cookie) {
+      try {
+        await this.fetchJson(this.api.keep_alive);
+      } catch (e) {
+        this.cache.clear();
+        Log.warning('Can not keep session alive using cookie {{cookie|json}}', { cookie }, e);
+      }
     }
   }
 
@@ -430,12 +436,8 @@ class Auth0Client {
       const now = Date.now().unix();
       const cookie = this.getCookie();
       if (cookie && now > this.last_used + cookie.inactive_lifetime - 120) {
-        try {
-          /* eslint-disable-next-line no-await-in-loop */
-          await this.keepAlive();
-        } catch (e) {
-          Log.warning('Can not keep session alive', e);
-        }
+        /* eslint-disable-next-line no-await-in-loop */
+        await this.keepAlive();
       }
       /* eslint-disable-next-line no-await-in-loop */
       await sleep(15);

@@ -1,0 +1,33 @@
+{
+  "backend": "https://firefox-health-backend.herokuapp.com",
+  "colors": [
+    "#e55525",
+    "#ffcd02",
+    "#45a1ff",
+    "#77cc00",
+    "#fd79ff",
+    "#AAAAAA"
+  ],
+  "firefoxReleases": "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
+  "annotation": {
+    "query": "https://activedata.allizom.org/note"
+  },
+  "auth0": {
+    "domain": "auth.mozilla.auth0.com",
+    "client_id": "10GIORp35iivxqZRNgOUk995Z90fhvFF",
+    "redirect_uri": "http://dev.localhost:3000/",
+    "audience": "https://annotations.charts.mozilla.org/",
+    "scope": "openid email",
+    "other scopes": "offline_access openid profile email data:change query:send",
+    "api": {
+      "cookie": {
+        "name": "annotation_session"
+      },
+      "domain": "activedata.allizom.org",
+      "login": "https://activedata.allizom.org/note/login",
+      "logout": "https://activedata.allizom.org/note/logout",
+      "keep_alive": "https://activedata.allizom.org/note/ping"
+    }
+  }
+}
+
