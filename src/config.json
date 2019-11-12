@@ -10,27 +10,23 @@
   ],
   "firefoxReleases": "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
   "annotation": {
-    "query": "http://dev.localhost:3000/annotation"
+    "query": "https://activedata.allizom.org/note"
   },
   "auth0": {
-    "domain": "dev-8821kz09.auth0.com",
-    "client_id": "FYlBPbNm7vZi9YPwVFyR7J2TLKrzNtST",
-    "redirect_uri": "http://dev.localhost:3000",
-    "_home_path": "/",
-    "audience": "https://locahost/query",
-    "scope": "openid email query:send",
+    "domain": "auth.mozilla.auth0.com",
+    "client_id": "10GIORp35iivxqZRNgOUk995Z90fhvFF",
+    "redirect_uri": "http://localhost:3000/",
+    "audience": "https://annotations.charts.mozilla.org/",
+    "scope": "openid email",
     "other scopes": "offline_access openid profile email data:change query:send",
-    "telemetry": {
-      "url": "https://github.com/klahnakoski/auth0-spa"
-    },
     "api": {
       "cookie": {
         "name": "annotation_session"
       },
-      "domain": "dev.localhost",
-      "login": "http://dev.localhost:5000/annotation/login",
-      "logout": "http://dev.localhost:5000/annotation/logout",
-      "keep_alive": "http://dev.localhost:5000/annotation/ping"
+      "domain": "activedata.allizom.org",
+      "login": "https://activedata.allizom.org/note/login",
+      "logout": "https://activedata.allizom.org/note/logout",
+      "keep_alive": "https://activedata.allizom.org/note/ping"
     }
   }
 }

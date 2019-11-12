@@ -49,11 +49,9 @@ class Auth0Client {
     if (!session) {
       Log.error('require session to call api');
     }
-    /* eslint-disable-next-line no-param-reassign */
-    options.credentials = 'include';
 
     try {
-      const response = await fetchJson(url, options);
+      const response = await fetchJson(url, { ...options, credentials: 'include' });
       this.last_used = now;
       return response;
     } catch (error) {
