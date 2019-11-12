@@ -489,7 +489,6 @@ exports[`renders correctly 1`] = `
       <span>
         Page Load tests (TP6)
         <span>
-           
           <a
             href="/quantum/tp6?platform=win64&test=warm-loadtime"
             title="show details"
@@ -2195,31 +2194,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="winOpen"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Window open
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2227,31 +2210,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="tabSwitch"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab switch
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2259,31 +2226,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="tabClose"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab close
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2291,31 +2242,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="firstPaint"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                First paint
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2323,31 +2258,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="sessionRestoreWindow"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Window ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2355,31 +2274,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="sessionRestoreStartupInit"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Startup Init ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2387,31 +2290,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="sessionRestoreStartupOnload"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Startup Onload ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2419,31 +2306,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="tabSwitchUpdate"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab Switch Update ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2451,31 +2322,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="gcAnimation"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GC Animation ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2483,31 +2338,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="gpuProcessInit"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GPU Process Initialization ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2515,31 +2354,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="gpuProcessLaunch"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GPU Process Launch ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2547,31 +2370,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="inputEventCoalesced"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Input Event Response Coalesced ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2579,31 +2386,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="networkCacheHit"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Network Cache Hit ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2611,31 +2402,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="networkCacheMiss"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Network Cache Miss ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2643,31 +2418,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="placesAutocomplete"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Places Autocomplete 6  First Results ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2675,31 +2434,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="searchServiceInit"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Search Service Init ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2707,31 +2450,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToDomComplete"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Complete ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2739,31 +2466,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToDomInteractive"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Interactive ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2771,31 +2482,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToDomLoading"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Loading ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2803,31 +2498,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToFirstInteraction"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to First Interaction ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2835,31 +2514,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToNonBlankPaint"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Non Blank Paint ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2867,31 +2530,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToResponseStart"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Response Start ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2899,31 +2546,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="webextBackgroundPageLoad"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Background Page Load ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2931,31 +2562,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="webextContentScriptInjection"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Content Script Injection ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2963,31 +2578,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="webextExtensionStartup"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Extension Startup ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -2995,31 +2594,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToLoadEventEnd"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Load Event End ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3027,31 +2610,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToDomContentLoadedEnd"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Content Loaded End ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3059,31 +2626,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="contentPaintTime"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                contentful paint Time ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3091,31 +2642,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="pageLoad"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                FX Page Load ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3123,31 +2658,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="simpleSessionRestored"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Simple Measures Session Restored ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3155,31 +2674,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="scalarFirstPaint"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Scalars Timestamp - First Paint ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>
@@ -3187,31 +2690,15 @@ exports[`renders correctly 1`] = `
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
         <div
-          className="criteria-widget"
-          id="timeToFirstScroll"
+          className="RawErrorMessage-container-142"
         >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to First Scroll ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
+          <div
+            className="RawErrorMessage-frame-143"
+          />
+          <div
+            className="RawErrorMessage-message-144"
+          >
+            Cannot read property 'description' of null
           </div>
         </div>
       </div>

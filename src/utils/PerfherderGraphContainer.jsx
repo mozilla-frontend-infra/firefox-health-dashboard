@@ -88,7 +88,7 @@ const tip = withStyles(tipStyles)(
         <span className={classes.value}>
           {round(record.value, { places: 3 })}
         </span>
-        {' '}
+
         (
         {higherOrLower}
 )
@@ -127,7 +127,7 @@ const tip = withStyles(tipStyles)(
           <a href={hgURL} target="_blank" rel="noopener noreferrer">
             {record.revision.slice(0, 12)}
           </a>
-          {' '}
+
 (
           <a href={jobURL} target="_blank" rel="noopener noreferrer">
             job
