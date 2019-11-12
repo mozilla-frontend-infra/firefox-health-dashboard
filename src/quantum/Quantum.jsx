@@ -1,5 +1,5 @@
 /* global document */
-import React, { lazy, Component } from 'react';
+import React, { Suspense, lazy, Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../utils/DashboardPage';
@@ -316,198 +316,262 @@ export default class QuantumIndex extends Component {
         cssRowExtraClasses: 'generic-metrics-graphics photon-perf',
         title: 'Performance Metrics',
         rows: [
-          <TelemetryContainer
-            key="winOpen"
-            id="winOpen"
-            title="Window open"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="tabSwitch"
-            id="tabSwitch"
-            title="Tab switch"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="tabClose"
-            id="tabClose"
-            title="Tab close"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="firstPaint"
-            id="firstPaint"
-            title="First paint"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="sessionRestoreWindow"
-            id="sessionRestoreWindow"
-            title="Session Restore Window ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="sessionRestoreStartupInit"
-            id="sessionRestoreStartupInit"
-            title="Session Restore Startup Init ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="sessionRestoreStartupOnload"
-            id="sessionRestoreStartupOnload"
-            title="Session Restore Startup Onload ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="tabSwitchUpdate"
-            id="tabSwitchUpdate"
-            title="Tab Switch Update ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="gcAnimation"
-            id="gcAnimation"
-            title="GC Animation ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="gpuProcessInit"
-            id="gpuProcessInit"
-            title="GPU Process Initialization ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="gpuProcessLaunch"
-            id="gpuProcessLaunch"
-            title="GPU Process Launch ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="inputEventCoalesced"
-            id="inputEventCoalesced"
-            title="Input Event Response Coalesced ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="networkCacheHit"
-            id="networkCacheHit"
-            title="Network Cache Hit ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="networkCacheMiss"
-            id="networkCacheMiss"
-            title="Network Cache Miss ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="placesAutocomplete"
-            id="placesAutocomplete"
-            title="Places Autocomplete 6  First Results ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="searchServiceInit"
-            id="searchServiceInit"
-            title="Search Service Init ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToDomComplete"
-            id="timeToDomComplete"
-            title="Time to DOM Complete ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToDomInteractive"
-            id="timeToDomInteractive"
-            title="Time to DOM Interactive ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToDomLoading"
-            id="timeToDomLoading"
-            title="Time to DOM Loading ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToFirstInteraction"
-            id="timeToFirstInteraction"
-            title="Time to First Interaction ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToNonBlankPaint"
-            id="timeToNonBlankPaint"
-            title="Time to Non Blank Paint ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToResponseStart"
-            id="timeToResponseStart"
-            title="Time to Response Start ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="webextBackgroundPageLoad"
-            id="webextBackgroundPageLoad"
-            title="Webext Background Page Load ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="webextContentScriptInjection"
-            id="webextContentScriptInjection"
-            title="Webext Content Script Injection ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="webextExtensionStartup"
-            id="webextExtensionStartup"
-            title="Webext Extension Startup ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToLoadEventEnd"
-            id="timeToLoadEventEnd"
-            title="Time to Load Event End ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToDomContentLoadedEnd"
-            id="timeToDomContentLoadedEnd"
-            title="Time to DOM Content Loaded End ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="contentPaintTime"
-            id="contentPaintTime"
-            title="contentful paint Time ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="pageLoad"
-            id="pageLoad"
-            title="FX Page Load ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="simpleSessionRestored"
-            id="simpleSessionRestored"
-            title="Simple Measures Session Restored ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="scalarFirstPaint"
-            id="scalarFirstPaint"
-            title="Scalars Timestamp - First Paint ms"
-            queryParams={quantumQueryParams}
-          />,
-          <TelemetryContainer
-            key="timeToFirstScroll"
-            id="timeToFirstScroll"
-            title="Time to First Scroll ms"
-            queryParams={quantumQueryParams}
-          />,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="winOpen"
+              id="winOpen"
+              title="Window open"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="tabSwitch"
+              id="tabSwitch"
+              title="Tab switch"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="tabClose"
+              id="tabClose"
+              title="Tab close"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="firstPaint"
+              id="firstPaint"
+              title="First paint"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="sessionRestoreWindow"
+              id="sessionRestoreWindow"
+              title="Session Restore Window ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="sessionRestoreStartupInit"
+              id="sessionRestoreStartupInit"
+              title="Session Restore Startup Init ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="sessionRestoreStartupOnload"
+              id="sessionRestoreStartupOnload"
+              title="Session Restore Startup Onload ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="tabSwitchUpdate"
+              id="tabSwitchUpdate"
+              title="Tab Switch Update ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="gcAnimation"
+              id="gcAnimation"
+              title="GC Animation ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="gpuProcessInit"
+              id="gpuProcessInit"
+              title="GPU Process Initialization ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="gpuProcessLaunch"
+              id="gpuProcessLaunch"
+              title="GPU Process Launch ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="inputEventCoalesced"
+              id="inputEventCoalesced"
+              title="Input Event Response Coalesced ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="networkCacheHit"
+              id="networkCacheHit"
+              title="Network Cache Hit ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="networkCacheMiss"
+              id="networkCacheMiss"
+              title="Network Cache Miss ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="placesAutocomplete"
+              id="placesAutocomplete"
+              title="Places Autocomplete 6  First Results ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="searchServiceInit"
+              id="searchServiceInit"
+              title="Search Service Init ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToDomComplete"
+              id="timeToDomComplete"
+              title="Time to DOM Complete ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToDomInteractive"
+              id="timeToDomInteractive"
+              title="Time to DOM Interactive ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToDomLoading"
+              id="timeToDomLoading"
+              title="Time to DOM Loading ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToFirstInteraction"
+              id="timeToFirstInteraction"
+              title="Time to First Interaction ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToNonBlankPaint"
+              id="timeToNonBlankPaint"
+              title="Time to Non Blank Paint ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToResponseStart"
+              id="timeToResponseStart"
+              title="Time to Response Start ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="webextBackgroundPageLoad"
+              id="webextBackgroundPageLoad"
+              title="Webext Background Page Load ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="webextContentScriptInjection"
+              id="webextContentScriptInjection"
+              title="Webext Content Script Injection ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="webextExtensionStartup"
+              id="webextExtensionStartup"
+              title="Webext Extension Startup ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToLoadEventEnd"
+              id="timeToLoadEventEnd"
+              title="Time to Load Event End ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToDomContentLoadedEnd"
+              id="timeToDomContentLoadedEnd"
+              title="Time to DOM Content Loaded End ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="contentPaintTime"
+              id="contentPaintTime"
+              title="contentful paint Time ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="pageLoad"
+              id="pageLoad"
+              title="FX Page Load ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="simpleSessionRestored"
+              id="simpleSessionRestored"
+              title="Simple Measures Session Restored ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="scalarFirstPaint"
+              id="scalarFirstPaint"
+              title="Scalars Timestamp - First Paint ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
+          <Suspense fallback={<div>Loading...</div>}>
+            <TelemetryContainer
+              key="timeToFirstScroll"
+              id="timeToFirstScroll"
+              title="Time to First Scroll ms"
+              queryParams={quantumQueryParams}
+            />
+          </Suspense>,
         ],
       },
     ];
