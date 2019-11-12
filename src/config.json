@@ -15,7 +15,7 @@
   "auth0": {
     "domain": "auth.mozilla.auth0.com",
     "client_id": "10GIORp35iivxqZRNgOUk995Z90fhvFF",
-    "redirect_uri": "http://localhost:3000/",
+    "redirect_uri": "https://deploy-preview-598--firefox-health-dashboard.netlify.com/",
     "audience": "https://annotations.charts.mozilla.org/",
     "scope": "openid email",
     "other scopes": "offline_access openid profile email data:change query:send",
