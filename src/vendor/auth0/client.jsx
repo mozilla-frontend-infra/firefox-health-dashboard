@@ -481,7 +481,13 @@ async function newInstance({ onStateChange, ...options }) {
     `);
   }
 
-  const redirect_uri = options.redirect_uri || window.location.origin + window.location.pathname;
+  let redirect_uri = window.location.origin + window.location.pathname;
+  if (options.redirect_path) {
+    redirect_uri = window.location.origin + options.redirect_path;
+  } else if (options.redirect_uri) {
+    /* eslint-disable-next-line prefer-destructuring */
+    redirect_uri = options.redirect_uri;
+  }
   if (options.home_path) {
     const location = window.location.origin + options.home_path;
     if (redirect_uri !== location) {
