@@ -1,8 +1,7 @@
 /* global document */
-import React, { Component } from 'react';
+import React, { lazy, Component } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
-import TelemetryContainer from '../telemetry/graph';
 import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
@@ -12,6 +11,8 @@ import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
+
+const TelemetryContainer = lazy(() => import('../telemetry/graph'));
 
 
 export default class QuantumIndex extends Component {
