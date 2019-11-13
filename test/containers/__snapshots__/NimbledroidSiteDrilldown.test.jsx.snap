@@ -6,7 +6,7 @@ exports[`renders correctly 1`] = `
 >
   <div>
     <button
-      className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-text"
+      className="MuiButtonBase-root MuiButton-root MuiButton-text"
       disabled={false}
       onBlur={[Function]}
       onClick={[Function]}

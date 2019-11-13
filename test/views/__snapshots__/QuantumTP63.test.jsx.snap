@@ -201,7 +201,6 @@ exports[`renders correctly integer 1`] = `
             </div>
             <input
               name="test"
-              onAnimationStart={[Function]}
               type="hidden"
               value="warm-loadtime"
             />
@@ -251,7 +250,6 @@ exports[`renders correctly integer 1`] = `
             </div>
             <input
               name="platform"
-              onAnimationStart={[Function]}
               type="hidden"
               value="win64"
             />
@@ -271,7 +269,7 @@ exports[`renders correctly integer 1`] = `
       </form>
       <form
         autoComplete="off"
-        className="DurationPickerPre-root-85"
+        className="DurationPickerPre-root-83"
         style={
           Object {
             "width": "8rem",
@@ -279,13 +277,13 @@ exports[`renders correctly integer 1`] = `
         }
       >
         <label
-          className="MuiFormLabel-root MuiInputLabel-root DurationPickerPre-label-86 MuiInputLabel-animated"
+          className="MuiFormLabel-root MuiInputLabel-root DurationPickerPre-label-84 MuiInputLabel-animated"
           htmlFor="past"
         >
           Show past
         </label>
         <div
-          className="DurationPickerPre-value-87"
+          className="DurationPickerPre-value-85"
         >
           month
         </div>
@@ -322,7 +320,6 @@ exports[`renders correctly integer 1`] = `
             >
               <button
                 className="MuiButtonBase-root MuiSlider-thumb"
-                disabled={false}
                 onBlur={[Function]}
                 onDragLeave={[Function]}
                 onFocus={[Function]}
@@ -365,10 +362,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Amazon
               <span
@@ -467,10 +464,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Apple
               <span
@@ -569,10 +566,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Bing
               <span
@@ -671,10 +668,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Docs
               <span
@@ -773,10 +770,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Facebook
               <span
@@ -875,10 +872,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Fandom
               <span
@@ -977,10 +974,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Google
               <span
@@ -1079,10 +1076,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Google Mail
               <span
@@ -1181,10 +1178,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Imdb
               <span
@@ -1283,10 +1280,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Imgur
               <span
@@ -1385,10 +1382,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Instagram
               <span
@@ -1487,10 +1484,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Instagram (binast)
               <span
@@ -1589,10 +1586,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: LinkedIn
               <span
@@ -1691,10 +1688,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Microsoft
               <span
@@ -1793,10 +1790,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Netflix
               <span
@@ -1895,10 +1892,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Office
               <span
@@ -1997,10 +1994,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Outlook
               <span
@@ -2099,10 +2096,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: PayPal
               <span
@@ -2201,10 +2198,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Pinterest
               <span
@@ -2303,10 +2300,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Reddit
               <span
@@ -2405,10 +2402,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Sheets
               <span
@@ -2507,10 +2504,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Slides
               <span
@@ -2609,10 +2606,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Tumblr
               <span
@@ -2711,10 +2708,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Twitch
               <span
@@ -2813,10 +2810,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Twitter
               <span
@@ -2915,10 +2912,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Wikipedia
               <span
@@ -3017,10 +3014,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Yahoo Mail
               <span
@@ -3119,10 +3116,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Yahoo News
               <span
@@ -3221,10 +3218,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: Yandex
               <span
@@ -3323,10 +3320,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: YouTube
               <span
@@ -3425,10 +3422,10 @@ exports[`renders correctly integer 1`] = `
           }
         >
           <div
-            className="ChartJsWrapper-chartContainer-211"
+            className="ChartJsWrapper-chartContainer-209"
           >
             <h2
-              className="ChartJsWrapper-title-212"
+              className="ChartJsWrapper-title-210"
             >
               Tp6: eBay
               <span

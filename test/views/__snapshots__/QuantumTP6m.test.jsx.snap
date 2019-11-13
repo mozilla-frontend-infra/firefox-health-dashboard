@@ -219,7 +219,6 @@ exports[`renders correctly 1`] = `
                   </div>
                   <input
                     name="test"
-                    onAnimationStart={[Function]}
                     type="hidden"
                     value="cold-loadtime"
                   />
@@ -269,7 +268,6 @@ exports[`renders correctly 1`] = `
                   </div>
                   <input
                     name="platform"
-                    onAnimationStart={[Function]}
                     type="hidden"
                     value="fenix-g5"
                   />
@@ -289,7 +287,7 @@ exports[`renders correctly 1`] = `
             </form>
             <form
               autoComplete="off"
-              className="DurationPickerPre-root-191"
+              className="DurationPickerPre-root-189"
               style={
                 Object {
                   "width": "8rem",
@@ -297,13 +295,13 @@ exports[`renders correctly 1`] = `
               }
             >
               <label
-                className="MuiFormLabel-root MuiInputLabel-root DurationPickerPre-label-192 MuiInputLabel-animated"
+                className="MuiFormLabel-root MuiInputLabel-root DurationPickerPre-label-190 MuiInputLabel-animated"
                 htmlFor="past"
               >
                 Show past
               </label>
               <div
-                className="DurationPickerPre-value-193"
+                className="DurationPickerPre-value-191"
               >
                 month
               </div>
@@ -340,7 +338,6 @@ exports[`renders correctly 1`] = `
                   >
                     <button
                       className="MuiButtonBase-root MuiSlider-thumb"
-                      disabled={false}
                       onBlur={[Function]}
                       onDragLeave={[Function]}
                       onFocus={[Function]}
@@ -384,10 +381,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Aframe.io
                 <span
@@ -486,10 +483,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: All Recipes
                 <span
@@ -588,10 +585,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Amazon
                 <span
@@ -690,10 +687,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Amazon Search
                 <span
@@ -792,10 +789,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: BBC
                 <span
@@ -894,10 +891,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Bing
                 <span
@@ -996,10 +993,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Bing Restaurants
                 <span
@@ -1098,10 +1095,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Booking
                 <span
@@ -1200,10 +1197,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: CNN
                 <span
@@ -1302,10 +1299,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: CNN AmpStories
                 <span
@@ -1404,10 +1401,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: ESPN
                 <span
@@ -1506,10 +1503,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Facebook
                 <span
@@ -1608,10 +1605,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Facebook Cristiano
                 <span
@@ -1710,10 +1707,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Google
                 <span
@@ -1812,10 +1809,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Google Maps
                 <span
@@ -1914,10 +1911,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Google Restaurants
                 <span
@@ -2016,10 +2013,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Imdb
                 <span
@@ -2118,10 +2115,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Instagram
                 <span
@@ -2220,10 +2217,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Jianshu
                 <span
@@ -2322,10 +2319,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Kleinanzeigen
                 <span
@@ -2424,10 +2421,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Kleinanzeigen Search
                 <span
@@ -2526,10 +2523,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Microsoft Support
                 <span
@@ -2628,10 +2625,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Reddit
                 <span
@@ -2730,10 +2727,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Stackoverflow
                 <span
@@ -2832,10 +2829,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Web.de
                 <span
@@ -2934,10 +2931,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: Wikipedia
                 <span
@@ -3036,10 +3033,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: YouTube
                 <span
@@ -3138,10 +3135,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-214"
+              className="ChartJsWrapper-chartContainer-212"
             >
               <h2
-                className="ChartJsWrapper-title-215"
+                className="ChartJsWrapper-title-213"
               >
                 Tp6 mobile: YouTube Watch
                 <span
