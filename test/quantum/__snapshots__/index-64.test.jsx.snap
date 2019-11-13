@@ -489,7 +489,6 @@ exports[`renders correctly 1`] = `
       <span>
         Page Load tests (TP6)
         <span>
-           
           <a
             href="/quantum/tp6?platform=win64&test=warm-loadtime"
             title="show details"
@@ -2194,1025 +2193,225 @@ exports[`renders correctly 1`] = `
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="winOpen"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Window open
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="tabSwitch"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab switch
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="tabClose"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab close
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="firstPaint"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                First paint
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="sessionRestoreWindow"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Window ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="sessionRestoreStartupInit"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Startup Init ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="sessionRestoreStartupOnload"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Session Restore Startup Onload ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="tabSwitchUpdate"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Tab Switch Update ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="gcAnimation"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GC Animation ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="gpuProcessInit"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GPU Process Initialization ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="gpuProcessLaunch"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                GPU Process Launch ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="inputEventCoalesced"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Input Event Response Coalesced ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="networkCacheHit"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Network Cache Hit ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="networkCacheMiss"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Network Cache Miss ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="placesAutocomplete"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Places Autocomplete 6  First Results ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="searchServiceInit"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Search Service Init ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToDomComplete"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Complete ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToDomInteractive"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Interactive ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToDomLoading"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Loading ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToFirstInteraction"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to First Interaction ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToNonBlankPaint"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Non Blank Paint ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToResponseStart"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Response Start ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="webextBackgroundPageLoad"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Background Page Load ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="webextContentScriptInjection"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Content Script Injection ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="webextExtensionStartup"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Webext Extension Startup ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToLoadEventEnd"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to Load Event End ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToDomContentLoadedEnd"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to DOM Content Loaded End ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="contentPaintTime"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                contentful paint Time ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="pageLoad"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                FX Page Load ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="simpleSessionRestored"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Simple Measures Session Restored ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="scalarFirstPaint"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Scalars Timestamp - First Paint ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
       <div
         className="MuiGrid-root  generic-metrics-graphics photon-perf MuiGrid-item MuiGrid-grid-xs-6"
       >
-        <div
-          className="criteria-widget"
-          id="timeToFirstScroll"
-        >
-          <header>
-            <h3
-              className="graph-title"
-            >
-              <a
-                className="graph-title-link"
-              >
-                Time to First Scroll ms
-              </a>
-            </h3>
-          </header>
-          <div>
-            <div
-              className="graph-subtitle"
-            />
-            <div
-              className="graph"
-            >
-              <div
-                className="graph-legend"
-              />
-            </div>
-          </div>
+        <div>
+          Loading...
         </div>
       </div>
     </div>

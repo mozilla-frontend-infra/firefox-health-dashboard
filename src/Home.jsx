@@ -44,27 +44,27 @@ const Home = ({ classes }) => (
     <div className={classes.links}>
       <Link to="/android">
         <AndroidIcon />
-        {' '}
+
 Android
       </Link>
       <Link to="/quantum/32">
         <DesktopIcon />
-        {' '}
+
 Quantum 32bit
       </Link>
       <Link to="/quantum/64">
         <DesktopIcon />
-        {' '}
+
 Quantum 64bit
       </Link>
       <Link to="/power">
         <BatteryIcon />
-        {' '}
+
 Power Usage
       </Link>
       <Link to="/playback">
         <VideoIcon />
-        {' '}
+
 Playback
       </Link>
     </div>
