@@ -16,6 +16,6 @@ describe('subbenchmarks', () => {
     const data = adjustedData(stubData, 50);
 
     assert(data.length === 2);
-    expect(data.map(d => d.value)).to.have.same.members([1, 2]);
+    expect(data.map((d) => d.value)).to.have.same.members([1, 2]);
   });
 });

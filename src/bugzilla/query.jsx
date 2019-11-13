@@ -97,7 +97,7 @@ Data.setDefault(expressionLookup, {
     if (vals.length > 1) {
       return [
         { f: 'OP', j: 'OR' },
-        ...val.map(v => ({ f: fld, o: 'equals', v })),
+        ...val.map((v) => ({ f: fld, o: 'equals', v })),
         { f: 'CP' },
       ];
     }
@@ -117,7 +117,7 @@ Data.setDefault(expressionLookup, {
     if (vals.length > 1) {
       return [
         { f: 'OP', j: 'OR' },
-        ...val.map(v => ({ f: fld, o: 'regexp', v: `${escapeRegEx(v)}.*` })),
+        ...val.map((v) => ({ f: fld, o: 'regexp', v: `${escapeRegEx(v)}.*` })),
         { f: 'CP' },
       ];
     }
@@ -182,17 +182,17 @@ const tokenizedMap = {
   regexp: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'regexp',
-    v: toArray(v).map(vv => `.*\\[${vv}.*`),
+    v: toArray(v).map((vv) => `.*\\[${vv}.*`),
   }),
   equals: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'substring',
-    v: toArray(v).map(vv => `[${vv}]`),
+    v: toArray(v).map((vv) => `[${vv}]`),
   }),
   anyexact: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'anywordssubstr',
-    v: toArray(v).map(vv => `[${vv}]`),
+    v: toArray(v).map((vv) => `[${vv}]`),
   }),
 };
 /*
@@ -246,7 +246,7 @@ const queryBugzilla = async (query) => {
 /*
 open a window to show given bugs
  */
-const showBugsUrl = query => URL({
+const showBugsUrl = (query) => URL({
   path: BUGZILLA_URL,
   query: {
     ...jx2rest(coalesce(query.where, query.filter)),

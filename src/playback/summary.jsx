@@ -96,7 +96,7 @@ class PlaybackSummary extends React.Component {
       .toArray();
     const combos = selectFrom(PLATFORMS)
       .where({ bits, type: platformType })
-      .map(platform => selectFrom(ENCODINGS)
+      .map((platform) => selectFrom(ENCODINGS)
         .where({ encoding })
         .map(({ encoding }) => selectFrom(TESTS)
           .where({
@@ -175,7 +175,7 @@ class PlaybackSummary extends React.Component {
     if (score === 'bad') {
       result.speeds.sort((a, b) => a.speed - b.speed);
 
-      const speed = result.speeds.find(s => s.loss > 1);
+      const speed = result.speeds.find((s) => s.loss > 1);
 
       return `${round(speed.loss, { places: 2 })} dropped frames at ${
         speed.speed
@@ -183,7 +183,7 @@ class PlaybackSummary extends React.Component {
     }
 
     if (score === 'fail') {
-      const speed = result.speeds.find(s => s.speed === 1);
+      const speed = result.speeds.find((s) => s.speed === 1);
 
       return `${round(speed.loss, { places: 2 })} dropped frames at ${
         speed.speed
@@ -239,7 +239,7 @@ class PlaybackSummary extends React.Component {
         </h2>
         {selectFrom(PLATFORMS)
           .where({ bits, type: platformType })
-          .map(platform => (
+          .map((platform) => (
             // https://health.graphics/playback/details?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
               key={platform}

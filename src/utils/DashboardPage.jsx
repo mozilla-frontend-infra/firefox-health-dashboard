@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from '../vendor/components/links';
 import {
   AndroidIcon,
   BatteryIcon,
-  DesktopIcon,
   CodeIcon,
+  DesktopIcon,
   HomeIcon,
   VideoIcon,
 } from './icons';
@@ -65,7 +65,7 @@ const DashboardPage = ({
         </a>
       </div>
     </div>
-    <Fragment>{children}</Fragment>
+    <>{children}</>
   </div>
 );
 

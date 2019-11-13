@@ -119,7 +119,7 @@ RedashContainer.propTypes = {
 RedashContainer.defaultProps = {
   standardOptions: {
     'axis.y.label': 'Miliseconds',
-    ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
+    ticksCallback: (value) => (value > 999 ? `${value / 1000}k` : value),
   },
   dataKeyIdentifier: 'label',
 };

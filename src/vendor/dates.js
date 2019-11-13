@@ -19,7 +19,7 @@ import {
 import { Log } from './logs';
 import strings from './strings';
 
-const twoDigits = x => (x < 0 || x > 9 ? '' : '0') + x;
+const twoDigits = (x) => (x < 0 || x > 9 ? '' : '0') + x;
 
 class GMTDate extends Date {
   unix = () => this.milli() / 1000.0;
@@ -87,7 +87,7 @@ class GMTDate extends Date {
   // CONVERT THIS LOCAL DATE TO GMT DATE
   subtractTimezone = () => this.addMinute(this.getTimezoneOffset());
 
-  addMilli = value => new GMTDate(this.milli() + value);
+  addMilli = (value) => new GMTDate(this.milli() + value);
 
   addSecond = (value) => {
     const output = new GMTDate(this);
@@ -269,7 +269,7 @@ class GMTDate extends Date {
 
   ceilingMonth = () => this.floorMonth().addMonth(1);
 
-  ceiling = interval => this.floor(interval).add(interval);
+  ceiling = (interval) => this.floor(interval).add(interval);
 
   // ------------------------------------------------------------------
   // formatDate(date_object, format);
@@ -746,7 +746,7 @@ GMTDate.getBestInterval = (
     return coalesce(
       Duration.COMMON_INTERVALS.slice()
         .reverse()
-        .find(d => biggest > d.month),
+        .find((d) => biggest > d.month),
       first(Duration.COMMON_INTERVALS),
     );
   }
@@ -763,14 +763,14 @@ GMTDate.getBestInterval = (
     return coalesce(
       Duration.COMMON_INTERVALS.slice()
         .reverse()
-        .find(d => biggest > d.milli),
+        .find((d) => biggest > d.milli),
       first(Duration.COMMON_INTERVALS),
     );
   }
 
   if (requested < smallest) {
     return coalesce(
-      Duration.COMMON_INTERVALS.find(d => smallest <= d.milli),
+      Duration.COMMON_INTERVALS.find((d) => smallest <= d.milli),
       last(Duration.COMMON_INTERVALS),
     );
   }
@@ -1168,7 +1168,7 @@ GMTDate.tryParse = (val_, isFutureDate = false) => {
   const val = val_.trim();
 
   // ATTEMPT EXPRESSIONS
-  if (Object.keys(RELATIVE).some(r => val.includes(r))) {
+  if (Object.keys(RELATIVE).some((r) => val.includes(r))) {
     return GMTDate.parseRelative(val);
   }
 
@@ -1213,6 +1213,6 @@ strings.format = (value, format) => {
   return GMTDate.newInstance(value).format(ff);
 };
 
-strings.unix = value => GMTDate.newInstance(value).unix();
+strings.unix = (value) => GMTDate.newInstance(value).unix();
 
 export { GMTDate }; // eslint-disable-line import/prefer-default-export

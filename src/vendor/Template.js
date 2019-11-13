@@ -14,7 +14,7 @@ class Template {
 
 function expandArray(arr, namespaces) {
   // AN ARRAY OF TEMPLATES IS SIMPLY CONCATENATED
-  return arr.map(t => expandAny(t, namespaces)).join('');
+  return arr.map((t) => expandAny(t, namespaces)).join('');
 }
 
 function expandLoop(loop, namespaces) {

@@ -30,7 +30,7 @@ class NimbledroidProductVersions extends Component {
 
     return !meta ? null : (
       <div className={classes.root}>
-        {Object.keys(meta).map(packageId => (
+        {Object.keys(meta).map((packageId) => (
           <span key={packageId} className={classes.spacing}>
             {`${CONFIG.packageIdLabels[packageId]} (${
               meta[packageId].latestVersion
