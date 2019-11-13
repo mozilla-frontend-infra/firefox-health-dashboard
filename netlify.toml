@@ -4,4 +4,5 @@
   status = 200
 
 [build.environment]
+  NODE_VERSION = "12.13.0"
   YARN_VERSION = "1.17.3"
