@@ -28,7 +28,7 @@ function parseStack(stackString) {
 
   return stackString
     .split('\n')
-    .map(line => stackPatterns
+    .map((line) => stackPatterns
       .map((stackPattern) => {
         const parts = stackPattern.exec(line);
 

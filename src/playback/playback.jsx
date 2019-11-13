@@ -12,7 +12,7 @@ export default class Playback extends React.Component {
         title="Playback"
         subtitle="Release criteria"
       >
-        {BROWSERS.map(browser => (
+        {BROWSERS.map((browser) => (
           <Section title={browser.title} key={browser.title}>
             <Grid container spacing={2}>
               {ENCODINGS.map(({ encoding }) => (

@@ -424,11 +424,11 @@ Duration.newInstance = (obj) => {
 };
 
 const milliSteps = [1, 2, 5, 10, 20, 50, 100, 200, 500]
-  .concat(...[1, 2, 5, 6, 10, 15, 30].map(v => v * 1000)) // SECONDS
-  .concat(...[1, 2, 5, 6, 10, 15, 30].map(v => v * 60 * 1000)) // MINUTES
-  .concat(...[1, 2, 3, 6, 12].map(v => v * 60 * 60 * 1000)) // HOURS
-  .concat(...[1].map(v => v * 24 * 60 * 60 * 1000)) // DAYS
-  .concat(...[1, 2].map(v => v * 7 * 24 * 60 * 60 * 1000)); // WEEKS
+  .concat(...[1, 2, 5, 6, 10, 15, 30].map((v) => v * 1000)) // SECONDS
+  .concat(...[1, 2, 5, 6, 10, 15, 30].map((v) => v * 60 * 1000)) // MINUTES
+  .concat(...[1, 2, 3, 6, 12].map((v) => v * 60 * 60 * 1000)) // HOURS
+  .concat(...[1].map((v) => v * 24 * 60 * 60 * 1000)) // DAYS
+  .concat(...[1, 2].map((v) => v * 7 * 24 * 60 * 60 * 1000)); // WEEKS
 const monthSteps = [1, 2, 6, 12, 24, 60, 120];
 
 /**

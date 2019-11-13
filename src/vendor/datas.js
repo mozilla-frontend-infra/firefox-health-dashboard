@@ -32,7 +32,7 @@ function isEqual(a, b, done = []) {
 
     const moreDone = [a, b, ...done];
 
-    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k => isEqual(a[k], b[k], moreDone));
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every((k) => isEqual(a[k], b[k], moreDone));
   }
 
   if (isMany(a) && isMany(b)) {
@@ -113,7 +113,7 @@ Data.deepCopy = (value) => {
     return output;
   }
 
-  if (isMany(value)) return value.map(v => Data.deepCopy(v));
+  if (isMany(value)) return value.map((v) => Data.deepCopy(v));
 
   return value;
 };
@@ -189,7 +189,7 @@ Data.get = (obj, path) => {
       } else if (isInteger(step)) {
         output = output[step];
       } else if (isArray(output)) {
-        output = output.map(o => (isData(o) ? o[step] : null));
+        output = output.map((o) => (isData(o) ? o[step] : null));
       }
     } else if (isData(output)) {
       output = output[step];

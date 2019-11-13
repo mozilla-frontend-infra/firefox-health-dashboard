@@ -7,13 +7,6 @@ import NimbledroidSiteDrilldown from './NimbledroidSiteDrilldown';
 import { CONFIG } from './config';
 
 class NimbledroidGraphPage extends Component {
-  static propTypes = {
-    site: propTypes.string,
-    location: propTypes.shape({
-      search: propTypes.string,
-    }),
-  };
-
   render() {
     const { products } = CONFIG;
     const nimbledroidSubTitle = `${
@@ -36,5 +29,13 @@ class NimbledroidGraphPage extends Component {
     );
   }
 }
+
+NimbledroidGraphPage.propTypes = {
+  site: propTypes.string,
+  location: propTypes.shape({
+    search: propTypes.string,
+  }),
+};
+
 
 export default NimbledroidGraphPage;

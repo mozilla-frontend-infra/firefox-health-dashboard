@@ -38,12 +38,12 @@ const niceCeiling = (value) => {
   if (value === 0) return 1;
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
   const norm = value / d;
-  const nice = [1.5, 2, 3, 5, 7.5, 10].find(v => norm <= v);
+  const nice = [1.5, 2, 3, 5, 7.5, 10].find((v) => norm <= v);
 
   return nice * d;
 };
 
-const generateLineChartStyle = color => ({
+const generateLineChartStyle = (color) => ({
   type: 'line',
   backgroundColor: color,
   borderColor: color,
@@ -151,7 +151,7 @@ const cjsGenerator = (standardOptions) => {
   }
 
   // BE SURE THE xEdge IS LAST (SO IT LINES UP WITH ChartJS datasetIndex
-  options.series = [...options.series.filter(s => s !== xEdge), xEdge];
+  options.series = [...options.series.filter((s) => s !== xEdge), xEdge];
   // ENSURE ALL SERIES HAVE A COLOR
   options.series.forEach((s, i) => {
     Data.setDefault(
@@ -167,7 +167,7 @@ const cjsGenerator = (standardOptions) => {
   xEdge.selector = xSelector;
 
   const datasets = selectFrom(options.series)
-    .filter(s => s !== xEdge)
+    .filter((s) => s !== xEdge)
     .map((s) => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
@@ -177,7 +177,7 @@ const cjsGenerator = (standardOptions) => {
         const yMax = jx(y.range.max);
 
         // eslint-disable-next-line no-param-reassign
-        s.selector = row => ({ min: yMin(row), max: yMax(row) });
+        s.selector = (row) => ({ min: yMin(row), max: yMax(row) });
 
         return [
           {
@@ -186,7 +186,7 @@ const cjsGenerator = (standardOptions) => {
             data: selectFrom(options.data)
               .select({
                 [y.axis]: yMin,
-                [x.axis]: r => Date.newInstance(xSelector(r)),
+                [x.axis]: (r) => Date.newInstance(xSelector(r)),
               })
               .toArray(),
             ...generateDatasetStyle(color, 'line'),
@@ -198,7 +198,7 @@ const cjsGenerator = (standardOptions) => {
             data: selectFrom(options.data)
               .select({
                 [y.axis]: yMax,
-                [x.axis]: r => Date.newInstance(xSelector(r)),
+                [x.axis]: (r) => Date.newInstance(xSelector(r)),
               })
               .toArray(),
             ...generateDatasetStyle(color, type),
@@ -221,7 +221,7 @@ const cjsGenerator = (standardOptions) => {
         data: selectFrom(options.data)
           .select({
             [y.axis]: ySelector,
-            [x.axis]: r => Date.newInstance(xSelector(r)),
+            [x.axis]: (r) => Date.newInstance(xSelector(r)),
           })
           .toArray(),
         ...generateDatasetStyle(color, type),
@@ -325,7 +325,7 @@ const cjsGenerator = (standardOptions) => {
         labels: {
           boxWidth: 10,
           fontSize: 10,
-          filter: item => exists(item.text),
+          filter: (item) => exists(item.text),
         },
       },
       scales: {

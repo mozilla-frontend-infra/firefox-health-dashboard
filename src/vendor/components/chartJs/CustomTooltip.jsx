@@ -170,7 +170,7 @@ function withTooltip() {
       }
 
       handleChartClick = () => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
           tooltipIsLocked: !prevState.tooltipIsLocked,
         }));
       };

@@ -62,7 +62,7 @@ class Matrix {
       const c = coord[0];
 
       if (missing(c)) {
-        return data.map(sub => _iter(coord.slice(1), sub));
+        return data.map((sub) => _iter(coord.slice(1), sub));
       }
 
       return _iter(coord.slice(1), data[c]);
@@ -132,7 +132,7 @@ class Matrix {
     for (const [v, coord] of this) {
       const n = coord.map((c, i) => ordering[i][c]);
 
-      if (n.every(n => exists(n))) {
+      if (n.every((n) => exists(n))) {
         output.set(n, v);
       }
     }

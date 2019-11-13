@@ -20,7 +20,7 @@ const REFERENCE_COLOR = '#45a1ff44';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
-  x => x * 24 * 60 * 60,
+  (x) => x * 24 * 60 * 60,
 );
 const tipStyles = {
   tooltipKey: {
@@ -145,7 +145,7 @@ const generateStandardOptions = (series, timeDomain) => {
   const { lowerIsBetter, unit } = series[0].meta;
   const data = selectFrom(series)
     .enumerate()
-    .map(s => selectFrom(s.data)
+    .map((s) => selectFrom(s.data)
       .sort('push_timestamp')
       .enumerate()
       .map((d) => {
@@ -162,7 +162,7 @@ const generateStandardOptions = (series, timeDomain) => {
   return {
     tip,
     series: selectFrom(series)
-      .map(s => ({
+      .map((s) => ({
         type: 'scatter',
         ...s,
         select: { value: literalField(s.label) },
@@ -185,14 +185,14 @@ into ChartJS formatting */
 const perfherderFormatter = (series, timeDomain) => {
   const firstTime = timeDomain.min.unix();
   const timeRange = Date.today().unix() - firstTime;
-  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t => t >= timeRange);
+  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find((t) => t >= timeRange);
   const combinedSeries = selectFrom(series)
     .enumerate()
     .map(({ sources, ...row }) => ({
       ...row,
       // choose meta from the source with most recent data
       meta: selectFrom(sources)
-        .sort(s => selectFrom(s.data)
+        .sort((s) => selectFrom(s.data)
           .select('push_timestamp')
           .max())
         .last({}).meta,

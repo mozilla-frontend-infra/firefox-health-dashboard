@@ -12,6 +12,9 @@ module.exports = {
     airbnb({
       eslint: {
         rules: {
+          'react/jsx-props-no-spreading': 0,
+          'react/state-in-constructor': 0,
+          'max-classes-per-file': 0,
           'class-methods-use-this': 0,
           'consistent-return': 0,
           'jsx-a11y/click-events-have-key-events': 0,

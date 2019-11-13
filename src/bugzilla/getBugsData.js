@@ -18,7 +18,7 @@ const getBugsData = async (queries = [], timeDomain) => {
   );
   const eod = Date.eod();
   const data = selectFrom(timeDomain.partitions)
-    .map(p => ({
+    .map((p) => ({
       date: p.min,
       ...selectFrom(bugSeries)
         .map(({ bugs, label }) => [

@@ -44,7 +44,7 @@ function fromQueryString(query) {
 Convert a JSON object into a query string
  */
 function toQueryString(value) {
-  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
+  const e = (vv) => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) => toArray(v)
     .filter(exists)
     .map((vv) => {

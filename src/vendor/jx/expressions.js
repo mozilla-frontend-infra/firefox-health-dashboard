@@ -26,7 +26,7 @@ const defineFunction = (expr) => {
     const pathArray = splitField(expr);
 
     if (pathArray.length === 0) {
-      return row => coalesce(row);
+      return (row) => coalesce(row);
     }
 
     if (pathArray.length === 1) {
@@ -43,7 +43,7 @@ const defineFunction = (expr) => {
           }
 
           if (isArray(row)) {
-            return row.map(o => (isData(o) ? o[step] : null));
+            return row.map((o) => (isData(o) ? o[step] : null));
           }
         } else if (isData(row)) {
           return coalesce(row[step]);
@@ -63,7 +63,7 @@ const defineFunction = (expr) => {
           } else if (isInteger(step)) {
             output = output[step];
           } else if (isArray(output)) {
-            output = output.map(o => (isData(o) ? o[step] : null));
+            output = output.map((o) => (isData(o) ? o[step] : null));
           }
         } else if (isData(output)) {
           output = output[step];
@@ -116,10 +116,10 @@ expressions.and = (terms) => {
   }
 
   if (filters.length === 1) {
-    return row => filters[0](row);
+    return (row) => filters[0](row);
   }
 
-  return row => filters.every(f => f(row));
+  return (row) => filters.every((f) => f(row));
 };
 
 /*
@@ -135,10 +135,10 @@ expressions.or = (terms) => {
   }
 
   if (filters.length === 1) {
-    return row => filters[0](row);
+    return (row) => filters[0](row);
   }
 
-  return row => filters.some(f => f(row));
+  return (row) => filters.some((f) => f(row));
 };
 
 /*
@@ -149,7 +149,7 @@ return opposite of expr
 expressions.not = (expr) => {
   const filter = defineFunction(expr);
 
-  return row => !filter(row);
+  return (row) => !filter(row);
 };
 
 /*
@@ -178,13 +178,13 @@ expressions.eq = (term) => {
       };
     });
 
-    return row => filters.every(f => f(row));
+    return (row) => filters.every((f) => f(row));
   }
 
   if (isArray(term)) {
     const [a, b] = term.map(defineFunction);
 
-    return row => a(row) === b(row);
+    return (row) => a(row) === b(row);
   }
 
   Log.error('eq Expecting object, or array');
@@ -197,7 +197,7 @@ example {prefix: {name: prefix}}
 
 Return true if `name` starts with literal `prefix`
  */
-expressions.prefix = term => row => Object.entries(term).every(([name, prefix]) => {
+expressions.prefix = (term) => (row) => Object.entries(term).every(([name, prefix]) => {
   const value = Data.get(row, name);
 
   if (missing(value)) {
@@ -213,7 +213,7 @@ return true if `expression` is missing
 expressions.missing = (expression) => {
   const func = defineFunction(expression);
 
-  return row => missing(func(row));
+  return (row) => missing(func(row));
 };
 
 /*
@@ -221,7 +221,7 @@ return index of substring
 return null if not found
  */
 
-expressions.find = term => row => Object.entries(term).every(([name, substring]) => {
+expressions.find = (term) => (row) => Object.entries(term).every(([name, substring]) => {
   const value = Data.get(row, name);
   if (missing(value)) return false;
   const index = value.indexOf(substring);
@@ -235,7 +235,7 @@ return true if `expression` exists
 expressions.exists = (expression) => {
   const func = defineFunction(expression);
 
-  return row => exists(func(row));
+  return (row) => exists(func(row));
 };
 
 /*
@@ -249,7 +249,7 @@ expressions.gte = (obj) => {
     defineFunction(reference),
   ]);
 
-  return row => lookup.every(([a, b]) => {
+  return (row) => lookup.every(([a, b]) => {
     const av = a(row);
     const bv = b(row);
 
@@ -272,7 +272,7 @@ expressions.lt = (obj) => {
     defineFunction(reference),
   ]);
 
-  return row => lookup.every(([a, b]) => {
+  return (row) => lookup.every(([a, b]) => {
     const av = a(row);
     const bv = b(row);
 
@@ -298,7 +298,7 @@ expressions.date = (value) => {
 
   const v = defineFunction(value);
 
-  return row => Date.newInstance(v(row)).unix();
+  return (row) => Date.newInstance(v(row)).unix();
 };
 
 export default defineFunction;

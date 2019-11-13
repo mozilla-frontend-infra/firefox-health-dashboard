@@ -87,7 +87,7 @@ const getFramework = async ({ repo, framework }) => {
                 'raptor-sunspider',
                 'raptor-webaudio',
                 'raptor-unity',
-              ].some(prefix => suite.startsWith(prefix))
+              ].some((prefix) => suite.startsWith(prefix))
             ) {
               lowerIsBetter = false;
             } else if (
@@ -99,7 +99,7 @@ const getFramework = async ({ repo, framework }) => {
                 'raptor-assorted-dom',
                 'tp4',
                 'tp5',
-              ].some(prefix => suite.startsWith(prefix))
+              ].some((prefix) => suite.startsWith(prefix))
             ) {
               lowerIsBetter = true;
               unit = 'Duration';
@@ -139,7 +139,7 @@ const getFramework = async ({ repo, framework }) => {
 
 
 function simpler(v) {
-  const vv = v.filter(e => e !== true && exists(e));
+  const vv = v.filter((e) => e !== true && exists(e));
   if (vv.length === 0) return null;
   if (vv.length === 1) return vv[0];
   return { and: vv };
@@ -166,11 +166,11 @@ const extract = (expression, props) => {
   return toPairs(expression)
     .map((param, op) => {
       if (op === 'or') {
-        return selectFrom(param).map(e => extract(e, props)).flatten();
+        return selectFrom(param).map((e) => extract(e, props)).flatten();
       }
       if (op === 'and') {
-        return combos(...param.map(e => extract(e, props)))
-          .map(v => zip(...v).map(simpler));
+        return combos(...param.map((e) => extract(e, props)))
+          .map((v) => zip(...v).map(simpler));
       }
 
       if (isString(param)) {
@@ -182,11 +182,11 @@ const extract = (expression, props) => {
       if (isArray(param)) {
         const temp = selectFrom;
         const expressions = temp(param)
-          .map(e => extract(e, props)) // array of dis-norm-form
+          .map((e) => extract(e, props)) // array of dis-norm-form
           .flatten() // dis-norm-form
           .zip() // length==N onfor each props
           .enumerate()
-          .filter(e => coalesce(...e)) // remove props with nothing
+          .filter((e) => coalesce(...e)) // remove props with nothing
           .materialize(); // non-lazy
 
         if (expressions.count() !== 1) {
@@ -259,7 +259,7 @@ function internalFetch(repo, todo) {
         todo.forEach((meta) => {
           dataCache[meta.signature].resolve({
             meta,
-            data: data[meta.signature].map(row => ({
+            data: data[meta.signature].map((row) => ({
               ...row,
               meta,
             })),
@@ -283,7 +283,7 @@ const getDataBySignature = async (metadatas) => {
       internalFetch(repo, todo);
     });
 
-  return Promise.all(toArray(metadatas).map(m => dataCache[m.signature]));
+  return Promise.all(toArray(metadatas).map((m) => dataCache[m.signature]));
 };
 
 /*

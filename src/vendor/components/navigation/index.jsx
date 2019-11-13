@@ -57,7 +57,7 @@ function withNavigation(config) {
         if (thisSearch !== prevSearch) {
           // Update state based on current props
           // eslint-disable-next-line react/no-did-update-set-state
-          this.setState(state => ({
+          this.setState((state) => ({
             ...state,
             ...fromQueryString(thisSearch),
           }));

@@ -39,7 +39,7 @@ function prettyJSON(json, maxDepth) {
 
       const lengths = output.map(length);
 
-      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
+      if (lengths.filter((v) => v > 30).first() || lengths.sum() > 60) {
         return `[\n${strings.indent(output.join(',\n'), 1)}\n]`;
       }
 
@@ -75,7 +75,7 @@ function prettyJSON(json, maxDepth) {
 
       const lengths = output.map(length);
 
-      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
+      if (lengths.filter((v) => v > 30).first() || lengths.sum() > 60) {
         return `{\n${strings.indent(output.join(',\n'), 1)}\n}`;
       }
 
