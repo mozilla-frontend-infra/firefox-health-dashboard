@@ -30,7 +30,7 @@ const DEBUG = false;
 let internalFrom = null;
 let internalToPairs = null;
 let internalLeaves = null;
-const getI = (i) => (m) => m[i];
+const getI = i => m => m[i];
 
 function preSelector(columnName) {
   // Return an array of [selector(), name] pairs
@@ -39,7 +39,7 @@ function preSelector(columnName) {
     // select many columns
     return internalFrom(columnName)
       .sort()
-      .map((select) => {
+      .map(select => {
         if (isString(select)) {
           const selector = jx(select);
 
@@ -79,7 +79,7 @@ function selector(columnName) {
     // select many columns
     const cs = preSelector(columnName).args();
 
-    return (row) => cs.map((func) => func(row)).fromLeaves();
+    return row => cs.map(func => func(row)).fromLeaves();
   }
 
   if (isString(columnName)) {
@@ -252,7 +252,7 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = (row) => {
+      func = row => {
         for (const s of selects) {
           if (missing(s(row))) {
             return false;
@@ -275,7 +275,7 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = (row) => {
+      func = row => {
         for (const s of selects) {
           if (exists(s(row))) {
             return false;
@@ -396,13 +396,13 @@ class ArrayWrapper {
       );
     }
 
-    const func = toArray(selectors).map((selector) => {
+    const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
         return ([arg]) => arg;
       }
 
       if (isFunction(selector)) {
-        return (args) => selector(...args);
+        return args => selector(...args);
       }
 
       const func = jx(selector);
@@ -740,7 +740,7 @@ internalToPairs = toPairs;
  * formal===true will escape the dots, making them literal
  */
 function leaves(obj, formal = true) {
-  const field = formal ? literalField : (k) => k;
+  const field = formal ? literalField : k => k;
 
   function* leafGen(map, prefix) {
     for (const [val, key] of toPairs(map).argsGen()) {
@@ -794,10 +794,10 @@ extendWrapper({
     const getterA = jx(propA);
 
     return internalFrom(listA)
-      .map((rowA) => {
+      .map(rowA => {
         const b = lookup[getterA(rowA)];
         if (missing(b)) return [{ ...rowA }];
-        return b.map((rowB) => (
+        return b.map(rowB => (
           { ...rowA, ...rowB }
         ));
       })
@@ -808,7 +808,7 @@ extendWrapper({
 });
 
 // ASSIGN USEFUL FUNCTIONS TO Data
-Data.fromConfig = (obj) => internalLeaves(obj, false).fromLeaves();
+Data.fromConfig = obj => internalLeaves(obj, false).fromLeaves();
 Data.toPairs = toPairs;
 Data.selectFrom = selectFrom;
 

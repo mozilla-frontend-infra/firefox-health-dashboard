@@ -57,7 +57,7 @@ class TimePicker extends Component {
 ENSURE THE options ARE UPDATED
 RETURN CORRECTED VALUE
  */
-TimePicker.prepare = (props) => {
+TimePicker.prepare = props => {
   const { options, value, defaultValue } = props;
 
   if (missing(value)) return defaultValue;

@@ -32,7 +32,7 @@ function isEqual(a, b, done = []) {
 
     const moreDone = [a, b, ...done];
 
-    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every((k) => isEqual(a[k], b[k], moreDone));
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].every(k => isEqual(a[k], b[k], moreDone));
   }
 
   if (isMany(a) && isMany(b)) {
@@ -53,7 +53,7 @@ function isEqual(a, b, done = []) {
 /*
 RETURN true IF value HAS NO KEYS
  */
-Data.isEmpty = (value) => {
+Data.isEmpty = value => {
   if (missing(value)) {
     return true;
   }
@@ -101,7 +101,7 @@ Data.copy = (from, to) => {
 /*
 deepcopy Data and Array-like objects
  */
-Data.deepCopy = (value) => {
+Data.deepCopy = value => {
   if (isData(value)) {
     const output = {};
 
@@ -113,17 +113,17 @@ Data.deepCopy = (value) => {
     return output;
   }
 
-  if (isMany(value)) return value.map((v) => Data.deepCopy(v));
+  if (isMany(value)) return value.map(v => Data.deepCopy(v));
 
   return value;
 };
 
-/*
-Coalesce leaf values
-Recursive version of {...argN, ... , ...arg2, ...arg1, ...dest}
-notice the reverse-ordering
- */
 Data.setDefault = (dest, ...args) => {
+  /*
+  Coalesce leaf values
+  Recursive version of {...argN, ... , ...arg2, ...arg1, ...dest}
+  notice the reverse-ordering
+   */
   function setDefault(dest, source, path) {
     const output = dest;
 
@@ -189,7 +189,7 @@ Data.get = (obj, path) => {
       } else if (isInteger(step)) {
         output = output[step];
       } else if (isArray(output)) {
-        output = output.map((o) => (isData(o) ? o[step] : null));
+        output = output.map(o => (isData(o) ? o[step] : null));
       }
     } else if (isData(output)) {
       output = output[step];

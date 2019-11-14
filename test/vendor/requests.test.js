@@ -34,7 +34,7 @@ describe('requests', () => {
   ];
 
   it('reversable', () => {
-    reversable.forEach((obj) => expect(
+    reversable.forEach(obj => expect(
       (() => {
         const qs = toQueryString(obj);
 

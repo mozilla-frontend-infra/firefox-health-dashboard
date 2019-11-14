@@ -78,7 +78,7 @@ class TP6M extends React.Component {
         label: browserPlatformLabel,
         data: result
           .along('pushDate')
-          .map((point) => ({
+          .map(point => ({
             pushDate: point.pushDate.getValue(),
             result: point.getValue(),
           }))
@@ -99,7 +99,7 @@ class TP6M extends React.Component {
   async componentDidUpdate(prevProps) {
     if (
       ['test', 'platform', 'past', 'ending'].every(
-        (v) => this.props[v] === prevProps[v],
+        v => this.props[v] === prevProps[v],
       )
     ) {
       return;

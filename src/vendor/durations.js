@@ -318,7 +318,7 @@ Duration.MONTH_SKEW = Duration.MILLI_VALUES.year / 12 - Duration.MILLI_VALUES.mo
 // //////////////////////////////////////////////////////////////////////////////
 // CONVERT SIMPLE <float><type> TO A DURATION OBJECT
 // //////////////////////////////////////////////////////////////////////////////
-Duration.String2Duration = (text) => {
+Duration.String2Duration = text => {
   if (text === '' || text === 'zero') {
     return new Duration();
   }
@@ -348,7 +348,7 @@ Duration.String2Duration = (text) => {
   return output;
 };
 
-Duration.parse = (value) => {
+Duration.parse = value => {
   let output = new Duration();
   // EXPECTING CONCAT OF <sign><integer><type>
   const plist = value.split('+');
@@ -398,7 +398,7 @@ Duration.min = (a, b) => {
   return b;
 };
 
-Duration.newInstance = (obj) => {
+Duration.newInstance = obj => {
   if (missing(obj)) {
     return null;
   }
@@ -424,11 +424,11 @@ Duration.newInstance = (obj) => {
 };
 
 const milliSteps = [1, 2, 5, 10, 20, 50, 100, 200, 500]
-  .concat(...[1, 2, 5, 6, 10, 15, 30].map((v) => v * 1000)) // SECONDS
-  .concat(...[1, 2, 5, 6, 10, 15, 30].map((v) => v * 60 * 1000)) // MINUTES
-  .concat(...[1, 2, 3, 6, 12].map((v) => v * 60 * 60 * 1000)) // HOURS
-  .concat(...[1].map((v) => v * 24 * 60 * 60 * 1000)) // DAYS
-  .concat(...[1, 2].map((v) => v * 7 * 24 * 60 * 60 * 1000)); // WEEKS
+  .concat(...[1, 2, 5, 6, 10, 15, 30].map(v => v * 1000)) // SECONDS
+  .concat(...[1, 2, 5, 6, 10, 15, 30].map(v => v * 60 * 1000)) // MINUTES
+  .concat(...[1, 2, 3, 6, 12].map(v => v * 60 * 60 * 1000)) // HOURS
+  .concat(...[1].map(v => v * 24 * 60 * 60 * 1000)) // DAYS
+  .concat(...[1, 2].map(v => v * 7 * 24 * 60 * 60 * 1000)); // WEEKS
 const monthSteps = [1, 2, 6, 12, 24, 60, 120];
 
 /**

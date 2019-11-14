@@ -64,7 +64,7 @@ async function pullAggregate({
     .flatten()
   /* eslint-disable-next-line camelcase */
     .filter(({ push_timestamp }) => referenceRange.includes(push_timestamp))
-    .map((row) => ({ ...row, ...row.meta }))
+    .map(row => ({ ...row, ...row.meta }))
     .edges([
       {
         name: 'test',
@@ -125,7 +125,7 @@ async function pullAggregate({
     .flatten()
     /* eslint-disable-next-line camelcase */
     .filter(({ push_timestamp }) => timeDomain.includes(push_timestamp))
-    .map((row) => ({ ...row, ...row.meta }))
+    .map(row => ({ ...row, ...row.meta }))
     .edges([
       {
         name: 'test',
@@ -175,7 +175,7 @@ async function pullAggregate({
         - measured
           .slice()
           .reverse()
-          .findIndex((m) => m.length > 0),
+          .findIndex(m => m.length > 0),
     },
   );
   const daily = window(
@@ -201,7 +201,7 @@ async function pullAggregate({
     { daily, referenceValue },
     {
       edges: ['test', 'platform', 'pushDate'],
-      value: (row) => {
+      value: row => {
         const { daily, referenceValue } = row;
 
         return round(
@@ -321,7 +321,7 @@ class TP6mAggregate_ extends Component {
             .where({ test })
             .along('platform')
             .enumerate()
-            .map((row) => {
+            .map(row => {
               const platform = row.platform.getValue();
               const count = row.count.getValue();
               const total = row.total.getValue();

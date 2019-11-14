@@ -12,7 +12,7 @@ import { selectFrom } from '../../vectors';
 import { coalesce, toArray } from '../../utils';
 import { withTooltip } from './CustomTooltip';
 import { ChartIcon, ImageIcon } from '../../../utils/icons';
-
+import { Notes } from './Notes';
 
 const styles = {
   // This div helps with canvas size changes
@@ -45,7 +45,7 @@ ChartJS.plugins.register({
     ctx.save();
     ctx.globalCompositeOperation = 'destination-over';
     ctx.fillStyle = styles.chartContainer.background;
-    ctx.fillRect(0, 0, c.chart.width, c.chart.height);
+    ctx.fillRect(0, 0, ctx.width, ctx.height);
     ctx.restore();
   },
 });
@@ -83,6 +83,7 @@ class ChartJsWrapper extends React.Component {
       urls,
       chartHeight,
       missingDataInterval,
+      notes,
     } = this.props;
     const { cjsOptions, standardOptions, showImage } = this.state;
 
@@ -187,7 +188,7 @@ class ChartJsWrapper extends React.Component {
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod(),
     );
-    const allOldData = cjsOptions.data.datasets.every((dataset) => {
+    const allOldData = cjsOptions.data.datasets.every(dataset => {
       const latestDataDate = Date.newInstance(
         selectFrom(dataset.data)
           .select('x')
@@ -226,6 +227,7 @@ class ChartJsWrapper extends React.Component {
       <div className={classes.chartContainer}>
         {showTitle({ classes, title, urls })}
         <div style={{ position: 'relative' }}>
+          <Notes chartRef={this.chartRef} notes={notes} />
           <ToolTipChart
             height={chartHeight}
             standardOptions={standardOptions}
@@ -269,6 +271,12 @@ ChartJsWrapper.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({})),
   }),
   missingDataInterval: PropTypes.number,
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    }),
+  ),
 };
 
 ChartJsWrapper.defaultProps = {

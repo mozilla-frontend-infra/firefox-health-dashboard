@@ -10,3 +10,4 @@ coverage
 .idea
 .svn
 *.iml
+/src/vendor/.svn

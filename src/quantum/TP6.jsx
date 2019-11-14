@@ -91,7 +91,7 @@ const nav = [
     id: 'platform',
     label: 'Platform',
     defaultValue: 'win64',
-    options: ['win32', 'win64', 'aarch64', 'linux64'].map((item) => ({
+    options: ['win32', 'win64', 'aarch64', 'linux64'].map(item => ({
       id: item,
       label: item,
     })),

@@ -4,13 +4,9 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import './index.css';
 import Routes from './routes';
-import registerTooltip from './utils/registerTooltip';
 import { reportOrLog } from './vendor/errors';
 
 require('typeface-roboto');
-
-// handle sticky tooltip for all charts
-registerTooltip();
 
 class GlobalErrorBoundary extends React.Component {
   constructor(props) {
