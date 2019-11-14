@@ -107,7 +107,7 @@ class Auth0Client {
     // Set-Cookie: annotation_session=7e092d6a-0783-4922-9456-7b306360898b; Domain=dev.localhost; Expires=Mon, 25-Nov-2019 12:49:05 GMT; Path=/
     const cookie = this.getCookie();
     if (cookie) {
-      document.cookie = `${cookie.name}=;path=${cookie.path};domain=${cookie.domain};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+      // document.cookie = `${cookie.name}=;path=${cookie.path};domain=${cookie.domain};expires=Thu, 01 Jan 1970 00:00:01 GMT`;
       this.cache.clear('cookie');
     }
   }
