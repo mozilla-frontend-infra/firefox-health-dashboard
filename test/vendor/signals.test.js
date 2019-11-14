@@ -92,7 +92,7 @@ describe('signals', () => {
     const s = new Signal();
     expect(s.done).toEqual(false);
     s.go();
-    expect(!s.done).toEqual(true);
+    expect(s.done).toEqual(true);
   });
 
   it('signal works as a decision value, kinda', () => {
