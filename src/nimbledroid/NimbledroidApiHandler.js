@@ -36,7 +36,7 @@ const transformedDataForMetrisGraphics = scenarios => Object.keys(scenarios).red
 
   return result;
 }, {});
-const mergeProductsData = (productsData) => {
+const mergeProductsData = productsData => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
     const { latestVersion, packageId } = meta;
@@ -45,7 +45,7 @@ const mergeProductsData = (productsData) => {
       latestVersion,
     };
 
-    Object.keys(scenarios).forEach((originalKey) => {
+    Object.keys(scenarios).forEach(originalKey => {
       const profileInfo = scenarios[originalKey];
 
       if (profileInfo.data.length === 0) {
@@ -83,7 +83,7 @@ const mergeProductsData = (productsData) => {
   };
 };
 
-const fetchProductData = async (product) => {
+const fetchProductData = async product => {
   const url = URL({
     path: ENDPOINT,
     query: {

@@ -198,7 +198,7 @@ class SetDomain extends Domain {
   }
 }
 
-Domain.newInstance = (desc) => {
+Domain.newInstance = desc => {
   if (desc instanceof Domain) {
     return desc;
   }

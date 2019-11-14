@@ -114,7 +114,7 @@ class Matrix {
       if (dim === 0) {
         data.splice(position, 0, newMultiArray(subDims, this.zero));
       } else {
-        data.forEach((d) => {
+        data.forEach(d => {
           _insert(dim - 1, d);
         });
       }

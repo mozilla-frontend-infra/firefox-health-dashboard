@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from '../vendor/components/links';
@@ -98,8 +98,9 @@ const DashboardPage = ({
 
         </div>
       </div>
-      <Fragment>{children}</Fragment>
+      <>{children}</>
     </div>
+    <>{children}</>
   </AuthProvider>
 
 );

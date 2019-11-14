@@ -53,7 +53,7 @@ function isEqual(a, b, done = []) {
 /*
 RETURN true IF value HAS NO KEYS
  */
-Data.isEmpty = (value) => {
+Data.isEmpty = value => {
   if (missing(value)) {
     return true;
   }
@@ -101,7 +101,7 @@ Data.copy = (from, to) => {
 /*
 deepcopy Data and Array-like objects
  */
-Data.deepCopy = (value) => {
+Data.deepCopy = value => {
   if (isData(value)) {
     const output = {};
 

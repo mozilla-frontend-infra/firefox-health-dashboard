@@ -99,8 +99,7 @@ class Subtests extends React.Component {
                           label: browser,
                           filter: { and: [{ eq: { test } }, filter] },
                         }
-                      ))
-                    }
+                      ))}
                   />
                 </Grid>
               ))}

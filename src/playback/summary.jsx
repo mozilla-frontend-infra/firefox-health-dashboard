@@ -103,7 +103,7 @@ class PlaybackSummary extends React.Component {
             encoding,
             size: sizes,
           })
-          .map((test) => {
+          .map(test => {
             const filter = {
               and: [browser.filter, platform.filter, test.filter],
             };
@@ -120,7 +120,7 @@ class PlaybackSummary extends React.Component {
       .flatten()
       .toArray();
     const results = await Promise.all(
-      combos.map(async (g) => {
+      combos.map(async g => {
         const perfData = await getData(g.filter);
         const loss = selectFrom(perfData)
           .select('data')

@@ -155,7 +155,7 @@ const generateStandardOptions = (series, timeDomain) => {
     .map(s => selectFrom(s.data)
       .sort('push_timestamp')
       .enumerate()
-      .map((d) => {
+      .map(d => {
         // eslint-disable-next-line no-param-reassign
         d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
 
@@ -238,7 +238,7 @@ const perfherderFormatter = (series, timeDomain) => {
 
 const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
-    series.map(async (row) => {
+    series.map(async row => {
       const sources = await getData(row.filter);
 
       // filter out old data
@@ -348,7 +348,7 @@ class PerfherderGraphContainer extends React.Component {
                 .select('data')
                 .flatten()
                 .where({ revision })
-                .map((d) => {
+                .map(d => {
                   // eslint-disable-next-line no-param-reassign
                   d.note = description;
                   return {

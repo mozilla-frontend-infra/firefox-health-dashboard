@@ -28,7 +28,7 @@ const telemetryDataToDatasets = (sourceData, dataKeyIdentifier, timeDomain) => {
     .map((rows, submission_date) => ({
       submission_date: Date.newInstance(submission_date),
       ...selectFrom(rows)
-        .map((r) => {
+        .map(r => {
           const { value } = r;
           const label = r[dataKeyIdentifier];
 

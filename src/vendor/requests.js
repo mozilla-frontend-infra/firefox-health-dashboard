@@ -21,7 +21,7 @@ objects
 see also https://github.com/sindresorhus/query-string#parsestring-options
  */
 function fromQueryString(query) {
-  const decode = (v) => {
+  const decode = v => {
     if (isArray(v)) {
       return v.map(decode);
     }
@@ -49,7 +49,7 @@ function toQueryString(value) {
   const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) => toArray(v)
     .filter(exists)
-    .map((vv) => {
+    .map(vv => {
       if (vv === true) {
         return e(k);
       }

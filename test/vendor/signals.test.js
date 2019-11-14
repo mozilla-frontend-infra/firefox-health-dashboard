@@ -90,17 +90,9 @@ describe('signals', () => {
 
   it('signal.done works as a decision value', () => {
     const s = new Signal();
-
-
-    if (s.done) {
-      throw new Error('not expected');
-    }
-
+    expect(s.done).toEqual(false);
     s.go();
-
-    if (!s.done) {
-      throw new Error('not expected');
-    }
+    expect(s.done).toEqual(true);
   });
 
   it('signal works as a decision value, kinda', () => {
@@ -111,14 +103,8 @@ describe('signals', () => {
       throw new Error('not expected');
     }
 
-    if (+s) {
-      throw new Error('not expected');
-    }
-
+    expect(+s).toEqual(0);
     s.go();
-
-    if (!s) {
-      throw new Error('not expected');
-    }
+    expect(!s).toEqual(false);
   });
 });

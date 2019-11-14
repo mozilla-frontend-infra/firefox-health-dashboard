@@ -27,7 +27,7 @@ function readOp(expr) {
 }
 
 const expressionLookup = {};
-const convert = (expr) => {
+const convert = expr => {
   try {
     const output = toPairs(expressionLookup)
       .map((restful, op) => (expr[op] ? restful(expr) : []))
@@ -142,7 +142,7 @@ Data.setDefault(expressionLookup, {
     ];
   },
   not(expr) {
-    expr.not.forEach((e) => {
+    expr.not.forEach(e => {
       e.n = 1;
     });
 
@@ -201,7 +201,7 @@ https://github.com/mozilla/ActiveData/blob/dev/docs/jx.md
 https://github.com/mozilla/ActiveData/blob/dev/docs/jx_expressions.md
 https://wiki.mozilla.org/Bugzilla:REST_API
  */
-const jx2rest = (expr) => {
+const jx2rest = expr => {
   const output = { query_format: 'advanced' };
   const params = convert(expr);
 
@@ -230,7 +230,7 @@ const jx2rest = (expr) => {
 /*
 send json query expression to Bugzilla
  */
-const queryBugzilla = async (query) => {
+const queryBugzilla = async query => {
   const url = URL({
     path: BUGZILLA_REST,
     query: {

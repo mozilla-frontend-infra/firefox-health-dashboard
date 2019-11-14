@@ -33,7 +33,7 @@ function parseStack(stackString) {
   return stackString
     .split('\n')
     .map(line => stackPatterns
-      .map((stackPattern) => {
+      .map(stackPattern => {
         const parts = stackPattern.exec(line);
 
         if (missing(parts)) return null;
@@ -106,7 +106,7 @@ class Exception extends Error {
     if (this.trace) {
       output.push('stacktrace');
       output.push(
-        ...this.trace.map((s) => {
+        ...this.trace.map(s => {
           const output = ['    '];
 
           if (exists(s.function)) {
@@ -161,7 +161,7 @@ class Exception extends Error {
   }
 }
 
-Exception.wrap = (err) => {
+Exception.wrap = err => {
   if (missing(err)) {
     return null;
   }

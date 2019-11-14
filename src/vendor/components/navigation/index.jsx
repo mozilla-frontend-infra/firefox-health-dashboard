@@ -21,14 +21,14 @@ function withNavigation(config) {
   //   to include on `render()`
   // * properties with names selectFrom(config).select("id")
 
-  return (WrappedComponent) => {
+  return WrappedComponent => {
     class Output extends React.Component {
       constructor(props) {
         super(props);
         const { history, location } = props;
         const state = fromQueryString(location.search);
         const updates = Data.zip(
-          config.map((c) => {
+          config.map(c => {
             const { type, id } = c;
 
             return [id, type.prepare({ value: state[id], ...c })];
@@ -41,7 +41,7 @@ function withNavigation(config) {
         history.push(URL({ path: location.pathname, query: updates }));
       }
 
-      onPathChange = (event) => {
+      onPathChange = event => {
         const { name, value } = event.target;
         const change = { [name]: value };
 
@@ -82,7 +82,7 @@ function withNavigation(config) {
 
         return (
           <div className={classes.root}>
-            {config.map((c) => {
+            {config.map(c => {
               const {
                 type, id, label, options, defaultValue,
               } = c;

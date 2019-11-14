@@ -52,7 +52,7 @@ class GMTDate extends Date {
     return true;
   };
 
-  add = (interval) => {
+  add = interval => {
     if (missing(interval)) {
       Log.error('expecting an interval to add');
     }
@@ -63,7 +63,7 @@ class GMTDate extends Date {
     return this.addMonth(i.month).addMilli(addMilli);
   };
 
-  subtract = (time) => {
+  subtract = time => {
     if (isString(time)) {
       Log.error(
         'expecting to subtract a Duration or GMTDate object, not a string',
@@ -89,7 +89,7 @@ class GMTDate extends Date {
 
   addMilli = value => new GMTDate(this.milli() + value);
 
-  addSecond = (value) => {
+  addSecond = value => {
     const output = new GMTDate(this);
 
     output.setUTCSeconds(this.getUTCSeconds() + value);
@@ -97,7 +97,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addMinute = (value) => {
+  addMinute = value => {
     const output = new GMTDate(this);
 
     output.setUTCMinutes(this.getUTCMinutes() + value);
@@ -105,7 +105,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addHour = (value) => {
+  addHour = value => {
     const output = new GMTDate(this);
 
     output.setUTCHours(this.getUTCHours() + value);
@@ -113,7 +113,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addDay = (value) => {
+  addDay = value => {
     const value_ = coalesce(value, 1);
     const output = new GMTDate(this);
 
@@ -122,7 +122,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addWeekday = (value) => {
+  addWeekday = value => {
     let output = this.addDay(1);
 
     if ([0, 1].includes(output.dow())) {
@@ -142,7 +142,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addWeek = (value) => {
+  addWeek = value => {
     const value_ = coalesce(value, 1);
     const output = new GMTDate(this);
 
@@ -151,7 +151,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addMonth = (value) => {
+  addMonth = value => {
     if (value === 0) {
       return this;
     } // WHOA! SETTING MONTH IS CRAZY EXPENSIVE!!
@@ -163,7 +163,7 @@ class GMTDate extends Date {
     return output;
   };
 
-  addYear = (value) => {
+  addYear = value => {
     const output = new GMTDate(this);
 
     output.setUTCFullYear(this.getUTCFullYear() + value);
@@ -276,7 +276,7 @@ class GMTDate extends Date {
   // Returns a date in the output format specified.
   // The format string uses the same abbreviations as in getDateFromFormat()
   // ------------------------------------------------------------------
-  format = (format) => {
+  format = format => {
     const y = `${this.getUTCFullYear()}`;
     const M = this.getUTCMonth() + 1;
     const d = this.getUTCDate();
@@ -350,7 +350,7 @@ class GMTDate extends Date {
   };
 }
 
-GMTDate.newInstance = (value) => {
+GMTDate.newInstance = value => {
   if (missing(value)) {
     return null;
   }
@@ -390,7 +390,7 @@ GMTDate.today = () => new GMTDate().floorDay();
 GMTDate.min = (...args) => {
   let min = null;
 
-  args.forEach((v) => {
+  args.forEach(v => {
     if (v === undefined || v === null) {
       return;
     }
@@ -406,7 +406,7 @@ GMTDate.min = (...args) => {
 GMTDate.max = (...args) => {
   let max = null;
 
-  args.forEach((a) => {
+  args.forEach(a => {
     if (a === null) {
       return;
     }
@@ -1141,10 +1141,10 @@ const RELATIVE = {
   eod: 'ceilingDay',
 };
 
-GMTDate.parseRelative = (val) => {
+GMTDate.parseRelative = val => {
   const parts = [];
 
-  val.split('+').forEach((t) => {
+  val.split('+').forEach(t => {
     t.split('-').forEach((tt, i) => {
       parts.push([i === 0 ? 'add' : 'subtract', tt]);
     });

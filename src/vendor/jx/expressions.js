@@ -17,7 +17,7 @@ import { GMTDate as Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
-const defineFunction = (expr) => {
+const defineFunction = expr => {
   if (isFunction(expr)) {
     return expr;
   }
@@ -32,7 +32,7 @@ const defineFunction = (expr) => {
     if (pathArray.length === 1) {
       const step = pathArray[0];
 
-      return (row) => {
+      return row => {
         if (isArray(row)) {
           if (step === 'length') {
             return row.length;
@@ -53,7 +53,7 @@ const defineFunction = (expr) => {
       };
     }
 
-    return (row) => {
+    return row => {
       let output = row;
 
       for (const step of pathArray) {
@@ -108,7 +108,7 @@ example {and: [a, b, c, ...]}
 
 return true if all `terms` return true
  */
-expressions.and = (terms) => {
+expressions.and = terms => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -127,7 +127,7 @@ example {or: [a, b, c, ...]}
 
 return true if any `terms` return true
  */
-expressions.or = (terms) => {
+expressions.or = terms => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -146,7 +146,7 @@ example {not: expr}
 
 return opposite of expr
  */
-expressions.not = (expr) => {
+expressions.not = expr => {
   const filter = defineFunction(expr);
 
   return row => !filter(row);
@@ -161,7 +161,7 @@ if variable equals literal value then
 if value is an array, then
     return true if any of the values match
  */
-expressions.eq = (term) => {
+expressions.eq = term => {
   if (isData(term)) {
     const filters = Object.entries(term).map(([k, v]) => {
       if (missing(v)) {
@@ -171,7 +171,7 @@ expressions.eq = (term) => {
       const allowed = toArray(v);
       const s = defineFunction(k);
 
-      return (row) => {
+      return row => {
         const value = s(row);
 
         return allowed.includes(value);
@@ -210,7 +210,7 @@ expressions.prefix = term => row => Object.entries(term).every(([name, prefix]) 
 /*
 return true if `expression` is missing
  */
-expressions.missing = (expression) => {
+expressions.missing = expression => {
   const func = defineFunction(expression);
 
   return row => missing(func(row));
@@ -232,7 +232,7 @@ expressions.find = term => row => Object.entries(term).every(([name, substring])
 /*
 return true if `expression` exists
  */
-expressions.exists = (expression) => {
+expressions.exists = expression => {
   const func = defineFunction(expression);
 
   return row => exists(func(row));
@@ -243,7 +243,7 @@ example {gte: {name: reference}
 
 return true if `name` >= `reference`
  */
-expressions.gte = (obj) => {
+expressions.gte = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
@@ -266,7 +266,7 @@ example {lt: {name: reference}
 
 return true if `name` < `reference`
  */
-expressions.lt = (obj) => {
+expressions.lt = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
@@ -287,7 +287,7 @@ expressions.lt = (obj) => {
 /*
 convert a date-like value into unix timestamp
  */
-expressions.date = (value) => {
+expressions.date = value => {
   const date = Date.tryParse(value);
 
   if (exists(date)) {

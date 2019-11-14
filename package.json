@@ -49,9 +49,9 @@
     "qrcode.react": "^0.9.3",
     "query-string": "^6.0.0",
     "raven-js": "^3.26.2",
-    "react": "^16.5.0",
+    "react": "^16.6.3",
     "react-chartjs-2": "^2.7.4",
-    "react-dom": "^16.5.0",
+    "react-dom": "^16.6.3",
     "react-hot-loader": "^4.3.6",
     "react-metrics-graphics": "^1.0.2",
     "react-router": "^4.2.0",
@@ -60,7 +60,7 @@
     "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
-    "@mozilla-frontend-infra/react-lint": "^1.1.1",
+    "@mozilla-frontend-infra/react-lint": "^2.0.0",
     "@neutrinojs/airbnb": "^9.0.0-rc.3",
     "@neutrinojs/copy": "^9.0.0-rc.3",
     "@neutrinojs/jest": "^9.0.0-rc.3",

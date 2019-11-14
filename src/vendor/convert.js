@@ -20,7 +20,7 @@ function prettyJSON(json, maxDepth) {
   try {
     if (isArray(json)) {
       const output = selectFrom(json)
-        .map((v) => {
+        .map(v => {
           if (v === undefined) {
             return;
           }

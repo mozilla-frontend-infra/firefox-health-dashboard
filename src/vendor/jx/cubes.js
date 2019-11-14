@@ -52,7 +52,7 @@ class Cube {
    * return a (reduced dimension) cube
    */
   where(combination) {
-    const coords = this.edges.map((e) => {
+    const coords = this.edges.map(e => {
       const value = combination[e.name];
 
       if (missing(value)) {
@@ -177,7 +177,7 @@ function align(cubes, cube) {
   // VERIFY EDGES ARE IDENTICAL
   let different = false;
   const [newEdges, ordering, dims] = selectFrom(cube.edges)
-    .map((foreignEdge) => {
+    .map(foreignEdge => {
       const foreignParts = foreignEdge.domain.partitions;
       const selfEdge = getEdgeByName(cubes, foreignEdge.name);
 
@@ -406,7 +406,7 @@ ArrayWrapper.edges = (self, edges, zero = array) => {
   const dims = normalizedEdges.map(e => e.domain.partitions.length);
   const matrix = new Matrix({ dims, zero });
 
-  self.forEach((row) => {
+  self.forEach(row => {
     const coord = normalizedEdges.map(e => e.domain.valueToIndex(e.value(row)));
 
     zip(dims, normalizedEdges).forEach(([d, e], i) => {

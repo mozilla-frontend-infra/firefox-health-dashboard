@@ -15,7 +15,7 @@ const invisible = 'rgba(0,0,0,0)';
 /*
 return maximum for most of the values
  */
-const mostlyMax = (values) => {
+const mostlyMax = values => {
   const sorted = selectFrom(values)
     .exists()
     .sort()
@@ -34,7 +34,7 @@ const mostlyMax = (values) => {
 /*
 return nice, round, upper bound
  */
-const niceCeiling = (value) => {
+const niceCeiling = value => {
   if (value === 0) return 1;
   const d = 10 ** (Math.ceil(Math.log10(value)) - 1);
   const norm = value / d;
@@ -59,7 +59,7 @@ const generateLineChartStyle = color => ({
 
   lineTension: 0.1,
 });
-const generateScatterChartStyle = (color) => {
+const generateScatterChartStyle = color => {
   const gentleColor = missing(color)
     ? color
     : Color.parseHTML(color)
@@ -98,7 +98,7 @@ const generateDatasetStyle = (colour, type = 'line') => {
 /*
 Convert from standard chart structure to CharJS structure
  */
-const cjsGenerator = (standardOptions) => {
+const cjsGenerator = standardOptions => {
   // ORGANIZE THE OPTIONS INTO STRUCTURE
   const options = (() => {
     // DEEP COPY, BUT NOT THE data
@@ -111,7 +111,7 @@ const cjsGenerator = (standardOptions) => {
     const xDomain = Data.get(options, 'axis.x.domain');
 
     if (xDomain) {
-      return toArray(xDomain).map((x) => {
+      return toArray(xDomain).map(x => {
         const [min, max] = [x.min, x.max];
 
         return {
@@ -168,7 +168,7 @@ const cjsGenerator = (standardOptions) => {
 
   const datasets = selectFrom(options.series)
     .filter(s => s !== xEdge)
-    .map((s) => {
+    .map(s => {
       const { select: y, style, type } = s;
       const color = Data.get(style, 'color');
 
@@ -273,10 +273,10 @@ const cjsGenerator = (standardOptions) => {
   const yReversed = Data.get(options, 'axis.y.reverse');
 
   // MARK EXTREME POINTS AS TRIANGLES, AND AT MAX CHART VALUE
-  datasets.forEach((dataset) => {
+  datasets.forEach(dataset => {
     const { data, pointStyle } = dataset;
     let needNewStyle = false;
-    const newStyle = data.map((d) => {
+    const newStyle = data.map(d => {
       if (exists(d.note)) {
         needNewStyle = true;
         return [pointStyle, 0];

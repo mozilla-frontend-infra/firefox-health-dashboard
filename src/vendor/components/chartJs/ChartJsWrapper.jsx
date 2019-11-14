@@ -188,7 +188,7 @@ class ChartJsWrapper extends React.Component {
       Data.get(Data.fromConfig(standardOptions), 'axis.x.max'),
       Date.eod(),
     );
-    const allOldData = cjsOptions.data.datasets.every((dataset) => {
+    const allOldData = cjsOptions.data.datasets.every(dataset => {
       const latestDataDate = Date.newInstance(
         selectFrom(dataset.data)
           .select('x')

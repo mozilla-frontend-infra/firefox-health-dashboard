@@ -105,7 +105,7 @@ function roundMetric(value, rounding) {
 function count(values) {
   let output = 0;
 
-  values.forEach((v) => {
+  values.forEach(v => {
     if (missing(v)) {
       return;
     }
@@ -119,7 +119,7 @@ function count(values) {
 function sum(values) {
   let sum = null;
 
-  values.forEach((v) => {
+  values.forEach(v => {
     if (missing(v)) {
       return;
     }
@@ -136,7 +136,7 @@ function average(values) {
   let total = 0.0;
   let count = 0;
 
-  values.forEach((v) => {
+  values.forEach(v => {
     if (missing(v)) {
       return;
     }
@@ -167,7 +167,7 @@ function geomean(values) {
 function max(values) {
   let max = null;
 
-  values.forEach((v) => {
+  values.forEach(v => {
     if (missing(v)) {
       return;
     }
@@ -183,7 +183,7 @@ function max(values) {
 function min(values) {
   let min = null;
 
-  values.forEach((v) => {
+  values.forEach(v => {
     if (missing(v)) {
       return;
     }
