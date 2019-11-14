@@ -15,14 +15,11 @@
   "auth0": {
     "domain": "dev-8821kz09.auth0.com",
     "client_id": "FYlBPbNm7vZi9YPwVFyR7J2TLKrzNtST",
-    "redirect_uri": "http://dev.localhost:3000",
+    "redirect_path": "/",
     "_home_path": "/",
     "audience": "https://locahost/query",
     "scope": "openid email query:send",
     "other scopes": "offline_access openid profile email data:change query:send",
-    "telemetry": {
-      "url": "https://github.com/klahnakoski/auth0-spa"
-    },
     "api": {
       "cookie": {
         "name": "annotation_session"
