@@ -39,7 +39,7 @@ function preSelector(columnName) {
     // select many columns
     return internalFrom(columnName)
       .sort()
-      .map((select) => {
+      .map(select => {
         if (isString(select)) {
           const selector = jx(select);
 
@@ -252,7 +252,7 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = (row) => {
+      func = row => {
         for (const s of selects) {
           if (missing(s(row))) {
             return false;
@@ -275,7 +275,7 @@ class ArrayWrapper {
     } else {
       const selects = toArray(columns).map(selector);
 
-      func = (row) => {
+      func = row => {
         for (const s of selects) {
           if (exists(s(row))) {
             return false;
@@ -396,7 +396,7 @@ class ArrayWrapper {
       );
     }
 
-    const func = toArray(selectors).map((selector) => {
+    const func = toArray(selectors).map(selector => {
       if (missing(selector)) {
         return ([arg]) => arg;
       }
@@ -794,7 +794,7 @@ extendWrapper({
     const getterA = jx(propA);
 
     return internalFrom(listA)
-      .map((rowA) => {
+      .map(rowA => {
         const b = lookup[getterA(rowA)];
         if (missing(b)) return [{ ...rowA }];
         return b.map(rowB => (

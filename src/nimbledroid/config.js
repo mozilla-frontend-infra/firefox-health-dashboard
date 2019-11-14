@@ -129,7 +129,7 @@ export const generateSitesTableContent = (
   const numSites = Object.keys(filteredScenarios).length;
   const sites = numSites > 0
     ? Object.values(filteredScenarios)
-      .map((scenario) => {
+      .map(scenario => {
         const ratio = scenario[baseProduct] / scenario[compareProduct];
 
         return { ratio, ...scenario };
@@ -146,7 +146,7 @@ export const generateSitesTableContent = (
 
   tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
 
-  const tableContent = sites.map((scenario) => {
+  const tableContent = sites.map(scenario => {
     const { title, url } = scenario;
     const { ratio, color } = siteMetrics(
       scenario[baseProduct],
@@ -158,7 +158,7 @@ export const generateSitesTableContent = (
 
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: packageIds.map((packageId) => {
+      dataPoints: packageIds.map(packageId => {
         const datum = scenario[packageId];
         const { color } = siteMetrics(
           datum,

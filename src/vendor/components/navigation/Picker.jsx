@@ -53,7 +53,7 @@ class Picker extends React.Component {
 ENSURE THE options ARE UPDATED
 RETURN CORRECTED VALUE
  */
-Picker.prepare = (props) => {
+Picker.prepare = props => {
   const { options, value, defaultValue } = props;
 
   if (missing(value)) return defaultValue;

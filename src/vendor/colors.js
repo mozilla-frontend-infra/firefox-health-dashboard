@@ -21,7 +21,7 @@ class RGBAColor extends Color {
 
 RGBAColor.prototype.toString = RGBAColor.prototype.toRGBA;
 
-Color.parseHTML = (html) => {
+Color.parseHTML = html => {
   if (html.startsWith('#')) {
     return new RGBAColor(
       ...selectFrom(html)

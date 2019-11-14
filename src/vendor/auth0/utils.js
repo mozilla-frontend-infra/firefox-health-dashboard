@@ -27,7 +27,7 @@ export const runIframe = (authorizeUrl, eventOrigin) => new Promise((res, rej) =
     window.document.body.removeChild(iframe);
   }, 60 * 1000);
 
-  const iframeEventHandler = (e) => {
+  const iframeEventHandler = e => {
     if (e.origin !== eventOrigin) return;
     if (!e.data || e.data.type !== 'authorization_response') return;
     (e.source).close();
@@ -71,7 +71,7 @@ export const runPopup = (
     }, (config.timeoutInSeconds || DEFAULT_AUTHORIZE_TIMEOUT_IN_SECONDS) * 1000);
 
 
-    window.addEventListener('message', (e) => {
+    window.addEventListener('message', e => {
       if (!e.data || e.data.type !== 'authorization_response') {
         return;
       }
@@ -88,7 +88,7 @@ export const runPopup = (
 export const createRandomString = () => bytesToBase64URL(crypto.getRandomValues(new Uint8Array(32)));
 
 
-export const sha256 = async (s) => {
+export const sha256 = async s => {
   const response = await Promise.resolve(
     window.crypto.subtle.digest(
       { name: 'SHA-256' },

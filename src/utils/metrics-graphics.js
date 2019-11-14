@@ -1,7 +1,7 @@
 import MG from 'metrics-graphics';
 
 // This graph shows multiple lines on a graph
-const graph = (specs) => {
+const graph = specs => {
   const {
     target, data, legend, title, legendTarget, markers,
   } = specs;

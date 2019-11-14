@@ -2,7 +2,7 @@ import { Log } from './logs';
 import { GMTDate } from './dates';
 
 function sleep(seconds) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, seconds * 1000);
   });
 }
@@ -59,7 +59,7 @@ class Signal {
     if (this.done) return;
     this.done = true;
 
-    this.waiting.forEach((func) => {
+    this.waiting.forEach(func => {
       try {
         func();
       } catch (e) {
@@ -80,7 +80,7 @@ class Signal {
     ```
      */
   async wait() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       this.waiting.push(resolve);
     });
   }

@@ -202,7 +202,7 @@ join two dot-delimited path names
 function concatField(...many) {
   let output = '.';
 
-  many.forEach((m) => {
+  many.forEach(m => {
     if (output === '.') {
       output = m;
     } else if (m !== '.') {

@@ -201,7 +201,7 @@ async function pullAggregate({
     { daily, referenceValue },
     {
       edges: ['test', 'platform', 'pushDate'],
-      value: (row) => {
+      value: row => {
         const { daily, referenceValue } = row;
 
         return round(
@@ -321,7 +321,7 @@ class TP6mAggregate_ extends Component {
             .where({ test })
             .along('platform')
             .enumerate()
-            .map((row) => {
+            .map(row => {
               const platform = row.platform.getValue();
               const count = row.count.getValue();
               const total = row.total.getValue();

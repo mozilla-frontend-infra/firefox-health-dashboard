@@ -318,7 +318,7 @@ Duration.MONTH_SKEW = Duration.MILLI_VALUES.year / 12 - Duration.MILLI_VALUES.mo
 // //////////////////////////////////////////////////////////////////////////////
 // CONVERT SIMPLE <float><type> TO A DURATION OBJECT
 // //////////////////////////////////////////////////////////////////////////////
-Duration.String2Duration = (text) => {
+Duration.String2Duration = text => {
   if (text === '' || text === 'zero') {
     return new Duration();
   }
@@ -348,7 +348,7 @@ Duration.String2Duration = (text) => {
   return output;
 };
 
-Duration.parse = (value) => {
+Duration.parse = value => {
   let output = new Duration();
   // EXPECTING CONCAT OF <sign><integer><type>
   const plist = value.split('+');
@@ -398,7 +398,7 @@ Duration.min = (a, b) => {
   return b;
 };
 
-Duration.newInstance = (obj) => {
+Duration.newInstance = obj => {
   if (missing(obj)) {
     return null;
   }

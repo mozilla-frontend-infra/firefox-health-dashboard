@@ -99,7 +99,7 @@ export default class Widget extends React.Component {
           className={cx('widget-content', {
             'state-loading': this.props.loading,
           })}
-          ref={(node) => {
+          ref={node => {
             if (node && this.props.viewport) {
               const rect = node.getBoundingClientRect();
 

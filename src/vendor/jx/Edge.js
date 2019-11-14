@@ -18,7 +18,7 @@ class Edge {
   }
 }
 
-Edge.newInstance = (desc) => {
+Edge.newInstance = desc => {
   if (desc instanceof Edge) {
     return desc;
   }

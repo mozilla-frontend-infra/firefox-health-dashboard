@@ -7,7 +7,7 @@ import { fetchJson, URL } from '../../vendor/requests';
 const TREEHERDER = 'https://treeherder.mozilla.org';
 const REPO = 'mozilla-central';
 const NINENTY_DAYS = 90 * 24 * 60 * 60;
-const subtests = async (signatureHash) => {
+const subtests = async signatureHash => {
   const url = URL({
     path: [TREEHERDER, 'api/project', REPO, 'performance/signatures/'],
     query: { parent_signature: signatureHash },
