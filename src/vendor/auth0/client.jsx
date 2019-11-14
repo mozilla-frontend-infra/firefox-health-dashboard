@@ -369,13 +369,14 @@ class Auth0Client {
     const { leeway, audience, scope } = this.options;
 
     const {
-      id_token: rawIdToken, access_token: rawAccessToken, expires_in, ...result
+      id_token: rawIdToken,
+      access_token: rawAccessToken,
+      expires_in,
+      ...result
     } = authResult;
+
     const access_token = decodeJwt(rawAccessToken, leeway);
-    let id_token = null;
-    if (rawIdToken) {
-      id_token = decodeJwt(rawIdToken, leeway);
-    }
+    const id_token = rawIdToken ? decodeJwt(rawIdToken, leeway) : null;
 
     this.cache.set({
       ...result,
@@ -397,11 +398,10 @@ class Auth0Client {
     GO TO API TO GET A SESSION
      */
     try {
-      const api_cookie = await fetchJson(this.api.login, {
-        headers: {
-          Authorization: `Bearer ${rawAccessToken}`,
-        },
-      });
+      const api_cookie = await fetchJson(
+        this.api.login,
+        { headers: { Authorization: `Bearer ${rawAccessToken}` } },
+      );
 
       this.setCookie(api_cookie);
     } catch (error) {
@@ -417,7 +417,10 @@ class Auth0Client {
     const cookie = this.getCookie();
     if (cookie) {
       try {
-        await this.fetchJson(this.api.keep_alive);
+        await this.fetchJson(
+          this.api.keep_alive,
+          { headers: { Authorization: 'dummy value to make browser send cookie' } },
+        );
       } catch (e) {
         this.cache.clear();
         Log.warning('Can not keep session alive using cookie {{cookie|json}}', { cookie }, e);
@@ -447,7 +450,10 @@ class Auth0Client {
      */
     try {
       if (!this.getCookie()) return;
-      await this.fetchJson(this.api.logout);
+      await this.fetchJson(
+        this.api.logout,
+        { headers: { Authorization: 'dummy value to make browser send cookie' } },
+      );
     } catch (e) {
       Log.warning('problem calling logout endpoint', e);
     } finally {
