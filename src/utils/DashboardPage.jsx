@@ -100,7 +100,6 @@ const DashboardPage = ({
       </div>
       <>{children}</>
     </div>
-    <>{children}</>
   </AuthProvider>
 
 );

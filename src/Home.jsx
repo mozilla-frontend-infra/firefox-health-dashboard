@@ -44,28 +44,23 @@ const Home = ({ classes }) => (
     <div className={classes.links}>
       <Link to="/android">
         <AndroidIcon />
-
-Android
+        Android
       </Link>
       <Link to="/quantum/32">
         <DesktopIcon />
-
-Quantum 32bit
+        Quantum 32bit
       </Link>
       <Link to="/quantum/64">
         <DesktopIcon />
-
-Quantum 64bit
+        Quantum 64bit
       </Link>
       <Link to="/power">
         <BatteryIcon />
-
-Power Usage
+        Power Usage
       </Link>
       <Link to="/playback">
         <VideoIcon />
-
-Playback
+        Playback
       </Link>
     </div>
     <div className={classes.netlify}>
