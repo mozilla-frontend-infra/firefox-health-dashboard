@@ -13,7 +13,6 @@ import { bytesToBase64URL, value2json } from '../convert';
 import { Cache } from './cache';
 import { GMTDate as Date } from '../dates';
 import { Signal, sleep, Timer } from '../signals';
-import { toPairs } from '../vectors';
 import SETTINGS from '../../config.json';
 
 const DEFAULT_SCOPE = '';
@@ -84,24 +83,24 @@ class Auth0Client {
   }
 
   setCookie(cookie) {
-    const str = (v, k) => {
-      if (v === true) {
-        return k;
-      } if (v === false) {
-        return '';
-      }
-      return `${k}=${v}`;
-    };
-    const {
-      domain, path, secure, httponly, expires, name, value,
-    } = cookie;
-    const rest = {
-      domain, path, secure, httponly, expires,
-    };
-    const cookie_text = `${name}=${value};${
-      toPairs(rest).map(str).filter(exists).join(';')}`;
+    // const str = (v, k) => {
+    //   if (v === true) {
+    //     return k;
+    //   } if (v === false) {
+    //     return '';
+    //   }
+    //   return `${k}=${v}`;
+    // };
+    // const {
+    //   domain, path, secure, httponly, expires, name, value,
+    // } = cookie;
+    // const rest = {
+    //   domain, path, secure, httponly, expires,
+    // };
+    // const cookie_text = `${name}=${value};${
+    //   toPairs(rest).map(str).filter(exists).join(';')}`;
     this.cache.set({ cookie });
-    document.cookie = cookie_text;
+    // document.cookie = cookie_text;
   }
 
   clearCookie() {
