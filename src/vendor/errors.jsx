@@ -76,7 +76,7 @@ class RawErrorMessage extends React.Component {
 }
 
 const ErrorMessage = withStyles(styles)(RawErrorMessage);
-const withErrorBoundary = (WrappedComponent) => {
+const withErrorBoundary = WrappedComponent => {
   if (
     WrappedComponent.displayName
     && WrappedComponent.displayName.startsWith('WithStyles')

@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 
 import {
-  coalesce, exists, isString, missing,
+  coalesce, exists, isString, missing, isArray,
 } from './utils';
-import { Data } from './datas';
+import { Data, isData } from './datas';
 import { Template } from './Template';
 
 //   Error
@@ -26,10 +26,14 @@ function parseStack(stackString) {
     return [];
   }
 
+  if (isArray(stackString)) {
+    return stackString; // ASSUME ALREADY PARSED
+  }
+
   return stackString
     .split('\n')
-    .map((line) => stackPatterns
-      .map((stackPattern) => {
+    .map(line => stackPatterns
+      .map(stackPattern => {
         const parts = stackPattern.exec(line);
 
         if (missing(parts)) return null;
@@ -83,6 +87,15 @@ class Exception extends Error {
     return parseStack(this.stack).slice(this.stackOffset);
   }
 
+  includes(find) {
+    /*
+    RETURN true IF find CAN BE FOND IN THE CAUSAL CHAIN OF THIS EXCEPTION
+     */
+    if (this.template === find) return true;
+    if (this.cause && this.cause.includes(find)) return true;
+    return Template.expand(this.template, this.props).includes(find);
+  }
+
   toString() {
     const output = [];
 
@@ -93,7 +106,7 @@ class Exception extends Error {
     if (this.trace) {
       output.push('stacktrace');
       output.push(
-        ...this.trace.map((s) => {
+        ...this.trace.map(s => {
           const output = ['    '];
 
           if (exists(s.function)) {
@@ -148,7 +161,7 @@ class Exception extends Error {
   }
 }
 
-Exception.wrap = (err) => {
+Exception.wrap = err => {
   if (missing(err)) {
     return null;
   }
@@ -159,10 +172,17 @@ Exception.wrap = (err) => {
 
   const output = new Exception();
 
-  output.template = err.message;
-  output.props = null;
-  output.cause = null;
-  output.stack = err.stack;
+  if (err instanceof Error) {
+    output.template = err.message;
+    output.props = null;
+    output.cause = null;
+    output.stack = err.stack;
+  } else if (isData(err)) {
+    output.template = err.template;
+    output.props = err.params;
+    output.stack = err.trace;
+    output.cause = Exception.wrap(output.cause);
+  }
 
   return output;
 };

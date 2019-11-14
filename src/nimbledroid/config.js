@@ -115,7 +115,7 @@ const FILTERED_OUT_SITES = [
   'https://www.washingtonpost.com/graphics/2018/national/amp-stories/border-wall',
   'https://www.wired.com/amp-stories/space-photos-of-the-week-111817',
 ];
-const includeScenario = (scenario) => scenario.includes('http') && !FILTERED_OUT_SITES.includes(scenario);
+const includeScenario = scenario => scenario.includes('http') && !FILTERED_OUT_SITES.includes(scenario);
 
 export const generateSitesTableContent = (
   nimbledroidData,
@@ -123,13 +123,13 @@ export const generateSitesTableContent = (
 ) => {
   const { meta, scenarios } = nimbledroidData;
   const filteredScenarios = Object.keys(scenarios)
-    .filter((scenario) => includeScenario(scenario))
-    .map((scenario) => scenarios[scenario]);
+    .filter(scenario => includeScenario(scenario))
+    .map(scenario => scenarios[scenario]);
   const packageIds = Object.keys(meta);
   const numSites = Object.keys(filteredScenarios).length;
   const sites = numSites > 0
     ? Object.values(filteredScenarios)
-      .map((scenario) => {
+      .map(scenario => {
         const ratio = scenario[baseProduct] / scenario[compareProduct];
 
         return { ratio, ...scenario };
@@ -142,11 +142,11 @@ export const generateSitesTableContent = (
     green: 0,
   };
   const { packageIdLabels } = CONFIG;
-  const tableHeader = packageIds.map((packageId) => packageIdLabels[packageId]);
+  const tableHeader = packageIds.map(packageId => packageIdLabels[packageId]);
 
   tableHeader.push(`% from ${packageIdLabels[compareProduct]}`);
 
-  const tableContent = sites.map((scenario) => {
+  const tableContent = sites.map(scenario => {
     const { title, url } = scenario;
     const { ratio, color } = siteMetrics(
       scenario[baseProduct],
@@ -158,7 +158,7 @@ export const generateSitesTableContent = (
 
     // This matches the format expected by the SummaryTable component
     return {
-      dataPoints: packageIds.map((packageId) => {
+      dataPoints: packageIds.map(packageId => {
         const datum = scenario[packageId];
         const { color } = siteMetrics(
           datum,

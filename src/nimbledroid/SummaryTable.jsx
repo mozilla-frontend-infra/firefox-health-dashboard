@@ -10,7 +10,7 @@ const SummaryTable = ({ content = [], header }) => (
         <tr>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <th />
-          {header.map((item) => (
+          {header.map(item => (
             <th className="column" key={item}>
               {item}
             </th>

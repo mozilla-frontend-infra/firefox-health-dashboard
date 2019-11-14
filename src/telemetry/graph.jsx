@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Log } from '../vendor/logs';
 import { fetchJson, URL } from '../vendor/requests';
-import SETTINGS from '../settings';
+import SETTINGS from '../config';
 import { withErrorBoundary } from '../vendor/errors';
 
 class TelemetryContainer extends React.Component {
@@ -44,7 +44,7 @@ class TelemetryContainer extends React.Component {
   graphEvolutionsTimeline({
     datas, params, yLabel, legendLabels,
   }, graphEl) {
-    const newDatas = datas.map((evo) => MG.convert.date(evo, 'date'));
+    const newDatas = datas.map(evo => MG.convert.date(evo, 'date'));
 
     MG.data_graphic({
       data: newDatas,
@@ -60,8 +60,8 @@ class TelemetryContainer extends React.Component {
       x_extended_ticks: true,
       x_label: params.useSubmissionDate ? 'Submission Date' : 'Built Date',
       y_label: yLabel,
-      xax_format: (date) => `${date.getMonth() + 1}-${date.getDate()}`,
-      yax_format: (y) => y,
+      xax_format: date => `${date.getMonth() + 1}-${date.getDate()}`,
+      yax_format: y => y,
       transition_on_update: false,
       legend: legendLabels,
       legend_target: graphEl.querySelector('.graph-legend'),
@@ -80,7 +80,7 @@ class TelemetryContainer extends React.Component {
             <h3 className="graph-title">
               <a
                 className="graph-title-link"
-                ref={(a) => (this.graphTitleLink = a)}
+                ref={a => (this.graphTitleLink = a)}
               >
                 {title}
               </a>
@@ -89,11 +89,11 @@ class TelemetryContainer extends React.Component {
           <div>
             <div
               className="graph-subtitle"
-              ref={(div) => (this.graphSubtitleEl = div)}
+              ref={div => (this.graphSubtitleEl = div)}
             >
               {}
             </div>
-            <div className="graph" ref={(div) => (this.graphEl = div)}>
+            <div className="graph" ref={div => (this.graphEl = div)}>
               <div className="graph-legend">{}</div>
             </div>
           </div>

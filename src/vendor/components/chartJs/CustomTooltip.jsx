@@ -141,7 +141,7 @@ function withTooltip() {
   // * s - index into series
   // * seri - all series shown on this chart
 
-  return (WrappedChart) => {
+  return WrappedChart => {
     class Output extends React.Component {
       constructor(props, ...moreArgs) {
         super(props, ...moreArgs);
@@ -170,7 +170,7 @@ function withTooltip() {
       }
 
       handleChartClick = () => {
-        this.setState((prevState) => ({
+        this.setState(prevState => ({
           tooltipIsLocked: !prevState.tooltipIsLocked,
         }));
       };

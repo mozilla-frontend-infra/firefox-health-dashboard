@@ -1,15 +1,15 @@
 /* eslint-disable no-param-reassign */
 import { selectFrom } from '../vendor/vectors';
 import { fetchJson, URL } from '../vendor/requests';
-import SETTINGS from '../settings';
+import SETTINGS from '../config';
 
 const ENDPOINT = URL({ path: [SETTINGS.backend, 'api/android/nimbledroid'] });
-const matchUrl = (profileName) => profileName.replace(
+const matchUrl = profileName => profileName.replace(
   /.*(http[s]?:\/\/w*\.?.*?[/]?)[)]/,
   (match, firstMatch) => firstMatch,
 );
-const matchShorterUrl = (url) => url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
-const transformedDataForMetrisGraphics = (scenarios) => Object.keys(scenarios).reduce((result, scenarioName) => {
+const matchShorterUrl = url => url.replace(/http[s]?:\/\/w*\.?(.*?)/, (match, firstMatch) => firstMatch);
+const transformedDataForMetrisGraphics = scenarios => Object.keys(scenarios).reduce((result, scenarioName) => {
   scenarios[scenarioName].forEach(({ date, ms }) => {
     // multiple scenarioName have same url0
     const url = matchUrl(scenarioName);
@@ -36,7 +36,7 @@ const transformedDataForMetrisGraphics = (scenarios) => Object.keys(scenarios).r
 
   return result;
 }, {});
-const mergeProductsData = (productsData) => {
+const mergeProductsData = productsData => {
   const mergedMeta = {};
   const mergedScenarios = productsData.reduce((result, { meta, scenarios }) => {
     const { latestVersion, packageId } = meta;
@@ -45,7 +45,7 @@ const mergeProductsData = (productsData) => {
       latestVersion,
     };
 
-    Object.keys(scenarios).forEach((originalKey) => {
+    Object.keys(scenarios).forEach(originalKey => {
       const profileInfo = scenarios[originalKey];
 
       if (profileInfo.data.length === 0) {
@@ -83,7 +83,7 @@ const mergeProductsData = (productsData) => {
   };
 };
 
-const fetchProductData = async (product) => {
+const fetchProductData = async product => {
   const url = URL({
     path: ENDPOINT,
     query: {
@@ -101,7 +101,7 @@ const fetchProductData = async (product) => {
 
 async function fetchNimbledroidData(products) {
   const productsData = await Promise.all(
-    products.map(async (product) => fetchProductData(product)),
+    products.map(async product => fetchProductData(product)),
   );
 
   return mergeProductsData(productsData);

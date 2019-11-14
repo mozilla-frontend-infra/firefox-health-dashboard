@@ -41,7 +41,7 @@ describe('math', () => {
 
   it('ceiling', () => {
     const result = selectFrom(data)
-      .map((v) => ceiling(v, 2))
+      .map(v => ceiling(v, 2))
       .toArray();
 
     expect(result).toEqual([2, null, null, 2, 4]);
@@ -86,13 +86,13 @@ describe('math', () => {
     // negative numbers, which causes arithmetic problems
     const m = 6; // OUR MODULO FOR TESTING
     const someValues = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
-    const negZero = ((v) => -1 * v)(0);
+    const negZero = (v => -1 * v)(0);
 
     // WE EXPECT mod(k, m) TO HAVE A CODOMAIN OF m DIFFERENT VALUES
     // WRONG
-    expect([...new Set(someValues.map((v) => v % m))].length).toBe(11);
+    expect([...new Set(someValues.map(v => v % m))].length).toBe(11);
     // CORRECT
-    expect([...new Set(someValues.map((v) => mod(v, m)))].length).toBe(6);
+    expect([...new Set(someValues.map(v => mod(v, m)))].length).toBe(6);
 
     // WE EXPECT ZERO TO BE ZERO
     expect(-6 % m).toBe(negZero); //  WRONG
@@ -122,7 +122,7 @@ describe('math', () => {
 
   it('floor', () => {
     const result = selectFrom(data)
-      .map((v) => floor(v, 2))
+      .map(v => floor(v, 2))
       .toArray();
 
     expect(result).toEqual([0, null, null, 2, 2]);

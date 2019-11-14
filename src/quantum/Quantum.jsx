@@ -67,9 +67,7 @@ export default class QuantumIndex extends Component {
       };
     const performanceFilter = {
       and: [
-        {
-          or: [{ missing: 'test' }, { eq: ['test', 'suite'] }],
-        },
+        { or: [{ missing: 'test' }, { eq: ['test', 'suite'] }] },
         platform,
         {
           eq: {
@@ -288,27 +286,23 @@ export default class QuantumIndex extends Component {
             timeDomain={timeDomain}
             key="svg-(tsvgr_opacity)"
             title="SVG (tsvgr_opacity)"
-            series={[
-              {
-                label: 'Firefox',
-                filter: {
-                  and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
-                },
+            series={[{
+              label: 'Firefox',
+              filter: {
+                and: [performanceFilter, { eq: { suite: 'tsvgr_opacity' } }],
               },
-            ]}
+            }]}
           />,
           <PerfherderGraphContainer
             timeDomain={timeDomain}
             key="svg-(tsvgx)"
             title="SVG (tsvgx)"
-            series={[
-              {
-                label: 'Firefox',
-                filter: {
-                  and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
-                },
+            series={[{
+              label: 'Firefox',
+              filter: {
+                and: [performanceFilter, { eq: { suite: 'tsvgx' } }],
               },
-            ]}
+            }]}
           />,
         ],
       },
@@ -583,7 +577,7 @@ export default class QuantumIndex extends Component {
           .map(() => 0)
           .fromPairs();
         const section = (
-          <Grid container spacing={24}>
+          <Grid key={title} container spacing={1}>
             {rows.map((widget, wi) => {
               // Acumulate the section's status
               statusList[widget.props.status] += 1;

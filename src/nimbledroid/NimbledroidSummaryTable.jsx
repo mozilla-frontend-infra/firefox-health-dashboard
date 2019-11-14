@@ -60,7 +60,7 @@ class NimbledroidSummaryTable extends Component {
               Show detailed view
             </Button>
             <div className={classes.summary}>
-              {summary.map((s) => (
+              {summary.map(s => (
                 <StatusWidget key={s.title.text} {...s} />
               ))}
             </div>

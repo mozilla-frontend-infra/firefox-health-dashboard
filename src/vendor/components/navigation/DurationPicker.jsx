@@ -99,7 +99,7 @@ class DurationPickerPre extends Component {
 ENSURE THE options ARE UPDATED
 RETURN CORRECTED VALUE
  */
-DurationPickerPre.prepare = (props) => {
+DurationPickerPre.prepare = props => {
   const { options, value, defaultValue } = props;
 
   if (

@@ -28,7 +28,7 @@ const telemetryDataToDatasets = (sourceData, dataKeyIdentifier, timeDomain) => {
     .map((rows, submission_date) => ({
       submission_date: Date.newInstance(submission_date),
       ...selectFrom(rows)
-        .map((r) => {
+        .map(r => {
           const { value } = r;
           const label = r[dataKeyIdentifier];
 
@@ -119,7 +119,7 @@ RedashContainer.propTypes = {
 RedashContainer.defaultProps = {
   standardOptions: {
     'axis.y.label': 'Miliseconds',
-    ticksCallback: (value) => (value > 999 ? `${value / 1000}k` : value),
+    ticksCallback: value => (value > 999 ? `${value / 1000}k` : value),
   },
   dataKeyIdentifier: 'label',
 };

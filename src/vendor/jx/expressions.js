@@ -17,7 +17,7 @@ import { GMTDate as Date } from '../dates';
 import { Log } from '../logs';
 
 const expressions = {};
-const defineFunction = (expr) => {
+const defineFunction = expr => {
   if (isFunction(expr)) {
     return expr;
   }
@@ -26,13 +26,13 @@ const defineFunction = (expr) => {
     const pathArray = splitField(expr);
 
     if (pathArray.length === 0) {
-      return (row) => coalesce(row);
+      return row => coalesce(row);
     }
 
     if (pathArray.length === 1) {
       const step = pathArray[0];
 
-      return (row) => {
+      return row => {
         if (isArray(row)) {
           if (step === 'length') {
             return row.length;
@@ -43,7 +43,7 @@ const defineFunction = (expr) => {
           }
 
           if (isArray(row)) {
-            return row.map((o) => (isData(o) ? o[step] : null));
+            return row.map(o => (isData(o) ? o[step] : null));
           }
         } else if (isData(row)) {
           return coalesce(row[step]);
@@ -53,7 +53,7 @@ const defineFunction = (expr) => {
       };
     }
 
-    return (row) => {
+    return row => {
       let output = row;
 
       for (const step of pathArray) {
@@ -63,7 +63,7 @@ const defineFunction = (expr) => {
           } else if (isInteger(step)) {
             output = output[step];
           } else if (isArray(output)) {
-            output = output.map((o) => (isData(o) ? o[step] : null));
+            output = output.map(o => (isData(o) ? o[step] : null));
           }
         } else if (isData(output)) {
           output = output[step];
@@ -108,7 +108,7 @@ example {and: [a, b, c, ...]}
 
 return true if all `terms` return true
  */
-expressions.and = (terms) => {
+expressions.and = terms => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -116,10 +116,10 @@ expressions.and = (terms) => {
   }
 
   if (filters.length === 1) {
-    return (row) => filters[0](row);
+    return row => filters[0](row);
   }
 
-  return (row) => filters.every((f) => f(row));
+  return row => filters.every(f => f(row));
 };
 
 /*
@@ -127,7 +127,7 @@ example {or: [a, b, c, ...]}
 
 return true if any `terms` return true
  */
-expressions.or = (terms) => {
+expressions.or = terms => {
   const filters = toArray(terms).map(defineFunction);
 
   if (filters.length === 0) {
@@ -135,10 +135,10 @@ expressions.or = (terms) => {
   }
 
   if (filters.length === 1) {
-    return (row) => filters[0](row);
+    return row => filters[0](row);
   }
 
-  return (row) => filters.some((f) => f(row));
+  return row => filters.some(f => f(row));
 };
 
 /*
@@ -146,10 +146,10 @@ example {not: expr}
 
 return opposite of expr
  */
-expressions.not = (expr) => {
+expressions.not = expr => {
   const filter = defineFunction(expr);
 
-  return (row) => !filter(row);
+  return row => !filter(row);
 };
 
 /*
@@ -161,7 +161,7 @@ if variable equals literal value then
 if value is an array, then
     return true if any of the values match
  */
-expressions.eq = (term) => {
+expressions.eq = term => {
   if (isData(term)) {
     const filters = Object.entries(term).map(([k, v]) => {
       if (missing(v)) {
@@ -171,20 +171,20 @@ expressions.eq = (term) => {
       const allowed = toArray(v);
       const s = defineFunction(k);
 
-      return (row) => {
+      return row => {
         const value = s(row);
 
         return allowed.includes(value);
       };
     });
 
-    return (row) => filters.every((f) => f(row));
+    return row => filters.every(f => f(row));
   }
 
   if (isArray(term)) {
     const [a, b] = term.map(defineFunction);
 
-    return (row) => a(row) === b(row);
+    return row => a(row) === b(row);
   }
 
   Log.error('eq Expecting object, or array');
@@ -197,7 +197,7 @@ example {prefix: {name: prefix}}
 
 Return true if `name` starts with literal `prefix`
  */
-expressions.prefix = (term) => (row) => Object.entries(term).every(([name, prefix]) => {
+expressions.prefix = term => row => Object.entries(term).every(([name, prefix]) => {
   const value = Data.get(row, name);
 
   if (missing(value)) {
@@ -210,10 +210,10 @@ expressions.prefix = (term) => (row) => Object.entries(term).every(([name, prefi
 /*
 return true if `expression` is missing
  */
-expressions.missing = (expression) => {
+expressions.missing = expression => {
   const func = defineFunction(expression);
 
-  return (row) => missing(func(row));
+  return row => missing(func(row));
 };
 
 /*
@@ -221,7 +221,7 @@ return index of substring
 return null if not found
  */
 
-expressions.find = (term) => (row) => Object.entries(term).every(([name, substring]) => {
+expressions.find = term => row => Object.entries(term).every(([name, substring]) => {
   const value = Data.get(row, name);
   if (missing(value)) return false;
   const index = value.indexOf(substring);
@@ -232,10 +232,10 @@ expressions.find = (term) => (row) => Object.entries(term).every(([name, substri
 /*
 return true if `expression` exists
  */
-expressions.exists = (expression) => {
+expressions.exists = expression => {
   const func = defineFunction(expression);
 
-  return (row) => exists(func(row));
+  return row => exists(func(row));
 };
 
 /*
@@ -243,13 +243,13 @@ example {gte: {name: reference}
 
 return true if `name` >= `reference`
  */
-expressions.gte = (obj) => {
+expressions.gte = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
   ]);
 
-  return (row) => lookup.every(([a, b]) => {
+  return row => lookup.every(([a, b]) => {
     const av = a(row);
     const bv = b(row);
 
@@ -266,13 +266,13 @@ example {lt: {name: reference}
 
 return true if `name` < `reference`
  */
-expressions.lt = (obj) => {
+expressions.lt = obj => {
   const lookup = Object.entries(obj).map(([name, reference]) => [
     defineFunction(name),
     defineFunction(reference),
   ]);
 
-  return (row) => lookup.every(([a, b]) => {
+  return row => lookup.every(([a, b]) => {
     const av = a(row);
     const bv = b(row);
 
@@ -287,7 +287,7 @@ expressions.lt = (obj) => {
 /*
 convert a date-like value into unix timestamp
  */
-expressions.date = (value) => {
+expressions.date = value => {
   const date = Date.tryParse(value);
 
   if (exists(date)) {
@@ -298,7 +298,7 @@ expressions.date = (value) => {
 
   const v = defineFunction(value);
 
-  return (row) => Date.newInstance(v(row)).unix();
+  return row => Date.newInstance(v(row)).unix();
 };
 
 export default defineFunction;

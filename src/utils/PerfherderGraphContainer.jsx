@@ -7,7 +7,7 @@ import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
-  exists, literalField, missing, sleep, toArray,
+  exists, literalField, missing, toArray,
 } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
@@ -15,12 +15,15 @@ import { getData, TREEHERDER } from '../vendor/perfherder';
 import { ArrayWrapper, selectFrom } from '../vendor/vectors';
 import { Log } from '../vendor/logs';
 import { round } from '../vendor/math';
+import { sleep } from '../vendor/signals';
+import SETTINGS from '../config.json';
+import { Auth0Client } from '../vendor/auth0/client';
 
 const REFERENCE_COLOR = '#45a1ff44';
 
 // treeherder can only accept particular time ranges
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
-  (x) => x * 24 * 60 * 60,
+  x => x * 24 * 60 * 60,
 );
 const tipStyles = {
   tooltipKey: {
@@ -134,6 +137,10 @@ const tip = withStyles(tipStyles)(
           </a>
           )
         </div>
+
+        <div style={{ backgroundColor: series.style.color }}>
+          {record.note}
+        </div>
         <div className={classes.lockMessage}>
           {isLocked ? 'Click to unlock' : 'Click to lock'}
         </div>
@@ -145,10 +152,10 @@ const generateStandardOptions = (series, timeDomain) => {
   const { lowerIsBetter, unit } = series[0].meta;
   const data = selectFrom(series)
     .enumerate()
-    .map((s) => selectFrom(s.data)
+    .map(s => selectFrom(s.data)
       .sort('push_timestamp')
       .enumerate()
-      .map((d) => {
+      .map(d => {
         // eslint-disable-next-line no-param-reassign
         d[s.label] = d.value; // IMPORTANT: WE DO NOT CREATE NEW DATA
 
@@ -162,7 +169,7 @@ const generateStandardOptions = (series, timeDomain) => {
   return {
     tip,
     series: selectFrom(series)
-      .map((s) => ({
+      .map(s => ({
         type: 'scatter',
         ...s,
         select: { value: literalField(s.label) },
@@ -185,14 +192,14 @@ into ChartJS formatting */
 const perfherderFormatter = (series, timeDomain) => {
   const firstTime = timeDomain.min.unix();
   const timeRange = Date.today().unix() - firstTime;
-  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find((t) => t >= timeRange);
+  const bestRange = ALLOWED_TREEHERDER_TIMERANGES.find(t => t >= timeRange);
   const combinedSeries = selectFrom(series)
     .enumerate()
     .map(({ sources, ...row }) => ({
       ...row,
       // choose meta from the source with most recent data
       meta: selectFrom(sources)
-        .sort((s) => selectFrom(s.data)
+        .sort(s => selectFrom(s.data)
           .select('push_timestamp')
           .max())
         .last({}).meta,
@@ -231,7 +238,7 @@ const perfherderFormatter = (series, timeDomain) => {
 
 const getPerfherderData = async (series, timeDomain) => {
   const newData = await Promise.all(
-    series.map(async (row) => {
+    series.map(async row => {
       const sources = await getData(row.filter);
 
       // filter out old data
@@ -280,6 +287,7 @@ class PerfherderGraphContainer extends React.Component {
       standardOptions: null,
       urls: null,
       isLoading: true,
+      notes: null,
     };
   }
 
@@ -289,7 +297,6 @@ class PerfherderGraphContainer extends React.Component {
     }
     return this.update();
   }
-
 
   async componentDidMount() {
     this.update();
@@ -308,6 +315,53 @@ class PerfherderGraphContainer extends React.Component {
       const { standardOptions, urls: moreUrls } = config;
       config.urls = [...toArray(propsUrls), ...toArray(moreUrls)];
       Data.setDefault(standardOptions, style);
+
+      // ASK ANNOTATION SERVICE FOR ALERTS ON REVISIONS
+      const { notes } = this.state;
+      if (!notes) {
+        (async () => {
+          const authenticator = await Auth0Client.newInstance({});
+
+          const revisions = selectFrom(standardOptions.series)
+            .select('data')
+            .flatten()
+            .select('revision')
+            .union()
+            .sort()
+            .toArray();
+
+          const result = await authenticator.fetchJson(
+            SETTINGS.annotation.query,
+            {
+              body: JSON.stringify({
+                from: 'sample_data',
+                where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
+                format: 'list',
+              }),
+            },
+          );
+
+          // MARKUP DATA WITH NOTES
+          if (exists(result.data)) {
+            const detailNotes = selectFrom(result.data)
+              .map(({ revision, description }) => selectFrom(standardOptions.series)
+                .select('data')
+                .flatten()
+                .where({ revision })
+                .map(d => {
+                  // eslint-disable-next-line no-param-reassign
+                  d.note = description;
+                  return {
+                    x: d.push_timestamp * 1000, y: d.value, note: description, id: revision,
+                  };
+                }))
+              .flatten()
+              .toArray();
+
+            this.setState({ notes: detailNotes });
+          }
+        })();
+      }
 
       if (exists(reference)) {
         // ADD HORIZONTAL LINE
@@ -329,10 +383,12 @@ class PerfherderGraphContainer extends React.Component {
 
   render() {
     const { title, missingDataInterval } = this.props;
-    const { urls, standardOptions, isLoading } = this.state;
+    const {
+      urls, standardOptions, isLoading, notes,
+    } = this.state;
 
     return (
-      <div key={title} style={{ position: 'relative' }}>
+      <div key={title + Boolean(notes)} style={{ position: 'relative' }}>
         <ChartJsWrapper
           title={title}
           urls={urls}
@@ -341,6 +397,7 @@ class PerfherderGraphContainer extends React.Component {
             isLoading,
             standardOptions,
             missingDataInterval,
+            notes,
           }}
         />
       </div>

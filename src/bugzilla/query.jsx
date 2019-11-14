@@ -27,7 +27,7 @@ function readOp(expr) {
 }
 
 const expressionLookup = {};
-const convert = (expr) => {
+const convert = expr => {
   try {
     const output = toPairs(expressionLookup)
       .map((restful, op) => (expr[op] ? restful(expr) : []))
@@ -97,7 +97,7 @@ Data.setDefault(expressionLookup, {
     if (vals.length > 1) {
       return [
         { f: 'OP', j: 'OR' },
-        ...val.map((v) => ({ f: fld, o: 'equals', v })),
+        ...val.map(v => ({ f: fld, o: 'equals', v })),
         { f: 'CP' },
       ];
     }
@@ -117,7 +117,7 @@ Data.setDefault(expressionLookup, {
     if (vals.length > 1) {
       return [
         { f: 'OP', j: 'OR' },
-        ...val.map((v) => ({ f: fld, o: 'regexp', v: `${escapeRegEx(v)}.*` })),
+        ...val.map(v => ({ f: fld, o: 'regexp', v: `${escapeRegEx(v)}.*` })),
         { f: 'CP' },
       ];
     }
@@ -142,7 +142,7 @@ Data.setDefault(expressionLookup, {
     ];
   },
   not(expr) {
-    expr.not.forEach((e) => {
+    expr.not.forEach(e => {
       e.n = 1;
     });
 
@@ -182,17 +182,17 @@ const tokenizedMap = {
   regexp: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'regexp',
-    v: toArray(v).map((vv) => `.*\\[${vv}.*`),
+    v: toArray(v).map(vv => `.*\\[${vv}.*`),
   }),
   equals: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'substring',
-    v: toArray(v).map((vv) => `[${vv}]`),
+    v: toArray(v).map(vv => `[${vv}]`),
   }),
   anyexact: ({ f, v }) => ({
     f: f.substring(0, f.length - 10),
     o: 'anywordssubstr',
-    v: toArray(v).map((vv) => `[${vv}]`),
+    v: toArray(v).map(vv => `[${vv}]`),
   }),
 };
 /*
@@ -201,7 +201,7 @@ https://github.com/mozilla/ActiveData/blob/dev/docs/jx.md
 https://github.com/mozilla/ActiveData/blob/dev/docs/jx_expressions.md
 https://wiki.mozilla.org/Bugzilla:REST_API
  */
-const jx2rest = (expr) => {
+const jx2rest = expr => {
   const output = { query_format: 'advanced' };
   const params = convert(expr);
 
@@ -230,7 +230,7 @@ const jx2rest = (expr) => {
 /*
 send json query expression to Bugzilla
  */
-const queryBugzilla = async (query) => {
+const queryBugzilla = async query => {
   const url = URL({
     path: BUGZILLA_REST,
     query: {
@@ -246,7 +246,7 @@ const queryBugzilla = async (query) => {
 /*
 open a window to show given bugs
  */
-const showBugsUrl = (query) => URL({
+const showBugsUrl = query => URL({
   path: BUGZILLA_URL,
   query: {
     ...jx2rest(coalesce(query.where, query.filter)),

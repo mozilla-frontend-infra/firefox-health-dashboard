@@ -20,7 +20,7 @@ function prettyJSON(json, maxDepth) {
   try {
     if (isArray(json)) {
       const output = selectFrom(json)
-        .map((v) => {
+        .map(v => {
           if (v === undefined) {
             return;
           }
@@ -39,7 +39,7 @@ function prettyJSON(json, maxDepth) {
 
       const lengths = output.map(length);
 
-      if (lengths.filter((v) => v > 30).first() || lengths.sum() > 60) {
+      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
         return `[\n${strings.indent(output.join(',\n'), 1)}\n]`;
       }
 
@@ -75,7 +75,7 @@ function prettyJSON(json, maxDepth) {
 
       const lengths = output.map(length);
 
-      if (lengths.filter((v) => v > 30).first() || lengths.sum() > 60) {
+      if (lengths.filter(v => v > 30).first() || lengths.sum() > 60) {
         return `{\n${strings.indent(output.join(',\n'), 1)}\n}`;
       }
 
@@ -99,4 +99,27 @@ function escapeRegEx(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
-export { value2json, json2value, escapeRegEx };
+
+const toB64 = { '-': '+', _: '/' };
+const toURL = { '+': '-', '/': '_', '=': '' };
+
+/*
+convert from bytes to base64 (encoded to be URL safe)
+ */
+function bytesToBase64URL(bytes) {
+  return window.btoa(String.fromCharCode(...Array.from(new Uint8Array(bytes))))
+    .replace(/[+/=]/g, m => toURL[m]);
+}
+
+/*
+convert from base64 in URL (safe, nor not) to bytes
+ */
+function base64URLToBytes(base64URL) {
+  return atob(decodeURIComponent(base64URL)
+    .replace(/[_-]/g, c => toB64[c]));
+}
+
+
+export {
+  value2json, json2value, escapeRegEx, bytesToBase64URL, base64URLToBytes,
+};

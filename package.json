@@ -4,7 +4,7 @@
   "description": "Project Platform Health",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --port 3000 --mode development --disable-host-check",
     "start:local": "BACKEND=http://localhost:3000 webpack-dev-server --mode development",
     "test": "jest",
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
@@ -46,6 +46,7 @@
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
     "prop-types": "^15.6.2",
+    "qrcode.react": "^0.9.3",
     "query-string": "^6.0.0",
     "raven-js": "^3.26.2",
     "react": "^16.6.3",

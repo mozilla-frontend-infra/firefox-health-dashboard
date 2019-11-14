@@ -1,7 +1,7 @@
 /* global fetch */
 import { parse } from 'query-string';
 import {
-  sleep, exists, isArray, isString, toArray, missing,
+  exists, isArray, isString, missing, toArray,
 } from './utils';
 import { Data } from './datas';
 import { Duration } from './durations';
@@ -10,6 +10,8 @@ import strings from './strings';
 import { Log } from './logs';
 import { leaves, toPairs } from './vectors';
 import { KVStore } from './db_cache';
+import { sleep } from './signals';
+import { json2value } from './convert';
 
 /*
 Parse a query string into an object. Leading ? or # are ignored, so you can
@@ -19,7 +21,7 @@ objects
 see also https://github.com/sindresorhus/query-string#parsestring-options
  */
 function fromQueryString(query) {
-  const decode = (v) => {
+  const decode = v => {
     if (isArray(v)) {
       return v.map(decode);
     }
@@ -44,10 +46,10 @@ function fromQueryString(query) {
 Convert a JSON object into a query string
  */
 function toQueryString(value) {
-  const e = (vv) => encodeURIComponent(vv).replace(/[%]20/g, '+');
+  const e = vv => encodeURIComponent(vv).replace(/[%]20/g, '+');
   const encode = (v, k) => toArray(v)
     .filter(exists)
-    .map((vv) => {
+    .map(vv => {
       if (vv === true) {
         return e(k);
       }
@@ -68,6 +70,7 @@ function toQueryString(value) {
 
   return leaves(value)
     .map(encode)
+    .filter(exists)
     .join('&');
 }
 
@@ -76,20 +79,28 @@ const jsonHeaders = {
   Accept: 'application/json',
 };
 const fetchJson = async (url, options = {}) => {
-  const { expire } = options;
+  const { expire, pleaseStop } = options;
+
+  let abortSignal;
+  if (exists(pleaseStop)) {
+    const controller = new AbortController();
+    pleaseStop.then(() => controller.abort());
+    abortSignal = controller.signal;
+  }
+
   const expires = missing(expire)
     ? null
     : Date.now().add(Duration.newInstance(expire));
 
-  if (expire) {
+  if (expire && !options.body) {
     const oldData = await requestCache.get(url);
 
     (async () => {
       // Launch promise chain to fill cache with fresh data
       try {
-        await sleep(10000); // wait 10sec so others can make requests
+        await sleep(10); // wait 10sec so others can make requests
         Log.note('refesh cache for {{url}}', { url });
-        const response = await fetch(url, jsonHeaders);
+        const response = await fetch(url, { ...options, signal: abortSignal, headers: { ...options.headers, ...jsonHeaders } });
 
         if (!response || !response.ok) {
           await requestCache.set(url, null);
@@ -109,17 +120,38 @@ const fetchJson = async (url, options = {}) => {
   }
 
   try {
-    const response = await fetch(url, jsonHeaders);
+    const response = await fetch(
+      url,
+      {
+        ...options,
+        method: options.body ? 'POST' : 'GET',
+        signal: abortSignal,
+        headers: {
+          ...options.headers,
+          ...jsonHeaders,
+        },
+      },
+    );
 
     if (!response) {
       return null;
     }
 
     if (!response.ok) {
-      Log.error('{{status}} when calling {{url}}', {
-        url,
-        status: response.status,
-      });
+      let cause = await response.text();
+      try {
+        cause = json2value(cause);
+      } catch (e) {
+        // do nothing
+      }
+      Log.error(
+        '{{status}} when calling {{url}}',
+        {
+          url,
+          status: response.status,
+        },
+        cause,
+      );
     }
 
     const content = await response.text();
@@ -129,6 +161,7 @@ const fetchJson = async (url, options = {}) => {
         await requestCache.set(url, { url, content, expires });
       }
 
+      if (missing(content)) return null;
       return JSON.parse(content);
     } catch (error) {
       Log.error('Problem parsing {{text}}', { text: response.text() }, error);

@@ -56,7 +56,7 @@ class ValueDomain extends Domain {
       return this.partitions.length - 1;
     }
 
-    const output = this.partitions.findIndex((v) => v.value === value);
+    const output = this.partitions.findIndex(v => v.value === value);
 
     if (output === -1) {
       if (this.locked) {
@@ -124,7 +124,7 @@ class TimeDomain extends Domain {
     const dateValue = Date.newInstance(value).milli();
 
     return this.partitions.findIndex(
-      (part) => part === NULL
+      part => part === NULL
         || (part.min.milli() <= dateValue && dateValue < part.max.milli()),
     );
   }
@@ -145,7 +145,7 @@ class TimeDomain extends Domain {
   isEqual(other) {
     if (this === other) return true;
 
-    return ['min', 'max', 'interval', 'past', 'ending', 'format'].every((v) => isEqual(this[v], other[v]));
+    return ['min', 'max', 'interval', 'past', 'ending', 'format'].every(v => isEqual(this[v], other[v]));
   }
 }
 
@@ -177,14 +177,14 @@ class SetDomain extends Domain {
       .append(NULL)
       .toArray();
 
-    this._value = (row) => this.partitions.find((part) => part._filter(row)).value;
+    this._value = row => this.partitions.find(part => part._filter(row)).value;
   }
 
   /*
   Return index into the `partitions` array for given `value`
    */
   valueToIndex(value) {
-    const output = this.partitions.findIndex((part) => part.value === value);
+    const output = this.partitions.findIndex(part => part.value === value);
 
     if (output === -1) {
       return this.partitions.length - 1;
@@ -198,7 +198,7 @@ class SetDomain extends Domain {
   }
 }
 
-Domain.newInstance = (desc) => {
+Domain.newInstance = desc => {
   if (desc instanceof Domain) {
     return desc;
   }
