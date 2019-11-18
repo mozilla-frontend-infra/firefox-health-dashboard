@@ -39,7 +39,7 @@ class TP6M extends React.Component {
 
   async update() {
     const {
-      test, platform: browserPlatform, past, ending,
+      test, browserPlatform, past, ending,
     } = this.props;
     // BE SURE THE timeDomain IS SET BEFORE DOING ANY await
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
@@ -63,7 +63,7 @@ class TP6M extends React.Component {
         data: null,
         referenceValue: null,
         test,
-        platform,
+        browserPlatform,
       });
 
       return;
@@ -88,7 +88,7 @@ class TP6M extends React.Component {
     const { data } = geomean[0];
 
     this.setState({
-      data, count, total, test, platform: browserPlatform, referenceValue, refMean,
+      data, count, total, test, browserPlatform, referenceValue, refMean,
     });
   }
 
@@ -98,7 +98,7 @@ class TP6M extends React.Component {
 
   async componentDidUpdate(prevProps) {
     if (
-      ['test', 'platform', 'past', 'ending'].every(
+      ['test', 'browserPlatform', 'past', 'ending'].every(
         v => this.props[v] === prevProps[v],
       )
     ) {
@@ -110,14 +110,14 @@ class TP6M extends React.Component {
 
   render() {
     const {
-      classes, navigation, test, platform: browserPlatform, past, ending,
+      classes, navigation, test, browserPlatform, past, ending,
     } = this.props;
     const { browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
       data, count, total, referenceValue, refMean,
     } = (() => {
-      if (test !== this.state.test || browserPlatform !== this.state.platform) {
+      if (test !== this.state.test || browserPlatform !== this.state.browserPlatform) {
         return {};
       }
 
@@ -204,7 +204,7 @@ TP6M.propTypes = {
     search: PropTypes.string.isRequired,
   }).isRequired,
   test: PropTypes.string.isRequired,
-  platform: PropTypes.string.isRequired,
+  browserPlatform: PropTypes.string.isRequired,
 };
 
 const nav = [
@@ -219,7 +219,7 @@ const nav = [
   },
   {
     type: Picker,
-    id: 'platform',
+    id: 'browserPlatform',
     label: 'Platform',
     defaultValue: 'fenix-g5',
     options: selectFrom(BROWSER_PLATFORMS)
