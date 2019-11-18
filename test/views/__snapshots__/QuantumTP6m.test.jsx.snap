@@ -275,9 +275,9 @@ exports[`renders correctly 1`] = `
                 >
                   <div
                     aria-haspopup="listbox"
-                    aria-labelledby=" mui-component-select-platform"
+                    aria-labelledby=" mui-component-select-browserPlatform"
                     className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input MuiInputBase-inputSelect"
-                    id="mui-component-select-platform"
+                    id="mui-component-select-browserPlatform"
                     onBlur={[Function]}
                     onClick={[Function]}
                     onFocus={[Function]}
@@ -289,7 +289,7 @@ exports[`renders correctly 1`] = `
                   </div>
                   <input
                     autoFocus={false}
-                    name="platform"
+                    name="browserPlatform"
                     onAnimationStart={[Function]}
                     type="hidden"
                     value="fenix-g5"

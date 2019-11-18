@@ -325,10 +325,9 @@ class TP6mAggregate_ extends Component {
               const platform = row.platform.getValue();
               const count = row.count.getValue();
               const total = row.total.getValue();
-              const platformLabel = selectFrom(BROWSER_PLATFORMS)
+              const { label: platformLabel, id: browserPlatform } = selectFrom(BROWSER_PLATFORMS)
                 .where({ browser, platform })
-                .first()
-                .label;
+                .first();
 
               return (
                 <Grid item xs={6} key={platform}>
@@ -342,7 +341,7 @@ class TP6mAggregate_ extends Component {
                           path: '/android/tp6m',
                           query: {
                             test,
-                            platform,
+                            browserPlatform,
                           },
                         }),
                       },
