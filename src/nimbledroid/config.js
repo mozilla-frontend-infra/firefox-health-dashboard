@@ -85,7 +85,7 @@ const generateSitesSummary = (count, numSites) => [
 ];
 const FILTERED_OUT_SITES = [
   'http://m.spiegel.de',
-  'http://m.spiegel.de/netzwelt/web/firefox-quantum-so-schlaegt-sich-der-mozilla-browser-gegen-google-chrome-a-1178579.html',
+  'http://m.spiegel.de/netzwelt/web/firefox-windows-so-schlaegt-sich-der-mozilla-browser-gegen-google-chrome-a-1178579.html',
   'http://www.wikia.com/fandom',
   'https://abcnews.go.com/US/nfl-owners-stand-players-trump-kneeling-rebuke/story?id=50060482',
   'https://gizmodo.com',
