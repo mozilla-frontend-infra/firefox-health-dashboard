@@ -7,6 +7,7 @@ export const CONFIG = {
     'org.mozilla.geckoview_example': 'GeckoView Example',
     'org.mozilla.reference.browser': 'Reference Browser',
     'org.mozilla.fenix': 'Firefox Preview',
+    'org.mozilla.fenix.': 'Firefox Preview',
   },
   products: [
     'org.mozilla.klar',
