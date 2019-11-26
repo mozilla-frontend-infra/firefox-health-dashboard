@@ -41,7 +41,7 @@ module.exports = {
         title: 'Firefox Health Dashboard',
       },
       env: {
-        BACKEND: 'https://firefox-health-backend.herokuapp.com',
+        BACKEND: 'https://firefox-health-backend-pr-73.herokuapp.com',
       },
       // Read https://stackoverflow.com/a/36623117
       // This is the key to making React Router work with neutrino

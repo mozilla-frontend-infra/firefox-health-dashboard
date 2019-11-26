@@ -1,5 +1,5 @@
 {
-  "backend": "https://firefox-health-backend.herokuapp.com",
+  "backend": "https://firefox-health-backend-pr-73.herokuapp.com",
   "colors": [
     "#e55525",
     "#ffcd02",
