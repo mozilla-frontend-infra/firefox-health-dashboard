@@ -2,25 +2,23 @@ import { Log } from '../vendor/logs';
 
 export const CONFIG = {
   packageIdLabels: {
-    'org.mozilla.klar': 'Firefox Klar',
+    'org.mozilla.fenix.nightly': 'Firefox Nightly',
     'com.chrome.beta': 'Chrome Beta',
-    'org.mozilla.geckoview_example': 'GeckoView Example',
     'org.mozilla.reference.browser': 'Reference Browser',
     'org.mozilla.fenix': 'Firefox Preview',
   },
   products: [
-    'org.mozilla.klar',
+    'org.mozilla.fenix.nightly',
     'com.chrome.beta',
-    'org.mozilla.geckoview_example',
     'org.mozilla.reference.browser',
     'org.mozilla.fenix',
   ],
   summaryTable: [
     'org.mozilla.geckoview_example',
-    'org.mozilla.fenix',
+    'org.mozilla.fenix.nightly',
     'com.chrome.beta',
   ],
-  baseProduct: 'org.mozilla.fenix',
+  baseProduct: 'org.mozilla.fenix.nightly',
   compareProduct: 'com.chrome.beta',
   targetRatio: 1.2,
 };

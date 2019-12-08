@@ -12,7 +12,7 @@ it('renders correctly', () => {
         configuration={{
           baseProduct: 'org.mozilla.klar',
           compareProduct: 'com.chrome.beta',
-          products: ['org.mozilla.klar', 'com.chrome.beta'],
+          products: ['org.mozilla.fenix.nightly', 'com.chrome.beta'],
           site: 'reddit.com',
           targetRatio: 1.2,
         }}
