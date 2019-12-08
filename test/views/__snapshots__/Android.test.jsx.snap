@@ -346,7 +346,7 @@ exports[`renders correctly 1`] = `
                 <span
                   className="Section-subtitle-119"
                 >
-                  Firefox Preview vs Chrome Beta
+                  Firefox Nightly vs Chrome Beta
                 </span>
               </span>
             </h2>

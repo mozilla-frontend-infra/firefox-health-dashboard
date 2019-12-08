@@ -39,7 +39,7 @@ exports[`renders correctly 1`] = `
           <span
             className=""
           >
-            Firefox Preview &gt; 20% slower than Chrome Beta
+            Firefox Nightly &gt; 20% slower than Chrome Beta
           </span>
           <span>
             37/46
@@ -53,7 +53,7 @@ exports[`renders correctly 1`] = `
           <span
             className=""
           >
-            Firefox Preview &gt; 0% and &lt;= 20% slower than Chrome Beta
+            Firefox Nightly &gt; 0% and &lt;= 20% slower than Chrome Beta
           </span>
           <span>
             2/46
@@ -67,7 +67,7 @@ exports[`renders correctly 1`] = `
           <span
             className=""
           >
-            Firefox Preview &lt;= 0% (i.e. faster than) Chrome Beta
+            Firefox Nightly &lt;= 0% (i.e. faster than) Chrome Beta
           </span>
           <span>
             7/46
