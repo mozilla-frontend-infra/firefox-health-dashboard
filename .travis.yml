@@ -1,18 +1,40 @@
 dist: xenial
-language: node_js
-cache: yarn
-node_js:
-  - '10'
-  - '12'
-before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
-  - export PATH="$HOME/.yarn/bin:$PATH"
-install:
-- yarn install --frozen-lockfile
-after_failure:
-- yarn build -- --inspect
-script:
-- yarn lint
-- yarn build
-- yarn test
-after_success: yarn coveralls
+matrix:
+  include:
+    - env: linters & build
+      language: node_js
+      cache: yarn
+      node_js: '12'
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      script:
+        - yarn lint
+        - yarn build
+      after_failure:
+        - yarn build -- --inspect
+
+    - env: tests
+      language: node_js
+      cache: yarn
+      node_js: '12'
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+      - yarn install --frozen-lockfile
+      script:
+      - yarn test
+
+    - env: tests & coverage
+      language: node_js
+      cache: yarn
+      node_js: '10'
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.17.3
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+      - yarn install --frozen-lockfile
+      script:
+      - yarn test
+      after_success: yarn coveralls
