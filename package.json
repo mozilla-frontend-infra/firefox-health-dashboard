@@ -46,7 +46,7 @@
     "metrics-graphics": "^2.10.1",
     "moment": "^2.19.3",
     "prop-types": "^15.6.2",
-    "qrcode.react": "^0.9.3",
+    "qrcode.react": "^1.0.0",
     "query-string": "^6.0.0",
     "raven-js": "^3.26.2",
     "react": "^16.6.3",
