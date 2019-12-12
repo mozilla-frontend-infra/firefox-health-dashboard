@@ -1087,10 +1087,10 @@
     prop-types "^15.7.2"
     react-is "^16.8.6"
 
-"@mozilla-frontend-infra/components@^2.2.1":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@mozilla-frontend-infra/components/-/components-2.5.0.tgz#559f543fed51aac3105f482fad316a1789f9e4fd"
-  integrity sha512-VwknIGafObvq9SO1soPfDjmZWM7uiWPUaGYZ80nweCprNX5bzNZRcoKSjVWtk7WLXgpok3UZiXh1JFZXe8Q8Lg==
+"@mozilla-frontend-infra/components@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@mozilla-frontend-infra/components/-/components-3.0.1.tgz#85528b20571f355c5322d353ab122430c514195c"
+  integrity sha512-owQi+PcNKs4eXWGayid9FMOJB0Sj+W9ZUSs3/dr/XlFpeDSVcFMef1ROF1Nd9ui+bmv/Uc842WUNalegIVAOuQ==
   dependencies:
     classnames "^2.2.6"
     codemirror "^5.39.0"
