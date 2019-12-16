@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "schedule:earlyMondays"
+  ],
+  "minor": {
+    "enabled": false
+  },
+  "separateMinorPatch": true,
+  "patch": {
+    "automerge": true
+  },
+  "lockFileMaintenance": {
+    "automerge": true
+  }
+}
