@@ -10,12 +10,9 @@ Separate projects have own version of source
 * Bug fix library, no API change
 * Enhance library, API enhancement
 * Change library, API changed
-* 
 * merging library code between projects
-* 
 * Merging library versions from multiple projects
 * Merging library from multiple branches in one repo
 * Merging multiple libraries from multiple branches
-* 
 
  
