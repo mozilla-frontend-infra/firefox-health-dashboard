@@ -123,6 +123,7 @@ const PLATFORMS = [
 
 const BROWSERS =[
   {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-firefox-live"]}}},
+  {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-chrome-live"]}}},
   {id: "geckoview", label:"geckoview", title:"Firefox (Android)", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-geckoview-live"]}}},
   {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", filter: {eq: {framework: 10, repo: 'fenix', suite: ["raptor-youtube-playback-fenix-live"]}}},
 ];

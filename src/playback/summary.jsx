@@ -87,7 +87,7 @@ class PlaybackSummary extends React.Component {
 
   async update() {
     const { bits, encoding, browserId } = this.props;
-    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
+    const platformType = browserId === 'firefox' || browserId === 'chrome' ? 'desktop' : 'mobile';
     const browser = selectFrom(BROWSERS)
       .where({ id: browserId })
       .first();
@@ -200,7 +200,7 @@ class PlaybackSummary extends React.Component {
     const {
       bits, encoding, classes, browserId,
     } = this.props;
-    const platformType = browserId === 'firefox' ? 'desktop' : 'mobile';
+    const platformType = browserId === 'firefox' || browserId === 'chrome' ? 'desktop' : 'mobile';
 
     if (!scores) {
       return (
@@ -276,6 +276,7 @@ class PlaybackSummary extends React.Component {
                   </div>
                 </Grid>
                 {selectFrom(SPECIAL_SIZES).map(({ id, label }) => {
+                  console.log(browserId, 'scores', scores);
                   const { score } = selectFrom(scores)
                     .where({ platform: platform.id, encoding, size: id })
                     .first();
