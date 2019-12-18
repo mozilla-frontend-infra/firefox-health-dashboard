@@ -8,7 +8,8 @@ import NimbledroidGraphPage from './nimbledroid/NimbledroidGraphPage';
 import NoMatch from './NotFound';
 import Playback from './playback/playback';
 import PlaybackDetails from './playback/details';
-import Power from './power';
+import Power from './power/power';
+import PowerDetails from './power/details';
 import Subtests from './quantum/subtests';
 import TP6 from './quantum/TP6';
 import TP6M from './android/TP6m';
@@ -22,6 +23,7 @@ const Routes = () => (
       <Route path="/android/tp6m" component={TP6M} />
       <Route path="/android/graph" component={NimbledroidGraphPage} />
       <Route path="/android" component={AndroidPage} />
+      <Route path="/power/details" component={PowerDetails} />
       <Route path="/power" component={Power} />
       <Route path="/playback/details" component={PlaybackDetails} />
       <Route path="/playback" component={Playback} />

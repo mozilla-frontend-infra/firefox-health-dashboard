@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-class Power extends React.Component {
+class PowerDetails extends React.Component {
   render() {
     const {
       classes, navigation, suite, browser, past, ending,
@@ -84,4 +84,4 @@ const nav = [
   ...timePickers,
 ];
 
-export default withNavigation(nav)(withStyles(styles)(Power));
+export default withNavigation(nav)(withStyles(styles)(PowerDetails));
