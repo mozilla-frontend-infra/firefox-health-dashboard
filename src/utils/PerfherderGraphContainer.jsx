@@ -66,7 +66,7 @@ const tip = withStyles(tipStyles)(
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',
       query: {
-        repo: 'mozilla-central',
+        repo: 'fenix',
         revision: record.revision,
         selectedJob: record.job_id,
         group_state: 'expanded',
