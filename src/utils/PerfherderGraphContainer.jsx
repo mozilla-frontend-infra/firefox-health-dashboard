@@ -61,8 +61,7 @@ const tip = withStyles(tipStyles)(
       ? 'lower is better'
       : 'higher is better';
     const hgURL = URL({
-      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
-      query: { changeset: record.revision },
+      path: `https://github.com/mozilla-mobile/fenix/commit/${record.revision}`,
     });
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',
