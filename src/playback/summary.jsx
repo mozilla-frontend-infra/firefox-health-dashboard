@@ -276,7 +276,6 @@ class PlaybackSummary extends React.Component {
                   </div>
                 </Grid>
                 {selectFrom(SPECIAL_SIZES).map(({ id, label }) => {
-                  console.log(browserId, 'scores', scores);
                   const { score } = selectFrom(scores)
                     .where({ platform: platform.id, encoding, size: id })
                     .first();
