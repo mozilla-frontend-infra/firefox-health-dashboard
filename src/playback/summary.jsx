@@ -87,10 +87,10 @@ class PlaybackSummary extends React.Component {
 
   async update() {
     const { bits, encoding, browserId } = this.props;
-    const platformType = browserId === 'firefox' || browserId === 'chrome' ? 'desktop' : 'mobile';
     const browser = selectFrom(BROWSERS)
       .where({ id: browserId })
       .first();
+    const platformType = browser.format;
     const sizes = selectFrom(SPECIAL_SIZES)
       .select('id')
       .toArray();
@@ -200,7 +200,7 @@ class PlaybackSummary extends React.Component {
     const {
       bits, encoding, classes, browserId,
     } = this.props;
-    const platformType = browserId === 'firefox' || browserId === 'chrome' ? 'desktop' : 'mobile';
+    const platformType = selectFrom(BROWSERS).where({ id: browserId }).first().format;
 
     if (!scores) {
       return (
