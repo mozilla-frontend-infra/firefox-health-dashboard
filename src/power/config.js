@@ -34,15 +34,15 @@ const PLATFORMS = [
       },
     },
   },
-  {
-    id: 'p2',
-    label: 'Pixel 2 (arm7)',
-    filter: {
-      eq: {
-        platform: 'android-hw-p2-8-0-arm7-api-16',
-      },
-    },
-  },
+  // {
+  //   id: 'p2',
+  //   label: 'Pixel 2 (arm7)',
+  //   filter: {
+  //     eq: {
+  //       platform: 'android-hw-p2-8-0-arm7-api-16',
+  //     },
+  //   },
+  // },
   {
     id: 'p2-aarch64',
     label: 'Pixel 2 (aarch64)',
@@ -54,6 +54,20 @@ const PLATFORMS = [
     },
   },
 ];
+// const SUITES = [
+//   {
+//     id: 'scn-power-idle',
+//     suiteLabel: '',
+//   },
+//   {
+//     id: '',
+//     suiteLabel: '',
+//   },
+//   {
+//     id: '',
+//     suiteLabel: '',
+//   },
+// ];
 const COMBO_TABLE = {
   header: ['browser', 'browserLabel', 'suite', 'suiteLabel', 'filter'],
   data: [

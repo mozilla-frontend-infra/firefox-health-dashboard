@@ -4,7 +4,7 @@ import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import { PowerSummary } from './summary';
 import { TimeDomain } from '../vendor/jx/domains';
-import { COMBOS } from './config';
+import { COMBOS, PLATFORMS } from './config';
 import { selectFrom } from '../vendor/vectors';
 
 export default class Power extends React.Component {
@@ -26,6 +26,22 @@ export default class Power extends React.Component {
                   suite="speedometer"
                   timeDomain={timeDomain}
                   title={browserLabel}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Section>
+        <Section title="idle">
+          <Grid container spacing={2}>
+            {PLATFORMS.map(({ browser, browserLabel }) => (
+              <Grid item xs={6}>
+                <PowerSummary
+                  key={`power_${browser}_speedometer`}
+                  browser={browser}
+                  suite="speedometer"
+                  timeDomain={timeDomain}
+                  title={browserLabel}
+                  newWay
                 />
               </Grid>
             ))}
