@@ -243,24 +243,24 @@ class Android extends Component {
                       ],
                     },
                   },
-                  {
-                    label: 'Pixel 2 (arm7)',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
-                        },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview',
-                          },
-                        },
-                      ],
-                    },
-                  },
+                  // {
+                  //   label: 'Pixel 2 (arm7)',
+                  //   filter: {
+                  //     and: [
+                  //       { missing: 'test' },
+                  //       {
+                  //         prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                  //       },
+                  //       {
+                  //         eq: {
+                  //           framework: 10,
+                  //           repo: 'mozilla-central',
+                  //           suite: 'raptor-speedometer-geckoview',
+                  //         },
+                  //       },
+                  //     ],
+                  //   },
+                  // },
                   {
                     label: 'Pixel 2 (ARM64)',
                     filter: {
@@ -313,24 +313,24 @@ class Android extends Component {
                       ],
                     },
                   },
-                  {
-                    label: 'Pixel 2 (arm7)',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-unity-webgl-geckoview',
-                          },
-                        },
-                        {
-                          prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
-                        },
-                      ],
-                    },
-                  },
+                  // {
+                  //   label: 'Pixel 2 (arm7)',
+                  //   filter: {
+                  //     and: [
+                  //       { missing: 'test' },
+                  //       {
+                  //         eq: {
+                  //           framework: 10,
+                  //           repo: 'mozilla-central',
+                  //           suite: 'raptor-unity-webgl-geckoview',
+                  //         },
+                  //       },
+                  //       {
+                  //         prefix: { platform: 'android-hw-p2-8-0-arm7-api-16' },
+                  //       },
+                  //     ],
+                  //   },
+                  // },
                   {
                     label: 'Pixel 2 (ARM64)',
                     filter: {

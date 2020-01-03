@@ -10,43 +10,32 @@ import { selectFrom } from '../vendor/vectors';
 export default class Power extends React.Component {
   render() {
     const timeDomain = new TimeDomain({ past: '2month', interval: 'day' });
-    const speedometerCombos = selectFrom(COMBOS).where({ suite: 'speedometer' });
+    const suites = selectFrom(COMBOS)
+      .groupBy('suiteLabel')
+      .map(([v]) => ({ suiteId: v.suite, suiteLabel: v.suiteLabel })).toArray();
 
     return (
       <DashboardPage
         title="Power Usage"
       >
-        <Section title="Speedometer CPU power usage">
-          <Grid container spacing={2}>
-            {speedometerCombos.map(({ browser, browserLabel }) => (
-              <Grid item xs={6}>
-                <PowerSummary
-                  key={`power_${browser}_speedometer`}
-                  browser={browser}
-                  suite="speedometer"
-                  timeDomain={timeDomain}
-                  title={browserLabel}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Section>
-        <Section title="idle">
-          <Grid container spacing={2}>
-            {PLATFORMS.map(({ browser, browserLabel }) => (
-              <Grid item xs={6}>
-                <PowerSummary
-                  key={`power_${browser}_speedometer`}
-                  browser={browser}
-                  suite="speedometer"
-                  timeDomain={timeDomain}
-                  title={browserLabel}
-                  newWay
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </Section>
+        {suites.map(({ suiteId, suiteLabel }) => (
+          <Section title={`Suite: ${suiteLabel} - CPU`}>
+            <Grid container spacing={2}>
+              {PLATFORMS.map(({ id, label: platformLabel }) => (
+                <Grid item xs={6}>
+                  <PowerSummary
+                    key={`power_${id}_${suiteId}`}
+                    platform={id}
+                    suite={suiteId}
+                    timeDomain={timeDomain}
+                    title={platformLabel}
+                    newWay
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Section>
+        ))}
       </DashboardPage>
     );
   }

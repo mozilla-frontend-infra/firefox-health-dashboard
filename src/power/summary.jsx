@@ -10,42 +10,16 @@ import { TimeDomain } from '../vendor/jx/domains';
 class PowerSummary extends React.Component {
   render() {
     const {
-      browser, suite, timeDomain, title, testId, newWay,
+      browser, suite, timeDomain, title, testId, platform,
     } = this.props;
-    const browserFilter = selectFrom(COMBOS)
-      .where({ browser, suite })
-      .first().filter;
+    const combos = selectFrom(COMBOS).where({ suite });
     const testFilter = selectFrom(TESTS).where({ id: testId }).first().filter;
-    if (newWay) {
-      return (
-        <PerfherderGraphContainer
-          timeDomain={timeDomain}
-          key={`power_summary_${browser}_${suite}`}
-          urls={{
-            title: 'show details',
-            url: URL({
-              path: '/power/details',
-              query: { browser, suite },
-            }),
-            icon: DetailsIcon,
-          }}
-          title={title}
-          series={selectFrom(PLATFORMS)
-            .map(({ label, filter: platformFilter }) => ({
-              label,
-              filter: {
-                and: [testFilter, platformFilter, browserFilter],
-              },
-            }))
-            .toArray()}
-          missingDataInterval={10}
-        />
-      );
-    }
+    const platfomFilter = selectFrom(PLATFORMS).where({ id: platform }).first().filter;
+
     return (
       <PerfherderGraphContainer
         timeDomain={timeDomain}
-        key={`power_summary_${browser}_${suite}`}
+        key={`power_summary_${platform}_${suite}`}
         urls={{
           title: 'show details',
           url: URL({
@@ -55,11 +29,11 @@ class PowerSummary extends React.Component {
           icon: DetailsIcon,
         }}
         title={title}
-        series={selectFrom(PLATFORMS)
-          .map(({ label, filter: platformFilter }) => ({
-            label,
+        series={selectFrom(combos)
+          .map(({ browserLabel, filter: browserSuiteFilter }) => ({
+            label: browserLabel,
             filter: {
-              and: [testFilter, platformFilter, browserFilter],
+              and: [testFilter, browserSuiteFilter, platfomFilter],
             },
           }))
           .toArray()}
@@ -70,19 +44,16 @@ class PowerSummary extends React.Component {
 }
 
 PowerSummary.propTypes = {
-  browser: PropTypes.string.isRequired,
   suite: PropTypes.string.isRequired,
   timeDomain: PropTypes.shape({}),
   title: PropTypes.string,
   testId: PropTypes.string,
-  newWay: PropTypes.bool,
 };
 
 PowerSummary.defaultProps = {
   timeDomain: new TimeDomain({ past: '3month', interval: 'day' }),
   title: 'Speedometer CPU power usage',
   testId: 'cpu',
-  newWay: false,
 };
 
 
