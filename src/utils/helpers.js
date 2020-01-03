@@ -36,3 +36,14 @@ export const determineStatusColor = (data, key, target) => {
 
   return 'red';
 };
+
+// get a window title by concatenating the given title and the base title (Firefox Health Dashboard)
+// ignore if pageTitle is the same as baseTtitle
+export const getWindowTitle = pageTitle => {
+  const baseTitle = 'Firefox Health Dashboard';
+  return (
+    pageTitle && !baseTitle.toLowerCase().includes(pageTitle.toLowerCase())
+  )
+    ? `${pageTitle} - ${baseTitle}`
+    : baseTitle;
+};
