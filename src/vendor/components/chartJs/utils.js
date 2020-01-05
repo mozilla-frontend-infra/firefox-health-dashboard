@@ -343,6 +343,15 @@ const cjsGenerator = standardOptions => {
     };
   }
 
+  const labels = (() => {
+    const minX = standardOptions['axis.x.min'];
+    const maxX = standardOptions['axis.x.max'];
+    const singleDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(Math.abs((maxX - minX) / singleDay));
+
+    return [...Array(diffDays).keys()].map(data => minX.addDay(data));
+  })();
+
   const cjsOptions = {
     type: 'line', // dummy value to get legend to show
     options: {
@@ -360,7 +369,7 @@ const cjsGenerator = standardOptions => {
       },
       backgroundColor: 'rgb(255,0,0)',
     },
-    data: { datasets },
+    data: { datasets, labels },
   };
   if (ticksCallback) {
     cjsOptions.options.scales.yAxes[0].ticks.callback = ticksCallback;
