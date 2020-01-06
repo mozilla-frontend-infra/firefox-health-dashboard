@@ -19,10 +19,13 @@ export default class Power extends React.Component {
         title="Power Usage"
       >
         {suites.map(({ suiteId, suiteLabel }) => (
-          <Section title={`Suite: ${suiteLabel} - CPU`}>
+          <Section
+            key={`section_${suiteId}`}
+            title={`Suite: ${suiteLabel} - CPU`}
+          >
             <Grid container spacing={2}>
               {PLATFORMS.map(({ id, label: platformLabel }) => (
-                <Grid item xs={6}>
+                <Grid key={`power_${id}_${suiteId}`} item xs={6}>
                   <PowerSummary
                     key={`power_${id}_${suiteId}`}
                     platform={id}

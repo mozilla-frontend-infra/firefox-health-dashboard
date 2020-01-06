@@ -91,7 +91,7 @@ class ChartJsWrapper extends React.Component {
       <h2 className={classes.title}>
         {title}
         {toArray(urls).map(({ title, icon, url }) => (
-          <a id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
+          <a key={title} id={title} href={url} title={title} target="_blank" rel="noopener noreferrer">
             {icon()}
           </a>
         ))}
