@@ -33,7 +33,7 @@ class PowerDetails extends React.Component {
       >
         {navigation}
         <Grid container spacing={24}>
-          {selectFrom(TESTS).map(({ id: testId, label, filter: testFilter }) => (
+          {selectFrom(TESTS).map(({ id: testId, label: testLabel, filter: testFilter }) => (
             PLATFORMS.map(({ id: platformId, label: platformLabel, filter: platformFilter }) => (
               <Grid
                 item
@@ -43,7 +43,7 @@ class PowerDetails extends React.Component {
               >
                 <PerfherderGraphContainer
                   timeDomain={timeDomain}
-                  title={`${platformLabel} - ${label}`}
+                  title={`${testLabel} - ${platformLabel}`}
                   series={selectFrom(suiteCombos)
                     .map(({ browserLabel, filter: browserFilter }) => ({
                       label: browserLabel,

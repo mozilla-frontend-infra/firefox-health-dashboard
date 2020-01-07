@@ -4,7 +4,7 @@ import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import { PowerSummary } from './summary';
 import { TimeDomain } from '../vendor/jx/domains';
-import { COMBOS, PLATFORMS } from './config';
+import { COMBOS, PLATFORMS, TESTS } from './config';
 import { selectFrom } from '../vendor/vectors';
 
 export default class Power extends React.Component {
@@ -13,6 +13,7 @@ export default class Power extends React.Component {
     const suites = selectFrom(COMBOS)
       .groupBy('suiteLabel')
       .map(([v]) => ({ suiteId: v.suite, suiteLabel: v.suiteLabel })).toArray();
+    const cpuTest = selectFrom(TESTS).where({ id: 'cpu' }).first();
 
     return (
       <DashboardPage
@@ -21,7 +22,7 @@ export default class Power extends React.Component {
         {suites.map(({ suiteId, suiteLabel }) => (
           <Section
             key={`section_${suiteId}`}
-            title={`Suite: ${suiteLabel} - CPU`}
+            title={`${suiteLabel} - ${cpuTest.label}`}
           >
             <Grid container spacing={2}>
               {PLATFORMS.map(({ id, label: platformLabel }) => (
@@ -32,7 +33,7 @@ export default class Power extends React.Component {
                     suite={suiteId}
                     timeDomain={timeDomain}
                     title={platformLabel}
-                    newWay
+                    testId={cpuTest.id}
                   />
                 </Grid>
               ))}
