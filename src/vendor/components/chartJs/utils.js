@@ -108,7 +108,7 @@ const cjsGenerator = standardOptions => {
     return Data.fromConfig({ data, ...newRest });
   })();
   const xAxes = (() => {
-    const xDomain = Data.get(options, 'axis.x.domain');
+    const xDomain = Data.get(options, 'axis.x');
 
     if (xDomain) {
       return toArray(xDomain).map(x => {
