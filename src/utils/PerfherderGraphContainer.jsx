@@ -60,14 +60,15 @@ const tip = withStyles(tipStyles)(
     const higherOrLower = series.meta.lowerIsBetter
       ? 'lower is better'
       : 'higher is better';
-    const hgURL = URL({
-      path: 'https://hg.mozilla.org/mozilla-central/pushloghtml',
-      query: { changeset: record.revision },
-    });
+
+    const revisionURL = record.meta.repo === 'mozilla-central'
+      ? `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${record.revision}`
+      : `https://github.com/mozilla-mobile/fenix/commit/${record.revision}`;
+
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',
       query: {
-        repo: 'mozilla-central',
+        repo: record.meta.repo,
         revision: record.revision,
         selectedJob: record.job_id,
         group_state: 'expanded',
@@ -127,7 +128,7 @@ const tip = withStyles(tipStyles)(
           );
         })()}
         <div>
-          <a href={hgURL} target="_blank" rel="noopener noreferrer">
+          <a href={revisionURL} target="_blank" rel="noopener noreferrer">
             {record.revision.slice(0, 12)}
           </a>
 
