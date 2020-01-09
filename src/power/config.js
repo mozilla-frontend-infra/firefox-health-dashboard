@@ -34,15 +34,6 @@ const PLATFORMS = [
       },
     },
   },
-  // {
-  //   id: 'p2',
-  //   label: 'Pixel 2 (arm7)',
-  //   filter: {
-  //     eq: {
-  //       platform: 'android-hw-p2-8-0-arm7-api-16',
-  //     },
-  //   },
-  // },
   {
     id: 'p2-aarch64',
     label: 'Pixel 2 (aarch64)',

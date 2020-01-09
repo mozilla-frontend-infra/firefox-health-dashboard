@@ -96,17 +96,6 @@ const PLATFORMS = [
       },
     },
   },
-  // {
-  //   id: 'p2',
-  //   type: 'mobile',
-  //   label: 'Pixel 2 (arm7)',
-  //   bits: 64,
-  //   filter: {
-  //     eq: {
-  //       platform: 'android-hw-p2-8-0-arm7-api-16',
-  //     },
-  //   },
-  // },
   {
     id: 'p2-aarch64',
     type: 'mobile',
