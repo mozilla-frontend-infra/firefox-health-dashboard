@@ -17,15 +17,14 @@ const styles = {
   },
 };
 
-class Power extends React.Component {
+class PowerDetails extends React.Component {
   render() {
     const {
       classes, navigation, suite, browser, past, ending,
     } = this.props;
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
-    const browserFilter = selectFrom(COMBOS)
-      .where({ browser, suite })
-      .first().filter;
+    const suiteCombos = selectFrom(COMBOS)
+      .where({ suite });
 
     return (
       <DashboardPage
@@ -34,28 +33,29 @@ class Power extends React.Component {
       >
         {navigation}
         <Grid container spacing={24}>
-          {selectFrom(TESTS).map(({ id, label, filter: testFilter }) => (
-            <Grid
-              item
-              xs={6}
-              key={`page_${id}_${browser}_${suite}`}
-              className={classes.chart}
-            >
-              <PerfherderGraphContainer
-                timeDomain={timeDomain}
-                title={label}
-                series={selectFrom(PLATFORMS)
-                  .map(({ label, filter: platformFilter }) => ({
-                    label,
-                    filter: {
-                      and: [testFilter, platformFilter, browserFilter],
-                    },
-                  }))
-                  .toArray()}
-                missingDataInterval={10}
-              />
-            </Grid>
-          ))}
+          {selectFrom(TESTS).map(({ id: testId, label: testLabel, filter: testFilter }) => (
+            PLATFORMS.map(({ id: platformId, label: platformLabel, filter: platformFilter }) => (
+              <Grid
+                item
+                xs={6}
+                key={`page_${testId}_${platformId}_${suite}`}
+                className={classes.chart}
+              >
+                <PerfherderGraphContainer
+                  timeDomain={timeDomain}
+                  title={`${testLabel} - ${platformLabel}`}
+                  series={selectFrom(suiteCombos)
+                    .map(({ browserLabel, filter: browserFilter }) => ({
+                      label: browserLabel,
+                      filter: {
+                        and: [testFilter, platformFilter, browserFilter],
+                      },
+                    }))
+                    .toArray()}
+                  missingDataInterval={10}
+                />
+              </Grid>
+            ))))}
         </Grid>
       </DashboardPage>
     );
@@ -63,15 +63,6 @@ class Power extends React.Component {
 }
 
 const nav = [
-  {
-    type: Picker,
-    id: 'browser',
-    label: 'Browser',
-    defaultValue: 'geckoview',
-    options: selectFrom(COMBOS)
-      .groupBy('browserLabel')
-      .map(([v]) => ({ id: v.browser, label: v.browserLabel })),
-  },
   {
     type: Picker,
     id: 'suite',
@@ -84,4 +75,4 @@ const nav = [
   ...timePickers,
 ];
 
-export default withNavigation(nav)(withStyles(styles)(Power));
+export default withNavigation(nav)(withStyles(styles)(PowerDetails));

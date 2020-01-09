@@ -237,27 +237,6 @@ const BROWSER_PLATFORMS = selectFrom([
     }},
   },
   {
-    id: 'geckoview-p2',
-    browser: 'geckoview',
-    label: 'Geckoview p2',
-    platform: 'p2',
-    platformFilter: {and: [
-      {or: [
-        {eq: {
-          platform: 'android-hw-p2-8-0-arm7-api-16',
-          options: ['pgo', 'opt'],
-        }},
-        {eq: {
-          platform: 'android-hw-p2-8-0-arm7-api-16-pgo',
-        }}
-      ]},
-      {eq: {
-        framework: 10,
-        repo: 'mozilla-central',
-      }},
-    ]},
-  },
-  {
     id: 'geckoview-g5',
     browser: 'geckoview',
     label: 'Geckoview g5',
