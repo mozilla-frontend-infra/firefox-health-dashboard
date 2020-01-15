@@ -7,6 +7,7 @@ import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
 import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
 import RedashContainer from '../utils/RedashContainer';
+import { SHOW_TELEMETRY } from './config';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
@@ -173,26 +174,29 @@ class Android extends Component {
         >
           <TP6mAggregate timeDomain={timeDomain} browser="fenix" platform={['p2-aarch64', 'g5']} test="cold-loadtime" />
         </Section>
-        <Section title="Telemetry">
-          <Grid container spacing={24}>
-            <Grid item xs={6}>
-              <RedashContainer
-                title="Total content page load time (no 95th)"
-                redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
-                redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
-                timeDomain={timeDomain}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <RedashContainer
-                title="Total content page load time"
-                redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
-                redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
-                timeDomain={timeDomain}
-              />
-            </Grid>
-          </Grid>
-        </Section>
+        { SHOW_TELEMETRY
+            && (
+            <Section title="Telemetry">
+              <Grid container spacing={24}>
+                <Grid item xs={6}>
+                  <RedashContainer
+                    title="Total content page load time (no 95th)"
+                    redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
+                    redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
+                    timeDomain={timeDomain}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <RedashContainer
+                    title="Total content page load time"
+                    redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
+                    redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
+                    timeDomain={timeDomain}
+                  />
+                </Grid>
+              </Grid>
+            </Section>
+            )}
         <Section
           title={`Media Playback - ${mediaPlaybackBrowser.label}`}
         >

@@ -8,6 +8,7 @@ import { GMTDate as Date } from "../vendor/dates";
 import { round } from "../vendor/math";
 import { HelpIcon } from '../utils/icons';
 
+const SHOW_TELEMETRY = false;
 const TARGET_NAME = "Firefox ESR";
 const REFERENCE_BROWSER = ['fennec68'];
 const REFERENCE_COLOR = '#45a1ff44';
@@ -88,4 +89,4 @@ const geoTip = withStyles(tipStyles)(
 
 
 
-export { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, GEOMEAN_DESCRIPTION, geoTip };
+export { TARGET_NAME, REFERENCE_BROWSER, REFERENCE_COLOR, GEOMEAN_DESCRIPTION, SHOW_TELEMETRY, geoTip };
