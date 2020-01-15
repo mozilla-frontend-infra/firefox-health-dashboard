@@ -140,28 +140,34 @@ class PlaybackSummary extends React.Component {
         score:
           lookupType[
             selectFrom(speeds)
-              .map(({ speed, loss }) => {
-                if (speed === 1) {
-                  if (missing(loss)) return 3;
-                  if (loss > 1) return 2;
-
-                  return 0;
-                }
-
-                if (missing(loss) || loss <= 1) return 0;
-
-                return 1;
-              })
+              .map(({ size, speed, loss }) => this.getPlaybackScore(
+                size, speed, loss, sizes.slice(0, 3),
+              ))
               .max()
           ],
       }))
       .toArray();
-
     this.setState({ scores: result });
   }
 
   async componentDidMount() {
     await this.update();
+  }
+
+  getPlaybackScore(size, speed, loss, smallSizes) {
+    if (speed === 1 && missing(loss)) return 3;
+
+    if (speed <= 1) {
+      if (smallSizes.includes(size) && loss > 1) {
+        return 2;
+      }
+      if (loss > 1) return 1;
+      return 0;
+    }
+
+    if (missing(loss) || loss <= 1) return 0;
+
+    return 1;
   }
 
   tooltipContent(score, encoding, platform, size) {
@@ -172,18 +178,10 @@ class PlaybackSummary extends React.Component {
       .where({ encoding, platform, size })
       .first();
 
-    if (score === 'bad') {
+    if (score === 'bad' || score === 'fail') {
       result.speeds.sort((a, b) => a.speed - b.speed);
 
       const speed = result.speeds.find(s => s.loss > 1);
-
-      return `${round(speed.loss, { places: 2 })} dropped frames at ${
-        speed.speed
-      }x playback speed`;
-    }
-
-    if (score === 'fail') {
-      const speed = result.speeds.find(s => s.speed === 1);
 
       return `${round(speed.loss, { places: 2 })} dropped frames at ${
         speed.speed
@@ -206,25 +204,19 @@ class PlaybackSummary extends React.Component {
       return (
         <div
           style={{
-            position: 'relative',
+            lineHeight: '100%',
+            textAlign: 'center',
+            width: '100%',
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              right: '50%',
-            }}
-          >
-            <CircularProgress />
-          </div>
+          <CircularProgress />
         </div>
       );
     }
 
     return (
       <div key={`cont_${browserId}_${encoding}`}>
-        <h2 className={classes.title}>
+        <h2 className={classes.title} style={{ marginBottom: '0.5rem' }}>
           {encoding}
           {' '}
           (one, or less, dropped frames per test)
@@ -242,7 +234,7 @@ class PlaybackSummary extends React.Component {
           .map(platform => (
             // https://health.graphics/playback/details?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
-              key={platform}
+              key={`row_${platform.id}_${browserId}_${encoding}`}
               className={classes.line}
               onClick={() => {
                 const url = URL({
@@ -282,7 +274,7 @@ class PlaybackSummary extends React.Component {
 
                   return (
                     <Grid
-                      key={`${platform.id}_${encoding}_${id}`}
+                      key={`${platform.id}_${browserId}_${encoding}_${id}`}
                       item
                       xs={1}
                       style={{ position: 'relative', padding: '0.1rem' }}
