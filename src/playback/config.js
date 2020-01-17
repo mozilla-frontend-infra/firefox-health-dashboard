@@ -27,9 +27,9 @@ const SPEEDS = [
   {speedLabel: "2", speed: 2},
   {speedLabel: "1.5", speed: 1.5},
   {speedLabel: "1.25", speed: 1.25},
-  {speedLabel: "1", speed: 1},
-  {speedLabel: "0.5", speed: 0.5},
-  {speedLabel: "0.25", speed: 0.25},
+  {speedLabel: "1", speed: 1, isSlow: true},
+  {speedLabel: "0.5", speed: 0.5, isSlow: true},
+  {speedLabel: "0.25", speed: 0.25, isSlow: true},
 ];
 
 const TESTS = selectFrom(ENCODINGS)

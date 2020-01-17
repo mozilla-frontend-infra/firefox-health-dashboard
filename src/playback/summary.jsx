@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, ENCODINGS, PLATFORMS, TESTS,
+  BROWSERS, ENCODINGS, PLATFORMS, SPEEDS, TESTS,
 } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
@@ -69,12 +69,16 @@ const styles = {
   },
 };
 const SPECIAL_SIZES = [
-  { id: '480p30', label: '480p' }, // .4M pixels
-  { id: '720p60', label: '720p' }, // 1M pixels
-  { id: '1080p60', label: '1080p' }, // 2M pixels
-  { id: '1440p60', label: '1440p' }, // 4M pixels
-  { id: '2160p60', label: '2160p' }, // 8M pixels
+  { id: '480p30', label: '480p', isSmall: true }, // .4M pixels
+  { id: '720p30', label: '720p', isSmall: true }, // 1M pixels
+  { id: '1080p30', label: '1080p', isSmall: true }, // 2M pixels
+  { id: '1440p30', label: '1440p' }, // 4M pixels
+  { id: '2160p30', label: '2160p' }, // 8M pixels
 ];
+
+const SMALL_SIZES = selectFrom(SPECIAL_SIZES).where({ isSmall: true }).select('id').toArray();
+const SLOW_SPEEDS = selectFrom(SPEEDS).where({ isSlow: true }).select('speed').toArray();
+
 const lookupType = {
   0: 'pass',
   1: 'bad',
@@ -141,7 +145,7 @@ class PlaybackSummary extends React.Component {
           lookupType[
             selectFrom(speeds)
               .map(({ size, speed, loss }) => this.getPlaybackScore(
-                size, speed, loss, sizes.slice(0, 3),
+                size, speed, loss,
               ))
               .max()
           ],
@@ -154,11 +158,11 @@ class PlaybackSummary extends React.Component {
     await this.update();
   }
 
-  getPlaybackScore(size, speed, loss, smallSizes) {
+  getPlaybackScore(size, speed, loss) {
     if (speed === 1 && missing(loss)) return 3;
 
-    if (speed <= 1) {
-      if (smallSizes.includes(size) && loss > 1) {
+    if (SLOW_SPEEDS.includes(speed)) {
+      if (SMALL_SIZES.includes(size) && loss > 1) {
         return 2;
       }
       if (loss > 1) return 1;
