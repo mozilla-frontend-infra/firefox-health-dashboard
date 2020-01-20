@@ -67,7 +67,7 @@ class Subtests extends React.Component {
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="Performance Subtests" subtitle={subtitle}>
           {navigation}
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid
               item
               xs={12}

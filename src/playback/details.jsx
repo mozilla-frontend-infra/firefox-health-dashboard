@@ -45,7 +45,7 @@ class PlaybackDetails extends React.Component {
         key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}
       >
         {navigation}
-        <Grid container spacing={24}>
+        <Grid container spacing={1}>
           {selectFrom(SIZES).map(({ size }) => (
             <Grid
               item

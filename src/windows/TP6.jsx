@@ -37,7 +37,7 @@ class TP6 extends React.Component {
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
           {navigation}
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             {selectFrom(TP6_COMBOS)
               .where({ test, platform })
               .groupBy('site')

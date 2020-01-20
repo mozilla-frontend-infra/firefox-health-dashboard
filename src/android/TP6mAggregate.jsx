@@ -313,7 +313,7 @@ class TP6mAggregate_ extends Component {
     }
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={1}>
         {selectFrom(TP6_TESTS)
           .where({ test })
           .enumerate()

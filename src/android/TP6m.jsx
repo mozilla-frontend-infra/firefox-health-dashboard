@@ -133,7 +133,7 @@ class TP6M extends React.Component {
     return (
       <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
         <Section title="Details by site">
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid item xs={6} className={classes.chart}>
               {navigation}
             </Grid>

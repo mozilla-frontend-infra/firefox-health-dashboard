@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import AndroidPage from './android';
@@ -34,9 +33,5 @@ const Routes = () => (
     </Switch>
   </BrowserRouter>
 );
-
-Routes.propTypes = {
-  location: PropTypes.object,
-};
 
 export default Routes;
