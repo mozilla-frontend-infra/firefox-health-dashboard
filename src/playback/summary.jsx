@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, ENCODINGS, PLATFORMS, TESTS,
+  BROWSERS, ENCODINGS, PLATFORMS, SPEEDS, TESTS,
 } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
@@ -69,12 +69,16 @@ const styles = {
   },
 };
 const SPECIAL_SIZES = [
-  { id: '480p30', label: '480p' }, // .4M pixels
-  { id: '720p60', label: '720p' }, // 1M pixels
-  { id: '1080p60', label: '1080p' }, // 2M pixels
-  { id: '1440p60', label: '1440p' }, // 4M pixels
-  { id: '2160p60', label: '2160p' }, // 8M pixels
+  { id: '480p30', label: '480p', isSmall: true }, // .4M pixels
+  { id: '720p30', label: '720p', isSmall: true }, // 1M pixels
+  { id: '1080p30', label: '1080p', isSmall: true }, // 2M pixels
+  { id: '1440p30', label: '1440p' }, // 4M pixels
+  { id: '2160p30', label: '2160p' }, // 8M pixels
 ];
+
+const SMALL_SIZES = selectFrom(SPECIAL_SIZES).where({ isSmall: true }).select('id').toArray();
+const SLOW_SPEEDS = selectFrom(SPEEDS).where({ isSlow: true }).select('speed').toArray();
+
 const lookupType = {
   0: 'pass',
   1: 'bad',
@@ -140,28 +144,26 @@ class PlaybackSummary extends React.Component {
         score:
           lookupType[
             selectFrom(speeds)
-              .map(({ speed, loss }) => {
-                if (speed === 1) {
-                  if (missing(loss)) return 3;
-                  if (loss > 1) return 2;
-
-                  return 0;
-                }
-
-                if (missing(loss) || loss <= 1) return 0;
-
-                return 1;
-              })
+              .map(({ size, speed, loss }) => this.getPlaybackScore(
+                size, speed, loss,
+              ))
               .max()
           ],
       }))
       .toArray();
-
     this.setState({ scores: result });
   }
 
   async componentDidMount() {
     await this.update();
+  }
+
+  getPlaybackScore(size, speed, loss) {
+    if (speed === 1 && missing(loss)) return 3;
+    if (missing(loss) || loss <= 1) return 0;
+
+    if (SLOW_SPEEDS.includes(speed) && SMALL_SIZES.includes(size)) return 2;
+    return 1;
   }
 
   tooltipContent(score, encoding, platform, size) {
@@ -172,21 +174,13 @@ class PlaybackSummary extends React.Component {
       .where({ encoding, platform, size })
       .first();
 
-    if (score === 'bad') {
-      result.speeds.sort((a, b) => a.speed - b.speed);
-
-      const speed = result.speeds.find(s => s.loss > 1);
-
-      return `${round(speed.loss, { places: 2 })} dropped frames at ${
-        speed.speed
-      }x playback speed`;
-    }
-
-    if (score === 'fail') {
-      const speed = result.speeds.find(s => s.speed === 1);
-
-      return `${round(speed.loss, { places: 2 })} dropped frames at ${
-        speed.speed
+    if (score === 'bad' || score === 'fail') {
+      const lowestFailingSpeed = selectFrom(result.speeds)
+        .sort('speed')
+        .filter(s => s.loss > 1)
+        .first();
+      return `${round(lowestFailingSpeed.loss, { places: 2 })} dropped frames at ${
+        lowestFailingSpeed.speed
       }x playback speed`;
     }
 
@@ -206,25 +200,19 @@ class PlaybackSummary extends React.Component {
       return (
         <div
           style={{
-            position: 'relative',
+            lineHeight: '100%',
+            textAlign: 'center',
+            width: '100%',
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              top: '50%',
-              right: '50%',
-            }}
-          >
-            <CircularProgress />
-          </div>
+          <CircularProgress />
         </div>
       );
     }
 
     return (
       <div key={`cont_${browserId}_${encoding}`}>
-        <h2 className={classes.title}>
+        <h2 className={classes.title} style={{ marginBottom: '0.5rem' }}>
           {encoding}
           {' '}
           (one, or less, dropped frames per test)
@@ -242,7 +230,7 @@ class PlaybackSummary extends React.Component {
           .map(platform => (
             // https://health.graphics/playback/details?platform=mac&browser=firefox&encoding=VP9&past=month&ending=2019-07-03
             <div
-              key={platform}
+              key={`row_${platform.id}_${browserId}_${encoding}`}
               className={classes.line}
               onClick={() => {
                 const url = URL({
@@ -282,7 +270,7 @@ class PlaybackSummary extends React.Component {
 
                   return (
                     <Grid
-                      key={`${platform.id}_${encoding}_${id}`}
+                      key={`${platform.id}_${browserId}_${encoding}_${id}`}
                       item
                       xs={1}
                       style={{ position: 'relative', padding: '0.1rem' }}
