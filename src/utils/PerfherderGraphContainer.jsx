@@ -61,14 +61,12 @@ const tip = withStyles(tipStyles)(
       ? 'lower is better'
       : 'higher is better';
 
-    const revisionURL = record.meta.repo === 'mozilla-central'
-      ? `https://hg.mozilla.org/mozilla-central/pushloghtml?changeset=${record.revision}`
-      : `https://github.com/mozilla-mobile/fenix/commit/${record.revision}`;
+    const revisionURL = URL(record.meta.repo.revisionURL, { changeset: record.revision });
 
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',
       query: {
-        repo: record.meta.repo,
+        repo: record.meta.repo.name,
         revision: record.revision,
         selectedJob: record.job_id,
         group_state: 'expanded',
