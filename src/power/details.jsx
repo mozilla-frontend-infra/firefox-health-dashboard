@@ -6,7 +6,7 @@ import { COMBOS, PLATFORMS, TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
 

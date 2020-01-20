@@ -7,15 +7,69 @@ const BENCHMARK_SUITES = {
   header: ['browser', 'suite', 'suiteFilter'],
 
   data: [
-    ['Firefox', 'MotionMark HTML', { eq: { suite: 'raptor-motionmark-htmlsuite-firefox' } }],
-    ['Chromium', 'MotionMark HTML', { eq: { suite: 'raptor-motionmark-htmlsuite-chromium' } }],
-    ['Chrome', 'MotionMark HTML', { eq: { suite: 'raptor-motionmark-htmlsuite-chrome' } }],
-    ['Firefox', 'MotionMark Animometer', { eq: { suite: 'raptor-motionmark-animometer-firefox' } }],
-    ['Chromium', 'MotionMark Animometer', { eq: { suite: 'raptor-motionmark-animometer-chromium' } }],
-    ['Chrome', 'MotionMark Animometer', { eq: { suite: 'raptor-motionmark-animometer-chrome' } }],
-    ['Firefox', 'Speedometer', { eq: { suite: 'raptor-speedometer-firefox' } }],
-    ['Chromium', 'Speedometer', { eq: { suite: 'raptor-speedometer-chromium' } }],
-    ['Chrome', 'Speedometer', { eq: { suite: 'raptor-speedometer-chrome' } }],
+    ['Firefox', 'MotionMark HTML', {
+      eq: {
+        suite: 'raptor-motionmark-htmlsuite-firefox',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chromium', 'MotionMark HTML', {
+      eq: {
+        suite: 'raptor-motionmark-htmlsuite-chromium',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chrome', 'MotionMark HTML', {
+      eq: {
+        suite: 'raptor-motionmark-htmlsuite-chrome',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Firefox', 'MotionMark Animometer', {
+      eq: {
+        suite: 'raptor-motionmark-animometer-firefox',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chromium', 'MotionMark Animometer', {
+      eq: {
+        suite: 'raptor-motionmark-animometer-chromium',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chrome', 'MotionMark Animometer', {
+      eq: {
+        suite: 'raptor-motionmark-animometer-chrome',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Firefox', 'Speedometer', {
+      eq: {
+        suite: 'raptor-speedometer-firefox',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chromium', 'Speedometer', {
+      eq: {
+        suite: 'raptor-speedometer-chromium',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
+    ['Chrome', 'Speedometer', {
+      eq: {
+        suite: 'raptor-speedometer-chrome',
+        framework: 10,
+        repo: 'mozilla-central',
+      },
+    }],
   ],
 };
 

@@ -1,13 +1,13 @@
 /* global document */
-import React, { Suspense, lazy, Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
-import { windows32QueryParams, windows64QueryParams, statusLabels } from './constants';
+import { statusLabels, windows32QueryParams, windows64QueryParams } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';

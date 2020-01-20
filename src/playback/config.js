@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { selectFrom } from "../vendor/vectors";
+import {MOZILLA_CENTRAL, FENIX} from "../utils/PerfherderGraphContainer";
 
 const SIZES = [
   {size: "2160p60"},
@@ -108,17 +109,6 @@ const PLATFORMS = [
     },
   },
 ];
-
-const MOZILLA_CENTRAL = {
-  name: "mozilla-central",
-  revisionURL: "https://hg.mozilla.org/mozilla-central/pushloghtml?changeset={{revision}}",
-};
-
-const FENIX = {
-  name: "fenix",
-  revisionURL: "https://github.com/mozilla-mobile/fenix/commit/{{revision}}",
-};
-
 
 const BROWSERS =[
   {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-firefox-live"]}}},

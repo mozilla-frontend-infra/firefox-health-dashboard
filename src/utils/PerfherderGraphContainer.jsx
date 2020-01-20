@@ -7,7 +7,7 @@ import ChartJsWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import { Data, isEqual } from '../vendor/datas';
 import { withErrorBoundary } from '../vendor/errors';
 import {
-  exists, literalField, missing, toArray,
+  coalesce, exists, literalField, missing, toArray,
 } from '../vendor/utils';
 import { URL } from '../vendor/requests';
 import { GMTDate as Date } from '../vendor/dates';
@@ -26,6 +26,18 @@ const REFERENCE_COLOR = '#45a1ff44';
 const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
   x => x * 24 * 60 * 60,
 );
+
+const MOZILLA_CENTRAL = {
+  name: 'mozilla-central',
+  revisionURL: 'https://hg.mozilla.org/mozilla-central/pushloghtml?changeset={{revision}}',
+};
+
+const FENIX = {
+  name: 'fenix',
+  revisionURL: 'https://github.com/mozilla-mobile/fenix/commit/{{revision}}',
+};
+
+
 const tipStyles = {
   tooltipKey: {
     display: 'inline-block',
@@ -62,12 +74,13 @@ const tip = withStyles(tipStyles)(
       ? 'lower is better'
       : 'higher is better';
 
-    const revisionURL = new Template(series.repo.revisionURL).expand({ revision: record.revision });
+    const repo = coalesce(series.repo, MOZILLA_CENTRAL);
+    const revisionURL = new Template(repo.revisionURL).expand({ revision: record.revision });
 
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',
       query: {
-        repo: record.meta.repo.name,
+        repo: repo.name,
         revision: record.revision,
         selectedJob: record.job_id,
         group_state: 'expanded',
@@ -274,7 +287,7 @@ const styles = () => ({
   },
 });
 
-class PerfherderGraphContainer extends React.Component {
+class PerfherderGraphContainerInternal extends React.Component {
   constructor(props) {
     super(props);
     const { timeDomain } = this.props;
@@ -405,7 +418,7 @@ class PerfherderGraphContainer extends React.Component {
   }
 }
 
-PerfherderGraphContainer.propTypes = {
+PerfherderGraphContainerInternal.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   reference: PropTypes.shape({
     range: PropTypes.shape({
@@ -419,6 +432,10 @@ PerfherderGraphContainer.propTypes = {
       PropTypes.shape({
         label: PropTypes.string.isRequired,
         filter: PropTypes.shape({}).isRequired,
+        repo: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          revisionURL: PropTypes.string.isRequired,
+        }).isRequired,
         standardOptions: PropTypes.shape({}),
       }),
     ),
@@ -432,4 +449,6 @@ PerfherderGraphContainer.propTypes = {
   }),
 };
 
-export default withStyles(styles)(withErrorBoundary(PerfherderGraphContainer));
+const PerfherderGraphContainer = withStyles(styles)(withErrorBoundary(PerfherderGraphContainerInternal));
+
+export { MOZILLA_CENTRAL, FENIX, PerfherderGraphContainer };

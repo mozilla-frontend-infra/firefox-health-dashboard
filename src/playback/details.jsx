@@ -8,7 +8,7 @@ import {
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
 import { timePickers } from '../utils/timePickers';
 

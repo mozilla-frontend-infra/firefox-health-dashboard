@@ -5,7 +5,7 @@ import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import RedashContainer from '../utils/RedashContainer';
 import { SHOW_TELEMETRY } from './config';
 import { CONFIG } from '../nimbledroid/config';
@@ -17,7 +17,6 @@ import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 import PlaybackSummary from '../playback/summary';
 import { BROWSERS } from '../playback/config';
-
 
 class Android extends Component {
   render() {
