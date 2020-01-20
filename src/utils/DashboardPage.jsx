@@ -67,7 +67,7 @@ class DashboardPage extends Component {
               <Link to="/android" title="Android Performance">
                 <AndroidIcon />
               </Link>
-              <Link to="/quantum/64" title="Quantum 64 Performance">
+              <Link to="/windows/64" title="Windows 64 Performance">
                 <DesktopIcon />
               </Link>
               <Link to="/power" title="Power Usage">
