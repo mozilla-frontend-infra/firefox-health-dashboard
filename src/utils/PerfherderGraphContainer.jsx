@@ -18,6 +18,7 @@ import { round } from '../vendor/math';
 import { sleep } from '../vendor/signals';
 import SETTINGS from '../config.json';
 import { Auth0Client } from '../vendor/auth0/client';
+import { Template } from '../vendor/Template';
 
 const REFERENCE_COLOR = '#45a1ff44';
 
@@ -61,7 +62,7 @@ const tip = withStyles(tipStyles)(
       ? 'lower is better'
       : 'higher is better';
 
-    const revisionURL = URL(record.meta.repo.revisionURL, { changeset: record.revision });
+    const revisionURL = new Template(series.repo.revisionURL).expand({ revision: record.revision });
 
     const jobURL = URL({
       path: 'https://treeherder.mozilla.org/#/jobs',

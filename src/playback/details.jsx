@@ -63,6 +63,7 @@ class PlaybackDetails extends React.Component {
                   })
                   .map(({ speed, filter: testFilter }) => ({
                     label: `${speed}x`,
+                    repo: browserDetails.repo,
                     filter: {
                       and: [
                         platformDetails.filter,

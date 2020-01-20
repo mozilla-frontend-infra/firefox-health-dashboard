@@ -111,20 +111,20 @@ const PLATFORMS = [
 
 const MOZILLA_CENTRAL = {
   name: "mozilla-central",
-  revisionURL: "https://hg.mozilla.org/mozilla-central/pushloghtml",
-}
+  revisionURL: "https://hg.mozilla.org/mozilla-central/pushloghtml?changeset={{revision}}",
+};
 
 const FENIX = {
   name: "fenix",
-  revisionURL: "https://github.com/mozilla-mobile/fenix/commit/",
-}
+  revisionURL: "https://github.com/mozilla-mobile/fenix/commit/{{revision}}",
+};
 
 
 const BROWSERS =[
-  {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", format:"desktop", filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL, suite: ["raptor-youtube-playback-firefox-live"]}}},
-  {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", format:"desktop", filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL, suite: ["raptor-youtube-playback-chrome-live"]}}},
-  {id: "geckoview", label:"geckoview", title:"Firefox (Android)", format:"mobile", filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL, suite: ["raptor-youtube-playback-geckoview-live"]}}},
-  {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", format:"mobile", filter: {eq: {framework: 10, repo: FENIX, suite: ["raptor-youtube-playback-fenix-live"]}}},
+  {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-firefox-live"]}}},
+  {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-chrome-live"]}}},
+  {id: "geckoview", label:"geckoview", title:"Firefox (Android)", format:"mobile", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-geckoview-live"]}}},
+  {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", format:"mobile", repo: FENIX, filter: {eq: {framework: 10, repo: FENIX.name, suite: ["raptor-youtube-playback-fenix-live"]}}},
 ];
 
 
