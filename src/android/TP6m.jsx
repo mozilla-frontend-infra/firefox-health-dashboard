@@ -9,7 +9,7 @@ import {
   BROWSER_PLATFORMS,
   TP6_COMBOS,
   TP6_TESTS,
-} from '../quantum/config';
+} from '../windows/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';

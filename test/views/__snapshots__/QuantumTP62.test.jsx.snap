@@ -77,8 +77,8 @@ exports[`renders correctly url 1`] = `
           </svg>
         </a>
         <a
-          href="/quantum/64"
-          title="Quantum 64 Performance"
+          href="/windows/64"
+          title="Windows 64 Performance"
         >
           <svg
             aria-hidden="true"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import QuantumTP6 from '../../src/quantum/TP6';
+import QuantumTP6 from '../../src/windows/TP6';
 import { timePickers } from '../../src/utils/timePickers';
 
 it('renders correctly', () => {

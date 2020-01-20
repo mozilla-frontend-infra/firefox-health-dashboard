@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
-import TP6 from '../../src/quantum/TP6';
+import TP6 from '../../src/windows/TP6';
 import { timePickers } from '../../src/utils/timePickers';
 
 it('renders correctly integer', () => {
@@ -11,7 +11,7 @@ it('renders correctly integer', () => {
     .create(
       <BrowserRouter>
         <TP6
-          location={{ pathname: '/quantum/tp6' }}
+          location={{ pathname: '/windows/tp6' }}
           match={{ params: { platform: 'win64', test: 'warm-loadtime' } }}
         />
       </BrowserRouter>,
