@@ -160,17 +160,9 @@ class PlaybackSummary extends React.Component {
 
   getPlaybackScore(size, speed, loss) {
     if (speed === 1 && missing(loss)) return 3;
-
-    if (SLOW_SPEEDS.includes(speed)) {
-      if (SMALL_SIZES.includes(size) && loss > 1) {
-        return 2;
-      }
-      if (loss > 1) return 1;
-      return 0;
-    }
-
     if (missing(loss) || loss <= 1) return 0;
 
+    if (SLOW_SPEEDS.includes(speed) && SMALL_SIZES.includes(size)) return 2;
     return 1;
   }
 
@@ -183,12 +175,12 @@ class PlaybackSummary extends React.Component {
       .first();
 
     if (score === 'bad' || score === 'fail') {
-      result.speeds.sort((a, b) => a.speed - b.speed);
-
-      const speed = result.speeds.find(s => s.loss > 1);
-
-      return `${round(speed.loss, { places: 2 })} dropped frames at ${
-        speed.speed
+      const lowestFailingSpeed = selectFrom(result.speeds)
+        .sort('speed')
+        .filter(s => s.loss > 1)
+        .first();
+      return `${round(lowestFailingSpeed.loss, { places: 2 })} dropped frames at ${
+        lowestFailingSpeed.speed
       }x playback speed`;
     }
 
