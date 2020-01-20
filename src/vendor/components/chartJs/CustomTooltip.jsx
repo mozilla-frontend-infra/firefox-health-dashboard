@@ -120,7 +120,10 @@ class CustomTooltip extends React.Component {
 CustomTooltip.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   standardOptions: PropTypes.shape({
-    tip: PropTypes.func.isRequired,
+    tip: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({}),
+    ]).isRequired,
     series: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }).isRequired,
   tooltipModel: PropTypes.shape({}),

@@ -343,35 +343,39 @@ class PerfherderGraphContainerInternal extends React.Component {
             .sort()
             .toArray();
 
-          const result = await authenticator.fetchJson(
-            SETTINGS.annotation.query,
-            {
-              body: JSON.stringify({
-                from: 'sample_data',
-                where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
-                format: 'list',
-              }),
-            },
-          );
+          try {
+            const result = await authenticator.fetchJson(
+              SETTINGS.annotation.query,
+              {
+                body: JSON.stringify({
+                  from: 'sample_data',
+                  where: { in: { revision12: revisions.map(r => r.substring(0, 12)) } },
+                  format: 'list',
+                }),
+              },
+            );
 
-          // MARKUP DATA WITH NOTES
-          if (exists(result.data)) {
-            const detailNotes = selectFrom(result.data)
-              .map(({ revision, description }) => selectFrom(standardOptions.series)
-                .select('data')
+            // MARKUP DATA WITH NOTES
+            if (exists(result.data)) {
+              const detailNotes = selectFrom(result.data)
+                .map(({ revision, description }) => selectFrom(standardOptions.series)
+                  .select('data')
+                  .flatten()
+                  .where({ revision })
+                  .map(d => {
+                    // eslint-disable-next-line no-param-reassign
+                    d.note = description;
+                    return {
+                      x: d.push_timestamp * 1000, y: d.value, note: description, id: revision,
+                    };
+                  }))
                 .flatten()
-                .where({ revision })
-                .map(d => {
-                  // eslint-disable-next-line no-param-reassign
-                  d.note = description;
-                  return {
-                    x: d.push_timestamp * 1000, y: d.value, note: description, id: revision,
-                  };
-                }))
-              .flatten()
-              .toArray();
+                .toArray();
 
-            this.setState({ notes: detailNotes });
+              this.setState({ notes: detailNotes });
+            }
+          } catch (error) {
+            Log.warning('Can not get annotations', error);
           }
         })();
       }
