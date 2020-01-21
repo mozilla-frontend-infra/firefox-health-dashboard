@@ -373,7 +373,7 @@ exports[`renders correctly default 1`] = `
       </form>
     </div>
     <div
-      className="MuiGrid-root MuiGrid-container"
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
     >
       <div
         className="MuiGrid-root TP6-chart-3 MuiGrid-item MuiGrid-grid-xs-6"
