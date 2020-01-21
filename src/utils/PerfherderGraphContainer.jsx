@@ -195,8 +195,8 @@ const generateStandardOptions = (series, timeDomain) => {
     data,
     'axis.y.label': unit,
     'axis.y.reverse': !lowerIsBetter,
-    'axis.x.min': timeDomain.min,
-    'axis.x.max': timeDomain.max,
+    'axis.x.domain.min': timeDomain.min,
+    'axis.x.domain.max': timeDomain.max,
   };
 };
 

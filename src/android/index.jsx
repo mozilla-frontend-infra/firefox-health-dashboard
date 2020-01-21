@@ -75,7 +75,7 @@ class Android extends Component {
                         <LinkIcon />
                       </a>
                     </span>
-)}
+                  )}
                   timeDomain={timeDomain}
                   queries={[
                     {
