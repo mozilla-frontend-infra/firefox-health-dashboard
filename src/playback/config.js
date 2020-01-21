@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import { selectFrom } from "../vendor/vectors";
+import {MOZILLA_CENTRAL, FENIX} from "../utils/PerfherderGraphContainer";
 
 const SIZES = [
   {size: "2160p60"},
@@ -109,12 +110,11 @@ const PLATFORMS = [
   },
 ];
 
-
 const BROWSERS =[
-  {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", format:"desktop", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-firefox-live"]}}},
-  {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", format:"desktop", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-chrome-live"]}}},
-  {id: "geckoview", label:"geckoview", title:"Firefox (Android)", format:"mobile", filter: {eq: {framework: 10, repo: 'mozilla-central', suite: ["raptor-youtube-playback-geckoview-live"]}}},
-  {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", format:"mobile", filter: {eq: {framework: 10, repo: 'fenix', suite: ["raptor-youtube-playback-fenix-live"]}}},
+  {id: "firefox", label:"Firefox", title:"Firefox (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-firefox-live"]}}},
+  {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-chrome-live"]}}},
+  {id: "geckoview", label:"geckoview", title:"Firefox (Android)", format:"mobile", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-geckoview-live"]}}},
+  {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", format:"mobile", repo: FENIX, filter: {eq: {framework: 10, repo: FENIX.name, suite: ["raptor-youtube-playback-fenix-live"]}}},
 ];
 
 

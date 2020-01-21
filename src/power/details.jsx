@@ -6,7 +6,7 @@ import { COMBOS, PLATFORMS, TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
 
@@ -32,7 +32,7 @@ class PowerDetails extends React.Component {
         key={`page_${browser}_${suite}_${past}_${ending}`}
       >
         {navigation}
-        <Grid container spacing={24}>
+        <Grid container spacing={1}>
           {selectFrom(TESTS).map(({ id: testId, label: testLabel, filter: testFilter }) => (
             PLATFORMS.map(({ id: platformId, label: platformLabel, filter: platformFilter }) => (
               <Grid

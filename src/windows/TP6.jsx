@@ -8,7 +8,7 @@ import { TP6_COMBOS, TP6_TESTS } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
 
@@ -37,7 +37,7 @@ class TP6 extends React.Component {
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="TP6 Desktop" subtitle={subtitle}>
           {navigation}
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             {selectFrom(TP6_COMBOS)
               .where({ test, platform })
               .groupBy('site')

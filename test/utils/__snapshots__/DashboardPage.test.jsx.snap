@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`DashboardPage renders correctly 1`] = `
 <div
-  className="DashboardPage-root-4 Home-root-1"
+  className="DashboardPage-root-1"
 >
   <div
-    className="DashboardPage-title-5"
+    className="DashboardPage-title-2"
   >
     <h1
       style={
@@ -14,12 +14,9 @@ exports[`renders correctly 1`] = `
         }
       }
     >
-      Firefox health
       <small
-        className="DashboardPage-subtitle-6"
-      >
-        Tracking metrics for Firefox products
-      </small>
+        className="DashboardPage-subtitle-3"
+      />
     </h1>
     <div
       style={
@@ -180,131 +177,6 @@ exports[`renders correctly 1`] = `
       </svg>
     </div>
   </div>
-  <div
-    className="Home-links-2"
-  >
-    <a
-      href="/android"
-    >
-      <svg
-        aria-hidden="true"
-        className="MuiSvgIcon-root"
-        focusable="false"
-        role="presentation"
-        style={
-          Object {
-            "margin": "0 .2rem 0 .2rem",
-            "verticalAlign": "baseline",
-          }
-        }
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"
-        />
-      </svg>
-      Android
-    </a>
-    <a
-      href="/windows/32"
-    >
-      <svg
-        aria-hidden="true"
-        className="MuiSvgIcon-root"
-        focusable="false"
-        role="presentation"
-        style={
-          Object {
-            "margin": "0 .2rem 0 .2rem",
-            "verticalAlign": "baseline",
-          }
-        }
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"
-        />
-      </svg>
-      Windows 32bit
-    </a>
-    <a
-      href="/windows/64"
-    >
-      <svg
-        aria-hidden="true"
-        className="MuiSvgIcon-root"
-        focusable="false"
-        role="presentation"
-        style={
-          Object {
-            "margin": "0 .2rem 0 .2rem",
-            "verticalAlign": "baseline",
-          }
-        }
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"
-        />
-      </svg>
-      Windows 64bit
-    </a>
-    <a
-      href="/power"
-    >
-      <svg
-        aria-hidden="true"
-        className="MuiSvgIcon-root"
-        focusable="false"
-        role="presentation"
-        style={
-          Object {
-            "margin": "0 .2rem 0 .2rem",
-            "verticalAlign": "baseline",
-          }
-        }
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4zM11 20v-5.5H9L13 7v5.5h2L11 20z"
-        />
-      </svg>
-      Power Usage
-    </a>
-    <a
-      href="/playback"
-    >
-      <svg
-        aria-hidden="true"
-        className="MuiSvgIcon-root"
-        focusable="false"
-        role="presentation"
-        style={
-          Object {
-            "margin": "0 .2rem 0 .2rem",
-            "verticalAlign": "baseline",
-          }
-        }
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"
-        />
-      </svg>
-      Playback
-    </a>
-  </div>
-  <div
-    className="Home-netlify-3"
-  >
-    <a
-      href="https://www.netlify.com"
-    >
-      <img
-        alt="Netlify"
-        src="https://www.netlify.com/img/global/badges/netlify-dark.svg"
-      />
-    </a>
-  </div>
+  <div />
 </div>
 `;

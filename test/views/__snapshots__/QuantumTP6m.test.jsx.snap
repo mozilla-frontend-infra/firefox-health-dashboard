@@ -74,8 +74,8 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
       <a
-        href="/quantum/64"
-        title="Quantum 64 Performance"
+        href="/windows/64"
+        title="Windows 64 Performance"
       >
         <svg
           aria-hidden="true"
@@ -196,7 +196,7 @@ exports[`renders correctly 1`] = `
       className="Section-content-15"
     >
       <div
-        className="MuiGrid-root MuiGrid-container"
+        className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
       >
         <div
           className="MuiGrid-root TP6M-chart-2 MuiGrid-item MuiGrid-grid-xs-6"

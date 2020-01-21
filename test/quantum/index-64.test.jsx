@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import renderer from 'react-test-renderer';
-import Quantum from '../../src/quantum/Quantum';
+import Windows from '../../src/windows/Windows';
 
 it('renders correctly', () => {
   const tree = renderer
     .create(
       <BrowserRouter>
-        <Quantum
-          location={{ pathname: '/quantum/64' }}
+        <Windows
+          location={{ pathname: '/windows/64' }}
           match={{ params: { bits: 64 } }}
         />
       </BrowserRouter>,

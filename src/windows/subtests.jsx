@@ -7,7 +7,7 @@ import { selectFrom } from '../vendor/vectors';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { timePickers } from '../utils/timePickers';
 import { TimeDomain } from '../vendor/jx/domains';
 import jx from '../vendor/jx/expressions';
@@ -67,7 +67,7 @@ class Subtests extends React.Component {
       <div className={classes.body}>
         <DashboardPage key={subtitle} title="Performance Subtests" subtitle={subtitle}>
           {navigation}
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid
               item
               xs={12}

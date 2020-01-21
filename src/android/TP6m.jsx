@@ -3,20 +3,16 @@ import React from 'react';
 import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { missing, exists } from '../vendor/utils';
+import { exists, missing } from '../vendor/utils';
 import { selectFrom } from '../vendor/vectors';
-import {
-  BROWSER_PLATFORMS,
-  TP6_COMBOS,
-  TP6_TESTS,
-} from '../quantum/config';
+import { BROWSER_PLATFORMS, TP6_COMBOS, TP6_TESTS } from '../windows/config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import ChartJSWrapper from '../vendor/components/chartJs/ChartJsWrapper';
 import {
-  TARGET_NAME, REFERENCE_COLOR, GEOMEAN_DESCRIPTION, geoTip,
+  GEOMEAN_DESCRIPTION, geoTip, REFERENCE_COLOR, TARGET_NAME,
 } from './config';
 import { pullAggregate } from './TP6mAggregate';
 import Section from '../utils/Section';
@@ -137,7 +133,7 @@ class TP6M extends React.Component {
     return (
       <DashboardPage key={subtitle} title="TP6 Mobile" subtitle={subtitle}>
         <Section title="Details by site">
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid item xs={6} className={classes.chart}>
               {navigation}
             </Grid>
@@ -183,6 +179,7 @@ class TP6M extends React.Component {
                   <PerfherderGraphContainer
                     timeDomain={timeDomain}
                     title={site}
+
                     reference={referenceValue ? referenceValue.where({ site }).getValue() : null}
                     series={selectFrom(series)
                       .sort(['ordering'])

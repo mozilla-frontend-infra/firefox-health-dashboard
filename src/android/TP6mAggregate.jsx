@@ -7,7 +7,7 @@ import { missing, coalesce } from '../vendor/utils';
 import { geomean, round, sum } from '../vendor/math';
 import {
   BROWSER_PLATFORMS, TP6_COMBOS, TP6_TESTS, TP6M_SITES,
-} from '../quantum/config';
+} from '../windows/config';
 import { getData } from '../vendor/perfherder';
 import { withErrorBoundary } from '../vendor/errors';
 import jx from '../vendor/jx/expressions';
@@ -313,7 +313,7 @@ class TP6mAggregate_ extends Component {
     }
 
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={1}>
         {selectFrom(TP6_TESTS)
           .where({ test })
           .enumerate()

@@ -33,46 +33,52 @@ const styles = {
     textAlign: 'center',
   },
 };
-const Home = ({ classes }) => (
-  <DashboardPage
-    classes={{
-      root: classes.root,
-    }}
-    title="Firefox health"
-    subtitle="Tracking metrics for Firefox products"
-  >
-    <div className={classes.links}>
-      <Link to="/android">
-        <AndroidIcon />
-        Android
-      </Link>
-      <Link to="/quantum/32">
-        <DesktopIcon />
-        Quantum 32bit
-      </Link>
-      <Link to="/quantum/64">
-        <DesktopIcon />
-        Quantum 64bit
-      </Link>
-      <Link to="/power">
-        <BatteryIcon />
-        Power Usage
-      </Link>
-      <Link to="/playback">
-        <VideoIcon />
-        Playback
-      </Link>
-    </div>
-    <div className={classes.netlify}>
-      <a href="https://www.netlify.com">
-        <img
-          src="https://www.netlify.com/img/global/badges/netlify-dark.svg"
-          alt="Netlify"
-        />
-      </a>
-    </div>
-  </DashboardPage>
-);
+
+class Home extends React.Component {
+  render() {
+    const { classes } = this.props;
+    return (
+      <DashboardPage
+        classes={{
+          root: classes.root,
+        }}
+        title="Firefox health"
+        subtitle="Tracking metrics for Firefox products"
+      >
+        <div className={classes.links}>
+          <Link to="/android">
+            <AndroidIcon />
+            Android
+          </Link>
+          <Link to="/windows/32">
+            <DesktopIcon />
+            Windows 32bit
+          </Link>
+          <Link to="/windows/64">
+            <DesktopIcon />
+            Windows 64bit
+          </Link>
+          <Link to="/power">
+            <BatteryIcon />
+            Power Usage
+          </Link>
+          <Link to="/playback">
+            <VideoIcon />
+            Playback
+          </Link>
+        </div>
+        <div className={classes.netlify}>
+          <a href="https://www.netlify.com">
+            <img
+              src="https://www.netlify.com/img/global/badges/netlify-dark.svg"
+              alt="Netlify"
+            />
+          </a>
+        </div>
+      </DashboardPage>
+    );
+  }
+}
 
 Home.propTypes = {
   classes: PropTypes.shape({}).isRequired,

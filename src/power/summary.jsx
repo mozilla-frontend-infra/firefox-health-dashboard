@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { URL } from '../vendor/requests';
 import { COMBOS, PLATFORMS, TESTS } from './config';
 import { selectFrom } from '../vendor/vectors';

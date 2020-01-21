@@ -8,7 +8,7 @@ import {
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
 import DashboardPage from '../utils/DashboardPage';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
 import { timePickers } from '../utils/timePickers';
 
@@ -45,7 +45,7 @@ class PlaybackDetails extends React.Component {
         key={`page_${platform}_${browser}_${encoding}_${past}_${ending}`}
       >
         {navigation}
-        <Grid container spacing={24}>
+        <Grid container spacing={1}>
           {selectFrom(SIZES).map(({ size }) => (
             <Grid
               item
@@ -63,6 +63,7 @@ class PlaybackDetails extends React.Component {
                   })
                   .map(({ speed, filter: testFilter }) => ({
                     label: `${speed}x`,
+                    repo: browserDetails.repo,
                     filter: {
                       and: [
                         platformDetails.filter,

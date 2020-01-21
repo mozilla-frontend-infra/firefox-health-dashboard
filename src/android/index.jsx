@@ -5,7 +5,7 @@ import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import RedashContainer from '../utils/RedashContainer';
 import { SHOW_TELEMETRY } from './config';
 import { CONFIG } from '../nimbledroid/config';
@@ -17,7 +17,6 @@ import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 import PlaybackSummary from '../playback/summary';
 import { BROWSERS } from '../playback/config';
-
 
 class Android extends Component {
   render() {
@@ -32,7 +31,7 @@ class Android extends Component {
     return (
       <DashboardPage title="Android" subtitle="Release criteria">
         <div>
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid item xs={6} key="bugzilla">
               <Section title="Bugzilla">
                 <BugzillaGraph
@@ -76,7 +75,7 @@ class Android extends Component {
                         <LinkIcon />
                       </a>
                     </span>
-)}
+                  )}
                   timeDomain={timeDomain}
                   queries={[
                     {
@@ -177,7 +176,7 @@ class Android extends Component {
         { SHOW_TELEMETRY
             && (
             <Section title="Telemetry">
-              <Grid container spacing={24}>
+              <Grid container spacing={1}>
                 <Grid item xs={6}>
                   <RedashContainer
                     title="Total content page load time (no 95th)"
@@ -200,7 +199,7 @@ class Android extends Component {
         <Section
           title={`Media Playback - ${mediaPlaybackBrowser.label}`}
         >
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid item xs={6} key="1">
               <PlaybackSummary
                 key="VP9"
@@ -223,7 +222,7 @@ class Android extends Component {
           title="Perfherder"
           subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)"
         >
-          <Grid container spacing={24}>
+          <Grid container spacing={1}>
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}

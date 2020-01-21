@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-import TP6 from '../../src/quantum/TP6';
+import TP6 from '../../src/windows/TP6';
 import { timePickers } from '../../src/utils/timePickers';
 
 it('renders correctly url', () => {
@@ -10,7 +10,7 @@ it('renders correctly url', () => {
   const tree = renderer
     .create(
       <MemoryRouter
-        initialEntries={['/quantum/tp6?bits=64&test=warm-loadtime']}
+        initialEntries={['/windows/tp6?bits=64&test=warm-loadtime']}
         initialIndex={0}
       >
         <TP6 />

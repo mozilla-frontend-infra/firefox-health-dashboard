@@ -1,9 +1,9 @@
-export const quantum32QueryParams = {
+export const windows32QueryParams = {
   // 32 bit
   architecture: 'x86',
 };
 
-export const quantum64QueryParams = {
+export const windows64QueryParams = {
   // 64 bit
   architecture: 'x86-64',
 };

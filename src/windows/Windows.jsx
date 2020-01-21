@@ -1,13 +1,13 @@
 /* global document */
-import React, { Suspense, lazy, Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid/Grid';
 import DashboardPage from '../utils/DashboardPage';
 import { selectFrom, toPairs } from '../vendor/vectors';
 import { fromQueryString, URL } from '../vendor/requests';
-import { quantum32QueryParams, quantum64QueryParams, statusLabels } from './constants';
+import { statusLabels, windows32QueryParams, windows64QueryParams } from './constants';
 import { BENCHMARKS, TP6_COMBOS } from './config';
-import PerfherderGraphContainer from '../utils/PerfherderGraphContainer';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { DetailsIcon } from '../utils/icons';
 import { TimeDomain } from '../vendor/jx/domains';
 import PlaybackSummary from '../playback/summary';
@@ -15,7 +15,7 @@ import PlaybackSummary from '../playback/summary';
 const TelemetryContainer = lazy(() => import('../telemetry/graph'));
 
 
-export default class QuantumIndex extends Component {
+export default class WindowsIndex extends Component {
   constructor(props) {
     super(props);
     document.body.classList.add('multipage');
@@ -31,7 +31,7 @@ export default class QuantumIndex extends Component {
     } = this.props;
     const urlParams = fromQueryString(location.search);
     const bits = urlParams.bits || Number.parseInt(params.bits, 10);
-    const quantumQueryParams = bits === 32 ? quantum32QueryParams : quantum64QueryParams;
+    const windowsQueryParams = bits === 32 ? windows32QueryParams : windows64QueryParams;
     const platform = bits === 32
       ? {
         or: [
@@ -90,7 +90,7 @@ export default class QuantumIndex extends Component {
               title={suite}
               urls={{
                 title: 'see details',
-                url: URL({ path: '/quantum/subtests', query: { suite, platform } }),
+                url: URL({ path: '/windows/subtests', query: { suite, platform } }),
                 icon: DetailsIcon,
               }}
               series={browsers.map(({ browser, filter, ...rest }) => ({
@@ -104,7 +104,7 @@ export default class QuantumIndex extends Component {
       {
         title: 'Page Load tests (TP6)',
         more: URL({
-          path: '/quantum/tp6',
+          path: '/windows/tp6',
           query: {
             platform: TP6_COMBOS.where({ os: 'win', bits }).select('platform').first(),
             test: 'warm-loadtime',
@@ -315,7 +315,7 @@ export default class QuantumIndex extends Component {
               key="winOpen"
               id="winOpen"
               title="Window open"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -323,7 +323,7 @@ export default class QuantumIndex extends Component {
               key="tabSwitch"
               id="tabSwitch"
               title="Tab switch"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -331,7 +331,7 @@ export default class QuantumIndex extends Component {
               key="tabClose"
               id="tabClose"
               title="Tab close"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -339,7 +339,7 @@ export default class QuantumIndex extends Component {
               key="firstPaint"
               id="firstPaint"
               title="First paint"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -347,7 +347,7 @@ export default class QuantumIndex extends Component {
               key="sessionRestoreWindow"
               id="sessionRestoreWindow"
               title="Session Restore Window ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -355,7 +355,7 @@ export default class QuantumIndex extends Component {
               key="sessionRestoreStartupInit"
               id="sessionRestoreStartupInit"
               title="Session Restore Startup Init ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -363,7 +363,7 @@ export default class QuantumIndex extends Component {
               key="sessionRestoreStartupOnload"
               id="sessionRestoreStartupOnload"
               title="Session Restore Startup Onload ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -371,7 +371,7 @@ export default class QuantumIndex extends Component {
               key="tabSwitchUpdate"
               id="tabSwitchUpdate"
               title="Tab Switch Update ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -379,7 +379,7 @@ export default class QuantumIndex extends Component {
               key="gcAnimation"
               id="gcAnimation"
               title="GC Animation ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -387,7 +387,7 @@ export default class QuantumIndex extends Component {
               key="gpuProcessInit"
               id="gpuProcessInit"
               title="GPU Process Initialization ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -395,7 +395,7 @@ export default class QuantumIndex extends Component {
               key="gpuProcessLaunch"
               id="gpuProcessLaunch"
               title="GPU Process Launch ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -403,7 +403,7 @@ export default class QuantumIndex extends Component {
               key="inputEventCoalesced"
               id="inputEventCoalesced"
               title="Input Event Response Coalesced ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -411,7 +411,7 @@ export default class QuantumIndex extends Component {
               key="networkCacheHit"
               id="networkCacheHit"
               title="Network Cache Hit ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -419,7 +419,7 @@ export default class QuantumIndex extends Component {
               key="networkCacheMiss"
               id="networkCacheMiss"
               title="Network Cache Miss ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -427,7 +427,7 @@ export default class QuantumIndex extends Component {
               key="placesAutocomplete"
               id="placesAutocomplete"
               title="Places Autocomplete 6  First Results ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -435,7 +435,7 @@ export default class QuantumIndex extends Component {
               key="searchServiceInit"
               id="searchServiceInit"
               title="Search Service Init ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -443,7 +443,7 @@ export default class QuantumIndex extends Component {
               key="timeToDomComplete"
               id="timeToDomComplete"
               title="Time to DOM Complete ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -451,7 +451,7 @@ export default class QuantumIndex extends Component {
               key="timeToDomInteractive"
               id="timeToDomInteractive"
               title="Time to DOM Interactive ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -459,7 +459,7 @@ export default class QuantumIndex extends Component {
               key="timeToDomLoading"
               id="timeToDomLoading"
               title="Time to DOM Loading ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -467,7 +467,7 @@ export default class QuantumIndex extends Component {
               key="timeToFirstInteraction"
               id="timeToFirstInteraction"
               title="Time to First Interaction ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -475,7 +475,7 @@ export default class QuantumIndex extends Component {
               key="timeToNonBlankPaint"
               id="timeToNonBlankPaint"
               title="Time to Non Blank Paint ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -483,7 +483,7 @@ export default class QuantumIndex extends Component {
               key="timeToResponseStart"
               id="timeToResponseStart"
               title="Time to Response Start ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -491,7 +491,7 @@ export default class QuantumIndex extends Component {
               key="webextBackgroundPageLoad"
               id="webextBackgroundPageLoad"
               title="Webext Background Page Load ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -499,7 +499,7 @@ export default class QuantumIndex extends Component {
               key="webextContentScriptInjection"
               id="webextContentScriptInjection"
               title="Webext Content Script Injection ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -507,7 +507,7 @@ export default class QuantumIndex extends Component {
               key="webextExtensionStartup"
               id="webextExtensionStartup"
               title="Webext Extension Startup ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -515,7 +515,7 @@ export default class QuantumIndex extends Component {
               key="timeToLoadEventEnd"
               id="timeToLoadEventEnd"
               title="Time to Load Event End ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -523,7 +523,7 @@ export default class QuantumIndex extends Component {
               key="timeToDomContentLoadedEnd"
               id="timeToDomContentLoadedEnd"
               title="Time to DOM Content Loaded End ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -531,7 +531,7 @@ export default class QuantumIndex extends Component {
               key="contentPaintTime"
               id="contentPaintTime"
               title="contentful paint Time ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -539,7 +539,7 @@ export default class QuantumIndex extends Component {
               key="pageLoad"
               id="pageLoad"
               title="FX Page Load ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -547,7 +547,7 @@ export default class QuantumIndex extends Component {
               key="simpleSessionRestored"
               id="simpleSessionRestored"
               title="Simple Measures Session Restored ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -555,7 +555,7 @@ export default class QuantumIndex extends Component {
               key="scalarFirstPaint"
               id="scalarFirstPaint"
               title="Scalars Timestamp - First Paint ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
           <Suspense fallback={<div>Loading...</div>}>
@@ -563,7 +563,7 @@ export default class QuantumIndex extends Component {
               key="timeToFirstScroll"
               id="timeToFirstScroll"
               title="Time to First Scroll ms"
-              queryParams={quantumQueryParams}
+              queryParams={windowsQueryParams}
             />
           </Suspense>,
         ],
@@ -647,13 +647,13 @@ export default class QuantumIndex extends Component {
 
     if (full) {
       return (
-        <DashboardPage title="Quantum" subtitle="Release Criteria Report">
+        <DashboardPage title="Windows" subtitle="Release Criteria Report">
           {selectFrom(reduced).limit(2)}
           <h2 key="moreData">
             More data on
-            <strong>https://health.graphics/quantum</strong>
+            <strong>https://health.graphics/windows</strong>
             . Ask questions in
-            <strong>#quantum</strong>
+            <strong>#Windows</strong>
             (IRC & Slack)
           </h2>
         </DashboardPage>
@@ -661,13 +661,13 @@ export default class QuantumIndex extends Component {
     }
 
     return (
-      <DashboardPage title="Quantum" subtitle="Release Criteria Report">
+      <DashboardPage title="Windows" subtitle="Release Criteria Report">
         {reduced}
       </DashboardPage>
     );
   }
 }
 
-QuantumIndex.propTypes = {
+WindowsIndex.propTypes = {
   location: PropTypes.object,
 };
