@@ -521,9 +521,13 @@ Auth0Client.CLIENT = null;
 Auth0Client.newInstance = newInstance;
 
 
-const AuthContext = React.createContext(null);
+const AuthContext = React.createContext(null);  // https://reactjs.org/docs/context.html
 
 class AuthProvider extends React.Component {
+  /*
+  INJECTS { authenticator, cookie } USING AuthContext.Provider SO THAT
+  AuthContext.Consumer CAN BE USED TO PULL THEM FOR PRESENTATION
+   */
   constructor(props) {
     super(props);
     this.state = {};
