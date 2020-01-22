@@ -39,20 +39,6 @@ class GithubGraph extends Component {
 }
 
 GithubGraph.propTypes = {
-  queries: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      parameters: PropTypes.shape({
-        include_fields: PropTypes.string,
-        component: PropTypes.string,
-        resolution: PropTypes.oneOfType([
-          PropTypes.arrayOf(PropTypes.string),
-          PropTypes.string,
-        ]),
-        priority: PropTypes.arrayOf(PropTypes.string),
-      }),
-    }),
-  ),
   startDate: PropTypes.string,
   title: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
 };
