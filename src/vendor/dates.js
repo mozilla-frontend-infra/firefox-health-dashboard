@@ -19,6 +19,7 @@ import {
 import { Log } from './logs';
 import strings from './strings';
 
+const ISO_8601 = 'yyyy-MM-ddTHH:mm:ssZ';
 const twoDigits = x => (x < 0 || x > 9 ? '' : '0') + x;
 
 class GMTDate extends Date {
@@ -1215,4 +1216,4 @@ strings.format = (value, format) => {
 
 strings.unix = value => GMTDate.newInstance(value).unix();
 
-export { GMTDate }; // eslint-disable-line import/prefer-default-export
+export { GMTDate, ISO_8601 }; // eslint-disable-line import/prefer-default-export

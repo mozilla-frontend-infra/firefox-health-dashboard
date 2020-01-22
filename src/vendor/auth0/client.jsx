@@ -521,7 +521,7 @@ Auth0Client.CLIENT = null;
 Auth0Client.newInstance = newInstance;
 
 
-const AuthContext = React.createContext(null);  // https://reactjs.org/docs/context.html
+const AuthContext = React.createContext(null); // https://reactjs.org/docs/context.html
 
 class AuthProvider extends React.Component {
   /*

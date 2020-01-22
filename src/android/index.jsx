@@ -17,6 +17,7 @@ import { showBugsUrl } from '../bugzilla/query';
 import { PowerSummary } from '../power/summary';
 import PlaybackSummary from '../playback/summary';
 import { BROWSERS } from '../playback/config';
+import GithubGraph from '../github/GithubGraph';
 
 class Android extends Component {
   render() {
@@ -33,6 +34,26 @@ class Android extends Component {
         <div>
           <Grid container spacing={1}>
             <Grid item xs={6} key="bugzilla">
+              <Section title="Github">
+                <GithubGraph
+                  title={(
+                    <span>
+                      Fenix P1 Performance Bugs
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://github.com/mozilla-mobile/fenix/labels/eng%3Aperformance"
+                        title="Fenix P1 performance bugs"
+                      >
+                        <LinkIcon />
+                      </a>
+                    </span>
+                  )}
+
+
+                  timeDomain={timeDomain}
+                />
+              </Section>
               <Section title="Bugzilla">
                 <BugzillaGraph
                   title={(
