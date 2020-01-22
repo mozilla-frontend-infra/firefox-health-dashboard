@@ -12,7 +12,7 @@ const GITHUB_ISSUES = new Template('https://api.github.com/repos/{{owner}}/{{rep
 const BURNDOWN = {
   owner: 'mozilla-mobile',
   repo: 'fenix',
-  labels: 'eng:performance',
+  labels: 'eng:performance,P1',
   filter: 'all',
 };
 
@@ -21,10 +21,11 @@ async function getIssues({ timeDomain }) {
   const { labels, filter } = BURNDOWN;
   const since = Date.newInstance(timeDomain.min).format(ISO_8601);
 
-  const response = await fetchJson(URL({
+  const url = URL({
     path: GITHUB_ISSUES.expand(BURNDOWN),
     query: { labels, filter, since },
-  }));
+  });
+  const response = await fetchJson(url);
 
   const eod = Date.eod();
 

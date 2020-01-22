@@ -42,7 +42,7 @@ class Android extends Component {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://github.com/mozilla-mobile/fenix/labels/eng%3Aperformance"
+                        href="https://github.com/mozilla-mobile/fenix/issues?q=is%3Aopen+is%3Aissue+label%3Aeng%3Aperformance+label%3AP1"
                         title="Fenix P1 performance bugs"
                       >
                         <LinkIcon />
