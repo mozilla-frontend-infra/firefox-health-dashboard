@@ -38,12 +38,12 @@ class Android extends Component {
                 <GithubGraph
                   title={(
                     <span>
-                      Fenix P1 Performance Bugs
+                      Firefox Preview P1 Performance Bugs
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
                         href="https://github.com/mozilla-mobile/fenix/issues?q=is%3Aopen+is%3Aissue+label%3Aeng%3Aperformance+label%3AP1"
-                        title="Fenix P1 performance bugs"
+                        title="Firefox Preview P1 performance bugs"
                       >
                         <LinkIcon />
                       </a>

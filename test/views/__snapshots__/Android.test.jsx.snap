@@ -209,12 +209,12 @@ exports[`renders correctly 1`] = `
                 className="ChartJsWrapper-title-121"
               >
                 <span>
-                  Fenix P1 Performance Bugs
+                  Firefox Preview P1 Performance Bugs
                   <a
                     href="https://github.com/mozilla-mobile/fenix/issues?q=is%3Aopen+is%3Aissue+label%3Aeng%3Aperformance+label%3AP1"
                     rel="noopener noreferrer"
                     target="_blank"
-                    title="Fenix P1 performance bugs"
+                    title="Firefox Preview P1 performance bugs"
                   >
                     <div
                       style={
