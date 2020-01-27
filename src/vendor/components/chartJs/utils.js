@@ -1,4 +1,4 @@
-import SETTINGS from '../../../config';
+import SETTINGS from '../../../config.json';
 import {
   exists, isNumeric, missing, toArray, zip,
 } from '../../utils';
