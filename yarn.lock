@@ -3120,7 +3120,6 @@ chardet@^0.7.0:
 
 chart.js@chartjs/Chart.js#7c3e934:
   version "2.7.2"
-  uid "7c3e934062c2679d6e06905b342f6432dd7d87f6"
   resolved "https://codeload.github.com/chartjs/Chart.js/tar.gz/7c3e934062c2679d6e06905b342f6432dd7d87f6"
   dependencies:
     chartjs-color "^2.1.0"
@@ -5738,7 +5737,6 @@ fsevents@^1.2.7:
   dependencies:
     bindings "^1.5.0"
     nan "^2.12.1"
-    node-pre-gyp "*"
 
 fsevents@^2.1.2:
   version "2.1.2"
