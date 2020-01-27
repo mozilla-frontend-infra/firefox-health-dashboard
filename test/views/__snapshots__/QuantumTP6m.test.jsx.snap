@@ -224,12 +224,12 @@ exports[`renders correctly 1`] = `
                   <div
                     aria-haspopup="listbox"
                     aria-labelledby=" mui-component-select-test"
-                    className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input MuiInputBase-inputSelect"
+                    className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                     id="mui-component-select-test"
                     onBlur={[Function]}
-                    onClick={[Function]}
                     onFocus={[Function]}
                     onKeyDown={[Function]}
+                    onMouseDown={[Function]}
                     role="button"
                     tabIndex={0}
                   >
@@ -276,12 +276,12 @@ exports[`renders correctly 1`] = `
                   <div
                     aria-haspopup="listbox"
                     aria-labelledby=" mui-component-select-browserPlatform"
-                    className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input MuiInputBase-inputSelect"
+                    className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                     id="mui-component-select-browserPlatform"
                     onBlur={[Function]}
-                    onClick={[Function]}
                     onFocus={[Function]}
                     onKeyDown={[Function]}
+                    onMouseDown={[Function]}
                     role="button"
                     tabIndex={0}
                   >
