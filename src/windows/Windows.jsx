@@ -659,20 +659,11 @@ export default class WindowsIndex extends Component {
         </DashboardPage>
       );
     }
-    if (bits === 32) {
-      return (
-        <DashboardPage title="Windows 32" subtitle="Release Criteria Report">
-          {reduced}
-        </DashboardPage>
-      );
-    }
-    if (bits === 64) {
-      return (
-        <DashboardPage title="Windows 64" subtitle="Release Criteria Report">
-          {reduced}
-        </DashboardPage>
-      );
-    }
+    return (
+      <DashboardPage title={'Windows ' + bits} subtitle="Release Criteria Report">
+        {reduced}
+      </DashboardPage>
+    );
   }
 }
 
