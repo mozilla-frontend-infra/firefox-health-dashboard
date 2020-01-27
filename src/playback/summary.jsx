@@ -8,7 +8,7 @@ import { selectFrom } from '../vendor/vectors';
 import {
   BROWSERS, ENCODINGS, PLATFORMS, SPEEDS, TESTS,
 } from './config';
-import { getData } from '../vendor/perfherder';
+import { getData, TEST_TYPE } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
 import { missing } from '../vendor/utils';
 import { URL } from '../vendor/requests';
@@ -125,7 +125,7 @@ class PlaybackSummary extends React.Component {
       .toArray();
     const results = await Promise.all(
       combos.map(async g => {
-        const perfData = await getData(g.filter);
+        const perfData = await getData(g.filter, TEST_TYPE.playback);
         const loss = selectFrom(perfData)
           .select('data')
           .flatten()

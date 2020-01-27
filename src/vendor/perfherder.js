@@ -24,7 +24,11 @@ const MIN_CHUNK_SIZE = 10; // ACCUMULATE SIGNATURE REQUESTS TO A SINGLE REQUEST
 const PERFHERDER = {
   signatures: [],
 };
+const PLAYBACK = [];
 const TREEHERDER = 'https://treeherder.mozilla.org';
+const TEST_TYPE = {
+  playback: 'playback',
+};
 const getAllOptions = (async () => {
   const output = await fetchJson(
     URL({ path: [TREEHERDER, 'api/optioncollectionhash/'] }),
@@ -66,10 +70,12 @@ const getFramework = async ({ repo, framework }) => {
           })();
           let lowerIsBetter = lower_is_better;
           let unit = 'Score';
+          let isPlayback = false;
 
           if (suite.includes('youtube-playback')) {
             lowerIsBetter = true;
             unit = 'count';
+            isPlayback = true;
 
             if (exists(test) && test.includes('%')) {
               unit = '';
@@ -126,11 +132,13 @@ const getFramework = async ({ repo, framework }) => {
             id: meta.id,
             framework: meta.framework_id,
             repo,
+            isPlayback,
           };
         })
         .toArray();
 
       PERFHERDER.signatures.push(...clean);
+      PLAYBACK.push(...(clean.filter(({ isPlayback }) => isPlayback)));
     })();
   }
 
@@ -286,11 +294,18 @@ const getDataBySignature = async metadatas => {
   return Promise.all(toArray(metadatas).map(m => dataCache[m.signature]));
 };
 
+const getCachedSigantures = testType => {
+  if (testType === TEST_TYPE.playback) {
+    return PLAYBACK;
+  }
+  return PERFHERDER.signatures;
+};
+
 /*
 return a list of {meta, data} objects, each representing
 a perfhereder signature that matches the given filter
  */
-const getData = async condition => {
+const getData = async (condition, testType) => {
   const collated = extract(condition, ['push_timestamp', 'repo', 'framework']);
 
   const results = await Promise.all(collated
@@ -299,10 +314,10 @@ const getData = async condition => {
         Log.error('expecting expression to have both repo and framework');
       }
       await getFramework({ repo: repo.eq.repo, framework: framework.eq.framework });
+      const cachedSignatures = getCachedSigantures(testType);
+      Log.note('scan {{num}} signatures', { num: cachedSignatures.length });
 
-      Log.note('scan {{num}} signatures', { num: PERFHERDER.signatures.length });
-
-      const signatures = PERFHERDER.signatures.filter(jx(rest));
+      const signatures = cachedSignatures.filter(jx(rest));
       const data = await getDataBySignature(signatures);
 
       if (missing(pushDate)) return data;
@@ -318,5 +333,5 @@ const getData = async condition => {
 };
 
 export {
-  getAllOptions, getData, TREEHERDER, PERFHERDER, getFramework,
+  getAllOptions, getData, TREEHERDER, PERFHERDER, getFramework, TEST_TYPE,
 };
