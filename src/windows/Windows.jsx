@@ -660,7 +660,7 @@ export default class WindowsIndex extends Component {
       );
     }
     return (
-      <DashboardPage title={'Windows ' + bits} subtitle="Release Criteria Report">
+      <DashboardPage title={`Windows ${bits}`} subtitle="Release Criteria Report">
         {reduced}
       </DashboardPage>
     );
