@@ -115,6 +115,7 @@ const BROWSERS =[
   {id: "chrome", label:"Chrome", title:"Chrome (Desktop)", format:"desktop", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-chrome-live"]}}},
   {id: "geckoview", label:"geckoview", title:"Firefox (Android)", format:"mobile", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-geckoview-live"]}}},
   {id: "fenix", label:"Firefox Preview", title:"Firefox Preview (Android)", format:"mobile", repo: FENIX, filter: {eq: {framework: 10, repo: FENIX.name, suite: ["raptor-youtube-playback-fenix-live"]}}},
+  {id: "fennec68", label:"Firefox ESR", title:"Firefox ESR (Android)", format:"mobile", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name, suite: ["raptor-youtube-playback-fennec68-live"]}}},
 ];
 
 
