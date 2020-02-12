@@ -94,19 +94,6 @@ function reverse(list) {
 }
 
 /*
-return all but last element
- */
-function notLast(list) {
-  if (isArray(list)) {
-    return list.slice(0, list.length - 1);
-  }
-
-  const arr = Array.from(list);
-
-  return arr.slice(arr.length - 1);
-}
-
-/*
 return true if `value` is a string
  */
 function isString(value) {
@@ -255,7 +242,6 @@ export {
   zip,
   array,
   zero,
-  notLast,
   MANY_TYPES,
   isMany,
   reverse,
