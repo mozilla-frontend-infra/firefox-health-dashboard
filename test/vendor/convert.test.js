@@ -1,5 +1,11 @@
 /* global describe, it */
-import { json2value, value2json } from '../../src/vendor/convert';
+import {
+  json2value,
+  value2json,
+  escapeRegEx,
+  bytesToBase64URL,
+  base64URLToBytes,
+} from '../../src/vendor/convert';
 
 describe('convert', () => {
   it('value2json', () => {
@@ -36,5 +42,20 @@ describe('convert', () => {
     expect(() => json2value("'''")).toThrow();
     expect(json2value('"text"')).toEqual('text');
     expect(json2value('{"b": 2}')).toEqual({ b: 2 });
+  });
+
+  it('escapeRegEx', () => {
+    expect(escapeRegEx('q2W#e.[{]}')).toBe('q2W#e\\.\\[\\{\\]\\}');
+    expect(escapeRegEx('./:loiep*&')).toBe('\\./:loiep\\*&');
+  });
+
+  it('bytesToBase64URL', () => {
+    expect(bytesToBase64URL('0000001')).toBe('AA');
+    expect(bytesToBase64URL('0000002')).toBe('AAA');
+  });
+
+  it('base64URLToBytes', () => {
+    expect(base64URLToBytes('aHR0cHM6Ly9nb29nbGUuY29t')).toBe('https://google.com');
+    expect(base64URLToBytes('aHR0cHM6Ly93d3cubW96aWxsYS5vcmc=')).toBe('https://www.mozilla.org');
   });
 });

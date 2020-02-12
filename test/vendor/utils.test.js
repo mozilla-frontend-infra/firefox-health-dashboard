@@ -8,6 +8,17 @@ import {
   missing,
   splitField,
   toArray,
+  first,
+  last,
+  isFunction,
+  exists,
+  coalesce,
+  isString,
+  joinField,
+  concatField,
+  zip,
+  isMany,
+  reverse,
 } from '../../src/vendor/utils';
 import { selectFrom } from '../../src/vendor/vectors';
 import { GMTDate as Date } from '../../src/vendor/dates';
@@ -145,5 +156,89 @@ describe('utils', () => {
     expect(missing(true)).toBe(false);
     expect(missing(0)).toBe(false);
     expect(missing({})).toBe(false);
+  });
+
+  it('first', () => {
+    expect(first('test')).toBe('t');
+    expect(first('jest')).toBe('j');
+    expect(first(['11', '22', '33'])).toBe('11');
+    expect(first('')).toBe(null);
+  });
+
+  it('last', () => {
+    expect(last('west')).toBe('t');
+    expect(last('foobar')).toBe('r');
+    expect(last(['11', '22', '33'])).toBe('33');
+    expect(last('')).toBe(null);
+  });
+
+  it('isFunction', () => {
+    const emptyFunc = function empty() {};
+    expect(isFunction(emptyFunc)).toBe(true);
+    expect(isFunction('string')).toBe(false);
+    expect(isFunction(true)).toBe(false);
+    expect(isFunction([])).toBe(false);
+    expect(isFunction(null)).toBe(false);
+    expect(isFunction(undefined)).toBe(false);
+  });
+
+  it('exists', () => {
+    expect(exists(Number.POSITIVE_INFINITY)).toBe(false);
+    expect(exists(Number.NEGATIVE_INFINITY)).toBe(false);
+    expect(exists(Number.NaN)).toBe(false);
+    expect(exists(null)).toBe(false);
+    expect(exists(undefined)).toBe(false);
+    expect(exists('')).toBe(false);
+    expect(exists([])).toBe(false);
+    expect(exists(selectFrom([]))).toBe(false);
+    expect(exists(toArray(null))).toBe(false);
+    expect(exists(false)).toBe(true);
+    expect(exists(true)).toBe(true);
+    expect(exists(0)).toBe(true);
+    expect(exists({})).toBe(true);
+  });
+
+  it('coalesce', () => {
+    expect(coalesce('a', 'b', 'c')).toBe('a');
+    expect(coalesce(3, 2, 1)).toBe(3);
+    expect(coalesce('string')).toBe('string');
+    expect(coalesce('')).toBe(null);
+  });
+
+  it('isString', () => {
+    expect(isString('string')).toBe(true);
+    expect(isString(true)).toBe(false);
+    expect(isString([])).toBe(false);
+    expect(isString(null)).toBe(false);
+    expect(isString(undefined)).toBe(false);
+  });
+
+  it('joinField', () => {
+    expect(joinField(['1', '2', '3'])).toBe('1.2.3');
+    expect(joinField(['3', '2', '1'])).toBe('3.2.1');
+  });
+
+  it('concatField', () => {
+    expect(concatField(1, 2, 3)).toBe('1.2.3');
+    expect(concatField('1.2,3', 1, 2, 3)).toBe('1.2,3.1.2.3');
+    expect(concatField('1.2,3', 1, 2, [3, '1,2'])).toBe('1.2,3.1.2.3,1,2');
+  });
+
+  it('zip', () => {
+    expect(zip([1, 2], [1, 2])).toStrictEqual([[1, 1], [2, 2]]);
+    expect(zip([1, 2, 3], [1, 2])).toStrictEqual([[1, 1], [2, 2], [3, undefined]]);
+  });
+
+  it('isMany', () => {
+    expect(isMany([])).toBe(true);
+    expect(isMany('')).toBe(false);
+    expect(isMany(null)).toBe(false);
+    expect(isMany({})).toBe(false);
+  });
+
+  it('reverse', () => {
+    expect(reverse([3, 2, 1])).toStrictEqual([1, 2, 3]);
+    expect(reverse([1])).toStrictEqual([1]);
+    expect(reverse(['t', 's', 'e', 'j'])).toStrictEqual(['j', 'e', 's', 't']);
   });
 });
