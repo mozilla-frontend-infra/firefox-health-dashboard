@@ -159,17 +159,23 @@ describe('utils', () => {
   });
 
   it('first', () => {
-    expect(first('test')).toBe('t');
-    expect(first('jest')).toBe('j');
+    expect(first('test')).toBe('test');
+    expect(first('jest')).toBe('jest');
     expect(first(['11', '22', '33'])).toBe('11');
+    expect(first(['33', '22', '11'])).toBe('33');
+    expect(first(['22'])).toBe('22');
     expect(first('')).toBe(null);
+    expect(() => { first(123); }).toThrow(TypeError);
   });
 
   it('last', () => {
-    expect(last('west')).toBe('t');
-    expect(last('foobar')).toBe('r');
+    expect(last('test')).toBe('test');
+    expect(last('jest')).toBe('jest');
     expect(last(['11', '22', '33'])).toBe('33');
+    expect(last(['33', '22', '11'])).toBe('11');
+    expect(last(['22'])).toBe('22');
     expect(last('')).toBe(null);
+    expect(() => { last(123); }).toThrow(TypeError);
   });
 
   it('isFunction', () => {
@@ -222,6 +228,7 @@ describe('utils', () => {
     expect(concatField(1, 2, 3)).toBe('1.2.3');
     expect(concatField('1.2,3', 1, 2, 3)).toBe('1.2,3.1.2.3');
     expect(concatField('1.2,3', 1, 2, [3, '1,2'])).toBe('1.2,3.1.2.3,1,2');
+    expect(concatField('1.2,3', [1, 2, [3, '1,2']], '2')).toBe('1.2,3.1,2,3,1,2.2');
   });
 
   it('zip', () => {
@@ -232,6 +239,7 @@ describe('utils', () => {
   it('isMany', () => {
     expect(isMany([])).toBe(true);
     expect(isMany('')).toBe(false);
+    expect(isMany('test')).toBe(false);
     expect(isMany(null)).toBe(false);
     expect(isMany({})).toBe(false);
   });
@@ -240,5 +248,8 @@ describe('utils', () => {
     expect(reverse([3, 2, 1])).toStrictEqual([1, 2, 3]);
     expect(reverse([1])).toStrictEqual([1]);
     expect(reverse(['t', 's', 'e', 'j'])).toStrictEqual(['j', 'e', 's', 't']);
+    expect(reverse('test')).toStrictEqual(['test']);
+    expect(reverse('')).toStrictEqual(['']);
+    expect(() => { reverse(123); }).toThrow(TypeError);
   });
 });

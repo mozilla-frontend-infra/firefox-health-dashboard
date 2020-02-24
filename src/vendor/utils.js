@@ -25,6 +25,13 @@ function array(length = 0) {
 }
 
 /*
+return true if `value` is a string
+ */
+function isString(value) {
+  return typeof value === 'string';
+}
+
+/*
 return true if value is null, or undefined, or not a legit value
  */
 function missing(value) {
@@ -66,6 +73,9 @@ function coalesce(...args) {
 return first element from list, or null
  */
 function first(list) {
+  if (isString(list) && !missing(list)) {
+    return list;
+  }
   for (const v of list) return v;
 
   return null;
@@ -75,6 +85,9 @@ function first(list) {
 return last element from list, or null
  */
 function last(list) {
+  if (isString(list) && !missing(list)) {
+    return list;
+  }
   if (isArray(list)) {
     return list[list.length - 1];
   }
@@ -84,20 +97,6 @@ function last(list) {
   for (const v of list) value = v;
 
   return value;
-}
-
-/*
-return new array in reverse order
- */
-function reverse(list) {
-  return list.slice().reverse();
-}
-
-/*
-return true if `value` is a string
- */
-function isString(value) {
-  return typeof value === 'string';
 }
 
 /*
@@ -121,6 +120,16 @@ function toArray(value) {
   }
 
   return [value];
+}
+
+/*
+return new array in reverse order
+ */
+function reverse(list) {
+  if (isString(list)) {
+    return toArray(list);
+  }
+  return list.slice().reverse();
 }
 
 function isNumeric(n) {
