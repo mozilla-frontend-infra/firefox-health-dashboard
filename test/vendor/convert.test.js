@@ -50,15 +50,18 @@ describe('convert', () => {
   });
 
   it('bytesToBase64URL', () => {
+    const spy = jest.spyOn(global.console, 'error');
+
     expect(bytesToBase64URL(1)).toBe('AA');
     expect(bytesToBase64URL(2)).toBe('AAA');
     expect(bytesToBase64URL(3)).toBe('AAAA');
     expect(bytesToBase64URL([1])).toBe('AQ');
     expect(bytesToBase64URL([1, 0, 1])).toBe('AQAB');
     expect(bytesToBase64URL([0, 1, 1, 0])).toBe('AAEBAA');
-    expect(() => { bytesToBase64URL(''); }).toThrow(TypeError);
-    expect(() => { bytesToBase64URL('1'); }).toThrow(TypeError);
-    expect(() => { bytesToBase64URL('test'); }).toThrow(TypeError);
+
+    expect(spy).not.toHaveBeenCalled();
+    bytesToBase64URL('test');
+    expect(spy).toHaveBeenCalled();
   });
 
   it('base64URLToBytes', () => {

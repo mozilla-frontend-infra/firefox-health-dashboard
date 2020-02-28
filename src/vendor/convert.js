@@ -108,7 +108,9 @@ convert from bytes to base64 (encoded to be URL safe)
  */
 function bytesToBase64URL(bytes) {
   if (isString(bytes)) {
-    return null.f();
+    const type = typeof bytes;
+    // eslint-disable-next-line no-console
+    return console.error('expecting array of ints, not', type);
   }
   return window.btoa(String.fromCharCode(...new Uint8Array(bytes)))
     .replace(/[+/=]/g, m => toURL[m]);
