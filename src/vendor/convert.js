@@ -1,7 +1,7 @@
 import { length, selectFrom, toPairs } from './vectors';
 import { Log } from './logs';
 import { isData } from './datas';
-import { isArray, isFunction } from './utils';
+import { isArray, isFunction, isString } from './utils';
 import strings from './strings';
 
 function json2value(json) {
@@ -107,7 +107,10 @@ const toURL = { '+': '-', '/': '_', '=': '' };
 convert from bytes to base64 (encoded to be URL safe)
  */
 function bytesToBase64URL(bytes) {
-  return window.btoa(String.fromCharCode(...Array.from(new Uint8Array(bytes))))
+  if (isString(bytes)) {
+    return null.f();
+  }
+  return window.btoa(String.fromCharCode(...new Uint8Array(bytes)))
     .replace(/[+/=]/g, m => toURL[m]);
 }
 
