@@ -26,7 +26,7 @@ const styles = {
     '--tip-size': '6px',
     position: 'absolute',
     padding: '6px',
-    width: '182px',
+    'min-width': '182px',
     background: 'var(--bg-color)',
     color: 'white',
     borderRadius: '4px',
