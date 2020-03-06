@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint --cache --ext mjs,jsx,js --format codeframe \".*.js\" src test",
     "coverage": "nyc --all jest --collectCoverage",
-    "coveralls": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov | coveralls",
+    "codecov": "rm -rf .nyc_output/ && yarn coverage && nyc report --reporter=text-lcov && codecov",
     "heroku-postbuild": "yarn build"
   },
   "nyc": {
@@ -64,7 +64,7 @@
     "@neutrinojs/jest": "^9.0.0-rc.3",
     "@neutrinojs/react": "^9.0.0-rc.3",
     "chai": "^4.1.2",
-    "coveralls": "^3.0.0",
+    "codecov": "^3.6.5",
     "eslint": "5.16.0",
     "husky": "^3.0.0",
     "jest": "^25.0.0",
