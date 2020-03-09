@@ -262,7 +262,7 @@ class Android extends Component {
                           eq: {
                             framework: 10,
                             repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview-power',
+                            suite: 'raptor-speedometer-geckoview',
                           },
                         },
                       ],
@@ -280,7 +280,7 @@ class Android extends Component {
                           eq: {
                             framework: 10,
                             repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fenix-power',
+                            suite: 'raptor-speedometer-fenix',
                           },
                         },
                       ],
@@ -298,7 +298,7 @@ class Android extends Component {
                           eq: {
                             framework: 10,
                             repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fennec68-power',
+                            suite: 'raptor-speedometer-fennec68',
                           },
                         },
                       ],
