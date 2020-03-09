@@ -727,7 +727,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Speedometer
+                Speedometer Moto G5
                 <span
                   onClick={[Function]}
                   style={
@@ -931,7 +931,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Unity WebGl
+                Unity WebGl Pixel 2
                 <span
                   onClick={[Function]}
                   style={
