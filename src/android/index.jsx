@@ -247,7 +247,7 @@ class Android extends Component {
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title="Moto G5 (arm7)"
+                title="Speedometer Moto G5"
                 browser="geckoview"
                 series={[
                   {
@@ -319,7 +319,7 @@ class Android extends Component {
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title="Pixel 2 (ARM64)"
+                title="Unity WebGl Pixel 2"
                 series={[
                   {
                     label: 'Geckoview',
