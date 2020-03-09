@@ -247,7 +247,7 @@ class Android extends Component {
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title="Speedometer"
+                title="Moto G5 (arm7)"
                 browser="geckoview"
                 series={[
                   {
@@ -319,10 +319,10 @@ class Android extends Component {
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title="Unity WebGl"
+                title="Pixel 2 (ARM64)"
                 series={[
                   {
-                    label: 'Moto G5 (arm7)',
+                    label: 'Geckoview',
                     filter: {
                       and: [
                         { missing: 'test' },
@@ -330,7 +330,7 @@ class Android extends Component {
                           eq: {
                             framework: 10,
                             repo: 'mozilla-central',
-                            suite: 'raptor-unity-webgl-geckoview',
+                            suite: 'raptor-speedometer-geckoview',
                           },
                         },
                         {
@@ -340,17 +340,33 @@ class Android extends Component {
                     },
                   },
                   {
-                    label: 'Pixel 2 (ARM64)',
+                    label: 'Firefox Preview',
                     filter: {
                       and: [
                         { missing: 'test' },
                         {
                           eq: {
                             framework: 10,
-                            options: 'opt',
-                            platform: 'android-hw-p2-8-0-android-aarch64',
                             repo: 'mozilla-central',
-                            suite: 'raptor-unity-webgl-geckoview',
+                            suite: 'raptor-speedometer-fenix',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    label: 'Firefox ESR',
+                    filter: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-fennec68',
                           },
                         },
                       ],
