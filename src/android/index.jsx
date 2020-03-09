@@ -49,8 +49,6 @@ class Android extends Component {
                       </a>
                     </span>
                   )}
-
-
                   timeDomain={timeDomain}
                 />
               </Section>
@@ -192,34 +190,36 @@ class Android extends Component {
           title="Raptor (TP6m)"
           more="/android/tp6m?test=cold-loadtime&platform=geckoview-p2-aarch64"
         >
-          <TP6mAggregate timeDomain={timeDomain} browser="fenix" platform={['p2-aarch64', 'g5']} test="cold-loadtime" />
+          <TP6mAggregate
+            timeDomain={timeDomain}
+            browser="fenix"
+            platform={['p2-aarch64', 'g5']}
+            test="cold-loadtime"
+          />
         </Section>
-        { SHOW_TELEMETRY
-            && (
-            <Section title="Telemetry">
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <RedashContainer
-                    title="Total content page load time (no 95th)"
-                    redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
-                    redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
-                    timeDomain={timeDomain}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <RedashContainer
-                    title="Total content page load time"
-                    redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
-                    redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
-                    timeDomain={timeDomain}
-                  />
-                </Grid>
+        {SHOW_TELEMETRY && (
+          <Section title="Telemetry">
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <RedashContainer
+                  title="Total content page load time (no 95th)"
+                  redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59395/results.json?api_key=2L0YcuUULtECr9bfew9OAEgtC50G4Ri8NCSPLR5F"
+                  redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59395"
+                  timeDomain={timeDomain}
+                />
               </Grid>
-            </Section>
-            )}
-        <Section
-          title={`Media Playback - ${mediaPlaybackBrowser.label}`}
-        >
+              <Grid item xs={6}>
+                <RedashContainer
+                  title="Total content page load time"
+                  redashDataUrl="https://sql.telemetry.mozilla.org/api/queries/59397/results.json?api_key=u9eculhXgxqgsluxYGxfXaWQ6g7KCXioEvfwjK83"
+                  redashQueryUrl="https://sql.telemetry.mozilla.org/queries/59397"
+                  timeDomain={timeDomain}
+                />
+              </Grid>
+            </Grid>
+          </Section>
+        )}
+        <Section title={`Media Playback - ${mediaPlaybackBrowser.label}`}>
           <Grid container spacing={1}>
             <Grid item xs={6} key="1">
               <PlaybackSummary
@@ -248,9 +248,10 @@ class Android extends Component {
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title="Speedometer"
+                browser="geckoview"
                 series={[
                   {
-                    label: 'Moto G5 (arm7)',
+                    label: 'Geckoview',
                     filter: {
                       and: [
                         { missing: 'test' },
@@ -261,24 +262,43 @@ class Android extends Component {
                           eq: {
                             framework: 10,
                             repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview',
+                            suite: 'raptor-speedometer-geckoview-power',
                           },
                         },
                       ],
                     },
                   },
                   {
-                    label: 'Pixel 2 (ARM64)',
+                    label: 'Firefox Preview',
                     filter: {
                       and: [
                         { missing: 'test' },
                         {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                        {
                           eq: {
                             framework: 10,
-                            options: 'opt',
-                            platform: 'android-hw-p2-8-0-android-aarch64',
                             repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview',
+                            suite: 'raptor-speedometer-fenix-power',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    label: 'Firefox ESR',
+                    filter: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            suite: 'raptor-speedometer-fennec68-power',
                           },
                         },
                       ],
