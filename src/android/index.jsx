@@ -5,11 +5,11 @@ import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
-import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import RedashContainer from '../utils/RedashContainer';
-import { SHOW_TELEMETRY, COMBOS } from './config';
+import { SHOW_TELEMETRY, COMBOS, PLATFORMS } from './config';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
+import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
 import { selectFrom } from '../vendor/vectors';
 import { LinkIcon } from '../utils/icons';
@@ -244,103 +244,62 @@ class Android extends Component {
           subtitle="Lower in the graph is better regardless if it is a score or execution time (read the Y label)"
         >
           <Grid container spacing={1}>
-            <Grid item xs={6}>
-              <PerfherderGraphContainer
-                timeDomain={timeDomain}
-                title="Speedometer Moto G5"
-                series={selectFrom(COMBOS)
-                  .where({ suite: 'speedometer' })
-                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
-                    label: browserLabel,
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+            {PLATFORMS.map(({ label, filter, id }) => (
+              <Grid item xs={6} key={id}>
+                <PerfherderGraphContainer
+                  timeDomain={timeDomain}
+                  title={`Speedometer ${label}`}
+                  series={selectFrom(COMBOS)
+                    .where({ suite: 'speedometer' })
+                    .map(
+                      ({ browserLabel, filter: browserSuiteFilter, test }) => ({
+                        label: browserLabel,
+                        filter: {
+                          and: [test, filter, browserSuiteFilter],
                         },
-                        browserSuiteFilter,
-                      ],
-                    },
-                  }))
-                  .toArray()}
-                missingDataInterval={10}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <PerfherderGraphContainer
-                timeDomain={timeDomain}
-                title="Speedometer Pixel 2"
-                series={selectFrom(COMBOS)
-                  .where({ suite: 'speedometer' })
-                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
-                    label: browserLabel,
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: {
-                            platform: 'android-hw-p2-8-0-android-aarch64',
-                          },
-                        },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            options: 'opt',
-                            suite: browserSuiteFilter.eq.suite,
-                          },
-                        },
-                      ],
-                    },
-                  }))
-                  .toArray()}
-                missingDataInterval={10}
-              />
-            </Grid>
-
+                      }),
+                    )
+                    .toArray()}
+                  missingDataInterval={10}
+                />
+              </Grid>
+            ))}
             <Grid item xs={6}>
               <PowerSummary
                 key="power"
-                browser="geckoview"
                 suite="speedometer"
                 timeDomain={timeDomain}
                 platform="g5"
               />
             </Grid>
-
             <Grid item xs={6}>
               <PowerSummary
                 key="power"
-                browser="geckoview"
                 suite="speedometer"
                 timeDomain={timeDomain}
                 platform="p2-aarch64"
               />
             </Grid>
-
-            <Grid item xs={6}>
-              <PerfherderGraphContainer
-                timeDomain={timeDomain}
-                title="Unity WebGl Moto G5"
-                series={selectFrom(COMBOS)
-                  .where({ suite: 'unity' })
-                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
-                    label: browserLabel,
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
+            {PLATFORMS.map(({ label, filter, id }) => (
+              <Grid item xs={6} key={id}>
+                <PerfherderGraphContainer
+                  timeDomain={timeDomain}
+                  title={`Unity WebGl ${label}`}
+                  series={selectFrom(COMBOS)
+                    .where({ suite: 'unity' })
+                    .map(
+                      ({ browserLabel, filter: browserSuiteFilter, test }) => ({
+                        label: browserLabel,
+                        filter: {
+                          and: [test, filter, browserSuiteFilter],
                         },
-                        browserSuiteFilter,
-                      ],
-                    },
-                  }))
-                  .toArray()}
-                missingDataInterval={10}
-              />
-            </Grid>
+                      }),
+                    )
+                    .toArray()}
+                  missingDataInterval={10}
+                />
+              </Grid>
+            ))}
           </Grid>
         </Section>
       </DashboardPage>

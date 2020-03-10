@@ -98,7 +98,7 @@ const PLATFORMS = [
     label: "Pixel 2 (aarch64)",
     filter: {
       eq: {
-        // options: 'opt',
+        options: "opt",
         platform: "android-hw-p2-8-0-android-aarch64"
       }
     }
@@ -106,11 +106,12 @@ const PLATFORMS = [
 ];
 
 const COMBO_TABLE = {
-  header: ["browser", "browserLabel", "suite", "suiteLabel", "filter"],
+  header: ["browser", "browserLabel", "test", "suite", "suiteLabel", "filter"],
   data: [
     [
       "geckoview",
       "Geckoview",
+      { missing: "test" },
       "scn-power-idle",
       "about:blank page",
       {
@@ -125,6 +126,7 @@ const COMBO_TABLE = {
     [
       "fenix",
       "Firefox Preview",
+      { missing: "test" },
       "scn-power-idle",
       "about:blank page",
       {
@@ -138,6 +140,7 @@ const COMBO_TABLE = {
     [
       "fennec68",
       "Firefox ESR",
+      { missing: "test" },
       "scn-power-idle",
       "about:blank page",
       {
@@ -152,6 +155,7 @@ const COMBO_TABLE = {
     [
       "geckoview",
       "Geckoview",
+      { missing: "test" },
       "scn-power-idle-bg",
       "idle background",
       {
@@ -166,6 +170,7 @@ const COMBO_TABLE = {
     [
       "fenix",
       "Firefox Preview",
+      { missing: "test" },
       "scn-power-idle-bg",
       "idle background",
       {
@@ -179,6 +184,7 @@ const COMBO_TABLE = {
     [
       "fennec68",
       "Firefox ESR",
+      { missing: "test" },
       "scn-power-idle-bg",
       "idle background",
       {
@@ -193,6 +199,7 @@ const COMBO_TABLE = {
     [
       "geckoview",
       "Geckoview",
+      { missing: "test" },
       "speedometer",
       "Speedometer",
       {
@@ -207,6 +214,7 @@ const COMBO_TABLE = {
     [
       "fenix",
       "Firefox Preview",
+      { missing: "test" },
       "speedometer",
       "Speedometer",
       {
@@ -220,6 +228,7 @@ const COMBO_TABLE = {
     [
       "fennec68",
       "Firefox ESR",
+      { missing: "test" },
       "speedometer",
       "Speedometer",
       {
@@ -233,6 +242,7 @@ const COMBO_TABLE = {
     [
       "geckoview",
       "Geckoview",
+      { missing: "test" },
       "unity",
       "Unity",
       {
@@ -246,6 +256,7 @@ const COMBO_TABLE = {
     [
       "fenix",
       "Firefox Preview",
+      { missing: "test" },
       "unity",
       "Unity",
       {
@@ -259,6 +270,7 @@ const COMBO_TABLE = {
     [
       "fennec68",
       "Firefox ESR",
+      { missing: "test" },
       "unity",
       "Unity",
       {
