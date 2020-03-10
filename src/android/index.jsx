@@ -7,7 +7,7 @@ import BugzillaGraph from '../bugzilla/BugzillaGraph';
 import NimbledroidSection from '../nimbledroid/NimbledroidSection';
 import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import RedashContainer from '../utils/RedashContainer';
-import { SHOW_TELEMETRY } from './config';
+import { SHOW_TELEMETRY, COMBOS } from './config';
 import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { TimeDomain } from '../vendor/jx/domains';
@@ -248,63 +248,21 @@ class Android extends Component {
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title="Speedometer Moto G5"
-                browser="geckoview"
-                series={[
-                  {
-                    label: 'Geckoview',
+                series={selectFrom(COMBOS)
+                  .where({ suite: 'speedometer' })
+                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
+                    label: browserLabel,
                     filter: {
                       and: [
                         { missing: 'test' },
                         {
                           prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
                         },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview',
-                          },
-                        },
+                        browserSuiteFilter,
                       ],
                     },
-                  },
-                  {
-                    label: 'Firefox Preview',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
-                        },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fenix',
-                          },
-                        },
-                      ],
-                    },
-                  },
-                  {
-                    label: 'Firefox ESR',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
-                        },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fennec68',
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ]}
+                  }))
+                  .toArray()}
                 missingDataInterval={10}
               />
             </Grid>
@@ -320,59 +278,23 @@ class Android extends Component {
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title="Unity WebGl Pixel 2"
-                series={[
-                  {
-                    label: 'Geckoview',
+                series={selectFrom(COMBOS)
+                  .where({ suite: 'speedometer' })
+                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
+                    label: browserLabel,
                     filter: {
                       and: [
                         { missing: 'test' },
                         {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-geckoview',
+                          prefix: {
+                            platform: 'android-hw-p2-8-0-android-aarch64',
                           },
                         },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
-                        },
+                        browserSuiteFilter,
                       ],
                     },
-                  },
-                  {
-                    label: 'Firefox Preview',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fenix',
-                          },
-                        },
-                      ],
-                    },
-                  },
-                  {
-                    label: 'Firefox ESR',
-                    filter: {
-                      and: [
-                        { missing: 'test' },
-                        {
-                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
-                        },
-                        {
-                          eq: {
-                            framework: 10,
-                            repo: 'mozilla-central',
-                            suite: 'raptor-speedometer-fennec68',
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ]}
+                  }))
+                  .toArray()}
                 missingDataInterval={10}
               />
             </Grid>
