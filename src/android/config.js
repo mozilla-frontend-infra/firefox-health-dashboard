@@ -83,6 +83,28 @@ const geoTip = withStyles(tipStyles)(
   }
 );
 
+const PLATFORMS = [
+  {
+    id: "g5",
+    label: "Moto G5 (arm7)",
+    filter: {
+      eq: {
+        platform: "android-hw-g5-7-0-arm7-api-16"
+      }
+    }
+  },
+  {
+    id: "p2-aarch64",
+    label: "Pixel 2 (aarch64)",
+    filter: {
+      eq: {
+        // options: 'opt',
+        platform: "android-hw-p2-8-0-android-aarch64"
+      }
+    }
+  }
+];
+
 const COMBO_TABLE = {
   header: ["browser", "browserLabel", "suite", "suiteLabel", "filter"],
   data: [
@@ -207,6 +229,45 @@ const COMBO_TABLE = {
           suite: ["raptor-speedometer-fennec68"]
         }
       }
+    ],
+    [
+      "geckoview",
+      "Geckoview",
+      "unity",
+      "Unity",
+      {
+        eq: {
+          framework: 10,
+          repo: "mozilla-central",
+          suite: ["raptor-unity-webgl-geckoview"]
+        }
+      }
+    ],
+    [
+      "fenix",
+      "Firefox Preview",
+      "unity",
+      "Unity",
+      {
+        eq: {
+          framework: 10,
+          repo: "mozilla-central",
+          suite: ["raptor-unity-webgl-fenix"]
+        }
+      }
+    ],
+    [
+      "fennec68",
+      "Firefox ESR",
+      "unity",
+      "Unity",
+      {
+        eq: {
+          framework: 10,
+          repo: "mozilla-central",
+          suite: ["raptor-unity-webgl-fennec68"]
+        }
+      }
     ]
   ]
 };
@@ -219,5 +280,6 @@ export {
   GEOMEAN_DESCRIPTION,
   SHOW_TELEMETRY,
   geoTip,
-  COMBOS
+  COMBOS,
+  PLATFORMS
 };

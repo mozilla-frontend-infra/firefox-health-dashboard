@@ -266,18 +266,11 @@ class Android extends Component {
                 missingDataInterval={10}
               />
             </Grid>
-            <Grid item xs={6}>
-              <PowerSummary
-                key="power"
-                browser="geckoview"
-                suite="speedometer"
-                timeDomain={timeDomain}
-              />
-            </Grid>
+
             <Grid item xs={6}>
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
-                title="Unity WebGl Pixel 2"
+                title="Speedometer Pixel 2"
                 series={selectFrom(COMBOS)
                   .where({ suite: 'speedometer' })
                   .map(({ browserLabel, filter: browserSuiteFilter }) => ({
@@ -289,6 +282,56 @@ class Android extends Component {
                           prefix: {
                             platform: 'android-hw-p2-8-0-android-aarch64',
                           },
+                        },
+                        {
+                          eq: {
+                            framework: 10,
+                            repo: 'mozilla-central',
+                            options: 'opt',
+                            suite: browserSuiteFilter.eq.suite,
+                          },
+                        },
+                      ],
+                    },
+                  }))
+                  .toArray()}
+                missingDataInterval={10}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <PowerSummary
+                key="power"
+                browser="geckoview"
+                suite="speedometer"
+                timeDomain={timeDomain}
+                platform="g5"
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <PowerSummary
+                key="power"
+                browser="geckoview"
+                suite="speedometer"
+                timeDomain={timeDomain}
+                platform="p2-aarch64"
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <PerfherderGraphContainer
+                timeDomain={timeDomain}
+                title="Unity WebGl Moto G5"
+                series={selectFrom(COMBOS)
+                  .where({ suite: 'unity' })
+                  .map(({ browserLabel, filter: browserSuiteFilter }) => ({
+                    label: browserLabel,
+                    filter: {
+                      and: [
+                        { missing: 'test' },
+                        {
+                          prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' },
                         },
                         browserSuiteFilter,
                       ],
