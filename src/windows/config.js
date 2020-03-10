@@ -285,7 +285,7 @@ const BROWSER_PLATFORMS = selectFrom([
   {
     id: 'fennec68-g5',
     browser: 'fennec68',
-    label: 'Fennec 64 g5',
+    label: 'Fennec 68 g5',
     platform: 'g5',
     platformFilter:
         { prefix: { platform: 'android-hw-g5-7-0-arm7-api-16' } },
@@ -293,7 +293,7 @@ const BROWSER_PLATFORMS = selectFrom([
   {
     id: 'fennec68-p2-aarch64',
     browser: 'fennec68',
-    label: 'Fennec 64 p2 (aarch64)',
+    label: 'Fennec 68 p2 (aarch64)',
     platform: 'p2-aarch64',
     platformFilter: {
       eq: {
