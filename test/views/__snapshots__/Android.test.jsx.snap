@@ -931,7 +931,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Speedometer CPU power usage
+                Speedometer CPU power usage Moto G5 (arm7)
                 <span
                   onClick={[Function]}
                   style={
@@ -1033,7 +1033,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Speedometer CPU power usage
+                Speedometer CPU power usage Pixel 2 (aarch64)
                 <span
                   onClick={[Function]}
                   style={

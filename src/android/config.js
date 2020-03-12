@@ -89,7 +89,8 @@ const PLATFORMS = [
     label: "Moto G5 (arm7)",
     filter: {
       eq: {
-        platform: "android-hw-g5-7-0-arm7-api-16"
+        platform: "android-hw-g5-7-0-arm7-api-16",
+        options: "pgo"
       }
     }
   },
@@ -98,7 +99,7 @@ const PLATFORMS = [
     label: "Pixel 2 (aarch64)",
     filter: {
       eq: {
-        options: "opt",
+        options: "pgo",
         platform: "android-hw-p2-8-0-android-aarch64"
       }
     }

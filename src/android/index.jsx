@@ -270,6 +270,7 @@ class Android extends Component {
                 suite="speedometer"
                 timeDomain={timeDomain}
                 platform="g5"
+                title="Speedometer CPU power usage Moto G5 (arm7)"
               />
             </Grid>
             <Grid item xs={6}>
@@ -278,6 +279,7 @@ class Android extends Component {
                 suite="speedometer"
                 timeDomain={timeDomain}
                 platform="p2-aarch64"
+                title="Speedometer CPU power usage Pixel 2 (aarch64)"
               />
             </Grid>
             {PLATFORMS.map(({ label, filter, id }) => (
