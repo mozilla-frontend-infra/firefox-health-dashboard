@@ -727,7 +727,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Speedometer
+                Speedometer Moto G5 (arm7)
                 <span
                   onClick={[Function]}
                   style={
@@ -829,7 +829,7 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Speedometer CPU power usage
+                Speedometer Pixel 2 (aarch64)
                 <span
                   onClick={[Function]}
                   style={
@@ -931,7 +931,313 @@ exports[`renders correctly 1`] = `
               <h2
                 className="ChartJsWrapper-title-121"
               >
-                Unity WebGl
+                Speedometer CPU power usage Moto G5 (arm7)
+                <span
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </h2>
+              <div
+                style={
+                  Object {
+                    "height": 80,
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "position": "absolute",
+                      "right": "50%",
+                      "top": "50%",
+                    }
+                  }
+                >
+                  <div
+                    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                    role="progressbar"
+                    style={
+                      Object {
+                        "height": 40,
+                        "width": 40,
+                      }
+                    }
+                  >
+                    <svg
+                      className="MuiCircularProgress-svg"
+                      viewBox="22 22 44 44"
+                    >
+                      <circle
+                        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                        cx={44}
+                        cy={44}
+                        fill="none"
+                        r={20.2}
+                        strokeWidth={3.6}
+                        style={Object {}}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        >
+          <div
+            style={
+              Object {
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              className="ChartJsWrapper-chartContainer-120"
+            >
+              <h2
+                className="ChartJsWrapper-title-121"
+              >
+                Speedometer CPU power usage Pixel 2 (aarch64)
+                <span
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </h2>
+              <div
+                style={
+                  Object {
+                    "height": 80,
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "position": "absolute",
+                      "right": "50%",
+                      "top": "50%",
+                    }
+                  }
+                >
+                  <div
+                    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                    role="progressbar"
+                    style={
+                      Object {
+                        "height": 40,
+                        "width": 40,
+                      }
+                    }
+                  >
+                    <svg
+                      className="MuiCircularProgress-svg"
+                      viewBox="22 22 44 44"
+                    >
+                      <circle
+                        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                        cx={44}
+                        cy={44}
+                        fill="none"
+                        r={20.2}
+                        strokeWidth={3.6}
+                        style={Object {}}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        >
+          <div
+            style={
+              Object {
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              className="ChartJsWrapper-chartContainer-120"
+            >
+              <h2
+                className="ChartJsWrapper-title-121"
+              >
+                Unity WebGl Moto G5 (arm7)
+                <span
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="MuiSvgIcon-root"
+                      focusable="false"
+                      role="presentation"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </h2>
+              <div
+                style={
+                  Object {
+                    "height": 80,
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "position": "absolute",
+                      "right": "50%",
+                      "top": "50%",
+                    }
+                  }
+                >
+                  <div
+                    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                    role="progressbar"
+                    style={
+                      Object {
+                        "height": 40,
+                        "width": 40,
+                      }
+                    }
+                  >
+                    <svg
+                      className="MuiCircularProgress-svg"
+                      viewBox="22 22 44 44"
+                    >
+                      <circle
+                        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                        cx={44}
+                        cy={44}
+                        fill="none"
+                        r={20.2}
+                        strokeWidth={3.6}
+                        style={Object {}}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        >
+          <div
+            style={
+              Object {
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              className="ChartJsWrapper-chartContainer-120"
+            >
+              <h2
+                className="ChartJsWrapper-title-121"
+              >
+                Unity WebGl Pixel 2 (aarch64)
                 <span
                   onClick={[Function]}
                   style={
