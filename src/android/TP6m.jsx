@@ -108,7 +108,7 @@ class TP6M extends React.Component {
     const {
       classes, navigation, test, browserPlatform, past, ending,
     } = this.props;
-    const { browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
+    const { repo, browser, platform } = BROWSER_PLATFORMS.where({ id: browserPlatform }).first();
     const timeDomain = new TimeDomain({ past, ending, interval: 'day' });
     const {
       data, count, total, referenceValue, refMean,
@@ -164,6 +164,7 @@ class TP6M extends React.Component {
 
             {selectFrom(TP6_COMBOS)
               .where({
+                repo,
                 browser,
                 platform,
                 test,
@@ -183,7 +184,7 @@ class TP6M extends React.Component {
                     reference={referenceValue ? referenceValue.where({ site }).getValue() : null}
                     series={selectFrom(series)
                       .sort(['ordering'])
-                      .select({ label: 'browser', filter: 'filter' })
+                      .select({ repo: 'repo', label: 'browser', filter: 'filter' })
                       .toArray()}
                   />
                 </Grid>

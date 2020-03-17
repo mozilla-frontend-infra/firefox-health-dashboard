@@ -252,8 +252,11 @@ class Android extends Component {
                   series={selectFrom(COMBOS)
                     .where({ suite: 'speedometer' })
                     .map(
-                      ({ browserLabel, filter: browserSuiteFilter, test }) => ({
+                      ({
+                        browserLabel, repo, filter: browserSuiteFilter, test,
+                      }) => ({
                         label: browserLabel,
+                        repo,
                         filter: {
                           and: [test, filter, browserSuiteFilter],
                         },
@@ -290,8 +293,11 @@ class Android extends Component {
                   series={selectFrom(COMBOS)
                     .where({ suite: 'unity' })
                     .map(
-                      ({ browserLabel, filter: browserSuiteFilter, test }) => ({
+                      ({
+                        browserLabel, repo, filter: browserSuiteFilter, test,
+                      }) => ({
                         label: browserLabel,
+                        repo,
                         filter: {
                           and: [test, filter, browserSuiteFilter],
                         },

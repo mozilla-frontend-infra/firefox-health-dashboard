@@ -53,7 +53,10 @@ class TP6 extends React.Component {
                     title={site}
                     series={selectFrom(series)
                       .sort(['ordering'])
-                      .map(({ browser, platform, filter }) => ({
+                      .map(({
+                        repo, browser, platform, filter,
+                      }) => ({
+                        repo,
                         label: `${browser} (${platform})`,
                         filter,
                       }))

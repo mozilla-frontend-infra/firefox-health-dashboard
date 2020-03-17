@@ -58,7 +58,8 @@ class Subtests extends React.Component {
       .map((_, g) => g)
       .materialize();
     const series = focus
-      .map(({ browser, filter }) => ({
+      .map(({ repo, browser, filter }) => ({
+        repo,
         label: browser,
         filter: { and: [{ missing: 'test' }, filter] },
       }));
@@ -94,8 +95,9 @@ class Subtests extends React.Component {
                     timeDomain={timeDomain}
                     title={test}
                     series={focus
-                      .map(({ browser, filter }) => (
+                      .map(({ repo, browser, filter }) => (
                         {
+                          repo,
                           label: browser,
                           filter: { and: [{ eq: { test } }, filter] },
                         }

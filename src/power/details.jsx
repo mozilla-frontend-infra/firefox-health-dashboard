@@ -45,8 +45,9 @@ class PowerDetails extends React.Component {
                   timeDomain={timeDomain}
                   title={`${testLabel} - ${platformLabel}`}
                   series={selectFrom(suiteCombos)
-                    .map(({ browserLabel, filter: browserFilter }) => ({
+                    .map(({ repo, browserLabel, filter: browserFilter }) => ({
                       label: browserLabel,
+                      repo,
                       filter: {
                         and: [testFilter, platformFilter, browserFilter],
                       },

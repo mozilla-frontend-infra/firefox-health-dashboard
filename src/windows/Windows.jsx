@@ -131,8 +131,11 @@ export default class WindowsIndex extends Component {
               title={site}
               series={selectFrom(series)
                 .sort(['ordering'])
-                .map(({ browser, platform, filter }) => ({
+                .map(({
+                  repo, browser, platform, filter,
+                }) => ({
                   label: `${browser} (${platform})`,
+                  repo,
                   filter,
                 }))}
             />

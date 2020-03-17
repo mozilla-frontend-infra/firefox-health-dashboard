@@ -30,7 +30,8 @@ class PowerSummary extends React.Component {
         }}
         title={title}
         series={selectFrom(combos)
-          .map(({ browserLabel, filter: browserSuiteFilter }) => ({
+          .map(({ repo, browserLabel, filter: browserSuiteFilter }) => ({
+            repo,
             label: browserLabel,
             filter: {
               and: [testFilter, browserSuiteFilter, platfomFilter],
