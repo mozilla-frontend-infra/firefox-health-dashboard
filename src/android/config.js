@@ -7,6 +7,7 @@ import { GMTDate as Date } from "../vendor/dates";
 import { round } from "../vendor/math";
 import { HelpIcon } from "../utils/icons";
 import { Data } from "../vendor/datas";
+import { MOZILLA_CENTRAL } from "../utils/PerfherderGraphContainer";
 
 const SHOW_TELEMETRY = false;
 const TARGET_NAME = "Firefox ESR";
@@ -107,9 +108,10 @@ const PLATFORMS = [
 ];
 
 const COMBO_TABLE = {
-  header: ["browser", "browserLabel", "test", "suite", "suiteLabel", "filter"],
+  header: ["repo", "browser", "browserLabel", "test", "suite", "suiteLabel", "filter"],
   data: [
     [
+      MOZILLA_CENTRAL,
       "geckoview",
       "Geckoview",
       { missing: "test" },
@@ -123,8 +125,9 @@ const COMBO_TABLE = {
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
+    // [MOZILLA_CENTRAL, 'refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
     [
+      MOZILLA_CENTRAL,
       "fenix",
       "Firefox Preview",
       { missing: "test" },
@@ -139,6 +142,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "fennec68",
       "Firefox ESR",
       { missing: "test" },
@@ -154,6 +158,7 @@ const COMBO_TABLE = {
     ],
 
     [
+      MOZILLA_CENTRAL,
       "geckoview",
       "Geckoview",
       { missing: "test" },
@@ -167,8 +172,9 @@ const COMBO_TABLE = {
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
+    // [MOZILLA_CENTRAL, 'refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
     [
+      MOZILLA_CENTRAL,
       "fenix",
       "Firefox Preview",
       { missing: "test" },
@@ -183,6 +189,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "fennec68",
       "Firefox ESR",
       { missing: "test" },
@@ -198,6 +205,7 @@ const COMBO_TABLE = {
     ],
 
     [
+      MOZILLA_CENTRAL,
       "geckoview",
       "Geckoview",
       { missing: "test" },
@@ -211,8 +219,9 @@ const COMBO_TABLE = {
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
+    // [MOZILLA_CENTRAL, 'refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
     [
+      MOZILLA_CENTRAL,
       "fenix",
       "Firefox Preview",
       { missing: "test" },
@@ -227,6 +236,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "fennec68",
       "Firefox ESR",
       { missing: "test" },
@@ -241,6 +251,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "geckoview",
       "Geckoview",
       { missing: "test" },
@@ -255,6 +266,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "fenix",
       "Firefox Preview",
       { missing: "test" },
@@ -269,6 +281,7 @@ const COMBO_TABLE = {
       }
     ],
     [
+      MOZILLA_CENTRAL,
       "fennec68",
       "Firefox ESR",
       { missing: "test" },
