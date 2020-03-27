@@ -1983,34 +1983,146 @@ const TP6_SITES_DATA = {
     ['geckoview', 'warm', 'Tp6 mobile: YouTube', { eq: { suite: 'raptor-tp6m-youtube-geckoview', framework: 10, repo: 'mozilla-central' } }],
     ['geckoview', 'warm', 'Tp6 mobile: YouTube Watch', { eq: { suite: 'raptor-tp6m-youtube-watch-geckoview', framework: 10, repo: 'mozilla-central' } }],
 
-    ['fenix', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-cold-amazon-fenix', 'raptor-tp6m-amazon-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-cold-amazon-search-fenix', 'raptor-tp6m-amazon-search-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-cold-aframeio-animation-fenix', 'raptor-tp6m-aframeio-animation-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-cold-allrecipes-fenix', 'raptor-tp6m-allrecipes-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-cold-bbc-fenix-cold', 'raptor-tp6m-bbc-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-cold-bing-fenix', 'raptor-tp6m-bing-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-fenix', 'raptor-tp6m-bing-restaurants-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-cold-booking-fenix', 'raptor-tp6m-booking-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cold-cnn-fenix', 'raptor-tp6m-cnn-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-fenix', 'raptor-tp6m-cnn-ampstories-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-fenix', 'raptor-tp6m-ebay-kleinanzeigen-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-fenix', 'raptor-tp6m-ebay-kleinanzeigen-search-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-cold-espn-fenix', 'raptor-tp6m-espn-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-cold-facebook-fenix', 'raptor-tp6m-facebook-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-cold-facebook-cristiano-fenix', 'raptor-tp6m-facebook-cristiano-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-cold-google-fenix', 'raptor-tp6m-google-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-cold-google-maps-fenix', 'raptor-tp6m-google-maps-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-cold-google-restaurants-fenix', 'raptor-tp6m-google-restaurants-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-cold-instagram-fenix', 'raptor-tp6m-instagram-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-cold-imdb-fenix', 'raptor-tp6m-imdb-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-cold-jianshu-fenix', 'raptor-tp6m-jianshu-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-cold-microsoft-support-fenix', 'raptor-tp6m-microsoft-support-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-cold-reddit-fenix', 'raptor-tp6m-reddit-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-cold-stackoverflow-fenix', 'raptor-tp6m-stackoverflow-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-cold-web-de-fenix', 'raptor-tp6m-web-de-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-cold-wikipedia-fenix', 'raptor-tp6m-wikipedia-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-cold-youtube-fenix', 'raptor-tp6m-youtube-fenix-cold'], framework: 10, repo: 'fenix' } }],
-    ['fenix', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-cold-youtube-watch-fenix', 'raptor-tp6m-youtube-watch-fenix-cold'], framework: 10, repo: 'fenix' } }],
+    ['fenix', 'cold', 'Tp6 mobile: Amazon', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-amazon-fenix', 'raptor-tp6m-amazon-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'amazon-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Amazon Search', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-amazon-search-fenix', 'raptor-tp6m-amazon-search-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'amazon-search-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Aframe.io', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-aframeio-animation-fenix', 'raptor-tp6m-aframeio-animation-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'aframe-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: All Recipes', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-allrecipes-fenix', 'raptor-tp6m-allrecipes-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'allrecipes-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: BBC', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-bbc-fenix-cold', 'raptor-tp6m-bbc-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'bbc-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Bing', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-bing-fenix', 'raptor-tp6m-bing-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'bing-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Bing Restaurants', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-fenix', 'raptor-tp6m-bing-restaurants-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'bing-search-restaurants-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Booking', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-booking-fenix', 'raptor-tp6m-booking-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'booking-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: CNN', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-cnn-fenix', 'raptor-tp6m-cnn-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'cnn-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: CNN AmpStories', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-fenix', 'raptor-tp6m-cnn-ampstories-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'cnn-ampstories-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Kleinanzeigen', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-fenix', 'raptor-tp6m-ebay-kleinanzeigen-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'ebay-kleinanzeigen-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Kleinanzeigen Search', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-fenix', 'raptor-tp6m-ebay-kleinanzeigen-search-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'ebay-kleinanzeigen-search-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: ESPN', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-espn-fenix', 'raptor-tp6m-espn-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'espn-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Facebook', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-facebook-fenix', 'raptor-tp6m-facebook-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'facebook-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Facebook Cristiano', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-facebook-cristiano-fenix', 'raptor-tp6m-facebook-cristiano-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'facebook-cristiano-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Google', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-google-fenix', 'raptor-tp6m-google-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'google-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Google Maps', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-google-maps-fenix', 'raptor-tp6m-google-maps-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'google-maps-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Google Restaurants', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-google-restaurants-fenix', 'raptor-tp6m-google-restaurants-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'google-restaurants-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Instagram', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-instagram-fenix', 'raptor-tp6m-instagram-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'instagram-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Imdb', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-imdb-fenix', 'raptor-tp6m-imdb-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'imdb-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Jianshu', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-jianshu-fenix', 'raptor-tp6m-jianshu-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'jianshu-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Microsoft Support', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-microsoft-support-fenix', 'raptor-tp6m-microsoft-support-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'microsoft-support-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Reddit', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-reddit-fenix', 'raptor-tp6m-reddit-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'reddit-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Stackoverflow', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-stackoverflow-fenix', 'raptor-tp6m-stackoverflow-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'stackoverflow-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Web.de', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-web-de-fenix', 'raptor-tp6m-web-de-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'web-de-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: Wikipedia', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-wikipedia-fenix', 'raptor-tp6m-wikipedia-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'wikipedia-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: YouTube', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-youtube-fenix', 'raptor-tp6m-youtube-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'youtube-cold', framework: 13, repo: 'fenix' } }],
+    }],
+    ['fenix', 'cold', 'Tp6 mobile: YouTube Watch', {
+      or: [
+        { and: [{ lt: { push_timestamp: { date: '2020-03-19' } } }, { eq: { suite: ['raptor-tp6m-cold-youtube-watch-fenix', 'raptor-tp6m-youtube-watch-fenix-cold'], framework: 10, repo: 'fenix' } }] },
+        { eq: { suite: 'youtube-watch-cold', framework: 13, repo: 'fenix' } }],
+    }],
 
     ['fennec68', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
     ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
