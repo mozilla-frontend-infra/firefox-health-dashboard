@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { Link } from '../vendor/components/links';
 import { AuthContext, AuthProvider } from '../vendor/auth0/client';
 import { getWindowTitle } from './helpers';
@@ -21,13 +23,20 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
   },
-  title: {
+  titleBar: {
     color: 'white',
     backgroundColor: 'black',
     borderBottom: '1px solid #fff',
     fontWeight: 100,
     height: '3rem',
-    padding: '1rem 0 0 1rem',
+    padding: '0rem 0 0 1rem',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    display: 'flex',
+    alignItems: 'center',
   },
   subtitle: {
     color: '#d1d2d3',
@@ -35,13 +44,37 @@ const styles = {
     margin: '.5rem .6rem .5rem',
     padding: '.5em 0',
   },
+  icons: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  select: {
+    color: 'white',
+    '&:before': {
+      borderColor: 'white',
+    },
+    '&:after': {
+      borderColor: 'white',
+    },
+  },
+  icon: {
+    fill: 'white',
+  },
 };
 
 class DashboardPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      version: 'nightly',
+    };
   }
+
+  chooseVersion = event => {
+    this.setState({ version: event.target.value });
+    console.log('version:', this.state.version);
+  };
 
   componentDidMount() {
     document.title = getWindowTitle(this.props.title);
@@ -55,12 +88,26 @@ class DashboardPage extends Component {
     return (
       <AuthProvider>
         <div className={classes.root}>
-          <div className={classes.title}>
-            <h1 style={{ display: 'inline' }}>
+          <div className={classes.titleBar}>
+            <h1 className={classes.title}>
               {title}
               <small className={classes.subtitle}>{subtitle}</small>
             </h1>
-            <div style={{ padding: '0 1rem 0 0', float: 'right' }}>
+            <div className={classes.icons}>
+              <Select
+                value={this.state.version}
+                onChange={this.chooseVersion}
+                displayEmpty
+                className={classes.select}
+                inputProps={{
+                  classes: {
+                    icon: classes.icon,
+                  },
+                }}
+              >
+                <MenuItem value="nightly">Nightly</MenuItem>
+                <MenuItem value="release">Release</MenuItem>
+              </Select>
               <Link to="/" title="Home">
                 <HomeIcon />
               </Link>
@@ -76,6 +123,7 @@ class DashboardPage extends Component {
               <Link to="/playback" title="Playback">
                 <VideoIcon />
               </Link>
+
               <a
                 href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"
                 title="Source Code"
@@ -110,13 +158,11 @@ class DashboardPage extends Component {
                   );
                 }}
               </AuthContext.Consumer>
-
             </div>
           </div>
           <>{children}</>
         </div>
       </AuthProvider>
-
     );
   }
 }
