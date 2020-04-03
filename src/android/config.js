@@ -220,7 +220,7 @@ const COMBO_TABLE = {
       "Speedometer",
       {
         eq: {
-          framework: 10,
+          framework: 13,
           repo: "mozilla-central",
           suite: ["raptor-speedometer-fenix"]
         }
