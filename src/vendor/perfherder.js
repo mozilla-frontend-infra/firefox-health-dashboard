@@ -55,6 +55,11 @@ const getFramework = async ({ repo, framework }) => {
       const clean = toPairs(rawData)
         .map((meta, signature) => {
           const { suite, test, lower_is_better } = meta;
+          if (suite === 'speedometer') {
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('repo, framework', repo, framework);
+            console.log('meta.....signature.....suite, test', meta, signature, suite, test);
+          }
           const cleanTest = (() => {
             if (missing(test)) return null;
 

@@ -218,12 +218,10 @@ const COMBO_TABLE = {
       { missing: "test" },
       "speedometer",
       "Speedometer",
-      {
-        eq: {
-          framework: 13,
-          repo: "mozilla-central",
-          suite: ["raptor-speedometer-fenix"]
-        }
+      {or: [
+          {and: [{ lt: { push_timestamp: { date: '2020-04-03' } } }, { eq: { suite: ['raptor-speedometer-fenix'], framework: 10, repo: 'mozilla-central' } }] },
+          {eq: { framework: 13, repo: "mozilla-central", suite: ["speedometer"]}},
+      ]
       }
     ],
     [
