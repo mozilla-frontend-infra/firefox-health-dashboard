@@ -219,8 +219,8 @@ const COMBO_TABLE = {
       "speedometer",
       "Speedometer",
       {or: [
-          {and: [{ lt: { push_timestamp: { date: '2020-04-03' } } }, { eq: { suite: ['raptor-speedometer-fenix'], framework: 10, repo: 'mozilla-central' } }] },
-          {eq: { framework: 13, repo: "mozilla-central", suite: ["speedometer"]}},
+          {and: [{ lt: { push_timestamp: { date: '2020-04-10' } } }, { eq: { suite: ['raptor-speedometer-fenix'], framework: 10, repo: 'mozilla-central' } }] },
+          {eq: { framework: 13, repo: "mozilla-central", suite: ["speedometer"], application: "fenix"}},
       ]
       }
     ],
