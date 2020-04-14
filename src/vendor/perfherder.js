@@ -128,6 +128,7 @@ const getFramework = async ({ repo, framework }) => {
             parent: meta.parent_signature,
             id: meta.id,
             framework: meta.framework_id,
+            application: meta.application,
             repo,
           };
         })
