@@ -44,7 +44,7 @@ class TP6Fission extends React.Component {
           <Grid container spacing={1}>
             {selectFrom(TP6_FISSION_COMBOS)
               .where({ test })
-              .map(({browser, filter, site}) => (
+              .map(({ browser, filter, site }) => (
                 <Grid
                   item
                   xs={6}
