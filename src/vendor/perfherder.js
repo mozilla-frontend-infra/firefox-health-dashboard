@@ -67,6 +67,12 @@ const getFramework = async ({ repo, framework }) => {
           let lowerIsBetter = lower_is_better;
           let unit = 'Score';
 
+          if (meta.extra_options && meta.extra_options.includes('fission')) {
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('repo, framework', repo, framework);
+            console.log('meta.....signature.....suite, test', meta, signature, suite, test);
+          }
+
           if (suite.includes('youtube-playback')) {
             lowerIsBetter = true;
             unit = 'count';
@@ -129,6 +135,7 @@ const getFramework = async ({ repo, framework }) => {
             id: meta.id,
             framework: meta.framework_id,
             repo,
+            fission: Boolean(meta.extra_options) && meta.extra_options.includes('fission'),
           };
         })
         .toArray();

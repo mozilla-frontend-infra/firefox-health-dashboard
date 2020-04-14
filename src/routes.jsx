@@ -13,6 +13,8 @@ import Subtests from './windows/subtests';
 import TP6 from './windows/TP6';
 import TP6M from './android/TP6m';
 import Windows from './windows/Windows';
+import TP6Fission from './fission/TP6Fission';
+import Fission from './fission/index';
 
 const Routes = () => (
   <BrowserRouter>
@@ -28,6 +30,8 @@ const Routes = () => (
       <Route path="/playback" component={Playback} />
       <Route path="/windows/subtests" component={Subtests} />
       <Route path="/windows/:bits" component={Windows} />
+      <Route path="/fission/tp6" component={TP6Fission} />
+      <Route path="/fission" component={Fission} />
       <Route path="/" component={Home} />
       <Route component={NoMatch} />
     </Switch>
