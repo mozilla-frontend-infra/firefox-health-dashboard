@@ -28,8 +28,8 @@ const ALLOWED_TREEHERDER_TIMERANGES = [1, 2, 7, 14, 30, 60, 90].map(
 );
 
 const MOZILLA_CENTRAL = {
-  name: 'mozilla-central',
-  revisionURL: 'https://hg.mozilla.org/mozilla-central/pushloghtml?changeset={{revision}}',
+  name: 'autoland',
+  revisionURL: 'https://hg.mozilla.org/autoland/pushloghtml?changeset={{revision}}',
 };
 
 const FENIX = {

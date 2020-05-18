@@ -11,63 +11,63 @@ const BENCHMARK_SUITES = {
       eq: {
         suite: 'raptor-motionmark-htmlsuite-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'MotionMark HTML', {
       eq: {
         suite: 'raptor-motionmark-htmlsuite-chromium',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'MotionMark HTML', {
       eq: {
         suite: 'raptor-motionmark-htmlsuite-chrome',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'MotionMark Animometer', {
       eq: {
         suite: 'raptor-motionmark-animometer-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'MotionMark Animometer', {
       eq: {
         suite: 'raptor-motionmark-animometer-chromium',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'MotionMark Animometer', {
       eq: {
         suite: 'raptor-motionmark-animometer-chrome',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'Speedometer', {
       eq: {
         suite: 'raptor-speedometer-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'Speedometer', {
       eq: {
         suite: 'raptor-speedometer-chromium',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'Speedometer', {
       eq: {
         suite: 'raptor-speedometer-chrome',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
   ],
@@ -212,7 +212,7 @@ const BROWSER_PLATFORMS = selectFrom([
       eq: {
         platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     },
   },
@@ -227,7 +227,7 @@ const BROWSER_PLATFORMS = selectFrom([
       eq: {
         platform: ['macosx1010-64-shippable', 'macosx1014-64-shippable', 'macosx64-shippable'],
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     },
   },
@@ -378,434 +378,434 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-facebook-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Amazon', {
       eq: {
         suite: 'raptor-tp6-amazon-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: YouTube', {
       eq: {
         suite: 'raptor-tp6-youtube-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Google', {
       eq: {
         suite: 'raptor-tp6-google-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Imdb', {
       eq: {
         suite: 'raptor-tp6-imdb-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Imgur', {
       eq: {
         suite: 'raptor-tp6-imgur-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Netflix', {
       eq: {
         suite: 'raptor-tp6-netflix-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Fandom', {
       eq: {
         suite: 'raptor-tp6-fandom-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Bing', {
       eq: {
         suite: 'raptor-tp6-bing-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Yandex', {
       eq: {
         suite: 'raptor-tp6-yandex-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Apple', {
       eq: {
         suite: 'raptor-tp6-apple-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Microsoft', {
       eq: {
         suite: 'raptor-tp6-microsoft-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Office', {
       eq: {
         suite: 'raptor-tp6-office-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Reddit', {
       eq: {
         suite: 'raptor-tp6-reddit-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: eBay', {
       eq: {
         suite: 'raptor-tp6-ebay-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Instagram', {
       eq: {
         suite: 'raptor-tp6-instagram-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: PayPal', {
       eq: {
         suite: 'raptor-tp6-paypal-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Pinterest', {
       eq: {
         suite: 'raptor-tp6-pinterest-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Instagram (binast)', {
       eq: {
         suite: 'raptor-tp6-binast-instagram-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Docs', {
       eq: {
         suite: 'raptor-tp6-docs-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Google Mail', {
       eq: {
         suite: 'raptor-tp6-google-mail-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: LinkedIn', {
       eq: {
         suite: 'raptor-tp6-linkedin-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Outlook', {
       eq: {
         suite: 'raptor-tp6-outlook-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Sheets', {
       eq: {
         suite: 'raptor-tp6-sheets-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Slides', {
       eq: {
         suite: 'raptor-tp6-slides-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Tumblr', {
       eq: {
         suite: 'raptor-tp6-tumblr-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Twitter', {
       eq: {
         suite: 'raptor-tp6-twitter-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Twitch', {
       eq: {
         suite: 'raptor-tp6-twitch-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Wikipedia', {
       eq: {
         suite: 'raptor-tp6-wikipedia-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Yahoo Mail', {
       eq: {
         suite: 'raptor-tp6-yahoo-mail-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'warm', 'Tp6: Yahoo News', {
       eq: {
         suite: 'raptor-tp6-yahoo-news-firefox',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Facebook', {
       eq: {
         suite: 'raptor-tp6-facebook-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Amazon', {
       eq: {
         suite: 'raptor-tp6-amazon-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: YouTube', {
       eq: {
         suite: 'raptor-tp6-youtube-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Google', {
       eq: {
         suite: 'raptor-tp6-google-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Imdb', {
       eq: {
         suite: 'raptor-tp6-imdb-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Imgur', {
       eq: {
         suite: 'raptor-tp6-imgur-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Netflix', {
       eq: {
         suite: 'raptor-tp6-netflix-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Fandom', {
       eq: {
         suite: 'raptor-tp6-fandom-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Bing', {
       eq: {
         suite: 'raptor-tp6-bing-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Yandex', {
       eq: {
         suite: 'raptor-tp6-yandex-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Apple', {
       eq: {
         suite: 'raptor-tp6-apple-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Microsoft', {
       eq: {
         suite: 'raptor-tp6-microsoft-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Office', {
       eq: {
         suite: 'raptor-tp6-office-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Reddit', {
       eq: {
         suite: 'raptor-tp6-reddit-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: eBay', {
       eq: {
         suite: 'raptor-tp6-ebay-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Instagram', {
       eq: {
         suite: 'raptor-tp6-instagram-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: PayPal', {
       eq: {
         suite: 'raptor-tp6-paypal-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Pinterest', {
       eq: {
         suite: 'raptor-tp6-pinterest-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Instagram (binast)', {
       eq: {
         suite: 'raptor-tp6-binast-instagram-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Docs', {
       eq: {
         suite: 'raptor-tp6-docs-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Google Mail', {
       eq: {
         suite: 'raptor-tp6-google-mail-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: LinkedIn', {
       eq: {
         suite: 'raptor-tp6-linkedin-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Outlook', {
       eq: {
         suite: 'raptor-tp6-outlook-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Sheets', {
       eq: {
         suite: 'raptor-tp6-sheets-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Slides', {
       eq: {
         suite: 'raptor-tp6-slides-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Tumblr', {
       eq: {
         suite: 'raptor-tp6-tumblr-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Twitter', {
       eq: {
         suite: 'raptor-tp6-twitter-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Twitch', {
       eq: {
         suite: 'raptor-tp6-twitch-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Wikipedia', {
       eq: {
         suite: 'raptor-tp6-wikipedia-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Yahoo Mail', {
       eq: {
         suite: 'raptor-tp6-yahoo-mail-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Firefox', 'cold', 'Tp6: Yahoo News', {
       eq: {
         suite: 'raptor-tp6-yahoo-news-firefox-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
 
@@ -816,14 +816,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-facebook-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-facebook-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -833,14 +833,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-amazon-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-amazon-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -850,14 +850,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-google-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-google-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -867,14 +867,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-youtube-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-youtube-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -884,14 +884,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-imdb-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-imdb-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -901,14 +901,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-imgur-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-imgur-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -918,14 +918,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-netflix-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-netflix-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -935,14 +935,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-fandom-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-fandom-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -952,14 +952,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-bing-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-bing-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -969,14 +969,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-yandex-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-yandex-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -986,14 +986,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-apple-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-apple-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1003,14 +1003,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-microsoft-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-microsoft-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1018,7 +1018,7 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-office-chromium',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'warm', 'Tp6: Reddit', {
@@ -1027,14 +1027,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-reddit-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-reddit-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1044,14 +1044,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-docs-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-docs-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1061,14 +1061,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-ebay-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-ebay-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1078,14 +1078,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-google-mail-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-google-mail-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1095,14 +1095,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-instagram-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-instagram-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1111,7 +1111,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-paypal-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1121,14 +1121,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-pinterest-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-pinterest-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1138,14 +1138,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-sheets-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-sheets-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1155,14 +1155,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-slides-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-slides-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1172,14 +1172,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-tumblr-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-tumblr-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1189,14 +1189,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-twitter-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-twitter-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1206,14 +1206,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-twitch-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-twitch-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1223,14 +1223,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-wikipedia-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-wikipedia-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1240,14 +1240,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-yahoo-mail-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-yahoo-mail-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1257,14 +1257,14 @@ const TP6_SITES_DATA = {
           eq: {
             suite: 'raptor-tp6-yahoo-news-chrome',
             framework: 10,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         }],
       }, {
         eq: {
           suite: 'raptor-tp6-yahoo-news-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1273,126 +1273,126 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-facebook-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Amazon', {
       eq: {
         suite: 'raptor-tp6-amazon-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Google', {
       eq: {
         suite: 'raptor-tp6-google-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: YouTube', {
       eq: {
         suite: 'raptor-tp6-youtube-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Imdb', {
       eq: {
         suite: 'raptor-tp6-imdb-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Imgur', {
       eq: {
         suite: 'raptor-tp6-imgur-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Netflix', {
       eq: {
         suite: 'raptor-tp6-netflix-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Fandom', {
       eq: {
         suite: 'raptor-tp6-fandom-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Bing', {
       eq: {
         suite: 'raptor-tp6-bing-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Yandex', {
       eq: {
         suite: 'raptor-tp6-yandex-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Apple', {
       eq: {
         suite: 'raptor-tp6-apple-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Microsoft', {
       eq: {
         suite: 'raptor-tp6-microsoft-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Office', {
       eq: {
         suite: 'raptor-tp6-office-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Reddit', {
       eq: {
         suite: 'raptor-tp6-reddit-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: eBay', {
       eq: {
         suite: 'raptor-tp6-ebay-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Instagram', {
       eq: {
         suite: 'raptor-tp6-instagram-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: PayPal', {
       eq: {
         suite: 'raptor-tp6-paypal-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Pinterest', {
       eq: {
         suite: 'raptor-tp6-pinterest-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     // ['Chromium', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-chromium-cold'}}],
@@ -1400,14 +1400,14 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-docs-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Google Mail', {
       eq: {
         suite: 'raptor-tp6-google-mail-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     // ['Chromium', 'cold', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-chromium-cold'}}],
@@ -1416,56 +1416,56 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-sheets-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Slides', {
       eq: {
         suite: 'raptor-tp6-slides-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Tumblr', {
       eq: {
         suite: 'raptor-tp6-tumblr-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Twitter', {
       eq: {
         suite: 'raptor-tp6-twitter-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Twitch', {
       eq: {
         suite: 'raptor-tp6-twitch-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Wikipedia', {
       eq: {
         suite: 'raptor-tp6-wikipedia-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Yahoo Mail', {
       eq: {
         suite: 'raptor-tp6-yahoo-mail-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chromium', 'cold', 'Tp6: Yahoo News', {
       eq: {
         suite: 'raptor-tp6-yahoo-news-chromium-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
 
@@ -1475,7 +1475,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-facebook-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1484,7 +1484,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-amazon-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1493,7 +1493,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-google-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1502,7 +1502,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-youtube-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1511,7 +1511,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-imdb-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1520,7 +1520,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-imgur-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1529,7 +1529,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-netflix-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1538,7 +1538,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-fandom-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1547,7 +1547,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-bing-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1556,7 +1556,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-yandex-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1565,7 +1565,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-apple-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1574,7 +1574,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-microsoft-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1583,7 +1583,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-office-chromium',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1592,7 +1592,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-reddit-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1601,7 +1601,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-docs-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1610,7 +1610,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-ebay-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1619,7 +1619,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-google-mail-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1628,7 +1628,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-instagram-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1637,7 +1637,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-paypal-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1646,7 +1646,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-pinterest-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1655,7 +1655,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-sheets-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1664,7 +1664,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-slides-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1673,7 +1673,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-tumblr-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1682,7 +1682,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-twitter-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1691,7 +1691,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-twitch-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1700,7 +1700,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-wikipedia-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1709,7 +1709,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-yahoo-mail-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1718,7 +1718,7 @@ const TP6_SITES_DATA = {
         eq: {
           suite: 'raptor-tp6-yahoo-news-chrome',
           framework: 10,
-          repo: 'mozilla-central',
+          repo: 'autoland',
         },
       }],
     }],
@@ -1727,126 +1727,126 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-facebook-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Amazon', {
       eq: {
         suite: 'raptor-tp6-amazon-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Google', {
       eq: {
         suite: 'raptor-tp6-google-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: YouTube', {
       eq: {
         suite: 'raptor-tp6-youtube-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Imdb', {
       eq: {
         suite: 'raptor-tp6-imdb-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Imgur', {
       eq: {
         suite: 'raptor-tp6-imgur-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Netflix', {
       eq: {
         suite: 'raptor-tp6-netflix-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Fandom', {
       eq: {
         suite: 'raptor-tp6-fandom-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Bing', {
       eq: {
         suite: 'raptor-tp6-bing-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Yandex', {
       eq: {
         suite: 'raptor-tp6-yandex-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Apple', {
       eq: {
         suite: 'raptor-tp6-apple-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Microsoft', {
       eq: {
         suite: 'raptor-tp6-microsoft-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Office', {
       eq: {
         suite: 'raptor-tp6-office-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Reddit', {
       eq: {
         suite: 'raptor-tp6-reddit-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: eBay', {
       eq: {
         suite: 'raptor-tp6-ebay-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Instagram', {
       eq: {
         suite: 'raptor-tp6-instagram-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: PayPal', {
       eq: {
         suite: 'raptor-tp6-paypal-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Pinterest', {
       eq: {
         suite: 'raptor-tp6-pinterest-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     // ['Chrome', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-chrome-cold'}}],
@@ -1854,14 +1854,14 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-docs-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Google Mail', {
       eq: {
         suite: 'raptor-tp6-google-mail-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     // ['Chrome', 'cold', 'Tp6: LinkedIn', {eq:{suite:'raptor-tp6-linkedin-chrome-cold'}}],
@@ -1870,118 +1870,118 @@ const TP6_SITES_DATA = {
       eq: {
         suite: 'raptor-tp6-sheets-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Slides', {
       eq: {
         suite: 'raptor-tp6-slides-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Tumblr', {
       eq: {
         suite: 'raptor-tp6-tumblr-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Twitter', {
       eq: {
         suite: 'raptor-tp6-twitter-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Twitch', {
       eq: {
         suite: 'raptor-tp6-twitch-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Wikipedia', {
       eq: {
         suite: 'raptor-tp6-wikipedia-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Yahoo Mail', {
       eq: {
         suite: 'raptor-tp6-yahoo-mail-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
     ['Chrome', 'cold', 'Tp6: Yahoo News', {
       eq: {
         suite: 'raptor-tp6-yahoo-news-chrome-cold',
         framework: 10,
-        repo: 'mozilla-central',
+        repo: 'autoland',
       },
     }],
 
 
-    ['geckoview', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-cold-amazon-geckoview', 'raptor-tp6m-amazon-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-cold-amazon-search-geckoview', 'raptor-tp6m-amazon-search-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-cold-aframeio-animation-geckoview', 'raptor-tp6m-aframeio-animation-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-cold-allrecipes-geckoview', 'raptor-tp6m-allrecipes-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-cold-bbc-geckoview', 'raptor-tp6m-bbc-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-cold-bing-geckoview', 'raptor-tp6m-bing-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-geckoview', 'raptor-tp6m-bing-restaurants-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-cold-booking-geckoview', 'raptor-tp6m-booking-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cold-cnn-geckoview', 'raptor-tp6m-cnn-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-geckoview', 'raptor-tp6m-cnn-ampstories-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-cold-espn-geckoview', 'raptor-tp6m-espn-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-cold-facebook-geckoview', 'raptor-tp6m-facebook-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-cold-facebook-cristiano-geckoview', 'raptor-tp6m-facebook-cristiano-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-cold-google-geckoview', 'raptor-tp6m-google-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-cold-google-maps-geckoview', 'raptor-tp6m-google-maps-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-cold-google-restaurants-geckoview', 'raptor-tp6m-google-restaurants-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-cold-instagram-geckoview', 'raptor-tp6m-instagram-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-cold-imdb-geckoview', 'raptor-tp6m-imdb-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-cold-jianshu-geckoview', 'raptor-tp6m-jianshu-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-cold-microsoft-support-geckoview', 'raptor-tp6m-microsoft-support-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-cold-reddit-geckoview', 'raptor-tp6m-reddit-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-cold-stackoverflow-geckoview', 'raptor-tp6m-stackoverflow-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-cold-web-de-geckoview', 'raptor-tp6m-web-de-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-cold-wikipedia-geckoview', 'raptor-tp6m-wikipedia-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-cold-youtube-geckoview', 'raptor-tp6m-youtube-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-cold-youtube-watch-geckoview', 'raptor-tp6m-youtube-watch-geckoview-cold'], framework: 10, repo: 'mozilla-central' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-cold-amazon-geckoview', 'raptor-tp6m-amazon-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-cold-amazon-search-geckoview', 'raptor-tp6m-amazon-search-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-cold-aframeio-animation-geckoview', 'raptor-tp6m-aframeio-animation-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-cold-allrecipes-geckoview', 'raptor-tp6m-allrecipes-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-cold-bbc-geckoview', 'raptor-tp6m-bbc-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-cold-bing-geckoview', 'raptor-tp6m-bing-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-cold-bing-restaurants-geckoview', 'raptor-tp6m-bing-restaurants-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-cold-booking-geckoview', 'raptor-tp6m-booking-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cold-cnn-geckoview', 'raptor-tp6m-cnn-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cold-cnn-ampstories-geckoview', 'raptor-tp6m-cnn-ampstories-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-cold-ebay-kleinanzeigen-search-geckoview', 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-cold-espn-geckoview', 'raptor-tp6m-espn-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-cold-facebook-geckoview', 'raptor-tp6m-facebook-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-cold-facebook-cristiano-geckoview', 'raptor-tp6m-facebook-cristiano-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-cold-google-geckoview', 'raptor-tp6m-google-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-cold-google-maps-geckoview', 'raptor-tp6m-google-maps-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-cold-google-restaurants-geckoview', 'raptor-tp6m-google-restaurants-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-cold-instagram-geckoview', 'raptor-tp6m-instagram-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-cold-imdb-geckoview', 'raptor-tp6m-imdb-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-cold-jianshu-geckoview', 'raptor-tp6m-jianshu-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-cold-microsoft-support-geckoview', 'raptor-tp6m-microsoft-support-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-cold-reddit-geckoview', 'raptor-tp6m-reddit-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-cold-stackoverflow-geckoview', 'raptor-tp6m-stackoverflow-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-cold-web-de-geckoview', 'raptor-tp6m-web-de-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-cold-wikipedia-geckoview', 'raptor-tp6m-wikipedia-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-cold-youtube-geckoview', 'raptor-tp6m-youtube-geckoview-cold'], framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-cold-youtube-watch-geckoview', 'raptor-tp6m-youtube-watch-geckoview-cold'], framework: 10, repo: 'autoland' } }],
 
 
-    ['geckoview', 'warm', 'Tp6 mobile: Amazon', { eq: { suite: 'raptor-tp6m-amazon-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Amazon Search', { eq: { suite: 'raptor-tp6m-amazon-search-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Aframe.io', { eq: { suite: 'raptor-tp6m-aframeio-animation-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: All Recipes', { eq: { suite: 'raptor-tp6m-allrecipes-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: BBC', { eq: { suite: 'raptor-tp6m-bbc-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Bing', { eq: { suite: 'raptor-tp6m-bing-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Bing Restaurants', { eq: { suite: 'raptor-tp6m-bing-restaurants-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Booking', { eq: { suite: 'raptor-tp6m-booking-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: CNN', { eq: { suite: 'raptor-tp6m-cnn-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: CNN AmpStories', { eq: { suite: 'raptor-tp6m-cnn-ampstories-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: ESPN', { eq: { suite: 'raptor-tp6m-espn-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Facebook', { eq: { suite: 'raptor-tp6m-facebook-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: 'raptor-tp6m-facebook-cristiano-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Google', { eq: { suite: 'raptor-tp6m-google-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Google Maps', { eq: { suite: 'raptor-tp6m-google-maps-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Google Restaurants', { eq: { suite: 'raptor-tp6m-google-restaurants-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Instagram', { eq: { suite: 'raptor-tp6m-instagram-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Imdb', { eq: { suite: 'raptor-tp6m-imdb-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Jianshu', { eq: { suite: 'raptor-tp6m-jianshu-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Microsoft Support', { eq: { suite: 'raptor-tp6m-microsoft-support-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Reddit', { eq: { suite: 'raptor-tp6m-reddit-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Stackoverflow', { eq: { suite: 'raptor-tp6m-stackoverflow-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Web.de', { eq: { suite: 'raptor-tp6m-web-de-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: Wikipedia', { eq: { suite: 'raptor-tp6m-wikipedia-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: YouTube', { eq: { suite: 'raptor-tp6m-youtube-geckoview', framework: 10, repo: 'mozilla-central' } }],
-    ['geckoview', 'warm', 'Tp6 mobile: YouTube Watch', { eq: { suite: 'raptor-tp6m-youtube-watch-geckoview', framework: 10, repo: 'mozilla-central' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Amazon', { eq: { suite: 'raptor-tp6m-amazon-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Amazon Search', { eq: { suite: 'raptor-tp6m-amazon-search-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Aframe.io', { eq: { suite: 'raptor-tp6m-aframeio-animation-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: All Recipes', { eq: { suite: 'raptor-tp6m-allrecipes-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: BBC', { eq: { suite: 'raptor-tp6m-bbc-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Bing', { eq: { suite: 'raptor-tp6m-bing-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Bing Restaurants', { eq: { suite: 'raptor-tp6m-bing-restaurants-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Booking', { eq: { suite: 'raptor-tp6m-booking-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: CNN', { eq: { suite: 'raptor-tp6m-cnn-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: CNN AmpStories', { eq: { suite: 'raptor-tp6m-cnn-ampstories-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: 'raptor-tp6m-ebay-kleinanzeigen-search-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: ESPN', { eq: { suite: 'raptor-tp6m-espn-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Facebook', { eq: { suite: 'raptor-tp6m-facebook-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: 'raptor-tp6m-facebook-cristiano-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Google', { eq: { suite: 'raptor-tp6m-google-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Google Maps', { eq: { suite: 'raptor-tp6m-google-maps-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Google Restaurants', { eq: { suite: 'raptor-tp6m-google-restaurants-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Instagram', { eq: { suite: 'raptor-tp6m-instagram-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Imdb', { eq: { suite: 'raptor-tp6m-imdb-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Jianshu', { eq: { suite: 'raptor-tp6m-jianshu-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Microsoft Support', { eq: { suite: 'raptor-tp6m-microsoft-support-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Reddit', { eq: { suite: 'raptor-tp6m-reddit-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Stackoverflow', { eq: { suite: 'raptor-tp6m-stackoverflow-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Web.de', { eq: { suite: 'raptor-tp6m-web-de-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: Wikipedia', { eq: { suite: 'raptor-tp6m-wikipedia-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: YouTube', { eq: { suite: 'raptor-tp6m-youtube-geckoview', framework: 10, repo: 'autoland' } }],
+    ['geckoview', 'warm', 'Tp6 mobile: YouTube Watch', { eq: { suite: 'raptor-tp6m-youtube-watch-geckoview', framework: 10, repo: 'autoland' } }],
 
     ['fenix', 'cold', 'Tp6 mobile: Amazon', {
       or: [
@@ -2124,34 +2124,34 @@ const TP6_SITES_DATA = {
         { eq: { suite: 'youtube-watch-cold', framework: 13, repo: 'fenix' } }],
     }],
 
-    ['fennec68', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-allrecipes-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-bbc-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-bing-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-booking-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cnn-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-espn-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-facebook-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-google-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-google-maps-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-google-restaurants-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-instagram-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-imdb-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-jianshu-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-microsoft-support-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-reddit-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-stackoverflow-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-web-de-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-wikipedia-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-youtube-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-youtube-watch-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-allrecipes-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-bbc-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-bing-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-booking-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cnn-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-espn-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-facebook-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-google-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-google-maps-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-google-restaurants-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-instagram-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-imdb-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-jianshu-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-microsoft-support-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-reddit-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-stackoverflow-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-web-de-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-wikipedia-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-youtube-fennec68-cold'], framework: 10, repo: 'autoland' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-youtube-watch-fennec68-cold'], framework: 10, repo: 'autoland' } }],
 
   ],
 };

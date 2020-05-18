@@ -72,7 +72,7 @@ export default class WindowsIndex extends Component {
         {
           eq: {
             framework: 1,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         },
       ],

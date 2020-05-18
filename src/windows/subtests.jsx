@@ -14,7 +14,7 @@ import jx from '../vendor/jx/expressions';
 import { getFramework, PERFHERDER } from '../vendor/perfherder';
 import { BENCHMARKS } from './config';
 
-const FRAMEWORK = { framework: 10, repo: 'mozilla-central' };
+const FRAMEWORK = { framework: 10, repo: 'autoland' };
 
 const styles = {
   body: {

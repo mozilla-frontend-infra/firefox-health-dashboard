@@ -49,20 +49,20 @@ const PLATFORMS = [
 const COMBO_TABLE = {
   header: ['browser', 'browserLabel', 'suite', 'suiteLabel', 'filter'],
   data: [
-    ['geckoview', 'Geckoview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-geckoview-power']}}],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
-    ['fenix', 'Firefox Preview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fenix-power']}}],
-    ['fennec68', 'Firefox ESR', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-fennec68-power']}}],
+    ['geckoview', 'Geckoview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-geckoview-power']}}],
+    // ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-fenix-power']}}],
+    ['fennec68', 'Firefox ESR', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-fennec68-power']}}],
 
-    ['geckoview', 'Geckoview', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-geckoview-power']}}],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
-    ['fenix', 'Firefox Preview', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-fenix-power']}}],
-    ['fennec68', 'Firefox ESR', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-fennec68-power']}}],
+    ['geckoview', 'Geckoview', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-bg-geckoview-power']}}],
+    // ['refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-bg-fenix-power']}}],
+    ['fennec68', 'Firefox ESR', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-bg-fennec68-power']}}],
 
-    ['geckoview', 'Geckoview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-geckoview-power']}}],
-    // ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
-    ['fenix', 'Firefox Preview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fenix-power']}}],
-    ['fennec68', 'Firefox ESR', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-fennec68-power']}}],
+    ['geckoview', 'Geckoview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-speedometer-geckoview-power']}}],
+    // ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-speedometer-refbrow-power']}}],
+    ['fenix', 'Firefox Preview', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-speedometer-fenix-power']}}],
+    ['fennec68', 'Firefox ESR', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-speedometer-fennec68-power']}}],
 
   ],
 };

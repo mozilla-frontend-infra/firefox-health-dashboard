@@ -118,12 +118,12 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-geckoview"]
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-refbrow-power']}}],
+    // ['refbrow', 'Reference Browser', 'scn-power-idle', 'about:blank page', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-refbrow-power']}}],
     [
       "fenix",
       "Firefox Preview",
@@ -133,7 +133,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-fenix"]
         }
       }
@@ -147,7 +147,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-fennec68"]
         }
       }
@@ -162,12 +162,12 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-bg-geckoview"]
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
+    // ['refbrow', 'Reference Browser', 'scn-power-idle-bg', 'idle background', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-scn-power-idle-bg-refbrow-power']}}],
     [
       "fenix",
       "Firefox Preview",
@@ -177,7 +177,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-bg-fenix"]
         }
       }
@@ -191,7 +191,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-scn-power-idle-bg-fennec68"]
         }
       }
@@ -206,12 +206,12 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-speedometer-geckoview"]
         }
       }
     ],
-    // ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'mozilla-central', suite: ['raptor-speedometer-refbrow-power']}}],
+    // ['refbrow', 'Reference Browser', 'speedometer', 'Speedometer', {eq: {framework: 10, repo: 'autoland', suite: ['raptor-speedometer-refbrow-power']}}],
     [
       "fenix",
       "Firefox Preview",
@@ -219,8 +219,8 @@ const COMBO_TABLE = {
       "speedometer",
       "Speedometer",
       {or: [
-          {and: [{ lt: { push_timestamp: { date: '2020-04-10' } } }, { eq: { suite: ['raptor-speedometer-fenix'], framework: 10, repo: 'mozilla-central' } }] },
-          {eq: { framework: 13, repo: "mozilla-central", suite: ["speedometer"], application: "fenix"}},
+          {and: [{ lt: { push_timestamp: { date: '2020-04-10' } } }, { eq: { suite: ['raptor-speedometer-fenix'], framework: 10, repo: 'autoland' } }] },
+          {eq: { framework: 13, repo: "autoland", suite: ["speedometer"], application: "fenix"}},
       ]
       }
     ],
@@ -233,7 +233,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-speedometer-fennec68"]
         }
       }
@@ -247,7 +247,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-unity-webgl-geckoview"]
         }
       }
@@ -261,7 +261,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-unity-webgl-fenix"]
         }
       }
@@ -275,7 +275,7 @@ const COMBO_TABLE = {
       {
         eq: {
           framework: 10,
-          repo: "mozilla-central",
+          repo: "autoland",
           suite: ["raptor-unity-webgl-fennec68"]
         }
       }

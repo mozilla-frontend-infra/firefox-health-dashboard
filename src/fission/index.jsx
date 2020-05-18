@@ -39,7 +39,7 @@ class Fission extends React.Component {
         {
           eq: {
             framework: 1,
-            repo: 'mozilla-central',
+            repo: 'autoland',
           },
         },
       ],
