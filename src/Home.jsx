@@ -7,6 +7,7 @@ import {
   AndroidIcon,
   BatteryIcon,
   DesktopIcon,
+  FlareIcon,
   VideoIcon,
 } from './utils/icons';
 
@@ -65,6 +66,10 @@ class Home extends React.Component {
           <Link to="/playback">
             <VideoIcon />
             Playback
+          </Link>
+          <Link to="/fission">
+            <FlareIcon />
+            Fission
           </Link>
         </div>
         <div className={classes.netlify}>

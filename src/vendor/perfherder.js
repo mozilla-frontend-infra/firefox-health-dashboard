@@ -103,6 +103,9 @@ const getFramework = async ({ repo, framework }) => {
             ) {
               lowerIsBetter = true;
               unit = 'Duration';
+            } else if (meta.framework_id === 13 && suite.endsWith('-cold')) {
+              lowerIsBetter = true;
+              unit = meta.measurement_unit;
             } else {
               if (DEBUG) {
                 Log.note('Do not have direction for {{suite}}', { suite });
@@ -125,7 +128,9 @@ const getFramework = async ({ repo, framework }) => {
             parent: meta.parent_signature,
             id: meta.id,
             framework: meta.framework_id,
+            application: meta.application,
             repo,
+            fission: Boolean(meta.extra_options) && meta.extra_options.includes('fission'),
           };
         })
         .toArray();

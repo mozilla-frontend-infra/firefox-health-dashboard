@@ -10,6 +10,7 @@ import {
   BatteryIcon,
   CodeIcon,
   DesktopIcon,
+  FlareIcon,
   HomeIcon,
   LogoutIcon,
   VideoIcon,
@@ -75,6 +76,9 @@ class DashboardPage extends Component {
               </Link>
               <Link to="/playback" title="Playback">
                 <VideoIcon />
+              </Link>
+              <Link to="/fission" title="Fission Comparison">
+                <FlareIcon />
               </Link>
               <a
                 href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/"

@@ -1,5 +1,5 @@
 [![Build Status](https://api.travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard.svg?branch=master)](https://travis-ci.org/mozilla-frontend-infra/firefox-health-dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/mozilla-frontend-infra/firefox-health-dashboard/badge.svg?branch=master)](https://coveralls.io/github/mozilla-frontend-infra/firefox-health-dashboard?branch=master)
+[![Coverage Status](https://codecov.io/gh/mozilla-frontend-infra/firefox-health-dashboard/branch/master/graphs/badge.svg)](https://codecov.io/gh/mozilla-frontend-infra/firefox-health-dashboard?branch=master)
 
 # Firefox health dashboard <a href="https://health.graphics/"> <img src="https://www.materialui.co/materialIcons/action/launch_black_36x36.png" alt="go to dashbaord"></a>
 

@@ -16,6 +16,7 @@ import AnnotationIconInternal from '@material-ui/icons/Announcement';
 import AccountIconInternal from '@material-ui/icons/PersonOutline';
 import LogoutIconInternal from '@material-ui/icons/ExitToApp';
 import StarBorderInternal from '@material-ui/icons/StarBorder';
+import FlareIconInternal from '@material-ui/icons/Flare';
 
 import githubMark from '../static/GitHub-Mark.png';
 
@@ -26,6 +27,7 @@ const BatteryIcon = () => <BatteryIconInternal style={iconStyle} />;
 const VideoIcon = () => <VideoIconInternal style={iconStyle} />;
 const DesktopIcon = () => <DesktopIconInternal style={iconStyle} />;
 const AndroidIcon = () => <AndroidIconInternal style={iconStyle} />;
+const FlareIcon = () => <FlareIconInternal style={iconStyle} />;
 const AccountIcon = () => <AccountIconInternal style={iconStyle} />;
 const LogoutIcon = () => <LogoutIconInternal style={iconStyle} />;
 
@@ -143,6 +145,7 @@ export {
   CopyIcon,
   DesktopIcon,
   DetailsIcon,
+  FlareIcon,
   GithubIcon,
   HelpIcon,
   HomeIcon,
