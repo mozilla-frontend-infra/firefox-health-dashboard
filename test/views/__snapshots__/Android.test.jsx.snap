@@ -352,6 +352,10 @@ exports[`renders correctly 1`] = `
             </div>
           </div>
         </div>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+      >
         <div>
           <div
             className="Section-header-117"
@@ -493,33 +497,6 @@ exports[`renders correctly 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
-      >
-        <div>
-          <div
-            className="Section-header-117"
-          >
-            <h2
-              className="Section-title-118"
-            >
-              <span>
-                Nimbledroid
-                <span
-                  className="Section-subtitle-119"
-                >
-                  Firefox Nightly vs Chrome Beta
-                </span>
-              </span>
-            </h2>
-          </div>
-          <div
-            className="Section-content-116"
-          >
-            <div />
           </div>
         </div>
       </div>
