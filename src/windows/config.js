@@ -259,7 +259,7 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'p2-aarch64',
     platformFilter: {
       eq: {
-        platform: 'android-hw-p2-8-0-android-aarch64',
+        platform: ['android-hw-p2-8-0-android-aarch64-shippable', 'android-hw-p2-8-0-android-aarch64'],
       },
     },
   },
@@ -278,7 +278,12 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'p2-aarch64',
     platformFilter: {
       eq: {
-        platform: ['android-hw-p2-8-0-aarch64', 'android-hw-p2-8-0-android-aarch64'],
+        platform: [
+          'android-hw-p2-8-0-aarch64-shippable',
+          'android-hw-p2-8-0-android-aarch64-shippable',
+          'android-hw-p2-8-0-aarch64',
+          'android-hw-p2-8-0-android-aarch64',
+        ],
       },
     },
   },
@@ -297,7 +302,12 @@ const BROWSER_PLATFORMS = selectFrom([
     platform: 'p2-aarch64',
     platformFilter: {
       eq: {
-        platform: ['android-hw-p2-8-0-aarch64', 'android-hw-p2-8-0-android-aarch64'],
+        platform: [
+          'android-hw-p2-8-0-aarch64-shippable',
+          'android-hw-p2-8-0-android-aarch64-shippable',
+          'android-hw-p2-8-0-aarch64',
+          'android-hw-p2-8-0-android-aarch64',
+        ],
       },
     },
   },

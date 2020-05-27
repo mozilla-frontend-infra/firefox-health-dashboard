@@ -88,20 +88,36 @@ const PLATFORMS = [
     id: "g5",
     label: "Moto G5 (arm7)",
     filter: {
-      eq: {
-        platform: "android-hw-g5-7-0-arm7-api-16",
-        options: "pgo"
-      }
+      or: [{
+        and: [{ lt: { push_timestamp: { date: '2019-05-22' } } }, {
+          eq: {
+            options: "pgo",
+            platform: "android-hw-g5-7-0-arm7-api-16"
+          }
+        }],
+      }, {
+        eq: {
+          platform: "android-hw-g5-7-0-arm7-api-16-shippable"
+        },
+      }],
     }
   },
   {
     id: "p2-aarch64",
     label: "Pixel 2 (aarch64)",
     filter: {
-      eq: {
-        options: "pgo",
-        platform: "android-hw-p2-8-0-android-aarch64"
-      }
+      or: [{
+        and: [{ lt: { push_timestamp: { date: '2019-05-22' } } }, {
+          eq: {
+            options: "pgo",
+            platform: "android-hw-p2-8-0-android-aarch64"
+          }
+        }],
+      }, {
+        eq: {
+          platform: "android-hw-p2-8-0-android-aarch64-shippable"
+        },
+      }],
     }
   }
 ];

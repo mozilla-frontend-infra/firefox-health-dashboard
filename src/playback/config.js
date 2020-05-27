@@ -93,7 +93,7 @@ const PLATFORMS = [
     bits: 64,
     filter: {
       eq: {
-        platform: 'android-hw-g5-7-0-arm7-api-16',
+        platform: ['android-hw-g5-7-0-arm7-api-16-shippable', 'android-hw-g5-7-0-arm7-api-16'],
       },
     },
   },
@@ -104,7 +104,7 @@ const PLATFORMS = [
     bits: 64,
     filter: {
       eq: {
-        platform: 'android-hw-p2-8-0-android-aarch64',
+        platform: ['android-hw-p2-8-0-android-aarch64-shippable', 'android-hw-p2-8-0-android-aarch64'],
       },
     },
   },
