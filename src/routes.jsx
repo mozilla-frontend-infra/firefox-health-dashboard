@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import AndroidPage from './android';
 import Home from './Home';
-import NimbledroidGraphPage from './nimbledroid/NimbledroidGraphPage';
 import NoMatch from './NotFound';
 import Playback from './playback/playback';
 import PlaybackDetails from './playback/details';
@@ -22,7 +21,6 @@ const Routes = () => (
       <Route path="/windows/tp6" component={TP6} />
       <Route path="/windows/tp6m" component={TP6M} />
       <Route path="/android/tp6m" component={TP6M} />
-      <Route path="/android/graph" component={NimbledroidGraphPage} />
       <Route path="/android" component={AndroidPage} />
       <Route path="/power/details" component={PowerDetails} />
       <Route path="/power" component={Power} />

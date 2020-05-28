@@ -4,10 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import DashboardPage from '../utils/DashboardPage';
 import Section from '../utils/Section';
 import BugzillaGraph from '../bugzilla/BugzillaGraph';
-import NimbledroidSection from '../nimbledroid/NimbledroidSection';
 import RedashContainer from '../utils/RedashContainer';
 import { SHOW_TELEMETRY, COMBOS, PLATFORMS } from './config';
-import { CONFIG } from '../nimbledroid/config';
 import { TP6mAggregate } from './TP6mAggregate';
 import { PerfherderGraphContainer } from '../utils/PerfherderGraphContainer';
 import { TimeDomain } from '../vendor/jx/domains';
@@ -21,9 +19,6 @@ import GithubGraph from '../github/GithubGraph';
 
 class Android extends Component {
   render() {
-    const nimbledroidSubTitle = `${
-      CONFIG.packageIdLabels[CONFIG.baseProduct]
-    } vs ${CONFIG.packageIdLabels[CONFIG.compareProduct]}`;
     const timeDomain = new TimeDomain({ past: '3month', interval: 'day' });
     const mediaPlaybackBrowser = selectFrom(BROWSERS)
       .where({ id: 'fenix' })
@@ -52,6 +47,9 @@ class Android extends Component {
                   timeDomain={timeDomain}
                 />
               </Section>
+            </Grid>
+
+            <Grid item xs={6} key="bugzilla">
               <Section title="Bugzilla">
                 <BugzillaGraph
                   title={(
@@ -176,12 +174,6 @@ class Android extends Component {
                     },
                   ]}
                 />
-              </Section>
-            </Grid>
-
-            <Grid item xs={6} key="nimbledroid">
-              <Section title="Nimbledroid" subtitle={nimbledroidSubTitle}>
-                <NimbledroidSection configuration={{ ...CONFIG }} />
               </Section>
             </Grid>
           </Grid>
