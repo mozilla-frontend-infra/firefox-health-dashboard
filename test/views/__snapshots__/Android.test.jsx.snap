@@ -34,10 +34,9 @@ exports[`renders correctly 1`] = `
         title="Home"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -56,10 +55,9 @@ exports[`renders correctly 1`] = `
         title="Android Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -78,10 +76,9 @@ exports[`renders correctly 1`] = `
         title="Windows 64 Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -100,10 +97,9 @@ exports[`renders correctly 1`] = `
         title="Power Usage"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -122,10 +118,9 @@ exports[`renders correctly 1`] = `
         title="Playback"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -144,10 +139,9 @@ exports[`renders correctly 1`] = `
         title="Fission Comparison"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -166,10 +160,9 @@ exports[`renders correctly 1`] = `
         title="Source Code"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -184,10 +177,9 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -211,10 +203,10 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <div
-            className="Section-header-117"
+            className="Section-header-5"
           >
             <h2
-              className="Section-title-118"
+              className="Section-title-6"
             >
               <span>
                 Github
@@ -222,13 +214,13 @@ exports[`renders correctly 1`] = `
             </h2>
           </div>
           <div
-            className="Section-content-116"
+            className="Section-content-4"
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 <span>
                   Firefox Preview P1 Performance Bugs
@@ -248,10 +240,9 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       <svg
-                        aria-hidden="true"
+                        aria-hidden={true}
                         className="MuiSvgIcon-root"
                         focusable="false"
-                        role="presentation"
                         style={
                           Object {
                             "margin": "0 .2rem 0 .2rem",
@@ -286,10 +277,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -358,10 +348,10 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <div
-            className="Section-header-117"
+            className="Section-header-5"
           >
             <h2
-              className="Section-title-118"
+              className="Section-title-6"
             >
               <span>
                 Bugzilla
@@ -369,13 +359,13 @@ exports[`renders correctly 1`] = `
             </h2>
           </div>
           <div
-            className="Section-content-116"
+            className="Section-content-4"
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 <span>
                   Firefox Preview Bugs
@@ -395,10 +385,9 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       <svg
-                        aria-hidden="true"
+                        aria-hidden={true}
                         className="MuiSvgIcon-root"
                         focusable="false"
-                        role="presentation"
                         style={
                           Object {
                             "margin": "0 .2rem 0 .2rem",
@@ -433,10 +422,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -504,10 +492,10 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Raptor (TP6m)
@@ -526,10 +514,9 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <svg
-                  aria-hidden="true"
+                  aria-hidden={true}
                   className="MuiSvgIcon-root"
                   focusable="false"
-                  role="presentation"
                   style={
                     Object {
                       "margin": "0 .2rem 0 .2rem",
@@ -549,7 +536,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         style={
@@ -590,10 +577,10 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Media Playback - Firefox Preview
@@ -601,7 +588,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -689,15 +676,15 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Perfherder
           <span
-            className="Section-subtitle-119"
+            className="Section-subtitle-7"
           >
             Lower in the graph is better regardless if it is a score or execution time (read the Y label)
           </span>
@@ -705,7 +692,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -721,10 +708,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer Moto G5 (arm7)
                 <span
@@ -746,10 +733,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -823,10 +809,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer Pixel 2 (aarch64)
                 <span
@@ -848,10 +834,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -925,10 +910,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer CPU power usage Moto G5 (arm7)
                 <span
@@ -950,10 +935,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1027,10 +1011,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer CPU power usage Pixel 2 (aarch64)
                 <span
@@ -1052,10 +1036,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1129,10 +1112,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Unity WebGl Moto G5 (arm7)
                 <span
@@ -1154,10 +1137,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1231,10 +1213,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Unity WebGl Pixel 2 (aarch64)
                 <span
@@ -1256,10 +1238,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",

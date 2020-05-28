@@ -107,7 +107,7 @@ const tip = withStyles(tipStyles)(
 
         (
         {higherOrLower}
-)
+        )
         {(() => {
           if (index === 0) return null;
           const prev = data[index - 1];
@@ -120,7 +120,7 @@ const tip = withStyles(tipStyles)(
           if (missing(deltaPercentage)) {
             return (
               <div>
-Δ
+                Δ
                 {delta.toFixed(2)}
               </div>
             );
@@ -132,10 +132,10 @@ const tip = withStyles(tipStyles)(
               {' '}
               {delta.toFixed(2)}
               {' '}
-(
+              (
               {deltaPercentage.toFixed(1)}
               {' '}
-%)
+              %)
             </div>
           );
         })()}
@@ -144,7 +144,7 @@ const tip = withStyles(tipStyles)(
             {record.revision.slice(0, 12)}
           </a>
 
-(
+          (
           <a href={jobURL} target="_blank" rel="noopener noreferrer">
             job
           </a>
