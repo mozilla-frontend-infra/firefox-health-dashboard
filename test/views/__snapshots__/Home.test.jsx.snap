@@ -34,10 +34,9 @@ exports[`renders correctly 1`] = `
         title="Home"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -56,10 +55,9 @@ exports[`renders correctly 1`] = `
         title="Android Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -78,10 +76,9 @@ exports[`renders correctly 1`] = `
         title="Windows 64 Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -100,10 +97,9 @@ exports[`renders correctly 1`] = `
         title="Power Usage"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -122,10 +118,9 @@ exports[`renders correctly 1`] = `
         title="Playback"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -144,10 +139,9 @@ exports[`renders correctly 1`] = `
         title="Fission Comparison"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -166,10 +160,9 @@ exports[`renders correctly 1`] = `
         title="Source Code"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -184,10 +177,9 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -209,10 +201,9 @@ exports[`renders correctly 1`] = `
       href="/android"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -231,10 +222,9 @@ exports[`renders correctly 1`] = `
       href="/windows/32"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -253,10 +243,9 @@ exports[`renders correctly 1`] = `
       href="/windows/64"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -275,10 +264,9 @@ exports[`renders correctly 1`] = `
       href="/power"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -297,10 +285,9 @@ exports[`renders correctly 1`] = `
       href="/playback"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -319,10 +306,9 @@ exports[`renders correctly 1`] = `
       href="/fission"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",

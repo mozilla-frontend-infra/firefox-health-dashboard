@@ -31,10 +31,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Home"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -53,10 +52,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Android Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -75,10 +73,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Windows 64 Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -97,10 +94,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Power Usage"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -119,10 +115,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Playback"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -141,10 +136,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Fission Comparison"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -163,10 +157,9 @@ exports[`DashboardPage renders correctly 1`] = `
         title="Source Code"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -181,10 +174,9 @@ exports[`DashboardPage renders correctly 1`] = `
         </svg>
       </a>
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
