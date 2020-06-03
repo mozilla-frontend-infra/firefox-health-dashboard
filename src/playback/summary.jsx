@@ -259,7 +259,7 @@ class PlaybackSummary extends React.Component {
                       }}
                     >
                       {platform.label}
-:
+                      :
                     </div>
                   </div>
                 </Grid>

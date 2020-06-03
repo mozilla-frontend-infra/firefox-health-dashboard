@@ -34,10 +34,9 @@ exports[`renders correctly 1`] = `
         title="Home"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -56,10 +55,9 @@ exports[`renders correctly 1`] = `
         title="Android Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -78,10 +76,9 @@ exports[`renders correctly 1`] = `
         title="Windows 64 Performance"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -100,10 +97,9 @@ exports[`renders correctly 1`] = `
         title="Power Usage"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -122,10 +118,9 @@ exports[`renders correctly 1`] = `
         title="Playback"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -144,10 +139,9 @@ exports[`renders correctly 1`] = `
         title="Fission Comparison"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -166,10 +160,9 @@ exports[`renders correctly 1`] = `
         title="Source Code"
       >
         <svg
-          aria-hidden="true"
+          aria-hidden={true}
           className="MuiSvgIcon-root"
           focusable="false"
-          role="presentation"
           style={
             Object {
               "margin": "0 .2rem 0 .2rem",
@@ -184,10 +177,9 @@ exports[`renders correctly 1`] = `
         </svg>
       </a>
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root"
         focusable="false"
-        role="presentation"
         style={
           Object {
             "margin": "0 .2rem 0 .2rem",
@@ -211,10 +203,10 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <div
-            className="Section-header-117"
+            className="Section-header-5"
           >
             <h2
-              className="Section-title-118"
+              className="Section-title-6"
             >
               <span>
                 Github
@@ -222,13 +214,13 @@ exports[`renders correctly 1`] = `
             </h2>
           </div>
           <div
-            className="Section-content-116"
+            className="Section-content-4"
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 <span>
                   Firefox Preview P1 Performance Bugs
@@ -248,10 +240,9 @@ exports[`renders correctly 1`] = `
                       }
                     >
                       <svg
-                        aria-hidden="true"
+                        aria-hidden={true}
                         className="MuiSvgIcon-root"
                         focusable="false"
-                        role="presentation"
                         style={
                           Object {
                             "margin": "0 .2rem 0 .2rem",
@@ -286,153 +277,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
-                      style={
-                        Object {
-                          "margin": "0 .2rem 0 .2rem",
-                          "verticalAlign": "baseline",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
-                      />
-                    </svg>
-                  </div>
-                </span>
-              </h2>
-              <div
-                style={
-                  Object {
-                    "height": 80,
-                    "position": "relative",
-                  }
-                }
-              >
-                <div
-                  style={
-                    Object {
-                      "position": "absolute",
-                      "right": "50%",
-                      "top": "50%",
-                    }
-                  }
-                >
-                  <div
-                    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-                    role="progressbar"
-                    style={
-                      Object {
-                        "height": 40,
-                        "width": 40,
-                      }
-                    }
-                  >
-                    <svg
-                      className="MuiCircularProgress-svg"
-                      viewBox="22 22 44 44"
-                    >
-                      <circle
-                        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
-                        cx={44}
-                        cy={44}
-                        fill="none"
-                        r={20.2}
-                        strokeWidth={3.6}
-                        style={Object {}}
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div
-            className="Section-header-117"
-          >
-            <h2
-              className="Section-title-118"
-            >
-              <span>
-                Bugzilla
-              </span>
-            </h2>
-          </div>
-          <div
-            className="Section-content-116"
-          >
-            <div
-              className="ChartJsWrapper-chartContainer-120"
-            >
-              <h2
-                className="ChartJsWrapper-title-121"
-              >
-                <span>
-                  Firefox Preview Bugs
-                  <a
-                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=OP&j2=OR&f3=product&o3=equals&v3=Geckoview&f4=status_whiteboard&o4=regexp&v4=.*%5C%5Bgeckoview%3A.*.*&f5=CP&f6=OP&j6=OR&f7=OP&j7=OR&f8=priority&o8=equals&v8=P1&f9=priority&o9=equals&v9=--&f10=CP&f11=priority&o11=isempty&f12=CP&f13=OP&j13=OR&f14=resolution&o14=equals&v14=---&f15=resolution&o15=isempty&f16=CP&f17=CP&columnlist=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    title="All Geckoview P1 and Triage bugs"
-                  >
-                    <div
-                      style={
-                        Object {
-                          "display": "inline-block",
-                          "margin": "-1rem 0",
-                          "verticalAlign": "middle",
-                        }
-                      }
-                    >
-                      <svg
-                        aria-hidden="true"
-                        className="MuiSvgIcon-root"
-                        focusable="false"
-                        role="presentation"
-                        style={
-                          Object {
-                            "margin": "0 .2rem 0 .2rem",
-                            "verticalAlign": "baseline",
-                          }
-                        }
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </div>
-                  </a>
-                </span>
-                <span
-                  onClick={[Function]}
-                  style={
-                    Object {
-                      "cursor": "pointer",
-                    }
-                  }
-                  title="show image for copy"
-                >
-                  <div
-                    style={
-                      Object {
-                        "display": "inline-block",
-                        "margin": "-1rem 0",
-                        "verticalAlign": "middle",
-                      }
-                    }
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="MuiSvgIcon-root"
-                      focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -501,25 +348,143 @@ exports[`renders correctly 1`] = `
       >
         <div>
           <div
-            className="Section-header-117"
+            className="Section-header-5"
           >
             <h2
-              className="Section-title-118"
+              className="Section-title-6"
             >
               <span>
-                Nimbledroid
-                <span
-                  className="Section-subtitle-119"
-                >
-                  Firefox Nightly vs Chrome Beta
-                </span>
+                Bugzilla
               </span>
             </h2>
           </div>
           <div
-            className="Section-content-116"
+            className="Section-content-4"
           >
-            <div />
+            <div
+              className="ChartJsWrapper-chartContainer-8"
+            >
+              <h2
+                className="ChartJsWrapper-title-9"
+              >
+                <span>
+                  Firefox Preview Bugs
+                  <a
+                    href="https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&f1=OP&j1=AND&f2=OP&j2=OR&f3=product&o3=equals&v3=Geckoview&f4=status_whiteboard&o4=regexp&v4=.*%5C%5Bgeckoview%3A.*.*&f5=CP&f6=OP&j6=OR&f7=OP&j7=OR&f8=priority&o8=equals&v8=P1&f9=priority&o9=equals&v9=--&f10=CP&f11=priority&o11=isempty&f12=CP&f13=OP&j13=OR&f14=resolution&o14=equals&v14=---&f15=resolution&o15=isempty&f16=CP&f17=CP&columnlist=priority%2Ccomponent%2Cassigned_to%2Cbug_status%2Cshort_desc%2Cstatus_whiteboard%2Cchangeddate&order=Bug+Number"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    title="All Geckoview P1 and Triage bugs"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "display": "inline-block",
+                          "margin": "-1rem 0",
+                          "verticalAlign": "middle",
+                        }
+                      }
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root"
+                        focusable="false"
+                        style={
+                          Object {
+                            "margin": "0 .2rem 0 .2rem",
+                            "verticalAlign": "baseline",
+                          }
+                        }
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </span>
+                <span
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "cursor": "pointer",
+                    }
+                  }
+                  title="show image for copy"
+                >
+                  <div
+                    style={
+                      Object {
+                        "display": "inline-block",
+                        "margin": "-1rem 0",
+                        "verticalAlign": "middle",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden={true}
+                      className="MuiSvgIcon-root"
+                      focusable="false"
+                      style={
+                        Object {
+                          "margin": "0 .2rem 0 .2rem",
+                          "verticalAlign": "baseline",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                      />
+                    </svg>
+                  </div>
+                </span>
+              </h2>
+              <div
+                style={
+                  Object {
+                    "height": 80,
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "position": "absolute",
+                      "right": "50%",
+                      "top": "50%",
+                    }
+                  }
+                >
+                  <div
+                    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+                    role="progressbar"
+                    style={
+                      Object {
+                        "height": 40,
+                        "width": 40,
+                      }
+                    }
+                  >
+                    <svg
+                      className="MuiCircularProgress-svg"
+                      viewBox="22 22 44 44"
+                    >
+                      <circle
+                        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                        cx={44}
+                        cy={44}
+                        fill="none"
+                        r={20.2}
+                        strokeWidth={3.6}
+                        style={Object {}}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -527,10 +492,10 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Raptor (TP6m)
@@ -549,10 +514,9 @@ exports[`renders correctly 1`] = `
                 }
               >
                 <svg
-                  aria-hidden="true"
+                  aria-hidden={true}
                   className="MuiSvgIcon-root"
                   focusable="false"
-                  role="presentation"
                   style={
                     Object {
                       "margin": "0 .2rem 0 .2rem",
@@ -572,7 +536,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         style={
@@ -613,10 +577,10 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Media Playback - Firefox Preview
@@ -624,7 +588,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -712,15 +676,15 @@ exports[`renders correctly 1`] = `
   </div>
   <div>
     <div
-      className="Section-header-117"
+      className="Section-header-5"
     >
       <h2
-        className="Section-title-118"
+        className="Section-title-6"
       >
         <span>
           Perfherder
           <span
-            className="Section-subtitle-119"
+            className="Section-subtitle-7"
           >
             Lower in the graph is better regardless if it is a score or execution time (read the Y label)
           </span>
@@ -728,7 +692,7 @@ exports[`renders correctly 1`] = `
       </h2>
     </div>
     <div
-      className="Section-content-116"
+      className="Section-content-4"
     >
       <div
         className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1"
@@ -744,10 +708,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer Moto G5 (arm7)
                 <span
@@ -769,10 +733,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -846,10 +809,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer Pixel 2 (aarch64)
                 <span
@@ -871,10 +834,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -948,10 +910,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer CPU power usage Moto G5 (arm7)
                 <span
@@ -973,10 +935,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1050,10 +1011,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Speedometer CPU power usage Pixel 2 (aarch64)
                 <span
@@ -1075,10 +1036,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1152,10 +1112,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Unity WebGl Moto G5 (arm7)
                 <span
@@ -1177,10 +1137,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
@@ -1254,10 +1213,10 @@ exports[`renders correctly 1`] = `
             }
           >
             <div
-              className="ChartJsWrapper-chartContainer-120"
+              className="ChartJsWrapper-chartContainer-8"
             >
               <h2
-                className="ChartJsWrapper-title-121"
+                className="ChartJsWrapper-title-9"
               >
                 Unity WebGl Pixel 2 (aarch64)
                 <span
@@ -1279,10 +1238,9 @@ exports[`renders correctly 1`] = `
                     }
                   >
                     <svg
-                      aria-hidden="true"
+                      aria-hidden={true}
                       className="MuiSvgIcon-root"
                       focusable="false"
-                      role="presentation"
                       style={
                         Object {
                           "margin": "0 .2rem 0 .2rem",
