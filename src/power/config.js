@@ -30,7 +30,7 @@ const PLATFORMS = [
     label: 'Moto G5 (arm7)',
     filter: {
       eq: {
-        platform: 'android-hw-g5-7-0-arm7-api-16',
+        platform: ['android-hw-g5-7-0-arm7-api-16-shippable', 'android-hw-g5-7-0-arm7-api-16'],
       },
     },
   },
@@ -39,8 +39,7 @@ const PLATFORMS = [
     label: 'Pixel 2 (aarch64)',
     filter: {
       eq: {
-        // options: 'opt',
-        platform: 'android-hw-p2-8-0-android-aarch64',
+        platform: ['android-hw-p2-8-0-android-aarch64-shippable', 'android-hw-p2-8-0-android-aarch64'],
       },
     },
   },
