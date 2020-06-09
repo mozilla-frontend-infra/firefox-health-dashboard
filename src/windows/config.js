@@ -1936,7 +1936,6 @@ const TP6_SITES_DATA = {
 
     ['geckoview', 'cold', 'Tp6 mobile: Amazon', { eq: { application: 'geckoview', suite: 'amazon-cold', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'cold', 'Tp6 mobile: Amazon Search', { eq: { application: 'geckoview', suite: 'amazon-search-cold', framework: 13, repo: 'mozilla-central' }}],
-    ['geckoview', 'cold', 'Tp6 mobile: Aframe.io', { eq: { application: 'geckoview', suite: 'aframe-cold', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'cold', 'Tp6 mobile: All Recipes', { eq: { application: 'geckoview', suite: 'allrecipes-cold', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'cold', 'Tp6 mobile: BBC', { eq: { application: 'geckoview', suite: 'bbc-cold', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'cold', 'Tp6 mobile: Bing', { eq: { application: 'geckoview', suite: 'bing-cold', framework: 13, repo: 'mozilla-central' }}],
@@ -1965,7 +1964,6 @@ const TP6_SITES_DATA = {
 
     ['geckoview', 'warm', 'Tp6 mobile: Amazon', { eq: { application: 'geckoview', suite: 'amazon', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'warm', 'Tp6 mobile: Amazon Search', { eq: { application: 'geckoview', suite: 'amazon-search', framework: 13, repo: 'mozilla-central' }}],
-    ['geckoview', 'cold', 'Tp6 mobile: Aframe.io', { eq: { application: 'geckoview', suite: 'aframe', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'warm', 'Tp6 mobile: All Recipes', { eq: { application: 'geckoview', suite: 'allrecipes', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'warm', 'Tp6 mobile: BBC', { eq: { application: 'geckoview', suite: 'bbc', framework: 13, repo: 'mozilla-central' }}],
     ['geckoview', 'warm', 'Tp6 mobile: Bing', { eq: { application: 'geckoview', suite: 'bing', framework: 13, repo: 'mozilla-central' }}],
@@ -1994,7 +1992,6 @@ const TP6_SITES_DATA = {
 
     ['fenix', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: 'amazon-cold', framework: 13, repo: 'fenix' }}],
     ['fenix', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: 'amazon-search-cold', framework: 13, repo: 'fenix' }}],
-    ['fenix', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: 'aframe-cold', framework: 13, repo: 'fenix' }}],
     ['fenix', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: 'allrecipes-cold', framework: 13, repo: 'fenix' }}],
     ['fenix', 'cold', 'Tp6 mobile: BBC', { eq: { suite: 'bbc-cold', framework: 13, repo: 'fenix' }}],
     ['fenix', 'cold', 'Tp6 mobile: Bing', { eq: { suite: 'bing-cold', framework: 13, repo: 'fenix' }}],
@@ -2023,7 +2020,6 @@ const TP6_SITES_DATA = {
 
     ['fennec68', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
     ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Aframe.io', { eq: { suite: ['raptor-tp6m-aframeio-animation-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
     ['fennec68', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-allrecipes-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
     ['fennec68', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-bbc-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
     ['fennec68', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-bing-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
