@@ -89,7 +89,7 @@ const PLATFORMS = [
     label: "Moto G5 (arm7)",
     filter: {
       or: [{
-        and: [{ lt: { push_timestamp: { date: '2019-05-22' } } }, {
+        and: [{ lt: { push_timestamp: { date: '2020-05-22' } } }, {
           eq: {
             options: "pgo",
             platform: "android-hw-g5-7-0-arm7-api-16"
@@ -107,7 +107,7 @@ const PLATFORMS = [
     label: "Pixel 2 (aarch64)",
     filter: {
       or: [{
-        and: [{ lt: { push_timestamp: { date: '2019-05-22' } } }, {
+        and: [{ lt: { push_timestamp: { date: '2020-05-22' } } }, {
           eq: {
             options: "pgo",
             platform: "android-hw-p2-8-0-android-aarch64"
