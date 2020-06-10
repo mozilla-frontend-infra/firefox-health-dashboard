@@ -130,6 +130,7 @@ const getFramework = async ({ repo, framework }) => {
             framework: meta.framework_id,
             application: meta.application,
             repo,
+            cold: Boolean(meta.extra_options) && meta.extra_options.includes('cold'),
             fission: Boolean(meta.extra_options) && meta.extra_options.includes('fission'),
           };
         })
