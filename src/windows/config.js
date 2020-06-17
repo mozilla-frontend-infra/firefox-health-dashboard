@@ -2342,33 +2342,141 @@ const TP6_SITES_DATA = {
       },
     }],
 
-    ['fennec68', 'cold', 'Tp6 mobile: Amazon', { eq: { suite: ['raptor-tp6m-amazon-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', { eq: { suite: ['raptor-tp6m-amazon-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: All Recipes', { eq: { suite: ['raptor-tp6m-allrecipes-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: BBC', { eq: { suite: ['raptor-tp6m-bbc-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Bing', { eq: { suite: ['raptor-tp6m-bing-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Bing Restaurants', { eq: { suite: ['raptor-tp6m-bing-restaurants-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Booking', { eq: { suite: ['raptor-tp6m-booking-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: CNN', { eq: { suite: ['raptor-tp6m-cnn-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: CNN AmpStories', { eq: { suite: ['raptor-tp6m-cnn-ampstories-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen Search', { eq: { suite: ['raptor-tp6m-ebay-kleinanzeigen-search-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: ESPN', { eq: { suite: ['raptor-tp6m-espn-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Facebook', { eq: { suite: ['raptor-tp6m-facebook-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Facebook Cristiano', { eq: { suite: ['raptor-tp6m-facebook-cristiano-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google', { eq: { suite: ['raptor-tp6m-google-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google Maps', { eq: { suite: ['raptor-tp6m-google-maps-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Google Restaurants', { eq: { suite: ['raptor-tp6m-google-restaurants-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Instagram', { eq: { suite: ['raptor-tp6m-instagram-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Imdb', { eq: { suite: ['raptor-tp6m-imdb-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Jianshu', { eq: { suite: ['raptor-tp6m-jianshu-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Microsoft Support', { eq: { suite: ['raptor-tp6m-microsoft-support-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Reddit', { eq: { suite: ['raptor-tp6m-reddit-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Stackoverflow', { eq: { suite: ['raptor-tp6m-stackoverflow-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Web.de', { eq: { suite: ['raptor-tp6m-web-de-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: Wikipedia', { eq: { suite: ['raptor-tp6m-wikipedia-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: YouTube', { eq: { suite: ['raptor-tp6m-youtube-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
-    ['fennec68', 'cold', 'Tp6 mobile: YouTube Watch', { eq: { suite: ['raptor-tp6m-youtube-watch-fennec68-cold'], framework: 10, repo: 'mozilla-central' } }],
+    ['fennec68', 'cold', 'Tp6 mobile: Amazon', {
+      eq: {
+        suite: 'amazon', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Amazon Search', {
+      eq: {
+        suite: 'amazon-search', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: All Recipes', {
+      eq: {
+        suite: 'allrecipes', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: BBC', {
+      eq: {
+        suite: 'bbc', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Bing', {
+      eq: {
+        suite: 'bing', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Bing Restaurants', {
+      eq: {
+        suite: 'bing-search-restaurants', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Booking', {
+      eq: {
+        suite: 'booking', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: CNN', {
+      eq: {
+        suite: 'cnn', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: CNN AmpStories', {
+      eq: {
+        suite: 'cnn-ampstories', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen', {
+      eq: {
+        suite: 'ebay-kleinanzeigen', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Kleinanzeigen Search', {
+      eq: {
+        suite: 'ebay-kleinanzeigen-search', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: ESPN', {
+      eq: {
+        suite: 'espn', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Facebook', {
+      eq: {
+        suite: 'facebook', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Facebook Cristiano', {
+      eq: {
+        suite: 'facebook-cristiano', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google', {
+      eq: {
+        suite: 'google', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google Maps', {
+      eq: {
+        suite: 'google-maps', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Google Restaurants', {
+      eq: {
+        suite: 'google-search-restaurants', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Instagram', {
+      eq: {
+        suite: 'instagram', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Imdb', {
+      eq: {
+        suite: 'imdb', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Jianshu', {
+      eq: {
+        suite: 'jianshu', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Microsoft Support', {
+      eq: {
+        suite: 'microsoft-support', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Reddit', {
+      eq: {
+        suite: 'reddit', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Stackoverflow', {
+      eq: {
+        suite: 'stackoverflow', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Web.de', {
+      eq: {
+        suite: 'web-de', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: Wikipedia', {
+      eq: {
+        suite: 'wikipedia', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: YouTube', {
+      eq: {
+        suite: 'youtube', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
+    ['fennec68', 'cold', 'Tp6 mobile: YouTube Watch', {
+      eq: {
+        suite: 'youtube-watch', cold: true, framework: 13, repo: 'mozilla-central',
+      },
+    }],
 
   ],
 };
