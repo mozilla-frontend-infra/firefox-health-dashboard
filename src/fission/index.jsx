@@ -45,6 +45,19 @@ class Fission extends React.Component {
       ],
     };
 
+    const awsyFilter = {
+      and: [
+        { missing: 'test' },
+        platformFilter,
+        {
+          eq: {
+            framework: 4,
+            repo: 'mozilla-central',
+          },
+        },
+      ],
+    };
+
     return (
       <div className={classes.body}>
         <DashboardPage title="Fission" subtitle="Comparison">
@@ -117,6 +130,37 @@ class Fission extends React.Component {
                   />
                 </Grid>
               ))}
+            </Grid>
+          </Section>
+          <Section
+            title="AWSY"
+          >
+            <Grid container spacing={1}>
+              <Grid
+                item
+                xs={6}
+                key="awsy-explicit-memory"
+                className={classes.chart}
+              >
+                <PerfherderGraphContainer
+                  timeDomain={timeDomain}
+                  key="awsy-explicit-memory"
+                  title="Explicit Memory"
+                  series={[
+                    {
+                      label: 'Firefox',
+                      filter: {
+                        and: [awsyFilter, { eq: { suite: 'Explicit Memory', fission: false } }],
+                      },
+                    }, {
+                      label: 'Firefox (fission)',
+                      filter: {
+                        and: [awsyFilter, { eq: { suite: 'Explicit Memory', fission: true } }],
+                      },
+                    },
+                  ]}
+                />
+              </Grid>
             </Grid>
           </Section>
         </DashboardPage>
