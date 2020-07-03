@@ -51,12 +51,12 @@ class Fission extends React.Component {
           {navigation}
           <Section
             title="Raptor (TP6)"
-            more="/fission/tp6?test=warm-loadtime&platform=win64-qr"
+            more="/fission/tp6?test=cold-loadtime&platform=win64-qr"
           >
             <Grid container spacing={1}>
               {selectFrom(TP6_FISSION_COMBOS)
                 .where({
-                  test: 'warm-loadtime',
+                  test: 'cold-loadtime',
                   site: [
                     'Tp6: Facebook',
                     'Tp6: Amazon',

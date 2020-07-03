@@ -107,14 +107,14 @@ export default class WindowsIndex extends Component {
           path: '/windows/tp6',
           query: {
             platform: TP6_COMBOS.where({ os: 'win', bits }).select('platform').first(),
-            test: 'warm-loadtime',
+            test: 'cold-loadtime',
           },
         }),
         rows: selectFrom(TP6_COMBOS)
           .where({
             os: 'win',
             bits,
-            test: 'warm-loadtime',
+            test: 'cold-loadtime',
             site: [
               'Tp6: Facebook',
               'Tp6: Amazon',

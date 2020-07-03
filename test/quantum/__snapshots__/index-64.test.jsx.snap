@@ -518,7 +518,7 @@ exports[`renders correctly 1`] = `
         Page Load tests (TP6)
         <span>
           <a
-            href="/windows/tp6?platform=win64&test=warm-loadtime"
+            href="/windows/tp6?platform=win64&test=cold-loadtime"
             title="show details"
           >
             <div

@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
         <small
           className="DashboardPage-subtitle-6"
         >
-          Warm load time on win64
+          Cold load time on win64
         </small>
       </h1>
       <div
@@ -229,14 +229,14 @@ exports[`renders correctly 1`] = `
               role="button"
               tabIndex={0}
             >
-              Warm load time
+              Cold load time
             </div>
             <input
               autoFocus={false}
               name="test"
               onAnimationStart={[Function]}
               type="hidden"
-              value="warm-loadtime"
+              value="cold-loadtime"
             />
             <svg
               aria-hidden={true}
