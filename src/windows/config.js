@@ -510,13 +510,6 @@ const TP6_SITES_DATA = {
         repo: 'mozilla-central',
       },
     }],
-    ['Firefox', 'warm', 'Tp6: Instagram (binast)', {
-      eq: {
-        suite: 'raptor-tp6-binast-instagram-firefox',
-        framework: 10,
-        repo: 'mozilla-central',
-      },
-    }],
     ['Firefox', 'warm', 'Tp6: Docs', {
       eq: {
         suite: 'raptor-tp6-docs-firefox',
@@ -723,13 +716,6 @@ const TP6_SITES_DATA = {
     ['Firefox', 'cold', 'Tp6: Pinterest', {
       eq: {
         suite: 'raptor-tp6-pinterest-firefox-cold',
-        framework: 10,
-        repo: 'mozilla-central',
-      },
-    }],
-    ['Firefox', 'cold', 'Tp6: Instagram (binast)', {
-      eq: {
-        suite: 'raptor-tp6-binast-instagram-firefox-cold',
         framework: 10,
         repo: 'mozilla-central',
       },
@@ -1405,7 +1391,6 @@ const TP6_SITES_DATA = {
         repo: 'mozilla-central',
       },
     }],
-    // ['Chromium', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-chromium-cold'}}],
     ['Chromium', 'cold', 'Tp6: Docs', {
       eq: {
         suite: 'raptor-tp6-docs-chromium-cold',
@@ -1859,7 +1844,6 @@ const TP6_SITES_DATA = {
         repo: 'mozilla-central',
       },
     }],
-    // ['Chrome', 'cold', 'Tp6: Instagram (binast)', {eq:{suite:'raptor-tp6-binast-instagram-chrome-cold'}}],
     ['Chrome', 'cold', 'Tp6: Docs', {
       eq: {
         suite: 'raptor-tp6-docs-chrome-cold',
