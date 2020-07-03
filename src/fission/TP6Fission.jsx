@@ -84,7 +84,7 @@ const nav = [
     type: Picker,
     id: 'test',
     label: 'Test',
-    defaultValue: 'warm-loadtime',
+    defaultValue: 'cold-loadtime',
     options: selectFrom(TP6_TESTS)
       .select({ id: 'test', label: 'label' })
       .toArray(),
