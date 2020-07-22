@@ -53,7 +53,8 @@ const getFramework = async ({ repo, framework }) => {
       // ADD OPTION SIGNATURES
       const lookup = await getAllOptions;
       const clean = toPairs(rawData)
-        .map((meta, signature) => {
+      // eslint-disable-next-line no-unused-vars
+        .map((meta, signatureId) => {
           const { suite, test, lower_is_better } = meta;
           const cleanTest = (() => {
             if (missing(test)) return null;
@@ -117,7 +118,7 @@ const getFramework = async ({ repo, framework }) => {
           }
 
           return {
-            signature,
+            signature: meta.signature_hash,
             suite,
             test: cleanTest,
             lowerIsBetter,
