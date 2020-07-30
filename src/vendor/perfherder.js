@@ -68,6 +68,24 @@ const getFramework = async ({ repo, framework }) => {
           let lowerIsBetter = lower_is_better;
           let unit = 'Score';
 
+          if (meta.id === 2486306 || meta.id === 2486282) {
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            console.log('metas', meta);
+            console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+          }
+
+          if (missing(test) && suite.includes('youtube-playback') && meta.machine_platform === 'windows10-64-shippable') {
+            console.log('-----------------------------------------------------');
+            console.log('windows', repo, framework, signatureId, meta.suite, meta.application, meta);
+            console.log('-----------------------------------------------------');
+          }
+
+          if (missing(test) && suite.includes('youtube-playback') && meta.machine_platform === 'android-hw-g5-7-0-arm7-api-16-shippable') {
+            console.log('-----------------------------------------------------');
+            console.log('android-g5', repo, framework, signatureId, meta.suite, meta.application, meta);
+            console.log('-----------------------------------------------------');
+          }
+
           if (suite.includes('youtube-playback')) {
             lowerIsBetter = true;
             unit = 'count';

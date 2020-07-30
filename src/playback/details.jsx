@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS,
+  BROWSERS, ENCODINGS, PLATFORMS, STANDARD_SIZES, TESTS, PLAYBACK_SUITES,
 } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
@@ -46,7 +46,7 @@ class PlaybackDetails extends React.Component {
       >
         {navigation}
         <Grid container spacing={1}>
-          {selectFrom(SIZES).map(({ size }) => (
+          {selectFrom(STANDARD_SIZES).map(({ size }) => (
             <Grid
               item
               xs={6}
@@ -61,17 +61,22 @@ class PlaybackDetails extends React.Component {
                     encoding,
                     size,
                   })
-                  .map(({ speed, filter: testFilter }) => ({
-                    label: `${speed}x`,
-                    repo: browserDetails.repo,
-                    filter: {
-                      and: [
-                        platformDetails.filter,
-                        browserDetails.filter,
-                        testFilter,
-                      ],
-                    },
-                  }))
+                  .map(test => {
+                    const { suite } = selectFrom(PLAYBACK_SUITES).where({ variant: test.variant, browser }).first();
+                    const suiteFilter = { eq: { suite } };
+                    return {
+                      label: `${test.speed}x`,
+                      repo: browserDetails.repo,
+                      filter: {
+                        and: [
+                          platformDetails.filter,
+                          browserDetails.filter,
+                          test.filter,
+                          suiteFilter,
+                        ],
+                      },
+                    };
+                  })
                   .toArray()}
                 missingDataInterval={missingDataInterval}
               />

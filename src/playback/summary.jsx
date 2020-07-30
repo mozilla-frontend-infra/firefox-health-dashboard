@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, ENCODINGS, PLATFORMS, SPEEDS, TESTS,
+  BROWSERS, PLATFORMS, SPEEDS, TESTS, PLAYBACK_SUITES, STANDARD_ENCODINGS
 } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
@@ -100,7 +100,7 @@ class PlaybackSummary extends React.Component {
       .toArray();
     const combos = selectFrom(PLATFORMS)
       .where({ bits, type: platformType })
-      .map(platform => selectFrom(ENCODINGS)
+      .map(platform => selectFrom(STANDARD_ENCODINGS)
         .where({ encoding })
         .map(({ encoding }) => selectFrom(TESTS)
           .where({
@@ -108,8 +108,10 @@ class PlaybackSummary extends React.Component {
             size: sizes,
           })
           .map(test => {
+            const { suite } = selectFrom(PLAYBACK_SUITES).where({ variant: test.variant, browser: browser.id }).first();
+            const suiteFilter = { eq: { suite } };
             const filter = {
-              and: [browser.filter, platform.filter, test.filter],
+              and: [browser.filter, platform.filter, test.filter, suiteFilter],
             };
 
             return {
