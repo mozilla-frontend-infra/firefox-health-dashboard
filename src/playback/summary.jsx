@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Tooltip from 'react-simple-tooltip';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, PLATFORMS, SPEEDS, TESTS, PLAYBACK_SUITES, STANDARD_ENCODINGS
+  BROWSERS, PLATFORMS, SPEEDS, STANDARD_TESTS, PLAYBACK_SUITES, STANDARD_ENCODINGS,
 } from './config';
 import { getData } from '../vendor/perfherder';
 import jx from '../vendor/jx/expressions';
@@ -102,7 +102,7 @@ class PlaybackSummary extends React.Component {
       .where({ bits, type: platformType })
       .map(platform => selectFrom(STANDARD_ENCODINGS)
         .where({ encoding })
-        .map(({ encoding }) => selectFrom(TESTS)
+        .map(({ encoding }) => selectFrom(STANDARD_TESTS)
           .where({
             encoding,
             size: sizes,

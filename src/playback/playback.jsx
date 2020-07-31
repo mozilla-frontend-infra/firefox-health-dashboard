@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DashboardPage from '../utils/DashboardPage';
 import {
-  BROWSERS, STANDARD_ENCODINGS
+  BROWSERS, STANDARD_ENCODINGS,
 } from './config';
 import PlaybackSummary from './summary';
 import Section from '../utils/Section';

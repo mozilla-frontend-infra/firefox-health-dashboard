@@ -86,6 +86,9 @@ const WIDEVINE_VP9_SFR_SIZES = [
   {size: "240p30"},
 ];
 
+const WIDEVINE_H264_SIZES = WIDEVINE_HFR_SIZES.concat(WIDEVINE_H264_SFR_SIZES);
+const WIDEVINE_VP9_SIZES = WIDEVINE_HFR_SIZES.concat(WIDEVINE_VP9_SFR_SIZES);
+
 const SPEEDS = [
   {speedLabel: "2", speed: 2},
   {speedLabel: "1.75", speed: 1.75},
@@ -104,8 +107,8 @@ const PLAYBACK_SUITES = [
   {id: "h264-sfr-firefox", variant: "h264-sfr", browser: "firefox", suite: "raptor-youtube-playback-h264-sfr-firefox-live"},
   {id: "vp9-sfr-firefox", variant: "vp9-sfr", browser: "firefox", suite: "raptor-youtube-playback-vp9-sfr-firefox-live"},
   {id: "widevine-hfr-firefox", variant: "widevine-hfr", browser: "firefox", suite: "raptor-youtube-playback-widevine-hfr-firefox-live"},
-  {id: "widevine-h264-sfr-firefox", variant: "widevine-h264-sfr", browser: "firefox", suite: "raptor-youtube-playback-firefox-live"},
-  {id: "widevine-vp9-sfr-firefox", variant: "widevine-vp9-sfr", browser: "firefox", suite: "raptor-youtube-playback-firefox-live"},
+  {id: "widevine-h264-sfr-firefox", variant: "widevine-h264-sfr", browser: "firefox", suite: "raptor-youtube-playback-widevine-h264-sfr-firefox-live"},
+  {id: "widevine-vp9-sfr-firefox", variant: "widevine-vp9-sfr", browser: "firefox", suite: "raptor-youtube-playback-widevine-vp9-sfr-firefox-live"},
 
   {id: "hfr-chrome", variant: "hfr", browser: "chrome", suite: "raptor-youtube-playback-h264-std-chrome-live"},
   // {id: "hfr-chrome", variant: "hfr", browser: "chrome", suite: "raptor-youtube-playback-hfr-chrome-live"},
@@ -113,8 +116,8 @@ const PLAYBACK_SUITES = [
   {id: "h264-sfr-chrome", variant: "h264-sfr", browser: "chrome", suite: "raptor-youtube-playback-h264-sfr-chrome-live"},
   {id: "vp9-sfr-chrome", variant: "vp9-sfr", browser: "chrome", suite: "raptor-youtube-playback-vp9-sfr-chrome-live"},
   {id: "widevine-hfr-chrome", variant: "widevine-hfr", browser: "chrome", suite: "raptor-youtube-playback-widevine-hfr-chrome-live"},
-  {id: "widevine-h264-sfr-chrome", variant: "widevine-h264-sfr", browser: "chrome", suite: "raptor-youtube-playback-chrome-live"},
-  {id: "widevine-vp9-sfr-chrome", variant: "widevine-vp9-sfr", browser: "chrome", suite: "raptor-youtube-playback-chrome-live"},
+  {id: "widevine-h264-sfr-chrome", variant: "widevine-h264-sfr", browser: "chrome", suite: "raptor-youtube-playback-widevine-h264-sfr-chrome-live"},
+  {id: "widevine-vp9-sfr-chrome", variant: "widevine-vp9-sfr", browser: "chrome", suite: "raptor-youtube-playback-widevine-vp9-sfr-chrome-live"},
 
   {id: "hfr-geckoview", variant: "hfr", browser: "geckoview", suite: "raptor-youtube-playback-h264-std-geckoview-live"},
   // {id: "hfr-geckoview", variant: "hfr", browser: "geckoview", suite: "raptor-youtube-playback-hfr-geckoview-live"},
@@ -122,8 +125,8 @@ const PLAYBACK_SUITES = [
   {id: "h264-sfr-geckoview", variant: "h264-sfr", browser: "geckoview", suite: "raptor-youtube-playback-h264-sfr-geckoview-live"},
   {id: "vp9-sfr-geckoview", variant: "vp9-sfr", browser: "geckoview", suite: "raptor-youtube-playback-vp9-sfr-geckoview-live"},
   {id: "widevine-hfr-geckoview", variant: "widevine-hfr", browser: "geckoview", suite: "raptor-youtube-playback-widevine-hfr-geckoview-live"},
-  {id: "widevine-h264-sfr-geckoview", variant: "widevine-h264-sfr", browser: "geckoview", suite: "raptor-youtube-playback-geckoview-live"},
-  {id: "widevine-vp9-sfr-geckoview", variant: "widevine-vp9-sfr", browser: "geckoview", suite: "raptor-youtube-playback-geckoview-live"},
+  {id: "widevine-h264-sfr-geckoview", variant: "widevine-h264-sfr", browser: "geckoview", suite: "raptor-youtube-playback-widevine-h264-sfr-geckoview-live"},
+  {id: "widevine-vp9-sfr-geckoview", variant: "widevine-vp9-sfr", browser: "geckoview", suite: "raptor-youtube-playback-widevine-vp9-sfr-geckoview-live"},
 
   {id: "hfr-fenix", variant: "hfr", browser: "fenix", suite: "raptor-youtube-playback-h264-std-fenix-live"},
   // {id: "hfr-fenix", variant: "hfr", browser: "fenix", suite: "raptor-youtube-playback-hfr-fenix-live"},
@@ -131,8 +134,8 @@ const PLAYBACK_SUITES = [
   {id: "h264-sfr-fenix", variant: "h264-sfr", browser: "fenix", suite: "raptor-youtube-playback-h264-sfr-fenix-live"},
   {id: "vp9-sfr-fenix", variant: "vp9-sfr", browser: "fenix", suite: "raptor-youtube-playback-vp9-sfr-fenix-live"},
   {id: "widevine-hfr-fenix", variant: "widevine-hfr", browser: "fenix", suite: "raptor-youtube-playback-widevine-hfr-fenix-live"},
-  {id: "widevine-h264-sfr-fenix", variant: "widevine-h264-sfr", browser: "fenix", suite: "raptor-youtube-playback-fenix-live"},
-  {id: "widevine-vp9-sfr-fenix", variant: "widevine-vp9-sfr", browser: "fenix", suite: "raptor-youtube-playback-fenix-live"},
+  {id: "widevine-h264-sfr-fenix", variant: "widevine-h264-sfr", browser: "fenix", suite: "raptor-youtube-playback-widevine-h264-sfr-fenix-live"},
+  {id: "widevine-vp9-sfr-fenix", variant: "widevine-vp9-sfr", browser: "fenix", suite: "raptor-youtube-playback-widevine-vp9-sfr-fenix-live"},
 
   {id: "hfr-fennec68", variant: "hfr", browser: "fennec68", suite: "raptor-youtube-playback-h264-std-fennec68-live"},
   // {id: "hfr-fennec68", variant: "hfr", browser: "fennec68", suite: "raptor-youtube-playback-hfr-fennec68-live"},
@@ -140,8 +143,8 @@ const PLAYBACK_SUITES = [
   {id: "h264-sfr-fennec68", variant: "h264-sfr", browser: "fennec68", suite: "raptor-youtube-playback-h264-sfr-fennec68-live"},
   {id: "vp9-sfr-fennec68", variant: "vp9-sfr", browser: "fennec68", suite: "raptor-youtube-playback-vp9-sfr-fennec68-live"},
   {id: "widevine-hfr-fennec68", variant: "widevine-hfr", browser: "fennec68", suite: "raptor-youtube-playback-widevine-hfr-fennec68-live"},
-  {id: "widevine-h264-sfr-fennec68", variant: "widevine-h264-sfr", browser: "fennec68", suite: "raptor-youtube-playback-fennec68-live"},
-  {id: "widevine-vp9-sfr-fennec68", variant: "widevine-vp9-sfr", browser: "fennec68", suite: "raptor-youtube-playback-fennec68-live"},
+  {id: "widevine-h264-sfr-fennec68", variant: "widevine-h264-sfr", browser: "fennec68", suite: "raptor-youtube-playback-widevine-h264-sfr-fennec68-live"},
+  {id: "widevine-vp9-sfr-fennec68", variant: "widevine-vp9-sfr", browser: "fennec68", suite: "raptor-youtube-playback-widevine-vp9-sfr-fennec68-live"},
 ];
 
 const HFR_H264_TESTS = selectFrom(H264_HFR_SIZES)
@@ -277,8 +280,6 @@ const WIDEVINE_VP9_SFR_TESTS = selectFrom(WIDEVINE_VP9_SFR_SIZES)
   })
   .toArray();
 
-const WIDEVINE_TESTS = WIDEVINE_HFR_TESTS.concat(WIDEVINE_H264_SFR_TESTS, WIDEVINE_VP9_SFR_TESTS);
-
 const PLATFORMS = [
   {
     id: 'win64',
@@ -348,6 +349,7 @@ const BROWSERS =[
   {id: "fennec68", label:"Firefox ESR", title:"Firefox ESR (Android)", format:"mobile", repo: MOZILLA_CENTRAL, filter: {eq: {framework: 10, repo: MOZILLA_CENTRAL.name}}},
 ];
 
-const TESTS = HFR_TESTS.concat(SFR_TESTS);
+const STANDARD_TESTS = HFR_TESTS.concat(SFR_TESTS);
+const WIDEVINE_TESTS = WIDEVINE_HFR_TESTS.concat(WIDEVINE_H264_SFR_TESTS, WIDEVINE_VP9_SFR_TESTS);
 
-export { STANDARD_SIZES, ENCODINGS, STANDARD_ENCODINGS, SPEEDS, TESTS, HFR_TESTS, SFR_TESTS, BROWSERS, PLATFORMS, PLAYBACK_SUITES};
+export { STANDARD_SIZES, ENCODINGS, STANDARD_ENCODINGS, SPEEDS, STANDARD_TESTS, WIDEVINE_TESTS, BROWSERS, PLATFORMS, PLAYBACK_SUITES, WIDEVINE_H264_SIZES, WIDEVINE_VP9_SIZES };
