@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
         <small
           className="DashboardPage-subtitle-6"
         >
-          Warm load time on win64
+          Cold load time on win64
         </small>
       </h1>
       <div
@@ -229,14 +229,14 @@ exports[`renders correctly 1`] = `
               role="button"
               tabIndex={0}
             >
-              Warm load time
+              Cold load time
             </div>
             <input
               autoFocus={false}
               name="test"
               onAnimationStart={[Function]}
               type="hidden"
-              value="warm-loadtime"
+              value="cold-loadtime"
             />
             <svg
               aria-hidden={true}
@@ -1414,107 +1414,6 @@ exports[`renders correctly 1`] = `
               className="ChartJsWrapper-title-15"
             >
               Tp6: Instagram
-              <span
-                onClick={[Function]}
-                style={
-                  Object {
-                    "cursor": "pointer",
-                  }
-                }
-                title="show image for copy"
-              >
-                <div
-                  style={
-                    Object {
-                      "display": "inline-block",
-                      "margin": "-1rem 0",
-                      "verticalAlign": "middle",
-                    }
-                  }
-                >
-                  <svg
-                    aria-hidden={true}
-                    className="MuiSvgIcon-root"
-                    focusable="false"
-                    style={
-                      Object {
-                        "margin": "0 .2rem 0 .2rem",
-                        "verticalAlign": "baseline",
-                      }
-                    }
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
-                    />
-                  </svg>
-                </div>
-              </span>
-            </h2>
-            <div
-              style={
-                Object {
-                  "height": 80,
-                  "position": "relative",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "position": "absolute",
-                    "right": "50%",
-                    "top": "50%",
-                  }
-                }
-              >
-                <div
-                  className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-                  role="progressbar"
-                  style={
-                    Object {
-                      "height": 40,
-                      "width": 40,
-                    }
-                  }
-                >
-                  <svg
-                    className="MuiCircularProgress-svg"
-                    viewBox="22 22 44 44"
-                  >
-                    <circle
-                      className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
-                      cx={44}
-                      cy={44}
-                      fill="none"
-                      r={20.2}
-                      strokeWidth={3.6}
-                      style={Object {}}
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="MuiGrid-root TP6-chart-3 MuiGrid-item MuiGrid-grid-xs-6"
-      >
-        <div
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
-        >
-          <div
-            className="ChartJsWrapper-chartContainer-14"
-          >
-            <h2
-              className="ChartJsWrapper-title-15"
-            >
-              Tp6: Instagram (binast)
               <span
                 onClick={[Function]}
                 style={

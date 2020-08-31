@@ -1,7 +1,9 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import DashboardPage from '../utils/DashboardPage';
-import { BROWSERS, ENCODINGS } from './config';
+import {
+  BROWSERS, STANDARD_ENCODINGS,
+} from './config';
 import PlaybackSummary from './summary';
 import Section from '../utils/Section';
 
@@ -15,7 +17,7 @@ export default class Playback extends React.Component {
         {BROWSERS.map(browser => (
           <Section title={browser.title} key={browser.title}>
             <Grid container spacing={2}>
-              {ENCODINGS.map(({ encoding }) => (
+              {STANDARD_ENCODINGS.map(({ encoding }) => (
                 <Grid item xs={6} key={`grid_${encoding}_${browser.id}`}>
                   <PlaybackSummary
                     key={`ps_${encoding}_${browser.id}`}

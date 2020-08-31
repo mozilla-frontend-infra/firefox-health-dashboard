@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { selectFrom } from '../vendor/vectors';
 import {
-  BROWSERS, ENCODINGS, PLATFORMS, SIZES, TESTS,
+  BROWSERS, ENCODINGS, PLATFORMS, STANDARD_SIZES, STANDARD_TESTS, WIDEVINE_TESTS, PLAYBACK_SUITES, WIDEVINE_H264_SIZES, WIDEVINE_VP9_SIZES,
 } from './config';
 import { withNavigation } from '../vendor/components/navigation';
 import Picker from '../vendor/components/navigation/Picker';
@@ -38,6 +38,21 @@ class PlaybackDetails extends React.Component {
       .where({ id: browser })
       .first();
     const missingDataInterval = browser === 'fenix' ? 7 : undefined;
+    const tests = encoding.includes('WIDEVINE') ? WIDEVINE_TESTS : STANDARD_TESTS;
+
+    // TODO: a better way to get the sizes automatically from tests
+    let sizes;
+    switch (encoding) {
+      case 'WIDEVINE-H264':
+        sizes = WIDEVINE_H264_SIZES;
+        break;
+      case 'WIDEVINE-VP9':
+        sizes = WIDEVINE_VP9_SIZES;
+        break;
+      default:
+        sizes = STANDARD_SIZES;
+        break;
+    }
 
     return (
       <DashboardPage
@@ -46,7 +61,7 @@ class PlaybackDetails extends React.Component {
       >
         {navigation}
         <Grid container spacing={1}>
-          {selectFrom(SIZES).map(({ size }) => (
+          {selectFrom(sizes).map(({ size }) => (
             <Grid
               item
               xs={6}
@@ -56,22 +71,27 @@ class PlaybackDetails extends React.Component {
               <PerfherderGraphContainer
                 timeDomain={timeDomain}
                 title={`Dropped Frames ${size}`}
-                series={selectFrom(TESTS)
+                series={selectFrom(tests)
                   .where({
                     encoding,
                     size,
                   })
-                  .map(({ speed, filter: testFilter }) => ({
-                    label: `${speed}x`,
-                    repo: browserDetails.repo,
-                    filter: {
-                      and: [
-                        platformDetails.filter,
-                        browserDetails.filter,
-                        testFilter,
-                      ],
-                    },
-                  }))
+                  .map(test => {
+                    const { suite } = selectFrom(PLAYBACK_SUITES).where({ variant: test.variant, browser }).first();
+                    const suiteFilter = { eq: { suite } };
+                    return {
+                      label: `${test.speed}x`,
+                      repo: browserDetails.repo,
+                      filter: {
+                        and: [
+                          platformDetails.filter,
+                          browserDetails.filter,
+                          test.filter,
+                          suiteFilter,
+                        ],
+                      },
+                    };
+                  })
                   .toArray()}
                 missingDataInterval={missingDataInterval}
               />
