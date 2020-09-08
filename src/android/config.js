@@ -262,9 +262,10 @@ const COMBO_TABLE = {
       "Unity",
       {
         eq: {
-          framework: 10,
+          framework: 13,
           repo: "mozilla-central",
-          suite: ["raptor-unity-webgl-geckoview"]
+          application: "geckoview",
+          suite: ["unity-webgl"]
         }
       }
     ],
@@ -276,23 +277,25 @@ const COMBO_TABLE = {
       "Unity",
       {
         eq: {
-          framework: 10,
+          framework: 13,
           repo: "mozilla-central",
-          suite: ["raptor-unity-webgl-fenix"]
+          application: "fenix",
+          suite: ["unity-webgl"]
         }
       }
     ],
     [
-      "fennec68",
-      "Firefox ESR",
+      "refbrow",
+      "Reference browser",
       { missing: "test" },
       "unity",
       "Unity",
       {
         eq: {
-          framework: 10,
+          framework: 13,
           repo: "mozilla-central",
-          suite: ["raptor-unity-webgl-fennec68"]
+          application: "refbrow",
+          suite: ["unity-webgl"]
         }
       }
     ]
