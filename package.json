@@ -55,7 +55,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-simple-tooltip": "^2.6.0",
-    "typeface-roboto": "^0.0.75"
+    "typeface-roboto": "^1.0.0"
   },
   "devDependencies": {
     "@mozilla-frontend-infra/react-lint": "^2.0.0",
