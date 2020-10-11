@@ -73,7 +73,7 @@
     "nyc": "^11.6.0",
     "react-test-renderer": "^16.5.2",
     "webpack": "^4",
-    "webpack-cli": "^3",
+    "webpack-cli": "^4.0.0",
     "webpack-dev-server": "^3"
   },
   "main": "index.js",
