@@ -5,6 +5,7 @@ import { AppContainer } from 'react-hot-loader';
 import './index.css';
 import Routes from './routes';
 import { reportOrLog } from './vendor/errors';
+import Banner from './banner/Banner';
 
 require('typeface-roboto');
 
@@ -46,6 +47,14 @@ const root = document.getElementById('root');
 const load = () => render(
   <AppContainer>
     <GlobalErrorBoundary>
+      <Banner>
+        This site is no longer being actively maintained, and may be retired in the future. Please complete&nbsp;
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeB1kQDvB8Pl-i_ELsKAHrJ_ysuMg0aNhKhYotkaJalJ0dRlA/viewform">
+          this feedback form
+        </a>
+        &nbsp;to help us understand your data needs so that we can suggest alternatives. Updates will be provided here as we
+        have them
+      </Banner>
       <Routes />
     </GlobalErrorBoundary>
   </AppContainer>,
