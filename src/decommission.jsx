@@ -67,13 +67,13 @@ const Decommission = props => {
             Many of the visualisations that were shown on this dashboard can still be found at
             {' '}
             <a href="https://arewefastyet.com/">https://arewefastyet.com</a>
-            , but if there's something in particular that you're unable to find we'd be happy to answer questions
+            , but if there&#39s something in particular that you&#39re unable to find we&#39d be happy to answer questions
             {' '}
             <a href="https://chat.mozilla.org/#/room/#firefox-health-dashboard:mozilla.org">in our public Matrix channel</a>
             .
           </p>
           <p>
-            You can read more about the dashboard's retirement, or provide your feedback
+            You can read more about the dashboard&#39s retirement, or provide your feedback
             {' '}
             {' '}
             <a href="https://github.com/mozilla-frontend-infra/firefox-health-dashboard/issues/729">in our issue tracker</a>
