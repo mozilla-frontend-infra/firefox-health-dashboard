@@ -63,7 +63,7 @@
     "@neutrinojs/copy": "^9.1.0",
     "@neutrinojs/jest": "^9.1.0",
     "@neutrinojs/react": "^9.1.0",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "codecov": "^3.6.5",
     "eslint": "5.16.0",
     "husky": "^3.0.0",
